@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(view)">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GreenFarm</title>
+
+    <!-- Favicon -->
+    <link href="..\assets\img\favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link
+      href="../assets/lib/owlcarousel/assets/owl.carousel.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="../assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="../assets/css/style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div th:fragment="navbar" class="header_area">
+      <div class="pos_page">
+        <div class="container">
+          <div class="pos_page_inner">
+            <nav th:insert="~{/layout/_header.html::header}"></nav>
+            <main th:replace="${view}"></main>
+          </div>
+        </div>
+      </div>
+
+      <div th:insert="~{/layout/_footer.html::footer}"></div>
+    </div>
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+      ><i class="fa fa-angle-double-up"></i
+    ></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/lib/easing/easing.min.js"></script>
+    <script src="../assets/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../assets/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="../assets/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="../assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="../assets/mail/jqBootstrapValidation.min.js"></script>
+    <script src="../assets/mail/contact.js"></script>
+    <script src="../assets/js/bootstrap.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

@@ -9768,3 +9768,49 @@ h6,
   padding: 0;
   list-style-type: none;
 }
+
+
+
+/* ------- */
+.lichtrinh_triangle{
+  border-right: 15px solid #FFFFFF;
+  border-bottom: 15px solid rgba(0, 0, 0, 0);
+  border-top: 15px solid rgba(0, 0, 0, 0);
+  position: absolute;
+  height: 0;
+  left: 65px;
+  top: 25px;
+}
+.lichtrinh_triangle_bg{
+  border-right: 17px solid rgba(72, 72, 72, 0.5);
+  border-bottom: 17px solid rgba(0, 0, 0, 0);
+  border-top: 17px solid rgba(0, 0, 0, 0);
+  position: absolute;
+  height: 0;
+  left: 63px;
+  top: 23px;
+}
+
+.lichtrinh {
+  position: relative;
+}
+
+.lichtrinh img{
+  height: 48px;
+}
+
+.mota_lichtrinh{
+  position: absolute;
+  padding: 10px;
+  top: 10px;
+  left: 80px;
+  box-shadow: 0 0 4px 0 rgba(72, 72, 72, 0.4);
+  border-radius: 5%;
+}
+
+.tour-four_info {
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 15px;
+  border: 1px solid #eee;
+}

@@ -1,4 +1,4 @@
-package com.poly.controller;
+package com.greenfarm.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,12 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 
-public class HomeController {
+public class HomeControllerTest {
     public String Home(Model model){
         return "index";
     }
 
-
+    @RequestMapping("/product-detail")
+    public String ProductDetail(Model model){
+        return "product/detail";
+    }
 
     @RequestMapping("/login")
     public String Login(Model model){
@@ -24,5 +27,7 @@ public class HomeController {
     public String Register(Model model){
         return "register";
     }
+
+    
 
 }
