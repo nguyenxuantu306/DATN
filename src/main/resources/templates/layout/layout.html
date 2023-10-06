@@ -69,5 +69,14 @@
 
     <!-- Template Javascript -->
     <script src="../assets/js/main.js"></script>
+    <script>
+      (function () {
+
+          $("#cart").on("click", function () {
+              $("#mini-cart").fadeToggle("fast");
+          });
+
+      })();
+  </script>
   </body>
 </html>

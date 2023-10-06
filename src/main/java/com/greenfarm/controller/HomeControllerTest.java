@@ -12,9 +12,9 @@ public class HomeControllerTest {
         return "index";
     }
 
-    @RequestMapping("/product-detail")
+    @RequestMapping("/tour-detail")
     public String ProductDetail(Model model){
-        return "product/detail";
+        return "tour/detail";
     }
 
     @RequestMapping("/login")
