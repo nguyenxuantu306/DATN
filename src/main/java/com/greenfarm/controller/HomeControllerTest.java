@@ -28,6 +28,9 @@ public class HomeControllerTest {
         return "register";
     }
 
-    
+        @RequestMapping("/cart")
+    public String Cart(Model model){
+        return "cart";
+    }
 
 }
