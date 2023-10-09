@@ -256,7 +256,8 @@
                     return actions.order.create({
                         purchase_units: [{
                             amount: {
-                                value: price // Sử dụng giá lấy được từ phần tử "price"
+                               // value: price  Sử dụng giá lấy được từ phần tử "price"
+                               value: 10.00
                             }
                         }]
                     });
@@ -264,6 +265,7 @@
                 onApprove: function (data, actions) {
                     return actions.order.capture().then(function (details) {
                         alert('Payment completed successfully!\nTransaction ID: ' + details.id);
+                        window.location.href = '/';
                     });
                 }
             }).render('#paypal-button'); 
