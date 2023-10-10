@@ -1,13 +1,17 @@
 package com.greenfarm.controller;
 
+import java.util.Optional;
+
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/")
-
-public class HomeControllerTest {
+public class HomeController {
     public String Home(Model model){
         return "index";
     }
@@ -28,6 +32,15 @@ public class HomeControllerTest {
         return "register";
     }
 
-    
+//    @RequestMapping({"/","/greenFarm.com"})
+//	public String home() {
+//		return "redirect:/greenFarm/tour";
+//	}
+//	
+//	
+//	@RequestMapping({"/admin","/admin/home/index"})
+//	public String admin() {
+//		return "redirect:/assets/admin/index.html";
+//	}
 
 }

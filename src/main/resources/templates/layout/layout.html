@@ -32,6 +32,13 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="../assets/css/style.css" rel="stylesheet" />
+    
+    
+     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   
+    
   </head>
 
   <body>
@@ -69,6 +76,7 @@
 
     <!-- Template Javascript -->
     <script src="../assets/js/main.js"></script>
+
     <script>
       (function () {
 
@@ -78,5 +86,39 @@
 
       })();
   </script>
+  
+  <!-- Sử dụng jQuery UI để tạo thanh trượt -->
+    <script>
+        $(function() {
+            $("#price-range-slider").slider({
+                range: true,
+                min: 0,
+                max: 1000, // Điều chỉnh giới hạn tối đa theo nhu cầu của bạn
+                values: [100, 500], // Giá trị mặc định ban đầu
+                slide: function(event, ui) {
+                    $("#minPrice").val(ui.values[0]);
+                    $("#maxPrice").val(ui.values[1]);
+                }
+            });
+            $("#minPrice").val($("#price-range-slider").slider("values", 0));
+            $("#maxPrice").val($("#price-range-slider").slider("values", 1));
+        });
+    </script>
+    
+    <script>
+    // Lấy giá trị priceRange từ URL nếu có
+	    const urlParams = new URLSearchParams(window.location.search);
+	    const priceRange = urlParams.get('priceRange');
+	
+	    // Nếu priceRange có giá trị, đặt radio button tương ứng là checked
+	    if (priceRange) {
+	        document.querySelector(`input[name="priceRange"][value="${priceRange}"]`).checked = true;
+	    }
+	
+	    // Sử dụng JavaScript để xử lý sự kiện khi form được gửi
+	    document.getElementById('priceRangeForm').addEventListener('submit', function (e) {
+	        // Do nothing, để form tiếp tục với mặc định
+	    });
+	</script>
   </body>
 </html>

@@ -148,70 +148,78 @@
 
     <!-- Destination Start -->
     <div class="container-fluid py-5">
-        <div class="container pt-5 pb-3">
+        <div  class="container pt-5 pb-3">
             <div class="text-center mb-3 pb-3">
                 <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Destination</h6>
                 <h1>Product</h1>
             </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="../assets/img/destination-1.jpg" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="">
+            
+				<form name="key" action="/product/search" method="GET">
+					<!-- <select class="input-select" name="key">
+						<option value="nameProduct" >Search Keyword</option>
+						<option value="categoryProduct" >Search Genres</option>
+					</select> -->
+					<input style="height:42px" placeholder="Search..." class="input" name="keyword"
+						th:value="${valueSearch}">
+				</form>
+				
+				<form action="/product/filter-by-price" method="get">
+        <label for="minPrice">Giá tối thiểu:</label>
+        <input type="text" id="minPrice" name="minPrice" />
+
+        <label for="maxPrice">Giá tối đa:</label>
+        <input type="text" id="maxPrice" name="maxPrice" />
+
+       
+
+        <button type="submit">Lọc</button>
+    </form>
+    
+    <!-- Biểu mẫu lọc theo tên A-Z -->
+<form action="/product/filter-by-name" method="get">
+    <label for="sort">Sắp xếp theo tên:</label>
+    <select id="sort" name="sort">
+        <option value="asc">A-Z</option>
+        <option value="desc">Z-A</option>
+    </select>
+
+    <button type="submit">Lọc theo tên</button>
+</form>
+
+
+<form action="/product/filter-by-custom-price-range" method="get">
+    <label>Giá:</label>
+    <input type="radio" name="priceRange" value="under500k" /> Dưới 50,000₫
+    <input type="radio" name="priceRange" value="500kTo1M" /> 50,000₫ - 100,000₫
+    <input type="radio" name="priceRange" value="1MTo1.5M" /> 100,000₫ - 150,000₫
+    <input type="radio" name="priceRange" value="2MTo5M" /> 200,000₫ - 500,000₫
+    <input type="radio" name="priceRange" value="over5M" /> Trên 5,000,000₫
+
+    <button type="submit">Lọc</button>
+</form>
+            <div  class="row">
+                <div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
+                    <div class="product_thumb destination-item position-relative overflow-hidden mb-2">
+                    	<a th:href="@{|/product/detail/${p.productid}|}"><img style="height:260px"  class="img-fluid" th:src="@{|${p.image}|}" alt=""></a>                       
+                        <!-- <a class="destination-overlay text-white text-decoration-none" href="">
                             <h5 class="text-white">Title</h5>
                             <span>Print</span>
-                        </a>
+                        </a>  -->                                               
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="../assets/img/destination-2.jpg" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="">
-                            <h5 class="text-white">Title</h5>
-                            <span>Print</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="../assets/img/destination-3.jpg" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="">
-                            <h5 class="text-white">Title</h5>
-                            <span>Print</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="../assets/img/destination-4.jpg" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="">
-                            <h5 class="text-white">Title</h5>
-                            <span>Print</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="../assets/img/destination-5.jpg" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="">
-                            <h5 class="text-white">Title</h5>
-                            <span>Print</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="../assets/img/destination-6.jpg" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="">
-                            <h5 class="text-white">Title</h5>
-                            <span>Print</span>
-                        </a>
-                    </div>
-                </div>
+                    <div class="product_content" style="text-align: center;">						
+						<h5 class="product_title">
+							<a th:utext="${p.productname}"></a>
+						</h5>
+						<span class="product_price"
+							th:text="*{#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}+ 'đ'">
+						</span>
+					</div>
+                </div>   
+                            
             </div>
         </div>
     </div>
-       
+            
 </body>
 
 </html>
