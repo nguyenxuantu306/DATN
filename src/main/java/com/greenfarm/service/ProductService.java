@@ -17,6 +17,9 @@ public interface ProductService {
 	// Danh sách sản phẩm
 	List<Product> findAll();
 
+	  Page<Product> findAll(Pageable pageable);
+	      
+	
 	// tìm sản phẩm theo id
 	Product findById(Integer productid);
 
@@ -30,7 +33,7 @@ public interface ProductService {
 	void delete(Integer productid);
 
 	
-
+	List<Product> findByCategoryId(String cid);
 	
 
 	List<Product> findProductByKeyword(String string);
@@ -39,7 +42,7 @@ public interface ProductService {
 
 	List<Product> findProductByPriceRange(String priceRange);
 
-	List<Product> sortProductsByNameAZ();
+	List<Product> findProductByProductNameSort(String sort);
 
 	
 }

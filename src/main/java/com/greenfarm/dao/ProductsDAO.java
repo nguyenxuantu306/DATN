@@ -20,5 +20,6 @@ public interface ProductsDAO extends JpaRepository<Product, Integer>  {
 	@Query("SELECT p FROM Product p WHERE p.price BETWEEN ?1 AND ?2")
 	List<Product> findByPriceBetween(Double minPrice, Double maxPrice);
 
-
+	@Query("SELECT p FROM Product p WHERE p.category.categoryid=?1")
+	List<Product> findByCategoryId(String cid);
 }

@@ -33,6 +33,10 @@ public class ProductServiceImpl implements ProductService {
 		return dao.findAll();
 	}
 	
+	public Page<Product> findAll(Pageable pageable) {
+        return dao.findAll(pageable);
+    }
+	
 	@Override
 	public Product findById(Integer id) {
 		return dao.findById(id).get();
@@ -54,10 +58,10 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	
-//	@Override
-//	public List<Product> findProductByKeyword(String keyword) {
-//		return dao.findProductByKeyword(keyword);
-//	}
+	@Override
+	public List<Product> findByCategoryId(String cid) {
+		return dao.findByCategoryId(cid);
+	}
 	
 	@Override
     public List<Product> findProductByKeyword(String keyword) {
@@ -117,13 +121,18 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	@Override
-    public List<Product> sortProductsByNameAZ() {
-        List<Product> productList = findAll();
+    public List<Product> findProductByProductNameSort(String sort) {
+        List<Product> productList = dao.findAll();
 
-        
+        // Sắp xếp sản phẩm theo tên sản phẩm (A-Z hoặc Z-A)
+        if (sort != null && sort.equalsIgnoreCase("desc")) {
             productList.sort(Comparator.comparing(Product::getProductname).reversed());
-      
+        } else {
+            productList.sort(Comparator.comparing(Product::getProductname));
+        }
 
         return productList;
     }
+
+	
 }

@@ -9,9 +9,9 @@
 </head>
 
 <body>
-	<div class="container-fluid py-5">
+	<div class="container-fluid">
 		<div class="container pt-5 pb-3">
-			<div class="text-center mb-3 pb-3">111
+			<!-- <div class="text-center mb-3 pb-3">111
 				<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Trang</h6>
 				<h1>Tour</h1>
 			</div>
@@ -143,18 +143,22 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<!-- Packages End -->
 
 	<!-- Destination Start -->
-	<div class="container-fluid py-5">
+	<div class="container-fluid ">
 		<div class="container pt-5 pb-3">
 			<div class="text-center mb-3 pb-3">
 				<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Destination</h6>
 				<h1>Product</h1>
 			</div>
+
+			<form id="searchForm">
+				<input type="text" id="searchKeyword" placeholder="Nhập từ khóa">				
+			</form>
 
 			<!-- Đây là biểu mẫu lọc sản phẩm -->
 			<form id="filterForm">
@@ -169,37 +173,33 @@
 
 
 
+			<form id="sortForm">
+			        <label for="sortType">Chọn loại sắp xếp:</label>
+			        <select id="sortType" name="sort">
+			            <option value="asc">A-Z</option>
+			            <option value="desc">Z-A</option>
+			        </select>
+			
+			        <input type="submit" value="Sắp xếp">
+			    </form>
 
+			
 
-			<!-- Biểu mẫu lọc theo tên A-Z -->
-			<!-- <form id="filterForm" method="get">
-				<label for="sort">Sắp xếp theo tên:</label>
-				<select id="sort" name="sort">
-					<option value="asc">A-Z</option>
-					<option value="desc">Z-A</option>
-				</select>
-
-				<button type="submit">Lọc theo tên</button>
-			</form> -->
-			<form id="filterForm">
-				<input type="submit" value="Sắp xếp theo tên A-Z">
-			</form>
-
-			<form action="/product/filter-by-custom-price-range" method="get">
+			<form id="filterForm" method="get">
 				<label>Giá:</label>
 				<input type="radio" name="priceRange" value="under500k" /> Dưới 50,000₫
 				<input type="radio" name="priceRange" value="500kTo1M" /> 50,000₫ - 100,000₫
 				<input type="radio" name="priceRange" value="1MTo1.5M" /> 100,000₫ - 150,000₫
 				<input type="radio" name="priceRange" value="2MTo5M" /> 200,000₫ - 500,000₫
 				<input type="radio" name="priceRange" value="over5M" /> Trên 5,000,000₫
-
-				<button type="submit">Lọc</button>
 			</form>
-			<form id="searchForm">
-				<input type="text" id="searchKeyword" placeholder="Nhập từ khóa">
-				<button type="submit">Tìm kiếm</button>
-			</form>
-			<div class="row" id="searchResults">
+			
+			<div class="block_tags">
+						<a th:each="c:${cates}" th:href="@{|/product/shop?cid=${c.categoryid}|}"
+							class="list-group-item">[[${c.categoryname}]]</a>
+					</div>
+			
+			<div class="row" id="Results">
 				<div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
 					<div class="product_thumb destination-item position-relative overflow-hidden mb-2">
 						<a th:href="@{|/product/detail/${p.productid}|}"><img style="height:260px" class="img-fluid"
@@ -220,90 +220,32 @@
 				</div>
 
 			</div>
+			
+			<!-- Phân trang -->
+        <nav>
+   <!--  <ul class="pagination">
+    <li>
+        <a  href="?page=0">First</a>
+    </li>
+    <li>
+        <a  th:href="@{'?page=' + ${items.number - 1}}">Previous</a>
+    </li>
+    <li>
+        <a  th:href="@{'?page=' + ${items.number + 1}}">Next</a>
+    </li>
+    <li>
+        <a  th:href="@{'?page=' + ${items.totalPages - 1}}">Last</a>
+    </li>
+</ul> -->
+
+
+
+
+
+</nav>
+
 		</div>
 	</div>
-	<script>
-		// Hàm tạo mã HTML cho một sản phẩm
-		function createProductHTML(product) {
-			var productHTML = `
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="product_thumb destination-item position-relative overflow-hidden mb-2">
-          <a href="/product/detail/${product.productid}">
-            <img style="height:260px" class="img-fluid" src="${product.image}" alt="">
-          </a>
-        </div>
-        <div class="product_content" style="text-align: center;">
-          <h5 class="product_title">
-            <a>${product.productname}</a>
-          </h5>
-          <span class="product_price">${product.price}đ</span>
-        </div>
-      </div>`;
-			return productHTML;
-		}
-	</script>
-	<script>
-		// JavaScript code
-
-		// Gắn kết sự kiện submit cho biểu mẫu tìm kiếm
-		$('#searchForm').submit(function (event) {
-			event.preventDefault(); // Ngăn chặn hành vi mặc định của trình duyệt
-
-			var keyword = $('#searchKeyword').val();
-
-			// Gửi yêu cầu tìm kiếm đến API
-			$.ajax({
-				url: '/product/search',
-				type: 'GET',
-				data: {keyword: keyword},
-				success: function (response) {
-					var searchResults = $('#searchResults');
-					searchResults.empty(); // Xóa nội dung hiện tại
-
-					response.forEach(function (product) {
-						var productHTML = createProductHTML(product);
-						searchResults.append(productHTML);
-					});
-				},
-				error: function (xhr) {
-					console.log(xhr.responseText);
-				}
-			});
-		});
-	</script>
-	<script>
-		$(document).ready(function () {
-			// Gắn kết sự kiện submit cho biểu mẫu lọc sản phẩm
-			$('#filterForm').submit(function (event) {
-				event.preventDefault(); // Ngăn chặn hành vi mặc định của trình duyệt
-
-				var minPrice = $('#minPrice').val();
-				var maxPrice = $('#maxPrice').val();
-
-				// Gửi yêu cầu lọc sản phẩm đến API
-				$.ajax({
-					url: '/product/filter',
-					type: 'GET',
-					data: {minPrice: minPrice, maxPrice: maxPrice},
-					success: function (response) {
-						var searchResults = $('#searchResults');
-						searchResults.empty(); // Xóa nội dung hiện tại
-
-						response.forEach(function (product) {
-							// Tạo và hiển thị sản phẩm lọc
-							var productHTML = createProductHTML(product);
-							searchResults.append(productHTML);
-						});
-					},
-					error: function (xhr) {
-						console.log(xhr.responseText);
-					}
-				});
-			});
-		});
-
-
-	</script>
 	
 </body>
 
