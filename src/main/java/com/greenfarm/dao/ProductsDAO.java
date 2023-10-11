@@ -13,7 +13,7 @@ import com.greenfarm.entity.Product;
 
 public interface ProductsDAO extends JpaRepository<Product, Integer>  {
 
-	@Query("SELECT p FROM Product p WHERE p.productname like ?1")
+	@Query("SELECT p FROM Product p WHERE p.productname like %?1%")
 	List<Product> findProductByKeyword(String keyword);
 
 	
