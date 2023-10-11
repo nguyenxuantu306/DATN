@@ -79,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
 //    }
 
 	@Override
-    public List<Product> findProductByPriceRange(Double minPrice, Double maxPrice) {
+    public List<Product> findProductsByPriceRange(Double minPrice, Double maxPrice) {
         List<Product> productList;
 
         if (minPrice != null && maxPrice != null) {
@@ -117,15 +117,12 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	@Override
-    public List<Product> findProductByProductNameSort(String sort) {
+    public List<Product> sortProductsByNameAZ() {
         List<Product> productList = findAll();
 
-        // Sắp xếp sản phẩm theo tên sản phẩm (A-Z hoặc Z-A)
-        if (sort != null && sort.equalsIgnoreCase("desc")) {
+        
             productList.sort(Comparator.comparing(Product::getProductname).reversed());
-        } else {
-            productList.sort(Comparator.comparing(Product::getProductname));
-        }
+      
 
         return productList;
     }

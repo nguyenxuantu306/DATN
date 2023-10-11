@@ -35,11 +35,11 @@ public interface ProductService {
 
 	List<Product> findProductByKeyword(String string);
 
-	 List<Product> findProductByPriceRange(Double minPrice, Double maxPrice);
+	 List<Product> findProductsByPriceRange(Double minPrice, Double maxPrice);
 
 	List<Product> findProductByPriceRange(String priceRange);
 
-	List<Product> findProductByProductNameSort(String sort);
+	List<Product> sortProductsByNameAZ();
 
 	
 }

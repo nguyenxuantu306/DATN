@@ -34,6 +34,7 @@ public class ProductController {
 	@Autowired
 	ModelMapper modelMapper;
 
+	// List All
 	@GetMapping("/product/shop")
 	public String shopList(Model model, @RequestParam("cid") Optional<Integer> cid) {
 		List<Product> productList = productService.findAll();
@@ -45,6 +46,8 @@ public class ProductController {
 		return "product/shop";
 	}
 
+	
+	// Search Name
 	@GetMapping("/product/search")
 	public ResponseEntity<List<ProductDTO>> searchProducts(@RequestParam("keyword") Optional<String> keyword) {
 		String searchKeyword = keyword.orElse("");
@@ -56,19 +59,37 @@ public class ProductController {
 		return ResponseEntity.ok(productDTOList);
 	}
 
-	@GetMapping("/product/filter-by-price")
-	public String filterByPrice(Model model, @RequestParam("minPrice") Optional<Double> minPrice,
-			@RequestParam("maxPrice") Optional<Double> maxPrice) {
-		List<Product> productList = productService.findProductByPriceRange(minPrice.orElse(null),
-				maxPrice.orElse(null));
+	
+	// 
+	
+	@GetMapping("/product/filter")
+    public ResponseEntity<List<ProductDTO>> filterProducts(
+            @RequestParam("minPrice") Double minPrice,
+            @RequestParam("maxPrice") Double maxPrice) {
+        List<Product> productList = productService.findProductsByPriceRange(minPrice, maxPrice);
 
-		List<ProductDTO> productDTOList = productList.stream()
-				.map(product -> modelMapper.map(product, ProductDTO.class)).collect(Collectors.toList());
+        List<ProductDTO> productDTOList = productList.stream()
+                .map(product -> modelMapper.map(product, ProductDTO.class)).collect(Collectors.toList());
 
-		model.addAttribute("items", productDTOList);
-
-		return "product/shop"; // Thay đổi tên trang HTML tương ứng
-	}
+        return ResponseEntity.ok(productDTOList);
+    }
+	
+//	@GetMapping("/product/filter")
+//    public String filterByPrice(Model model,
+//                                @RequestParam("minPrice") Optional<Double> minPrice,
+//                                @RequestParam("maxPrice") Optional<Double> maxPrice
+//                                ) {
+//        List<Product> productList = productService.findProductsByPriceRange(minPrice.orElse(null), maxPrice.orElse(null));
+//
+//        List<ProductDTO> productDTOList = productList.stream()
+//                .map(product -> modelMapper.map(product, ProductDTO.class))
+//                .collect(Collectors.toList());
+//
+//        model.addAttribute("items", productDTOList);
+//
+//        return "product/shop"; // Thay đổi tên trang HTML tương ứng
+//    }
+	
 
 	@GetMapping("/product/filter-by-custom-price-range")
 	public String filterByCustomPriceRange(Model model, @RequestParam("priceRange") String priceRange) {
@@ -82,15 +103,13 @@ public class ProductController {
 		return "product/shop"; // Thay đổi tên trang HTML tương ứng
 	}
 
-	@GetMapping("/product/filter-by-name")
-	public String filterByName(Model model, @RequestParam("sort") Optional<String> sort) {
-		List<Product> productList = productService.findProductByProductNameSort(sort.orElse(null));
+	 @GetMapping("/product/sortByNameAZ")
+	    public ResponseEntity<List<ProductDTO>> sortProductsByNameAZ() {
+	        List<Product> productList = productService.sortProductsByNameAZ();
 
-		List<ProductDTO> productDTOList = productList.stream()
-				.map(product -> modelMapper.map(product, ProductDTO.class)).collect(Collectors.toList());
+	        List<ProductDTO> productDTOList = productList.stream()
+	                .map(product -> modelMapper.map(product, ProductDTO.class)).collect(Collectors.toList());
 
-		model.addAttribute("items", productDTOList);
-
-		return "product/shop"; // Thay đổi tên trang HTML tương ứng
-	}
+	        return ResponseEntity.ok(productDTOList);
+	    }
 }

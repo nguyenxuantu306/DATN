@@ -17,7 +17,7 @@ public interface ProductsDAO extends JpaRepository<Product, Integer>  {
 	List<Product> findProductByKeyword(String keyword);
 
 	
-	@Query("SELECT p FROM Product p WHERE p.price >= ?1 AND p.price <= ?2")
+	@Query("SELECT p FROM Product p WHERE p.price BETWEEN ?1 AND ?2")
 	List<Product> findByPriceBetween(Double minPrice, Double maxPrice);
 
 
