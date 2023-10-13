@@ -1,93 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(view)">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <title>GreenFarm</title>
-
     <!-- Favicon -->
-    <link href="..\assets\img\favicon.ico" rel="icon" />
+    <link href="assets/img/favicon.ico" rel="icon">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+</head>
 
-    <!-- Font Awesome -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-      rel="stylesheet"
-    />
-
-    <!-- Libraries Stylesheet -->
-    <link
-      href="../assets/lib/owlcarousel/assets/owl.carousel.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="../assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
-      rel="stylesheet"
-    />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="../assets/css/style.css" rel="stylesheet" />
-    
-    
-     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-   
-    
-  </head>
-
-  <body>
+<body>
     <div th:fragment="navbar" class="header_area">
-      <div class="pos_page">
-        <div class="container">
-          <div class="pos_page_inner">
-            <nav th:insert="~{/layout/_header.html::header}"></nav>
-            <main th:replace="${view}"></main>
-          </div>
+        <div class="pos_page">
+            <div class="container">
+                <div class="pos_page_inner">
+                    <nav th:insert="~{/layout/_header.html::header}"></nav>
+                    <main th:replace="${view}"></main>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <div th:insert="~{/layout/_footer.html::footer}"></div>
+        <div th:insert="~{/layout/_footer.html::footer}"></div>
     </div>
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
-      ><i class="fa fa-angle-double-up"></i
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i
     ></a>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/lib/easing/easing.min.js"></script>
-    <script src="../assets/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="../assets/lib/tempusdominus/js/moment.min.js"></script>
-    <script src="../assets/lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="../assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
-    <!-- Contact Javascript File -->
-    <script src="../assets/mail/jqBootstrapValidation.min.js"></script>
-    <script src="../assets/mail/contact.js"></script>
-    <script src="../assets/js/bootstrap.js"></script>
+    <script src="../assets/js/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="../assets/js/main.js"></script>
-
     <script>
-      (function () {
+        (function() {
+            $("#cart").on("click", function() {
+                $("#mini-cart").fadeToggle("fast");
+            });
+        })();
+    </script>
 
-          $("#cart").on("click", function () {
-              $("#mini-cart").fadeToggle("fast");
-          });
-
-      })();
-  </script>
-  
-  <!-- Sử dụng jQuery UI để tạo thanh trượt -->
+    <!-- Sử dụng jQuery UI để tạo thanh trượt -->
     <script>
         $(function() {
             $("#price-range-slider").slider({
@@ -104,21 +62,36 @@
             $("#maxPrice").val($("#price-range-slider").slider("values", 1));
         });
     </script>
-    
+
     <script>
-    // Lấy giá trị priceRange từ URL nếu có
-	    const urlParams = new URLSearchParams(window.location.search);
-	    const priceRange = urlParams.get('priceRange');
-	
-	    // Nếu priceRange có giá trị, đặt radio button tương ứng là checked
-	    if (priceRange) {
-	        document.querySelector(`input[name="priceRange"][value="${priceRange}"]`).checked = true;
-	    }
-	
-	    // Sử dụng JavaScript để xử lý sự kiện khi form được gửi
-	    document.getElementById('priceRangeForm').addEventListener('submit', function (e) {
-	        // Do nothing, để form tiếp tục với mặc định
-	    });
-	</script>
-  </body>
+        // Lấy giá trị priceRange từ URL nếu có
+        const urlParams = new URLSearchParams(window.location.search);
+        const priceRange = urlParams.get('priceRange');
+
+        // Nếu priceRange có giá trị, đặt radio button tương ứng là checked
+        if (priceRange) {
+            document.querySelector(`input[name="priceRange"][value="${priceRange}"]`).checked = true;
+        }
+
+        // Sử dụng JavaScript để xử lý sự kiện khi form được gửi
+        document.getElementById('priceRangeForm').addEventListener('submit', function(e) {
+            // Do nothing, để form tiếp tục với mặc định
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#cart").on("click", function(e) {
+                e.preventDefault(); // Ngăn chặn mặc định của thẻ a
+                $("#mini-cart").fadeToggle("fast");
+            });
+        });
+    </script>
+
+
+</body>
+
 </html>

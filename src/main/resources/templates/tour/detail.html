@@ -6,10 +6,36 @@
   <head>
     <meta charset="UTF-8" />
     <title>GreenFarm</title>
+    <style>
+      .rating-title {
+        font-size: 18px;
+        color: #005294;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 300;
+      }
+
+      .rating-title label {
+        font-size: 14px;
+        color: #333;
+        font-weight: normal;
+      }
+
+      .rating-title input {
+        display: block;
+        width: 100%;
+        height: 40px;
+        border: 1px solid #eee;
+        padding-left: 10px;
+        border-radius: 5px;
+      }
+    </style>
   </head>
+
   <body>
     <div class="container-fluid py-5">
-      <div class="container pt-5 pb-3">
+      <div class=" pt-5 pb-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
@@ -268,8 +294,45 @@
             </div>
           </div>
         </div>
-        <div class="tour-four_info mt-5">
-          <div class="raiting-content"></div>
+        <div
+          class="container-fluid py-3 my-3"
+          style="
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 15px;
+            border: 1px solid #eee;
+          "
+        >
+          <form action="">
+            <div class="rating-title py-3">
+              QUÝ KHÁCH CHƯA RÕ VỀ CHƯƠNG TRÌNH TUOR XIN CỨ HỎI, CHÚNG TÔI TRẢ
+              LỜI
+            </div>
+            <div class="row d-flex flex-between">
+              <div class="col-lg-4 col-md-12 d-grid">
+                <label for="">1. Nhập họ tên</label>
+                <input type="text" name="" id="" placeholder="*" />
+              </div>
+              <div class="col-lg-4 col-md-12 d-grid">
+                <label for="">1. Nhập email</label>
+                <input type="email" name="" id="" placeholder="*" />
+              </div>
+              <div class="col-lg-4 col-md-12 d-grid">
+                <label for="">1. Nhập số điện thoại</label>
+                <input type="number" name="" id="" placeholder="*" />
+              </div>
+              <div class="col-lg-12 d-grid" width="100%">
+                <label for="">4. Viết nhận xét của bạn vào bên dưới</label>
+                <input
+                  type="text"
+                  name=""
+                  id=""
+                  placeholder=""
+                  style="height: 150px"
+                />
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
