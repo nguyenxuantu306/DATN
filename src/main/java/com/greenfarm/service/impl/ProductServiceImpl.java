@@ -101,16 +101,16 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findProductByPriceRange(String priceRange) {
         List<Product> productList;
 
-    if ("under500k".equals(priceRange)) {
-    	productList = dao.findByPriceBetween(0.0 , 50.0);
-    } else if ("500kTo1M".equals(priceRange)) {
-        productList = dao.findByPriceBetween(50.0, 100.0);
-    } else if ("1MTo1.5M".equals(priceRange)) {
+    if ("under30k".equals(priceRange)) {
+    	productList = dao.findByPriceBetween(0.0 , 30.0);
+    } else if ("30kTo70k".equals(priceRange)) {
+        productList = dao.findByPriceBetween(30.0, 70.0);
+    } else if ("70kTo100k".equals(priceRange)) {
+        productList = dao.findByPriceBetween(70.0, 100.0);
+    } else if ("100kTo150k".equals(priceRange)) {
         productList = dao.findByPriceBetween(100.0, 150.0);
-    } else if ("2MTo5M".equals(priceRange)) {
-        productList = dao.findByPriceBetween(200.0, 500.0);
-    } else if ("over5M".equals(priceRange)) {
-        productList = dao.findByPriceBetween(500.0, Double.MAX_VALUE);
+    } else if ("over150k".equals(priceRange)) {
+        productList = dao.findByPriceBetween(150.0, Double.MAX_VALUE);
     } else {
         // Hiển thị tất cả sản phẩm nếu không có lựa chọn nào được chọn
         productList = dao.findAll();

@@ -52,4 +52,6 @@ public class ProductController {
 
 		return "product/shop";
 	}
+	
+	
 }

@@ -24,7 +24,7 @@ public class HomeController {
 
     @RequestMapping("/shop-list")
     public String ShopList(Model model) {
-        return "shop/shopList";
+        return "product/shopList";
     }
 
     @RequestMapping("/tour-detail")

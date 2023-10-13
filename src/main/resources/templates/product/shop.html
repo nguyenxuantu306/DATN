@@ -1,252 +1,163 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
-
+<html xmlns="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout::dynamic(~{::body})}">
 <head>
-	<meta charset="UTF-8">
-	<title>GreenFarm</title>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<meta charset="UTF-8">
+<title>GreenFarm</title>
 
 </head>
 
 <body>
 	<div class="container-fluid">
-		<div class="container pt-5 pb-3">
-			<!-- <div class="text-center mb-3 pb-3">111
-				<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Trang</h6>
-				<h1>Tour</h1>
+		<div class="pt-3">
+			<div class="text-center mb-3 pb-3">
+				<h1>List Product</h1>
 			</div>
 			<div class="row">
-				<div class="col-lg-4 col-md-6 mb-4">
-					<div class="package-item bg-white mb-2">
-						<img class="img-fluid" src="../assets/img/package-1.jpg" alt="">
-						<div class="p-4">
-							<div class="d-flex justify-content-between mb-3">
-								<small class="m-0"><i
-										class="fa fa-map-marker-alt text-primary mr-2"></i>Thailand</small>
-								<small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>3 days</small>
-								<small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Person</small>
-							</div>
-							<a class="h5 text-decoration-none" href="/tour-detail">Discover amazing places of the world
-								with us</a>
-							<div class="border-top mt-4 pt-4">
-								<div class="d-flex justify-content-between">
-									<h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
-									</h6>
-									<h5 class="m-0">$350</h5>
+				<div class="col-lg-3">
+					<div class="accordion" id="accordionExample">
+						<div class="accordion-item">
+							<h2 class="accordion-header">
+								<button class="accordion-button" type="button"
+									data-bs-toggle="collapse" data-bs-target="#collapseOne"
+									aria-expanded="true" aria-controls="collapseOne">
+									Category</button>
+							</h2>
+
+
+							<div id="collapseOne" class="accordion-collapse collapse show"
+								data-bs-parent="#accordionExample">
+								<div class="accordion-body">
+									<ul th:each="c:${cates}" class="list-unstyled"
+										style="font-size: 20px;">
+										<li><a style="color: black;"
+											th:href="@{|/product/shop?cid=${c.categoryid}|}">[[${c.categoryname}]]</a></li>
+									</ul>
 								</div>
+							</div>
+						</div>
+						<div class="accordion-item">
+							<h2 class="accordion-header">
+								<button class="accordion-button collapsed" type="button"
+									data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+									aria-expanded="false" aria-controls="collapseTwo">
+									Price</button>
+							</h2>
+							<div id="collapseTwo" class="accordion-collapse collapse"
+								data-bs-parent="#accordionExample">
+								<div class="accordion-body" style="font-size: 14px;">
+									<form id="filterForm" method="get">
+										<div class="form-check">
+											<input class="form-check-input" type="radio"
+												name="priceRange" value="under30k" id="flexRadioDefault0"
+												checked> <label class="form-check-label"
+												for="flexRadioDefault0"> Dưới 30,000₫ </label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="radio"
+												name="priceRange" value="30kTo70k" id="flexRadioDefault0"
+												checked> <label class="form-check-label"
+												for="flexRadioDefault0"> 30,000₫ - 70,000₫ </label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="radio"
+												name="priceRange" value="70kTo100k" id="flexRadioDefault0"
+												checked> <label class="form-check-label"
+												for="flexRadioDefault0"> 70,000₫ - 100,000₫ </label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="radio"
+												name="priceRange" value="100kTo150k" id="flexRadioDefault0"
+												checked> <label class="form-check-label"
+												for="flexRadioDefault0"> 100,000₫ - 150,000₫ </label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="radio"
+												name="priceRange" value="over150k" id="flexRadioDefault0"
+												checked> <label class="form-check-label"
+												for="flexRadioDefault0"> Trên 150,000₫ </label>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="accordion-item">
+							<h2 class="accordion-header">
+								<button class="accordion-button collapsed" type="button"
+									data-bs-toggle="collapse" data-bs-target="#collapseThree"
+									aria-expanded="false" aria-controls="collapseThree">
+									Arrange</button>
+							</h2>
+							<div id="collapseThree" class="accordion-collapse collapse"
+								data-bs-parent="#accordionExample">
+								<ul class="list-unstyled"  id="productList">
+									<li ><a style="color: black;" href="#" data-sort="asc">Tên A-Z</a></li>
+									<li><a  style="color: black;" href="#" data-sort="desc">Tên Z-A</a></li>
+								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-md-6 mb-4">
-					<div class="package-item bg-white mb-2">
-						<img class="img-fluid" src="../assets/img/package-2.jpg" alt="">
-						<div class="p-4">
-							<div class="d-flex justify-content-between mb-3">
-								<small class="m-0"><i
-										class="fa fa-map-marker-alt text-primary mr-2"></i>Thailand</small>
-								<small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>3 days</small>
-								<small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Person</small>
-							</div>
-							<a class="h5 text-decoration-none" href="">Discover amazing places of the world with us</a>
-							<div class="border-top mt-4 pt-4">
-								<div class="d-flex justify-content-between">
-									<h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
-									</h6>
-									<h5 class="m-0">$350</h5>
-								</div>
-							</div>
-						</div>
+				<div class="col-lg-9">
+
+					<div class="search-box">
+						<button id="searchForm" class="btn-search">
+							<i class="fas fa-search"></i>
+						</button>
+						<input type="text" id="searchKeyword" class="input-search"
+							placeholder="Type to Search..." />
 					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 mb-4">
-					<div class="package-item bg-white mb-2">
-						<img class="img-fluid" src="../assets/img/package-3.jpg" alt="">
-						<div class="p-4">
-							<div class="d-flex justify-content-between mb-3">
-								<small class="m-0"><i
-										class="fa fa-map-marker-alt text-primary mr-2"></i>Thailand</small>
-								<small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>3 days</small>
-								<small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Person</small>
-							</div>
-							<a class="h5 text-decoration-none" href="">Discover amazing places of the world with us</a>
-							<div class="border-top mt-4 pt-4">
-								<div class="d-flex justify-content-between">
-									<h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
-									</h6>
-									<h5 class="m-0">$350</h5>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 mb-4">
-					<div class="package-item bg-white mb-2">
-						<img class="img-fluid" src="../assets/img/package-4.jpg" alt="">
-						<div class="p-4">
-							<div class="d-flex justify-content-between mb-3">
-								<small class="m-0"><i
-										class="fa fa-map-marker-alt text-primary mr-2"></i>Thailand</small>
-								<small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>3 days</small>
-								<small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Person</small>
-							</div>
-							<a class="h5 text-decoration-none" href="">Discover amazing places of the world with us</a>
-							<div class="border-top mt-4 pt-4">
-								<div class="d-flex justify-content-between">
-									<h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
-									</h6>
-									<h5 class="m-0">$350</h5>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 mb-4">
-					<div class="package-item bg-white mb-2">
-						<img class="img-fluid" src="../assets/img/package-5.jpg" alt="">
-						<div class="p-4">
-							<div class="d-flex justify-content-between mb-3">
-								<small class="m-0"><i
-										class="fa fa-map-marker-alt text-primary mr-2"></i>Thailand</small>
-								<small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>3 days</small>
-								<small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Person</small>
-							</div>
-							<a class="h5 text-decoration-none" href="">Discover amazing places of the world with us</a>
-							<div class="border-top mt-4 pt-4">
-								<div class="d-flex justify-content-between">
-									<h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
-									</h6>
-									<h5 class="m-0">$350</h5>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 mb-4">
-					<div class="package-item bg-white mb-2">
-						<img class="img-fluid" src="../assets/img/package-6.jpg" alt="">
-						<div class="p-4">
-							<div class="d-flex justify-content-between mb-3">
-								<small class="m-0"><i
-										class="fa fa-map-marker-alt text-primary mr-2"></i>Thailand</small>
-								<small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>3 days</small>
-								<small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Person</small>
-							</div>
-							<a class="h5 text-decoration-none" href="">Discover amazing places of the world with us</a>
-							<div class="border-top mt-4 pt-4">
-								<div class="d-flex justify-content-between">
-									<h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
-									</h6>
-									<h5 class="m-0">$350</h5>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div> -->
-		</div>
-	</div>
-	<!-- Packages End -->
-
-	<!-- Destination Start -->
-	<div class="container-fluid ">
-		<div class="container pt-5 pb-3">
-			<div class="text-center mb-3 pb-3">
-				<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Destination</h6>
-				<h1>Product</h1>
-			</div>
-
-			<form id="searchForm">
-				<input type="text" id="searchKeyword" placeholder="Nhập từ khóa">				
-			</form>
-
-			<!-- Đây là biểu mẫu lọc sản phẩm -->
-			<form id="filterForm">
-				<label for="minPrice">Giá tối thiểu:</label>
-				<input type="number" id="minPrice" name="minPrice" step="0.01">
-
-				<label for="maxPrice">Giá tối đa:</label>
-				<input type="number" id="maxPrice" name="maxPrice" step="0.01">
-
-				<input type="submit" value="Lọc">
-			</form>
-
-
-
-			<form id="sortForm">
-			        <label for="sortType">Chọn loại sắp xếp:</label>
-			        <select id="sortType" name="sort">
-			            <option value="asc">A-Z</option>
-			            <option value="desc">Z-A</option>
-			        </select>
-			
-			        <input type="submit" value="Sắp xếp">
-			    </form>
-
-			
-
-			<form id="filterForm" method="get">
-				<label>Giá:</label>
-				<input type="radio" name="priceRange" value="under500k" /> Dưới 50,000₫
-				<input type="radio" name="priceRange" value="500kTo1M" /> 50,000₫ - 100,000₫
-				<input type="radio" name="priceRange" value="1MTo1.5M" /> 100,000₫ - 150,000₫
-				<input type="radio" name="priceRange" value="2MTo5M" /> 200,000₫ - 500,000₫
-				<input type="radio" name="priceRange" value="over5M" /> Trên 5,000,000₫
-			</form>
-			
-			<div class="block_tags">
-						<a th:each="c:${cates}" th:href="@{|/product/shop?cid=${c.categoryid}|}"
-							class="list-group-item">[[${c.categoryname}]]</a>
-					</div>
-			
-			<div class="row" id="Results">
-				<div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
-					<div class="product_thumb destination-item position-relative overflow-hidden mb-2">
-						<a th:href="@{|/product/detail/${p.productid}|}"><img style="height:260px" class="img-fluid"
-								th:src="@{|${p.image}|}" alt=""></a>
-						<!-- <a class="destination-overlay text-white text-decoration-none" href="">
+					<div class="row" id="Results">
+						<div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
+							<div
+								class="product_thumb destination-item position-relative overflow-hidden mb-2">
+								<a th:href="@{|/product/detail/${p.productid}|}"><img
+									style="height: 260px" class="img-fluid"
+									th:src="@{|${p.image}|}" alt=""></a>
+								<!-- <a class="destination-overlay text-white text-decoration-none" href="">
                             <h5 class="text-white">Title</h5>
                             <span>Print</span>
                         </a>  -->
+							</div>
+							<div class="product_content" style="text-align: center;">
+								<h5 class="product_title">
+									<a th:utext="${p.productname}"></a>
+								</h5>
+								<span class="product_price"
+									th:text="*{#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}+ 'đ'">
+								</span>
+							</div>
+						</div>
+
 					</div>
-					<div class="product_content" style="text-align: center;">
-						<h5 class="product_title">
-							<a th:utext="${p.productname}"></a>
-						</h5>
-						<span class="product_price"
-							th:text="*{#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}+ 'đ'">
-						</span>
-					</div>
+
+
+
+					<nav aria-label="Page navigation">
+						<ul class="pagination justify-content-center">
+							<li class="page-item"><a class="page-link" href="?page=0"
+								aria-label="First"> <span aria-hidden="true"><i
+										class="fas fa-step-backward"></i></span>
+							</a></li>
+							<li class="page-item"><a class="page-link"
+								th:href="@{'?page=' + ${items.number - 1}}"
+								aria-label="Previous"> <span aria-hidden="true"><i
+										class="fas fa-chevron-left"></i></span>
+							</a></li>
+							<li class="page-item"><a class="page-link"
+								th:href="@{'?page=' + ${items.number + 1}}" aria-label="Next">
+									<span aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+							</a></li>
+							<li class="page-item"><a class="page-link"
+								th:href="@{'?page=' + ${items.totalPages - 1}}"
+								aria-label="Last"> <span aria-hidden="true"><i
+										class="fas fa-step-forward"></i></span>
+							</a></li>
+						</ul>
+					</nav>
 				</div>
-
 			</div>
-			
-			<!-- Phân trang -->
-        <nav>
-   <!--  <ul class="pagination">
-    <li>
-        <a  href="?page=0">First</a>
-    </li>
-    <li>
-        <a  th:href="@{'?page=' + ${items.number - 1}}">Previous</a>
-    </li>
-    <li>
-        <a  th:href="@{'?page=' + ${items.number + 1}}">Next</a>
-    </li>
-    <li>
-        <a  th:href="@{'?page=' + ${items.totalPages - 1}}">Last</a>
-    </li>
-</ul> -->
-
-
-
-
-
-</nav>
-
 		</div>
 	</div>
-	
 </body>
-
 </html>
