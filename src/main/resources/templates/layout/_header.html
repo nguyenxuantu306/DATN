@@ -11,7 +11,7 @@
   <body>
     <div th:fragment="header" class="header_area">
       <!-- Topbar Start -->
-      <div class="container-fluid bg-light pt-3 d-none d-lg-block">
+      <div class="container-fluid bg-light pt-3d-none d-lg-block">
         <div class="container">
           <div class="row">
             <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
@@ -49,7 +49,7 @@
       </div>
       <!-- Topbar End -->
       <!-- Topbar End -->
-      <div class="container" id="mini-cart">
+      <div class="container cart-container" id="mini-cart">
         <div class="shopping-cart">
           <div class="shopping-cart-header">
             <i class="fa fa-shopping-cart cart-icon"></i
@@ -98,31 +98,49 @@
         <!--end shopping-cart -->
       </div>
       <!-- Navbar Start -->
-    <div class="container-fluid position-relative nav-bar p-0">
-      <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
-          <nav class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5">
-              <a href="/" class="navbar-brand">
-                  <h2 class="m-0 text-primary">GREEN<span class="text-dark">FARM</span></h2>
+      <div class="container-fluid position-relative nav-bar p-0">
+        <div
+          class="container-lg position-relative p-0 px-lg-3"
+          style="z-index: 9"
+        >
+          <nav
+            class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5"
+          >
+            <a href="/" class="navbar-brand">
+              <h2 class="m-0 text-primary">
+                GREEN<span class="text-dark">FARM</span>
+              </h2>
+            </a>
+            <button
+              type="button"
+              class="navbar-toggler"
+              data-toggle="collapse"
+              data-target="#navbarCollapse"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div
+              class="collapse navbar-collapse justify-content-between px-3"
+              id="navbarCollapse"
+            >
+            <div class="navbar-nav ml-auto py-0">
+              <a href="/" class="nav-item nav-link">Home</a>
+              <a href="/shop-list" class="nav-item nav-link">Shop</a>
+              <a href="/" class="nav-item nav-link">Tour</a>
+              <a href="about.html" class="nav-item nav-link">About</a>
+              <a href="contact.html" class="nav-item nav-link">Contact</a>
+              <a class="nav-item nav-link data-toggle" href="/cart">Cart</a>
+              <a class="nav-item nav-link data-toggle" href="/login">Login</a>
+              <a href="/profile" class="rounded-circle">
+                  <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" style="padding: 20px; width: 85px;" alt="Avatar">
               </a>
-              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                  <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
-                  <div class="navbar-nav ml-auto py-0">
-                      <a href="/" class="nav-item nav-link">Home</a>
-                      <a href="/" class="nav-item nav-link">Shop</a>
-                      <a href="about.html" class="nav-item nav-link">About</a>
-                      <a href="service.html" class="nav-item nav-link">Services</a>
-                      <a href="package.html" class="nav-item nav-link active">Tour Packages</a>
-                      <a href="contact.html" class="nav-item nav-link">Contact</a>
-                      <a class="nav-item nav-link data-toggle=" href="/cart">Cart</a>
-                      <a class="nav-item nav-link data-toggle=" href="/login">Login</a>
-                  </div>
-              </div>
+          </div>
+
+            </div>
           </nav>
+        </div>
       </div>
-  </div>
-  <!-- Navbar End -->
+      <!-- Navbar End -->
 
       <!-- Header Start -->
       <div class="container-fluid page-header">
@@ -131,16 +149,17 @@
             class="d-flex flex-column align-items-center justify-content-center"
             style="min-height: 400px"
           >
-            <h3 class="display-4 text-white text-uppercase">Packages</h3>
-            <div class="d-inline-flex text-white">
-              <p class="m-0 text-uppercase">
-                <a class="text-white" href="">Home</a>
-              </p>
-              <i class="fa fa-angle-double-right pt-1 px-3"></i>
-              <p class="m-0 text-uppercase">Packages</p>
-            </div>
+            <h3 class="display-4 text-white text-uppercase">GREENFARM</h3>
           </div>
         </div>
+      </div>
+      <div class="search-box">
+        <button class="btn-search"><i class="fas fa-search"></i></button>
+        <input
+          type="text"
+          class="input-search"
+          placeholder="Type to Search..."
+        />
       </div>
     </div>
   </body>

@@ -11,6 +11,16 @@ public class HomeControllerTest {
         return "index";
     }
 
+    @RequestMapping("/profile")
+    public String Profile(Model model) {
+        return "profile";
+    }
+
+    @RequestMapping("/shop-list")
+    public String ShopList(Model model) {
+        return "shop/shopList";
+    }
+
     @RequestMapping("/tour-detail")
     public String TourDetail(Model model) {
         return "tour/detail";
