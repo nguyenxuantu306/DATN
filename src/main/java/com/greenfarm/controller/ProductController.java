@@ -53,5 +53,17 @@ public class ProductController {
 		return "product/shop";
 	}
 	
-	
+	@GetMapping("/product/detail/{productid}")
+	public String detail(Model model, @PathVariable("productid") Integer productid) {
+	    Product item = productService.findById(productid);
+	    
+	    if (item != null) {
+	        ProductDTO itemDTO = modelMapper.map(item, ProductDTO.class);
+	        model.addAttribute("item", itemDTO);
+	    } else {
+	        // Xử lý trường hợp đối tượng không tồn tại
+	    }
+
+	    return "product/detail";
+	}
 }

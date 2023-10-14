@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout::dynamic(~{::body})}">
+<head>
+<meta charset="UTF-8" />
+<title>GreenFarm</title> {% comment %}
+<style>
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.breadcrumb {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0.75rem 1rem;
+	margin-bottom: 1rem;
+	list-style: none;
+	background-color: #e9ecef;
+}
+
+.pro-qty {
+	margin-right: 100px;
+}
+
+.pro-qty input {
+	width: 100px;
+	height: 40px;
+	text-align: center;
+	font-size: 20px;
+}
+
+.pro-qty a {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	font-weight: normal;
+	line-height: 20px;
+	text-align: center;
+	font-size: 18px;
+}
+
+a .inc {
+	top: 0;
+	right: 0;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+
+a .dec {
+	bottom: 0;
+	right: 0;
+	border-left: 1px solid #ddd;
+}
+
+.add-to-cart-btn a {
+	background-color: #80bb01;
+	border-color: #80bb01;
+	color: #ffffff;
+	font-size: 15px;
+	text-transform: uppercase;
+	border-radius: 50px;
+	padding: 12px 30px;
+}
+
+.categories h5 {
+	font-size: 16px;
+	line-height: 30px;
+	font-weight: 500;
+	color: #323232;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 20px 0;
+	text-transform: uppercase;
+}
+
+.categories h5 a {
+	display: inline-block;
+	margin-left: 5px;
+	color: #323232;
+	font-size: 16px;
+}
+
+.cart-button {
+	justify-content: space-around;
+	align-items: center;
+}
+
+.rating-title {
+	font-size: 18px;
+	color: #005294;
+	text-transform: uppercase;
+	margin-bottom: 15px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 300;
+}
+
+.rating-title label {
+	font-size: 14px;
+	color: #333;
+	font-weight: normal;
+}
+
+.rating-title input {
+	display: block;
+	width: 100%;
+	height: 40px;
+	border: 1px solid #eee;
+	padding-left: 10px;
+	border-radius: 5px;
+}
+</style>
+{% endcomment %}
+</head>
+
+<body>
+	<div class="container-fluid shop-detail ">
+		<div class="pt-3">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a href="#">Shop</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Cà chua</li>
+				</ol>
+			</nav>
+			<div th:object="${item}" class="row">
+				<div class="col-lg-6">
+					<img th:src="@{|*{image}|}" alt="" style="width: 500px"
+						height="300px">
+				</div>
+				<div class="col-lg-6">
+					<div class="text-left mb-3 pb-3">
+						<h3 th:text="*{productname}" class="text-uppercase mt-3"></h3>
+						<h2 class="mb-3"
+							style="font-weight: 300; color: #80bb01; font-size: 28px">
+							<span th:text="*{price}"
+								style="color: #999; text-decoration: line-through"></span> <span
+								th:text="*{price}"></span>
+						</h2>
+						<p th:text="*{description}" class="product-description mb-3"></p>
+						<div class="cart-button mt-5 mb-5 d-flex">
+							<div class="pro-qty mr-3 mb-xs-3 d-flex">
+								<input type="text" value="1" class="pr-3" />
+								<div class="d-inline-block">
+									<a href="#" class="inc qty-btn">+</a> <a href="#"
+										class="dec qty-btn">-</a>
+								</div>
+							</div>
+							<div class="add-to-cart-btn">
+								<a href="#"> <i class="bi bi-cart-check"></i> Add to cart
+								</a>
+							</div>
+						</div>
+						<div class="categories d-flex">
+							<h5>
+								CATEGORIES: <span><a th:text="*{category.categoryname}"
+									href=""></span>
+							</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<!--new product area start-->
+			<div class="new_product_area product_page">
+				<div class="row">
+					<div class="col-12">
+						<div class="block_title">
+							<h3>SẢN PHẨM CÙNG LOẠI</h3>
+
+						</div>
+					</div>
+				</div>
+
+
+
+
+				<div class="row" th:object="${item}">
+					<div th:each="p:*{category.products}"
+						class="col-lg-4 col-md-6 mb-4">
+						<div class="package-item bg-white mb-2">
+							<a class="text-center"><img th:src="@{|${p.image}|}" alt=""
+								style="width: 500px" height="300px">
+								<div class="p-4">
+									<div class="d-flex justify-content-between mb-3">
+										<small class="m-0"><i
+											class="fa fa-map-marker-alt text-primary mr-2"></i>Thailand</small> <small
+											class="m-0"><i
+											class="fa fa-calendar-alt text-primary mr-2"></i>3 days</small> <small
+											class="m-0"><i
+											class="fa fa-user text-primary mr-2"></i>2 Person</small>
+									</div>
+									<a th:href="@{|/product/detail/${p.productid}|}"
+										th:text="${p.productname}"> </a>
+
+									<div class="border-top mt-4 pt-4">
+										<div class="d-flex justify-content-between">
+											<h6 class="m-0">
+												<i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
+											</h6>
+											<h5
+												th:text="${#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}+ 'đ'"
+												class="m-0"></h5>
+										</div>
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+</body>
+</html>
