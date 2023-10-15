@@ -3,7 +3,7 @@
 	th:replace="~{/layout/layout::dynamic(~{::body})}">
 <head>
 <meta charset="UTF-8" />
-<title>GreenFarm</title> {% comment %}
+<title>GreenFarm</title>
 <style>
 a {
 	text-decoration: none;
@@ -114,7 +114,6 @@ a .dec {
 	border-radius: 5px;
 }
 </style>
-{% endcomment %}
 </head>
 
 <body>
@@ -192,8 +191,8 @@ a .dec {
 											class="fa fa-map-marker-alt text-primary mr-2"></i>Thailand</small> <small
 											class="m-0"><i
 											class="fa fa-calendar-alt text-primary mr-2"></i>3 days</small> <small
-											class="m-0"><i
-											class="fa fa-user text-primary mr-2"></i>2 Person</small>
+											class="m-0"><i class="fa fa-user text-primary mr-2"></i>2
+											Person</small>
 									</div>
 									<a th:href="@{|/product/detail/${p.productid}|}"
 										th:text="${p.productname}"> </a>

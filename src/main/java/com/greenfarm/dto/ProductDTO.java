@@ -1,5 +1,6 @@
 package com.greenfarm.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greenfarm.entity.Category;
 
 import jakarta.persistence.JoinColumn;
@@ -18,5 +19,6 @@ public class ProductDTO {
     private Double price;
     private String image;
     private Integer quantityavailable;
+    @JsonIgnore
     private CategoryDTO category;
 }
