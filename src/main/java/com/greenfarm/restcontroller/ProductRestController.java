@@ -82,4 +82,15 @@ public class ProductRestController {
 
 	        return ResponseEntity.ok(productDTOList);
 	    }
+	 
+	 @GetMapping("/product/sortprice")
+	 public ResponseEntity<List<ProductDTO>> sortProductsByPrice(@RequestParam("sortprice") Integer sortprice) {
+	     List<Product> productList= productService.findProductByProductPiceSort(sortprice);
+	    
+	     List<ProductDTO> productDTOList = productList.stream()
+	             .map(product -> modelMapper.map(product, ProductDTO.class)).collect(Collectors.toList());
+
+	     return ResponseEntity.ok(productDTOList);
+	 }
+
 }

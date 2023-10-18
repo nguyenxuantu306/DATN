@@ -10,14 +10,15 @@
 <body>
 	<div class="container-fluid shop-detail ">
 		<div class="pt-3">
-			<nav aria-label="breadcrumb">
+			
+			<div th:object="${item}" class="row">
+				<nav aria-label="breadcrumb">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
 					<li class="breadcrumb-item"><a href="#">Shop</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Cà chua</li>
+					<li class="breadcrumb-item active" aria-current="page" th:text="*{productname}"></li>
 				</ol>
-			</nav>
-			<div th:object="${item}" class="row">
+				</nav>
 				<div class="col-lg-6">
 					<img th:src="@{|*{image}|}" alt="" style="width: 500px"
 						height="300px">
@@ -40,9 +41,9 @@
 										class="dec qty-btn">-</a>
 								</div>
 							</div>
-							 <button class="add-to-cart-button">
-        <i class="fas fa-shopping-cart"></i> Add to Cart
-    </button>
+							<button class="add-to-cart-button">
+								<i class="fas fa-shopping-cart"></i> Add to Cart
+							</button>
 						</div>
 						<div class="categories d-flex">
 							<h5>
@@ -93,8 +94,9 @@
 					<div class="col-md-12 col-sm-12 col-xs-12 slide"
 						th:each="p : *{category.products}">
 						<div class="wap-items-ss brbox">
-							<a th:href="@{|/product/detail/${p.productid}|}" class="wap-ss-img">
-								<img  th:src="@{|${p.image}|}" alt="Product Image">
+							<a th:href="@{|/product/detail/${p.productid}|}"
+								class="wap-ss-img"> <img th:src="@{|${p.image}|}"
+								alt="Product Image">
 							</a>
 							<div class="textleft">
 								<a th:href="@{|/product/detail/${p.productid}|}"

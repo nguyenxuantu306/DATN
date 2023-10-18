@@ -26,6 +26,11 @@ public class HomeController {
     public String ShopList(Model model) {
         return "product/shopList";
     }
+    
+    @RequestMapping("/tour")
+    public String Tour(Model model) {
+        return "tour/booking";
+    }
 
     @RequestMapping("/tour-detail")
     public String TourDetail(Model model) {

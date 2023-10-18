@@ -44,5 +44,6 @@ public interface ProductService {
 
 	List<Product> findProductByProductNameSort(String sort);
 
+	List<Product> findProductByProductPiceSort(Integer sortprice);
 	
 }

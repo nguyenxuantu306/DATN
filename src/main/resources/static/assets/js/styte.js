@@ -110,6 +110,36 @@
             });
         });
     });
+     $(document).ready(function() {
+    // Gắn kết sự kiện click cho các thẻ 'a'
+    $('#productList a').click(function(event) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của trình duyệt
+
+        var sortType = $(this).data('sortprice'); // Lấy giá trị 'data-sortprice' của thẻ 'a'
+
+        // Gửi yêu cầu sắp xếp sản phẩm theo giá đến API
+        $.ajax({
+            url: '/product/sortprice', // Đảm bảo rằng URL phù hợp với API của bạn
+            type: 'GET',
+            data: { sortprice: sortType }, // Sử dụng 'sortprice' thay vì 'sort'
+            success: function(response) {
+                var Results = $('#Results');
+                Results.empty(); // Xóa nội dung hiện tại
+
+                response.forEach(function(product) {
+                    // Tạo và hiển thị sản phẩm lọc
+                    var productHTML = createProductHTML(product);
+                    Results.append(productHTML);
+                });
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+});
+
+    
 
     // Chức năng giá theo khoảng 
     $(document).ready(function() {

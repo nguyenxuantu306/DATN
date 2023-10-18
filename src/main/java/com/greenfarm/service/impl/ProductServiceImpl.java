@@ -134,5 +134,23 @@ public class ProductServiceImpl implements ProductService {
         return productList;
     }
 
+	@Override
+	public List<Product> findProductByProductPiceSort(Integer sortprice) {
+	    List<Product> productList = dao.findAll();
+
+	    // Sắp xếp sản phẩm theo giá (tăng dần hoặc giảm dần)
+	    if (sortprice != null) {
+	        if (sortprice == 1) { // 1 có thể tượng trưng cho sắp xếp tăng dần
+	            productList.sort(Comparator.comparing(Product::getPrice));
+	        } else if (sortprice == 2) { // 2 có thể tượng trưng cho sắp xếp giảm dần
+	            productList.sort(Comparator.comparing(Product::getPrice).reversed());
+	        }
+	    }
+
+	    return productList;
+	}
+
+
+
 	
 }

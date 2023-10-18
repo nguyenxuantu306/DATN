@@ -41,7 +41,7 @@ public class ProductController {
 
 	// List All
 	@GetMapping("/product/shop")
-	public String shopList(Model model, @PageableDefault(size = 9) Pageable pageable,
+	public String shopList(Model model, @PageableDefault(size = 12) Pageable pageable,
 			@RequestParam("cid") Optional<String> cid) {
 		if (cid.isPresent()) {
 			List<Product> list = productService.findByCategoryId(cid.get());
