@@ -15,39 +15,31 @@
 				<div class="card-body">
 					<h4 class="card-title">Data Table</h4>
 					<div class="table-responsive">
-						<table class="table table-striped table-bordered zero-configuration">
+						<table
+							class="table table-striped table-bordered zero-configuration">
 							<thead>
-								<tr>
-									<th>ID</th>
-									<th>USERNAME</th>
-									<th>FIRST NAME</th>
-									<th>LAST NAME</th>
+								<tr>								
+									<th>FIRSTNAME</th>
 									<th>EMAIL</th>
 									<th>PHONE</th>
 									<th>IMAGE</th>
 									<th>ADDRESS</th>
 									<th>GENDER</th>
-									<th>BIRRHDAY</th>
 									<th>CREATEDATE</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in pager.items">
-									<td>{{item.userid}}</td>
-									<td>{{item.username}}</td>
+								<tr ng-repeat="item in pager.items">									
 									<td>{{item.firstname}}</td>
-									<td>{{item.lastname}}</td>
 									<td>{{item.email}}</td>
 									<td>{{item.phonenumber}}</td>
 									<td>{{item.image}}</td>
-									<td>{{item.address}}</td>
+									<td style="width: 300px;">{{item.address}}</td>
 									<td>{{item.gender?'Nam':'Nữ'}}</td>
-									<td>{{item.birthday | date:'dd-MM-yyyy'}}</td>
 									<td>{{item.createddate | date:'dd-MM-yyyy'}}</td>
-									<td class="text-center">
-										<a ng-click="edit(item)"><i class="bi bi-pencil-square p-2"></i>
-										</a>
-										<a ng-click="delete(item)"><i class="bi bi-trash3-fill p-2"></i></a>
+									<td class="text-center"><a ng-click="edit(item)"><i
+											class="bi bi-pencil-square p-2"></i> </a> <a
+										ng-click="delete(item)"><i class="bi bi-trash3-fill p-2"></i></a>
 									</td>
 								</tr>
 							</tbody>
@@ -71,101 +63,96 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
-
-
-<div class="col-lg-12">
-	<div class="card">
-		<div class="card-body">
-			<h4 class="card-title">Create / Update</h4>
-			<div class="basic-form">
-				<form class="row">
-					<div class="col-sm-4">
-						<label for="image"> <img ng-src="{{'/assetsAdmin/images/' +form.image}}"
-								style="max-width: 100%; height: 400px">
-						</label>
-						
-					</div>
-					<div class="col-sm-4">
-						
-						<input name="userid" type="text" ng-model="form.userid" class="form-control input-default"
-							placeholder="UserID..." readonly>
-						<input name="username" type="text" ng-model="form.username" class="form-control input-default"
-							placeholder="Username...">
-						<input name="email" type="text" ng-model="form.email" class="my-3 form-control input-default"
-							placeholder="Email...">
-						<input name="address" type="text" ng-model="form.address"
-							class="my-3 form-control input-default" placeholder="Address...">
-						<div>Ngày tạo:</div>
-						<input ng-model="form.createddate" type="date" class="form-control" id="image">
-
-
-						<div class="form-control mt-3">
-							<div>Giới tính</div>
-							<label class="radio-inline"> <input ng-model="form.gender" ng-value="true"
-											type="radio" name="gender" required> Nam
-									</label> <label class="radio-inline"> <input ng-model="form.gender" ng-value="false"
-											type="radio" name="gender" required> Nữ
-									</label>
-						</div>
-					</div>
-					<div class="col-sm-4">
-						
-						<input name="firstname" type="text" ng-model="form.firstname" class="form-control input-default"
-							placeholder="FirstName...">
-
-						<input name="lastname" type="text" ng-model="form.lastname"
-							class="my-3 form-control input-default" placeholder="LastName...">
-
-						<input name="phonenumber" type="text" ng-model="form.phonenumber"
-							class="mb-3 form-control input-default" placeholder="Phonenumber...">
-
-						<div>Ngày sinh:</div>
-						<input ng-model="form.birthday" type="date" class="form-control" id="birthday">
-
-						<div>Hình ảnh:</div>
-								<input type="file" class="form-control" id="image" ng-model="form.image"
-									onchange="angular.element(this).scope().imageChanged(this.files)">
-					</div>
-
-				
-			</div>
-			</form>
-			<div class="panel-footer text-right">
-				<button id="btn-create" ng-click="create()" class="btn btn-success">
-					Add</button>
-				<button id="btn-update" disabled="disabled" ng-click="update()" class="btn btn-success">
-					<b class="glyphicon glyphicon-save"></b> Update
-				</button>
-				<button id="btn-delete" disabled="disabled" ng-click="delete(form)" class="btn btn-success">
-					<b class="glyphicon glyphicon-trash"></b> Del
-				</button>
-				<button id="btn-reset" ng-click="reset()" class="btn btn-success">
-					<b class="glyphicon glyphicon-refresh"></b> New
-				</button>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
-
-
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-12">
+		<div class="col-lg-12">
 			<div class="card">
-				<h3 class="text-center p-4">DESCRIPTION</h3>
 				<div class="card-body">
-					<div class="click2edit m-b-40">Click on Edite button and
-						change the text then save it.</div>
-					<button id="edit" class="btn btn-info btn-rounded" onclick="edit()" type="button">Edit</button>
-					<button id="save" class="btn btn-success btn-rounded" onclick="save()" type="button">Save</button>
+					<h4 class="card-title">Create / Update</h4>
+					<div class="basic-form">
+						<form class="row info">
+							<div class="col-md-4">
+								<label for="image"> <img
+									ng-src="{{'/assetsAdmin/images/' +form.image}}"
+									style="max-width: 100%; height: 400px">
+								</label>
+
+							</div>
+							<div class="col-md-8">
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<input name="username" type="text" ng-model="form.username"
+											class="form-control input-default" placeholder="Username">
+									</div>
+									<div class="form-group col-sm-6">
+										<input name="password" type="password" ng-model="form.password"
+											class="form-control input-default" placeholder="Password">
+									</div>
+									<div class="form-group col-sm-6">
+										<input name="address" type="text" ng-model="form.address"
+											class="form-control input-default" placeholder="Address">
+									</div>
+									<div class="form-group col-sm-6">
+										<input ng-model="form.createddate" type="date"
+											class="form-control input-default" placeholder="date">
+									</div>
+									<div class="form-group col-sm-6">
+										<input name="email" type="text" ng-model="form.email"
+											class="form-control input-default" placeholder="Email">
+									</div>
+									
+									<div class="form-group col-sm-6">
+										<div class="form-control">
+											<input form-control ng-model="form.gender" ng-value="true"
+												type="radio" name="gender" required> Nam <input
+												form-control ng-model="form.gender" ng-value="false"
+												type="radio" name="gender" required> Nữ
+										</div>
+									</div>
+									<div class="form-group col-sm-6">
+										<input name="firstname" type="text" ng-model="form.firstname"
+											class="form-control input-default" placeholder="FirstName">
+									</div>
+									<div class="form-group col-sm-6">
+										<input name="lastname" type="text" ng-model="form.lastname"
+											class="form-control input-default" placeholder="LastName">
+									</div>
+									<div class="form-group col-sm-6">
+										<input name="phonenumber" type="text"
+											ng-model="form.phonenumber"
+											class="form-control input-default" placeholder="Phonenumber">
+									</div>																		
+									<div class="form-group col-sm-6">
+										<input ng-model="form.birthday" type="date" id="birthday"
+											class="form-control input-default" placeholder="FirstName">
+									</div>
+									<div class="form-group col-sm-6">
+									<input type="file" class="form-control" id="image"
+										ng-model="form.image"
+										onchange="angular.element(this).scope().imageChanged(this.files)">
+									</div>
+								</div>
+							</div>
+					</div>
+					</form>
+					<div class="panel-footer text-right">
+						<button id="btn-create" ng-click="create()"
+							class="btn btn-success">Add</button>
+						<button id="btn-update" disabled="disabled" ng-click="update()"
+							class="btn btn-success">
+							<b class="glyphicon glyphicon-save"></b> Update
+						</button>
+						<button id="btn-delete" disabled="disabled"
+							ng-click="delete(form)" class="btn btn-success">
+							<b class="glyphicon glyphicon-trash"></b> Del
+						</button>
+						<button id="btn-reset" ng-click="reset()" class="btn btn-success">
+							<b class="glyphicon glyphicon-refresh"></b> New
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="col-12 text-center">
-	<button class="btn btn-danger px-5">Create / Update</button>
-</div>
+
+
+
