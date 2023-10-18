@@ -2,10 +2,27 @@ package com.greenfarm.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.greenfarm.dao.CategoryDAO;
 import com.greenfarm.entity.Category;
 
-public interface CategoryService {
 
+
+public interface CategoryService {	
+	// API show loại sản phẩm
 	List<Category> findAll();
+
+	// API tìm kiếm loại sản phẩm theo categoryid
+	Category findById(Integer categoryid);
+
+	// API thêm loại sản phẩm
+	Category create(Category category);
+
+	// API cập nhật sản phẩm
+	Category update(Category category);
+
+	// API xóa sản phẩm
+	void delete(Integer categoryid);	
 
 }

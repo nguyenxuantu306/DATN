@@ -1,0 +1,142 @@
+
+<div class="row page-titles mx-0">
+	<div class="col p-md-0">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a>
+			</li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">Tour</a>
+			</li>
+		</ol>
+	</div>
+</div>
+<!-- row -->
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<h4 class="card-title">Data Table</h4>
+					<div class="table-responsive">
+						<table
+							class="table table-striped table-bordered zero-configuration">
+							<thead>
+								<tr>
+									<th>IMAGE</th>
+									<th>NAME</th>
+									<th>SKU</th>
+									<th>START DATE</th>
+									<th>END DATE</th>
+									<th>PRICE</th>
+									<th>LOCATION</th>
+									<th>SLOTS</th>
+									<th>DATE CREATE</th>
+									<th>ACTION</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>image.png</td>
+									<td>Tour 1 ngày: Tát mương bắt cá Mỹ Tho - Bến Tre</td>
+									<td>001</td>
+									<td>10/10/2023 00:00 AM</td>
+									<td>10/10/2023 00:00 AM</td>
+									<td>10.000 VNĐ</td>
+									<td>GREEN FARM</td>
+									<td>50</td>
+									<td>10/10/2023 00:00 AM</td>
+									<td class="text-center"><a href="/"><i
+											class="bi bi-pencil-square p-2"></i> </a> <a href="/"><i
+											class="bi bi-trash3-fill p-2"></i></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="col-lg-12">
+	<div class="card">
+		<div class="card-body">
+			<h4 class="card-title">Create / Update</h4>
+			<div class="basic-form">
+				<form>
+					<div class="form-group">
+						<input type="text" class="form-control input-default"
+							placeholder="Name" />
+					</div>
+					<div class="form-group d-flex">
+						<div class="form-group d-flex">
+							<input type="number" class="form-control input-default mr-2"
+								placeholder="ChildPrice" /> <input
+								type="number" class="form-control input-default ml-2"
+								placeholder="InfantPrice" />
+						</div>
+						<input type="number" class="form-control input-default ml-2"
+							placeholder="Quantity" />
+					</div>
+
+					<div class="form-group d-flex">
+						<input class="form-control input-daterange-datepicker mr-2"
+							type="text" name="daterange" placeholder="Start Date - End Date" />
+						<input type="text" class="form-control input-default ml-2"
+							placeholder="Location" />
+					</div>
+					<div class="form-group">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Upload</span>
+							</div>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" /> <label
+									class="custom-file-label">Choose file</label>
+							</div>
+						</div>
+						<img src="images/paypal.png" alt="Hình Ảnh" class="img-fluid" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<h3 class="text-center p-4">Condition</h3>
+				<div class="card-body">
+					<div class="click2edit m-b-40">Click on Edite button and
+						change the text then save it.</div>
+					<button id="edit" class="btn btn-info btn-rounded" onclick="edit()"
+						type="button">Edit</button>
+					<button id="save" class="btn btn-success btn-rounded"
+						onclick="save()" type="button">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<h3 class="text-center p-4">Overview</h3>
+				<div class="card-body">
+					<div class="click2edit m-b-40">Click on Edite button and
+						change the text then save it.</div>
+					<button id="edit" class="btn btn-info btn-rounded" onclick="edit()"
+						type="button">Edit</button>
+					<button id="save" class="btn btn-success btn-rounded"
+						onclick="save()" type="button">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-12 text-center">
+	<button class="btn btn-danger px-5">Create / Update</button>
+</div>
+

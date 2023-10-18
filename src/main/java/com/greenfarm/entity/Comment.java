@@ -24,9 +24,9 @@ public class Comment implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer CommentID;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "UserID")
-//	Integer user;
+	@ManyToOne
+	@JoinColumn(name = "UserID")
+	User user;
 //	
 //	@ManyToOne	
 //	@JoinColumn(name = "TourID")

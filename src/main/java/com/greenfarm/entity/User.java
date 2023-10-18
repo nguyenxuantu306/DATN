@@ -1,9 +1,11 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,30 +27,45 @@ public class User implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer UserID;
-	String Username;
-	String Password;
-	String Email;
-	String FirstName;
-	String LastName;
-	String PhoneNumber;
-	String Image;
-	String Address;
-	Boolean Gender;
+	Integer userid;
+	String username;
+	String password;
+	String email;
+	String firstname;
+	String lastname;
+	String phonenumber;
+	String image;
+	String address;
+	Boolean gender;
 	@Temporal(TemporalType.DATE)
-	Date Birthday = new Date();
+	Date birthday = new Date();
 	
 	@Temporal(TemporalType.DATE)
-	Date CreatedDate = new Date();
+	Date createddate = new Date();
 	
-	Boolean IsActive;
+	//Boolean IsActive;
 	
-	@OneToMany
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
 	List<Booking> booking;
 	
-	@OneToMany
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
 	List<Comment> comment;
 	
-	@OneToMany
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
 	List<UserRole> userRole;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	List<Tour> tour;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	List<Order> order;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	List<Userdiscount>  discount;
 }

@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "UserRole")
+@Table(name = "Userroles")
 public class UserRole implements Serializable{
 	
 	@Id

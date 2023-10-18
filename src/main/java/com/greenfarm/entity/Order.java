@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -26,7 +28,9 @@ public class Order implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer OrderID;
 	
-	Integer UserID;
+	@ManyToOne
+	@JoinColumn(name = "UserID")
+	User user;
 	
 	@Temporal(TemporalType.DATE)
 	Date OrderDate = new Date();

@@ -1,0 +1,156 @@
+
+
+<div class="row page-titles mx-0">
+	<div class="col p-md-0">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">Order</a></li>
+		</ol>
+	</div>
+</div>
+<!-- row -->
+      <div class="container-fluid mt-3">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Order List</h4>
+              <div class="table-responsive">
+                <table class="table header-border zero-configuration">
+                  <thead>
+                    <tr class="text-center">
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="text-center">
+                      <th>002</th>
+                      <td>Nguyễn Xuân Tú</td>
+                      <td>10/10/2023 00:00 AM</td>
+                      <td>100.000 VNĐ</td>
+                      <td class="text-bg-success">Thành công</td>
+
+                      <td class="text-center">
+                        <a
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#exampleModal"
+                        >
+                          <i class="bi bi-info-circle"></i>
+                        </a>
+                        <!-- Modal -->
+                        <div
+                          class="modal fade"
+                          id="exampleModal"
+                          tabindex="-1"
+                          aria-labelledby="exampleModalLabel"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1
+                                  class="modal-title fs-5"
+                                  id="exampleModalLabel"
+                                >
+                                  Order Detail 10/13/2023 - #Mã đơn -  Nguyễn Xuân Tú
+                                </h1>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body pb-5">
+                                <div class="table-responsive">
+                                  <table class="table header-border">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Quantity (KG)</th>
+                                        <th scope="col">Total</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <th>001</th>
+                                        <td>Cà không chua</td>
+                                        <td>Quả</td>
+                                        <td>800</td>
+                                        <td>8.000.000 VNĐ</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <div class="modal-order">
+                                <select
+                                  class="form-select w-auto select"
+                                  aria-label="Default select example"
+                                >
+                                  <option selected>Status</option>
+                                  <option class="text-bg-success" value="1">
+                                    Success
+                                  </option>
+                                  <option class="text-bg-warning" value="2">
+                                    Cancel
+                                  </option>
+                                  <option class="text-bg-info" value="3">
+                                    Confirm
+                                  </option>
+                                </select>
+                                <h4 class="total fs-4">
+                                  Total: <strong>120.000 VNĐ</strong>
+                                </h4>
+                                <div class="btn">Save</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Top 10 Vegetables sell well</h4>
+              <div class="table-responsive">
+                <table class="table header-border zero-configuration">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Quantity (KG)</th>
+                      <th scope="col">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>001</th>
+                      <td>Cà không chua</td>
+                      <td>10.000 VNĐ</td>
+                      <td>800</td>
+                      <td>8.000.000 VNĐ</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    

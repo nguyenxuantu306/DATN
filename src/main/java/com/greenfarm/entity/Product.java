@@ -35,7 +35,7 @@ public class Product implements Serializable {
 	
 	private String Description;
 		
-	private Double price;
+	private Float price;
 	
 	private String image;
 	
@@ -48,16 +48,16 @@ public class Product implements Serializable {
 //	@JsonIgnore
 //	@OneToMany(mappedBy = "book")
 //	List<OrderDetail> orderDetail;
+
 	
 //	@OneToMany
 //	List<OrderDetail> orderDetail;
-	
+//	
 //	@OneToMany
 //	List<ProductDiscount> productDiscount;
-	
+//	
 //	@OneToMany
 //	List<ProductImage> productImage;
-	
 	
 	@Override
 	public String toString() {

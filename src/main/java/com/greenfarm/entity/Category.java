@@ -1,9 +1,10 @@
 package com.greenfarm.entity;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,11 +21,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Productcategories")
-public class Category implements Serializable{
+public class Category {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int categoryid;
+	private Integer categoryid;
 
 	private String categoryname;
 	
@@ -33,7 +34,6 @@ public class Category implements Serializable{
 	List<Product> products;
 	
 	public Category(int categoryid) {
-        this.categoryid = categoryid;
-    }
-
+		this.categoryid = categoryid;
+	}
 }

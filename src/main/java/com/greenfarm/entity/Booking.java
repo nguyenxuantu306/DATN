@@ -27,9 +27,9 @@ public class Booking implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer BookingID;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "UserID")
-//	User user;
+	@ManyToOne
+	@JoinColumn(name = "UserID")
+	User user;
 //	
 //	@ManyToOne
 //	@JoinColumn(name = "TourID")
