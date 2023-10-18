@@ -27,7 +27,7 @@ public class UserRole implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer UserRoleID;
+	Integer Userroleid;
 	
 	@ManyToOne
 	@JoinColumn(name = "RoleID")
