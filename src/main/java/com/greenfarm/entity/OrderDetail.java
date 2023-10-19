@@ -18,22 +18,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "OrderDetails")
+@Table(name = "Orderdetails")
 public class OrderDetail implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer OrderDetailID;
+	Integer orderdetailid;
 	
 	@ManyToOne
 	@JoinColumn(name = "OrderID")
 	Order order;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "ProductID")
-//	Product product;
+	@ManyToOne
+	@JoinColumn(name = "ProductID")
+	Product product;
 	
-	Integer QuantityOrdered;
+	Integer quantityordered;
 	
-	Float TotalPrice;
+	Float totalprice;
 	
 }

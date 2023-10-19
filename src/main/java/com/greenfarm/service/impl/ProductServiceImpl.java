@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.util.ArrayBuilders.BooleanBuilder;
 import com.greenfarm.dao.ProductsDAO;
 import com.greenfarm.entity.Product;
+import com.greenfarm.entity.Report;
 import com.greenfarm.service.ProductService;
 
 
@@ -70,27 +71,6 @@ public class ProductServiceImpl implements ProductService {
         if (keyword != null && !keyword.isEmpty()) {
             productList = dao.findProductByKeyword(keyword);
         } else {
-            productList = dao.findAll();
-        }
-
-        return productList;
-    }
-
-
-//	@Override
-//    public List<Product> findByPriceBetween(Double minPrice, Double maxPrice) {
-//        return dao.findByPriceBetween(minPrice, maxPrice);
-//    }
-
-	@Override
-    public List<Product> findProductsByPriceRange(Double minPrice, Double maxPrice) {
-        List<Product> productList;
-
-        if (minPrice != null && maxPrice != null) {
-            // Thực hiện lọc sản phẩm theo giá từ minPrice đến maxPrice
-            productList = dao.findByPriceBetween(minPrice, maxPrice);
-        } else {
-            // Hiển thị tất cả sản phẩm nếu không có giá trị minPrice và maxPrice
             productList = dao.findAll();
         }
 
@@ -150,7 +130,15 @@ public class ProductServiceImpl implements ProductService {
 	    return productList;
 	}
 
-
+	@Override
+	public List<Report> getTk_sp() {		
+		return dao.reportTheoProduct();
+	}
+	
+	@Override
+	public List<Report> getTk_loai() {
+		return dao.getInventoryByCategory();
+	}
 
 	
 }

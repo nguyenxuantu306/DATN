@@ -32,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Product;
+import com.greenfarm.entity.Report;
 import com.greenfarm.service.ProductService;
 
 @CrossOrigin("*")
@@ -132,19 +133,6 @@ public class ProductRestController {
 		return ResponseEntity.ok(productDTOList);
 	}
 
-	
-	// Lọc theo giá 	
-	@GetMapping("/filter")
-    public ResponseEntity<List<ProductDTO>> filterProducts(
-            @RequestParam("minPrice") Double minPrice,
-            @RequestParam("maxPrice") Double maxPrice) {
-        List<Product> productList = productService.findProductsByPriceRange(minPrice, maxPrice);
-
-        List<ProductDTO> productDTOList = productList.stream()
-                .map(product -> modelMapper.map(product, ProductDTO.class)).collect(Collectors.toList());
-
-        return ResponseEntity.ok(productDTOList);
-    }
 		
 	// Lọc theo khoảng giá
 	@GetMapping("/filter-by-custom-price-range")
@@ -177,6 +165,15 @@ public class ProductRestController {
 	     return ResponseEntity.ok(productDTOList);
 	 }
 	 
-	 
+	 @GetMapping("/thongke/sp")
+		public ResponseEntity<List<Report>> getTK_SP() {
+			return new ResponseEntity<>(productService.getTk_sp(), HttpStatus.OK);
+		}
+		
+
+		@GetMapping("/thongke/loai")
+		public List<Report> getTK_Loai() {
+			return productService.getTk_loai();
+		}
 
 }
