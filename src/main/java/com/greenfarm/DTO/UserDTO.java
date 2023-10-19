@@ -1,4 +1,4 @@
-package com.greenfarm.DTO;
+package com.greenfarm.dto;
 
 import java.util.Date;
 

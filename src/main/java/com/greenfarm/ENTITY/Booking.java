@@ -1,4 +1,4 @@
-package com.greenfarm.ENTITY;
+package com.greenfarm.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -24,14 +24,6 @@ public class Booking implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer BookingID;
-	
-//	@ManyToOne
-//	@JoinColumn(name = "UserID")
-//	User user;
-//	
-//	@ManyToOne
-//	@JoinColumn(name = "TourID")
-//	Integer tour;
 	
 	@Temporal(TemporalType.DATE)
 	Date BookingDate = new Date();

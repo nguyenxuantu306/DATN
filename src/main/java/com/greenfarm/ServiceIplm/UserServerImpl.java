@@ -12,9 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.greenfarm.DAO.UserDAO;
-import com.greenfarm.ENTITY.User;
-import com.greenfarm.Service.UserService;
+import com.greenfarm.dao.UserDAO;
+import com.greenfarm.entity.User;
+import com.greenfarm.service.UserService;
 
 @Service
 public class UserServerImpl implements UserService, UserDetailsService {

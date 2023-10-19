@@ -1,7 +1,8 @@
-package com.greenfarm.ENTITY;
+package com.greenfarm.entity;
 
 import java.io.Serializable;
 import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

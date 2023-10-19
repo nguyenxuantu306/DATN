@@ -1,8 +1,8 @@
-package com.greenfarm.Service;
+package com.greenfarm.service;
 
 import java.util.List;
 
-import com.greenfarm.ENTITY.User;
+import com.greenfarm.entity.User;
 
 public interface UserService {
 

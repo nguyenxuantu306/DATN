@@ -1,10 +1,10 @@
-package com.greenfarm.DAO;
+package com.greenfarm.dao;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.greenfarm.ENTITY.User;
+import com.greenfarm.entity.User;
 
 
 

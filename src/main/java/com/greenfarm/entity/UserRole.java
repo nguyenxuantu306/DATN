@@ -1,4 +1,4 @@
-package com.greenfarm.ENTITY;
+package com.greenfarm.entity;
 
 import java.io.Serializable;
 

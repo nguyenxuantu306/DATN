@@ -1,8 +1,8 @@
-package com.greenfarm.DAO;
+package com.greenfarm.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.greenfarm.ENTITY.UserRole;
+import com.greenfarm.entity.UserRole;
 
 
 

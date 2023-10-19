@@ -1,8 +1,8 @@
-package com.greenfarm.DAO;
+package com.greenfarm.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.greenfarm.ENTITY.Role;
+import com.greenfarm.entity.Role;
 
 
 public interface RoleDAO extends JpaRepository<Role, Integer>{

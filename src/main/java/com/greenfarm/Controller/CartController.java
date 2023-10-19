@@ -1,4 +1,4 @@
-package com.greenfarm.controller;
+package com.greenfarm.Controller;
 
 import java.util.HashMap;
 import java.util.Map;

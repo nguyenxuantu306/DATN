@@ -1,7 +1,7 @@
 package com.greenfarm.mapper;
 
-import com.greenfarm.DTO.UserDTO;
-import com.greenfarm.ENTITY.User;
+import com.greenfarm.dto.UserDTO;
+import com.greenfarm.entity.User;
 
 public class Usermapperimpl implements Usermapper {
 
