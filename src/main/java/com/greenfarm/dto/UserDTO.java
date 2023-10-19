@@ -27,6 +27,10 @@ public class UserDTO {
 	
 	@NotEmpty(message = "Thiếu Username")
 	private String username;
+	
+
+	@NotEmpty(message = "Thiếu password")
+	private String password;
 
 	@NotEmpty(message = "Thiếu FirstName")
 	private String firstname;

@@ -51,16 +51,26 @@ app.controller("user-ctrl", function($scope, $http) {
 
 	// Thêm mới
 	$scope.create = function() {
-		alert("them");
 		var item = angular.copy($scope.form);
 		$http.post(`/rest/users`, item).then(resp => {
 			resp.data.createddate = new Date(resp.data.createddate);
 			resp.data.birthday = new Date(resp.data.birthday);
 			$scope.items.push(resp.data);
 			$scope.reset();
-			alert("Thêm tài khoản thành công!");
+			// Sử dụng SweetAlert2 cho thông báo thành công
+	        Swal.fire({
+	            icon: 'success',
+	            title: 'Thành công!',
+	            text: 'Thêm tài khoản thành công!',
+	        });
+			
 		}).catch(error => {
-			alert("Lỗi thêm mới tài khoản");
+			// Sử dụng SweetAlert2 cho thông báo lỗi
+	        Swal.fire({
+	            icon: 'error',
+	            title: 'Lỗi!',
+	            text: 'Lỗi thêm mới tài khoản',
+	        });
 			console.log("Error", error);
 		});
 	}
@@ -70,7 +80,7 @@ app.controller("user-ctrl", function($scope, $http) {
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
 		$http.put(`/rest/users/${item.userid}`,item).then(resp =>{
-			var index = $scope.items.findIndex(p => p.categoryid == item.userid);
+			var index = $scope.items.findIndex(p => p.userid == item.userid);
 			$scope.items[index] = item;				
 			// Sử dụng SweetAlert2 cho thông báo thành công
 	        Swal.fire({
