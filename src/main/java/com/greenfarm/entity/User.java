@@ -1,10 +1,11 @@
-package com.greenfarm.entity;
+package com.greenfarm.ENTITY;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,32 +17,34 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Users")
 public class User implements Serializable{
-	
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer UserID;
-	String Username;
-	String Password;
-	String Email;
-	String FirstName;
-	String LastName;
-	String PhoneNumber;
-	String Image;
-	String Address;
-	Boolean Gender;
+	Integer userid;
+	String password;
+	String email;
+	String firstname;
+	String lastname;
+	String phonenumber;
+	String image;
+	String address;
+	Boolean gender;
 	@Temporal(TemporalType.DATE)
-	Date Birthday = new Date();
+	Date birthday = new Date();
 	
 	@Temporal(TemporalType.DATE)
-	Date CreatedDate = new Date();
+	Date createddate = new Date();
 	
-	Boolean IsActive;
+	//Boolean IsActive;
 	
 	@OneToMany
 	List<Booking> booking;
@@ -49,6 +52,6 @@ public class User implements Serializable{
 	@OneToMany
 	List<Comment> comment;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	List<UserRole> userRole;
 }

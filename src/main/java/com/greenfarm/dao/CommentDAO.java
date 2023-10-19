@@ -1,8 +1,9 @@
-package com.greenfarm.dao;
+package com.greenfarm.DAO;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.greenfarm.entity.Comment;
+import com.greenfarm.ENTITY.Comment;
+
 
 public interface CommentDAO extends JpaRepository<Comment, Integer>{
 

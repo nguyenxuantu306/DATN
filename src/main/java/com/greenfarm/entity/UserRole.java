@@ -1,10 +1,6 @@
-package com.greenfarm.entity;
+package com.greenfarm.ENTITY;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "UserRole")
+@Table(name = "UserRoles")
 public class UserRole implements Serializable{
 	
 	@Id
