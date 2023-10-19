@@ -1,6 +1,7 @@
 package com.greenfarm.controller;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
@@ -12,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.greenfarm.entity.Product;
 
 
+
 @Controller
-@RequestMapping("/")
+@RequestMapping("/") 
 public class HomeController {
-    public String Home(Model model){
+	public String Home(Model model) {
         return "index";
     }
+
 
     @RequestMapping("/profile")
     public String Profile(Model model) {
@@ -39,10 +42,6 @@ public class HomeController {
         return "tour/detail";
     }
 
-    @RequestMapping("/shop-detail")
-    public String ShopDetail(Model model) {
-        return "shop/detail";
-    }
 
     @RequestMapping("/login")
     public String Login(Model model) {

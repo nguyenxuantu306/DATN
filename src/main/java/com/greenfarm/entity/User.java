@@ -2,11 +2,14 @@ package com.greenfarm.entity;
 
 import java.io.Serializable;
 
+
 import java.util.Date;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -53,7 +56,7 @@ public class User implements Serializable{
 	List<Comment> comment;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	List<UserRole> userRole;
 	
 	@JsonIgnore
