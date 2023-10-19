@@ -1,19 +1,14 @@
-package com.greenfarm.controller;
-
-import java.util.Optional;
-
-
+package com.greenfarm.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
-    public String Home(Model model){
+    public String Home(Model model) {
         return "index";
     }
 
@@ -90,5 +85,15 @@ public class HomeController {
     @RequestMapping("/revenue-statistics")
     public String RevenueStatistics(Model model) {
         return "admin/statistical/revenueStatistics";
+    }
+
+    @RequestMapping("/order-list")
+    public String OrderList(Model model) {
+        return "admin/order/order-list";
+    }
+
+        @RequestMapping("/admin-account")
+    public String Account(Model model) {
+        return "account";
     }
 }
