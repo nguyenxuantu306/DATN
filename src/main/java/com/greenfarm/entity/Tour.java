@@ -33,7 +33,8 @@ import lombok.NoArgsConstructor;
 public class Tour implements Serializable {
 
 	@Id
-	private Integer Tourid;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer tourid;
 
 	private String Tourname;
 
@@ -92,4 +93,7 @@ public class Tour implements Serializable {
 //	
 //	@OneToMany
 //	List<TourImage> tourImage;
+	
+//	@OneToMany(mapped = "tour")
+//	List<TourTypeTicket> tourTypeTicket;
 }

@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Productcategories")
+@Table(name = "productcategories")
 public class Category implements Serializable {
 	
 	@Id
@@ -29,6 +29,8 @@ public class Category implements Serializable {
 	private Integer categoryid;
 
 	private String categoryname;
+	
+	private String descriptions;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "category")

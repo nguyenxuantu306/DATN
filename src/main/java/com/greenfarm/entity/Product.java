@@ -49,11 +49,12 @@ public class Product implements Serializable {
 	@OneToMany(mappedBy = "product")
 	List<OrderDetail> orderDetails;	
 
-	
-//	@OneToMany
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "product")
 //	List<ProductDiscount> productDiscount;
-//	
-//	@OneToMany
+	
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "product")
 //	List<ProductImage> productImage;
 	
 	@Override

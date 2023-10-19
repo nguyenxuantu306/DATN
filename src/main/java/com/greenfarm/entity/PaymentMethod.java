@@ -2,26 +2,33 @@ package com.greenfarm.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "PaymentMethods")
+@Table(name = "paymentmethods")
 public class PaymentMethod implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer PaymentMethodID;
-	String MethodName;
-	String Description;
+	private Integer Paymentmethodid;
+	private String Methodname;
+	private String Description;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "paymentMethod")
+	List<OrderDetail> orderDetail;
 }

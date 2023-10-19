@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Users")
+@Table(name = "users")
 public class User implements Serializable{
 	
 	@Id
@@ -69,5 +69,6 @@ public class User implements Serializable{
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
-	List<Userdiscount>  discount;
+	List<UserDiscount>  discount;
+	
 }

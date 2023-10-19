@@ -4,10 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -25,23 +29,28 @@ public class Discount implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer DiscountID;
+	private Integer Discountid;
 	
-	String Name;
+	private String Name;
 	
-	Float Value;
-	
-	@Temporal(TemporalType.DATE)
-	Date StartDate = new Date();
+	private Float Value;
 	
 	@Temporal(TemporalType.DATE)
-	Date EndDate = new Date();
+	private Date Startdate = new Date();
 	
 	@Temporal(TemporalType.DATE)
-	Date CreateDate = new Date();
+	private Date Enddate = new Date();
 	
-	String Status;
+	@Temporal(TemporalType.DATE)
+	private Date Createdate = new Date();
 	
-	@OneToMany
+//	private Integer Amount;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "discount")
 	List<ProductDiscount> productDiscounts;
+	
+	@ManyToOne
+	@JoinColumn(name = "statusvoucherid")
+	StatusVoucher statusVoucher;
 }
