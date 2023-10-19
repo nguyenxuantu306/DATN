@@ -168,12 +168,12 @@ public class ProductRestController {
 	 @GetMapping("/thongke/sp")
 		public ResponseEntity<List<Report>> getTK_SP() {
 			return new ResponseEntity<>(productService.getTk_sp(), HttpStatus.OK);
-		}
+	}
 		
 
 		@GetMapping("/thongke/loai")
-		public List<Report> getTK_Loai() {
-			return productService.getTk_loai();
+		public ResponseEntity<List<Report>> getTK_Loai() {		
+			return new ResponseEntity<>(productService.getTk_loai(), HttpStatus.OK);
 		}
 
 }

@@ -1,8 +1,11 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,20 +26,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Orders")
-public class Order implements Serializable{
+public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer OrderID;
-	
+	Integer Orderid;
+
 	@ManyToOne
 	@JoinColumn(name = "UserID")
 	User user;
-	
+
 	@Temporal(TemporalType.DATE)
-	Date OrderDate = new Date();
-	
+	@JoinColumn(name = "OrderDate")
+	Date orderdate = new Date();
+
 	String Address;
-	
-	@OneToMany
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "order")
 	List<OrderDetail> orderDetail;
 }

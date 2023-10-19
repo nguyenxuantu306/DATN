@@ -24,11 +24,6 @@ public class UserDTO {
 	@Email(message = "Email không hợp lệ")
 	private String email;
 	
-	
-	@NotEmpty(message = "Thiếu Username")
-	private String username;
-	
-
 	@NotEmpty(message = "Thiếu password")
 	private String password;
 

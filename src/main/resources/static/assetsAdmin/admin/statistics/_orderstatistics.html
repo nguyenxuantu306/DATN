@@ -7,37 +7,60 @@
 	</div>
 </div>
 <!-- row -->
-      <div class="container-fluid mt-3">
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Order Statistics</h4>
-              <div class="table-responsive">
-                <table class="table header-border zero-configuration">
-                  <thead>
-                    <tr>
-                      <th scope="col">Product's name</th>
-                      <th scope="col">Buyer</th>
-                      <th scope="col">Date of purchase</th>
-                      <th scope="col">Price</th>    
-                      <th scope="col">Quantity</th>  
-                      <th scope="col">Total amount</th>                 
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th>001</th>
-                      <td>Cà không chua</td>
-                      <td>10.000 VNĐ</td>
-                      <td>800</td>
-                      <th>001</th>
-                      <th>001</th>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-   
+<div class="container-fluid mt-3">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
+				<h4 class=" row card-title">
+					<span class="col-md-6">Order Statistics </span> <span
+						class="col-md-6" style="text-align: right;">{{pager.page +
+						1}} of {{pager.count}}</span>
+				</h4>
+				<div class="table-responsive">
+					<table class="table header-border zero-configuration">
+						<thead>
+							<tr>
+								<th scope="col">STT</th>
+								<th scope="col">Tên sản phẩm</th>
+								<th scope="col">Người mua</th>
+								<th scope="col">Ngày mua</th>
+								<th scope="col">Giá tiền</th>
+								<th scope="col">Số lượng</th>
+								<th scope="col">Tổng thành tiền</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in pager.itemsThongKeOrder">
+								<td>{{$index + 1}}</td>	
+								<td>{{item.group.product.productname}}</td>
+								<td>{{item.group.order.user.email}}</td>
+								<td>{{item.group.order.orderdate}}</td>
+								<td>{{item.group.totalprice | number : 0}}đ</td>
+								<td>{{item.count}}</td>
+								<td>{{item.sum | number :0}}đ</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="text-right">
+
+						<button ng-click="pager.first()" class="btn btn-success">
+							<b class="glyphicon glyphicon-hand-up"></b> First
+						</button>
+						<button ng-click="pager.prev()" class="btn btn-success">
+							<b class="glyphicon glyphicon-hand-left"></b> prev
+						</button>
+
+						<button ng-click="pager.next()" class="btn btn-success">
+							<b class="glyphicon glyphicon-hand-right"></b> next
+						</button>
+						<button ng-click="pager.last()" class="btn btn-success">
+							<b class="glyphicon glyphicon-hand-down"></b> last
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

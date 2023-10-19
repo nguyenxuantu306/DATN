@@ -1,5 +1,6 @@
 package com.greenfarm.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Productcategories")
-public class Category {
+public class Category implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,3 +38,8 @@ public class Category {
 		this.categoryid = categoryid;
 	}
 }
+
+
+
+
+
