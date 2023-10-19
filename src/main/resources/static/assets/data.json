@@ -1,0 +1,39 @@
+{
+    "tours": [
+      {
+        "name": "Tour 1",
+        "location": "Thailand",
+        "duration": "3 days",
+        "capacity": "2 Person",
+        "description": "Discover amazing places of the world with us",
+        "rating": 4.5,
+        "reviews": 250,
+        "price": 350
+      },
+      {
+        "name": "Tour 2",
+        "location": "Thailand",
+        "duration": "3 days",
+        "capacity": "2 Person",
+        "description": "Discover amazing places of the world with us",
+        "rating": 4.5,
+        "reviews": 250,
+        "price": 350
+      }
+    ],
+    "products": [
+      {
+        "title": "Product 1",
+        "image": "destination-1.jpg",
+        "price": 10000,
+        "originalPrice": 12000
+      },
+      {
+        "title": "Product 2",
+        "image": "destination-2.jpg",
+        "price": 20000,
+        "originalPrice": 22000
+      }
+    ]
+  }
+  

@@ -1,0 +1,208 @@
+<div class="container-fluid mt-3">
+	<div class="row">
+		<div class="col-lg-3 col-sm-6">
+			<div class="card gradient-1">
+				<div class="card-body">
+					<h3 class="card-title text-white">Products Sold</h3>
+					<div class="d-inline-block">
+						<h2 class="text-white">4565</h2>
+						<p class="text-white mb-0">Jan - March 2019</p>
+					</div>
+					<span class="float-right display-5 opacity-5"><i
+						class="fa fa-shopping-cart"></i></span>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-sm-6">
+			<div class="card gradient-2">
+				<div class="card-body">
+					<h3 class="card-title text-white">Net Profit</h3>
+					<div class="d-inline-block">
+						<h2 class="text-white">$ 8541</h2>
+						<p class="text-white mb-0">Jan - March 2019</p>
+					</div>
+					<span class="float-right display-5 opacity-5"><i
+						class="fa fa-money"></i></span>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-sm-6">
+			<div class="card gradient-3">
+				<div class="card-body">
+					<h3 class="card-title text-white">New Customers</h3>
+					<div class="d-inline-block">
+						<h2 class="text-white">4565</h2>
+						<p class="text-white mb-0">Jan - March 2019</p>
+					</div>
+					<span class="float-right display-5 opacity-5"><i
+						class="fa fa-users"></i></span>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-sm-6">
+			<div class="card gradient-4">
+				<div class="card-body">
+					<h3 class="card-title text-white">Customer Satisfaction</h3>
+					<div class="d-inline-block">
+						<h2 class="text-white">99%</h2>
+						<p class="text-white mb-0">Jan - March 2019</p>
+					</div>
+					<span class="float-right display-5 opacity-5"><i
+						class="fa fa-heart"></i></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-body">
+							<h4 class="card-title">Line Chart</h4>
+							<div id="flotLine1" class="flot-chart"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<h3 class="text-center pt-3">TOUR</h3>
+				<div class="card-body">
+					<div class="active-member">
+						<div class="table-responsive">
+							<table class="table table-xs mb-0 zero-configuration">
+								<thead>
+									<tr>
+										<th>User</th>
+										<th>Name</th>
+										<th>Child</th>
+										<th>Adults</th>
+										<th>Total</th>
+										<th>Date</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Nguyễn Xuân Tú</td>
+										<td>Tour 1 ngày: Tát mương bắt cá Mỹ Tho - Bến Tre</td>
+										<td>500.000 VNĐ</td>
+										<td>780.000 VNĐ</td>
+										<td>1.280.000 VNĐ</td>
+										<td>10/10/2023 00:00 AM</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<h3 class="text-center pt-3">VEGETABLE</h3>
+				<div class="card-body">
+					<div class="active-member">
+						<div class="table-responsive">
+							<table class="table table-xs mb-0 zero-configuration">
+								<thead>
+									<tr>
+										<th>User</th>
+										<th>Name</th>
+										<th>Price</th>
+										<th>Quantity</th>
+										<th>Total</th>
+										<th>Payment Method</th>
+										<th>Date</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Nguyễn Xuân Tú</td>
+										<td>Cà rốt</td>
+										<td>10.000 VNĐ</td>
+										<td>10</td>
+										<td>100.000 VNĐ</td>
+										<td>Paypal</td>
+										<td>10/10/2023 00:00 AM</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+		$(function() {
+			var newCust = [ [ 4, 1 ], [ 5, 3 ], [ 6, 6 ], [ 7, 5 ], [ 8, 7 ],
+					[ 9, 8 ], [ 10, 10 ], ];
+			var retCust = [ [ 4, 1 ], [ 5, 2 ], [ 6, 5 ], [ 7, 3 ], [ 8, 5 ],
+					[ 9, 6 ], [ 10, 9 ], ];
+
+			var plot = $.plot($("#flotLine1"), [ {
+				data : newCust,
+				label : "New Customer",
+				color : "#ff5e5e",
+			}, {
+				data : retCust,
+				label : "Returning Customer",
+				color : "#7571F9",
+			}, ], {
+				series : {
+					lines : {
+						show : true,
+						lineWidth : 1,
+					},
+					shadowSize : 0,
+				},
+				points : {
+					show : false,
+				},
+				legend : {
+					noColumns : 1,
+					position : "nw",
+				},
+				grid : {
+					hoverable : true,
+					clickable : true,
+					borderColor : "#ddd",
+					borderWidth : 0,
+					labelMargin : 5,
+					backgroundColor : "transparent",
+				},
+				yaxis : {
+					min : 0,
+					max : 15,
+					color : "transparent",
+					font : {
+						size : 10,
+						color : "#999",
+					},
+				},
+				xaxis : {
+					color : "transparent",
+					font : {
+						size : 10,
+						color : "#999",
+					},
+				},
+			});
+		});
+	</script>
+	<script>
+		(function() {
+			$("#cart").on("click", function() {
+				$("#mini-cart").fadeToggle("fast");
+			});
+		})();
+	</script>
