@@ -115,7 +115,7 @@
 								class="product_thumb destination-item position-relative overflow-hidden mb-2">
 								<a th:href="@{|/product/detail/${p.productid}|}"><img
 									style="height: 260px" class="img-fluid"
-									th:src="@{|${p.image}|}" alt=""></a>								
+									th:src="@{|${p.image}|}" alt=""></a>
 							</div>
 							<div class="product_content" style="text-align: center;">
 								<h5 class="product_title">
@@ -124,6 +124,7 @@
 								<span class="product_price"
 									th:text="*{#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}+ 'đ'">
 								</span>
+								<button><a th:href="@{|/cart/add/${p.productid}|}">Add</a></button>
 							</div>
 						</div>
 
