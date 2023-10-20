@@ -1,7 +1,10 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,15 +20,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Roles")
-public class Role implements Serializable{
-	
+@Table(name = "paymentmethods")
+public class PaymentMethod implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
+	private Integer Paymentmethodid;
+	private String Methodname;
+	private String Description;
 	
-	String name;
-	
-	@OneToMany
-	List<UserRole> userRole;
+	@JsonIgnore
+	@OneToMany(mappedBy = "paymentMethod")
+	List<OrderDetail> orderDetail;
 }

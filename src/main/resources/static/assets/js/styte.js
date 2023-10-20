@@ -28,7 +28,7 @@
     	    // Hàm tìm kiếm sản phẩm
     	    function searchProducts(keyword) {
     	        $.ajax({
-    	            url: '/product/search',
+    	            url: '/rest/products/search',
     	            type: 'GET',
     	            data: { keyword: keyword },
     	            success: function(response) {
@@ -60,7 +60,7 @@
 
     				// Gửi yêu cầu lọc sản phẩm đến API
     				$.ajax({
-    					url: '/product/filter',
+    					url: '/rest/products/filter',
     					type: 'GET',
     					data: {minPrice: minPrice, maxPrice: maxPrice},
     					success: function (response) {
@@ -91,7 +91,7 @@
 
             // Gửi yêu cầu sắp xếp sản phẩm đến API
             $.ajax({
-                url: '/product/sort',
+                url: '/rest/products/sort',
                 type: 'GET',
                 data: { sort: sortType },
                 success: function(response) {
@@ -119,7 +119,7 @@
 
         // Gửi yêu cầu sắp xếp sản phẩm theo giá đến API
         $.ajax({
-            url: '/product/sortprice', // Đảm bảo rằng URL phù hợp với API của bạn
+            url: '/rest/products/sortprice', // Đảm bảo rằng URL phù hợp với API của bạn
             type: 'GET',
             data: { sortprice: sortType }, // Sử dụng 'sortprice' thay vì 'sort'
             success: function(response) {
@@ -149,7 +149,7 @@
 
             // Gửi yêu cầu lọc sản phẩm theo khoảng giá tùy chỉnh đến controller
             $.ajax({
-                url: '/product/filter-by-custom-price-range',
+                url: '/rest/products/filter-by-custom-price-range',
                 type: 'GET',
                 data: { priceRange: priceRange },
                 success: function(response) {

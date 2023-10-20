@@ -29,7 +29,7 @@ public class Product implements Serializable {
 	
 	private String Description;
 		
-	private Double price;
+	private Float price;
 	
 	private String image;
 	
@@ -39,19 +39,17 @@ public class Product implements Serializable {
 	@JoinColumn(name = "CategoryID")
 	Category category;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "product")
+	List<OrderDetail> orderDetails;	
+
 //	@JsonIgnore
-//	@OneToMany(mappedBy = "book")
-//	List<OrderDetail> orderDetail;
-	
-//	@OneToMany
-//	List<OrderDetail> orderDetail;
-	
-//	@OneToMany
+//	@OneToMany(mappedBy = "product")
 //	List<ProductDiscount> productDiscount;
 	
-//	@OneToMany
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "product")
 //	List<ProductImage> productImage;
-	
 	
 	@Override
 	public String toString() {

@@ -28,27 +28,19 @@ public class Authconfig {
 	public SecurityFilterChain fillterchain(HttpSecurity http) throws Exception {
 		http.csrf().disable().cors().disable();
 
-		http.authorizeRequests(authorize -> authorize
-				.requestMatchers("/profile", "/").authenticated()
-				.requestMatchers("/admin/**").hasRole("Administrator")
-				.anyRequest().permitAll());
+		http.authorizeRequests(authorize -> authorize.requestMatchers("/profile", "/").authenticated()
+				.requestMatchers("/admin/**").hasRole("Administrator").anyRequest().permitAll());
 
-		http.formLogin(form -> form
-				.loginPage("/login")
+		http.formLogin(form -> form.loginPage("/login")
 
-		)
-				.logout(
-						logout -> logout
-								.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-								.permitAll());
+		).logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll());
 
 		return http.build();
 	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService)
-				.passwordEncoder(passwordEncoder());
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 }

@@ -21,12 +21,12 @@ import lombok.NoArgsConstructor;
 public class ProductImage implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer ImageID;
+	private Integer Productimageid;
 
 	@ManyToOne
-	@JoinColumn(name = "ProductID")
-	Product product;
+	@JoinColumn(name = "productid")
+	private Product product;
 	
-	String ImageURL;
+	private String imageurl;
 	
 }

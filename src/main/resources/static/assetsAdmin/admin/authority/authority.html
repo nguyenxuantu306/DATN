@@ -1,0 +1,51 @@
+<div class="row page-titles mx-0">
+	<div class="col p-md-0">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">Authority</a></li>
+		</ol>
+	</div>
+</div>
+<!-- row -->
+
+<div class="container-fluid" >
+
+	<!-- DataTales Example -->
+	<div class="card shadow mb-4 ">
+		<div class="card-header py-3">
+			<div class="card-header ">
+				<h3 class=" p-0 m-0">USER AUTHORIZATION</h3>
+			</div>
+		</div>
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table table-bordered" id="dataTable" width="100%"
+					cellspacing="0">
+					<thead>
+						<tr>
+							<th>STT</th>
+							<th>USER</th>
+							<th ng-repeat="role in roles" class="text-center">{{role.name}}</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr ng-repeat="acc in admins">
+							<td style="width: 300px">{{$index + 1}}</td>
+							<td style="width: 300px">{{acc.email}}</td>
+							<th style="width: 300px" ng-repeat="role in roles" class="text-center"><input
+								ng-checked="authority_of(acc,role)"
+								ng-click="authority_changed(acc,role)" type="checkbox">
+							</th>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+

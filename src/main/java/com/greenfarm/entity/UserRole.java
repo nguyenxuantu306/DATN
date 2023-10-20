@@ -1,6 +1,10 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,12 +22,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "UserRoles")
+@Table(name = "Userroles")
 public class UserRole implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer UserRoleID;
+	Integer Userroleid;
 	
 	@ManyToOne
 	@JoinColumn(name = "RoleID")
