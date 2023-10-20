@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -18,14 +20,16 @@ import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.service.ProductService;
 
-
+@Configuration
 @Controller
 public class ProductController {
-	@Autowired
-	ProductService productService;
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 
 	@Autowired
-	ModelMapper modelMapper;
+	ProductService productService;
 
 	// List All
 	@GetMapping("/product/shop")
@@ -36,7 +40,7 @@ public class ProductController {
 			model.addAttribute("items", list);
 		} else {
 			Page<Product> productsPage = productService.findAll(pageable);
-			Page<ProductDTO> productDTOPage = productsPage.map(product -> modelMapper.map(product, ProductDTO.class));
+			Page<ProductDTO> productDTOPage = productsPage.map(product -> modelMapper().map(product, ProductDTO.class));
 			model.addAttribute("items", productDTOPage);
 		}
 
@@ -48,7 +52,7 @@ public class ProductController {
 	    Product item = productService.findById(productid);
 	    
 	    if (item != null) {
-	        ProductDTO itemDTO = modelMapper.map(item, ProductDTO.class);
+	        ProductDTO itemDTO = modelMapper().map(item, ProductDTO.class);
 	        model.addAttribute("item", itemDTO);
 	    } else {
 	        // Xử lý trường hợp đối tượng không tồn tại
