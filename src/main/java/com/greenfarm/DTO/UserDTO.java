@@ -13,8 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +24,8 @@ public class UserDTO {
 	@Email(message = "Email không hợp lệ")
 	private String email;
 	
+	@NotEmpty(message = "Thiếu password")
+	private String password;
 
 	@NotEmpty(message = "Thiếu FirstName")
 	private String firstname;
@@ -54,4 +54,5 @@ public class UserDTO {
 	@NotNull(message = "Trường CreatedDate không được để trống")
 	@PastOrPresent(message = "CreatedDate phải ở trong quá khứ hoặc hiện tại mới tạo")
 	private Date createddate;
+
 }

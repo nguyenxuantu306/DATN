@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.greenfarm.Controller.CustomAuthenticationSuccessHandler;
+
 @Configuration
 @EnableWebSecurity
 public class Authconfig {
@@ -23,6 +25,11 @@ public class Authconfig {
 		return new BCryptPasswordEncoder();
 	}
 
+	@Bean
+	public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+		return new CustomAuthenticationSuccessHandler();
+	}
+
 	@SuppressWarnings("deprecation")
 	@Bean
 	public SecurityFilterChain fillterchain(HttpSecurity http) throws Exception {
@@ -31,8 +38,7 @@ public class Authconfig {
 		http.authorizeRequests(authorize -> authorize.requestMatchers("/profile", "/").authenticated()
 				.requestMatchers("/admin/**").hasRole("Administrator").anyRequest().permitAll());
 
-		http.formLogin(form -> form.loginPage("/login")
-
+		http.formLogin(form -> form.loginPage("/login").successHandler(customAuthenticationSuccessHandler()) // handler
 		).logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll());
 
 		return http.build();

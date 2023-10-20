@@ -50,7 +50,6 @@ public class UserServerImpl implements UserService,UserDetailsService {
 	// Security
 	@Override
 	public User findByEmail(String email) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		Optional<User> userOptional = dao.findByEmail(email);
 		if (userOptional.isPresent()) {
 			return userOptional.get(); // Lấy đối tượng User ra khỏi Optional
@@ -60,7 +59,6 @@ public class UserServerImpl implements UserService,UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		Optional<User> userOptional = dao.findByEmail(email);
 		if (userOptional.isPresent()) {
 			User user = userOptional.get();
@@ -73,7 +71,6 @@ public class UserServerImpl implements UserService,UserDetailsService {
 				return org.springframework.security.core.userdetails.User.builder().username(email)
 						.password(user.getPassword()).authorities(authorities).build();
 			} catch (Exception e) {
-				// TODO: handle exception
 
 				System.out.println("Lỗi xảy ra khi xử lý người dùng: " + e.getMessage());
 			}

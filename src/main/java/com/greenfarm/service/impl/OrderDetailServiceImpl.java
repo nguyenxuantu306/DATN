@@ -2,7 +2,6 @@ package com.greenfarm.service.impl;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +18,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
 	@Override
 	public List<OrderDetail> findAll() {
-		// TODO Auto-generated method stub
 		return dao.findAll();
 	}
 
 	@Override
 	public List<Report> tongdoanhthu() {
-		// TODO Auto-generated method stub
 		return dao.reportTheoLuotMuaHang();
 	}
 

@@ -3,10 +3,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DatnApplication {
+public class GreenfarmApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DatnApplication.class, args);
+		SpringApplication.run(GreenfarmApplication.class, args);
 	}
 
 }

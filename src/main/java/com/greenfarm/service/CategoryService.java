@@ -2,9 +2,6 @@ package com.greenfarm.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.greenfarm.dao.CategoryDAO;
 import com.greenfarm.entity.Category;
 
 

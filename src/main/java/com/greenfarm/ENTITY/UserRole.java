@@ -18,12 +18,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "UserRoles")
+@Table(name = "Userroles")
 public class UserRole implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer UserRoleID;
+	Integer Userroleid;
 	
 	@ManyToOne
 	@JoinColumn(name = "RoleID")

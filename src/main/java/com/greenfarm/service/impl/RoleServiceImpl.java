@@ -13,12 +13,15 @@ import com.greenfarm.service.RoleService;
 public class RoleServiceImpl implements RoleService{
 
 	@Autowired
-	RoleDAO rdao;
-	
+	RoleDAO dao;
+
 	@Override
 	public List<Role> findAll() {
-		return rdao.findAll();
+		
+		return null;
 	}
+	
+	
 
 	
 

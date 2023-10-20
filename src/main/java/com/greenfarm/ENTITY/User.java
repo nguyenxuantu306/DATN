@@ -1,8 +1,12 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
+
+
 import java.util.Date;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,16 +21,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Users")
+@Table(name = "users")
 public class User implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer userid;
@@ -46,12 +47,28 @@ public class User implements Serializable{
 	
 	//Boolean IsActive;
 	
-	@OneToMany
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
 	List<Booking> booking;
 	
-	@OneToMany
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
 	List<Comment> comment;
 	
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	List<UserRole> userRole;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	List<Tour> tour;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	List<Order> order;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	List<UserDiscount>  discount;
+	
 }
