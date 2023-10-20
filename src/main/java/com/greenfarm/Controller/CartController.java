@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.greenfarm.entity.Cart;
 import com.greenfarm.entity.Product;
 import com.greenfarm.service.ProductService;
@@ -51,11 +52,10 @@ public class CartController {
 			session.setAttribute("myCartNum", cartItems.size());
 		} else {
 			
-			return "redirect:/login"; 
+			return "redirect:/login";
 		}
 
 		String referer = request.getHeader("Referer");
-
 		return "redirect:" + referer;
 	}
 
