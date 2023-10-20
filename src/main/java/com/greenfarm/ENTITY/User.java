@@ -1,12 +1,10 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
-
-
 import java.util.Date;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -31,6 +29,7 @@ public class User implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer userid;
+	
 	String password;
 	String email;
 	String firstname;

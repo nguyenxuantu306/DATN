@@ -15,4 +15,5 @@ public interface UserDAO extends JpaRepository<User, Integer>{
 	
 	// Security
 	Optional<User>  findByEmail(String email);
+	
 }
