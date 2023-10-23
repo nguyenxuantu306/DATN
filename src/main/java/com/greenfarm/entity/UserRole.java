@@ -30,10 +30,10 @@ public class UserRole implements Serializable{
 	Integer Userroleid;
 	
 	@ManyToOne
-	@JoinColumn(name = "RoleID")
+	@JoinColumn(name = "roleid")
 	Role role;
 	
 	@ManyToOne
-	@JoinColumn(name = "UserID")
+	@JoinColumn(name = "userid")
 	User user;
 }

@@ -40,7 +40,7 @@ public class HomeController {
 	@Autowired
 	TourService tourService;
 	
-	@RequestMapping("")
+	@RequestMapping("")	
 	public String Home(Model model) {
 		Pageable pageable = PageRequest.of(0, 8); 
 		Pageable pageable1 = PageRequest.of(0, 3); 
@@ -53,6 +53,7 @@ public class HomeController {
         return "user/index";
     }
     
+
     @RequestMapping("/profile")
     public String Profile(Model model) {
         return "profile";
@@ -73,16 +74,11 @@ public class HomeController {
         return "tour/detail";
     }
 
-
-    @RequestMapping("/login")
-    public String Login(Model model) {
-        return "login";
-    }
-
-    @RequestMapping("/register")
-    public String Register(Model model) {
-        return "register";
-    }
+//
+//    @RequestMapping("/register")
+//    public String Register(Model model) {
+//        return "register";
+//    }
 
     @RequestMapping("/cart")
     public String Cart(Model model) {
