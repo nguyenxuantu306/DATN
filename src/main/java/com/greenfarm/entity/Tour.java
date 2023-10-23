@@ -51,8 +51,6 @@ public class Tour implements Serializable {
 	private Date enddate = new Date();
 	
 	
-	private Double price;
-	
 	private String location;
 	
 	@Column(name = "Availableslots")
@@ -82,9 +80,9 @@ public class Tour implements Serializable {
 	@OneToMany(mappedBy = "tour")
 	List<TourImage> tourImage;
 	
-//	@OneToMany(mapped = "tour")
-//	List<TourTypeTicket> tourTypeTicket;
-	
+	@JsonIgnore
+	@OneToOne(mappedBy = "tour")
+	Pricing pricings;
 	
 	@Override
 	public String toString() {

@@ -2,15 +2,12 @@ package com.greenfarm.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,15 +17,19 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Tickettypes")
-public class TicketType implements Serializable {
+@Table(name = "Pricings")
+public class Pricing implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Pricingid;
+	Integer Pricingid;
 	
-	private String Nameticket;
+	@ManyToOne
+	@JoinColumn(name = "TourID")
+	Tour tour;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "ticketType")
-	List<TourTypeTicket> tourTypeTicket;
+	Float Adultprice;
+	
+	Float Childprice;
+	
+	Float Infantprice;
 }

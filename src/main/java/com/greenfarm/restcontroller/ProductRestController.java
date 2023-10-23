@@ -2,6 +2,7 @@ package com.greenfarm.restcontroller;
 
 import java.util.Comparator;
 
+
 import java.util.List;
 
 import java.util.Optional;
@@ -32,7 +33,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.greenfarm.dto.ProductDTO;
-import com.greenfarm.dto.TopSellingProductDTO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.service.ProductService;
@@ -173,8 +173,5 @@ public class ProductRestController {
 		return new ResponseEntity<>(productService.getTk_loai(), HttpStatus.OK);
 	}
 
-	@GetMapping("/top-selling")
-	public List<Product> getTopSellingProducts() {
-		return productService.getTopSellingProducts();
-	}
+	
 }

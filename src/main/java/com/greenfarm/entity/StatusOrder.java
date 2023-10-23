@@ -27,7 +27,7 @@ public class StatusOrder implements Serializable{
 	
 	private String name;
 	
-//	@JsonIgnore
-//	@OneToMany(mappedBy = "statusOrder")
-//	List<Order> order;
+	@JsonIgnore
+	@OneToMany(mappedBy = "statusOrder")
+	List<Order> order;
 }

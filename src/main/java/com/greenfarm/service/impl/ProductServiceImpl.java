@@ -1,6 +1,7 @@
 package com.greenfarm.service.impl;
 
 import java.util.Comparator;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.util.ArrayBuilders.BooleanBuilder;
 import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.ProductsDAO;
-import com.greenfarm.dto.TopSellingProductDTO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.service.ProductService;
@@ -142,12 +142,5 @@ public class ProductServiceImpl implements ProductService {
 	public List<Report> getTk_loai() {
 		return dao.getInventoryByCategory();
 	}
-
-	@Override
-    public List<Product> getTopSellingProducts() {
-        List<Product> topSellingProducts = dao.findTopSellingProducts();
-        return topSellingProducts.subList(0, Math.min(topSellingProducts.size(), 10));
-    }
-
 	
 }

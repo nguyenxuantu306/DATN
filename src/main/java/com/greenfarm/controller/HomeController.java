@@ -64,10 +64,6 @@ public class HomeController {
         return "product/shopList";
     }
     
-    @RequestMapping("/tour")
-    public String Tour(Model model) {
-        return "tour/booking";
-    }
 
     @RequestMapping("/tour-detail")
     public String TourDetail(Model model) {
