@@ -3,6 +3,7 @@ package com.greenfarm.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,6 +35,8 @@ public class OrderDetail implements Serializable{
 	
 	Integer quantityordered;
 	
+	
+	@Column(name = "Totalprice")
 	Float totalprice;
 
 	@ManyToOne

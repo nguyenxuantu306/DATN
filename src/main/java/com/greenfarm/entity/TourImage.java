@@ -24,9 +24,10 @@ public class TourImage implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer ImageID;
 	
-	@ManyToOne
-	@JoinColumn(name = "TourID")
-	Tour tour;
 
 	String ImageURL;
+	
+	@ManyToOne
+	@JoinColumn(name = "tourid")
+	Tour tour;
 }

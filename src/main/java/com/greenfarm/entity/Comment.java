@@ -27,10 +27,10 @@ public class Comment implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "userid")
 	private User user;
-//	
-//	@ManyToOne	
-//	@JoinColumn(name = "TourID")
-//	Tour tour;
+	
+	@ManyToOne	
+	@JoinColumn(name = "TourID")
+	Tour tour;
 	
 	private String Commentext;
 	

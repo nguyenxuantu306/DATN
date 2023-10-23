@@ -29,7 +29,7 @@ public class StatusBooking implements Serializable{
 	
 	private String name;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "statusBooking")
-	List<Booking> booking;
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "statusBooking")
+//	List<Booking> booking;
 }

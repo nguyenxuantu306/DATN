@@ -38,7 +38,7 @@ public class TourTypeTicket implements Serializable{
 	@JoinColumn(name = "Tickettypeid")
 	TicketType ticketType;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "tourTypeTicket")
-	List<Booking> booking;
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "tourTypeTicket")
+//	List<Booking> booking;
 }

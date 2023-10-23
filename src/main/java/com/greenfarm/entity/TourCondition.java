@@ -25,9 +25,9 @@ public class TourCondition implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer tourconditionid;
 	
-//	@OneToOne
-//	@JoinColumn(name = "tourid")
-//	Tour tour;
-	
 	private String Conditions;
+	
+	@OneToOne
+	@JoinColumn(name = "tourid")
+	Tour tour;
 }

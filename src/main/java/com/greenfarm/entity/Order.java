@@ -43,7 +43,7 @@ public class Order implements Serializable {
 	@OneToMany(mappedBy = "order")
 	List<OrderDetail> orderDetail;
 	
-	@ManyToOne
-	@JoinColumn(name = "statusorderid")
-	StatusOrder statusOrder;
+//	@ManyToOne
+//	@JoinColumn(name = "statusorderid")
+//	StatusOrder statusOrder;
 }
