@@ -13,6 +13,97 @@
 			<div class="text-center mb-3 pb-3">
 				<h1>List Tour</h1>
 			</div>
+			<div class="tab-content py-5">
+				<div role="tabpanel" class="tab-pane active" id="plan">
+					<div class="block_search">
+						<form action="/index.php" method="get">
+							<input type="hidden" name="language" value="vi"> <input
+								type="hidden" name="nv" value="tour"> <input
+								type="hidden" name="op" value="search">
+
+							<div class="search_panel">
+								<div class="row">
+									<div class="col-xs-24 col-sm-8 col-md-6">
+										<input type="text" class="form-control" name="q" value=""
+											placeholder="Từ khoá">
+									</div>
+									<div class="col-xs-24 col-sm-8 col-md-2">
+										<select class="form-control" name="time">
+											<option value="0">--- Thời gian ---</option>
+											<option value="1">1 ngày</option>
+											<option value="2">2 ngày 1 đêm</option>
+											<option value="3">3 ngày 2 đêm</option>
+											<option value="4">4 ngày 3 đêm</option>											
+										</select>
+									</div>
+									<div class="col-xs-24 col-sm-8 col-md-2">
+										<select name="price_spread" class="form-control">
+											<option value="0">--- Khoảng giá ---</option>
+											<option value="1000000-3000000">50 VNĐ - 100 VNĐ</option>
+											<option value="3000000-5000000">100 VNĐ - 150 VNĐ</option>
+											<option value="5000000-7000000">150 VNĐ - 200 VNĐ</option>
+											<option value="7000000-9000000">200 VNĐ - 300 VNĐ</option>
+											<option value="9000000-11000000">300 VNĐ - 500 VNĐ</option>											
+										</select>
+									</div>
+									
+									<div class="col-xs-24 col-sm-8 col-md-2 text-right">
+										<input type="hidden" name="is_search" value="1"> <input
+											type="submit" class="btn btn-primary" value="Tìm kiếm">
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="detail">
+					<div class="block_search">
+						<form action="/index.php" method="get" class="form-horizontal">
+							<input type="hidden" name="language" value="vi"> <input
+								type="hidden" name="nv" value="car"> <input
+								type="hidden" name="op" value="search">
+
+							<div class="search_panel">
+								<div class="row">
+									<div class="col-xs-24 col-sm-8 col-md-6">
+										<input type="text" class="form-control" name="q" value=""
+											placeholder="Từ khóa">
+									</div>
+									<div class="col-xs-24 col-sm-8 col-md-5">
+										<input type="hidden" id="allow_country_0" value=""> <input
+											type="hidden" id="allow_province_0" value=""> <input
+											type="hidden" id="allow_district_0" value=""> <input
+											type="hidden" id="allow_ward_0" value=""> <input
+											type="hidden" id="is_district_0" value=""> <input
+											type="hidden" id="is_ward_0" value=""> <input
+											type="hidden" id="multiple_province_0" value="0"> <input
+											type="hidden" id="multiple_distric_0" value="0"> <input
+											type="hidden" id="multiple_ward_0" value="0"> <input
+											type="hidden" id="blank_title_country_0" value="0"> <input
+											type="hidden" id="blank_title_province_0" value="1">
+										<input type="hidden" id="blank_title_district_0" value="1">
+										<input type="hidden" id="blank_title_ward_0" value="0">
+										<input type="hidden" id="name_country_0" value=""> <input
+											type="hidden" id="name_province_0"
+											value="place_start_province"> <input type="hidden"
+											id="name_district_0" value="place_start_district"> <input
+											type="hidden" id="name_ward_0" value="wardid"> <input
+											type="hidden" id="index_0" value="0"> <input
+											type="hidden" id="col_class_0"
+											value="col-xs-24 col-sm-12 col-md-12">
+
+								
+									</div>
+															
+									<div class="col-xs-24 col-sm-8 col-md-2">
+										<input type="submit" class="btn btn-primary" value="Tìm kiếm">
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 			<div class="row">
 				<div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
 					<div class="package-item bg-white mb-2">
