@@ -167,11 +167,11 @@
 					<div class="tab-pane fade" id="pills-image" role="tabpanel" aria-labelledby="pills-image-tab"
 						tabindex="0">
 						<h3>HÌNH ẢNH TOUR</h3>
-					<!--	<p th:text="*{tourImage}"></p>-->
-				
-						<div th:each="image : ${item.tourImage}">
-							<img th:src="${image.Imageurl}" class="img-fluid" alt="đây là hình" />
+					<div class="row">
+						<div class="col-md-4"  th:each="image : ${item.tourImage}">
+							<img style="height:400px" th:src="${image.Imageurl}" class="img-fluid" alt="đây là hình" />
 						</div>
+					</div>										
 					</div>
 				</div>
 				<div class="container-fluid py-3 my-3"
