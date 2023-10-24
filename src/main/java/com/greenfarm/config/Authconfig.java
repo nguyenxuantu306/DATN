@@ -18,11 +18,15 @@ public class Authconfig {
 	@Autowired
 	UserDetailsService userDetailsService;
 
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+	}
+
 	@Bean
 	public static PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
 
 	@SuppressWarnings("deprecation")
 	@Bean
@@ -32,15 +36,11 @@ public class Authconfig {
 		http.authorizeRequests(authorize -> authorize.requestMatchers("/profile", "/").authenticated()
 				.requestMatchers("/admin/**").hasRole("Administrator").anyRequest().permitAll());
 
-		http.formLogin(form -> form.loginPage("/login").successHandler(customAuthenticationSuccessHandler()) // handler
+		http.formLogin(form -> form.loginPage("/login")
+
 		).logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll());
 
 		return http.build();
-	}
-
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 }

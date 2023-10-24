@@ -1,9 +1,10 @@
 package com.greenfarm.Controller;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,82 +33,80 @@ public class CartController {
     CartDAO cartDAO;
 
     @RequestMapping("/add/{productId}")
-    public String viewAdd(ModelMap modelMap, HttpSession session, HttpServletRequest request,
+    public String addToCart(HttpSession session, @PathVariable("productId") Integer productId) {
+        // Lấy thông tin người dùng hiện tại từ session hoặc Spring Security
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()
+                && !"anonymousUser".equals(authentication.getPrincipal())) {
+            String userEmail = authentication.getName();
+            User user = userService.findByEmail(userEmail);
+            if (user != null) {
+                Product product = productService.findById(productId);
+                if (product != null) {
+                    Cart cartItem = cartDAO.findByUserAndProduct(user, product);
+                    if (cartItem != null) {
+                        // Nếu sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng lên 1
+                        cartItem.setQuantity(cartItem.getQuantity() + 1);
+                    } else {
+                        // Nếu sản phẩm chưa có trong giỏ hàng, tạo mới và đặt số lượng là 1
+                        cartItem = new Cart();
+                        cartItem.setUser(user);
+                        cartItem.setProduct(product);
+                        cartItem.setQuantity(1);
+                    }
+                    cartDAO.save(cartItem);
+                }
+                return "redirect:/product/shop"; // Điều hướng trở lại trang sản phẩm sau khi thêm vào giỏ hàng
+            }
+        }
+        // Nếu người dùng chưa đăng nhập, điều hướng đến trang đăng nhập
+        return "redirect:/login";
+    }
+
+    @RequestMapping("/update/{productId}")
+    public String viewUpdate(ModelMap modelMap, HttpSession session, HttpServletRequest request,
             @PathVariable("productId") Integer productId) {
-        Integer userId = (Integer) session.getAttribute("userId");
-        if (userId != null) {
-            User user = userService.findById(userId);
-            Product product = productService.findById(productId);
+        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
+        if (cartItems != null) {
+            if (cartItems.containsKey(productId)) {
+                Cart item = cartItems.get(productId);
 
-            if (user != null && product != null) {
-                Cart cartItem = cartDAO.findByUserAndProduct(user, product);
+                Integer updateQuantity = item.getQuantity() - 1;
 
-                if (cartItem != null) {
-                    // Update the existing cart item
-                    cartItem.setQuantity(cartItem.getQuantity() + 1);
+                if (updateQuantity > 0) {
+                    item.setQuantity(updateQuantity);
+                    cartItems.put(productId, item);
                 } else {
-                    // Create a new cart item
-                    cartItem = new Cart();
-                    cartItem.setUser(user);
-                    cartItem.setProduct(product);
-                    cartItem.setQuantity(1);
+                    cartItems.remove(productId);
                 }
 
-                cartDAO.save(cartItem);
+                session.setAttribute("myCartItems", cartItems);
+                session.setAttribute("myCartTotal", totalPrice(cartItems));
+                session.setAttribute("myCartNum", cartItems.size());
             }
-        } else {
-            return "redirect:/login";
         }
-
         String referer = request.getHeader("Referer");
+
         return "redirect:" + referer;
     }
 
-	@RequestMapping("/update/{productId}")
-	public String viewUpdate(ModelMap modelMap, HttpSession session, HttpServletRequest request,
-			@PathVariable("productId") Integer productId) {
-		HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
-		if (cartItems != null) {
-			if (cartItems.containsKey(productId)) {
-				Cart item = cartItems.get(productId);
+    @RequestMapping("/remove/{productId}")
+    public String viewRemove(ModelMap modelMap, HttpSession session, @PathVariable("productId") Integer productId) {
+        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
+        if (cartItems != null) {
+            cartItems.remove(productId);
+            session.setAttribute("myCartItems", cartItems);
+            session.setAttribute("myCartTotal", totalPrice(cartItems));
+            session.setAttribute("myCartNum", cartItems.size());
+        }
+        return "cart";
+    }
 
-				Integer updateQuantity = item.getQuantity() - 1;
-
-				if (updateQuantity > 0) {
-					item.setQuantity(updateQuantity);
-					cartItems.put(productId, item);
-				} else {
-					cartItems.remove(productId);
-				}
-
-				session.setAttribute("myCartItems", cartItems);
-				session.setAttribute("myCartTotal", totalPrice(cartItems));
-				session.setAttribute("myCartNum", cartItems.size());
-			}
-		}
-		String referer = request.getHeader("Referer");
-
-		return "redirect:" + referer;
-	}
-
-	@RequestMapping("/remove/{productId}")
-	public String viewRemove(ModelMap modelMap, HttpSession session, @PathVariable("productId") Integer productId) {
-		HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
-		if (cartItems != null) {
-			cartItems.remove(productId);
-			session.setAttribute("myCartItems", cartItems);
-			session.setAttribute("myCartTotal", totalPrice(cartItems));
-			session.setAttribute("myCartNum", cartItems.size());
-		}
-		return "cart";
-	}
-
-	public double totalPrice(HashMap<Integer, Cart> cartItems) {
-		int count = 0;
-		for (Map.Entry<Integer, Cart> entry : cartItems.entrySet()) {
-			Cart item = entry.getValue();
-			count += item.getProduct().getPrice() * item.getQuantity();
-		}
-		return count;
-	}
+    public double totalPrice(HashMap<Integer, Cart> cartItems) {
+        double total = 0;
+        for (Cart cartItem : cartItems.values()) {
+            total += cartItem.getProduct().getPrice() * cartItem.getQuantity();
+        }
+        return total;
+    }
 }
