@@ -10,7 +10,7 @@ import com.greenfarm.entity.User;
 
 public interface UserDAO extends JpaRepository<User, Integer>{
 
-	@Query("SELECT DISTINCT ur.user FROM UserRole ur WHERE ur.role.id IN (1)")
+	@Query("SELECT DISTINCT ur.user FROM UserRole ur WHERE ur.role.id IN (1,2)")
 	List<User> getAdministrators();
 	
 //	// Security

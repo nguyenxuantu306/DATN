@@ -18,4 +18,6 @@ public interface UserService {
 	// Security
 	User findByEmail(String email);
 	
+	public List<User> getAdministrators();
+	
 }

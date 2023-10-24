@@ -47,6 +47,12 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	public void delete(Integer userid) {
 		dao.deleteById(userid);
 	}
+	
+	@Override
+	public List<User> getAdministrators() {
+		// TODO Auto-generated method stub
+		return dao.getAdministrators();
+	};
 
 	// Security
 //	@Override
