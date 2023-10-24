@@ -9,7 +9,7 @@ function createProductHTML(product) {
 				src="${product.image}" alt=""></a>
 			<div class="p-4">
 				<a 
-					class="h5 text-decoration-none">${product.productname}</a>
+					class="h5 text-decoration-none" >${product.productname}</a>
 				<div class="border-top mt-4 pt-4">
 					<div class="d-flex justify-content-between">
 						<h6 class="m-0">
@@ -27,155 +27,121 @@ function createProductHTML(product) {
 	return productHTML;
 }
 
-// chức năng Search theo tên 
+// Hàm hiển thị danh sách sản phẩm
+function displayProducts(products) {
+	var Results = $('#Results');
+	Results.empty();
+
+	products.forEach(function(product) {
+		var productHTML = createProductHTML(product);
+		Results.append(productHTML);
+	});
+}
+
+// Hàm tìm kiếm sản phẩm
+function searchProducts(keyword) {
+	$.ajax({
+		url: '/rest/products/search',
+		type: 'GET',
+		data: { keyword: keyword },
+		success: function(response) {
+			displayProducts(response);
+		},
+		error: function(xhr) {
+			console.log(xhr.responseText);
+		}
+	});
+}
+
+// Hàm lọc sản phẩm theo khoảng giá
+function filterProductsByPrice(minPrice, maxPrice) {
+	$.ajax({
+		url: '/rest/products/filter',
+		type: 'GET',
+		data: { minPrice: minPrice, maxPrice: maxPrice },
+		success: function(response) {
+			displayProducts(response);
+		},
+		error: function(xhr) {
+			console.log(xhr.responseText);
+		}
+	});
+}
+
+// Hàm sắp xếp sản phẩm theo tên
+function sortProductsByName(sortType) {
+	$.ajax({
+		url: '/rest/products/sort',
+		type: 'GET',
+		data: { sort: sortType },
+		success: function(response) {
+			displayProducts(response);
+		},
+		error: function(xhr) {
+			console.log(xhr.responseText);
+		}
+	});
+}
+
+// Hàm sắp xếp sản phẩm theo giá
+function sortProductsByPrice(sortType) {
+	$.ajax({
+		url: '/rest/products/sortprice',
+		type: 'GET',
+		data: { sortprice: sortType },
+		success: function(response) {
+			displayProducts(response);
+		},
+		error: function(xhr) {
+			console.log(xhr.responseText);
+		}
+	});
+}
+
+// Hàm xử lý sự kiện khi người dùng thay đổi giá trị radio
+function handlePriceRangeChange() {
+	var priceRange = $('input[name="priceRange"]:checked').val();
+	$.ajax({
+		url: '/rest/products/filter-by-custom-price-range',
+		type: 'GET',
+		data: { priceRange: priceRange },
+		success: function(response) {
+			displayProducts(response);
+		},
+		error: function(xhr) {
+			console.log(xhr.responseText);
+		}
+	});
+}
+
 $(document).ready(function() {
 	// Gắn kết sự kiện khi người dùng nhập từ khóa
 	$('#searchKeyword').on('input', function() {
-		var keyword = $(this).val();
-		searchProducts(keyword);
+		searchProducts($(this).val());
 	});
 
-	// Hàm tìm kiếm sản phẩm
-	function searchProducts(keyword) {
-		$.ajax({
-			url: '/rest/products/search',
-			type: 'GET',
-			data: { keyword: keyword },
-			success: function(response) {
-				var Results = $('#Results');
-				Results.empty(); // Xóa nội dung hiện tại
-
-				response.forEach(function(product) {
-					var productHTML = createProductHTML(product);
-					Results.append(productHTML);
-				});
-			},
-			error: function(xhr) {
-				console.log(xhr.responseText);
-			}
-		});
-	}
-
-
-});
-
-// chức năng search trong khoảng giá
-$(document).ready(function() {
 	// Gắn kết sự kiện submit cho biểu mẫu lọc sản phẩm
 	$('#filterForm').submit(function(event) {
-		event.preventDefault(); // Ngăn chặn hành vi mặc định của trình duyệt
-
+		event.preventDefault();
 		var minPrice = $('#minPrice').val();
 		var maxPrice = $('#maxPrice').val();
-
-		// Gửi yêu cầu lọc sản phẩm đến API
-		$.ajax({
-			url: '/rest/products/filter',
-			type: 'GET',
-			data: { minPrice: minPrice, maxPrice: maxPrice },
-			success: function(response) {
-				var Results = $('#Results');
-				Results.empty(); // Xóa nội dung hiện tại
-
-				response.forEach(function(product) {
-					// Tạo và hiển thị sản phẩm lọc
-					var productHTML = createProductHTML(product);
-					Results.append(productHTML);
-				});
-			},
-			error: function(xhr) {
-				console.log(xhr.responseText);
-			}
-		});
+		filterProductsByPrice(minPrice, maxPrice);
 	});
-});
 
-
-// Chức năng sắp xếp theo tên A - Z & Z -A 
-$(document).ready(function() {
-	// Gắn kết sự kiện click cho các thẻ 'a'
-	$('#productList a').click(function(event) {
-		event.preventDefault(); // Ngăn chặn hành vi mặc định của trình duyệt
-
-		var sortType = $(this).data('sort'); // Lấy giá trị 'data-sort' của thẻ 'a'
-
-		// Gửi yêu cầu sắp xếp sản phẩm đến API
-		$.ajax({
-			url: '/rest/products/sort',
-			type: 'GET',
-			data: { sort: sortType },
-			success: function(response) {
-				var Results = $('#Results');
-				Results.empty(); // Xóa nội dung hiện tại
-
-				response.forEach(function(product) {
-					// Tạo và hiển thị sản phẩm lọc
-					var productHTML = createProductHTML(product);
-					Results.append(productHTML);
-				});
-			},
-			error: function(xhr) {
-				console.log(xhr.responseText);
-			}
-		});
+	// Gắn kết sự kiện click cho các thẻ 'a' sắp xếp theo tên
+	$('#productList a[data-sort]').click(function(event) {
+		event.preventDefault();
+		var sortType = $(this).data('sort');
+		sortProductsByName(sortType);
 	});
-});
-$(document).ready(function() {
-	// Gắn kết sự kiện click cho các thẻ 'a'
-	$('#productList a').click(function(event) {
-		event.preventDefault(); // Ngăn chặn hành vi mặc định của trình duyệt
 
-		var sortType = $(this).data('sortprice'); // Lấy giá trị 'data-sortprice' của thẻ 'a'
-
-		// Gửi yêu cầu sắp xếp sản phẩm theo giá đến API
-		$.ajax({
-			url: '/rest/products/sortprice', // Đảm bảo rằng URL phù hợp với API của bạn
-			type: 'GET',
-			data: { sortprice: sortType }, // Sử dụng 'sortprice' thay vì 'sort'
-			success: function(response) {
-				var Results = $('#Results');
-				Results.empty(); // Xóa nội dung hiện tại
-
-				response.forEach(function(product) {
-					// Tạo và hiển thị sản phẩm lọc
-					var productHTML = createProductHTML(product);
-					Results.append(productHTML);
-				});
-			},
-			error: function(xhr) {
-				console.log(xhr.responseText);
-			}
-		});
+	// Gắn kết sự kiện click cho các thẻ 'a' sắp xếp theo giá
+	$('#productList a[data-sortprice]').click(function(event) {
+		event.preventDefault();
+		var sortType = $(this).data('sortprice');
+		sortProductsByPrice(sortType);
 	});
+
+	// Gắn kết sự kiện khi người dùng thay đổi giá trị radio
+	$('input[type="radio"]').change(handlePriceRangeChange);
 });
-
-
-
-// Chức năng giá theo khoảng 
-$(document).ready(function() {
-	// Gắn kết sự kiện khi người dùng chọn một trong các nút radio
-	$('input[type="radio"]').change(function() {
-		var priceRange = $('input[name="priceRange"]:checked').val();
-
-		// Gửi yêu cầu lọc sản phẩm theo khoảng giá tùy chỉnh đến controller
-		$.ajax({
-			url: '/rest/products/filter-by-custom-price-range',
-			type: 'GET',
-			data: { priceRange: priceRange },
-			success: function(response) {
-				var Results = $('#Results');
-				Results.empty(); // Xóa nội dung hiện tại
-
-				response.forEach(function(product) {
-					// Tạo và hiển thị sản phẩm lọc
-					var productHTML = createProductHTML(product);
-					Results.append(productHTML);
-				});
-			},
-			error: function(xhr) {
-				console.log(xhr.responseText);
-			}
-		});
-	});
-});
-
