@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.TourDAO;
+import com.greenfarm.dto.TourDTO;
+import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Top10;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.service.TourService;
@@ -22,6 +24,11 @@ public class TourServiceImpl implements TourService {
 	@Override
 	public List<Tour> findAll() {
 		return dao.findAll();
+	}
+
+	@Override
+	public Tour findById(Integer tourid) {
+		return dao.findById(tourid).get();
 	}
 	
 	

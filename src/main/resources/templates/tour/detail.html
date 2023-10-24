@@ -1,340 +1,213 @@
 <!DOCTYPE html>
-<html
-  xmlns="http://www.thymeleaf.org"
-  th:replace="~{/layout/layout::dynamic(~{::body})}"
->
-  <head>
-    <meta charset="UTF-8" />
-    <title>GreenFarm</title>
-    <style>
-      .rating-title {
-        font-size: 18px;
-        color: #005294;
-        text-transform: uppercase;
-        margin-bottom: 15px;
-        font-family: Arial, Helvetica, sans-serif;
-        font-weight: 300;
-      }
+<html xmlns="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout::dynamic(~{::body})}">
+<head>
+<meta charset="UTF-8" />
+<title>GreenFarm</title>
+<style>
+.rating-title {
+	font-size: 18px;
+	color: #005294;
+	text-transform: uppercase;
+	margin-bottom: 15px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 300;
+}
 
-      .rating-title label {
-        font-size: 14px;
-        color: #333;
-        font-weight: normal;
-      }
+.rating-title label {
+	font-size: 14px;
+	color: #333;
+	font-weight: normal;
+}
 
-      .rating-title input {
-        display: block;
-        width: 100%;
-        height: 40px;
-        border: 1px solid #eee;
-        padding-left: 10px;
-        border-radius: 5px;
-      }
-    </style>
-  </head>
+.rating-title input {
+	display: block;
+	width: 100%;
+	height: 40px;
+	border: 1px solid #eee;
+	padding-left: 10px;
+	border-radius: 5px;
+}
+</style>
+</head>
 
-  <body>
-    <div class="container-fluid py-5">
-      <div class=" pt-5 pb-3">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a href="#">Tour</a></li>
-            <li class="breadcrumb-item active" aria-current="page">
-              Tour Tham quan vườn rau xanh
-            </li>
-          </ol>
-        </nav>
-        <div class="text-left mb-3 pb-3">
-          <h3 class="text-primary text-uppercase">
-            TOUR 1 NGÀY: TÁT MƯƠNG BẮT CÁ: MỸ THO - BẾN TRE
-          </h3>
-          <h5>
-            Giá tour gốc/khách: <span style="color: #fb752e">780.000đ</span>
-          </h5>
-        </div>
-        <div class="d-grid gap-2 d-md-block">
-          <a href="#" class="btn btn-lg btn-primary p-2">Đặt ngay</a>
-        </div>
-        <div class="mt-2 mb-2">
-          <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link active"
-                id="pills-tour-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-tour"
-                type="button"
-                role="tab"
-                aria-controls="pills-tour"
-                aria-selected="true"
-              >
-                Chương trình tour
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link"
-                id="pills-profile-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-profile"
-                type="button"
-                role="tab"
-                aria-controls="pills-profile"
-                aria-selected="false"
-              >
-                Bảng giá
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link"
-                id="pills-infomation-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-infomation"
-                type="button"
-                role="tab"
-                aria-controls="pills-infomation"
-                aria-selected="false"
-              >
-                Thông tin tour
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link"
-                id="pills-overview-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-overview"
-                type="button"
-                role="tab"
-                aria-controls="pills-overview"
-                aria-selected="false"
-              >
-                Tổng quan tour
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link"
-                id="pills-condition-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-condition"
-                type="button"
-                role="tab"
-                aria-controls="pills-condition"
-                aria-selected="false"
-              >
-                Điều kiện tour
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link"
-                id="pills-image-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-image"
-                type="button"
-                role="tab"
-                aria-controls="pills-image"
-                aria-selected="false"
-              >
-                Hình ảnh tour
-              </button>
-            </li>
-          </ul>
-          <div class="tab-content" id="pills-tabContent">
-            <div
-              class="tab-pane fade show active"
-              id="pills-tour"
-              role="tabpanel"
-              aria-labelledby="pills-tour-tab"
-              tabindex="0"
-            >
-              <h3>Chương trình tour</h3>
-              <div class="row">
-                <div class="col-lg-6 col-md-12 mb-4">
-                  <img class="img-fluid" src="assets/images/tour.png" alt="#" />
-                </div>
-                <div class="col-lg-6 col-md-12 mb-4 lichtrinh">
-                  <div>
-                    <img src="assets/images/traidat.png" class="mt-3" alt="" />
-                  </div>
-                  <div class="lichtrinh_triangle_bg"></div>
-                  <div class="lichtrinh_triangle"></div>
-                  <div class="mota_lichtrinh">
-                    <p>
-                      Văn học hay ngữ văn (thường gọi tắt là văn) (Tiếng Anh:
-                      literature) theo cách nói chung nhất, là bất kỳ tác phẩm
-                      nào bằng văn bản. Hiểu theo nghĩa hẹp hơn, thì văn học là
-                      dạng văn bản được coi là một hình thức nghệ thuật, hoặc
-                      bất kỳ một bài viết nào được coi là có giá trị nghệ thuật
-                      hoặc trí tuệ, thường là do cách thức triển khai ngôn ngữ
-                      theo những cách khác với cách sử dụng bình thường. Trong
-                      các định nghĩa hiện đại hơn, văn học bao hàm cả các văn
-                      bản được nói ra hoặc được hát lên (văn học truyền miệng).
-                      Sự phát triển trong công nghệ in ấn đã cho phép phân phối
-                      và phát triển các tác phẩm chữ viết, và tạo ra loại văn
-                      học điện tử.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="pills-profile"
-              role="tabpanel"
-              aria-labelledby="pills-profile-tab"
-              tabindex="0"
-            >
-              <h3>Bảng giá</h3>
-              <table class="table" style="text-align: center">
-                <thead>
-                  <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Giá người lớn</th>
-                    <th scope="col">Giá trẻ em</th>
-                    <th scope="col">Suất ăn</th>
-                    <th scope="col">Hành động</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>780.000đ</td>
-                    <td>585.000đ</td>
-                    <td>3-4 khách</td>
-                    <td>
-                      <a href="#" class="btn btn-md btn-primary p-2"
-                        >Đặt ngay</a
-                      >
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="pills-infomation"
-              role="tabpanel"
-              aria-labelledby="pills-infomation-tab"
-              tabindex="0"
-            >
-              <h3>Thông tin tour</h3>
-              <div
-                class="d-flex flex-center flex-between mt-5"
-                style="justify-content: space-between"
-              >
-                <div>XNMT 01</div>
-                <div>Hằng ngày</div>
-                <div>1 ngày</div>
-                <div>Ô tô</div>
-                <div>2 sao</div>
-              </div>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="pills-overview"
-              role="tabpanel"
-              aria-labelledby="pills-overview-tab"
-              tabindex="0"
-            >
-              <h3 class="m-auto text-center" style="width: 50%">
-                Về miền tây trải nghiệm tát mương bắt cá thưởng thức đặc sản
-              </h3>
-              <p class="m-auto text-center" style="width: 70%">
-                <span>M</span>iền Tây từ lâu được biết đến là nơi được thiên
-                nhiên ưu ái ban tặng cho địa hình sông nước đầy ắp cá tôm và dồi
-                dào phù sa, những đồng lúa chín vàng trải dài và những vườn cây
-                ăn trái sai trĩu quả. Chính vì thế, du lịch miền Tây là một
-                trong những sự lựa chọn lý tưởng để thư giãn cuối tuần cùng gia
-                đình và bạn bè. Hãy cùng Tour Bốn Phương rời xa thành phố về
-                thăm Mỹ Tho - Bến Tre qua tour miền Tây 1 ngày: tát mương bắt
-                cá. Tour du lịch miền Tây khởi hành từ Sài Gòn của Tour Bốn
-                Phương sẽ đưa quý khách trải nghiệm cuộc sống của người dân miền
-                Tây với những hoạt động thú vị như chèo xuồng ba lá, thư giãn
-                với giai điệu đàn ca tài tử, tự tay tát mương, bắt cá...và ghé
-                thăm những làng nghề truyền thống.
-              </p>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="pills-condition"
-              role="tabpanel"
-              aria-labelledby="pills-condition-tab"
-              tabindex="0"
-            >
-              <h3>Điều kiện tour</h3>
+<body>
+	<div class="container-fluid py-5">
+		<div th:object="${item}" class=" pt-5 pb-3">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a href="#">Tour</a></li>
+					<li th:text="*{Tourname}" class="breadcrumb-item active"
+						aria-current="page"></li>
+				</ol>
+			</nav>
+			<div class="text-left mb-3">
+				<h3 th:text="*{Tourname}" class="text-primary text-uppercase"></h3>
+				<h5>
+					Giá tour gốc/khách: <span th:text="*{pricings.Adultprice}"
+						style="color: #fb752e"></span>
+				</h5>
+			</div>
+			<div class="d-grid gap-2 d-md-block">
+				<div
+					style="display: flex; justify-content: space-between; align-items: center;">
+					<a href="#" class="btn btn-lg btn-primary p-2">Đặt ngay</a> <span
+						class="m-0"> <i class="fas fa-calendar"></i> <span
+						th:text="*{startdate}"></span> 
+						
+						<i class="fas fa-clock"></i> <span
+						th:text="*{enddate}"></span>
+					</span>
+				</div>
+			</div>
 
-              <p>
-                <span>M</span>iền Tây từ lâu được biết đến là nơi được thiên
-                nhiên ưu ái ban tặng cho địa hình sông nước đầy ắp cá tôm và dồi
-                dào phù sa, những đồng lúa chín vàng trải dài và những vườn cây
-                ăn trái sai trĩu quả. Chính vì thế, du lịch miền Tây là một
-                trong những sự lựa chọn lý tưởng để thư giãn cuối tuần cùng gia
-                đình và bạn bè. Hãy cùng Tour Bốn Phương rời xa thành phố về
-                thăm Mỹ Tho - Bến Tre qua tour miền Tây 1 ngày: tát mương bắt
-                cá. Tour du lịch miền Tây khởi hành từ Sài Gòn của Tour Bốn
-                Phương sẽ đưa quý khách trải nghiệm cuộc sống của người dân miền
-                Tây với những hoạt động thú vị như chèo xuồng ba lá, thư giãn
-                với giai điệu đàn ca tài tử, tự tay tát mương, bắt cá...và ghé
-                thăm những làng nghề truyền thống.
-              </p>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="pills-image"
-              role="tabpanel"
-              aria-labelledby="pills-image-tab"
-              tabindex="0"
-            >
-              <h3>Hình ảnh tour</h3>
-              <img src="assets/images/tour.png" alt="" />
-            </div>
-          </div>
-        </div>
-        <div
-          class="container-fluid py-3 my-3"
-          style="
-            padding: 10px;
-            background: #f9f9f9;
-            border-radius: 15px;
-            border: 1px solid #eee;
-          "
-        >
-          <form action="">
-            <div class="rating-title py-3">
-              QUÝ KHÁCH CHƯA RÕ VỀ CHƯƠNG TRÌNH TUOR XIN CỨ HỎI, CHÚNG TÔI TRẢ
-              LỜI
-            </div>
-            <div class="row d-flex flex-between">
-              <div class="col-lg-4 col-md-12 d-grid">
-                <label for="">1. Nhập họ tên</label>
-                <input type="text" name="" id="" placeholder="*" />
-              </div>
-              <div class="col-lg-4 col-md-12 d-grid">
-                <label for="">1. Nhập email</label>
-                <input type="email" name="" id="" placeholder="*" />
-              </div>
-              <div class="col-lg-4 col-md-12 d-grid">
-                <label for="">1. Nhập số điện thoại</label>
-                <input type="number" name="" id="" placeholder="*" />
-              </div>
-              <div class="col-lg-12 d-grid" width="100%">
-                <label for="">4. Viết nhận xét của bạn vào bên dưới</label>
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder=""
-                  style="height: 150px"
-                />
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </body>
+
+			<div class="mt-2 mb-2">
+				<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link active" id="pills-tour-tab"
+							data-bs-toggle="pill" data-bs-target="#pills-tour" type="button"
+							role="tab" aria-controls="pills-tour" aria-selected="true">
+							Chương trình tour</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="pills-profile-tab"
+							data-bs-toggle="pill" data-bs-target="#pills-profile"
+							type="button" role="tab" aria-controls="pills-profile"
+							aria-selected="false">Bảng giá</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="pills-infomation-tab"
+							data-bs-toggle="pill" data-bs-target="#pills-infomation"
+							type="button" role="tab" aria-controls="pills-infomation"
+							aria-selected="false">Thông tin tour</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="pills-overview-tab"
+							data-bs-toggle="pill" data-bs-target="#pills-overview"
+							type="button" role="tab" aria-controls="pills-overview"
+							aria-selected="false">Tổng quan tour</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="pills-condition-tab"
+							data-bs-toggle="pill" data-bs-target="#pills-condition"
+							type="button" role="tab" aria-controls="pills-condition"
+							aria-selected="false">Điều kiện tour</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="pills-image-tab"
+							data-bs-toggle="pill" data-bs-target="#pills-image" type="button"
+							role="tab" aria-controls="pills-image" aria-selected="false">
+							Hình ảnh tour</button>
+					</li>
+				</ul>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-tour"
+						role="tabpanel" aria-labelledby="pills-tour-tab" tabindex="0">
+						<h3>CHƯƠNG TRÌNH TOUR</h3>
+						<div class="row">
+							<div class="col-lg-6 col-md-12 mb-4">
+								<img class="img-fluid" th:src="@{|*{image}|}" alt=""
+									style="width: 500px" height="300px" />
+							</div>
+							<div class="col-lg-6 col-md-12 mb-4 lichtrinh">
+								<div>
+									<img src="/assets/images/traidat.png" class="mt-3" alt="" />
+								</div>
+								<div class="lichtrinh_triangle_bg"></div>
+								<div class="lichtrinh_triangle"></div>
+								<div class="mota_lichtrinh">
+									<p th:text="*{description}"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="pills-profile" role="tabpanel"
+						aria-labelledby="pills-profile-tab" tabindex="0">
+						<h3>BẢNG GIÁ</h3>
+						<table class="table" style="text-align: center">
+							<thead>
+								<tr>
+									<th scope="col">STT</th>
+									<th scope="col">Giá người lớn</th>
+									<th scope="col">Giá trẻ em</th>
+									<th scope="col">Suất ăn</th>
+									<th scope="col">Hành động</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row">1</th>
+									<td th:text="*{pricings.Adultprice}"></td>
+									<td th:text="*{pricings.Childprice}"></td>
+									<td>Trọn gói</td>
+									<td><a href="#" class="btn btn-md btn-primary p-2">Đặt
+											ngay</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="tab-pane fade" id="pills-infomation" role="tabpanel"
+						aria-labelledby="pills-infomation-tab" tabindex="0">
+						<h3>THÔNG TIN TOUR</h3>
+						<div class="d-flex flex-center flex-between mt-5"
+							style="justify-content: space-between">
+							<div>XNMT 01</div>
+							<div>Hằng ngày</div>
+							<div>1 ngày</div>
+							<div>Ô tô</div>
+							<div>2 sao</div>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="pills-overview" role="tabpanel"					
+						aria-labelledby="pills-overview-tab" tabindex="0">
+						<h3>TỔNG QUAN TOUR</h3>
+						<h3 th:text="*{tourOverview.Title}" class="m-auto text-center" style="width: 50%"></h3>
+						<p th:text="*{tourOverview.Content}" class="m-auto text-center" style="width: 70%">							
+						</p>
+					</div>
+					<div class="tab-pane fade" id="pills-condition" role="tabpanel"
+						aria-labelledby="pills-condition-tab" tabindex="0">
+						<h3>ĐIỀU KIỆN TOUR</h3>
+
+						<p th:text="*{tourCondition.Conditions}">							
+						</p>
+					</div>
+					<div class="tab-pane fade" id="pills-image" role="tabpanel"
+						aria-labelledby="pills-image-tab" tabindex="0">
+						<h3>HÌNH ẢNH TOUR</h3>
+						<!-- <img class="img-fluid" th:src="@{|*{tourImage.Imageid}|}" alt=""
+									style="width: 500px" height="300px" /> -->
+					</div>
+				</div>
+			</div>
+					<div class="container-fluid py-3 my-3"
+				style="padding: 10px; background: #f9f9f9; border-radius: 15px; border: 1px solid #eee;">
+				<form action="">
+					<div class="rating-title py-3">QUÝ KHÁCH CHƯA RÕ VỀ CHƯƠNG
+						TRÌNH TUOR XIN CỨ HỎI, CHÚNG TÔI TRẢ LỜI</div>
+					<div class="row d-flex flex-between">
+						<div class="col-lg-4 col-md-12 d-grid">
+							<label for="">1. Nhập họ tên</label> <input type="text" name=""
+								id="" placeholder="*" />
+						</div>
+						<div class="col-lg-4 col-md-12 d-grid">
+							<label for="">1. Nhập email</label> <input type="email" name=""
+								id="" placeholder="*" />
+						</div>
+						<div class="col-lg-4 col-md-12 d-grid">
+							<label for="">1. Nhập số điện thoại</label> <input type="number"
+								name="" id="" placeholder="*" />
+						</div>
+						<div class="col-lg-12 d-grid" width="100%">
+							<label for="">4. Viết nhận xét của bạn vào bên dưới</label> <input
+								type="text" name="" id="" placeholder="" style="height: 150px" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
 </html>
