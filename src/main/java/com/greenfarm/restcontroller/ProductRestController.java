@@ -32,9 +32,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.greenfarm.dao.ProductImageDAO;
 import com.greenfarm.dto.ProductDTO;
+import com.greenfarm.dto.TourImageDTO;
 import com.greenfarm.entity.Product;
+import com.greenfarm.entity.ProductImage;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.TourImage;
 import com.greenfarm.service.ProductService;
 
 @CrossOrigin("*")
@@ -172,6 +176,7 @@ public class ProductRestController {
 	public ResponseEntity<List<Report>> getTK_Loai() {
 		return new ResponseEntity<>(productService.getTk_loai(), HttpStatus.OK);
 	}
+
 
 	
 }

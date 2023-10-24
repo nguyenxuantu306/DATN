@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class TourImage implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer Imageid;
+	Integer tourimageid;
 	
 
 	String Imageurl;

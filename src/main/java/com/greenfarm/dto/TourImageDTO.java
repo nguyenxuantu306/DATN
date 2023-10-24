@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 public class TourImageDTO {
 	
 	private Integer tourimageid;
-	private String imageurl;
+	private String Imageurl;
 	private Tour tour;
 }

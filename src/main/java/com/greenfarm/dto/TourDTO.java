@@ -1,6 +1,8 @@
 package com.greenfarm.dto;
 
 import java.util.Date;
+import java.util.List;
+
 import com.greenfarm.entity.Pricing;
 import com.greenfarm.entity.TourCondition;
 import com.greenfarm.entity.TourImage;
@@ -25,6 +27,6 @@ public class TourDTO {
 	private Integer Availableslots;
 	private TourCondition tourCondition;
 	private TourOverview tourOverview;
-//	private TourImage tourImage;
+	private List<TourImage> tourImage;
 	private Pricing pricings;
 }
