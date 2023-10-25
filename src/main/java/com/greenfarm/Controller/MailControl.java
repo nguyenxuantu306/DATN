@@ -1,5 +1,4 @@
-package com.greenfarm.controller;
-
+package com.greenfarm.Controller;
 
 import java.io.FileNotFoundException;
 
@@ -21,9 +20,9 @@ import jakarta.mail.MessagingException;
 
 @RestController
 @RequestMapping("/email")
-public class MailCOntroll {
+public class MailControl {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(MailCOntroll.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MailControl.class);
 		
     @Autowired
     EmailService emailService;

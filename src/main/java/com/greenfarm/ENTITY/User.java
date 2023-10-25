@@ -3,9 +3,11 @@ package com.greenfarm.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +33,7 @@ public class User implements Serializable{
 	Integer userid;
 	
 	String password;
+	@Column(unique = true)
 	String email;
 	String firstname;
 	String lastname;
@@ -70,4 +73,8 @@ public class User implements Serializable{
 	@OneToMany(mappedBy = "user")
 	List<UserDiscount>  discount;
 	
+	private boolean accountVerified;
+	
+	@OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    private Set<Securetoken> tokens;
 }
