@@ -27,6 +27,35 @@ function createProductHTML(product) {
 	return productHTML;
 }
 
+// Hàm tạo mã HTML cho một sản phẩm
+function createTourHTML(tour) {
+	var tourHTML = `
+              <div 
+		class="col-lg-4 col-md-6 mb-4">
+		<div class="package-item bg-white mb-2">
+			<a th:href="@{|/tour/detail/${tour.tourid}|}"><img
+				style="height: 350px; width: 100%" class="img-fluid"
+				src="${tour.image}" alt=""></a>
+			<div class="p-4">
+				<a 
+					class="h5 text-decoration-none" >${tour.tourname}</a>
+				<div class="border-top mt-4 pt-4">
+					<div class="d-flex justify-content-between">
+						<h6 class="m-0">
+							<i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
+						</h6>
+						<h5
+				
+							class="m-0">${tour.pricings.Adultprice}</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+        `;
+	return tourHTML;
+}
+
 // Hàm hiển thị danh sách sản phẩm
 function displayProducts(products) {
 	var Results = $('#Results');
@@ -38,6 +67,17 @@ function displayProducts(products) {
 	});
 }
 
+// Hàm hiển thị danh sách tour
+function displayTours(tours) {
+	var tourResults = $('#tourResults');
+	tourResults.empty();
+
+	tours.forEach(function(tour) {
+		var tourHTML = createTourHTML(tour);
+		tourResults.append(tourHTML);
+	});
+}
+
 // Hàm tìm kiếm sản phẩm
 function searchProducts(keyword) {
 	$.ajax({
@@ -46,6 +86,21 @@ function searchProducts(keyword) {
 		data: { keyword: keyword },
 		success: function(response) {
 			displayProducts(response);
+		},
+		error: function(xhr) {
+			console.log(xhr.responseText);
+		}
+	});
+}
+
+// Hàm tìm kiếm Tour theo tên
+function searchTours(keyword) {
+	$.ajax({
+		url: '/rest/tours/searchtour',
+		type: 'GET',
+		data: { keyword: keyword },
+		success: function(response) {
+			displayTours(response);
 		},
 		error: function(xhr) {
 			console.log(xhr.responseText);
@@ -118,6 +173,11 @@ $(document).ready(function() {
 	// Gắn kết sự kiện khi người dùng nhập từ khóa
 	$('#searchKeyword').on('input', function() {
 		searchProducts($(this).val());
+	});
+
+	// Gắn kết sự kiện khi người dùng nhập từ khóa searchtour
+	$('#searchtour').on('input', function() {
+		searchTours($(this).val());
 	});
 
 	// Gắn kết sự kiện submit cho biểu mẫu lọc sản phẩm

@@ -14,6 +14,8 @@ public interface TourService {
 	List<Tour> findAll();
 
 	Tour findById(Integer tourid);
+
+	List<Tour> findTourByKeyword(String searchKeyword);
 	
 	
 }

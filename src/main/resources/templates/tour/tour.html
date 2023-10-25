@@ -1,4 +1,4 @@
-S<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.thymeleaf.org"
 	th:replace="~{/layout/layout::dynamic(~{::body})}">
 <head>
@@ -23,17 +23,17 @@ S<!DOCTYPE html>
 
 							<div class="search_panel">
 								<div class="row">
-									<div class="col-xs-24 col-sm-8 col-md-6">
-										<input type="text" class="form-control" name="q" value=""
+									<div class="col-xs-24 col-sm-8 col-md-8">
+										<input id="searchtour" type="text" class="form-control" name="q" value=""
 											placeholder="Từ khoá">
 									</div>
 									<div class="col-xs-24 col-sm-8 col-md-2">
 										<select class="form-control" name="time">
 											<option value="0">--- Thời gian ---</option>
-											<option value="1">1 ngày</option>
-											<option value="2">2 ngày 1 đêm</option>
-											<option value="3">3 ngày 2 đêm</option>
-											<option value="4">4 ngày 3 đêm</option>											
+											<option value="1">Liên Hệ</option>
+											<option value="2">Hằng Ngày</option>
+											<option value="3">Ngày 11, 18</option>
+											<option value="4">Ngày Chủ Nhật</option>											
 										</select>
 									</div>
 									<div class="col-xs-24 col-sm-8 col-md-2">
@@ -47,17 +47,14 @@ S<!DOCTYPE html>
 										</select>
 									</div>
 									
-									<div class="col-xs-24 col-sm-8 col-md-2 text-right">
-										<input type="hidden" name="is_search" value="1"> <input
-											type="submit" class="btn btn-primary" value="Tìm kiếm">
-									</div>
 								</div>
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			
+			<div class="row" id="tourResults">
 				<div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
 					<div class="package-item bg-white mb-2">
 						<a th:href="@{|/tour/detail/${p.tourid}|}"> <img

@@ -30,6 +30,20 @@ public class TourServiceImpl implements TourService {
 	public Tour findById(Integer tourid) {
 		return dao.findById(tourid).get();
 	}
+
+	@Override
+	public List<Tour> findTourByKeyword(String keyword) {
+		
+		List<Tour> tourList;
+
+		if (keyword != null && !keyword.isEmpty()) {
+			tourList = dao.findTourByKeyword(keyword);
+		} else {
+			tourList = dao.findAll();
+		}
+
+		return tourList;
+	}
 	
 	
 }
