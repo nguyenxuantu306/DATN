@@ -1,9 +1,8 @@
-package com.greenfarm.controller;
+package com.greenfarm.Controller;
 
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.dto.TourDTO;
-import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.service.TourService;
 

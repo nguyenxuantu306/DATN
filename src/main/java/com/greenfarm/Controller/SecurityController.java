@@ -1,4 +1,4 @@
-package com.greenfarm.controller;
+package com.greenfarm.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

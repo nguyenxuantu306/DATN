@@ -74,10 +74,10 @@ public String viewUpdate(ModelMap modelMap, @PathVariable("productId") Integer p
                         cartItem.setQuantity(updatedQuantity);
                         cartDAO.save(cartItem);
                     } else {
-                        cartDAO.delete(cartItem); // Remove the item from the cart if quantity becomes zero
+                        cartDAO.delete(cartItem); 
                     }
                 }
-                // Fetch the updated cart items from the database
+                
                 List<Cart> cartItems = cartDAO.findByUser(user);
                 modelMap.addAttribute("cartItems", cartItems);
                 modelMap.addAttribute("totalPrice", totalPrice(cartItems));

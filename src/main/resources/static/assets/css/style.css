@@ -11166,8 +11166,10 @@ nav ul li a:hover {
 
 .cart-container {
   position: absolute;
-  top: 0;
+  top: 140px;
   right: 0;
+  width: 370px;
+  padding-top: 10px;
   background-color: #fff;
   z-index: 999;
   border: 1px solid #ccc;
@@ -11247,82 +11249,3 @@ nav ul li a:hover {
 
 
 
-/* Mini Cart CSS */
-.mini-cart {
-  position: relative;
-  display: inline-block;
-}
-
-.mini-cart-icon {
-  font-size: 24px;
-  color: #333;
-  text-decoration: none;
-  position: relative;
-}
-
-.mini-cart-count {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: #ff5722;
-  color: #fff;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  text-align: center;
-  line-height: 24px;
-}
-
-.mini-cart-content {
-  display: none;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  min-width: 250px;
-  z-index: 1000;
-}
-
-.mini-cart-items {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.mini-cart-item {
-  display: flex;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.mini-cart-item img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-}
-
-.mini-cart-item-info {
-  flex: 1;
-}
-
-.mini-cart-item-title {
-  font-weight: 600;
-}
-
-.mini-cart-item-remove {
-  font-size: 18px;
-  color: #ccc;
-  cursor: pointer;
-}
-
-.mini-cart-total {
-  padding: 10px;
-  text-align: right;
-}
-
-.mini-cart-buttons {
-  padding: 10px;
-  text-align: center;
-}

@@ -1,101 +1,114 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout::dynamic(~{::body})}">
-<head>
-<meta charset="UTF-8" />
-<title>GreenFarm</title>
+<html
+  xmlns="http://www.thymeleaf.org"
+  th:replace="~{/layout/layout::dynamic(~{::body})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>GreenFarm</title>
+  </head>
 
-</head>
+  <body>
+    <div class="container-fluid shop-detail">
+      <div class="pt-3">
+        <div th:object="${item}" class="row">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+              <li class="breadcrumb-item"><a href="#">Shop</a></li>
+              <li
+                class="breadcrumb-item active"
+                aria-current="page"
+                th:text="*{productname}"
+              ></li>
+            </ol>
+          </nav>
+          <div class="col-lg-6">
+            <img
+              th:src="@{|*{image}|}"
+              alt=""
+              style="width: 500px"
+              height="300px"
+            />
+          </div>
+          <div class="col-lg-6">
+            <div class="text-left mb-3 pb-3">
+              <h3 th:text="*{productname}" class="text-uppercase mt-3"></h3>
+              <h2
+                class="mb-3"
+                style="font-weight: 300; color: #80bb01; font-size: 28px"
+              >
+                <span
+                  th:text="*{price}"
+                  style="color: #999; text-decoration: line-through"
+                ></span>
+                <span th:text="*{price}"></span>
+              </h2>
+              <p th:text="*{description}" class="product-description mb-3"></p>
+              <div class="cart-button mt-5 mb-5 d-flex">
+                <div class="pro-qty mr-3 mb-xs-3 d-flex">
+                  <input type="text" value="1" class="pr-3" />
+                  <div class="d-inline-block">
+                    <a href="#" class="inc qty-btn">+</a>
+                    <a href="#" class="dec qty-btn">-</a>
+                  </div>
+                </div>
+                <button class="add-to-cart-button" th:onclick="'addToCart(\'' + ${item.productid} + '\')'">
+                  <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+              </div>
+              <div class="categories d-flex">
+                <h5>
+                  CATEGORIES:
+                  <span><a th:text="*{category.categoryname}"></a></span>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<body>
-	<div class="container-fluid shop-detail ">
-		<div class="pt-3">
-			
-			<div th:object="${item}" class="row">
-				<nav aria-label="breadcrumb">
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-					<li class="breadcrumb-item"><a href="#">Shop</a></li>
-					<li class="breadcrumb-item active" aria-current="page" th:text="*{productname}"></li>
-				</ol>
-				</nav>
-				<div class="col-lg-6">
-					<img th:src="@{|*{image}|}" alt="" style="width: 500px"
-						height="300px">
-				</div>
-				<div class="col-lg-6">
-					<div class="text-left mb-3 pb-3">
-						<h3 th:text="*{productname}" class="text-uppercase mt-3"></h3>
-						<h2 class="mb-3"
-							style="font-weight: 300; color: #80bb01; font-size: 28px">
-							<span th:text="*{price}"
-								style="color: #999; text-decoration: line-through"></span> <span
-								th:text="*{price}"></span>
-						</h2>
-						<p th:text="*{description}" class="product-description mb-3"></p>
-						<div class="cart-button mt-5 mb-5 d-flex">
-							<div class="pro-qty mr-3 mb-xs-3 d-flex">
-								<input type="text" value="1" class="pr-3" />
-								<div class="d-inline-block">
-									<a href="#" class="inc qty-btn">+</a> <a href="#"
-										class="dec qty-btn">-</a>
-								</div>
-							</div>
-							<button class="add-to-cart-button">
-								<i class="fas fa-shopping-cart"></i> Add to Cart
-							</button>
-						</div>
-						<div class="categories d-flex">
-							<h5>
-								CATEGORIES: <span><a th:text="*{category.categoryname}"></span>
-							</h5>
-						</div>
-					</div>
-				</div>
-			</div>
+        <div id="wapper">
+          <div class="new_product_area product_page">
+            <div class="row">
+              <div class="col-12">
+                <div class="block_title">
+                  <h3>SẢN PHẨM LIÊN QUAN</h3>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <div class="row slider" th:object="${item}">
+            <div
+              class="col-md-12 col-sm-12 col-xs-12 slide"
+              th:each="p : *{category.products}"
+            >
+              <div class="wap-items-ss brbox">
+                <a
+                  th:href="@{|/product/detail/${p.productid}|}"
+                  class="wap-ss-img"
+                >
+                  <img th:src="@{|${p.image}|}" alt="Product Image" />
+                </a>
+                <div class="textleft">
+                  <a
+                    th:href="@{|/product/detail/${p.productid}|}"
+                    th:text="${p.productname}"
+                    style="color: black; text-decoration: none"
+                  ></a>
+                  <div>
+                    <b
+                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"
+                    ></b>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-
-
-			<div id="wapper">
-				<div class="new_product_area product_page">
-					<div class="row">
-						<div class="col-12">
-							<div class="block_title">
-								<h3>SẢN PHẨM LIÊN QUAN</h3>
-
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="row slider" th:object="${item}">
-					<div class="col-md-12 col-sm-12 col-xs-12 slide"
-						th:each="p : *{category.products}">
-						<div class="wap-items-ss brbox">
-							<a th:href="@{|/product/detail/${p.productid}|}"
-								class="wap-ss-img"> <img th:src="@{|${p.image}|}"
-								alt="Product Image">
-							</a>
-							<div class="textleft">
-								<a th:href="@{|/product/detail/${p.productid}|}"
-									th:text="${p.productname}"
-									style="color: black; text-decoration: none;"></a>
-								<div>
-									<b
-										th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></b>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-
-
-
-	</div>
-
-</body>
+	
+  </body>
 </html>

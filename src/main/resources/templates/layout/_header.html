@@ -1,127 +1,170 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html
+  xmlns="http://www.thymeleaf.org"
+  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>GreenFarm</title>
+  </head>
 
-<head>
-	<meta charset="UTF-8" />
-	<title>GreenFarm</title>
-</head>
+  <body>
+    <div th:fragment="header" class="header_area">
+      <!-- Topbar Start -->
+      <div class="container-fluid bg-light pt-3d-none d-lg-block">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+              <div class="d-inline-flex align-items-center">
+                <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
+                <p class="text-body px-3">|</p>
+                <p><i class="fa fa-phone-alt mr-2"></i>+012 345 6789</p>
+              </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+              <div class="d-inline-flex align-items-center">
+                <a class="text-primary px-3" href="">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a class="text-primary px-3" href="">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a class="text-primary px-3" href="">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a class="text-primary px-3" href="">
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a class="text-primary pl-3" href="">
+                  <i class="fab fa-youtube"></i>
+                </a>
+                <a class="text-primary pl-3" href="#" id="cart-toggle"
+                  ><i class="fa fa-shopping-cart"></i>
+                  <span class="badge">3</span></a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<body>
-	<div th:fragment="header" class="header_area">
-		<!-- Topbar Start -->
-		<div class="container-fluid bg-light pt-3d-none d-lg-block">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
-						<div class="d-inline-flex align-items-center">
-							<p>
-								<i class="fa fa-envelope mr-2"></i>info@example.com
-							</p>
-							<p class="text-body px-3">|</p>
-							<p>
-								<i class="fa fa-phone-alt mr-2"></i>+012 345 6789
-							</p>
-						</div>
-					</div>
-					<div class="col-lg-6 text-center text-lg-right">
-						<div class="d-inline-flex align-items-center">
-							<a class="text-primary px-3" href=""> <i class="fab fa-facebook-f"></i>
-							</a> <a class="text-primary px-3" href=""> <i class="fab fa-twitter"></i>
-							</a> <a class="text-primary px-3" href=""> <i class="fab fa-linkedin-in"></i>
-							</a> <a class="text-primary px-3" href=""> <i class="fab fa-instagram"></i>
-							</a> <a class="text-primary pl-3" href=""> <i class="fab fa-youtube"></i>
-							</a> <a class="text-primary pl-3" href="#" id="cart"><i class="fa fa-shopping-cart"></i>
-								<span class="badge">3</span></a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+      <div sec:authorize="isAuthenticated()" class="col-md-12 text-right">
+        <div class="bg-primary p-1 d-inline-block">
+          <div class="d-flex">
+            <div
+              th:if="${#authorization.expression('hasRole(''Administrator'')')}"
+              class="mr-3"
+            >
+              <a class="text-white" th:href="@{/admin}">Administration</a>
+            </div>
+            <div><a class="text-white" th:href="@{/logoff}">Logoff</a></div>
+          </div>
+        </div>
+      </div>
 
-		<div sec:authorize="isAuthenticated()" class="col-md-12 text-right">
-			<div class="bg-primary p-1 d-inline-block">
-				<div class="d-flex">
-					<div th:if="${#authorization.expression('hasRole(''Administrator'')')}" class="mr-3"><a
-							class="text-white" th:href="@{/admin}">Administration</a></div>
-					<div><a class="text-white" th:href="@{/logoff}">Logoff</a></div> 
-				</div>
-			</div>
-		</div>
+      <!-- Topbar End -->
+      <!-- Topbar End -->
+      <div class="container cart-container mini-cart" id="mini-cart">
+        <div class="shopping-cart">
+          <div class="shopping-cart-header">
+            <i class="fa fa-shopping-cart cart-icon"></i
+            ><span class="badge">3</span>
+            <div class="shopping-cart-total">
+              <span class="lighter-text">Total:</span>
+              <span class="main-color-text">$2,229.97</span>
+            </div>
+          </div>
+          <!--end shopping-cart-header -->
 
-		<!-- Topbar End -->
-		<!-- Topbar End -->
-		<div class="container cart-container" id="mini-cart">
-			<div class="shopping-cart">
-				<div class="shopping-cart-header">
-					<i class="fa fa-shopping-cart cart-icon"></i><span class="badge">3</span>
-					<div class="shopping-cart-total">
-						<span class="lighter-text">Total:</span> <span class="main-color-text">$2,229.97</span>
-					</div>
-				</div>
-				<!--end shopping-cart-header -->
+          <ul class="shopping-cart-items">
+            <li class="clearfix">
+              <img
+                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item1.jpg"
+                alt="item1"
+              />
+              <span class="item-name">Sony DSC-RX100M III</span>
+              <span class="item-price">$849.99</span>
+              <span class="item-quantity">Quantity: 01</span>
+            </li>
 
-				<ul class="shopping-cart-items">
-					<li class="clearfix"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item1.jpg"
-							alt="item1" /> <span class="item-name">Sony
-							DSC-RX100M III</span> <span class="item-price">$849.99</span> <span
-							class="item-quantity">Quantity: 01</span></li>
+            <li class="clearfix">
+              <img
+                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg"
+                alt="item1"
+              />
+              <span class="item-name">KS Automatic Mechanic...</span>
+              <span class="item-price">$1,249.99</span>
+              <span class="item-quantity">Quantity: 01</span>
+            </li>
 
-					<li class="clearfix"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg"
-							alt="item1" /> <span class="item-name">KS
-							Automatic Mechanic...</span> <span class="item-price">$1,249.99</span> <span
-							class="item-quantity">Quantity: 01</span></li>
+            <li class="clearfix">
+              <img
+                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item3.jpg"
+                alt="item1"
+              />
+              <span class="item-name">Kindle, 6" Glare-Free To...</span>
+              <span class="item-price">$129.99</span>
+              <span class="item-quantity">Quantity: 01</span>
+            </li>
+          </ul>
 
-					<li class="clearfix"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item3.jpg"
-							alt="item1" /> <span class="item-name">Kindle,
-							6" Glare-Free To...</span> <span class="item-price">$129.99</span> <span
-							class="item-quantity">Quantity: 01</span></li>
-				</ul>
-
-				<a href="/cart" class="button">Checkout</a>
-			</div>
-			<!--end shopping-cart -->
-		</div>
-		<!-- Navbar Start -->
-		<div class="container-fluid position-relative nav-bar p-0">
-			<div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9">
-				<nav class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5">
-					<a href="/" class="navbar-brand">
-						<h2 class="m-0 text-primary">
-							GREEN<span class="text-dark">FARM</span>
-						</h2>
-					</a>
-					<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
-						<div class="navbar-nav ml-auto ">
-							<a href="/" class="nav-item nav-link">Home</a> <a href="/product/shop"
-								class="nav-item nav-link">Shop</a> <a href="/tour"
-								class="nav-item nav-link">Tour</a> <a href="about.html"
-								class="nav-item nav-link">About</a> <a href="contact.html"
-								class="nav-item nav-link">Contact</a> <a class="nav-item nav-link data-toggle"
-								href="/cart">Cart</a>
-							<div sec:authorize="isAnonymous()">
-								<a class="nav-item nav-link data-toggle" th:href="@{/login}">Login</a>
-							</div>
-							<div sec:authorize="isAuthenticated()">
-								<a th:href="@{/profile}" class="rounded-circle"> <img
-										src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-										style="padding: 20px; width: 85px;" alt="Avatar">
-								</a>
-							</div>
-						</div>
-
-
-					</div>
-				</nav>
-			</div>
-		</div>
-		<!-- Navbar End -->
-
-
-
-	</div>
-</body>
-
+          <a href="/cart" class="button">Checkout</a>
+        </div>
+        <!--end shopping-cart -->
+      </div>
+      <!-- Navbar Start -->
+      <div class="container-fluid position-relative nav-bar p-0">
+        <div
+          class="container-lg position-relative p-0 px-lg-3"
+          style="z-index: 9"
+        >
+          <nav
+            class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5"
+          >
+            <a href="/" class="navbar-brand">
+              <h2 class="m-0 text-primary">
+                GREEN<span class="text-dark">FARM</span>
+              </h2>
+            </a>
+            <button
+              type="button"
+              class="navbar-toggler"
+              data-toggle="collapse"
+              data-target="#navbarCollapse"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div
+              class="collapse navbar-collapse justify-content-between px-3"
+              id="navbarCollapse"
+            >
+              <div class="navbar-nav ml-auto">
+                <a href="/" class="nav-item nav-link">Home</a>
+                <a href="/product/shop" class="nav-item nav-link">Shop</a>
+                <a href="/tour" class="nav-item nav-link">Tour</a>
+                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a class="nav-item nav-link data-toggle" href="/cart">Cart</a>
+                <div sec:authorize="isAnonymous()">
+                  <a class="nav-item nav-link data-toggle" th:href="@{/login}"
+                    >Login</a
+                  >
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                  <a th:href="@{/profile}" class="rounded-circle">
+                    <img
+                      src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                      style="padding: 20px; width: 85px"
+                      alt="Avatar"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <!-- Navbar End -->
+    </div>
+  </body>
 </html>

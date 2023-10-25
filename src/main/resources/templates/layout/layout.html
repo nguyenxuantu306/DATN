@@ -148,5 +148,42 @@
         });
       });
     </script>
+
+    {% comment %} Mini Cart {% endcomment %}
+    <script>
+      // JavaScript to handle the mini cart toggle using jQuery
+      $(document).ready(function () {
+        const cartToggle = $("#cart-toggle");
+        const miniCart = $("#mini-cart");
+    
+        // Initially hide the mini cart
+        miniCart.hide();
+    
+        cartToggle.click(function () {
+          miniCart.toggle();
+        });
+      });
+    </script>
+
+
+    {% comment %} AddToCart {% endcomment %}
+    <script>
+      function addToCart(productId) {
+          $.ajax({
+              type: "POST",
+              url: "/cart/add/" + productId,
+              data: {
+                  productId: productId
+              },
+              success: function(response) {
+                  console.log("Product added to cart:", response);
+              },
+              error: function(error) {
+                  console.error("Error adding product to cart:", error);
+              }
+          });
+      }
+  </script>
+  
   </body>
 </html>
