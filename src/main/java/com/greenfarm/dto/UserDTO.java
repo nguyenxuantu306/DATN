@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
-	@NotEmpty(message = "UserId không được để trống")
+	//@NotEmpty(message = "UserId không được để trống")
 	private Integer userid;
 	@NotEmpty(message = "Thiếu Email")
 	@Email(message = "Email không hợp lệ")
@@ -23,6 +23,10 @@ public class UserDTO {
 	
 	@NotEmpty(message = "Thiếu password")
 	private String password;
+	
+	@NotEmpty
+	private String repeatpassword;
+	
 	@NotEmpty(message = "Thiếu FirstName")
 	private String firstname;
 	@NotEmpty(message = "Thiếu LastName")
@@ -40,7 +44,7 @@ public class UserDTO {
 	@NotNull(message = "Trường Birthday không được để trống")
 	@Past(message = "Birthday phải ở trong quá khứ")
 	private Date birthday;
-	@NotNull(message = "Trường CreatedDate không được để trống")
-	@PastOrPresent(message = "CreatedDate phải ở trong quá khứ hoặc hiện tại mới tạo")
+//	@NotNull(message = "Trường CreatedDate không được để trống")
+//	@PastOrPresent(message = "CreatedDate phải ở trong quá khứ hoặc hiện tại mới tạo")
 	private Date createddate;
 }
