@@ -1,4 +1,4 @@
-package com.greenfarm.Controller;
+package com.greenfarm.controller;
 
 import java.io.FileNotFoundException;
 

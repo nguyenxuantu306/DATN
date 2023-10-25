@@ -1,4 +1,4 @@
-package com.greenfarm.Controller;
+package com.greenfarm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
