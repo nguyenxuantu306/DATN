@@ -1,5 +1,7 @@
 package com.greenfarm.dto;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -18,4 +20,8 @@ public class ProductDTO {
     private Integer quantityavailable;
     @JsonIgnore
     private CategoryDTO category;
+    
+    
+    // top 10 
+    private BigDecimal revenue;
 }

@@ -20,13 +20,13 @@ public class TourOverview implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer touroverviewid;
-//	
-//	@OneToOne
-//	@JoinColumn(name = "tourid")
-//	Tour tour;
 	
 	private String Title;
 	
 	private String Content;
+	
+	@OneToOne
+	@JoinColumn(name = "tourid")
+	Tour tour;
 	
 }

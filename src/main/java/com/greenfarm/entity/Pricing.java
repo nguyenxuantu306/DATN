@@ -21,15 +21,15 @@ import lombok.NoArgsConstructor;
 public class Pricing implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer PricingID;
+	Integer Pricingid;
 	
 	@ManyToOne
 	@JoinColumn(name = "TourID")
 	Tour tour;
 	
-	Float AdultPrice;
+	Float Adultprice;
 	
-	Float ChildPrice;
+	Float Childprice;
 	
-	Float InfantPrice;
+	Float Infantprice;
 }

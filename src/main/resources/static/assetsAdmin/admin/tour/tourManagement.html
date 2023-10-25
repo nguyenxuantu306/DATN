@@ -1,4 +1,3 @@
-
 <div class="row page-titles mx-0">
 	<div class="col p-md-0">
 		<ol class="breadcrumb">
@@ -18,36 +17,36 @@
 				<div class="card-body">
 					<h4 class="card-title">Data Table</h4>
 					<div class="table-responsive">
-						<table
-							class="table table-striped table-bordered zero-configuration">
+						<table class="table table-striped table-bordered zero-configuration">
 							<thead>
 								<tr>
-									<th>STT</th>
+									<th>NO.</th>
 									<th>IMAGE</th>
-									<th>NAME</th>								
+									<th>NAME</th>
 									<th>STARTDATE</th>
 									<th>ENDDATE</th>
-									<th>PRICE</th>									
-									<th>SLOTS</th>	
+									<th>PRICE</th>
+									<th>SLOTS</th>
 									<th>Condition</th>
-									<th>Overview</th>								
+									<th>Overview</th>
 									<th>ACTION</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
+								<tr ng-repeat="item in items">
 									<td>{{$index + 1}}</td>
-									<td>anhtour.png</td>
-									<td>Tour 1 ngày: Tát mương bắt cá Mỹ Tho - Bến Tre</td>									
-									<td>10/10/2023 00:00 AM</td>
-									<td>10/10/2023 00:00 AM</td>
-									<td>10.000 VNĐ</td>									
-									<td>50</td>	
-									<td>Condition</td>
-									<td>Overview</td>								
-									<td class="text-center"><a href="/"><i
-											class="bi bi-pencil-square p-2"></i> </a> <a href="/"><i
-											class="bi bi-trash3-fill p-2"></i></a></td>
+									<td><img ng-src="{{item.image}}" alt="Tour Image"
+										style="width: 80px;"></td>
+									<td>{{item.tourname}}</td>
+									<td>{{item.startdate | date:'dd-MM-yyyy'}}</td>
+									<td>{{item.enddate | date:'dd-MM-yyyy'}}</td>
+									<td>{{item.pricings.childprice}}</td>
+									<td>{{item.availableslots}}</td>
+									<td>{{item.tourCondition.tourconditionid}}</td>
+									<td>{{item.tourOverview.touroverviewid}}</td>
+									<td class="text-center"><a href="" ng-click="edit(item)"><i
+												class="bi bi-pencil-square p-2"></i> </a> </td>
+									<!--<a href="/"><i class="bi bi-trash3-fill p-2"></i></a>-->
 								</tr>
 							</tbody>
 						</table>
@@ -65,25 +64,26 @@
 			<div class="basic-form">
 				<form>
 					<div class="form-group">
-						<input type="text" class="form-control input-default"
+						<input type="text" name="tourname" ng-model="form.tourname" class="form-control input-default"
 							placeholder="Name" />
 					</div>
 					<div class="form-group d-flex">
 						<div class="form-group d-flex">
-							<input type="number" class="form-control input-default mr-2"
-								placeholder="ChildPrice" /> <input
-								type="number" class="form-control input-default ml-2"
-								placeholder="InfantPrice" />
+							<input type="number" ng-model="form.pricings.childprice" number-format="{0:.3f}" class="form-control input-default mr-2" placeholder="ChildPrice" />
+							<input type="number" ng-model="form.pricings.adultprice" class="form-control input-default ml-2" placeholder="InfantPrice" />
 						</div>
-						<input type="number" class="form-control input-default ml-2"
-							placeholder="Quantity" />
+						<input type="number" name="availableslots" ng-model="form.availableslots"
+							class="form-control input-default ml-2" placeholder="Quantity" />
 					</div>
 
 					<div class="form-group d-flex">
-						<input class="form-control input-daterange-datepicker mr-2"
-							type="text" name="daterange" placeholder="Start Date - End Date" />
-						<input type="text" class="form-control input-default ml-2"
-							placeholder="Location" />
+						<input class="form-control input-daterange-datepicker mr-2" type="date" name="daterange"
+							ng-model="form.startdate" placeholder="Start Date" />
+						<input class="form-control input-daterange-datepicker mr-2" type="date" name="daterange"
+							ng-model="form.enddate" placeholder="End Date" />
+					</div>
+					<div class="form-group">
+						<input type="text" name="location" ng-model="form.location"class="form-control input-default ml-2" placeholder="Location" />
 					</div>
 					<div class="form-group">
 						<div class="input-group mb-3">
@@ -91,11 +91,11 @@
 								<span class="input-group-text">Upload</span>
 							</div>
 							<div class="custom-file">
-								<input type="file" class="custom-file-input" /> <label
-									class="custom-file-label">Choose file</label>
+								<input type="file" name="image" ng-model="form.image" class="custom-file-input" />
+								<label class="custom-file-label">Choose file</label>
 							</div>
 						</div>
-						<img src="images/paypal.png" alt="Hình Ảnh" class="img-fluid" />
+						<img src="images/paypal.png" ng-model="form.image" alt="Hình Ảnh" class="img-fluid" />
 					</div>
 				</form>
 			</div>
@@ -107,13 +107,18 @@
 		<div class="col-12">
 			<div class="card">
 				<h3 class="text-center p-4">Condition</h3>
-				<div class="card-body">
+				<!--<div class="card-body">
+				
 					<div class="click2edit m-b-40">Click on Edite button and
 						change the text then save it.</div>
-					<button id="edit" class="btn btn-info btn-rounded" onclick="edit()"
-						type="button">Edit</button>
-					<button id="save" class="btn btn-success btn-rounded"
-						onclick="save()" type="button">Save</button>
+					<button id="edit" class="btn btn-info btn-rounded" onclick="edit()" type="button">Edit</button>
+					<button id="save" class="btn btn-success btn-rounded" onclick="save()" type="button">Save</button>
+				</div>-->
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Conditions</span>
+					</div>
+					<textarea class="form-control" style="height: 200px;" ng-model="form.tourCondition.conditions" aria-label="With textarea"></textarea>
 				</div>
 			</div>
 		</div>
@@ -124,13 +129,24 @@
 		<div class="col-12">
 			<div class="card">
 				<h3 class="text-center p-4">Overview</h3>
-				<div class="card-body">
+				<!--<div class="card-body">
 					<div class="click2edit m-b-40">Click on Edite button and
 						change the text then save it.</div>
-					<button id="edit" class="btn btn-info btn-rounded" onclick="edit()"
-						type="button">Edit</button>
-					<button id="save" class="btn btn-success btn-rounded"
-						onclick="save()" type="button">Save</button>
+					<button id="edit" class="btn btn-info btn-rounded" onclick="edit()" type="button">Edit</button>
+					<button id="save" class="btn btn-success btn-rounded" onclick="save()" type="button">Save</button>
+				</div>-->
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+					</div>
+					<input type="text" ng-model="form.tourOverview.title" class="form-control" aria-label="Default"
+						aria-describedby="inputGroup-sizing-default">
+				</div>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Content</span>
+					</div>
+					<textarea class="form-control" style="height: 200px;" ng-model="form.tourOverview.content" aria-label="With textarea"></textarea>
 				</div>
 			</div>
 		</div>
@@ -139,4 +155,3 @@
 <div class="col-12 text-center">
 	<button class="btn btn-danger px-5">Create / Update</button>
 </div>
-

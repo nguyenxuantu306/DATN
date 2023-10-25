@@ -12,7 +12,7 @@ app.controller("authority-ctrl", function($scope, $http, $location) {
 
 
 		// load staffs and directors(administrators)
-		$http.get("/rest/users?admin=true").then(resp => {
+		$http.get("/rest/users/useradmin?admin=true").then(resp => {
 			$scope.admins = resp.data;
 		})
 
@@ -26,7 +26,7 @@ app.controller("authority-ctrl", function($scope, $http, $location) {
 
 	$scope.authority_of = function(acc, role) {
 		if ($scope.authorities) {
-			return $scope.authorities.find(ur => ur.user.username == acc.username && ur.role.id == role.id);
+			return $scope.authorities.find(ur => ur.user.email == acc.email && ur.role.id == role.id);
 		}
 	}
 

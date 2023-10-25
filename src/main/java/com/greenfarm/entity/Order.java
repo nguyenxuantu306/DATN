@@ -27,23 +27,23 @@ import lombok.NoArgsConstructor;
 public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Orderid;
-
-	@ManyToOne
-	@JoinColumn(name = "UserID")
-	private User user;
+	public Integer Orderid;
 
 	@Temporal(TemporalType.DATE)
-	@JoinColumn(name = "OrderDate")
+	@JoinColumn(name = "orderdate")
 	private Date orderdate = new Date();
 
 	private String Address;
 
-	@JsonIgnore
+//	@JsonIgnore 
 	@OneToMany(mappedBy = "order")
-	List<OrderDetail> orderDetail;
+	public List<OrderDetail> orderDetail;
 	
 	@ManyToOne
-	@JoinColumn(name = "statusorderid")
+	@JoinColumn(name = "userid")
+	User user;
+	
+	@ManyToOne
+	@JoinColumn(name ="statusorderid")
 	StatusOrder statusOrder;
 }
