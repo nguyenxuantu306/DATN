@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.User;
+import com.greenfarm.exception.UnkownIdentifierException;
+import com.greenfarm.exception.UserAlreadyExistException;
 import com.greenfarm.service.UserService;
 
 @CrossOrigin("*")
@@ -48,7 +50,7 @@ public class UserRestController {
 	}
 	
 	@GetMapping("{userid}")
-	public ResponseEntity<UserDTO> getOne(@PathVariable("userid") Integer userid) {
+	public ResponseEntity<UserDTO> getOne(@PathVariable("userid") Integer userid) throws UnkownIdentifierException {
 	    User user = userService.findById(userid);
 
 	    if (user == null) {
@@ -65,7 +67,7 @@ public class UserRestController {
 	}
 
 	@PostMapping()
-	public ResponseEntity<UserDTO> create(@RequestBody User user) {
+	public ResponseEntity<UserDTO> create(@RequestBody User user) throws UserAlreadyExistException {
 	  User createdUser = userService.create(user);
 
 	    if (createdUser == null) {
@@ -82,7 +84,7 @@ public class UserRestController {
 	}
 
 	@PutMapping("{userid}")
-	public ResponseEntity<UserDTO> update(@PathVariable("userid") Integer userid, @RequestBody User updateUser) {
+	public ResponseEntity<UserDTO> update(@PathVariable("userid") Integer userid, @RequestBody User updateUser) throws UnkownIdentifierException {
 	    User existingUser = userService.findById(userid);
 
 	    if (existingUser == null) {
@@ -113,7 +115,7 @@ public class UserRestController {
 
 
 	@DeleteMapping("{userid}")
-	public ResponseEntity<Void> delete(@PathVariable("userid") Integer userid) {
+	public ResponseEntity<Void> delete(@PathVariable("userid") Integer userid) throws UnkownIdentifierException {
 		
 	    User existingUser = userService.findById(userid);
 	    
