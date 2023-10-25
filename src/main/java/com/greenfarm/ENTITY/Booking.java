@@ -27,14 +27,6 @@ public class Booking implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Bookingid;
 	
-	@ManyToOne
-	@JoinColumn(name = "userid")
-	User user;
-//	
-//	@ManyToOne
-//	@JoinColumn(name = "TourID")
-//	Tour tour;
-	
 	@Temporal(TemporalType.DATE)
 	private Date Bookingdate = new Date();
 	
@@ -43,12 +35,20 @@ public class Booking implements Serializable{
 	private Float Totalprice;
 	
 	@ManyToOne
-	@JoinColumn(name = "statusbookingid")
-	StatusBooking statusBooking;
+	@JoinColumn(name = "userid")
+	User user;
 	
 	@ManyToOne
-	@JoinColumn(name = "tourtypeticketid")
-	TourTypeTicket tourTypeTicket;
+	@JoinColumn(name = "tourid")
+	Tour tour;
+	
+//	@ManyToOne
+//	@JoinColumn(name = "statusbookingid")
+//	StatusBooking statusBooking;
+	
+//	@ManyToOne
+//	@JoinColumn(name = "tourtypeticketid")
+//	TourTypeTicket tourTypeTicket;
 	
 
 }
