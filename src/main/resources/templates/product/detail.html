@@ -54,7 +54,7 @@
                   </div>
                 </div>
                 {% comment %} <button class="add-to-cart-button" th:onclick="'addToCart(\'' + ${item.productid} + '\')'"> {% endcomment %}
-                  <button class="add-to-cart-button" th:href="cart/add/1">
+                  <button class="add-to-cart-button" th:href="cart/add/{}">
                   <i class="fas fa-shopping-cart"></i> Add to Cart
                 </button>
               </div>
