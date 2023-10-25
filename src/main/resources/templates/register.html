@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng Ký</title>
+<link rel="stylesheet" href="assets/login/login.css">
+</head>
+
+<body>
+	<section>
+		<div class="form-box">
+			<div class="form-value">
+				<form action="/register" th:object="${userinfo}" method="post"
+					th:action="@{/register}" novalidate>
+					<h2>REGISTER</h2>
+					<div class="alert alert-success" role="alert"
+						th:if="${registrationMsg != null}">
+						<p th:text="${registrationMsg}"></p>
+					</div>
+					<div class="inputbox">
+						<ion-icon name="person-outline"></ion-icon>
+						<input name="firstname" type="text" required
+							th:field="*{firstname}"> <span class="error"
+							th:if="${#fields.hasErrors('firstname')}"
+							th:errors="*{firstname}"></span> <label for="">First Name</label>
+					</div>
+					<div class="inputbox">
+						<ion-icon name="person-outline"></ion-icon>
+						<input name="lastname" type="text" required th:field="*{lastname}">
+						<span class="error" th:if="${#fields.hasErrors('lastname')}"
+							th:errors="*{lastname}"></span> <label for="">Last Name</label>
+					</div>
+					<div class="inputbox">
+						<ion-icon name="mail-outline"></ion-icon>
+						<input name="email" type="email" required th:field="*{email}">
+						<span class="error" th:if="${#fields.hasErrors('email')}"
+							th:errors="*{email}"></span> <label for="">Email</label>
+					</div>
+					<div class="inputbox">
+						<ion-icon name="call-outline"></ion-icon>
+						<input name="phonenumber" type="number" required
+							th:field="*{phonenumber}"> <span class="error"
+							th:if="${#fields.hasErrors('phonenumber')}"
+							th:errors="*{phonenumber}"></span> <label for="">Phone</label>
+					</div>
+					<div class="inputbox">
+						<ion-icon name="location-outline"></ion-icon>
+						<input name="address" type="text" required th:field="*{address}">
+						<span class="error" th:if="${#fields.hasErrors('address')}"
+							th:errors="*{address}"></span> <label for="">Address</label>
+					</div>
+					<div class="inputbox">
+						<ion-icon name="calendar-outline"></ion-icon>
+						<input name="birthday" type="text" required th:field="*{birthday}">
+						<span class="error" th:if="${#fields.hasErrors('birthday')}"
+							th:errors="*{birthday}"></span> <label for="">Birthday</label>
+					</div>
+					<div class="inputbox">
+						<ion-icon name="lock-closed-outline"></ion-icon>
+						<input name="password" type="password" required
+							th:field="*{password}"> <span class="error"
+							th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+						<label for="">Password</label>
+					</div>
+					<div class="inputbox">
+						<ion-icon name="lock-closed-outline"></ion-icon>
+						<input name="repeatpassword" type="password" required
+							th:field="*{repeatpassword}"> <span class="error"
+							th:if="${#fields.hasErrors('repeatpassword')}"
+							th:errors="*{repeatpassword}"></span> <label for="">Repeat
+							Password</label>
+					</div>
+					<div class="radio">
+						<input name="gender" type="radio" value="true" required
+							th:field="*{gender}"> <label>Male</label> <input
+							name="gender" type="radio" value="false" required
+							th:field="*{gender}"> <label>Female</label>
+					</div>
+					<div class="inputbox">
+						<ion-icon name="image-outline"></ion-icon>
+						<input name="image" type="file" required th:field="*{image}">
+						<span class="error" th:if="${#fields.hasErrors('image')}"
+							th:errors="*{image}"></span> <label for="">Image</label>
+					</div>
+					<button type="submit">Create Account</button>
+					<div class="register">
+						<p>
+							Already have an account! <a href="/login">Login</a>
+						</p>
+						<a href="/"><ion-icon class="iconHome" name="home-outline"></ion-icon></a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<script type="module"
+		src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule
+		src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
+<!-- 
+<body>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form action="/register/xacminh" th:object="${userinfo}" method="post">
+                    <h2>REGISTER</h2>
+                    <div class="inputbox">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <input name="firstname" type="text" required th:field="*{firstname}">
+                        <span class="error" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></span>
+                        <label for="">First Name</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <input name="lastname" type="text" required>
+                        <label for="">Last Name</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <input name="email" type="email" required>
+                        <label for="">Email</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="call-outline"></ion-icon>
+                        <input name="phonenumber" type="number" required>
+                        <label for="">Phone</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="location-outline"></ion-icon>
+                        <input name="address" type="text" required>
+                        <label for="">Address</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="calendar-outline"></ion-icon>
+                        <input name="birthday" type="text"  required>
+                        <label for="">Birthday</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input name="password" type="password" required>
+                        <label for="">Password</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input name="repeatpassword" type="password" required>
+                        <label for="">Repeat Password</label>
+                    </div>
+                    -------------------------------
+                    <div class="radio">
+                        <input name="gender" type="radio" checked>
+                        <label>Male</label>
+                    
+                        <input name="gender" type="radio">
+                        <label>Female</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="image-outline"></ion-icon>
+                        <input name="image" type="file" required>
+                        <label for="">Image</label>
+                    </div>
+                    <button>Create Account</button>
+                    <div class="register">
+                        <p>Already have an account! <a href="/login">Login</a></p>
+                        <a href="/"><ion-icon class="iconHome" name="home-outline"></ion-icon></a>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body> -->

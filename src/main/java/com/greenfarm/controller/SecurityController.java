@@ -1,21 +1,33 @@
 package com.greenfarm.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.greenfarm.dao.UserDAO;
+import com.greenfarm.dto.UserDTO;
+import com.greenfarm.entity.Passworddata;
+import com.greenfarm.entity.User;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.impl.UserServerImpl;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class SecurityController {
 
-	@Autowired
-	UserServerImpl acipl;
+	
 
 	@Autowired
 	PasswordEncoder passwordE;
@@ -26,6 +38,16 @@ public class SecurityController {
 	@Autowired
 	private UserService userService;
 
+
+//	@ModelAttribute
+//	public void commonUser(Principal p,Model model) {
+//		if (p != null) {
+//			String email = p.getName();
+//			com.greenfarm.entity.User user = userService.findByEmail(email);
+//			model.addAttribute("user", user);
+//		}
+//	}
+	
 	@RequestMapping("/login")
 	public String login(Model model) {
 		model.addAttribute("message", "Vui lòng đăng nhập!");
@@ -56,11 +78,7 @@ public class SecurityController {
 //		return "security/login";
 //	}
 
-	@GetMapping("/register")
-	public String register(Model model) {
-		model.addAttribute("message", "Vui lòng đăng ký!");
-		return "security/register";
-	}
+
 
 //
 //	@GetMapping("/index/register/save")
@@ -96,47 +114,7 @@ public class SecurityController {
 //		return "security/login";
 //	}
 //
-//	@GetMapping("/index/profile")
-//	public String profile(Model model) {
-//
-//		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//
-//		// Kiểm tra nếu người dùng đã xác thực
-//		if (authentication.isAuthenticated()) {
-//			// Lấy tên người dùng
-//			String username = authentication.getName();
-//
-//			// Lấy các quyền (roles) của người dùng
-//			String roles = authentication.getAuthorities().toString();
-//
-//			// Trả về thông tin tài khoản trong phản hồi
-//			System.out.println("Xin chào, " + username + "! Bạn có các quyền: " + roles);
-//		} else {
-//			System.out.println("Xin chào! Bạn chưa đăng nhập.");
-//		}
-//		String username = authentication.getName();
-//		Account ac = acdao.findByUsername(username);
-//		System.out.println(ac.getUsername());
-//		System.out.println(ac.getAddress());
-//		System.out.println(ac.getFullname());
-//		System.out.println(ac.getPassword());
-//		System.out.println(ac.getPhone());
-//		System.out.println(ac.getPhoto());
-//		System.out.println(
-//				"*************************************************************************?///////////////////////");
-//		System.out
-//				.println(ac.getAccountroles().stream().map(er -> er.getRole().getName()).collect(Collectors.toList()));
-//		Role role = new Role();
-//		role.setId(1);
-//		System.out.println("//////////////////");
-//		System.out.println(role.getName());
-//
-//		model.addAttribute("ac", ac);
-//
-//		return "/user/profile";
-//	}
-//
+
 	@RequestMapping("/oauth2/login/form")
 	public String fbform() {
 		return "security/login";
@@ -157,5 +135,90 @@ public class SecurityController {
 //	public String ggform() {
 //		return "security/login";
 //	}
+	
+	
+	
+	@GetMapping("/profile")
+	public String profile(Model model) {
+
+		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		// Kiểm tra nếu người dùng đã xác thực
+		if (authentication.isAuthenticated()) {
+			// Lấy tên người dùng
+			String username = authentication.getName();
+			User user = userService.findByEmail(username);
+			model.addAttribute("user", user);
+			// Lấy các quyền (roles) của người dùng
+			String roles = authentication.getAuthorities().toString();
+			model.addAttribute("roles", roles);
+			// Trả về thông tin tài khoản trong phản hồi
+			System.out.println("Xin chào, " + username + "! Bạn có các quyền: " + roles);
+			return "profile";
+		} else {
+			System.out.println("Xin chào! Bạn chưa đăng nhập.");
+			
+			return "profile";
+		}
+	
+		
+
+		//return "redirect:/login";
+	}
+	
+	@PostMapping("/profile")
+	public String profileupdate(Model model, @ModelAttribute("userchange") @Valid UserDTO userchange, BindingResult bindingResult) {
+//		if (bindingResult.hasErrors()) {
+//    	    // Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
+//    	    model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
+//    	    return "register";
+//    	}
+		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		// Kiểm tra nếu người dùng đã xác thực
+		if (authentication.isAuthenticated()) {
+			// Lấy tên người dùng
+			String username = authentication.getName();
+			User user = userService.findByEmail(username);
+			user.setAddress(userchange.getAddress());
+			user.setImage(userchange.getImage());
+			user.setFirstname(userchange.getFirstname());
+			user.setLastname(userchange.getLastname());
+			user.setPhonenumber(userchange.getPhonenumber());
+			try {
+				userService.update(user);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+			
+			model.addAttribute("user", user);
+			String roles = authentication.getAuthorities().toString();
+			model.addAttribute("roles", roles);
+				return "profile";
+		} else {
+			System.out.println("Xin chào! Bạn chưa đăng nhập.");
+			
+			
+		}
+		return "profile";
+	}
+	
+	
+	@GetMapping("/changepass")
+	public String changepass(Model model) {
+		//model.addAttribute("message", "Bạn đã đăng xuất!");
+		return "security/changepass";
+	}
+	
+	@PutMapping("/changepass")
+	public String changepass1(Model model,@ModelAttribute("passchange") @Valid Passworddata passchange, BindingResult bindingResult) {
+		//model.addAttribute("message", "Bạn đã đăng xuất!");
+		return "security/changepass";
+	}
+
 
 }
