@@ -8,14 +8,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.greenfarm.dao.UserDAO;
+import com.greenfarm.dto.UserDTO;
+import com.greenfarm.entity.Passworddata;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.impl.UserServerImpl;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class SecurityController {
@@ -151,12 +158,66 @@ public class SecurityController {
 			return "profile";
 		} else {
 			System.out.println("Xin chào! Bạn chưa đăng nhập.");
+			
 			return "profile";
 		}
 	
 		
 
 		//return "redirect:/login";
+	}
+	
+	@PostMapping("/profile")
+	public String profileupdate(Model model, @ModelAttribute("userchange") @Valid UserDTO userchange, BindingResult bindingResult) {
+//		if (bindingResult.hasErrors()) {
+//    	    // Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
+//    	    model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
+//    	    return "register";
+//    	}
+		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		// Kiểm tra nếu người dùng đã xác thực
+		if (authentication.isAuthenticated()) {
+			// Lấy tên người dùng
+			String username = authentication.getName();
+			User user = userService.findByEmail(username);
+			user.setAddress(userchange.getAddress());
+			user.setImage(userchange.getImage());
+			user.setFirstname(userchange.getFirstname());
+			user.setLastname(userchange.getLastname());
+			user.setPhonenumber(userchange.getPhonenumber());
+			try {
+				userService.update(user);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+			
+			model.addAttribute("user", user);
+			String roles = authentication.getAuthorities().toString();
+			model.addAttribute("roles", roles);
+				return "profile";
+		} else {
+			System.out.println("Xin chào! Bạn chưa đăng nhập.");
+			
+			
+		}
+		return "profile";
+	}
+	
+	
+	@GetMapping("/changepass")
+	public String changepass(Model model) {
+		//model.addAttribute("message", "Bạn đã đăng xuất!");
+		return "security/changepass";
+	}
+	
+	@PutMapping("/changepass")
+	public String changepass1(Model model,@ModelAttribute("passchange") @Valid Passworddata passchange, BindingResult bindingResult) {
+		//model.addAttribute("message", "Bạn đã đăng xuất!");
+		return "security/changepass";
 	}
 
 
