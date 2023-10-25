@@ -1,6 +1,7 @@
 package com.greenfarm.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,4 +13,6 @@ public interface CartDAO extends JpaRepository<Cart, Integer>{
     Cart findByUserAndProduct(User user, Product product);
 
     HashMap<Integer, Cart> getCartItemsByUser(User user);
+
+    List<Cart> findByUser(User user);
 }

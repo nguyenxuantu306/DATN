@@ -1,6 +1,6 @@
 package com.greenfarm.Controller;
 
-import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,7 +17,6 @@ import com.greenfarm.entity.User;
 import com.greenfarm.service.ProductService;
 import com.greenfarm.service.UserService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -34,10 +33,8 @@ public class CartController {
 
     @RequestMapping("/add/{productId}")
     public String addToCart(HttpSession session, @PathVariable("productId") Integer productId) {
-        // Lấy thông tin người dùng hiện tại từ session hoặc Spring Security
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()
-                && !"anonymousUser".equals(authentication.getPrincipal())) {
+        if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal())) {
             String userEmail = authentication.getName();
             User user = userService.findByEmail(userEmail);
             if (user != null) {
@@ -45,10 +42,8 @@ public class CartController {
                 if (product != null) {
                     Cart cartItem = cartDAO.findByUserAndProduct(user, product);
                     if (cartItem != null) {
-                        // Nếu sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng lên 1
                         cartItem.setQuantity(cartItem.getQuantity() + 1);
                     } else {
-                        // Nếu sản phẩm chưa có trong giỏ hàng, tạo mới và đặt số lượng là 1
                         cartItem = new Cart();
                         cartItem.setUser(user);
                         cartItem.setProduct(product);
@@ -56,55 +51,69 @@ public class CartController {
                     }
                     cartDAO.save(cartItem);
                 }
-                return "redirect:/product/shop"; // Điều hướng trở lại trang sản phẩm sau khi thêm vào giỏ hàng
+                return "redirect:/product/shop";
             }
         }
-        // Nếu người dùng chưa đăng nhập, điều hướng đến trang đăng nhập
         return "redirect:/login";
     }
 
+
     @RequestMapping("/update/{productId}")
-    public String viewUpdate(ModelMap modelMap, HttpSession session, HttpServletRequest request,
-            @PathVariable("productId") Integer productId) {
-        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
-        if (cartItems != null) {
-            if (cartItems.containsKey(productId)) {
-                Cart item = cartItems.get(productId);
-
-                Integer updateQuantity = item.getQuantity() - 1;
-
-                if (updateQuantity > 0) {
-                    item.setQuantity(updateQuantity);
-                    cartItems.put(productId, item);
-                } else {
-                    cartItems.remove(productId);
+public String viewUpdate(ModelMap modelMap, @PathVariable("productId") Integer productId) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal())) {
+        String userEmail = authentication.getName();
+        User user = userService.findByEmail(userEmail);
+        if (user != null) {
+            Product product = productService.findById(productId);
+            if (product != null) {
+                Cart cartItem = cartDAO.findByUserAndProduct(user, product);
+                if (cartItem != null) {
+                    int updatedQuantity = cartItem.getQuantity() - 1;
+                    if (updatedQuantity > 0) {
+                        cartItem.setQuantity(updatedQuantity);
+                        cartDAO.save(cartItem);
+                    } else {
+                        cartDAO.delete(cartItem); // Remove the item from the cart if quantity becomes zero
+                    }
                 }
-
-                session.setAttribute("myCartItems", cartItems);
-                session.setAttribute("myCartTotal", totalPrice(cartItems));
-                session.setAttribute("myCartNum", cartItems.size());
+                // Fetch the updated cart items from the database
+                List<Cart> cartItems = cartDAO.findByUser(user);
+                modelMap.addAttribute("cartItems", cartItems);
+                modelMap.addAttribute("totalPrice", totalPrice(cartItems));
             }
         }
-        String referer = request.getHeader("Referer");
-
-        return "redirect:" + referer;
     }
+    return "cart";
+}
 
-    @RequestMapping("/remove/{productId}")
-    public String viewRemove(ModelMap modelMap, HttpSession session, @PathVariable("productId") Integer productId) {
-        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
-        if (cartItems != null) {
-            cartItems.remove(productId);
-            session.setAttribute("myCartItems", cartItems);
-            session.setAttribute("myCartTotal", totalPrice(cartItems));
-            session.setAttribute("myCartNum", cartItems.size());
+@RequestMapping("/remove/{productId}")
+public String viewRemove(ModelMap modelMap, @PathVariable("productId") Integer productId) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal())) {
+        String userEmail = authentication.getName();
+        User user = userService.findByEmail(userEmail);
+        if (user != null) {
+            Product product = productService.findById(productId);
+            if (product != null) {
+                Cart cartItem = cartDAO.findByUserAndProduct(user, product);
+                if (cartItem != null) {
+                    cartDAO.delete(cartItem); // Remove the item from the cart in the database
+                }
+                // Fetch the updated cart items from the database
+                List<Cart> cartItems = cartDAO.findByUser(user);
+                modelMap.addAttribute("cartItems", cartItems);
+                modelMap.addAttribute("totalPrice", totalPrice(cartItems));
+            }
         }
-        return "cart";
     }
+    return "cart";
+}
 
-    public double totalPrice(HashMap<Integer, Cart> cartItems) {
+
+    public double totalPrice(List<Cart> cartItems) {
         double total = 0;
-        for (Cart cartItem : cartItems.values()) {
+        for (Cart cartItem : cartItems) {
             total += cartItem.getProduct().getPrice() * cartItem.getQuantity();
         }
         return total;

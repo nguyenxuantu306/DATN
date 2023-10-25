@@ -133,34 +133,6 @@
     <!-- Template Javascript -->
     <script src="/assets/js/main.js"></script>
     <script type="text/javascript" src="/assets/js/styte.js"></script>
-    <script>
-      $(document).ready(function () {
-        var cartVisible = false;
-
-        $("#cart").on("click", function (e) {
-          e.preventDefault(); // Ngăn chặn mặc định của thẻ a
-
-          if (!cartVisible) {
-            // Nếu giỏ hàng không hiển thị, hiển thị nó và di chuyển nó
-            var $cart = $("#mini-cart");
-            var $cartIcon = $("#cart");
-            var cartIconOffset = $cartIcon.offset();
-
-            $cart.css({
-              top: cartIconOffset.top + $cartIcon.outerHeight(),
-              left: cartIconOffset.left,
-            });
-
-            $cart.fadeIn("fast");
-            cartVisible = true;
-          } else {
-            // Nếu giỏ hàng đang hiển thị, ẩn nó
-            $("#mini-cart").fadeOut("fast");
-            cartVisible = false;
-          }
-        });
-      });
-    </script>
 
     <!-- slider -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
