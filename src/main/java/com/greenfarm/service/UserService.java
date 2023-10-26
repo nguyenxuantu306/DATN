@@ -29,5 +29,8 @@ public interface UserService {
 	boolean checkIfUserExist(final String email);
     void sendRegistrationConfirmationEmail(final User user);
     boolean verifyUser(final String token) throws com.greenfarm.exception.InvalidTokenException;
-    
+    public boolean iscurrentPasswordMatching(User user,String password) ;
+
+    public boolean isPasswordMatching(String password, String confirmPassword);
+
 }

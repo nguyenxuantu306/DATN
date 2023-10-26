@@ -211,12 +211,32 @@ public class SecurityController {
 	@GetMapping("/changepass")
 	public String changepass(Model model) {
 		//model.addAttribute("message", "Bạn đã đăng xuất!");
+		model.addAttribute("passchange", new  Passworddata());
 		return "security/changepass";
 	}
 	
-	@PutMapping("/changepass")
+	@PostMapping("/changepass")
 	public String changepass1(Model model,@ModelAttribute("passchange") @Valid Passworddata passchange, BindingResult bindingResult) {
-		//model.addAttribute("message", "Bạn đã đăng xuất!");
+		if (bindingResult.hasErrors()) {
+	        return "security/changepass"; // Trả về trang thay đổi mật khẩu với thông báo lỗi
+	    }
+
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    User user = userService.findByEmail(authentication.getName());
+
+	    if (!userService.iscurrentPasswordMatching(user, passchange.getCurrentpass())) {
+	        model.addAttribute("currentPasswordError", "Mật khẩu hiện tại không đúng.");
+	        return "security/changepass";
+	    }
+
+	    if (!userService.isPasswordMatching(passchange.getNewpass(), passchange.getConfirmpass())) {
+	        model.addAttribute("newPasswordError", "Mật khẩu mới và xác nhận mật khẩu không khớp.");
+	        return "security/changepass";
+	    }
+
+	    // Cập nhật mật khẩu trong cơ sở dữ liệu
+	    user.setPassword(passwordE.encode(passchange.getNewpass()));
+	    userService.update(user);
 		return "security/changepass";
 	}
 

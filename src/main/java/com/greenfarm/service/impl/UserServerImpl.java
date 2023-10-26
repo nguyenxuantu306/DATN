@@ -200,4 +200,23 @@ public class UserServerImpl implements UserService, UserDetailsService {
         return true;
 	}
 
+	
+
+	@Override
+	public boolean isPasswordMatching(String password, String confirmPassword) {
+		// TODO Auto-generated method stub
+		
+		return password.equals(confirmPassword);
+	}
+
+	@Override
+	public boolean iscurrentPasswordMatching(User user, String password) {
+		// TODO Auto-generated method stub
+		 // Lấy mật khẩu hiện tại của người dùng
+	    String currentPassword = user.getPassword(); // Giả sử rằng mật khẩu đã được mã hóa
+
+	    // So sánh mật khẩu hiện tại với mật khẩu được cung cấp
+	    return PE.matches(password, currentPassword);
+	}
+
 }

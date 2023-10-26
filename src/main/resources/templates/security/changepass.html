@@ -10,22 +10,31 @@
     <section>
         <div class="form-box">
             <div class="form-value">
-                <form th:action="@{/changepass}" method="post">
+                <form action="/changepass" th:object="${passchange}" method="post">  <!-- th:action="@{/changepass}" -->
                     <h2>Change Password</h2>
+                    <!-- Hiển thị lỗi nếu có -->
+        
+        
+
+                    
                     <div class="inputbox">
                         <ion-icon name="lock-outline"></ion-icon>
-                        <input name="currentpassword" type="password" required>
+                        <input name="currentpass" type="password" th:field="*{currentpass}" required>
                         <label for="">Current Password</label>
+                        <div th:if="${#fields.hasErrors('currentpass')}" th:errors="*{currentpass}"></div>
                     </div>
                     <div class="inputbox">
                         <ion-icon name="lock-closed-outline"></ion-icon>
-                        <input name="newpassword" type="password" required>
+                        <input name="newpass" type="password" th:field="*{newpass}" required="required">
+                       
                         <label for="">New Password</label>
+                         <div th:if="${#fields.hasErrors('newpass')}" th:errors="*{newpass}"></div>
                     </div>
                     <div class="inputbox">
                         <ion-icon name="lock-closed-outline"></ion-icon>
-                        <input name="password" type="password" required>
+                        <input name="confirmpass" type="password" th:field="*{confirmpass}" required="required">
                         <label for="">Confirm Password</label>
+                                <div th:if="${#fields.hasErrors('confirmpass')}" th:errors="*{confirmpass}"></div>
                     </div>
                     <div class="forget">
                         <label for=""> <a href="#">Forget Password</a></label>

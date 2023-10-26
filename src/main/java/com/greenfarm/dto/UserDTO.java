@@ -11,6 +11,8 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,10 +23,11 @@ public class UserDTO {
 	@Email(message = "Email không hợp lệ")
 	private String email;
 	
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
 	@NotEmpty(message = "Thiếu password")
 	private String password;
 	
-	@NotEmpty
+	@NotEmpty(message = "Thiếu mật khẩu xác nhận")
 	private String repeatpassword;
 	
 	@NotEmpty(message = "Thiếu FirstName")
