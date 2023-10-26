@@ -1,5 +1,6 @@
 package com.greenfarm.controller;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,7 +131,14 @@ public class CartController {
             User user = userService.findByEmail(userEmail);
             if (user != null) {
                 List<Cart> cartItems = cartDAO.findByUser(user);
-                Cart cart = cartDAO.findByUser(user).get(0);
+                
+                modelMap.addAttribute("cartList", cartItems);
+                for(Cart ca : cartItems) {
+                	System.out.println(ca.getProduct().getProductname());
+                	System.out.println(ca.getQuantity());
+                	System.out.println("**********88");
+                }
+                Cart cart = cartDAO.findByUser(user).get(1);
                 System.out.println(cart.getUser().getEmail());
                 System.out.println(cart.getProduct().getProductname());
                 modelMap.addAttribute("cartItems", cart);

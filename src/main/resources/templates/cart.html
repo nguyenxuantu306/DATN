@@ -32,6 +32,22 @@
                                         </div>
                                     </div>
                                     
+                                    <table>
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="cart : ${cartList}">
+            <td th:text="${cart.product.productname}"></td>
+            <td th:text="${cart.quantity}"></td>
+            <td th:text="${cart.product.price}"></td>
+        </tr>
+    </tbody>
+          </table>                          
 									    <ul>
     <li th:each="item : ${cartItems}">
         <span th:text="${item.product.productname}"></span>
