@@ -24,13 +24,13 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	OrderDetailDAO ddao;
-	
+
 	@Override
 	public List<Order> getAllOrders(int page, int size) {
 		int offset = page * size;
 		return dao.findAll(offset, size);
 	}
-	
+
 //	@Override
 //	public List<Order> findAll() {
 //		return dao.findAll();
@@ -43,7 +43,8 @@ public class OrderServiceImpl implements OrderService {
 		Order order = mapper.convertValue(orderData, Order.class);
 		dao.save(order);
 
-		TypeReference<List<OrderDetail>> type = new TypeReference<List<OrderDetail>>() {};
+		TypeReference<List<OrderDetail>> type = new TypeReference<List<OrderDetail>>() {
+		};
 		List<OrderDetail> details = mapper.convertValue(orderData.get("orderDetail"), type).stream()
 				.peek(d -> d.setOrder(order)).collect(Collectors.toList());
 		ddao.saveAll(details);
@@ -51,16 +52,11 @@ public class OrderServiceImpl implements OrderService {
 		return order;
 	}
 
-	
-
-	
-
 	@Override
 	public List<Order> findByIdAccount(Integer Id) {
 		// TODO Auto-generated method stub
 		return dao.findByIdAccount(Id);
 	}
-
 
 	@Override
 	public Order findById(Integer Id) {

@@ -20,23 +20,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Orderdetails")
-public class OrderDetail implements Serializable{
+public class OrderDetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Integer orderdetailid; 
-	
-	@JsonIgnore 
+	public Integer orderdetailid;
+
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "orderid")
 	public Order order;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "productid")
 	private Product product;
-	
+
 	Integer quantityordered;
-	
+
 	Float totalprice;
 
-	
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.greenfarm.entity.Role;
 import com.greenfarm.service.RoleService;
 
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/roles")

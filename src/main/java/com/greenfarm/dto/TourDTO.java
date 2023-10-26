@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TourDTO {
-	
+
 	private Integer tourid;
 	private String Tourname;
 	private String Description;

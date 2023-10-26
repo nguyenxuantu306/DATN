@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StatusOrderDTO {
 	private Integer statusorderid;
-	
+
 	private String name;
 	private List<OrderDTO> order;
 }

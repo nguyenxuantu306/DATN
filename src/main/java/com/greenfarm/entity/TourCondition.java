@@ -18,13 +18,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Tourconditions")
-public class TourCondition implements Serializable{
+public class TourCondition implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer tourconditionid;
-	
+
 	private String Conditions;
-	
+
 	@OneToOne
 	@JoinColumn(name = "tourid")
 	Tour tour;

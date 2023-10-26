@@ -14,6 +14,5 @@ public interface TourService {
 	List<Tour> findAll();
 
 	Tour findById(Integer tourid);
-	
-	
+
 }

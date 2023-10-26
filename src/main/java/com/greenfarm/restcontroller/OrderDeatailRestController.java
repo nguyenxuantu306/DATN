@@ -14,7 +14,6 @@ import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Report;
 import com.greenfarm.service.OrderDetailService;
 
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/orderdetails")
@@ -27,11 +26,11 @@ public class OrderDeatailRestController {
 	public List<OrderDetail> getAll() {
 		return orderDetailService.findAll();
 	}
-		
+
 	@GetMapping("/thongke")
-	public ResponseEntity<List<Report>>  tongdoanhthu(){	
+	public ResponseEntity<List<Report>> tongdoanhthu() {
 		return new ResponseEntity<>(orderDetailService.tongdoanhthu(), HttpStatus.OK);
-		
+
 	}
-	
+
 }

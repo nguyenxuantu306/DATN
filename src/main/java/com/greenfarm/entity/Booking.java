@@ -16,39 +16,37 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Bookings")
-public class Booking implements Serializable{
+public class Booking implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Bookingid;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date Bookingdate = new Date();
-	
+
 	private Integer Numparticipants;
-	
+
 	private Float Totalprice;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "userid")
 	User user;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "tourid")
 	Tour tour;
-	
+
 //	@ManyToOne
 //	@JoinColumn(name = "statusbookingid")
 //	StatusBooking statusBooking;
-	
+
 //	@ManyToOne
 //	@JoinColumn(name = "tourtypeticketid")
 //	TourTypeTicket tourTypeTicket;
-	
 
 }

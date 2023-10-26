@@ -22,25 +22,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "productcategories")
 public class Category implements Serializable {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer categoryid;
 
 	private String categoryname;
-	
+
 	private String descriptions;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "category")
 	List<Product> products;
-	
+
 	public Category(int categoryid) {
 		this.categoryid = categoryid;
 	}
 }
-
-
-
-
-

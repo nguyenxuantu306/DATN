@@ -6,9 +6,8 @@ import com.greenfarm.entity.Securetoken;
 
 import java.util.List;
 
-
-public interface Securetokendao extends JpaRepository<Securetoken, Long>{
+public interface Securetokendao extends JpaRepository<Securetoken, Long> {
 	Securetoken findByToken(String token);
-	
+
 	Long removeByToken(String token);
 }

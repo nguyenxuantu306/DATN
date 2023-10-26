@@ -23,21 +23,20 @@ public class StatusOrderRestController {
 
 	@Autowired
 	StatusOrderService statusService;
-	
+
 	@Autowired
 	ModelMapper modelMapper;
 
 	@GetMapping()
 	public ResponseEntity<List<StatusOrderDTO>> getList() {
-	    List<StatusOrder> statusOrder = statusService.findAll();
+		List<StatusOrder> statusOrder = statusService.findAll();
 
-	    // Sử dụng modelMapper để ánh xạ danh sách Category sang danh sách CategoryDTO
-	    ModelMapper modelMapper = new ModelMapper();
-	    List<StatusOrderDTO> statusOrderDtos = statusOrder.stream()
-	            .map(statusorder -> modelMapper.map(statusorder, StatusOrderDTO.class))
-	            .collect(Collectors.toList());
+		// Sử dụng modelMapper để ánh xạ danh sách Category sang danh sách CategoryDTO
+		ModelMapper modelMapper = new ModelMapper();
+		List<StatusOrderDTO> statusOrderDtos = statusOrder.stream()
+				.map(statusorder -> modelMapper.map(statusorder, StatusOrderDTO.class)).collect(Collectors.toList());
 
-	    return ResponseEntity.ok(statusOrderDtos); // ResponseEntity.ok() tương đương HttpStatus.OK
+		return ResponseEntity.ok(statusOrderDtos); // ResponseEntity.ok() tương đương HttpStatus.OK
 	}
-	
+
 }

@@ -18,18 +18,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Pricings")
-public class Pricing implements Serializable{
+public class Pricing implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer Pricingid;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "TourID")
 	Tour tour;
-	
+
 	Float Adultprice;
-	
+
 	Float Childprice;
-	
+
 	Float Infantprice;
 }

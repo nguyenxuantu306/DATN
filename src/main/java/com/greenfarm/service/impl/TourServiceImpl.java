@@ -19,7 +19,6 @@ public class TourServiceImpl implements TourService {
 
 	@Autowired
 	TourDAO dao;
-	
 
 	@Override
 	public List<Tour> findAll() {
@@ -30,6 +29,5 @@ public class TourServiceImpl implements TourService {
 	public Tour findById(Integer tourid) {
 		return dao.findById(tourid).get();
 	}
-	
-	
+
 }

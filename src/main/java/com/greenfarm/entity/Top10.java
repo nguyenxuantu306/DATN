@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Top10 implements Serializable{
-	
+public class Top10 implements Serializable {
+
 	@Id
 	Product product;
-	
+
 	long sum;
 }

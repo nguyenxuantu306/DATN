@@ -29,19 +29,18 @@ public class TourController {
 		model.addAttribute("items", list);
 		return "tour/tour";
 	}
-	
-	
+
 	@GetMapping("/tour/detail/{tourid}")
 	public String detail(Model model, @PathVariable("tourid") Integer tourid) {
 		Tour item = tourservice.findById(tourid);
-	    
-	    if (item != null) {
-	        TourDTO itemDTO = modelMapper.map(item, TourDTO.class);
-	        model.addAttribute("item", itemDTO);
-	    } else {
-	        // Xử lý trường hợp đối tượng không tồn tại
-	    }
 
-	    return "tour/detail";
+		if (item != null) {
+			TourDTO itemDTO = modelMapper.map(item, TourDTO.class);
+			model.addAttribute("item", itemDTO);
+		} else {
+			// Xử lý trường hợp đối tượng không tồn tại
+		}
+
+		return "tour/detail";
 	}
 }

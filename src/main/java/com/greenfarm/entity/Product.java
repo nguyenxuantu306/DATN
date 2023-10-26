@@ -24,29 +24,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "Products")
 public class Product implements Serializable {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer productid;
 
 	private String productname;
-	
+
 	private String Description;
-		
+
 	private Float price;
-	
+
 	private String image;
-	
+
 	private Integer quantityavailable;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "CategoryID")
 	Category category;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
-	List<OrderDetail> orderDetails;	
-
+	List<OrderDetail> orderDetails;
 
 	@Override
 	public String toString() {

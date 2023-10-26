@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TourImageDTO {
-	
+
 	private Integer tourimageid;
 	private String Imageurl;
 	private Tour tour;

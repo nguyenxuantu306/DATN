@@ -10,10 +10,8 @@ import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Top10;
 import com.greenfarm.entity.Top3;
 
+public interface BookingDAO extends JpaRepository<Booking, Integer> {
 
-public interface BookingDAO extends JpaRepository<Booking, Integer>{
-
-	
 	@Query("SELECT new Top3(o.tour, sum(o.Numparticipants)) FROM Booking "
 			+ "o GROUP BY o.tour ORDER BY sum(o.Numparticipants) DESC")
 	Page<Top3> getTop3Tour(Pageable pageable1);

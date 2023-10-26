@@ -18,15 +18,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Productdiscounts")
-public class ProductDiscount implements Serializable{
+public class ProductDiscount implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Productdiscountid;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "productid")
 	Product product;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "discountid")
 	Discount discount;

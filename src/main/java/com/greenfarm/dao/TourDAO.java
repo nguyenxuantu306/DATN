@@ -12,5 +12,4 @@ import com.greenfarm.entity.Tour;
 
 public interface TourDAO extends JpaRepository<Tour, Integer> {
 
-
 }

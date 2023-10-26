@@ -38,12 +38,12 @@ public class Order implements Serializable {
 //	@JsonIgnore 
 	@OneToMany(mappedBy = "order")
 	public List<OrderDetail> orderDetail;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "userid")
 	User user;
-	
+
 	@ManyToOne
-	@JoinColumn(name ="statusorderid")
+	@JoinColumn(name = "statusorderid")
 	StatusOrder statusOrder;
 }

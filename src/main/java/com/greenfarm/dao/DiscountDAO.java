@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.greenfarm.entity.Discount;
 
-public interface DiscountDAO extends JpaRepository<Discount, Integer>{
+public interface DiscountDAO extends JpaRepository<Discount, Integer> {
 
 }

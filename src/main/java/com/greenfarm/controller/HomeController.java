@@ -14,49 +14,50 @@ import com.greenfarm.service.BookingService;
 import com.greenfarm.service.OrderDetailService;
 import com.greenfarm.service.TourService;
 
-
-
 @Controller
-@RequestMapping("/") 
+@RequestMapping("/")
 public class HomeController {
 	@Autowired
 	OrderDetailService orderDetailService;
-	
+
 	@Autowired
 	BookingService bookingService;
-	
+
 	@Autowired
 	TourService tourService;
-	
-	@RequestMapping("")	
+
+	@RequestMapping("")
 	public String Home(Model model) {
-		Pageable pageable = PageRequest.of(0, 8); 
-		Pageable pageable1 = PageRequest.of(0, 3); 
-		Page<Top10> topList = orderDetailService.getTop10(pageable);	
+		Pageable pageable = PageRequest.of(0, 8);
+		Pageable pageable1 = PageRequest.of(0, 3);
+		Page<Top10> topList = orderDetailService.getTop10(pageable);
 		Page<Top3> topTour = bookingService.getTop3Tour(pageable1);
-		
+
 		model.addAttribute("topList", topList);
 		model.addAttribute("topTour", topTour);
-		
-        return "user/index";
-    }
-    
 
-    @RequestMapping("/profile")
-    public String Profile(Model model) {
-        return "profile";
-    }
-    
-    @RequestMapping("/shop-list")
-    public String ShopList(Model model) {
-        return "product/shopList";
-    }
-    
+		return "user/index";
+	}
+	
+	@RequestMapping("/success")
+	public String Success(Model model) {
+		return "success";
+	}
 
-    @RequestMapping("/tour-detail")
-    public String TourDetail(Model model) {
-        return "tour/detail";
-    }
+	@RequestMapping("/profile")
+	public String Profile(Model model) {
+		return "profile";
+	}
+
+	@RequestMapping("/shop-list")
+	public String ShopList(Model model) {
+		return "product/shopList";
+	}
+
+	@RequestMapping("/tour-detail")
+	public String TourDetail(Model model) {
+		return "tour/detail";
+	}
 
 //
 //    @RequestMapping("/register")
@@ -69,7 +70,7 @@ public class HomeController {
 //        return "cart";
 //    }
 
-	@RequestMapping({"/admin","/admin/home/index"})
+	@RequestMapping({ "/admin", "/admin/home/index" })
 	public String admin() {
 		return "redirect:/assetsAdmin/admin/index.html";
 	}

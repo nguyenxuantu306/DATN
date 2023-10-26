@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.greenfarm.entity.Comment;
 
-
-public interface CommentDAO extends JpaRepository<Comment, Integer>{
+public interface CommentDAO extends JpaRepository<Comment, Integer> {
 
 }

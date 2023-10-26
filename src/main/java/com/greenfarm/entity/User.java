@@ -26,12 +26,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-public class User implements Serializable{
-	
+public class User implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer userid;
-	
+
 	String password;
 	@Column(unique = true)
 	String email;
@@ -43,38 +43,38 @@ public class User implements Serializable{
 	Boolean gender;
 	@Temporal(TemporalType.DATE)
 	Date birthday = new Date();
-	
+
 	@Temporal(TemporalType.DATE)
 	Date createddate = new Date();
-	
-	//Boolean IsActive;
-	
+
+	// Boolean IsActive;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Booking> booking;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Comment> comment;
-	
+
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	List<UserRole> userRole;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Tour> tour;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Order> order;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
-	List<UserDiscount>  discount;
-	
+	List<UserDiscount> discount;
+
 	private boolean accountVerified;
-	
-	@OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
-    private Set<Securetoken> tokens;
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	private Set<Securetoken> tokens;
 }

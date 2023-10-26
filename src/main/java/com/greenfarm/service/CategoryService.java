@@ -4,9 +4,7 @@ import java.util.List;
 
 import com.greenfarm.entity.Category;
 
-
-
-public interface CategoryService {	
+public interface CategoryService {
 	// API show loại sản phẩm
 	List<Category> findAll();
 
@@ -20,6 +18,6 @@ public interface CategoryService {
 	Category update(Category category);
 
 	// API xóa sản phẩm
-	void delete(Integer categoryid);	
+	void delete(Integer categoryid);
 
 }

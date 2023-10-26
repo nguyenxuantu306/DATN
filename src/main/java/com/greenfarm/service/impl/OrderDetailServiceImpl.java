@@ -13,7 +13,6 @@ import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Top10;
 import com.greenfarm.service.OrderDetailService;
 
-
 @Service
 public class OrderDetailServiceImpl implements OrderDetailService {
 	@Autowired
@@ -30,9 +29,8 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	}
 
 	@Override
-    public Page<Top10> getTop10(Pageable pageable) {
-        return dao.getTop10(pageable);
-    }
+	public Page<Top10> getTop10(Pageable pageable) {
+		return dao.getTop10(pageable);
+	}
 
-   
 }

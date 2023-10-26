@@ -9,26 +9,24 @@ import com.greenfarm.dao.CategoryDAO;
 import com.greenfarm.entity.Category;
 import com.greenfarm.service.CategoryService;
 
-
-
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
 	CategoryDAO dao;
-	
+
 	@Override
-	public List<Category> findAll() {		
+	public List<Category> findAll() {
 		return dao.findAll();
 	}
 
 	@Override
-	public Category findById(Integer categoryid) {	
+	public Category findById(Integer categoryid) {
 		return dao.findById(categoryid).get();
 	}
 
 	@Override
-	public Category create(Category category) {	
+	public Category create(Category category) {
 		return dao.save(category);
 	}
 
@@ -41,6 +39,5 @@ public class CategoryServiceImpl implements CategoryService{
 	public void delete(Integer categoryid) {
 		dao.deleteById(categoryid);
 	}
-	
 
 }

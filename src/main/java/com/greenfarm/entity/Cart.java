@@ -20,24 +20,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "Cart")
 public class Cart implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer cartID;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer cartID;
 
-    private Integer quantity;
+	private Integer quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "Productid")
-    private Product product;
+	@ManyToOne
+	@JoinColumn(name = "Productid")
+	private Product product;
 
-    @ManyToOne
-    @JoinColumn(name = "userid")
-    private User user;
-    
+	@ManyToOne
+	@JoinColumn(name = "userid")
+	private User user;
 
 }
-
-
-
-
-

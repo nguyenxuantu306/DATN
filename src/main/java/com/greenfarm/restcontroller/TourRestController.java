@@ -14,7 +14,6 @@ import com.greenfarm.dto.TourDTO;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.service.TourService;
 
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/tours")
@@ -28,10 +27,9 @@ public class TourRestController {
 
 	@GetMapping()
 	public ResponseEntity<List<TourDTO>> getList() {
-	    List<Tour> tours = tourService.findAll();
-	    List<TourDTO> tourDTOs = tours.stream()
-	            .map(tour -> modelMapper.map(tour, TourDTO.class))
-	            .collect(Collectors.toList());
-	    return new ResponseEntity<>(tourDTOs, HttpStatus.OK);
+		List<Tour> tours = tourService.findAll();
+		List<TourDTO> tourDTOs = tours.stream().map(tour -> modelMapper.map(tour, TourDTO.class))
+				.collect(Collectors.toList());
+		return new ResponseEntity<>(tourDTOs, HttpStatus.OK);
 	}
 }

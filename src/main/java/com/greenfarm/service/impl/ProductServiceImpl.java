@@ -142,5 +142,5 @@ public class ProductServiceImpl implements ProductService {
 	public List<Report> getTk_loai() {
 		return dao.getInventoryByCategory();
 	}
-	
+
 }

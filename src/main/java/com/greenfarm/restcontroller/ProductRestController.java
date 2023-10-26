@@ -2,7 +2,6 @@ package com.greenfarm.restcontroller;
 
 import java.util.Comparator;
 
-
 import java.util.List;
 
 import java.util.Optional;
@@ -177,6 +176,4 @@ public class ProductRestController {
 		return new ResponseEntity<>(productService.getTk_loai(), HttpStatus.OK);
 	}
 
-
-	
 }

@@ -10,7 +10,7 @@ import com.greenfarm.entity.TourImage;
 import com.greenfarm.service.TourImageService;
 
 @Service
-public class TourImageServiceImpl implements TourImageService{
+public class TourImageServiceImpl implements TourImageService {
 	@Autowired
 	TourImageDAO dao;
 

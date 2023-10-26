@@ -11,6 +11,4 @@ public interface BookingService {
 
 	Page<Top3> getTop3Tour(Pageable pageable1);
 
-
-
 }

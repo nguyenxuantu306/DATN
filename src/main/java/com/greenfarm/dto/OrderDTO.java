@@ -11,17 +11,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDTO {
-	
-    private Integer Orderid;
-    private Date orderdate;
-    private String address;
-    
-    List<OrderDetail> orderDetail;
-    User user;
-    StatusOrder statusOrder;
+
+	private Integer Orderid;
+	private Date orderdate;
+	private String address;
+
+	List<OrderDetail> orderDetail;
+	User user;
+	StatusOrder statusOrder;
 }

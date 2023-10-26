@@ -47,8 +47,8 @@ public class CustomLogoutHandler implements LogoutHandler {
 		try {
 			final User userEntity = userService.findByEmail(authentication.getName());
 			System.out.println("Logged Out Handler");
-			//set status to false
-			//redirecting to another controller endpoint
+			// set status to false
+			// redirecting to another controller endpoint
 			response.sendRedirect("/logout");
 		} catch (IOException e) {
 			e.printStackTrace();

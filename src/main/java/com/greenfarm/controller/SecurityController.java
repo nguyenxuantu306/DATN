@@ -1,7 +1,5 @@
 package com.greenfarm.controller;
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,14 +18,11 @@ import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.Passworddata;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.UserService;
-import com.greenfarm.service.impl.UserServerImpl;
 
 import jakarta.validation.Valid;
 
 @Controller
 public class SecurityController {
-
-	
 
 	@Autowired
 	PasswordEncoder passwordE;
@@ -38,7 +33,6 @@ public class SecurityController {
 	@Autowired
 	private UserService userService;
 
-
 //	@ModelAttribute
 //	public void commonUser(Principal p,Model model) {
 //		if (p != null) {
@@ -47,7 +41,7 @@ public class SecurityController {
 //			model.addAttribute("user", user);
 //		}
 //	}
-	
+
 	@RequestMapping("/login")
 	public String login(Model model) {
 		model.addAttribute("message", "Vui lòng đăng nhập!");
@@ -57,9 +51,9 @@ public class SecurityController {
 	@RequestMapping("/logoff")
 	public String logoff(Model model) {
 		model.addAttribute("message", "Bạn đã đăng xuất!");
-		return "security/login";
+		return "redirect:/";
 	}
-	
+
 //	@GetMapping("/index/login/success")
 //	public String login_success(Model model) {
 //		model.addAttribute("message", "Đăng nhập thành công!");
@@ -77,8 +71,6 @@ public class SecurityController {
 //		model.addAttribute("message", "Không có quyền truy xuất!");
 //		return "security/login";
 //	}
-
-
 
 //
 //	@GetMapping("/index/register/save")
@@ -135,9 +127,7 @@ public class SecurityController {
 //	public String ggform() {
 //		return "security/login";
 //	}
-	
-	
-	
+
 	@GetMapping("/profile")
 	public String profile(Model model) {
 
@@ -158,17 +148,16 @@ public class SecurityController {
 			return "profile";
 		} else {
 			System.out.println("Xin chào! Bạn chưa đăng nhập.");
-			
+
 			return "profile";
 		}
-	
-		
 
-		//return "redirect:/login";
+		// return "redirect:/login";
 	}
-	
+
 	@PostMapping("/profile")
-	public String profileupdate(Model model, @ModelAttribute("userchange") @Valid UserDTO userchange, BindingResult bindingResult) {
+	public String profileupdate(Model model, @ModelAttribute("userchange") @Valid UserDTO userchange,
+			BindingResult bindingResult) {
 //		if (bindingResult.hasErrors()) {
 //    	    // Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
 //    	    model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
@@ -193,32 +182,29 @@ public class SecurityController {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
-			
-			
+
 			model.addAttribute("user", user);
 			String roles = authentication.getAuthorities().toString();
 			model.addAttribute("roles", roles);
-				return "profile";
+			return "profile";
 		} else {
 			System.out.println("Xin chào! Bạn chưa đăng nhập.");
-			
-			
+
 		}
 		return "profile";
 	}
-	
-	
+
 	@GetMapping("/changepass")
 	public String changepass(Model model) {
-		//model.addAttribute("message", "Bạn đã đăng xuất!");
-		return "security/changepass";
-	}
-	
-	@PutMapping("/changepass")
-	public String changepass1(Model model,@ModelAttribute("passchange") @Valid Passworddata passchange, BindingResult bindingResult) {
-		//model.addAttribute("message", "Bạn đã đăng xuất!");
+		// model.addAttribute("message", "Bạn đã đăng xuất!");
 		return "security/changepass";
 	}
 
+	@PutMapping("/changepass")
+	public String changepass1(Model model, @ModelAttribute("passchange") @Valid Passworddata passchange,
+			BindingResult bindingResult) {
+		// model.addAttribute("message", "Bạn đã đăng xuất!");
+		return "security/changepass";
+	}
 
 }

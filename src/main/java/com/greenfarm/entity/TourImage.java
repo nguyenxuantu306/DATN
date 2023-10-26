@@ -18,14 +18,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Tourimages")
-public class TourImage implements Serializable{
+public class TourImage implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer tourimageid;
-	
 
 	String Imageurl;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "tourid")
 	Tour tour;

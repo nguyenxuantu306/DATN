@@ -15,37 +15,37 @@ import org.springframework.stereotype.Service;
 import com.greenfarm.entity.Securetoken;
 import com.greenfarm.service.Securetokenservice;
 
-
 @Service
-public class Securetokenserviceimpl implements Securetokenservice{
-	
+public class Securetokenserviceimpl implements Securetokenservice {
 
-    private static final BytesKeyGenerator DEFAULT_TOKEN_GENERATOR = KeyGenerators.secureRandom(15);
-    private static final Charset US_ASCII = Charset.forName("US-ASCII");
-	
+	private static final BytesKeyGenerator DEFAULT_TOKEN_GENERATOR = KeyGenerators.secureRandom(15);
+	private static final Charset US_ASCII = Charset.forName("US-ASCII");
+
 //    @Value("${jdj.secure.token.validity}")
 //    private int tokenValidityInSeconds;
-    
-    @Autowired
-    com.greenfarm.dao.Securetokendao Securetokendao;
-    
-    
+
+	@Autowired
+	com.greenfarm.dao.Securetokendao Securetokendao;
 
 	@Override
 	public Securetoken createSecureToken() {
 		// TODO Auto-generated method stub
-		//String tokenValue = new String(org.springframework.security.crypto.codec.Base64.encodeBase64URLSafe(DEFAULT_TOKEN_GENERATOR.generateKey()), US_ASCII); // this is a sample, you can adapt as per your security need
-	       
-		String tokenValue = new String(Base64.getUrlEncoder().withoutPadding().encode(DEFAULT_TOKEN_GENERATOR.generateKey()), StandardCharsets.US_ASCII);
+		// String tokenValue = new
+		// String(org.springframework.security.crypto.codec.Base64.encodeBase64URLSafe(DEFAULT_TOKEN_GENERATOR.generateKey()),
+		// US_ASCII); // this is a sample, you can adapt as per your security need
+
+		String tokenValue = new String(
+				Base64.getUrlEncoder().withoutPadding().encode(DEFAULT_TOKEN_GENERATOR.generateKey()),
+				StandardCharsets.US_ASCII);
 		Securetoken secureToken = new Securetoken();
-        secureToken.setToken(tokenValue);
+		secureToken.setToken(tokenValue);
 		secureToken.setExpireAt(LocalDateTime.now().plusSeconds(43200));
-		
+
 		long timestampValue = System.currentTimeMillis();
 		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-	      
+
 		secureToken.setTimeStamp(currentTimestamp);
-		//secureToken.setTimeStamp(System.currentTimeMillis());
+		// secureToken.setTimeStamp(System.currentTimeMillis());
 		this.saveSecureToken(secureToken);
 		return secureToken;
 	}
@@ -73,11 +73,9 @@ public class Securetokenserviceimpl implements Securetokenservice{
 		// TODO Auto-generated method stub
 		Securetokendao.removeByToken(token);
 	}
-    
+
 //	public int getTokenValidityInSeconds() {
 //        return tokenValidityInSeconds;
 //    }
-	
-	
 
 }

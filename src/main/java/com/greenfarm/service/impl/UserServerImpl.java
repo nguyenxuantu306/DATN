@@ -31,19 +31,19 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Autowired
 	UserDAO dao;
-	
+
 	@Autowired
 	Securetokenservice securetokenservice;
-	
+
 	@Autowired
 	EmailService emailService;
-	
+
 	@Autowired
 	Securetokendao securetokendao;
-	
+
 	@Autowired
 	PasswordEncoder PE;
-	
+
 	@Override
 	public List<User> findAll() {
 		return dao.findAll();
@@ -64,7 +64,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	@Override
 	public User create(User user) throws UserAlreadyExistException {
 		if (!emailExists(user.getEmail())) {
-			throw new  UserAlreadyExistException("đã có tài khoản dùng email này");
+			throw new UserAlreadyExistException("đã có tài khoản dùng email này");
 		}
 		User userentity = new User();
 		BeanUtils.copyProperties(user, userentity);
@@ -84,7 +84,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	public void delete(Integer userid) {
 		dao.deleteById(userid);
 	}
-	
+
 	@Override
 	public List<User> getAdministrators() {
 		// TODO Auto-generated method stub
@@ -117,7 +117,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 //		}
 //			
 //	}
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
@@ -127,9 +127,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		} else {
 			boolean enabled = !account.isAccountVerified();
 			return org.springframework.security.core.userdetails.User.builder().username(account.getEmail())
-					.password(account.getPassword())
-					.disabled(enabled)
-					.roles(account.getUserRole().stream()
+					.password(account.getPassword()).disabled(enabled).roles(account.getUserRole().stream()
 							.map(er -> er.getRole().getName()).collect(Collectors.toList()).toArray(new String[0]))
 					.build();
 		}
@@ -142,7 +140,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public User findByEmail(String email) {	
+	public User findByEmail(String email) {
 		User user = dao.findByEmail(email).get();
 		return user;
 	}
@@ -159,37 +157,38 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public void sendRegistrationConfirmationEmail(User user) {
-		Securetoken secureToken= securetokenservice.createSecureToken();
-        secureToken.setUser(user);
-        securetokendao.save(secureToken);
-        AccountVerificationEmailContext emailContext = new AccountVerificationEmailContext();
-        emailContext.init(user);
-        emailContext.setToken(secureToken.getToken());
-        emailContext.buildVerificationUrl("http://localhost:8080", secureToken.getToken());
-        try {
-            emailService.sendMail(emailContext);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		Securetoken secureToken = securetokenservice.createSecureToken();
+		secureToken.setUser(user);
+		securetokendao.save(secureToken);
+		AccountVerificationEmailContext emailContext = new AccountVerificationEmailContext();
+		emailContext.init(user);
+		emailContext.setToken(secureToken.getToken());
+		emailContext.buildVerificationUrl("http://localhost:8080", secureToken.getToken());
+		try {
+			emailService.sendMail(emailContext);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public boolean verifyUser(String token) throws InvalidTokenException {
 		Securetoken secureToken = securetokenservice.findByToken(token);
-		if (Objects.isNull(secureToken) || !com.mysql.cj.util.StringUtils.nullSafeEqual(token, secureToken.getToken()) || secureToken.isExpired()  ) {
-			 throw new InvalidTokenException("Token is not valid");
+		if (Objects.isNull(secureToken) || !com.mysql.cj.util.StringUtils.nullSafeEqual(token, secureToken.getToken())
+				|| secureToken.isExpired()) {
+			throw new InvalidTokenException("Token is not valid");
 		}
-        User user = dao.getOne(secureToken.getUser().getUserid());
-        if(Objects.isNull(user)){
-            return false;
-        }
-        user.setAccountVerified(true);
-        System.out.println("set true");
-        dao.save(user); // let's same user details
+		User user = dao.getOne(secureToken.getUser().getUserid());
+		if (Objects.isNull(user)) {
+			return false;
+		}
+		user.setAccountVerified(true);
+		System.out.println("set true");
+		dao.save(user); // let's same user details
 
-        // we don't need invalid password now
-        securetokenservice.removeToken(secureToken);
-        return true;
+		// we don't need invalid password now
+		securetokenservice.removeToken(secureToken);
+		return true;
 	}
 
 }

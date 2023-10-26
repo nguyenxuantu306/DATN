@@ -34,23 +34,21 @@ public class OrderRestController {
 	ModelMapper modelMapper;
 
 	@GetMapping()
-	public ResponseEntity<String> getAllOrders(
-	        @RequestParam(defaultValue = "0") int page,
-	        @RequestParam(defaultValue = "10") int size) {
-	    List<Order> orders = orderService.getAllOrders(page, size);
-	    List<OrderDTO> orderDTOs = orders.stream()
-	            .map(order -> modelMapper.map(order, OrderDTO.class))
-	            .collect(Collectors.toList());
+	public ResponseEntity<String> getAllOrders(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size) {
+		List<Order> orders = orderService.getAllOrders(page, size);
+		List<OrderDTO> orderDTOs = orders.stream().map(order -> modelMapper.map(order, OrderDTO.class))
+				.collect(Collectors.toList());
 
-	    ObjectMapper objectMapper = new ObjectMapper();
-	    try {
-	        String json = objectMapper.writeValueAsString(orderDTOs);
-	        return ResponseEntity.ok(json);
-	    } catch (JsonProcessingException e) {
-	        // Xử lý lỗi nếu chuyển đổi sang JSON không thành công
-	        e.printStackTrace();
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	    }
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			String json = objectMapper.writeValueAsString(orderDTOs);
+			return ResponseEntity.ok(json);
+		} catch (JsonProcessingException e) {
+			// Xử lý lỗi nếu chuyển đổi sang JSON không thành công
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
 //	@PostMapping()
@@ -77,7 +75,7 @@ public class OrderRestController {
 	public Order create(@RequestBody JsonNode orderData) {
 		return orderService.create(orderData);
 	}
-	
+
 	@PutMapping("{id}")
 	public Order update(@PathVariable("id") Integer id, @RequestBody Order order) {
 		return orderService.update(order);

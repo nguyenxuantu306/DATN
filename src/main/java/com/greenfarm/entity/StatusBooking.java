@@ -20,15 +20,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "statusbookings")
-public class StatusBooking implements Serializable{
+public class StatusBooking implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer statusbookingid;
-	
+
 	private String name;
-	
+
 //	@JsonIgnore
 //	@OneToMany(mappedBy = "statusBooking")
 //	List<Booking> booking;

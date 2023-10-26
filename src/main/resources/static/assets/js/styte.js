@@ -178,3 +178,89 @@ function addToCart(productId) {
     },
   });
 }
+
+function removeCart(productId) {
+  $.ajax({
+    type: "POST",
+    url: "/cart/remove/" + productId,
+    data: {
+      productId: productId,
+    },
+    success: function (response) {
+      window.location.reload();
+    },
+    error: function (error) {
+      console.error("Error adding product to cart:", error);
+    },
+  });
+}
+
+function removeAllItemsFromCart() {
+    $.ajax({
+        type: "POST",
+        url: "/cart/remove/all", // Endpoint để xóa tất cả sản phẩm
+        success: function (response) {
+            window.location.reload();
+        },
+        error: function (error) {
+            console.error("Error removing all items from cart:", error);
+        },
+    });
+}
+
+function decreaseQuantity(buttonElement) {
+  var quantityInput = buttonElement.nextElementSibling;
+  var productId = quantityInput.getAttribute('data-productid');
+  var newQuantity = parseInt(quantityInput.value) - 1;
+  
+  if (newQuantity >= 1) {
+      quantityInput.value = newQuantity;
+      updateQuantity(productId, newQuantity);
+  } else {
+    removeCart(productId);
+  }
+}
+
+function increaseQuantity(buttonElement) {
+  var quantityInput = buttonElement.previousElementSibling;
+  var productId = quantityInput.getAttribute('data-productid'); // Sửa đổi ở đây
+  var newQuantity = parseInt(quantityInput.value) + 1;
+  
+  quantityInput.value = newQuantity;
+  updateQuantity(productId, newQuantity);
+}
+
+
+function updateQuantity(productId, newQuantity) {
+  $.ajax({
+      type: "POST",
+      url: "/cart/update/" + productId + "?quantity=" + newQuantity,
+      success: function(data) {
+        window.location.reload();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR.responseText);
+      }
+  });
+}
+
+// Lấy tất cả các trường số lượng
+var quantityInputs = document.querySelectorAll('.cart-quantity');
+
+// Lặp qua từng trường số lượng và thêm bộ lắng nghe sự kiện cho mỗi trường
+quantityInputs.forEach(function(quantityInput) {
+    quantityInput.addEventListener("keyup", function(event) {
+        // Kiểm tra nếu phím Enter đã được nhấn (event.key === "Enter")
+        if (event.key === "Enter") {
+            var productId = quantityInput.getAttribute('data-productid');
+            var newQuantity = parseInt(quantityInput.value);
+            if (!isNaN(newQuantity) && newQuantity >= 1) {
+                updateQuantity(productId, newQuantity);
+            }
+        }
+    });
+});
+
+
+
+
