@@ -1,6 +1,6 @@
 // Hàm tạo mã HTML cho một sản phẩm
 function createProductHTML(product) {
-	var productHTML = `
+  var productHTML = `
               <div 
 		class="col-lg-4 col-md-6 mb-4">
 		<div class="package-item bg-white mb-2">
@@ -24,124 +24,157 @@ function createProductHTML(product) {
 		</div>
 	</div>
         `;
-	return productHTML;
+  return productHTML;
 }
 
 // Hàm hiển thị danh sách sản phẩm
 function displayProducts(products) {
-	var Results = $('#Results');
-	Results.empty();
+  var Results = $("#Results");
+  Results.empty();
 
-	products.forEach(function(product) {
-		var productHTML = createProductHTML(product);
-		Results.append(productHTML);
-	});
+  products.forEach(function (product) {
+    var productHTML = createProductHTML(product);
+    Results.append(productHTML);
+  });
 }
 
 // Hàm tìm kiếm sản phẩm
 function searchProducts(keyword) {
-	$.ajax({
-		url: '/rest/products/search',
-		type: 'GET',
-		data: { keyword: keyword },
-		success: function(response) {
-			displayProducts(response);
-		},
-		error: function(xhr) {
-			console.log(xhr.responseText);
-		}
-	});
+  $.ajax({
+    url: "/rest/products/search",
+    type: "GET",
+    data: { keyword: keyword },
+    success: function (response) {
+      displayProducts(response);
+    },
+    error: function (xhr) {
+      console.log(xhr.responseText);
+    },
+  });
 }
 
 // Hàm lọc sản phẩm theo khoảng giá
 function filterProductsByPrice(minPrice, maxPrice) {
-	$.ajax({
-		url: '/rest/products/filter',
-		type: 'GET',
-		data: { minPrice: minPrice, maxPrice: maxPrice },
-		success: function(response) {
-			displayProducts(response);
-		},
-		error: function(xhr) {
-			console.log(xhr.responseText);
-		}
-	});
+  $.ajax({
+    url: "/rest/products/filter",
+    type: "GET",
+    data: { minPrice: minPrice, maxPrice: maxPrice },
+    success: function (response) {
+      displayProducts(response);
+    },
+    error: function (xhr) {
+      console.log(xhr.responseText);
+    },
+  });
 }
 
 // Hàm sắp xếp sản phẩm theo tên
 function sortProductsByName(sortType) {
-	$.ajax({
-		url: '/rest/products/sort',
-		type: 'GET',
-		data: { sort: sortType },
-		success: function(response) {
-			displayProducts(response);
-		},
-		error: function(xhr) {
-			console.log(xhr.responseText);
-		}
-	});
+  $.ajax({
+    url: "/rest/products/sort",
+    type: "GET",
+    data: { sort: sortType },
+    success: function (response) {
+      displayProducts(response);
+    },
+    error: function (xhr) {
+      console.log(xhr.responseText);
+    },
+  });
 }
 
 // Hàm sắp xếp sản phẩm theo giá
 function sortProductsByPrice(sortType) {
-	$.ajax({
-		url: '/rest/products/sortprice',
-		type: 'GET',
-		data: { sortprice: sortType },
-		success: function(response) {
-			displayProducts(response);
-		},
-		error: function(xhr) {
-			console.log(xhr.responseText);
-		}
-	});
+  $.ajax({
+    url: "/rest/products/sortprice",
+    type: "GET",
+    data: { sortprice: sortType },
+    success: function (response) {
+      displayProducts(response);
+    },
+    error: function (xhr) {
+      console.log(xhr.responseText);
+    },
+  });
 }
 
 // Hàm xử lý sự kiện khi người dùng thay đổi giá trị radio
 function handlePriceRangeChange() {
-	var priceRange = $('input[name="priceRange"]:checked').val();
-	$.ajax({
-		url: '/rest/products/filter-by-custom-price-range',
-		type: 'GET',
-		data: { priceRange: priceRange },
-		success: function(response) {
-			displayProducts(response);
-		},
-		error: function(xhr) {
-			console.log(xhr.responseText);
-		}
-	});
+  var priceRange = $('input[name="priceRange"]:checked').val();
+  $.ajax({
+    url: "/rest/products/filter-by-custom-price-range",
+    type: "GET",
+    data: { priceRange: priceRange },
+    success: function (response) {
+      displayProducts(response);
+    },
+    error: function (xhr) {
+      console.log(xhr.responseText);
+    },
+  });
 }
 
-$(document).ready(function() {
-	// Gắn kết sự kiện khi người dùng nhập từ khóa
-	$('#searchKeyword').on('input', function() {
-		searchProducts($(this).val());
-	});
+$(document).ready(function () {
+  // Gắn kết sự kiện khi người dùng nhập từ khóa
+  $("#searchKeyword").on("input", function () {
+    searchProducts($(this).val());
+  });
 
-	// Gắn kết sự kiện submit cho biểu mẫu lọc sản phẩm
-	$('#filterForm').submit(function(event) {
-		event.preventDefault();
-		var minPrice = $('#minPrice').val();
-		var maxPrice = $('#maxPrice').val();
-		filterProductsByPrice(minPrice, maxPrice);
-	});
+  // Gắn kết sự kiện submit cho biểu mẫu lọc sản phẩm
+  $("#filterForm").submit(function (event) {
+    event.preventDefault();
+    var minPrice = $("#minPrice").val();
+    var maxPrice = $("#maxPrice").val();
+    filterProductsByPrice(minPrice, maxPrice);
+  });
 
-	// Gắn kết sự kiện click cho các thẻ 'a' sắp xếp theo tên
-	$('#productList a[data-sort]').click(function(event) {
-		event.preventDefault();
-		var sortType = $(this).data('sort');
-		sortProductsByName(sortType);
-	});
+  // Gắn kết sự kiện click cho các thẻ 'a' sắp xếp theo tên
+  $("#productList a[data-sort]").click(function (event) {
+    event.preventDefault();
+    var sortType = $(this).data("sort");
+    sortProductsByName(sortType);
+  });
 
-	// Gắn kết sự kiện click cho các thẻ 'a' sắp xếp theo giá
-	$('#productList a[data-sortprice]').click(function(event) {
-		event.preventDefault();
-		var sortType = $(this).data('sortprice');
-		sortProductsByPrice(sortType);
-	});
+  // Gắn kết sự kiện click cho các thẻ 'a' sắp xếp theo giá
+  $("#productList a[data-sortprice]").click(function (event) {
+    event.preventDefault();
+    var sortType = $(this).data("sortprice");
+    sortProductsByPrice(sortType);
+  });
 
-	// Gắn kết sự kiện khi người dùng thay đổi giá trị radio
-	$('input[type="radio"]').change(handlePriceRangeChange);
+  // Gắn kết sự kiện khi người dùng thay đổi giá trị radio
+  $('input[type="radio"]').change(handlePriceRangeChange);
 });
+
+// Mini Cart
+
+// JavaScript to handle the mini cart toggle using jQuery
+$(document).ready(function () {
+  const cartToggle = $("#cart-toggle");
+  const miniCart = $("#mini-cart");
+
+  // Initially hide the mini cart
+  miniCart.hide();
+
+  cartToggle.click(function () {
+    miniCart.toggle();
+  });
+});
+
+// AddToCart
+
+function addToCart(productId) {
+  $.ajax({
+    type: "POST",
+    url: "/cart/add/" + productId,
+    data: {
+      productId: productId,
+    },
+    success: function (response) {
+      console.log("Product added to cart:", response);
+    },
+    error: function (error) {
+      console.error("Error adding product to cart:", error);
+    },
+  });
+}

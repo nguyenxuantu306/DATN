@@ -34,7 +34,8 @@ public class CartController {
     @RequestMapping("/add/{productId}")
     public String addToCart(HttpSession session, @PathVariable("productId") Integer productId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal())) {
+        if (authentication != null && authentication.isAuthenticated()
+                && !"anonymousUser".equals(authentication.getPrincipal())) {
             String userEmail = authentication.getName();
             User user = userService.findByEmail(userEmail);
             if (user != null) {
@@ -57,59 +58,59 @@ public class CartController {
         return "redirect:/login";
     }
 
-
     @RequestMapping("/update/{productId}")
-public String viewUpdate(ModelMap modelMap, @PathVariable("productId") Integer productId) {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal())) {
-        String userEmail = authentication.getName();
-        User user = userService.findByEmail(userEmail);
-        if (user != null) {
-            Product product = productService.findById(productId);
-            if (product != null) {
-                Cart cartItem = cartDAO.findByUserAndProduct(user, product);
-                if (cartItem != null) {
-                    int updatedQuantity = cartItem.getQuantity() - 1;
-                    if (updatedQuantity > 0) {
-                        cartItem.setQuantity(updatedQuantity);
-                        cartDAO.save(cartItem);
-                    } else {
-                        cartDAO.delete(cartItem); 
+    public String viewUpdate(ModelMap modelMap, @PathVariable("productId") Integer productId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()
+                && !"anonymousUser".equals(authentication.getPrincipal())) {
+            String userEmail = authentication.getName();
+            User user = userService.findByEmail(userEmail);
+            if (user != null) {
+                Product product = productService.findById(productId);
+                if (product != null) {
+                    Cart cartItem = cartDAO.findByUserAndProduct(user, product);
+                    if (cartItem != null) {
+                        int updatedQuantity = cartItem.getQuantity() - 1;
+                        if (updatedQuantity > 0) {
+                            cartItem.setQuantity(updatedQuantity);
+                            cartDAO.save(cartItem);
+                        } else {
+                            cartDAO.delete(cartItem);
+                        }
                     }
+
+                    List<Cart> cartItems = cartDAO.findByUser(user);
+                    modelMap.addAttribute("cartItems", cartItems);
+                    modelMap.addAttribute("totalPrice", totalPrice(cartItems));
                 }
-                
-                List<Cart> cartItems = cartDAO.findByUser(user);
-                modelMap.addAttribute("cartItems", cartItems);
-                modelMap.addAttribute("totalPrice", totalPrice(cartItems));
             }
         }
+        return "cart";
     }
-    return "cart";
-}
 
-@RequestMapping("/remove/{productId}")
-public String viewRemove(ModelMap modelMap, @PathVariable("productId") Integer productId) {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal())) {
-        String userEmail = authentication.getName();
-        User user = userService.findByEmail(userEmail);
-        if (user != null) {
-            Product product = productService.findById(productId);
-            if (product != null) {
-                Cart cartItem = cartDAO.findByUserAndProduct(user, product);
-                if (cartItem != null) {
-                    cartDAO.delete(cartItem); // Remove the item from the cart in the database
+    @RequestMapping("/remove/{productId}")
+    public String viewRemove(ModelMap modelMap, @PathVariable("productId") Integer productId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()
+                && !"anonymousUser".equals(authentication.getPrincipal())) {
+            String userEmail = authentication.getName();
+            User user = userService.findByEmail(userEmail);
+            if (user != null) {
+                Product product = productService.findById(productId);
+                if (product != null) {
+                    Cart cartItem = cartDAO.findByUserAndProduct(user, product);
+                    if (cartItem != null) {
+                        cartDAO.delete(cartItem); // Remove the item from the cart in the database
+                    }
+                    // Fetch the updated cart items from the database
+                    List<Cart> cartItems = cartDAO.findByUser(user);
+                    modelMap.addAttribute("cartItems", cartItems);
+                    modelMap.addAttribute("totalPrice", totalPrice(cartItems));
                 }
-                // Fetch the updated cart items from the database
-                List<Cart> cartItems = cartDAO.findByUser(user);
-                modelMap.addAttribute("cartItems", cartItems);
-                modelMap.addAttribute("totalPrice", totalPrice(cartItems));
             }
         }
+        return "cart";
     }
-    return "cart";
-}
-
 
     public double totalPrice(List<Cart> cartItems) {
         double total = 0;
@@ -118,4 +119,21 @@ public String viewRemove(ModelMap modelMap, @PathVariable("productId") Integer p
         }
         return total;
     }
+
+    @RequestMapping("/view")
+    public String viewCart(ModelMap modelMap) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()
+                && !"anonymousUser".equals(authentication.getPrincipal())) {
+            String userEmail = authentication.getName();
+            User user = userService.findByEmail(userEmail);
+            if (user != null) {
+                List<Cart> cartItems = cartDAO.findByUser(user);
+                modelMap.addAttribute("cartItems", cartItems);
+                modelMap.addAttribute("totalPrice", totalPrice(cartItems));
+            }
+        }
+        return "cart";
+    }
+
 }

@@ -53,8 +53,8 @@
                     <a href="#" class="dec qty-btn">-</a>
                   </div>
                 </div>
-                {% comment %} <button class="add-to-cart-button" th:onclick="'addToCart(\'' + ${item.productid} + '\')'"> {% endcomment %}
-                  <button class="add-to-cart-button" th:href="cart/add/{}">
+                
+                <button class="add-to-cart-button" th:onclick="'addToCart(\'' + ${item.productid} + '\')'">
                   <i class="fas fa-shopping-cart"></i> Add to Cart
                 </button>
               </div>
