@@ -28,12 +28,21 @@ public class Authconfig {
 	public SecurityFilterChain fillterchain(HttpSecurity http) throws Exception {
 		http.csrf().disable().cors().disable();
 
-		http.authorizeRequests(authorize -> authorize.requestMatchers("/profile", "/").authenticated()
-				.requestMatchers("/admin/**").hasRole("Administrator").anyRequest().permitAll());
+		http.authorizeRequests(authorize -> authorize
+				.requestMatchers("/profile").authenticated()
+				.requestMatchers("/assetsAdmin/**", "/admin").hasRole("Administrator")
+				.anyRequest().permitAll());
 
-		http.formLogin(form -> form.loginPage("/login")
+		http.formLogin(form -> form
+				.loginPage("/login")
+		/* .loginProcessingUrl("/") */
 
-		).logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll());
+		).logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logoff")).permitAll());
+//		.oauth2Login()
+//		.loginPage("/oauth2/login/form")
+//   		.defaultSuccessUrl("/oauth2/login/success",true)
+//   		.failureUrl("/oauth2/login/error")
+//   		.authorizationEndpoint().baseUri("/oauth2/authorization");
 
 		return http.build();
 	}

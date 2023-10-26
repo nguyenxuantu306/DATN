@@ -33,63 +33,59 @@ import lombok.NoArgsConstructor;
 public class Tour implements Serializable {
 
 	@Id
-	private Integer Tourid;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer tourid;
 
 	private String Tourname;
 
 	private String Description;
 
-	private String Image;
+	private String image;
 	
-//	@Temporal(TemporalType.DATE)
-//	@Column(name = "Startdate")
-//	private Date Startdate = new Date();
-//
-//	@Temporal(TemporalType.DATE)
-//	@Column(name = "Enddate")
-//	private Date Enddate = new Date();
+	@Temporal(TemporalType.DATE)
+	@Column(name = "Startdate")
+	private Date startdate = new Date();
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "Enddate")
+	private Date enddate = new Date();
 	
-	private String Departureday;
 	
-	private Double Price;
-	
-	private String Location;
+	private String location;
 	
 	@Column(name = "Availableslots")
 	private Integer Availableslots;
 	
-	private String vehicle;
+	@ManyToOne
+	@JoinColumn(name = "userid")
+	User user;
 	
-	@Column(name = "Icondition")
-	private String icondition;
+	@JsonIgnore
+	@OneToMany(mappedBy = "tour")
+	List<Booking> booking;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "tour")
+	List<Comment> comment;
 	
-	private String programme;
+	@JsonIgnore
+	@OneToOne(mappedBy = "tour")
+	TourCondition tourCondition;
 	
-	/* private boolean activee; */
+	@JsonIgnore
+	@OneToOne(mappedBy = "tour")
+	TourOverview tourOverview;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "tour")
+	List<TourImage> tourImage;
+	
+	@JsonIgnore
+	@OneToOne(mappedBy = "tour")
+	Pricing pricings;
 	
 	@Override
 	public String toString() {
 		return "";
 	}
-	@ManyToOne
-	@JoinColumn(name = "UserID")
-	User user;
-//	@OneToMany
-//	List<Booking> booking;
-//	
-//	@OneToMany
-//	List<Comment> comment;
-//	
-//	@OneToMany
-//	List<Pricing> pricing;
-//	
-//	@OneToOne
-//	TourCondition tourCondition;
-//	
-//	@OneToOne
-//	TourOverview tourOverview;
-//	
-//	@OneToMany
-//	List<TourImage> tourImage;
 }

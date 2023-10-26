@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
     <section>
         <div class="form-box">
             <div class="form-value">
-                <form action="/login" method="post">
+                <form th:action="@{/login}" method="post">
                     <h2>LOGIN</h2>
                     <div class="inputbox">
                         <ion-icon name="mail-outline"></ion-icon>

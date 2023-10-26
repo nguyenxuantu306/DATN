@@ -20,15 +20,17 @@
 							class="table table-striped table-bordered zero-configuration">
 							<thead>
 								<tr>
-									<th>STT</th>																									
+									<th>NO.</th>																									
 									<th>CATEGORYNAME</th>
-									<th class="text-center">...</th>
+									<th>DESCRIPTIONS</th>
+									<th class="text-center"></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr ng-repeat="item in pager.items">								
-									<th style="width: 400px">{{$index + 1}}</th>
-									<th style="width: 400px">{{item.categoryname}}</th>
+									<th>{{$index + 1}}</th>
+									<th style="width:100px">{{item.categoryname}}</th>
+									<th style="width:700px">{{item.descriptions}}</th>
 									<td class="text-center">
 									
 									 <a ng-click="edit(item)" ><i
@@ -67,15 +69,15 @@
 		<div class="card-body">
 			<h4 class="card-title">Create / Update</h4>
 			<div class="basic-form">
-				<form class="row">
-					<div class="form-group col-sm-6">
-						<input  name="categoryid" type="text"  class="form-control input-default"
-							placeholder="CategoryID..." readonly>
-							
-					</div>
+				<form class="row">					
 					<div class="form-group col-sm-6">
 						<input name="categoryname" type="text" ng-model="form.categoryname" class="form-control input-default"
 							placeholder="CategoryName...">
+							
+					</div>
+					<div class="form-group col-sm-6">
+						<textarea name="descriptions" type="text" ng-model="form.descriptions" class="form-control input-default"
+							placeholder="Descriptions..."></textarea>
 							
 					</div>
 				</form>

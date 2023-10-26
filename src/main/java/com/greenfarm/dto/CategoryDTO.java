@@ -13,5 +13,6 @@ public class CategoryDTO {
 	
     private int categoryid;
     private String categoryname;
+    private String descriptions;
     private List<ProductDTO> products;
 }

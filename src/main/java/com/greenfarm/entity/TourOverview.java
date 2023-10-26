@@ -17,18 +17,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "TouOverviews")
+@Table(name = "Touroverviews")
 public class TourOverview implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer OverviewID;
-//	
-//	@OneToOne
-//	@JoinColumn(name = "TourID")
-//	Tour tour;
+	private Integer touroverviewid;
 	
-	String Title;
+	private String Title;
 	
-	String Content;
+	private String Content;
+	
+	@OneToOne
+	@JoinColumn(name = "tourid")
+	Tour tour;
 	
 }

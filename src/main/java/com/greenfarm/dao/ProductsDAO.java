@@ -2,6 +2,7 @@ package com.greenfarm.dao;
 
 import java.util.List;
 
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,4 +31,8 @@ public interface ProductsDAO extends JpaRepository<Product, Integer>  {
 	@Query("SELECT new Report(o.category, sum(o.price), count(o)) " + " FROM Product o " + " GROUP BY o.category"
 			+ " ORDER BY sum(o.price) DESC")
 	List<Report> getInventoryByCategory();
+
+
+    @Query("SELECT p FROM Product p JOIN p.orderDetails od GROUP BY p.productid, p.productname,p.image ORDER BY SUM(od.quantityordered) DESC")
+    List<Product> findTopSellingProducts();
 }

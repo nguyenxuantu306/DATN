@@ -4,9 +4,7 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,19 +27,23 @@ import lombok.NoArgsConstructor;
 public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer Orderid;
-
-	@ManyToOne
-	@JoinColumn(name = "UserID")
-	User user;
+	public Integer Orderid;
 
 	@Temporal(TemporalType.DATE)
-	@JoinColumn(name = "OrderDate")
-	Date orderdate = new Date();
+	@JoinColumn(name = "orderdate")
+	private Date orderdate = new Date();
 
-	String Address;
+	private String Address;
 
-	@JsonIgnore
+//	@JsonIgnore 
 	@OneToMany(mappedBy = "order")
-	List<OrderDetail> orderDetail;
+	public List<OrderDetail> orderDetail;
+	
+	@ManyToOne
+	@JoinColumn(name = "userid")
+	User user;
+	
+	@ManyToOne
+	@JoinColumn(name ="statusorderid")
+	StatusOrder statusOrder;
 }

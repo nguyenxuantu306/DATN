@@ -10750,7 +10750,7 @@ h6,
 }
 
 .page-header {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/carousel-2.jpg), no-repeat center center;
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(https://static.wixstatic.com/media/7406f4_50e5b6d2b98c4f998fd55d67dfce0685~mv2.jpg/v1/fill/w_1899,h_578,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/7406f4_50e5b6d2b98c4f998fd55d67dfce0685~mv2.jpg), no-repeat center center;
   background-size: cover;
 }
 

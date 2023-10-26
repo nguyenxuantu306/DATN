@@ -29,7 +29,7 @@ public class Product implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Productid;
+	private Integer productid;
 
 	private String productname;
 	
@@ -49,11 +49,12 @@ public class Product implements Serializable {
 	@OneToMany(mappedBy = "product")
 	List<OrderDetail> orderDetails;	
 
-	
-//	@OneToMany
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "product")
 //	List<ProductDiscount> productDiscount;
-//	
-//	@OneToMany
+	
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "product")
 //	List<ProductImage> productImage;
 	
 	@Override

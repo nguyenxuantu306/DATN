@@ -3,6 +3,8 @@ package com.greenfarm.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,18 +24,23 @@ import lombok.NoArgsConstructor;
 public class OrderDetail implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer orderdetailid;
+	public Integer orderdetailid; 
+	
+	@JsonIgnore 
+	@ManyToOne
+	@JoinColumn(name = "orderid")
+	public Order order;
 	
 	@ManyToOne
-	@JoinColumn(name = "OrderID")
-	Order order;
-	
-	@ManyToOne
-	@JoinColumn(name = "ProductID")
-	Product product;
+	@JoinColumn(name = "productid")
+	private Product product;
 	
 	Integer quantityordered;
 	
 	Float totalprice;
+
+	@ManyToOne
+	@JoinColumn(name = "paymentmethodid")
+	PaymentMethod paymentMethod;
 	
 }
