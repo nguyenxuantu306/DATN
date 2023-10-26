@@ -64,10 +64,10 @@ public class HomeController {
 //        return "register";
 //    }
 
-    @RequestMapping("/cart")
-    public String Cart(Model model) {
-        return "cart";
-    }
+//    @RequestMapping("/cart")
+//    public String Cart(Model model) {
+//        return "cart";
+//    }
 
 	@RequestMapping({"/admin","/admin/home/index"})
 	public String admin() {

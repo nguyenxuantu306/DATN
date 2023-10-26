@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -120,7 +121,7 @@ public class CartController {
         return total;
     }
 
-    @RequestMapping("/view")
+    @GetMapping
     public String viewCart(ModelMap modelMap) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()
@@ -129,7 +130,10 @@ public class CartController {
             User user = userService.findByEmail(userEmail);
             if (user != null) {
                 List<Cart> cartItems = cartDAO.findByUser(user);
-                modelMap.addAttribute("cartItems", cartItems);
+                Cart cart = cartDAO.findByUser(user).get(0);
+                System.out.println(cart.getUser().getEmail());
+                System.out.println(cart.getProduct().getProductname());
+                modelMap.addAttribute("cartItems", cart);
                 modelMap.addAttribute("totalPrice", totalPrice(cartItems));
             }
         }

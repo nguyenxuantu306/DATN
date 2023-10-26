@@ -31,7 +31,15 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div >
+                                    
+									    <ul>
+    <li th:each="item : ${cartItems}">
+        <span th:text="${item.product.productname}"></span>
+        <span th:text="${item.user.email}"></span>
+    </li>
+</ul>
+
+                                    <!-- <div    th:each="items : ${cartItems}">
                                         <div class="card mb-3">
                                             <a>aaaa</a>
                                             <div class="card-body">
@@ -60,7 +68,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="col-lg-5">
 
