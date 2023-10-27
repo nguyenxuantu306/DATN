@@ -48,11 +48,11 @@ app.config(function($routeProvider) {
 		})
 		.when("/dashboard", {
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
-			controller: "thongke-ctrl"
+			
 		})
 
 		.otherwise({
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
-			controller: "thongke-ctrl"
+			
 		});
 });

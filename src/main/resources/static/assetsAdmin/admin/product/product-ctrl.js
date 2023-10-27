@@ -20,12 +20,6 @@ app.controller("product-ctrl", function($scope, $http) {
 			
 		});
 		
-		/*// Load Athor
-		$http.get("/rest/categories").then(resp =>{
-			$scope.cates = resp.data;
-			
-		});*/
-		
 	}
 	
 	$scope.sort = function(keyname) {
@@ -55,11 +49,7 @@ app.controller("product-ctrl", function($scope, $http) {
 		$scope.form = angular.copy(item);	
 		$('#btn-create').attr('disabled', 'disabled');
 		$('#btn-delete').removeAttr('disabled');
-		$('#btn-update').removeAttr('disabled');			
-		$('html,body').animate({
-			scrollTop: $(".info").offset().top
-		},
-			'slow');	
+		$('#btn-update').removeAttr('disabled');				
 	}
 	
 	// Thêm sản phẩm mới

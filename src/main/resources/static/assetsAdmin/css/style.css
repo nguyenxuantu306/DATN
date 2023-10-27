@@ -14700,3 +14700,8 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
       color: #fff; }
 
 /*# sourceMappingURL=style.css.map */
+
+
+.custom-modal {
+  max-width: 1000px; /* Điều chỉnh kích thước tùy chọn tại đây */
+}

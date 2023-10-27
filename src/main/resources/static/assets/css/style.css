@@ -11257,4 +11257,12 @@ nav ul li a:hover {
 }
 
 
+.price {
+  display: flex;
+  align-items: baseline;
+}
+
+.price span:first-child {
+  margin-right: 4px; /* Khoảng cách giữa giá và chữ đồng */
+}
 

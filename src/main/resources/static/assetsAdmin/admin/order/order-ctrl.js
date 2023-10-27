@@ -70,20 +70,6 @@ app.controller("order-ctrl", function($scope, $http) {
 		/*$(".nav-tabs a:eq(0)").tab('show');*/
 	}
 
-	// Thêm sản phẩm mới
-	/*$scope.create = function(){
-		var item = angular.copy($scope.form);
-		$http.post(`/rest/products`,item).then(resp =>{
-			resp.data.publication_date = new Date(resp.data.publication_date)
-			$scope.items.push(resp.data);
-			$scope.reset();
-			alert("Thêm sản phẩm thành công!");
-		}).catch(error =>{
-			alert("Lỗi thêm mới sản phẩm");
-			console.log("Error",error);
-		});
-	}*/
-
 	// cập nhật trạng thái
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
@@ -91,11 +77,21 @@ app.controller("order-ctrl", function($scope, $http) {
 		$http.put(`/rest/orders/${item.orderid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.orderid == item.orderid);
 			$scope.items[index] = item;
-			alert("Cập nhật trạng thái thành công!");
+			// Sử dụng SweetAlert2 cho thông báo thành công
+	        Swal.fire({
+	            icon: 'success',
+	            title: 'Thành công!',
+	            text: 'Cập nhật trạng thái thành công !',
+	        });
 			refreshPage();
 		})
 			.catch(error => {
-				alert("Lỗi cập nhật trạng thái!");
+				// Sử dụng SweetAlert2 cho thông báo lỗi
+	        Swal.fire({
+	            icon: 'error',
+	            title: 'Lỗi!',
+	            text: 'Cập nhật trạng thái thất bại !',
+	        });
 				console.log("Error", error);
 			});
 	}
@@ -104,35 +100,6 @@ app.controller("order-ctrl", function($scope, $http) {
 		location.reload();
 	}
 
-
-	// Xóa sản phẩm 
-	/*$scope.delete = function(item){
-		$http.delete(`/rest/orders/${item.id}`).then(resp =>{
-			var index = $scope.items.findIndex(p => p.id == item.id);
-			$scope.items.splice(index,1);
-			$scope.reset();				
-			alert("Xóa thành công!");
-		})
-		.catch(error =>{
-			alert("Lỗi xóa");
-			console.log("Error",error);
-		});
-	}
-	*/
-	// Upload hình
-	/*$scope.imageChanged = function(files){
-		var data = new FormData();
-		data.append('file',files[0]);
-		$http.post('/rest/upload/images',data,{
-			transformRequest:angular.identity,
-			headers:{'Content-Type':undefined}
-		}).then(resp =>{
-			$scope.form.image = resp.data.name;
-		}).catch(error =>{
-			alert("Lỗi upload hình ảnh");
-			console.log("Error",error);
-		})
-	}*/
 
 	$scope.pager = {
 		page: 0,

@@ -61,6 +61,8 @@
 <!-- SweetAlert2 CSS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
 </head>
 
@@ -117,22 +119,6 @@
 						<span class="toggle-icon"><i class="icon-menu"></i></span>
 					</div>
 				</div>
-				<div class="header-left">
-					<div class="input-group icons">
-						<div class="input-group-prepend">
-							<span
-								class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
-								id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
-						</div>
-						<input type="search" class="form-control"
-							placeholder="Search Dashboard" aria-label="Search Dashboard">
-						<div class="drop-down animated flipInX d-md-none">
-							<form action="#">
-								<input type="text" class="form-control" placeholder="Search">
-							</form>
-						</div>
-					</div>
-				</div>
 				<div class="header-right">
 					<ul class="clearfix">
 						<li class="icons dropdown"><a href="javascript:void(0)"
@@ -142,45 +128,13 @@
 							<div class="drop-down animated fadeIn dropdown-menu">
 								<div
 									class="dropdown-content-heading d-flex justify-content-between">
-									<span class="">3 New Messages</span> <a
+									<span class="">3 Tin nhắn mới</span> <a
 										href="javascript:void()" class="d-inline-block"> <span
 										class="badge badge-pill gradient-1">3</span>
 									</a>
 								</div>
 								<div class="dropdown-content-body">
 									<ul>
-										<li class="notification-unread"><a
-											href="javascript:void()"> <img
-												class="float-left mr-3 avatar-img" src="images/avatar/1.jpg"
-												alt="">
-												<div class="notification-content">
-													<div class="notification-heading">Saiful Islam</div>
-													<div class="notification-timestamp">08 Hours ago</div>
-													<div class="notification-text">Hi Teddy, Just wanted
-														to let you .</div>
-												</div>
-										</a></li>
-										<li class="notification-unread"><a
-											href="javascript:void()"> <img
-												class="float-left mr-3 avatar-img" src="images/avatar/2.jpg"
-												alt="">
-												<div class="notification-content">
-													<div class="notification-heading">Adam Smith</div>
-													<div class="notification-timestamp">08 Hours ago</div>
-													<div class="notification-text">Can you do me a
-														favour?</div>
-												</div>
-										</a></li>
-										<li><a href="javascript:void()"> <img
-												class="float-left mr-3 avatar-img" src="images/avatar/3.jpg"
-												alt="">
-												<div class="notification-content">
-													<div class="notification-heading">Barak Obama</div>
-													<div class="notification-timestamp">08 Hours ago</div>
-													<div class="notification-text">Hi Teddy, Just wanted
-														to let you .</div>
-												</div>
-										</a></li>
 										<li><a href="javascript:void()"> <img
 												class="float-left mr-3 avatar-img" src="images/avatar/4.jpg"
 												alt="">
@@ -202,38 +156,13 @@
 								class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
 								<div
 									class="dropdown-content-heading d-flex justify-content-between">
-									<span class="">2 New Notifications</span> <a
+									<span class="">2 Thông báo mới</span> <a
 										href="javascript:void()" class="d-inline-block"> <span
 										class="badge badge-pill gradient-2">5</span>
 									</a>
 								</div>
 								<div class="dropdown-content-body">
 									<ul>
-										<li><a href="javascript:void()"> <span
-												class="mr-3 avatar-icon bg-success-lighten-2"><i
-													class="icon-present"></i></span>
-												<div class="notification-content">
-													<h6 class="notification-heading">Events near you</h6>
-													<span class="notification-text">Within next 5 days</span>
-												</div>
-										</a></li>
-										<li><a href="javascript:void()"> <span
-												class="mr-3 avatar-icon bg-danger-lighten-2"><i
-													class="icon-present"></i></span>
-												<div class="notification-content">
-													<h6 class="notification-heading">Event Started</h6>
-													<span class="notification-text">One hour ago</span>
-												</div>
-										</a></li>
-										<li><a href="javascript:void()"> <span
-												class="mr-3 avatar-icon bg-success-lighten-2"><i
-													class="icon-present"></i></span>
-												<div class="notification-content">
-													<h6 class="notification-heading">Event Ended
-														Successfully</h6>
-													<span class="notification-text">One hour ago</span>
-												</div>
-										</a></li>
 										<li><a href="javascript:void()"> <span
 												class="mr-3 avatar-icon bg-danger-lighten-2"><i
 													class="icon-present"></i></span>
@@ -248,15 +177,15 @@
 							</div></li>
 						<li class="icons dropdown d-none d-md-flex"><a
 							href="javascript:void(0)" class="log-user" data-toggle="dropdown">
-								<span>English</span> <i class="fa fa-angle-down f-s-14"
+								<span>VN</span> <i class="fa fa-angle-down f-s-14"
 								aria-hidden="true"></i>
 						</a>
 							<div
 								class="drop-down dropdown-language animated fadeIn  dropdown-menu">
 								<div class="dropdown-content-body">
 									<ul>
+										<li><a href="javascript:void()">VN</a></li>
 										<li><a href="javascript:void()">English</a></li>
-										<li><a href="javascript:void()">Dutch</a></li>
 									</ul>
 								</div>
 							</div></li>
@@ -305,142 +234,52 @@
 			<div class="nk-sidebar">
 				<div class="nk-nav-scroll">
 					<ul class="metismenu" id="menu">
-						<li class="nav-label">Dashboard</li>
 						<li><a class="has-arrow" href="/admin" aria-expanded="false">
-								<i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
+								<i class="fa fa-home menu-icon"></i><span class="nav-text">Trang
+									Chủ</span>
 						</a></li>
-						<li class="nav-label">...</li>
+						<hr>
 						<li><a class="has-arrow" href="javascript:void()"
-							aria-expanded="false"> <i class="icon-envelope menu-icon"></i>
-								<span class="nav-text">User & Authority </span>
-						</a>
-							<ul aria-expanded="false">								
-								<li><a href="#!user">User Management</a></li>
-								<li><a href="#!authorize">Authority Management</a></li>
-							</ul></li>
-						<li><a class="has-arrow" href="javascript:void()"
-							aria-expanded="false"> <i class="icon-envelope menu-icon"></i>
-								<span class="nav-text">Product</span>
+							aria-expanded="false"> <i class="fa fa-user menu-icon"></i> <span
+								class="nav-text">Người dùng & Phân quyền </span>
 						</a>
 							<ul aria-expanded="false">
-								<li><a href="#!product">Shop Management</a></li>
-								<li><a href="#!tour">Tour Management</a></li>								
-								<li><a href="#!category">Category Management</a></li>
-								<!-- <li><a href="/edit-shop">Create Shop</a></li>
-								<li><a href="/edit-tour">Create Tour</a></li> -->
+								<li><a href="#!user">Quản lý người dùng</a></li>
+								<li><a href="#!authorize">Quản lý phân quyền</a></li>
 							</ul></li>
+						<hr>
 						<li><a class="has-arrow" href="javascript:void()"
-							aria-expanded="false"> <i class="icon-envelope menu-icon"></i>
-								<span class="nav-text">Order</span>
-						</a>
-							<ul aria-expanded="false">								
-								<li><a href="#!order">Order Management</a></li>								
+							aria-expanded="false"><i class="fas fa-tag menu-icon"></i> <span
+								class="nav-text">Sản phẩm</span> </a>
+							<ul aria-expanded="false">
+								<li><a href="#!product">Quản lý sản phẩm</a></li>
+								<li><a href="#!tour">Quản lý tour</a></li>
+								<li><a href="#!category">Quản lý loại sản phẩm</a></li>
 							</ul></li>
+						<hr>
 						<li><a class="has-arrow" href="javascript:void()"
 							aria-expanded="false"> <i
-								class="icon-screen-tablet menu-icon"></i><span class="nav-text">Statistical</span>
+								class="fas fa-shopping-cart menu-icon"></i> <span
+								class="nav-text">Đặt hàng</span>
 						</a>
 							<ul aria-expanded="false">
-								<li><a href="#!productS">ProductStatistics Statistics</a></li>
-								<li><a href="#!tyte">TyteStatistics</a></li>
-								<li><a href="#!orderS">OrderStatistics</a></li>
-								<li><a href="#!inventory">Inventory Statistics</a></li>
-								<li><a href="#!revenue">Revenue Statistics</a></li>
+								<li><a href="#!order">Quản lý đơn hàng</a></li>
 							</ul></li>
-						<li class="nav-label">...</li>
+						<hr>
+						<li><a class="has-arrow" href="javascript:void()"
+							aria-expanded="false"><i class="fas fa-chart-bar menu-icon"></i>
 
 
-						<li><a class="has-arrow" href="javascript:void()"
-							aria-expanded="false"> <i class="icon-graph menu-icon"></i> <span
-								class="nav-text">Charts</span>
-						</a>
+
+								<span class="nav-text">Thống kê</span> </a>
 							<ul aria-expanded="false">
-								<li><a href="./chart-flot.html">Flot</a></li>
-								<li><a href="./chart-morris.html">Morris</a></li>
-								<li><a href="./chart-chartjs.html">Chartjs</a></li>
-								<li><a href="./chart-chartist.html">Chartist</a></li>
-								<li><a href="./chart-sparkline.html">Sparkline</a></li>
-								<li><a href="./chart-peity.html">Peity</a></li>
+								<li><a href="#!productS">Thống kê sản phẩm</a></li>
+								<li><a href="#!tyte">Thống kê loại sản phẩm</a></li>
+								<li><a href="#!orderS">Thống kê đơn hàng</a></li>
+								<li><a href="#!inventory">Thống kê hàng tồn kho</a></li>
+								<li><a href="#!revenue">Thống kê doanh thu</a></li>
 							</ul></li>
-						<li class="nav-label">UI Components</li>
-						<li><a class="has-arrow" href="javascript:void()"
-							aria-expanded="false"> <i class="icon-grid menu-icon"></i><span
-								class="nav-text">UI Components</span>
-						</a>
-							<ul aria-expanded="false">
-								<li><a href="./ui-accordion.html">Accordion</a></li>
-								<li><a href="./ui-alert.html">Alert</a></li>
-								<li><a href="./ui-badge.html">Badge</a></li>
-								<li><a href="./ui-button.html">Button</a></li>
-								<li><a href="./ui-button-group.html">Button Group</a></li>
-								<li><a href="./ui-cards.html">Cards</a></li>
-								<li><a href="./ui-carousel.html">Carousel</a></li>
-								<li><a href="./ui-dropdown.html">Dropdown</a></li>
-								<li><a href="./ui-list-group.html">List Group</a></li>
-								<li><a href="./ui-media-object.html">Media Object</a></li>
-								<li><a href="./ui-modal.html">Modal</a></li>
-								<li><a href="./ui-pagination.html">Pagination</a></li>
-								<li><a href="./ui-popover.html">Popover</a></li>
-								<li><a href="./ui-progressbar.html">Progressbar</a></li>
-								<li><a href="./ui-tab.html">Tab</a></li>
-								<li><a href="./ui-typography.html">Typography</a></li>
-								<!-- </ul>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-layers menu-icon"></i><span class="nav-text">Components</span>
-                        </a>
-                        <ul aria-expanded="false"> -->
-								<li><a href="./uc-nestedable.html">Nestedable</a></li>
-								<li><a href="./uc-noui-slider.html">Noui Slider</a></li>
-								<li><a href="./uc-sweetalert.html">Sweet Alert</a></li>
-								<li><a href="./uc-toastr.html">Toastr</a></li>
-							</ul></li>
-						<li><a href="widgets.html" aria-expanded="false"> <i
-								class="icon-badge menu-icon"></i><span class="nav-text">Widget</span>
-						</a></li>
-						<li class="nav-label">Forms</li>
-						<li><a class="has-arrow" href="javascript:void()"
-							aria-expanded="false"> <i class="icon-note menu-icon"></i><span
-								class="nav-text">Forms</span>
-						</a>
-							<ul aria-expanded="false">
-								<li><a href="./form-basic.html">Basic Form</a></li>
-								<li><a href="./form-validation.html">Form Validation</a></li>
-								<li><a href="./form-step.html">Step Form</a></li>
-								<li><a href="./form-editor.html">Editor</a></li>
-								<li><a href="./form-picker.html">Picker</a></li>
-							</ul></li>
-						<li class="nav-label">Table</li>
-						<li><a class="has-arrow" href="javascript:void()"
-							aria-expanded="false"> <i class="icon-menu menu-icon"></i><span
-								class="nav-text">Table</span>
-						</a>
-							<ul aria-expanded="false">
-								<li><a href="./table-basic.html" aria-expanded="false">Basic
-										Table</a></li>
-								<li><a href="./table-datatable.html" aria-expanded="false">Data
-										Table</a></li>
-							</ul></li>
-						<li class="nav-label">Pages</li>
-						<li><a class="has-arrow" href="javascript:void()"
-							aria-expanded="false"> <i class="icon-notebook menu-icon"></i><span
-								class="nav-text">Pages</span>
-						</a>
-							<ul aria-expanded="false">
-								<li><a href="./page-login.html">Login</a></li>
-								<li><a href="./page-register.html">Register</a></li>
-								<li><a href="./page-lock.html">Lock Screen</a></li>
-								<li><a class="has-arrow" href="javascript:void()"
-									aria-expanded="false">Error</a>
-									<ul aria-expanded="false">
-										<li><a href="./page-error-404.html">Error 404</a></li>
-										<li><a href="./page-error-403.html">Error 403</a></li>
-										<li><a href="./page-error-400.html">Error 400</a></li>
-										<li><a href="./page-error-500.html">Error 500</a></li>
-										<li><a href="./page-error-503.html">Error 503</a></li>
-									</ul></li>
-							</ul></li>
+						<hr>
 					</ul>
 				</div>
 			</div>
@@ -520,7 +359,8 @@
 	<script src="/assetsAdmin/plugins/flot/js/jquery.flot.resize.js"></script>
 	<script src="/assetsAdmin/plugins/flot/js/jquery.flot.spline.js"></script>
 
-	<script src="/assetsAdmin/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+	<script
+		src="/assetsAdmin/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
 
 	<script src="/assetsAdmin/plugins/tables/js/jquery.dataTables.min.js"></script>
 	<script

@@ -43,10 +43,6 @@ app.controller("user-ctrl", function($scope, $http) {
 		$('#btn-create').attr('disabled', 'disabled');
 		$('#btn-delete').removeAttr('disabled');
 		$('#btn-update').removeAttr('disabled');			
-		$('html,body').animate({
-			scrollTop: $(".info").offset().top
-		},
-			'slow');
 	}
 
 	// Thêm mới

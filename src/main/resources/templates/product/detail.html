@@ -28,9 +28,9 @@
 						<h3 th:text="*{productname}" class="text-uppercase mt-3"></h3>
 						<h2 class="mb-3"
 							style="font-weight: 300; color: #80bb01; font-size: 28px">
-							<span th:text="*{price}"
+							<span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"
 								style="color: #999; text-decoration: line-through"></span> <span
-								th:text="*{price}"></span>
+								th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span>
 						</h2>
 						<p th:text="*{description}" class="product-description mb-3"></p>
 						<div class="cart-button mt-5 mb-5 d-flex">

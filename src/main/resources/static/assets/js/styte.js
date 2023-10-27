@@ -4,7 +4,7 @@ function createProductHTML(product) {
               <div 
 		class="col-lg-4 col-md-6 mb-4">
 		<div class="package-item bg-white mb-2">
-			<a th:href="@{|/product/detail/${product.productid}|}"><img
+			<a href="/product/detail/${product.productid}"><img
 				style="height: 250px" class="img-fluid"
 				src="${product.image}" alt=""></a>
 			<div class="p-4">
@@ -15,9 +15,8 @@ function createProductHTML(product) {
 						<h6 class="m-0">
 							<i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
 						</h6>
-						<h5
-				
-							class="m-0">${product.price}</h5>
+						<h5 class="m-0">${product.price} đ</h5>
+
 					</div>
 				</div>
 			</div>
