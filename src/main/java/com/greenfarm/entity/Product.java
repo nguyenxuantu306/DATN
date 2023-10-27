@@ -3,7 +3,9 @@ package com.greenfarm.entity;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -61,4 +63,9 @@ public class Product implements Serializable {
 	public String toString() {
 		return "";
 	}
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "product")
+//	private Set<Review> reviews = new HashSet<>(0);
+	List<Review> Review;
 }

@@ -1,7 +1,9 @@
 package com.greenfarm.entity;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,31 +12,37 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@SuppressWarnings("serial")
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Comments")
-public class Comment implements Serializable{
+@Table(name = "Reviews")
+public class Review {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer commentid;
+	private Integer reviewid;
 	
+	private String content;
 	
-	private String Commenttext;
+	@Temporal(TemporalType.DATE)
+	Date datepost = new Date();
 	
-	private Date commentdate = new Date();
-	
+	private float rating;
 	
 	@ManyToOne
 	@JoinColumn(name = "userid")
 	private User user;
 	
-	@ManyToOne	
-	@JoinColumn(name = "TourID")
-	Tour tour;
+	@ManyToOne
+	@JoinColumn(name = "productid")
+	private Product product;
+	
 }

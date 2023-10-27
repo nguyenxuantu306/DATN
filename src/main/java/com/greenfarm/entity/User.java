@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -78,4 +79,9 @@ public class User implements Serializable{
 	
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
     private Set<Securetoken> tokens;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	private Set<Review> reviews = new HashSet<>(0);
+	
 }

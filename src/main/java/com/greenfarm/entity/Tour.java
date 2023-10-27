@@ -2,10 +2,13 @@ package com.greenfarm.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -65,8 +68,9 @@ public class Tour implements Serializable {
 	List<Booking> booking;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "tour")
-	List<Comment> comment;
+	@OneToMany(mappedBy = "tour" ,cascade = CascadeType.ALL)
+	private Set<Comment> comments = new HashSet<>();
+//	List<Comment> comment;
 	
 	@JsonIgnore
 	@OneToOne(mappedBy = "tour")
