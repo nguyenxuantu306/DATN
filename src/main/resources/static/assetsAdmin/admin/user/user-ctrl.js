@@ -174,7 +174,11 @@ app.controller("user-ctrl", function($scope, $http) {
 				var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 				var link = document.createElement('a');
 				link.href = window.URL.createObjectURL(blob);
+<<<<<<< Updated upstream
 				link.download = 'exportUser.xlsx';
+=======
+				link.download = 'userdata.xlsx';
+>>>>>>> Stashed changes
 				link.click();
 			})
 			.catch(function(error) {

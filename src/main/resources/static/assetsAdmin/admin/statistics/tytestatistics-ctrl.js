@@ -60,6 +60,24 @@ app.controller('tytestatistics-ctrl', function($scope, $http) {
 			});
 	};
 	
+<<<<<<< Updated upstream
+=======
+	// Trong AngularJS controller hoặc service
+	$scope.exportExcel = function() {
+		$http.get('/excel-categorystatistics', { responseType: 'arraybuffer' })
+			.then(function(response) {
+				var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+				var link = document.createElement('a');
+				link.href = window.URL.createObjectURL(blob);
+				link.download = 'categorystatistics.xlsx';
+				link.click();
+			})
+			.catch(function(error) {
+				console.error('Error exporting Excel:', error);
+			});
+	};
+	
+>>>>>>> Stashed changes
 	
 	// PDF
 		

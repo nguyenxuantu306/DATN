@@ -47,6 +47,11 @@ app.controller('productstatistics-ctrl', function($scope, $http) {
 		},
 	}
 	$scope.initialize();
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 // Trong AngularJS controller hoặc service
 	$scope.exportExcel = function() {
 		$http.get('/excel-productstatistics', { responseType: 'arraybuffer' })
@@ -71,7 +76,11 @@ app.controller('productstatistics-ctrl', function($scope, $http) {
 				var objectUrl = URL.createObjectURL(blob);
 				var a = document.createElement('a');
 				a.href = objectUrl;
+<<<<<<< Updated upstream
 				a.download = 'exportProductstatistics.pdf';
+=======
+				a.download = 'exportUser.pdf';
+>>>>>>> Stashed changes
 				a.click();
 				URL.revokeObjectURL(objectUrl);
 			})
