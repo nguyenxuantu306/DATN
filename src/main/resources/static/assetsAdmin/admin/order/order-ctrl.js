@@ -7,7 +7,7 @@ app.controller("order-ctrl", function($scope, $http) {
 	$scope.products = [];
 	$scope.selectedItem = null;
 	$scope.totalPrice = 0;
-	
+
 	//Tính tổng đơn hàng
 	$scope.calculateTotal = function(item) {
 		var total = 0;
@@ -78,20 +78,20 @@ app.controller("order-ctrl", function($scope, $http) {
 			var index = $scope.items.findIndex(p => p.orderid == item.orderid);
 			$scope.items[index] = item;
 			// Sử dụng SweetAlert2 cho thông báo thành công
-	        Swal.fire({
-	            icon: 'success',
-	            title: 'Thành công!',
-	            text: 'Cập nhật trạng thái thành công !',
-	        });
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Cập nhật trạng thái thành công !',
+			});
 			refreshPage();
 		})
 			.catch(error => {
 				// Sử dụng SweetAlert2 cho thông báo lỗi
-	        Swal.fire({
-	            icon: 'error',
-	            title: 'Lỗi!',
-	            text: 'Cập nhật trạng thái thất bại !',
-	        });
+				Swal.fire({
+					icon: 'error',
+					title: 'Lỗi!',
+					text: 'Cập nhật trạng thái thất bại !',
+				});
 				console.log("Error", error);
 			});
 	}
@@ -99,7 +99,28 @@ app.controller("order-ctrl", function($scope, $http) {
 	function refreshPage() {
 		location.reload();
 	}
+	
+	$scope.selectedStatus = "0";
 
+	$scope.filterOrders = function() {
+		var selectedStatus = document.getElementById("statusSelect").value; // Lấy giá trị trạng thái đã chọn
+
+		// Lặp qua tất cả các hàng của bảng đơn hàng
+		var rows = document.querySelectorAll("#orderList .text-center");
+		for (var i = 0; i < rows.length; i++) {
+			var row = rows[i];
+			var statusCell = row.querySelector("td:nth-child(5)"); // Lấy ô chứa trạng thái
+
+			// Kiểm tra xem trạng thái của đơn hàng có khớp với trạng thái đã chọn hay không
+			if (selectedStatus === "0" || statusCell.textContent.trim() === selectedStatus) {
+				// Hiển thị đơn hàng nếu khớp hoặc nếu đã chọn "Tất cả"
+				row.style.display = "table-row";
+			} else {
+				// Ẩn đơn hàng nếu không khớp
+				row.style.display = "none";
+			}
+		}
+	};
 
 	$scope.pager = {
 		page: 0,
@@ -130,8 +151,8 @@ app.controller("order-ctrl", function($scope, $http) {
 			this.page = this.count - 1;
 		}
 	};
-	
-	
+
+
 
 });
 
