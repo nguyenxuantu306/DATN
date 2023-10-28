@@ -73,5 +73,16 @@ public class OrderServiceImpl implements OrderService {
 		// TODO Auto-generated method stub
 		return dao.save(order);
 	}
+	
+	
+	@Override
+    public List<Order> getOrdersByStatusName(String statusName) {
+        return dao.findByStatusOrder_Name(statusName);
+    }
 
+	
+	@Override
+    public List<Order> filterOrdersByDate(String ngayTao) {
+        return dao.findByNgayTao(ngayTao);
+    }
 }

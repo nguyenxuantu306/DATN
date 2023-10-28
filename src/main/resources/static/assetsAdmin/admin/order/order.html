@@ -13,7 +13,7 @@
 						<input type="date" class="form-control">
 					</div>
 					<div class="col-md-4 input-group icons">
-						<select class="select" style="width: 200px;">
+						<select class="select" style="width: 200px;" id="statusSelect">
 							<option value="1">Trang thái đơn hàng</option>
 							<option value="2">Giao hàng thành công</option>
 							<option value="3">Chờ xác nhận</option>
@@ -30,8 +30,11 @@
 						</button>
 					</div>
 				</div>
+				<div id="orderList">
+				
+				</div>
 				<div class="table-responsive">
-					<table class="table header-border zero-configuration">
+					<table  class="table header-border zero-configuration">
 						<thead>
 							<tr class="text-center">
 								<th scope="col">STT</th>
@@ -135,7 +138,8 @@
 														<div class="modal-order text-right">
 															<hr>
 															<h4 style="padding-left: 100px" class="total fs-4">
-																Tổng cộng: <strong>{{calculateTotal(form) | number : 3}}</strong>
+																Tổng cộng: <strong>{{calculateTotal(form) |
+																	number : 3}}</strong>
 															</h4>
 															<hr>
 															<label style="font-size: 20px; color: black;">Cập

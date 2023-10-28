@@ -82,4 +82,20 @@ public class OrderRestController {
 	public Order update(@PathVariable("id") Integer id, @RequestBody Order order) {
 		return orderService.update(order);
 	}
+	
+	// API endpoint để lấy danh sách đơn hàng theo tên trạng thái
+    @GetMapping("/byStatusName")
+    public ResponseEntity<List<Order>> getOrdersByStatusName(@RequestParam("statusName") String statusName) {
+        List<Order> orders = orderService.getOrdersByStatusName(statusName);
+        return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+    
+    
+    @GetMapping("/filter")
+    public ResponseEntity<List<Order>> filterOrdersByDate(@RequestParam("ngayTao") String ngayTao) {
+        List<Order> filteredOrders = orderService.filterOrdersByDate(ngayTao);
+        return ResponseEntity.ok(filteredOrders);
+    }
+	
+	
 }

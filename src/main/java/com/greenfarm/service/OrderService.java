@@ -18,5 +18,9 @@ public interface OrderService {
 	List<Order> getAllOrders(int page, int size);
 
 	Order update(Order order);
+	
+	List<Order> getOrdersByStatusName(String statusName);
+	
+	List<Order> filterOrdersByDate(String ngayTao);
 
 }
