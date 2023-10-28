@@ -77,6 +77,8 @@ function displayTours(tours) {
 	});
 }
 
+
+
 // Hàm tìm kiếm sản phẩm
 function searchProducts(keyword) {
 	$.ajax({
@@ -204,3 +206,23 @@ $(document).ready(function() {
 	// Gắn kết sự kiện khi người dùng thay đổi giá trị radio
 	$('input[type="radio"]').change(handlePriceRangeChange);
 });
+
+/*document.getElementById("priceFilter").addEventListener("change", function () {
+    var selectedPrice = this.value;
+    var tourItems = document.querySelectorAll(".package-item");
+
+    for (var i = 0; i < tourItems.length; i++) {
+        var tourPrice = parseFloat(tourItems[i].querySelector(".p-4 h5").innerText.replace('đ', '').replace(/\s/g, '').replace(',', ''));
+        var priceRange = selectedPrice.split("-");
+        var minPrice = parseFloat(priceRange[0]);
+        var maxPrice = parseFloat(priceRange[1]);
+
+        if (selectedPrice === "0" || (tourPrice >= minPrice && tourPrice <= maxPrice)) {
+            tourItems[i].style.display = "block";
+            tourItems[i].classList.add("hidden");
+        } else {
+            tourItems[i].style.display = "none";
+            
+        }
+    }
+});*/

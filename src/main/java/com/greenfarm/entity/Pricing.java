@@ -2,6 +2,8 @@ package com.greenfarm.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +29,8 @@ public class Pricing implements Serializable{
 	@JoinColumn(name = "TourID")
 	Tour tour;
 	
-	Float Adultprice;
+	@Column(name = "adultprice")
+	Float adultprice;
 	
 	Float Childprice;
 	
