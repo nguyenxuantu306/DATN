@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,6 +28,9 @@ import com.greenfarm.exception.UserAlreadyExistException;
 import com.greenfarm.service.EmailService;
 import com.greenfarm.service.Securetokenservice;
 import com.greenfarm.service.UserService;
+import com.mysql.cj.util.StringUtils;
+
+import jakarta.mail.MessagingException;
 
 @Service
 public class UserServerImpl implements UserService, UserDetailsService {
@@ -218,5 +222,53 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	    // So sánh mật khẩu hiện tại với mật khẩu được cung cấp
 	    return PE.matches(password, currentPassword);
 	}
+
+	@Override
+	public void forgottenPassword(String userName) throws UnkownIdentifierException {
+		// TODO Auto-generated method stub
+		User user = dao.findByEmail(userName).get();
+		sendResetPasswordEmail(user);
+	}
+
+	@Override
+	public void updatePassword(String password, String token) throws InvalidTokenException, UnkownIdentifierException {
+		// TODO Auto-generated method stub
+		Securetoken securetoken = securetokenservice.findByToken(token);
+		if (Objects.isNull(securetoken) || !org.apache.commons.codec.binary.StringUtils.equals(token, securetoken.getToken()) || securetoken.isExpired()) {
+			throw new InvalidTokenException("Token is not valid");
+		}
+		User user = dao.getOne(securetoken.getUser().getUserid());
+	System.out.println(user.getEmail());
+		if(Objects.isNull(user)){
+            throw new UnkownIdentifierException("unable to find user for the token");
+        }
+		securetokenservice.removeToken(securetoken);
+		System.out.println("doi mk");
+		user.setPassword(PE.encode(password));
+		dao.save(user);
+		
+	}
+
+	@Override
+	public boolean loginDisabled(String username) {
+		// TODO Auto-generated method stub
+		User user = dao.findByEmail(username).get();
+		return false;
+	}
+	
+	 protected void sendResetPasswordEmail(User user) {
+	        Securetoken secureToken= securetokenservice.createSecureToken();
+	        secureToken.setUser(user);
+	        securetokendao.save(secureToken);
+	        ForgotPasswordEmailContext emailContext = new ForgotPasswordEmailContext();
+	        emailContext.init(user);
+	        emailContext.setToken(secureToken.getToken());
+	        emailContext.buildVerificationUrl("http://localhost:8080", secureToken.getToken());
+	        try {
+	            emailService.sendMail(emailContext);
+	        } catch (MessagingException e) {
+	            e.printStackTrace();
+	        }
+	    }
 
 }

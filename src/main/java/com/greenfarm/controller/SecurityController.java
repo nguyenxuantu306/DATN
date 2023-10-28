@@ -2,7 +2,9 @@ package com.greenfarm.controller;
 
 import java.security.Principal;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,11 +16,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greenfarm.dao.UserDAO;
 import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.Passworddata;
+import com.greenfarm.entity.ResetPassWordData;
 import com.greenfarm.entity.User;
+import com.greenfarm.exception.InvalidTokenException;
+import com.greenfarm.exception.UnkownIdentifierException;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.impl.UserServerImpl;
 
@@ -97,10 +104,7 @@ public class SecurityController {
 //		return "security/register";
 //	}
 //
-//	@GetMapping("/index/forgot")
-//	public String forgot(Model model) {
-//		return "security/forgotpassword";
-//	}
+
 //
 //	@GetMapping("/index/logoff")
 //	public String logoff(Model model) {
@@ -210,7 +214,7 @@ public class SecurityController {
 	
 	@GetMapping("/changepass")
 	public String changepass(Model model) {
-		//model.addAttribute("message", "Bạn đã đăng xuất!");
+		
 		model.addAttribute("passchange", new  Passworddata());
 		return "security/changepass";
 	}
@@ -240,5 +244,76 @@ public class SecurityController {
 		return "security/changepass";
 	}
 
+	@GetMapping("/forgot")
+	public String forgot(Model model) {
+		return "security/forgetpassword";
+	}
+	
+	@PostMapping("/forgot")
+	public String fogot(Model model ,@RequestParam String email) throws UnkownIdentifierException {
+		try {
+			System.out.println(email);
+			//String userName = email;
+			userService.forgottenPassword(email);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "redirect:/login";
+	}
+	
+	 @GetMapping("/resetpass")
+	    public String getressetPassword(@ModelAttribute("data") ResetPassWordData data,@RequestParam(required = false) String token,  final Model model) {
+	        if (StringUtils.isEmpty(token)) {
+//	            redirAttr.addFlashAttribute("tokenError",final RedirectAttributes redirAttr,
+//	                    messageSource.getMessage("user.registration.verification.missing.token", null, LocaleContextHolder.getLocale())
+//	         
+	        	System.out.println("Không tìm thấy token");
+	            return "redirect: /login";
+	        }
+	       // model.addAttribute("data", new  ResetPassWordData());
+	        System.out.println("có token");
+	        ResetPassWordData datap = new ResetPassWordData();
+	        datap.setToken(token);
+	        setResetPasswordForm(model, datap);
+
+		 
+		 
+	        return "security/resetpass";
+	    }
+
+	    @PostMapping("/resetpass")
+	    public String resetPassword(@ModelAttribute("data") @Valid ResetPassWordData data, final Model model, BindingResult bindingResult) {
+	    	if (bindingResult.hasErrors()) {
+	    	    // Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
+	    	    model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
+	    	    return "security/resetpass";
+	    	}
+	        try {
+	        	userService.updatePassword(data.getNewpass(), data.getToken());
+	             // customerAccountService.updatePassword(data.getPassword(), data.getToken());
+	        } catch (InvalidTokenException | UnkownIdentifierException e) {
+	        	e.getStackTrace();
+	            // log error statement
+//	            model.addAttribute("tokenError",
+//	                    messageSource.getMessage("user.registration.verification.invalid.token", null, LocaleContextHolder.getLocale())
+//	            );
+	        	System.out.println("Báo lỗi không thấy token");
+
+	            return "security/resetpass";
+	        }
+//	        model.addAttribute("passwordUpdateMsg",
+//	                messageSource.getMessage("user.password.updated.msg", null, LocaleContextHolder.getLocale())
+//	        );
+	        System.out.println("Báo đã update");
+	        setResetPasswordForm(model, new ResetPassWordData());
+   	
+	    	
+	        return "redirect:/login";
+	    }
+
+	    private void setResetPasswordForm(final Model model, ResetPassWordData data){
+	        model.addAttribute("forgotPassword",data);
+	    }
 
 }

@@ -21,7 +21,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.InvalidTokenException;
-import com.greenfarm.mapper.Usermapper;
 import com.mysql.cj.util.StringUtils;
 
 import jakarta.validation.Valid;
@@ -116,27 +115,5 @@ public class RegisterController {
         return REDIRECT_LOGIN;
     }
     
-    
-//	@PostMapping("/register/xacminh")
-//	public String xacminh(Model model, @ModelAttribute("userinfo") UserDTO userinfo) {
-//		try {
-//			if (!kiemtra(userinfo)) {
-//				throw new Exception("Password does not match");
-//			}
-//			
-//			User user = UsermapperFactory.MAPPER.fromDto(userinfo);
-//			userservice.create(user);
-//			
-//			// Đăng ký thành công, chuyển hướng tới trang đăng nhập
-//			return "redirect:/login";
-//		} catch (Exception e) {
-//			// Xử lý lỗi
-//			model.addAttribute("error", e.getMessage());
-//			return "register";
-//		}
-//	}
-//	
-//	public boolean kiemtra(UserDTO userdto) {
-//		return userdto.getPassword().equals(userdto.getRepeatpassword());
-//	}
+  
 }

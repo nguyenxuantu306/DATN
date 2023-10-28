@@ -2,6 +2,7 @@ package com.greenfarm.service;
 
 import java.util.List;
 import com.greenfarm.entity.User;
+import com.greenfarm.exception.InvalidTokenException;
 import com.greenfarm.exception.UnkownIdentifierException;
 import com.greenfarm.exception.UserAlreadyExistException;
 
@@ -32,5 +33,8 @@ public interface UserService {
     public boolean iscurrentPasswordMatching(User user,String password) ;
 
     public boolean isPasswordMatching(String password, String confirmPassword);
-
+    
+    void forgottenPassword(final String userName) throws UnkownIdentifierException;
+    void updatePassword(final String password, final String token) throws InvalidTokenException, UnkownIdentifierException;
+    boolean loginDisabled(final String username);
 }

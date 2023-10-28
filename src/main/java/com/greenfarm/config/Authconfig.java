@@ -30,14 +30,20 @@ public class Authconfig {
 
 		http.authorizeRequests(authorize -> authorize
 				.requestMatchers("/profile").authenticated()
+				
 				.requestMatchers("/assetsAdmin/**", "/admin").hasRole("Administrator")
-				.anyRequest().permitAll());
-
+				.anyRequest().permitAll()
+				
+				);
+		http.rememberMe().rememberMeParameter("remember");
 		http.formLogin(form -> form
 				.loginPage("/login")
+				
 		/* .loginProcessingUrl("/") */
 
-		).logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logoff")).permitAll());
+		)
+		
+		.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logoff")).permitAll());
 //		.oauth2Login()
 //		.loginPage("/oauth2/login/form")
 //   		.defaultSuccessUrl("/oauth2/login/success",true)
