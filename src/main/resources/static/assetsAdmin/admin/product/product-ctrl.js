@@ -181,29 +181,32 @@ app.controller("product-ctrl", function($scope, $http) {
 		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 	});
 
-	// Trong AngularJS controller hoặc service
+
+// Trong AngularJS controller hoặc service
 	$scope.exportExcel = function() {
-		$http.get('/print-to-excelsp', { responseType: 'arraybuffer' })
+		$http.get('/excel-product', { responseType: 'arraybuffer' })
 			.then(function(response) {
 				var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 				var link = document.createElement('a');
 				link.href = window.URL.createObjectURL(blob);
-				link.download = 'example.xlsx';
+				link.download = 'product.xlsx';
 				link.click();
 			})
 			.catch(function(error) {
 				console.error('Error exporting Excel:', error);
 			});
 	};
-
-	$scope.exportPdf = function() {
-		$http.get('/print-to-pdfsp', { responseType: 'arraybuffer' })
+	
+	// PDF
+		
+		$scope.exportPdf = function() {
+		$http.get('/pdf-product', { responseType: 'arraybuffer' })
 			.then(function(response) {
 				var blob = new Blob([response.data], { type: 'application/pdf' });
 				var objectUrl = URL.createObjectURL(blob);
 				var a = document.createElement('a');
 				a.href = objectUrl;
-				a.download = 'exportAccount.pdf';
+				a.download = 'pdfProduct.pdf';
 				a.click();
 				URL.revokeObjectURL(objectUrl);
 			})
