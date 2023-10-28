@@ -1,5 +1,6 @@
 package com.greenfarm.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +19,5 @@ public interface OrderDAO extends JpaRepository<Order, Integer>{
 	List<Order> findByStatusOrder_Name(String statusName);
 	
 	@Query("SELECT o FROM Order o WHERE o.orderdate = ?1")
-	List<Order> findByNgayTao(String ngayTao);
+	List<Order> findByNgayTao(Date ngayTao);
 }

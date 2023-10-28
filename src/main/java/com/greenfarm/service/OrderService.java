@@ -1,5 +1,7 @@
 package com.greenfarm.service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,6 +23,7 @@ public interface OrderService {
 	
 	List<Order> getOrdersByStatusName(String statusName);
 	
-	List<Order> filterOrdersByDate(String ngayTao);
+	List<Order> filterOrdersByNgayTao(Date ngayTao);
+
 
 }

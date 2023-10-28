@@ -1,5 +1,6 @@
 package com.greenfarm.service.impl;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -82,7 +83,8 @@ public class OrderServiceImpl implements OrderService {
 
 	
 	@Override
-    public List<Order> filterOrdersByDate(String ngayTao) {
+    public List<Order> filterOrdersByNgayTao(Date ngayTao) {
+        // Thực hiện truy vấn để lọc các đơn hàng theo ngày tạo
         return dao.findByNgayTao(ngayTao);
     }
 }
