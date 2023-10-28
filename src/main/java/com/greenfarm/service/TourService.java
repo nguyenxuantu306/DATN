@@ -17,5 +17,5 @@ public interface TourService {
 
 	List<Tour> findTourByKeyword(String searchKeyword);
 	
-	
+	List<TourDTO> findToursByAdultPrice(Float minPrice, Float maxPrice);
 }

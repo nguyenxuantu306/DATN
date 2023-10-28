@@ -46,4 +46,6 @@ public class TourRestController {
 
 		return ResponseEntity.ok(tourDTOList);
 	}
+	
+	
 }

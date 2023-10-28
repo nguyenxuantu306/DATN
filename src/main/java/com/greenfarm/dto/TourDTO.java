@@ -29,4 +29,5 @@ public class TourDTO {
 	private TourOverview tourOverview;
 	private List<TourImage> tourImage;
 	private Pricing pricings;
+	private Float adultprice;
 }
