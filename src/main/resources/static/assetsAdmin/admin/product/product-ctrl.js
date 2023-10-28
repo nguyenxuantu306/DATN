@@ -33,10 +33,8 @@ app.controller("product-ctrl", function($scope, $http) {
 	// Xóa form
 	$scope.reset = function(){
 		$scope.error = ['err'];
-		$scope.form = {
-			/*publication_date:new Date(),
-			image:'cloud-upload.jpg',
-			available:true,*/
+		$scope.form = {			
+			image:'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',			
 		};
 		$('#id').attr('readonly', false);
 		$('#btn-create').removeAttr('disabled');
@@ -124,27 +122,6 @@ app.controller("product-ctrl", function($scope, $http) {
 			console.log("Error", error);
 		});
 	}
-	
-	// Upload hình	
-		$scope.imageChanged = function(files){
-		var data = new FormData();
-		data.append('file',files[0]);
-		$http.post('/rest/upload/images',data,{
-			transformRequest:angular.identity,
-			headers:{'Content-Type':undefined}
-		}).then(resp =>{
-			$scope.form.image = resp.data.name;
-		}).catch(error =>{
-			alert("Lỗi upload hình ảnh");
-			console.log("Error",error);
-		})
-	}
-	
-	$scope.$watch('searchText', function(term) {
-		$scope.filtered = filterFilter($scope.items, term);
-		$scope.size = $scope.filtered.length;
-		$scope.noOfPages = Math.ceil($scope.filtered.length / $scope.entryLimit);
-	}, true);
 	
 	$scope.pager = {
 		page:0,

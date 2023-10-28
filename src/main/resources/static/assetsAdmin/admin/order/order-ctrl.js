@@ -99,28 +99,45 @@ app.controller("order-ctrl", function($scope, $http) {
 	function refreshPage() {
 		location.reload();
 	}
-	
-	$scope.selectedStatus = "0";
+
+	$scope.selectedStatus = "1";
 
 	$scope.filterOrders = function() {
-		var selectedStatus = document.getElementById("statusSelect").value; // Lấy giá trị trạng thái đã chọn
+	    // Lặp qua tất cả các hàng của bảng đơn hàng
+	    var rows = document.querySelectorAll("#orderList .text-center");
+	    for (var i = 0; i < rows.length; i++) {
+	        var row = rows[i];
+	        var statusCell = row.querySelector("td:nth-child(5)"); // Lấy ô chứa trạng thái
+	
+	        // Kiểm tra xem trạng thái của đơn hàng có khớp với trạng thái đã chọn hoặc là trạng thái 1 hay không
+	        if (statusCell.textContent.trim() === selectedStatus || selectedStatus === "1") {
+	            // Hiển thị đơn hàng nếu khớp hoặc nếu đã chọn "Tất cả"
+	            row.style.display = "table-row";
+	        } else {
+	            // Ẩn đơn hàng nếu không khớp
+	            row.style.display = "none";
+	        }
+	    }
+	};
 
-		// Lặp qua tất cả các hàng của bảng đơn hàng
-		var rows = document.querySelectorAll("#orderList .text-center");
-		for (var i = 0; i < rows.length; i++) {
-			var row = rows[i];
-			var statusCell = row.querySelector("td:nth-child(5)"); // Lấy ô chứa trạng thái
+	$scope.ngayTaoFilter = ''; // Trường nhập kiểu text
 
-			// Kiểm tra xem trạng thái của đơn hàng có khớp với trạng thái đã chọn hay không
-			if (selectedStatus === "0" || statusCell.textContent.trim() === selectedStatus) {
-				// Hiển thị đơn hàng nếu khớp hoặc nếu đã chọn "Tất cả"
-				row.style.display = "table-row";
-			} else {
-				// Ẩn đơn hàng nếu không khớp
-				row.style.display = "none";
-			}
+	$scope.filterOrdersByNgayTao = function() {
+		if ($scope.ngayTaoFilter === '') {
+			// Nếu trường nhập kiểu text rỗng, hiển thị toàn bộ đơn hàng
+			$scope.items = $scope.originalItems;
+		} else {
+			// Nếu trường nhập kiểu text có dữ liệu, lọc đơn hàng dựa trên ngày tạo
+			$scope.items = $scope.originalItems.filter(function(item) {
+				var formattedInputDate = $scope.ngayTaoFilter.toLowerCase();
+				var formattedOrderDate = new Date(item.orderdate).toDateString().toLowerCase();
+
+				return formattedOrderDate.includes(formattedInputDate);
+			});
 		}
 	};
+
+
 
 	$scope.pager = {
 		page: 0,
