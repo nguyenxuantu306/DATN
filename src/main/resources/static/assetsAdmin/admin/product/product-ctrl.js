@@ -196,11 +196,6 @@ app.controller("product-ctrl", function($scope, $http) {
 				console.error('Error exporting Excel:', error);
 			});
 	};
-	
-<<<<<<< Updated upstream
-=======
-	
->>>>>>> Stashed changes
 	// PDF
 		
 		$scope.exportPdf = function() {
@@ -210,11 +205,7 @@ app.controller("product-ctrl", function($scope, $http) {
 				var objectUrl = URL.createObjectURL(blob);
 				var a = document.createElement('a');
 				a.href = objectUrl;
-<<<<<<< Updated upstream
-				a.download = 'pdfProduct.pdf';
-=======
 				a.download = 'product.pdf';
->>>>>>> Stashed changes
 				a.click();
 				URL.revokeObjectURL(objectUrl);
 			})

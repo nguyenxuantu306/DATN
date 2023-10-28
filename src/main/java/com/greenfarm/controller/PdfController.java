@@ -49,11 +49,7 @@ public class PdfController {
 
 		// Khởi tạo font Unicode từ tệp font
 		BaseFont unicodeFont = BaseFont.createFont("D:\\DA\\DATN\\src\\main\\resources\\static\\Unicode\\arial.ttf",
-<<<<<<< Updated upstream
 				BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-=======
-		BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
->>>>>>> Stashed changes
 
 		document.open();// Thêm tiêu đề vào tài liệu
 		String title = "Danh sách người dùng";
@@ -74,15 +70,7 @@ public class PdfController {
 		PdfPTable table = new PdfPTable(7); // Số cột trong bảng
 
 		// Thiết lập tiêu đề cho từng cột
-<<<<<<< Updated upstream
-		table.addCell(createCell("User ID", true, unicodeFonts));
-		table.addCell(createCell("First Name", true, unicodeFonts));
-		table.addCell(createCell("Email", true, unicodeFonts));
-		table.addCell(createCell("PhoneNumber", true, unicodeFonts));
-		table.addCell(createCell("Address", true, unicodeFonts));
-		table.addCell(createCell("Gender", true, unicodeFonts));
-		table.addCell(createCell("Brithday", true, unicodeFonts));
-=======
+		
 		table.addCell(createCell("STT", true, unicodeFonts));
 		table.addCell(createCell("Tên", true, unicodeFonts));
 		table.addCell(createCell("Email", true, unicodeFonts));
@@ -90,18 +78,13 @@ public class PdfController {
 		table.addCell(createCell("Địa chỉ", true, unicodeFonts));
 		table.addCell(createCell("Giới tính", true, unicodeFonts));
 		table.addCell(createCell("Ngày tạo", true, unicodeFonts));
->>>>>>> Stashed changes
 
 		// Thêm dữ liệu từ danh sách vào bảng
 		for (User data : dataList) {
 
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-<<<<<<< Updated upstream
-			String birthdayString = dateFormat.format(data.getBirthday());
-=======
+			
 			String createDateString = dateFormat.format(data.getCreateddate());
->>>>>>> Stashed changes
 
 			// Chuyển đổi số nguyên thành chuỗi trước khi truyền vào createCell
 			table.addCell(createCell(data.getUserid().toString(), false, unicodeFonts));
@@ -110,11 +93,7 @@ public class PdfController {
 			table.addCell(createCell(data.getPhonenumber(), false, unicodeFonts));
 			table.addCell(createCell(data.getAddress(), false, unicodeFonts));
 			table.addCell(createCell(data.getGender() != null && data.getGender() ? "Nam" : "Nữ", false, unicodeFonts));
-<<<<<<< Updated upstream
-			table.addCell(createCell(birthdayString, false, unicodeFonts));
-=======
 			table.addCell(createCell(createDateString, false, unicodeFonts));
->>>>>>> Stashed changes
 
 		}
 
@@ -146,18 +125,12 @@ public class PdfController {
 	public final List<User> getAll() {
 		return userService.findAll();
 	}
-<<<<<<< Updated upstream
-	
-	@GetMapping("/pdf-product")
-	public ResponseEntity<byte[]> PDFProduct() throws IOException, DocumentException {
-		List<Product> dataList = getProduct(); // Hàm này tạo dữ liệu mẫu
-=======
+
 
 	
 	@GetMapping("/pdf-product")
 	public ResponseEntity<byte[]> PDFProduct() throws IOException, DocumentException {
 		List<Product> dataList = getAllProduct(); // Hàm này tạo dữ liệu mẫu
->>>>>>> Stashed changes
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		Document document = new Document();
@@ -166,19 +139,10 @@ public class PdfController {
 		// Khởi tạo font Unicode từ tệp font
 		BaseFont unicodeFont = BaseFont.createFont("D:\\DA\\DATN\\src\\main\\resources\\static\\Unicode\\arial.ttf",
 				BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-<<<<<<< Updated upstream
 		
 		document.open();// Thêm tiêu đề vào tài liệu
 		String title = "Danh sách sản phẩm";
-=======
-		// String fontPath = "classpath:static/Unicode/arial.ttf"; // Đường dẫn tương
-		// đối đến tệp font trong thư mục resources
-		// BaseFont font = BaseFont.createFont(fontPath, BaseFont.IDENTITY_H,
-		// BaseFont.EMBEDDED);
-
-		document.open();// Thêm tiêu đề vào tài liệu
-		String title = "Danh sách  sản phẩm";
->>>>>>> Stashed changes
+		
 		document.addTitle(title);
 
 		document.open();
@@ -197,17 +161,10 @@ public class PdfController {
 
 		// Thiết lập tiêu đề cho từng cột
 		table.addCell(createCell("STT", true, unicodeFonts));
-<<<<<<< Updated upstream
-		table.addCell(createCell("Tên SP", true, unicodeFonts));
-		table.addCell(createCell("Giá", true, unicodeFonts));
-		table.addCell(createCell("Số lượng",true, unicodeFonts));
-		
-=======
 		table.addCell(createCell("Tên sản phẩm", true, unicodeFonts));
 		table.addCell(createCell("Giá", true, unicodeFonts));
 		table.addCell(createCell("Số lượng", true, unicodeFonts));
 
->>>>>>> Stashed changes
 		// Định dạng giá tiền
 		DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
 		symbols.setGroupingSeparator(',');
@@ -221,13 +178,10 @@ public class PdfController {
 			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
 			table.addCell(createCell(data.getProductname(), false, unicodeFonts));
 			table.addCell(createCell(decimalFormat.format(data.getPrice()), false, unicodeFonts));
-<<<<<<< Updated upstream
 			table.addCell(createCell(String.valueOf(data.getQuantityavailable()), false, unicodeFonts));
 		
 		}
-=======
-			table.addCell(createCell(String.valueOf(data.getQuantityavailable()), false, unicodeFonts));		}
->>>>>>> Stashed changes
+
 
 		document.add(table);
 		document.close();
@@ -238,21 +192,15 @@ public class PdfController {
 
 		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
-<<<<<<< Updated upstream
 
 	public final List<Product> getProduct() {
 		return productService.findAll();
 	}
 	
-
-=======
 	
 	public final List<Product> getAllProduct() {
 		return productService.findAll();
 	}
-	
-	
->>>>>>> Stashed changes
 	@GetMapping("/pdf-productstatistics")
 	public ResponseEntity<byte[]> PDFProductStatistics() throws IOException, DocumentException {
 		List<Report> dataList = getProductStatitics(); // Hàm này tạo dữ liệu mẫu
@@ -291,13 +239,8 @@ public class PdfController {
 		table.addCell(createCell("STT", true, unicodeFonts));
 		table.addCell(createCell("Tên sản phẩm", true, unicodeFonts));
 		table.addCell(createCell("Giá", true, unicodeFonts));
-		table.addCell(createCell("Số lượng", true, unicodeFonts));
-<<<<<<< Updated upstream
 		table.addCell(createCell("Số lượng sản phẩm đã bán", true, unicodeFonts));
-=======
-		table.addCell(createCell("SL sản phẩm đã bán", true, unicodeFonts));
-		
->>>>>>> Stashed changes
+		table.addCell(createCell("Tổng tiền", true, unicodeFonts));
 
 		// Định dạng giá tiền
 		DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
@@ -307,14 +250,14 @@ public class PdfController {
 
 		// Thiết lập dữ liệu cho từng hàng
 		for (int i = 0; i < dataList.size(); i++) {
-			Report data = dataList.get(i);
-			Product product = (Product) data.getGroup();
+		    Report data = dataList.get(i);
+		    Product product = (Product) data.getGroup();
 
-			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
-			table.addCell(createCell(product.getProductname(), false, unicodeFonts));
-			table.addCell(createCell(decimalFormat.format(product.getPrice()), false, unicodeFonts));
-			table.addCell(createCell(String.valueOf(data.getCount()), false, unicodeFonts));
-			table.addCell(createCell(decimalFormat.format(product.getPrice() * data.getCount()), false, unicodeFonts));
+		    table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
+		    table.addCell(createCell(product.getProductname(), false, unicodeFonts));
+		    table.addCell(createCell(decimalFormat.format(product.getPrice()), false, unicodeFonts));
+		    table.addCell(createCell(String.valueOf(data.getCount()), false, unicodeFonts));
+		    table.addCell(createCell(decimalFormat.format(product.getPrice() * data.getCount()), false, unicodeFonts));
 		}
 
 		document.add(table);
