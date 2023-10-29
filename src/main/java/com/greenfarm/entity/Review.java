@@ -34,8 +34,8 @@ public class Review implements Serializable {
 	
 	private String content;
 	
-	@Temporal(TemporalType.DATE)
-	Date datepost ;
+	@Temporal(TemporalType.TIMESTAMP)
+	LocalDateTime datepost ;
 	
 	private Float rating;
 	

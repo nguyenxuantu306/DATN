@@ -1,5 +1,6 @@
 package com.greenfarm.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,13 +86,16 @@ public class ProductController {
 	@PostMapping("/product/detail/{productid}")
 	public String review(@PathVariable("productid") Integer productid,@ModelAttribute("reviewinsert") Review reviewinsert) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = authentication.getName();
-		
+		String username = authentication.getName();		
 		User user = userService.findByEmail(username);
 		reviewinsert.setUser(user);
 		Product product =  productService.findById(productid);
 		reviewinsert.setProduct(product);
+		// Lấy ngày giờ hiện tại
+	    LocalDateTime currentDateTime = LocalDateTime.now();
+	    reviewinsert.setDatepost(currentDateTime);
 		reviewService.create(reviewinsert);
+		
 		return "redirect:/product/detail/" + productid;		
 	}
 	

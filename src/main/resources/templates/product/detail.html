@@ -200,7 +200,7 @@
 													id="textAreaExample" rows="4"></textarea>
 
 											</div>
-											<input th:field="*{datepost}" type="text" value="2020/01/01">
+											<!-- <input th:field="*{datepost}" type="text" value="2020/01/01"> -->
 											<div class="d-flex justify-content-between mt-3">
 												<button type="submit" class="btn btn-danger">
 													Gửi đánh giá <i class="fas fa-long-arrow-alt-right ms-1"></i>
@@ -226,13 +226,20 @@
 								<h3 class="mt-2 mb-0" th:text="${review.user.email}"></h3>
 								<div>
 									<p class="text-left">
-										<span class="text-muted" th:text="${review.rating}"></span><span
+
+										<span class="text-muted" th:text="${review.rating}"></span> 
+										
+										<span
 											class="fa fa-star star-active ml-3"
 											th:each="i : ${#numbers.sequence(1, review.rating)}"></span>
 										<span class="fa fa-star-half star-active"
-											th:if="${review.rating % 1 != 0}"></span> <span
+											th:if="${review.rating % 1 != 0}"></span> 											
+											<span
 											class="fa fa-star star-inactive"
-											th:each="i : ${#numbers.sequence(review.rating.intValue() + 1, 5)}"></span>
+											th:each="i : ${#numbers.sequence(review.rating.floatValue() + 1, 5)}"></span>
+											
+											
+											
 										<span th:text="${review.datepost}" class="p-5 "></span>
 									</p>
 
@@ -246,14 +253,16 @@
 							<p class="content" th:text="${review.content}"></p>
 						</div>
 
-<div th:if="${#authorization.expression('isAuthenticated()')}">
-<button th:if="${#authorization.expression(review.user.email +' eq '+ #authentication.principal.username)}">
-    <a th:href="@{'/product/detail/' + ${productid} + '/delete/' + ${review.reviewid}}">Xóa</a>
-</button>
-</div>
+						<div th:if="${#authorization.expression('isAuthenticated()')}">
+							<button
+								th:if="${#authorization.expression(review.user.email == #authentication.principal.username)}">
+								<a
+									th:href="@{'/product/detail/' + ${productid} + '/delete/' + ${review.reviewid}}">Xóa</a>
+							</button>
+						</div>
 
 
-<!-- <a th:text="${review.user.email}"></a>
+						<!-- <a th:text="${review.user.email}"></a>
 <p th:text="${#authentication.principal.username}">Tên đăng nhập</p> -->
 
 
