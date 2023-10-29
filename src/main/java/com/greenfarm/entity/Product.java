@@ -10,6 +10,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -65,7 +66,7 @@ public class Product implements Serializable {
 	}
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "product")
+	@OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
 //	private Set<Review> reviews = new HashSet<>(0);
 	List<Review> Review;
 }

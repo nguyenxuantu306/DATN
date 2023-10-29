@@ -2,6 +2,7 @@ package com.greenfarm.service;
 
 import java.util.List;
 
+import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Review;
 
 public interface ReviewService {
@@ -12,9 +13,7 @@ public interface ReviewService {
 	// get all ratings
 	List<Review> getReviews();
 	
-//	// get all byuserid
-//	List<Review> getReviewByUserId(Integer userid);
-//	
-//	// get all by productid
-//	List<Review> getReviewByProductId(Integer productid);
+	List<Review> findbyproduct(Product product);
+	
+	boolean deleteReviewById(Integer reviewid);
 }

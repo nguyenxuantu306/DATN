@@ -11257,4 +11257,178 @@ nav ul li a:hover {
 }
 
 
+a {
+	text-decoration: none !important;
+	color: inherit;
+}
 
+a:hover {
+	color: #455A64;
+}
+
+.card {
+	border-radius: 5px;
+	background-color: #fff;
+	padding-left: 60px;
+	padding-right: 60px;
+	margin-top: 30px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.rating-box {
+	width: 130px;
+	height: 130px;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: #FBC02D;
+	color: #fff;
+}
+
+.rating-label {
+	font-weight: bold;
+}
+
+/* Rating bar width */
+.rating-bar {
+	width: 300px;
+	padding: 8px;
+	border-radius: 5px;
+}
+
+/* The bar container */
+.bar-container {
+  width: 100%;
+  background-color: #f1f1f1;
+  text-align: center;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+/* Individual bars */
+.bar-5 {
+	width: 70%;
+	height: 13px;
+	background-color: #FBC02D; 
+	border-radius: 20px;
+
+}
+.bar-4 {
+	width: 30%;
+	height: 13px;
+	background-color: #FBC02D; 
+	border-radius: 20px;
+
+}
+.bar-3 {
+	width: 20%;
+	height: 13px;
+	background-color: #FBC02D; 
+	border-radius: 20px;
+
+}
+.bar-2 {
+	width: 10%;
+	height: 13px;
+	background-color: #FBC02D; 
+	border-radius: 20px;
+
+}
+.bar-1 {
+	width: 0%;
+	height: 13px;
+	background-color: #FBC02D; 
+	border-radius: 20px;
+
+}
+
+td {
+	padding-bottom: 10px;
+}
+
+.star-active {
+	color: #FBC02D;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.star-active:hover {
+	color: #F9A825;
+	cursor: pointer;
+}
+
+.star-inactive {
+	color: #CFD8DC;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.blue-text {
+	color: #0091EA;
+}
+
+.content {
+	font-size: 18px;
+}
+
+.profile-pic {
+	width: 90px;
+	height: 90px;
+	border-radius: 100%;
+	margin-right: 30px;
+}
+ 
+.pic {
+	width: 80px;
+	height: 80px;
+	margin-right: 10px;
+}
+
+.vote {
+	cursor: pointer;
+}
+
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+fieldset, label { margin: 0; padding: 0; }
+body{ margin: 20px; }
+h1 { font-size: 1.5em; margin: 10px; }
+
+/****** Style Star Rating Widget *****/
+
+.rating { 
+  border: none;
+  float: left;
+}
+
+.rating > input { display: none; } 
+.rating > label:before { 
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > .half:before { 
+  content: "\f089";
+  position: absolute;
+}
+
+.rating > label { 
+  color: #ddd; 
+ float: right; 
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 

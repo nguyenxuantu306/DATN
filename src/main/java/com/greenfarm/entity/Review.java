@@ -1,5 +1,7 @@
 package com.greenfarm.entity;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +26,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Reviews")
-public class Review {
+public class Review implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +35,9 @@ public class Review {
 	private String content;
 	
 	@Temporal(TemporalType.DATE)
-	Date datepost = new Date();
+	Date datepost ;
 	
-	private float rating;
+	private Float rating;
 	
 	@ManyToOne
 	@JoinColumn(name = "userid")

@@ -81,7 +81,6 @@ public class User implements Serializable{
     private Set<Securetoken> tokens;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "user")
-	private Set<Review> reviews = new HashSet<>(0);
-	
+	@OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+	List<Review> Review;	
 }
