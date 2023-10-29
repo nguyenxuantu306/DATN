@@ -236,7 +236,7 @@
 											th:if="${review.rating % 1 != 0}"></span> 											
 											<span
 											class="fa fa-star star-inactive"
-											th:each="i : ${#numbers.sequence(review.rating.floatValue() + 1, 5)}"></span>
+											th:each="i : ${#numbers.sequence(review.rating.floatValue() +1,5)}"></span>
 											
 											
 											
