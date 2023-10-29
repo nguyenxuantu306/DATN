@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.Securetokendao;
@@ -270,5 +271,45 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	            e.printStackTrace();
 	        }
 	    }
+
+	@Override
+	public void loginFormOAuth2(OAuth2AuthenticationToken oauth2) {
+		// TODO Auto-generated method stub
+//		 		String email = oauth2.getPrincipal().getAttribute("email");
+//				String password = Long.toHexString(System.currentTimeMillis());
+//				
+//				UserDetails user = User.withUsername(email)
+//						.password(pe.encode(password)).roles("1","2").build();
+//				org.springframework.security.core.Authentication auth = new UsernamePasswordAuthenticationToken(password, null,user.getAuthorities());
+//				SecurityContextHolder.getContext().setAuthentication(auth);
+//				Authentication auth = new UsernamePasswordAuthenticationToken(user , null, user.getAuthorities());
+//				SecurityContextHolder.getContext().setAuthentication(auth);
+				
+		
+	}
+
+	@Override
+	public UserDetails createNewUser(String email) {
+		// TODO Auto-generated method stub
+		// Kiểm tra xem người dùng đã tồn tại trong hệ thống chưa
+       
+
+		if (!emailExists(email)){
+            // Nếu người dùng đã tồn tại, trả về UserDetails của họ
+			throw new  UserAlreadyExistException("đã có tài khoản dùng email này");
+		} else {
+            // Nếu người dùng chưa tồn tại, tạo một tài khoản mới
+            User newUser = new User();
+            newUser.setEmail(email);
+            // Thêm quyền (roles) tùy ý cho tài khoản mới
+            newUser.setRoles(Arrays.asList("ROLE_USER", "ROLE_ADMIN"));
+
+            // Lưu tài khoản mới vào cơ sở dữ liệu
+            userRepository.save(newUser);
+
+            // Trả về UserDetails của tài khoản mới
+            return newUser;
+        }
+	}
 
 }

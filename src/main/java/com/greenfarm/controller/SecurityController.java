@@ -8,6 +8,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -119,15 +120,16 @@ public class SecurityController {
 //	}
 //
 
-	@RequestMapping("/oauth2/login/form")
-	public String fbform() {
-		return "security/login";
-	}
-
-	@RequestMapping("/oauth2/login/error")
-	public String fber() {
-		return "security/login";
-	}
+//
+//	@RequestMapping("/oauth2/login/form")
+//	public String fbform() {
+//		return "/security/login";
+//	}
+//
+//	@RequestMapping("/oauth2/login/error")
+//	public String fber() {
+//		return "/security/login";
+//	}
 //
 //	@RequestMapping("/oauth2/login/success")
 //	public String fbsuccess(OAuth2AuthenticationToken oauth2) {

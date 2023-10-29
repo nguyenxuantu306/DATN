@@ -1,6 +1,12 @@
 package com.greenfarm.service;
 
 import java.util.List;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.InvalidTokenException;
 import com.greenfarm.exception.UnkownIdentifierException;
@@ -37,4 +43,8 @@ public interface UserService {
     void forgottenPassword(final String userName) throws UnkownIdentifierException;
     void updatePassword(final String password, final String token) throws InvalidTokenException, UnkownIdentifierException;
     boolean loginDisabled(final String username);
+    
+    public UserDetails createNewUser(String email);
+    public void loginFormOAuth2(OAuth2AuthenticationToken oauth2);
+    
 }

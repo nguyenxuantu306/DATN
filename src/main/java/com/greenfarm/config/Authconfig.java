@@ -43,12 +43,11 @@ public class Authconfig {
 
 		)
 		
-		.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logoff")).permitAll());
-//		.oauth2Login()
-//		.loginPage("/oauth2/login/form")
-//   		.defaultSuccessUrl("/oauth2/login/success",true)
-//   		.failureUrl("/oauth2/login/error")
-//   		.authorizationEndpoint().baseUri("/oauth2/authorization");
+		.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logoff")).permitAll())
+		.oauth2Login().loginPage("/oauth2/login/form")
+   		.defaultSuccessUrl("/oauth2/login/success",true)
+   		.failureUrl("/oauth2/login/error")
+   		.authorizationEndpoint().baseUri("/oauth2/authorization")  ;
 
 		return http.build();
 	}
