@@ -21,9 +21,16 @@ public class Report implements Serializable {
 	Serializable group;
 	Double sum;
 	Long count;
+	Integer tinh;
 
 	public Report(String group, Long count) {
 		this.group  = group;
 		this.count = count;
 	}
+	
+	public Report(Integer tinh, Long count) {
+		this.tinh  = tinh;
+		this.count = count;
+	}
+	
 }

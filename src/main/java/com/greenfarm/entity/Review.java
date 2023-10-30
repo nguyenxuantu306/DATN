@@ -37,7 +37,7 @@ public class Review implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	LocalDateTime datepost ;
 	
-	private Float rating;
+	private Integer rating;
 	
 	@ManyToOne
 	@JoinColumn(name = "userid")
