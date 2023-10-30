@@ -16,6 +16,8 @@ public interface OrderService {
 	List<Order> findByIdAccount(Integer Id);
 
 	Order findById(Integer Id);
+	
+	List<Order> findByEfindByIdAccountmail(String email);
 
 	List<Order> getAllOrders(int page, int size);
 
@@ -31,4 +33,6 @@ public interface OrderService {
 
 	// Thống kê số lượng trạng thái
 	List<Report> slstatus();
+	
+	void cancelOrder(Integer orderId);
 }

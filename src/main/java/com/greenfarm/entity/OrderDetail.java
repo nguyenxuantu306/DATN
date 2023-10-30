@@ -43,4 +43,11 @@ public class OrderDetail implements Serializable{
 	@JoinColumn(name = "paymentmethodid")
 	PaymentMethod paymentMethod;
 	
+	public Float getTotalPrice() {
+	    return totalprice;
+	}
+
+	public void setTotalPrice(Float totalPrice) {
+	    this.totalprice = totalPrice;
+	}
 }

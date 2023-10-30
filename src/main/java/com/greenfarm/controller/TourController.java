@@ -28,12 +28,7 @@ public class TourController {
 	@Autowired
 	ModelMapper modelMapper;
 
-//	@RequestMapping("/tour")
-//	public String Tour(Model model) {
-//		List<Tour> list = tourservice.findAll();
-//		model.addAttribute("items", list);
-//		return "tour/tour";
-//	}
+	
 	
 	@RequestMapping("/tour")
     public String Tour(@RequestParam(name = "price_spread", required = false) 

@@ -21,6 +21,9 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 
 	@Query("SELECT o FROM Order o WHERE o.orderdate = ?1")
 	List<Order> findByNgayTao(Date ngayTao);
+	
+	@Query("SELECT o FROM Order o WHERE o.user.email =?1")
+	List<Order> findByEfindByIdAccountmail(String email);
 
 	@Query("SELECT new Report(o.statusOrder.name, count(o)) FROM Order o GROUP BY o.statusOrder.name")
 	List<Report> countOrdersByStatus();

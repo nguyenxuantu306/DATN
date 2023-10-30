@@ -117,5 +117,14 @@ public class OrderRestController {
 		return new ResponseEntity<>(orderService.slstatus(), HttpStatus.OK);
 	}
 	
-	
+	@PutMapping("/cancel/{orderid}")
+	public ResponseEntity<String> cancelOrder(@PathVariable("orderid") Integer orderid) {
+		// Thực hiện các thao tác hủy đơn hàng
+		try {
+			orderService.cancelOrder(orderid);
+			return new ResponseEntity<>("Đã hủy đơn hàng thành công", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Lỗi khi hủy đơn hàng: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

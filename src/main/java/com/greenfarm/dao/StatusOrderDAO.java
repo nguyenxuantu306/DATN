@@ -5,4 +5,5 @@ import com.greenfarm.entity.StatusOrder;
 
 public interface StatusOrderDAO extends JpaRepository<StatusOrder, Integer>{
 
+	StatusOrder getStatusOrderByStatusorderid(int canceledStatusOrderId);
 }
