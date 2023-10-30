@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportRevenue;
 
 public interface OrderDAO extends JpaRepository<Order, Integer> {
 
@@ -25,7 +26,7 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 	@Query("SELECT o FROM Order o WHERE o.user.email =?1")
 	List<Order> findByEfindByIdAccountmail(String email);
 
-	@Query("SELECT new Report(o.statusOrder.name, count(o)) FROM Order o GROUP BY o.statusOrder.name")
-	List<Report> countOrdersByStatus();
+	@Query("SELECT new ReportRevenue(o.statusOrder.name, count(o)) FROM Order o GROUP BY o.statusOrder.name")
+	List<ReportRevenue> countOrdersByStatus();
 
 }

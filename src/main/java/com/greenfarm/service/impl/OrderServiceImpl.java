@@ -19,6 +19,7 @@ import com.greenfarm.dao.StatusOrderDAO;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.service.OrderService;
 
@@ -100,8 +101,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
 	@Override
-	public List<Report> slstatus() {	
-		return dao.countOrdersByStatus();
+	public List<ReportRevenue> slstatus() {	
+		return dao.countOrdersByStatus(); 
 	}
 	
 	public void setStatusOrderDAO(StatusOrderDAO statusOrderDAO) {

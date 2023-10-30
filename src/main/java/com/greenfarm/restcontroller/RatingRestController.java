@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.Review;
 import com.greenfarm.exception.UnkownIdentifierException;
 import com.greenfarm.service.ReviewService;
@@ -39,7 +40,7 @@ public class RatingRestController {
 	}
 
 	@GetMapping("/stats")
-	public List<Report> getRatingStats() {
+	public List<ReportRevenue> getRatingStats() {
 		return reviewService.getRatingStats();
 	}
 

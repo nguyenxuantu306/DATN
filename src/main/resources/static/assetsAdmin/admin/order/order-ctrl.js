@@ -100,6 +100,8 @@ app.controller("order-ctrl", function($scope, $http) {
 		location.reload();
 	}
 
+
+
 	$scope.selectedStatus = "1";
 
 	$scope.filterOrders = function() {

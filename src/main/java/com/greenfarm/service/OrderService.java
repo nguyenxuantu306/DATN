@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportRevenue;
 
 public interface OrderService {
 
@@ -32,7 +33,7 @@ public interface OrderService {
 	List<Order> filterOrdersByNgayTao(Date ngayTao);
 
 	// Thống kê số lượng trạng thái
-	List<Report> slstatus();
+	List<ReportRevenue> slstatus();
 	
 	void cancelOrder(Integer orderId);
 }

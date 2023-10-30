@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.Review;
 
 public interface ReviewService {
@@ -18,5 +19,5 @@ public interface ReviewService {
 	
 	boolean deleteReviewById(Integer reviewid);
 
-	List<Report> getRatingStats();
+	List<ReportRevenue> getRatingStats();
 }

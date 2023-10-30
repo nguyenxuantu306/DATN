@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.service.OrderService;
 
 @CrossOrigin("*")
@@ -113,7 +114,7 @@ public class OrderRestController {
 
 	// Thống kê số lượng trạng thái
 	@GetMapping("/slstatus")
-	public ResponseEntity<List<Report>>  slstatus(){	
+	public ResponseEntity<List<ReportRevenue>>  slstatus(){	
 		return new ResponseEntity<>(orderService.slstatus(), HttpStatus.OK);
 	}
 	

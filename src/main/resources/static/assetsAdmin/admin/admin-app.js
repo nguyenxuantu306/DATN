@@ -52,6 +52,6 @@ app.config(function($routeProvider) {
 
 		.otherwise({
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
-			controller: "slstatus"
+			controller: "orderstatistics-ctrl"
 		});
 });

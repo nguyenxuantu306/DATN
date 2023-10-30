@@ -1,7 +1,7 @@
 app.controller('orderstatistics-ctrl', function($scope, $http) {
 	$scope.form = {};
 	$scope.itemsThongKeOrder = [];
-	
+	$scope.itemsThongKeSTstatus = [];
 	$scope.form = {};
 	$scope.sort = function(keyname) {
 		$scope.sortKey = keyname;
@@ -18,12 +18,23 @@ app.controller('orderstatistics-ctrl', function($scope, $http) {
 			console.log(err);
 		})
 		
-		
+		$http.get('/rest/orders/slstatus').then(response => {
+			$scope.itemsThongKeSTstatus = response.data;
+			console.log($scope.itemsThongKeSTstatus);
+			
+		})	
 		
 	}
 	
 
 	
+	$scope.calculateTotalCount = function() {
+    let totalCount = 0;
+    for (let i = 0; i < $scope.itemsThongKeSTstatus.length; i++) {
+        totalCount += $scope.itemsThongKeSTstatus[i].count;
+    }
+    return totalCount;
+	};
 	
 	
 	

@@ -48,7 +48,7 @@ public class PdfController {
 		PdfWriter.getInstance(document, outputStream);
 
 		// Khởi tạo font Unicode từ tệp font
-		BaseFont unicodeFont = BaseFont.createFont("D:\\DA\\DATN\\src\\main\\resources\\static\\Unicode\\arial.ttf",
+		BaseFont unicodeFont = BaseFont.createFont("D:\\Ki 6\\Java6ThayLiem\\DATN\\src\\main\\resources\\static\\Unicode\\arial.ttf",
 				BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
 		document.open();// Thêm tiêu đề vào tài liệu
@@ -137,7 +137,7 @@ public class PdfController {
 		PdfWriter.getInstance(document, outputStream);
 
 		// Khởi tạo font Unicode từ tệp font
-		BaseFont unicodeFont = BaseFont.createFont("D:\\DA\\DATN\\src\\main\\resources\\static\\Unicode\\arial.ttf",
+		BaseFont unicodeFont = BaseFont.createFont("D:\\Ki 6\\Java6ThayLiem\\DATN\\src\\main\\resources\\static\\Unicode\\arial.ttf",
 				BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 		
 		document.open();// Thêm tiêu đề vào tài liệu
@@ -210,7 +210,7 @@ public class PdfController {
 		PdfWriter.getInstance(document, outputStream);
 
 		// Khởi tạo font Unicode từ tệp font
-		BaseFont unicodeFont = BaseFont.createFont("D:\\DA\\DATN\\src\\main\\resources\\static\\Unicode\\arial.ttf",
+		BaseFont unicodeFont = BaseFont.createFont("D:\\Ki 6\\Java6ThayLiem\\DATN\\src\\main\\resources\\static\\Unicode\\arial.ttf",
 				BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 		// String fontPath = "classpath:static/Unicode/arial.ttf"; // Đường dẫn tương
 		// đối đến tệp font trong thư mục resources
@@ -284,7 +284,7 @@ public class PdfController {
 		PdfWriter.getInstance(document, outputStream);
 
 		// Khởi tạo font Unicode từ tệp font
-		BaseFont unicodeFont = BaseFont.createFont("D:\\DA\\DATN\\src\\main\\resources\\static\\Unicode\\arial.ttf",
+		BaseFont unicodeFont = BaseFont.createFont("D:\\Ki 6\\Java6ThayLiem\\DATN\\src\\\\main\\resources\\static\\Unicode\\arial.ttf",
 				BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 		// String fontPath = "classpath:static/Unicode/arial.ttf"; // Đường dẫn tương
 		
