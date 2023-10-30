@@ -1,7 +1,5 @@
 package com.greenfarm.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,19 +52,16 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<Order> findByIdAccount(Integer Id) {
-		// TODO Auto-generated method stub
 		return dao.findByIdAccount(Id);
 	}
 
 	@Override
 	public Order findById(Integer Id) {
-		// TODO Auto-generated method stub
 		return dao.findById(Id).get();
 	}
 
 	@Override
 	public Order update(Order order) {
-		// TODO Auto-generated method stub
 		return dao.save(order);
 	}
 

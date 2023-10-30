@@ -1,10 +1,9 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
-
-import java.util.Date;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,13 +28,14 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer Orderid;
 
-	@Temporal(TemporalType.DATE)
-	@JoinColumn(name = "orderdate")
-	private Date orderdate = new Date();
+@Temporal(TemporalType.TIMESTAMP)
+@Column(name = "orderdate")
+private String orderdate;
+
 
 	private String Address;
 
-//	@JsonIgnore 
+	// @JsonIgnore
 	@OneToMany(mappedBy = "order")
 	public List<OrderDetail> orderDetail;
 

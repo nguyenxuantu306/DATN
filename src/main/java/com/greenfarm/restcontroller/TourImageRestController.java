@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.TourImageDTO;
 import com.greenfarm.entity.TourImage;
-import com.greenfarm.service.ProductService;
 import com.greenfarm.service.TourImageService;
 
 @CrossOrigin("*")

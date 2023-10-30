@@ -178,7 +178,7 @@ function addToCart(productId) {
     },
   });
 }
-
+//xóa 1 sản phẩm trong giỏ hàng
 function removeCart(productId) {
   $.ajax({
     type: "POST",
@@ -194,7 +194,7 @@ function removeCart(productId) {
     },
   });
 }
-
+//xóa tất cả giỏ hàng
 function removeAllItemsFromCart() {
     $.ajax({
         type: "POST",
@@ -207,7 +207,7 @@ function removeAllItemsFromCart() {
         },
     });
 }
-
+//-1 số lượng giỏ hàng
 function decreaseQuantity(buttonElement) {
   var quantityInput = buttonElement.nextElementSibling;
   var productId = quantityInput.getAttribute('data-productid');
@@ -220,7 +220,7 @@ function decreaseQuantity(buttonElement) {
     removeCart(productId);
   }
 }
-
+//+1 số lượng giỏ hàng
 function increaseQuantity(buttonElement) {
   var quantityInput = buttonElement.previousElementSibling;
   var productId = quantityInput.getAttribute('data-productid'); // Sửa đổi ở đây
@@ -230,7 +230,7 @@ function increaseQuantity(buttonElement) {
   updateQuantity(productId, newQuantity);
 }
 
-
+// thay đổi số lượng
 function updateQuantity(productId, newQuantity) {
   $.ajax({
       type: "POST",
@@ -261,6 +261,52 @@ quantityInputs.forEach(function(quantityInput) {
     });
 });
 
+//select cod & paypal
+
+    function showButton(option) {
+        var checkoutButton = document.getElementById('checkout-button');
+        var paypalButton = document.getElementById('paypal-button');
+
+        if (option === 'debit') {
+            checkoutButton.style.display = 'block';
+            paypalButton.style.display = 'none';
+        } else if (option === 'paypal') {
+            checkoutButton.style.display = 'none';
+            paypalButton.style.display = 'block';
+        }
+    }
+
+
+    //tính tổng checkout
+    // document.addEventListener("DOMContentLoaded", function() {
+    //   var productList = document.querySelectorAll(".list-group-item");
+    //   var totalPrice = 0;
+    
+    //   productList.forEach(function(product) {
+    //     var priceElement = product.querySelector(".text-muted");
+    //     var quantityElement = product.querySelector("small");
+    
+    //     var price = parseFloat(priceElement.innerText.replace("VNĐ", "").replace(/\./g, "").replace(",", ""));
+    //     var quantity = parseInt(quantityElement.innerText);
+    
+    //     var itemTotal = price * quantity;
+    //     totalPrice += itemTotal;
+    //   });
+    
+    //   // Trừ giảm giá nếu có
+    //   totalPrice -= 5000; // Số tiền giảm giá 5000 VNĐ, tùy chỉnh theo yêu cầu của bạn
+    
+    //   // Hiển thị tổng giá trị trong VNĐ
+    //   var totalPriceElement = document.getElementById("totalPrice");
+    //   if (totalPriceElement) {
+    //     totalPriceElement.innerText = formatCurrency(totalPrice) + " VNĐ";
+    //   }
+    // });
+    
+    // function formatCurrency(value) {
+    //   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Định dạng số tiền với dấu phẩy hàng ngàn
+    // }
+    
 
 
 

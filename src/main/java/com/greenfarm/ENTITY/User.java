@@ -77,4 +77,6 @@ public class User implements Serializable {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	private Set<Securetoken> tokens;
+
+	
 }

@@ -9,116 +9,72 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <meta name="description" content="" />
-    <meta
-      name="author"
-      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
-    />
-    <meta name="generator" content="Jekyll v3.8.5" />
     <title>Checkout</title>
-
-    <link
-      rel="canonical"
-      href="https://getbootstrap.com/docs/4.3/examples/checkout/"
-    />
-
-    <!-- Bootstrap core CSS -->
-    <link
-      href="/docs/4.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-    <!-- Custom styles for this template -->
-    <link href="form-validation.css" rel="stylesheet" />
   </head>
   <body class="bg-light">
+    <script src="https://www.paypal.com/sdk/js?client-id=ASZnl0CCBGjrS-TwWJ1wE2Urw17vj973eOd9ENBq5g1SyJYBZ2l8iZL8iAdkd7hzpjCrZgdYtKDtYhj0"></script>
     <div class="container">
-
       <div class="row py-5">
         <div class="col-md-4 order-md-2 mb-4">
           <h4 class="d-flex justify-content-between align-items-center mb-3">
             <span class="text-muted">Your cart</span>
             <span class="badge badge-secondary badge-pill">3</span>
           </h4>
-          <ul class="list-group mb-3">
-            <li
-              class="list-group-item d-flex justify-content-between lh-condensed"
-            >
-              <div>
-                <h6 class="my-0">Product name</h6>
-                <small class="text-muted">Brief description</small>
+          <form method="post" action="/checkout/payment">
+            <ul class="list-group">
+              <div th:each="item : ${cartList}">
+                <div>
+                  <li
+                    class="list-group-item d-flex justify-content-between lh-condensed"
+                  >
+                    <div>
+                      <h6
+                        class="my-0"
+                        th:text="${item.product.productname}"
+                      ></h6>
+                      <small
+                        class="text-muted"
+                        th:text="${item.quantity}"
+                      ></small>
+                    </div>
+                    <span class="text-muted" th:text="${item.quantity * item.product.price}"></span>
+                  </li>
+                </div>
               </div>
-              <span class="text-muted">$12</span>
-            </li>
-            <li
-              class="list-group-item d-flex justify-content-between lh-condensed"
-            >
-              <div>
-                <h6 class="my-0">Second product</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$8</span>
-            </li>
-            <li
-              class="list-group-item d-flex justify-content-between lh-condensed"
-            >
-              <div>
-                <h6 class="my-0">Third item</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between bg-light">
-              <div class="text-success">
-                <h6 class="my-0">Promo code</h6>
-                <small>EXAMPLECODE</small>
-              </div>
-              <span class="text-success">-$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
-              <strong>$20</strong>
-            </li>
-          </ul>
-
-          <form class="card p-2">
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Promo code"
-              />
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-secondary">Redeem</button>
-              </div>
-            </div>
+              <li
+                class="list-group-item d-flex justify-content-between bg-light"
+              >
+                <div class="text-success">
+                  <h6 class="my-0">Promo code</h6>
+                  <small>EXAMPLECODE</small>
+                </div>
+                <span class="text-success">-$5</span>
+              </li>
+              <!-- Hiển thị tổng tiền trong thẻ "Total (USD)" -->
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Total (USD)</span>
+                <strong id="totalPrice" th:text="${totalPrice - 5}"></strong>
+              </li>
+              <button type="submit" class="btn btn-primary">Thanh toán</button>
+            </ul>
           </form>
         </div>
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Billing address</h4>
-          <form class="needs-validation" novalidate>
+          <form
+            class="needs-validation"
+            novalidate
+            th:object="${infoOrder}"
+            method="Post"
+            action="/checkout/payment"
+          >
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">First name</label>
                 <input
+                  th:field="${user.firstname}"
+                  th:value="${user.firstname}"
+                  th:placeholder="${user.firstname}"
                   type="text"
                   class="form-control"
                   id="firstName"
@@ -133,6 +89,9 @@
               <div class="col-md-6 mb-3">
                 <label for="lastName">Last name</label>
                 <input
+                  th:placeholder="${user.lastname}"
+                  th:value="${user.lastname}"
+                  th:field="${user.lastname}"
                   type="text"
                   class="form-control"
                   id="lastName"
@@ -152,7 +111,8 @@
                 type="email"
                 class="form-control"
                 id="email"
-                placeholder="you@example.com"
+                th:placeholder="${user.email}"
+                readonly="readonly"
               />
               <div class="invalid-feedback">
                 Please enter a valid email address for shipping updates.
@@ -160,26 +120,14 @@
             </div>
 
             <div class="mb-3">
-                <label for="address">Phone</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="address"
-                  placeholder="012 345 6789"
-                  required
-                />
-                <div class="invalid-feedback">
-                  Please enter your phone.
-                </div>
-              </div>
-
-            <div class="mb-3">
-              <label for="address">Address</label>
+              <label for="address">Phone</label>
               <input
-                type="text"
+                type="tel"
                 class="form-control"
                 id="address"
-                placeholder="1234 Main St"
+                th:value="${user.phonenumber}"
+                th:field="${user.phonenumber}"
+                th:placeholder="${user.phonenumber}"
                 required
               />
               <div class="invalid-feedback">
@@ -187,7 +135,22 @@
               </div>
             </div>
 
-            
+            <div class="mb-3">
+              <label for="address">Address</label>
+              <input
+                type="text"
+                class="form-control"
+                id="address"
+                th:placeholder="${user.address}"
+                th:value="${user.address}"
+                th:field="${user.address}"
+                required
+              />
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+
             <hr class="mb-4" />
             <div class="custom-control custom-checkbox">
               <input
@@ -221,10 +184,10 @@
                   type="radio"
                   class="custom-control-input"
                   required
+                  onclick="showButton('debit')"
+                  checked
                 />
-                <label class="custom-control-label" for="debit"
-                  >COD</label
-                >
+                <label class="custom-control-label" for="debit">COD</label>
               </div>
               <div class="custom-control custom-radio">
                 <input
@@ -233,15 +196,24 @@
                   type="radio"
                   class="custom-control-input"
                   required
+                  onclick="showButton('paypal')"
                 />
                 <label class="custom-control-label" for="paypal">PayPal</label>
               </div>
             </div>
-            
-            <hr class="mb-4" />
-            <button class="btn btn-primary btn-lg btn-block" type="submit">
-              Continue to checkout
-            </button>
+            <div id="paypal-button" style="display: none">
+              <!-- Đặt nội dung nút PayPal ở đây -->
+            </div>
+            <div id="checkout-button">
+              <!-- Đặt nội dung nút "Continue to checkout" ở đây -->
+              <button
+                class="btn btn-primary btn-lg btn-block"
+                type="submit"
+                href="/checkout/payment"
+              >
+                Continue to checkout
+              </button>
+            </div>
           </form>
         </div>
       </div>
@@ -255,22 +227,33 @@
         </ul>
       </footer>
     </div>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
+
     <script>
-      window.jQuery ||
-        document.write(
-          '<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>'
-        );
+      paypal
+        .Buttons({
+          createOrder: function (data, actions) {
+            var priceElement = document.getElementById("totalPrice");
+            var price = parseFloat(priceElement.innerText.replace("$", ""));
+
+            return actions.order.create({
+              purchase_units: [
+                {
+                  amount: {
+                    value: price,
+                  },
+                },
+              ],
+            });
+          },
+
+          onApprove: function (data, actions) {
+            return actions.order.capture().then(function (details) {
+              window.location.href = "/success";
+              removeAllItemsFromCart();
+            });
+          },
+        })
+        .render("#paypal-button");
     </script>
-    <script
-      src="https://getbootstrap.com/docs/4.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://getbootstrap.com/docs/4.3/examples/checkout/form-validation.js"></script>
   </body>
 </html>

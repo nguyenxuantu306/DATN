@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.keygen.BytesKeyGenerator;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,6 @@ public class Securetokenserviceimpl implements Securetokenservice {
 
 	@Override
 	public Securetoken createSecureToken() {
-		// TODO Auto-generated method stub
 		// String tokenValue = new
 		// String(org.springframework.security.crypto.codec.Base64.encodeBase64URLSafe(DEFAULT_TOKEN_GENERATOR.generateKey()),
 		// US_ASCII); // this is a sample, you can adapt as per your security need
@@ -52,25 +50,21 @@ public class Securetokenserviceimpl implements Securetokenservice {
 
 	@Override
 	public void saveSecureToken(Securetoken token) {
-		// TODO Auto-generated method stub
 		Securetokendao.save(token);
 	}
 
 	@Override
 	public Securetoken findByToken(String token) {
-		// TODO Auto-generated method stub
 		return Securetokendao.findByToken(token);
 	}
 
 	@Override
 	public void removeToken(Securetoken token) {
-		// TODO Auto-generated method stub
 		Securetokendao.delete(token);
 	}
 
 	@Override
 	public void removeTokenByToken(String token) {
-		// TODO Auto-generated method stub
 		Securetokendao.removeByToken(token);
 	}
 

@@ -87,13 +87,11 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public List<User> getAdministrators() {
-		// TODO Auto-generated method stub
 		return dao.getAdministrators();
 	};
 
 //	@Override
 //	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//		// TODO Auto-generated method stub
 //		Optional<User> userOptional = dao.findByEmail(email);
 //		if(userOptional.isPresent()) {
 //			User user = userOptional.get();
@@ -107,7 +105,6 @@ public class UserServerImpl implements UserService, UserDetailsService {
 //							.disabled(enabled)
 //							.authorities(authorities).build();
 //			} catch (Exception e) {
-//				// TODO: handle exception
 //				 System.out.println("Lỗi xảy ra khi xử lý người dùng: " + e.getMessage());
 //		            throw new UsernameNotFoundException("Không thể xử lý người dùng");
 //		       }
@@ -120,7 +117,6 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		User account = dao.findByEmail(email).get();
 		if (account == null) {
 			throw new UsernameNotFoundException("Invalid username or password.");

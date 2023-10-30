@@ -16,7 +16,6 @@ public class TourImageServiceImpl implements TourImageService {
 
 	@Override
 	public List<TourImage> findAll() {
-		// TODO Auto-generated method stub
 		return dao.findAll();
 	}
 }

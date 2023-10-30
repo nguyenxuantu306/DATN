@@ -2,7 +2,6 @@ package com.greenfarm.dto;
 
 import java.util.List;
 
-import com.greenfarm.entity.Order;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

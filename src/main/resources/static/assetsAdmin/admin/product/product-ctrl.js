@@ -244,6 +244,53 @@ app.controller("product-ctrl", function($scope, $http) {
 				console.error('Error exporting PDF:', error);
 			});
 	};
+
+// Sử dụng AngularJS để lắng nghe sự kiện khi người dùng chọn tệp
+$scope.selectImage = function() {
+    var fileInput = document.getElementById('imageUpload');
+    fileInput.click();
+};
+
+// Xử lý sự kiện khi người dùng chọn tệp
+document.getElementById('imageUpload').addEventListener('change', function(event) {
+    var imagePreview = document.getElementById('imagePreview');
+    var file = event.target.files[0];
+
+    if (file) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            imagePreview.src = e.target.result;
+            imagePreview.style.display = 'block';
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        // Nếu người dùng không chọn tệp, ẩn hình ảnh
+        imagePreview.src = '';
+        imagePreview.style.display = 'none';
+    }
+});
+
+// Xử lý sự kiện khi trường nhập URL mất focus (ng-blur)
+$scope.updateImageFromUrl = function() {
+    var imageUrl = $scope.form.imageUrl;
+    var imagePreview = document.getElementById('imagePreview');
+
+    if (imageUrl) {
+        imagePreview.src = imageUrl;
+        imagePreview.style.display = 'block';
+    } else {
+        // Nếu URL trống, ẩn hình ảnh
+        imagePreview.src = '';
+        imagePreview.style.display = 'none';
+    }
+};
+
+
+
+
+	
 	
 });
 

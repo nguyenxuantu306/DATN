@@ -147,8 +147,7 @@
                           <p class="mb-2">Total(Incl. taxes)</p>
                           <p class="mb-2">$4818.00</p>
                         </div>
-
-                        <button
+                        <a href="/checkout"> <button
                           type="button"
                           class="btn btn-info btn-block btn-lg"
                         >
@@ -159,9 +158,8 @@
                               <i class="fas fa-long-arrow-alt-right ms-2"></i>
                             </span>
                           </div>
-                        </button>
+                        </button></a>
                         <br />
-                        <div id="paypal-button"></div>
                       </div>
                     </div>
                   </div>
@@ -172,33 +170,5 @@
         </div>
       </div>
     </section>
-
-    <script src="https://www.paypal.com/sdk/js?client-id=ASZnl0CCBGjrS-TwWJ1wE2Urw17vj973eOd9ENBq5g1SyJYBZ2l8iZL8iAdkd7hzpjCrZgdYtKDtYhj0"></script>
-    <script>
-      paypal
-        .Buttons({
-          createOrder: function (data, actions) {
-            var priceElement = document.getElementById("price");
-            var price = parseFloat(priceElement.innerText.replace("$", ""));
-
-            return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    value: price,
-                  },
-                },
-              ],
-            });
-          },
-          onApprove: function (data, actions) {
-            return actions.order.capture().then(function (details) {
-              window.location.href = "/success";
-              removeAllItemsFromCart();
-            });
-          },
-        })
-        .render("#paypal-button");
-    </script>
   </body>
 </html>

@@ -29,7 +29,6 @@ public class Emailserviceimpl implements EmailService {
 
 	@Override
 	public void sendSimpleEmail(String toAddress, String subject, String message) {
-		// TODO Auto-generated method stub
 		SimpleMailMessage simplemailmessage = new SimpleMailMessage();
 		simplemailmessage.setTo(toAddress);
 		simplemailmessage.setSubject(subject);
@@ -40,7 +39,6 @@ public class Emailserviceimpl implements EmailService {
 	@Override
 	public void sendEmailWithAttachment(String toAddress, String subject, String message, String attachment)
 			throws MessagingException, FileNotFoundException {
-		// TODO Auto-generated method stub
 		MimeMessage mimeMessage = emailSender.createMimeMessage();
 		MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
 		messageHelper.setTo(toAddress);
@@ -53,7 +51,6 @@ public class Emailserviceimpl implements EmailService {
 
 	@Override
 	public void sendMail(AbstractEmailContext email) throws MessagingException {
-		// TODO Auto-generated method stub
 		MimeMessage message = emailSender.createMimeMessage();
 		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message,
 				MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());

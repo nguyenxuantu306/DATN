@@ -151,10 +151,8 @@ public class CartController {
 	}
 
 	
-	@RequestMapping("/checkout")
-	public String Checkout(ModelMap modelMap) {
-		return "checkout";
-	}
+	
+
 
 	public double totalPrice(List<Cart> cartItems) {
 		double total = 0;

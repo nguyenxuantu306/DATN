@@ -179,7 +179,6 @@ public class SecurityController {
 			try {
 				userService.update(user);
 			} catch (Exception e) {
-				// TODO: handle exception
 				e.printStackTrace();
 			}
 

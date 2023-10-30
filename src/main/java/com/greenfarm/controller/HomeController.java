@@ -38,6 +38,11 @@ public class HomeController {
 
 		return "user/index";
 	}
+
+	@RequestMapping("/paypal")
+	public String Paypal(Model model) {
+		return "paypal";
+	}
 	
 	@RequestMapping("/success")
 	public String Success(Model model) {

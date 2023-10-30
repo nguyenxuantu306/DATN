@@ -1,6 +1,5 @@
 package com.greenfarm.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greenfarm.entity.Tour;
 
 import lombok.AllArgsConstructor;

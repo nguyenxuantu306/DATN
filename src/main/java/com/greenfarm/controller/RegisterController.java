@@ -70,7 +70,6 @@ public class RegisterController {
 			user.setCreateddate(new Date());
 			userservice.create(user);
 		} catch (Exception e) {
-			// TODO: handle exception
 			bindingResult.rejectValue("email", "error.userDTO", "An account already exists for this email.");
 			model.addAttribute("registrationForm", userInfo);
 			return "register";
