@@ -3,6 +3,7 @@ package com.greenfarm.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,9 +26,9 @@ public class TourCondition implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer tourconditionid;
 	
-	private String Conditions;
+	private String conditions;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "tourid")
-	Tour tour;
+	private Tour tour;
 }

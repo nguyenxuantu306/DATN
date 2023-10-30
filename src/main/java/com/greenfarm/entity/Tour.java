@@ -1,12 +1,16 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.greenfarm.dto.TourConditionDTO;
+import com.greenfarm.dto.TourOverviewDTO;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -23,18 +27,18 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
-
-@SuppressWarnings("serial")
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Tours")
 public class Tour implements Serializable {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer tourid;
@@ -44,7 +48,7 @@ public class Tour implements Serializable {
 	private String Description;
 
 	private String image;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "Startdate")
 	private Date startdate = new Date();
@@ -52,42 +56,40 @@ public class Tour implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "Enddate")
 	private Date enddate = new Date();
-	
-	
+
 	private String location;
-	
+
 	@Column(name = "Availableslots")
 	private Integer Availableslots;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "userid")
-	User user;
-	
+	private User user;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "tour")
-	List<Booking> booking;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "tour" ,cascade = CascadeType.ALL)
-	private Set<Comment> comments = new HashSet<>();
-//	List<Comment> comment;
-	
-	@JsonIgnore
-	@OneToOne(mappedBy = "tour")
-	TourCondition tourCondition;
-	
-	@JsonIgnore
-	@OneToOne(mappedBy = "tour")
-	TourOverview tourOverview;
-	
+	private List<Booking> booking;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "tour")
-	List<TourImage> tourImage;
+	private List<Comment> comment;
+
+	@JsonIgnore
+	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
+	private TourCondition tourCondition;
+
+	@JsonIgnore
+	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
+	private TourOverview tourOverview;
+
+	@JsonIgnore
+	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
+	private Pricing pricings;
 	
 	@JsonIgnore
-	@OneToOne(mappedBy = "tour")
-	Pricing pricings;
-	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tour")
+	private List<TourImage> tourImage = new ArrayList<>();
+
 	@Override
 	public String toString() {
 		return "";

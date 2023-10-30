@@ -2,6 +2,8 @@ package com.greenfarm.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +29,7 @@ public class TourOverview implements Serializable{
 	
 	private String Content;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "tourid")
 	Tour tour;
 	

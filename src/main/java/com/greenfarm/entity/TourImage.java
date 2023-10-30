@@ -2,6 +2,8 @@ package com.greenfarm.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,9 +14,12 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,7 +32,7 @@ public class TourImage implements Serializable{
 
 	String Imageurl;
 	
-	@ManyToOne
-	@JoinColumn(name = "tourid")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "tourid",referencedColumnName = "tourid")
 	Tour tour;
 }
