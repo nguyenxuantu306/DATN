@@ -6,7 +6,6 @@
 					<h3 class="card-title text-white">Sản phẩm đã bán</h3>
 					<div class="d-inline-block">
 						<h2 class="text-white">4565</h2>
-						<p class="text-white mb-0">Jan - March 2019</p>
 					</div>
 					<span class="float-right display-5 opacity-5"><i
 						class="fa fa-shopping-cart"></i></span>
@@ -19,22 +18,20 @@
 					<h3 class="card-title text-white">Lợi nhuận ròng</h3>
 					<div class="d-inline-block">
 						<h2 class="text-white">$ 8541</h2>
-						<p class="text-white mb-0">Jan - March 2019</p>
 					</div>
 					<span class="float-right display-5 opacity-5"><i
 						class="fa fa-money"></i></span>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-3 col-sm-6">
+		<div class="col-lg-3 col-sm-6 " id="slstatus">
 			<div class="card gradient-3">
-				<div  class="card-body " style="padding-top: 38px">
+				<div class="card-body " style="height: 160px">
 					<h3 class="card-title text-white">Số lượng đơn hàng</h3>
-					<div class="d-inline-block">
-						<h2 class="text-white">4565</h2>
-						<p class="text-white mb-0">Jan - March 2019</p>
+					<div class="d-inline-block py-3">
+						<h2 class="text-white">{{ calculateTotalCount() }}</h2>
 					</div>
-					<button type="button" class="btn btn-light float-right opacity-5"
+					<button style="margin-top: 20px;" type="button" class="btn btn-light float-right opacity-5"
 						data-toggle="modal" data-target="#exampleModal">
 						<i class="fa fa-wrench"></i>
 					</button>
@@ -43,27 +40,29 @@
 						<div class="modal-dialog modal-xl custom-modal">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h3 class="modal-title " id="exampleModalLabel">Số lượng
-										trạng thái đơn hàng</h3>
+									<h3 class="modal-title " id="exampleModalLabel">Chi tiết :
+										số lượng trạng thái đơn hàng</h3>
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
 									<div class="row">
-										<div class="col-3">
+										<div ng-repeat="item in itemsThongKeSTstatus" class="col-6">
 											<div class="card card-widget">
 												<div class="card-body gradient-3">
 													<div class="media">
 														<span class="card-widget__icon"><i
-															class="icon-home"></i></span>
-														<div class="media-body">
-															<h2 class="card-widget__title"></h2>
-															<h5 class="card-widget__subtitle">All Properties</h5>
+															class="fa fa-shopping-bag"></i></span>
+														<div class="media-body p-2">
+															<h2 class="card-widget__title">
+																{{item.group}} : <span>{{item.count}}</span>
+															</h2>
+
 														</div>
 													</div>
 												</div>
 											</div>
-										</div>									
+										</div>
 									</div>
 
 								</div>
@@ -73,19 +72,56 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-3 col-sm-6">
+		<div class="col-lg-3 col-sm-6 " id="slstatus">
 			<div class="card gradient-4">
-				<div class="card-body">
+				<div class="card-body " style="height: 160px">
 					<h3 class="card-title text-white">Sự hài lòng của khách hàng</h3>
-					<div class="d-inline-block">
-						<h2 class="text-white">99%</h2>
-						<p class="text-white mb-0">Jan - March 2019</p>
+					<div class="d-inline-block py-3">
+						<h2 class="text-white">{{ calculateTotalCount() }}</h2>
 					</div>
-					<span class="float-right display-5 opacity-5"><i
-						class="fa fa-heart"></i></span>
+					<button style="margin-top: 20px;" type="button"
+						class="btn btn-light float-right opacity-5" data-toggle="modal"
+						data-target="#exampleModal">
+						<i class="fa fa-heart"></i>
+					</button>
+					<div class="modal fade" id="exampleModal" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-xl custom-modal">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h3 class="modal-title " id="exampleModalLabel">Chi tiết :
+										đánh giá sản phẩm</h3>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<div ng-repeat="item in itemsThongKeSTstatus" class="col-6">
+											<div class="card card-widget">
+												<div class="card-body gradient-3">
+													<div class="media">
+														<span class="card-widget__icon"><i
+															class="fa fa-shopping-bag"></i></span>
+														<div class="media-body p-2">
+															<h2 class="card-widget__title">
+																{{item.group}} : <span>{{item.count}}</span>
+															</h2>
+
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
+
 	</div>
 
 	<div class="row">
@@ -240,3 +276,4 @@
 		});
 	})();
 </script>
+

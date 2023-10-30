@@ -22,7 +22,6 @@ public class Report implements Serializable {
 	Double sum;
 	Long count;
 
-//	String name;
 	public Report(String group, Long count) {
 		this.group  = group;
 		this.count = count;

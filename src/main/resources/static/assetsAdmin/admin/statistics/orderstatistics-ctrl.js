@@ -1,7 +1,6 @@
 app.controller('orderstatistics-ctrl', function($scope, $http) {
 	$scope.form = {};
 	$scope.itemsThongKeOrder = [];
-	$scope.itemsThongKeSTstatus = [];
 	
 	$scope.form = {};
 	$scope.sort = function(keyname) {
@@ -10,20 +9,16 @@ app.controller('orderstatistics-ctrl', function($scope, $http) {
 	}
 	
 	$scope.initialize = function() {
-		/*$http.get('/rest/orderdetails/thongke').then(response => {
+		$http.get('/rest/orderdetails/thongke').then(response => {
 			$scope.itemsThongKeOrder = response.data;
 			console.log($scope.itemsThongKeOrder);
 			
 		}).catch(err => {
 			
 			console.log(err);
-		})*/
+		})
 		
-		$http.get('/rest/orders/slstatus').then(response => {
-			$scope.itemsThongKeSTstatus = response.data;
-			console.log($scope.itemsThongKeSTstatus);
-			
-		})	
+		
 		
 	}
 	

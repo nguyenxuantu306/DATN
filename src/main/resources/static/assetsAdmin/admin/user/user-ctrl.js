@@ -23,7 +23,7 @@ app.controller("user-ctrl", function($scope, $http) {
 	// Khởi đầu
 	$scope.initialize();
 
-	// Xóa form
+	/*// Xóa form
 	$scope.reset = function() {
 		$scope.form = {
 			createddate:new Date(),
@@ -43,6 +43,31 @@ app.controller("user-ctrl", function($scope, $http) {
 		$('#btn-create').attr('disabled', 'disabled');
 		$('#btn-delete').removeAttr('disabled');
 		$('#btn-update').removeAttr('disabled');			
+	}*/
+
+	$scope.isEdit = false; // Mặc định không ở chế độ edit
+
+	$scope.reset = function() {
+		$scope.form = {
+			createddate: new Date(),
+			birthday: new Date(),
+			image: 'cloud-upload.jpg',
+			gender: true,
+			password: '' // Trường password sẽ được đặt về rỗng khi tạo mới
+		};
+		$scope.isEdit = false; // Chuyển về chế độ tạo mới
+		$('#id').attr('readonly', false);
+		$('#btn-create').removeAttr('disabled');
+		$('#btn-update').attr('disabled', 'disabled');
+		$('#btn-delete').attr('disabled', 'disabled');
+	}
+
+	$scope.edit = function(item) {
+		$scope.form = angular.copy(item);
+		$scope.isEdit = true; // Chuyển về chế độ edit
+		$('#btn-create').attr('disabled', 'disabled');
+		$('#btn-delete').removeAttr('disabled');
+		$('#btn-update').removeAttr('disabled');
 	}
 
 	// Thêm mới
@@ -54,19 +79,19 @@ app.controller("user-ctrl", function($scope, $http) {
 			$scope.items.push(resp.data);
 			$scope.reset();
 			// Sử dụng SweetAlert2 cho thông báo thành công
-	        Swal.fire({
-	            icon: 'success',
-	            title: 'Thành công!',
-	            text: 'Thêm tài khoản thành công!',
-	        });
-			
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Thêm tài khoản thành công!',
+			});
+
 		}).catch(error => {
 			// Sử dụng SweetAlert2 cho thông báo lỗi
-	        Swal.fire({
-	            icon: 'error',
-	            title: 'Lỗi!',
-	            text: 'Lỗi thêm mới tài khoản',
-	        });
+			Swal.fire({
+				icon: 'error',
+				title: 'Lỗi!',
+				text: 'Lỗi thêm mới tài khoản',
+			});
 			console.log("Error", error);
 		});
 	}
@@ -75,52 +100,52 @@ app.controller("user-ctrl", function($scope, $http) {
 	// cập loại nhật sản phẩm
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/users/${item.userid}`,item).then(resp =>{
+		$http.put(`/rest/users/${item.userid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.userid == item.userid);
-			$scope.items[index] = item;				
+			$scope.items[index] = item;
 			// Sử dụng SweetAlert2 cho thông báo thành công
-	        Swal.fire({
-	            icon: 'success',
-	            title: 'Thành công!',
-	            text: 'Cập nhật thành công!',
-	        });
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Cập nhật thành công!',
+			});
 		})
-		.catch(error =>{
-			// Sử dụng SweetAlert2 cho thông báo lỗi
-	        Swal.fire({
-	            icon: 'error',
-	            title: 'Lỗi!',
-	            text: 'Lỗi Cập nhật',
-	        });
-			console.log("Error",error);
-		});
+			.catch(error => {
+				// Sử dụng SweetAlert2 cho thông báo lỗi
+				Swal.fire({
+					icon: 'error',
+					title: 'Lỗi!',
+					text: 'Lỗi Cập nhật',
+				});
+				console.log("Error", error);
+			});
 	}
 
 	// Xóa loại sản phẩm 
 	$scope.delete = function(item) {
-		$http.delete(`/rest/users/${item.userid}`).then(resp =>{
+		$http.delete(`/rest/users/${item.userid}`).then(resp => {
 			var index = $scope.items.findIndex(p => p.userid == item.userid);
-			$scope.items.splice(index,1);
-			$scope.reset();				
+			$scope.items.splice(index, 1);
+			$scope.reset();
 			// Sử dụng SweetAlert2 cho thông báo thành công
-	        Swal.fire({
-	            icon: 'success',
-	            title: 'Thành công!',
-	            text: 'Xóa thành công!',
-	        });	  
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Xóa thành công!',
+			});
 		})
-		.catch(error =>{
-			// Sử dụng SweetAlert2 cho thông báo lỗi
-	        Swal.fire({
-	            icon: 'error',
-	            title: 'Lỗi!',
-	            text: 'Lỗi user',
-	        });	       
-			console.log("Error",error);
-		});
+			.catch(error => {
+				// Sử dụng SweetAlert2 cho thông báo lỗi
+				Swal.fire({
+					icon: 'error',
+					title: 'Lỗi!',
+					text: 'Lỗi user',
+				});
+				console.log("Error", error);
+			});
 	}
 
-// Upload hình
+	// Upload hình
 	$scope.imageChanged = function(files) {
 		var data = new FormData();
 		data.append('file', files[0]);
