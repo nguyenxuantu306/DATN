@@ -67,6 +67,5 @@ public class Product implements Serializable {
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
-//	private Set<Review> reviews = new HashSet<>(0);
 	List<Review> Review;
 }
