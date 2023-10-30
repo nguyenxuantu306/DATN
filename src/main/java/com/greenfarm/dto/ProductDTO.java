@@ -25,6 +25,4 @@ public class ProductDTO {
     private CategoryDTO category;
     
     
-    // top 10 
-    private BigDecimal revenue;
 }
