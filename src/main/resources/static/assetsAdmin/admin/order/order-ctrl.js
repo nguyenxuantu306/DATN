@@ -140,34 +140,34 @@ app.controller("order-ctrl", function($scope, $http) {
 
 
 	$scope.pager = {
-		page: 0,
-		size: 10,
-		get items() {
-			var start = this.page * this.size;
-			return $scope.items.slice(start, start + this.size);
+		page:0,
+		size:28,
+		get items(){
+			var start = this.page*this.size;
+			 return $scope.items.slice(start,start + this.size);
 		},
-		get count() {
+		get count(){
 			return Math.ceil(1.0 * $scope.items.length / this.size);
 		},
-		first() {
+		first(){
 			this.page = 0;
 		},
-		prev() {
+		prev(){
 			this.page--;
-			if (this.page < 0) {
+			if(this.page < 0){
 				this.last();
 			}
 		},
-		next() {
+		next(){
 			this.page++;
-			if (this.page > this.count) {
+			if(this.page > this.count){
 				this.first();
 			}
 		},
-		last() {
-			this.page = this.count - 1;
-		}
-	};
+		last(){
+			this.page = this.count-1;
+		}		
+	}
 
 
 

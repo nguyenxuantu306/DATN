@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.Report;
 
 public interface OrderService {
 
@@ -20,9 +21,14 @@ public interface OrderService {
 
 	Order update(Order order);
 	
+	
+	// Hàm Lọc lấy tên theo trạng thái
 	List<Order> getOrdersByStatusName(String statusName);
 	
+	
+	// Hàm lọc theo ngày tạo
 	List<Order> filterOrdersByNgayTao(Date ngayTao);
 
-
+	// Thống kê số lượng trạng thái
+	List<Report> slstatus();
 }

@@ -19,4 +19,10 @@ public class Report implements Serializable {
 	Serializable group;
 	Double sum;
 	Long count;
+	
+//	String name;
+//	public Report(String name, Long count) {
+//	    this.name = name;
+//	    this.count = count;
+//	}
 }

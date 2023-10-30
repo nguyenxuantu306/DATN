@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.Report;
 
 public interface OrderDAO extends JpaRepository<Order, Integer>{
 	
@@ -20,4 +21,10 @@ public interface OrderDAO extends JpaRepository<Order, Integer>{
 	
 	@Query("SELECT o FROM Order o WHERE o.orderdate = ?1")
 	List<Order> findByNgayTao(Date ngayTao);
+
+	
+	@Query("SELECT new Report(o.statusOrder.name, count(o)) FROM Order o")
+	List<Report> countOrdersByStatus();
+
+
 }

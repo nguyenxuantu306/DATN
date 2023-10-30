@@ -33,7 +33,7 @@
 						<tbody>
 							<tr ng-repeat="item in pager.itemsThongKeOrder">
 								<td>{{$index + 1}}</td>
-								<td>{{item.group.product.productname}}</td>
+								<td>{{item.group.product.order.orderid}}</td>
 								<td>{{item.group.order.user.email}}</td>
 								<td>{{item.group.order.orderdate}}</td>
 								<td>{{item.group.totalprice | number : 0}}đ</td>

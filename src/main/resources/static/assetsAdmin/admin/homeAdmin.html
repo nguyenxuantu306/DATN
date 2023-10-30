@@ -28,14 +28,48 @@
 		</div>
 		<div class="col-lg-3 col-sm-6">
 			<div class="card gradient-3">
-				<div class="card-body">
-					<h3 class="card-title text-white">những khách hàng mới</h3>
+				<div  class="card-body " style="padding-top: 38px">
+					<h3 class="card-title text-white">Số lượng đơn hàng</h3>
 					<div class="d-inline-block">
 						<h2 class="text-white">4565</h2>
 						<p class="text-white mb-0">Jan - March 2019</p>
 					</div>
-					<span class="float-right display-5 opacity-5"><i
-						class="fa fa-users"></i></span>
+					<button type="button" class="btn btn-light float-right opacity-5"
+						data-toggle="modal" data-target="#exampleModal">
+						<i class="fa fa-wrench"></i>
+					</button>
+					<div class="modal fade" id="exampleModal" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-xl custom-modal">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h3 class="modal-title " id="exampleModalLabel">Số lượng
+										trạng thái đơn hàng</h3>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<div class="col-3">
+											<div class="card card-widget">
+												<div class="card-body gradient-3">
+													<div class="media">
+														<span class="card-widget__icon"><i
+															class="icon-home"></i></span>
+														<div class="media-body">
+															<h2 class="card-widget__title"></h2>
+															<h5 class="card-widget__subtitle">All Properties</h5>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>									
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -143,66 +177,66 @@
 	</div>
 </div>
 <script>
-		$(function() {
-			var newCust = [ [ 4, 1 ], [ 5, 3 ], [ 6, 6 ], [ 7, 5 ], [ 8, 7 ],
-					[ 9, 8 ], [ 10, 10 ], ];
-			var retCust = [ [ 4, 1 ], [ 5, 2 ], [ 6, 5 ], [ 7, 3 ], [ 8, 5 ],
-					[ 9, 6 ], [ 10, 9 ], ];
+	$(function() {
+		var newCust = [ [ 4, 1 ], [ 5, 3 ], [ 6, 6 ], [ 7, 5 ], [ 8, 7 ],
+				[ 9, 8 ], [ 10, 10 ], ];
+		var retCust = [ [ 4, 1 ], [ 5, 2 ], [ 6, 5 ], [ 7, 3 ], [ 8, 5 ],
+				[ 9, 6 ], [ 10, 9 ], ];
 
-			var plot = $.plot($("#flotLine1"), [ {
-				data : newCust,
-				label : "New Customer",
-				color : "#ff5e5e",
-			}, {
-				data : retCust,
-				label : "Returning Customer",
-				color : "#7571F9",
-			}, ], {
-				series : {
-					lines : {
-						show : true,
-						lineWidth : 1,
-					},
-					shadowSize : 0,
+		var plot = $.plot($("#flotLine1"), [ {
+			data : newCust,
+			label : "New Customer",
+			color : "#ff5e5e",
+		}, {
+			data : retCust,
+			label : "Returning Customer",
+			color : "#7571F9",
+		}, ], {
+			series : {
+				lines : {
+					show : true,
+					lineWidth : 1,
 				},
-				points : {
-					show : false,
+				shadowSize : 0,
+			},
+			points : {
+				show : false,
+			},
+			legend : {
+				noColumns : 1,
+				position : "nw",
+			},
+			grid : {
+				hoverable : true,
+				clickable : true,
+				borderColor : "#ddd",
+				borderWidth : 0,
+				labelMargin : 5,
+				backgroundColor : "transparent",
+			},
+			yaxis : {
+				min : 0,
+				max : 15,
+				color : "transparent",
+				font : {
+					size : 10,
+					color : "#999",
 				},
-				legend : {
-					noColumns : 1,
-					position : "nw",
+			},
+			xaxis : {
+				color : "transparent",
+				font : {
+					size : 10,
+					color : "#999",
 				},
-				grid : {
-					hoverable : true,
-					clickable : true,
-					borderColor : "#ddd",
-					borderWidth : 0,
-					labelMargin : 5,
-					backgroundColor : "transparent",
-				},
-				yaxis : {
-					min : 0,
-					max : 15,
-					color : "transparent",
-					font : {
-						size : 10,
-						color : "#999",
-					},
-				},
-				xaxis : {
-					color : "transparent",
-					font : {
-						size : 10,
-						color : "#999",
-					},
-				},
-			});
+			},
 		});
-	</script>
-	<script>
-		(function() {
-			$("#cart").on("click", function() {
-				$("#mini-cart").fadeToggle("fast");
-			});
-		})();
-	</script>
+	});
+</script>
+<script>
+	(function() {
+		$("#cart").on("click", function() {
+			$("#mini-cart").fadeToggle("fast");
+		});
+	})();
+</script>

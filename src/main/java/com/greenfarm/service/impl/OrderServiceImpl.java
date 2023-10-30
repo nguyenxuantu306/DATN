@@ -16,6 +16,7 @@ import com.greenfarm.dao.OrderDAO;
 import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
+import com.greenfarm.entity.Report;
 import com.greenfarm.service.OrderService;
 
 @Service
@@ -87,4 +88,9 @@ public class OrderServiceImpl implements OrderService {
         // Thực hiện truy vấn để lọc các đơn hàng theo ngày tạo
         return dao.findByNgayTao(ngayTao);
     }
+
+	@Override
+	public List<Report> slstatus() {	
+		return dao.countOrdersByStatus();
+	}
 }

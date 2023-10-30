@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.Report;
 import com.greenfarm.service.OrderService;
 
 @CrossOrigin("*")
@@ -85,19 +86,37 @@ public class OrderRestController {
 		return orderService.update(order);
 	}
 	
-	// API endpoint để lấy danh sách đơn hàng theo tên trạng thái
-    @GetMapping("/byStatusName")
-    public ResponseEntity<List<Order>> getOrdersByStatusName(@RequestParam("statusName") String statusName) {
+	@GetMapping("/byStatusName")
+    public ResponseEntity<List<OrderDTO>> getOrdersByStatusName(@RequestParam("statusName") String statusName) {
         List<Order> orders = orderService.getOrdersByStatusName(statusName);
-        return new ResponseEntity<>(orders, HttpStatus.OK);
+
+        // Sử dụng ModelMapper để ánh xạ từ Order sang OrderDTO
+        List<OrderDTO> orderDTOs = orders.stream()
+                .map(order -> modelMapper.map(order, OrderDTO.class))
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
     }
     
     
-    @GetMapping("/filter")
-    public ResponseEntity<List<Order>> filterOrdersByNgayTao(@RequestParam("ngayTao") @DateTimeFormat(pattern = "dd-MM-yyyy") Date ngayTao) {
-        List<Order> filteredOrders = orderService.filterOrdersByNgayTao(ngayTao);
-        return ResponseEntity.ok(filteredOrders);
-    }
+	@GetMapping("/filter")
+	public ResponseEntity<List<OrderDTO>> filterOrdersByNgayTao(@RequestParam("ngayTao") @DateTimeFormat(pattern = "dd-MM-yyyy") Date ngayTao) {
+	    List<Order> filteredOrders = orderService.filterOrdersByNgayTao(ngayTao);
+
+	    // Sử dụng ModelMapper để ánh xạ từ Order sang OrderDTO
+	    List<OrderDTO> filteredOrderDTOs = filteredOrders.stream()
+	            .map(order -> modelMapper.map(order, OrderDTO.class))
+	            .collect(Collectors.toList());
+
+	    return ResponseEntity.ok(filteredOrderDTOs);
+	}
+
+	// Thống kê số lượng trạng thái
+	@GetMapping("/slstatus")
+	public ResponseEntity<List<Report>>  slstatus(){	
+		return new ResponseEntity<>(orderService.slstatus(), HttpStatus.OK);
+		
+	}
 	
 	
 }
