@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.ReviewDao;
 import com.greenfarm.entity.Product;
+import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Review;
 import com.greenfarm.service.ReviewService;
 
@@ -48,5 +49,10 @@ public class ReviewServiceImpl implements ReviewService {
         }
     }
 
+	
+	 @Override
+	    public List<Report> getRatingStats() {
+	        return dao.getRatingStats();
+	    }
 
 }

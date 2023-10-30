@@ -29,7 +29,8 @@
 						<h3 th:text="*{productname}" class="text-uppercase mt-3"></h3>
 						<h2 class="mb-3"
 							style="font-weight: 300; color: #80bb01; font-size: 28px">
-							<span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"
+							<span
+								th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"
 								style="color: #999; text-decoration: line-through"></span> <span
 								th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span>
 						</h2>
@@ -59,15 +60,8 @@
 
 
 			<div id="wapper">
-				<div class="new_product_area product_page">
-					<div class="row">
-						<div class="col-12">
-							<div class="block_title">
-								<h3>SẢN PHẨM LIÊN QUAN</h3>
-
-							</div>
-						</div>
-					</div>
+				<div class=" mb-3 pb-3">
+					<h1>SẢN PHẨM LIÊN QUAN</h1>
 				</div>
 
 				<div class="row slider" th:object="${item}">
@@ -92,9 +86,14 @@
 				</div>
 
 			</div>
+			<br>
 
-			<div class="row " ng-app="rating">
-				<div class="col-xl-6 col-lg-8 col-md-10 col-12 text-center mb-5">
+			<div class=" mb-3 pb-3">
+				<h1>ĐÁNH GIÁ SẢN PHẨM</h1>
+			</div>
+
+			<div class="row ">
+				<div class="col-xl-10 col-lg-8 col-md-10 col-12 text-center">
 					<div class="card">
 						<div class="row justify-content-left d-flex">
 							<div class="col-md-6 d-flex flex-column">
@@ -114,7 +113,7 @@
 								<div class="rating-bar0 justify-content-center">
 									<table class="text-left mx-auto">
 										<tr>
-											<td class="rating-label">Excellent</td>
+											<td class="rating-label">5</td>
 											<td class="rating-bar">
 												<div class="bar-container">
 													<div class="bar-5"></div>
@@ -123,7 +122,7 @@
 											<td class="text-right">123</td>
 										</tr>
 										<tr>
-											<td class="rating-label">Good</td>
+											<td class="rating-label">4</td>
 											<td class="rating-bar">
 												<div class="bar-container">
 													<div class="bar-4"></div>
@@ -132,7 +131,7 @@
 											<td class="text-right">23</td>
 										</tr>
 										<tr>
-											<td class="rating-label">Average</td>
+											<td class="rating-label">3</td>
 											<td class="rating-bar">
 												<div class="bar-container">
 													<div class="bar-3"></div>
@@ -141,7 +140,7 @@
 											<td class="text-right">10</td>
 										</tr>
 										<tr>
-											<td class="rating-label">Poor</td>
+											<td class="rating-label">2</td>
 											<td class="rating-bar">
 												<div class="bar-container">
 													<div class="bar-2"></div>
@@ -150,7 +149,7 @@
 											<td class="text-right">3</td>
 										</tr>
 										<tr>
-											<td class="rating-label">Terrible</td>
+											<td class="rating-label">1</td>
 											<td class="rating-bar">
 												<div class="bar-container">
 													<div class="bar-1"></div>
@@ -162,113 +161,105 @@
 								</div>
 							</div>
 						</div>
-						<div class="card">
-							<div class="card-body">
-								<div class="d-flex flex-start w-100">
-									<img class="rounded-circle shadow-1-strong"
-										src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(21).webp"
-										alt="avatar" width="65" height="65" />
-									<div class="w-100">
-										<h5>Add a comment</h5>
 
-										<form th:action="@{'/product/detail/' + ${productid}}"
-											th:object="${reviewinsert}" method="post">
 
-											<fieldset class="rating" th:field="*{rating}">
-												<input type="radio" id="star5" name="rating" value="5" /><label
-													class="full" for="star5"></label> <input type="radio"
-													id="star4half" name="rating" value="4.5" /><label
-													class="half" for="star4half"></label> <input type="radio"
-													id="star4" name="rating" value="4" /><label class="full"
-													for="star4"></label> <input type="radio" id="star3half"
-													name="rating" value="3.5" /><label class="half"
-													for="star3half"></label> <input type="radio" id="star3"
-													name="rating" value="3" /><label class="full" for="star3"></label>
-												<input type="radio" id="star2half" name="rating" value="2.5" /><label
-													class="half" for="star2half"></label> <input type="radio"
-													id="star2" name="rating" value="2" /><label class="full"
-													for="star2"></label> <input type="radio" id="star1half"
-													name="rating" value="1.5" /><label class="half"
-													for="star1half"></label> <input type="radio" id="star1"
-													name="rating" value="1" /><label class="full" for="star1"></label>
-												<input type="radio" id="starhalf" name="rating" value="half" /><label
-													class="half" for="starhalf"></label>
-											</fieldset>
 
-											<div class="form-outline">
-												<textarea th:field="*{content}" class="form-control"
-													id="textAreaExample" rows="4"></textarea>
+						<!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#exampleModal">
+							ĐÁNH GIÁ SẢN PHẨM</button>
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<div class="card">
+											<div class="modal-header">
+												<h1 class="modal-title fs-6 text-center"
+													id="exampleModalLabel">GreenFarm cám ơn quý khách!</h1>
+											</div>
+											<div class="card-body">
+												<form th:action="@{'/product/detail/' + ${productid}}"
+													th:object="${reviewinsert}" method="post">
+													<fieldset style="font-size: 40px;" class="rating"
+														th:field="*{rating}">
+														<input type="radio" id="star5" name="rating" value="5" /><label
+															class="full" for="star5"></label> <input type="radio"
+															id="star4" name="rating" value="4" /><label class="full"
+															for="star4"></label> <input type="radio" id="star3"
+															name="rating" value="3" /><label class="full"
+															for="star3"></label> <input type="radio" id="star2"
+															name="rating" value="2" /><label class="full"
+															for="star2"></label> <input type="radio" id="star1"
+															name="rating" value="1" /><label class="full"for "star1"></label>
+													</fieldset>
+
+
+													<div class="form-outline">
+														<textarea th:field="*{content}" class="form-control"
+															id="textAreaExample" rows="4"></textarea>
+
+													</div>
+													<div class="d-flex justify-content-between mt-3">
+														<button type="submit" class="btn btn-danger">
+															Gửi đánh giá <i class="fas fa-long-arrow-alt-right ms-1"></i>
+														</button>
+													</div>
+												</form>
+
 
 											</div>
-											<!-- <input th:field="*{datepost}" type="text" value="2020/01/01"> -->
-											<div class="d-flex justify-content-between mt-3">
-												<button type="submit" class="btn btn-danger">
-													Gửi đánh giá <i class="fas fa-long-arrow-alt-right ms-1"></i>
-												</button>
-											</div>
-										</form>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+
 					</div>
 
 				</div>
 
 
-				<div class="col-md-6">
+				<div class="col-md-10">
 					<div th:each="review : ${review}" class="card">
-						<div class="row d-flex">
-							<div class="">
-								<img class="profile-pic" src="https://i.imgur.com/V3ICjlm.jpg">
+						<div class="row ">
+							<div class="col-md-6">
+								<img style="width: 50px; height: 50px" class="profile-pic"
+									th:src="@{|/assetsAdmin/images/${review.user.image}|}"
+									alt="User Image" th:text="${review.user.email}" />
+
 							</div>
+
+							<div class="col-md-6" th:if="${#authorization.expression('isAuthenticated()')}">
+								<button style="float: right;" class="btn btn-danger"
+									th:if="${#authorization.expression(review.user.email == #authentication.principal.username)}">
+									<a 	th:href="@{'/product/detail/' + ${productid} + '/delete/' + ${review.reviewid}}">Xóa</a>
+								</button>								
+							</div>
+
 							<div class=" d-flex flex-column">
-								<h3 class="mt-2 mb-0" th:text="${review.user.email}"></h3>
 								<div>
-									<p class="text-left">
-
-										<span class="text-muted" th:text="${review.rating}"></span> 
-										
-										<span
-											class="fa fa-star star-active ml-3"
-											th:each="i : ${#numbers.sequence(1, review.rating)}"></span>
-										<span class="fa fa-star-half star-active"
-											th:if="${review.rating % 1 != 0}"></span> 											
-											<span
-											class="fa fa-star star-inactive"
-											th:each="i : ${#numbers.sequence(review.rating.floatValue() +1,5)}"></span>
-											
-											
-											
-										<span th:text="${review.datepost}" class="p-5 "></span>
-									</p>
-
+									<span class="fa fa-star star-active"
+										th:each="i : ${#numbers.sequence(1, review.rating)}"></span> <span
+										class="fa fa-star-half star-active"
+										th:if="${review.rating % 1 != 0}"></span> <span
+										class="fa fa-star star-inactive"
+										th:each="i : ${#numbers.sequence(review.rating.floatValue() +1,5)}">
+									</span>
+								</div>
+								<div>
+									<span th:text="${review.product.category.categoryname}"></span>
+									| <span th:text="${review.datepost}" class=""></span>
 								</div>
 
 							</div>
-
 						</div>
 						<div class="row text-left">
-
-							<p class="content" th:text="${review.content}"></p>
+							<p style="font-family: Arial, Helvetica, sans-serif"
+								class="content" th:text="${review.content}"></p>
 						</div>
-
-						<div th:if="${#authorization.expression('isAuthenticated()')}">
-							<button
-								th:if="${#authorization.expression(review.user.email == #authentication.principal.username)}">
-								<a
-									th:href="@{'/product/detail/' + ${productid} + '/delete/' + ${review.reviewid}}">Xóa</a>
-							</button>
-						</div>
-
-
-						<!-- <a th:text="${review.user.email}"></a>
-<p th:text="${#authentication.principal.username}">Tên đăng nhập</p> -->
-
-
-
-
-
 					</div>
 
 				</div>
