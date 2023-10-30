@@ -2,12 +2,11 @@ package com.greenfarm.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,17 +18,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import com.greenfarm.dao.CartDAO;
+import com.greenfarm.dao.OrderDAO;
+import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.entity.Cart;
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.OrderService;
 import com.greenfarm.service.UserService;
@@ -45,20 +44,13 @@ public class CheckoutController {
     CartDAO cartDAO;
 
     @Autowired
+    OrderDAO orderDAO;
+
+    @Autowired
     private OrderService orderService;
 
-    @Bean
-    ModelMapper modelMapperPayment() {
-        return new ModelMapper();
-    }
-
-    @Bean
-    ObjectMapper objectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule()); // Đăng ký JavaTimeModule
-        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        return objectMapper;
-    }
+    @Autowired
+    OrderDetailDAO orderDetailDAO;
 
     ObjectMapper mapper = JsonMapper.builder() // or different mapper for other format
             .addModule(new ParameterNamesModule())
@@ -89,6 +81,7 @@ public class CheckoutController {
                 modelMap.addAttribute("cartList", cartItems);
                 modelMap.addAttribute("totalPrice", totalPrice(cartItems));
             }
+
             return "checkout";
         } else {
             System.out.println("Xin chào! Bạn chưa đăng nhập.");
@@ -97,48 +90,48 @@ public class CheckoutController {
     }
 
     @PostMapping(value = "/payment")
-    public String Payment(ModelMap modelMap, @ModelAttribute("infoOrder") OrderDTO orderDTO) {
-        // Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // Kiểm tra nếu người dùng đã xác thực
-        if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            User user = userService.findByEmail(userDetails.getUsername());
+public String Payment(ModelMap modelMap, @ModelAttribute("Order") OrderDTO orderDTO) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = userService.findByEmail(userDetails.getUsername());
 
-            
-            // Chuyển đổi thời gian hiện tại thành Date
-            DateFormat df = new SimpleDateFormat("dd/mm/yyyy HH:mm;ss");
-            Date date = new Date();
-            System.out.println(df.format(date));
+        // Chuyển đổi thời gian hiện tại thành Date
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        System.out.println(df.format(date));
 
+        if (user != null) {
+            Order orderItem = new Order();
+            orderItem.setUser(user);
+            orderItem.setOrderdate(df.format(date));
+            orderItem.setAddress(orderDTO.getAddress());
+            System.out.println(orderDTO.getAddress());
+            orderDAO.save(orderItem);
 
-            Order order = new Order();
-            order.setOrderdate(df.format(date));
-            order.setAddress(orderDTO.getAddress()); // Lấy địa chỉ từ form
-            order.setUser(user);
+            List<Cart> cartItems = cartDAO.findByUser(user); // Retrieve cart items for the user
 
-            ObjectNode orderData = objectMapper.createObjectNode();
-            orderData.put("orderdate", order.getOrderdate().toString());
+            List<OrderDetail> orderDetailList = new ArrayList<>();
 
-            ArrayNode orderDetailArray = objectMapper.createArrayNode();
-            List<Cart> cartItems = cartDAO.findByUser(user);
-            for (Cart item : cartItems) {
-                ObjectNode orderDetail = objectMapper.createObjectNode();
-                orderDetail.put("product", item.getProduct().getProductid());
-                orderDetail.put("quantityOrdered", item.getQuantity());
-                orderDetailArray.add(orderDetail);
+            for (Cart cartItem : cartItems) {
+                OrderDetail orderDetailItem = new OrderDetail();
+                orderDetailItem.setOrder(orderItem);
+                orderDetailItem.setProduct(cartItem.getProduct());
+                orderDetailItem.setQuantityordered(cartItem.getQuantity());
+                orderDetailItem.setTotalprice(cartItem.getQuantity() * cartItem.getProduct().getPrice());
+                orderDetailList.add(orderDetailItem);
             }
-            orderData.set("orderDetail", orderDetailArray);
 
-            // Call the create method to save the order and order details
-            orderService.create(orderData);
-
-            return "success";
-        } else {
-            System.out.println("Xin chào! Bạn chưa đăng nhập.");
-            return "checkout";
+            orderDetailDAO.saveAll(orderDetailList);
         }
+
+        return "success";
+    } else {
+        System.out.println("Xin chào! Bạn chưa đăng nhập.");
+        return "checkout";
     }
+}
+
 
     public double totalPrice(List<Cart> cartItems) {
         double total = 0;
@@ -147,7 +140,5 @@ public class CheckoutController {
         }
         return total;
     }
-
-    
 
 }

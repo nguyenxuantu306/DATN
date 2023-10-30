@@ -20,7 +20,7 @@
             <span class="text-muted">Your cart</span>
             <span class="badge badge-secondary badge-pill">3</span>
           </h4>
-          <form method="post" action="/checkout/payment">
+          <form th:method="post" th:action="@{/checkout/payment}" th:object="${orderDetail}">
             <ul class="list-group">
               <div th:each="item : ${cartList}">
                 <div>
@@ -64,9 +64,9 @@
           <form
             class="needs-validation"
             novalidate
-            th:object="${infoOrder}"
-            method="Post"
-            action="/checkout/payment"
+            th:object="${Order}"
+            th:method="Post"
+            th:action="@{/checkout/payment}"
           >
             <div class="row">
               <div class="col-md-6 mb-3">
@@ -138,12 +138,13 @@
             <div class="mb-3">
               <label for="address">Address</label>
               <input
+              th:value="${user.address}"
+              th:field="${user.address}"
+              th:placeholder="${user.address}"
                 type="text"
                 class="form-control"
                 id="address"
-                th:placeholder="${user.address}"
-                th:value="${user.address}"
-                th:field="${user.address}"
+                
                 required
               />
               <div class="invalid-feedback">
