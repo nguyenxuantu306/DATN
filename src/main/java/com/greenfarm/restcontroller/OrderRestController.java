@@ -115,7 +115,6 @@ public class OrderRestController {
 	@GetMapping("/slstatus")
 	public ResponseEntity<List<Report>>  slstatus(){	
 		return new ResponseEntity<>(orderService.slstatus(), HttpStatus.OK);
-		
 	}
 	
 	

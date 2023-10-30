@@ -2,15 +2,17 @@ package com.greenfarm.entity;
 
 import java.io.Serializable;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Report implements Serializable {
@@ -19,10 +21,10 @@ public class Report implements Serializable {
 	Serializable group;
 	Double sum;
 	Long count;
-	
+
 //	String name;
-//	public Report(String name, Long count) {
-//	    this.name = name;
-//	    this.count = count;
-//	}
+	public Report(String group, Long count) {
+		this.group  = group;
+		this.count = count;
+	}
 }
