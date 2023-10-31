@@ -19,20 +19,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Comments")
-public class Comment implements Serializable {
+public class Comment implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer CommentID;
-
+	private Integer commentid;
+	
+	
+	private String Commenttext;
+	
+	private Date commentdate = new Date();
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "userid")
 	private User user;
-
-	@ManyToOne
+	
+	@ManyToOne	
 	@JoinColumn(name = "TourID")
 	Tour tour;
-
-	private String Commentext;
-
-	private Date Commentdate = new Date();
 }

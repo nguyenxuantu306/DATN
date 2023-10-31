@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.stream.events.Comment;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -78,5 +80,7 @@ public class User implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	private Set<Securetoken> tokens;
 
-	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	List<Review> Review;
 }
