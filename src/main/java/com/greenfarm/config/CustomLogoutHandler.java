@@ -49,7 +49,7 @@ public class CustomLogoutHandler implements LogoutHandler {
 			System.out.println("Logged Out Handler");
 			//set status to false
 			//redirecting to another controller endpoint
-			response.sendRedirect("/logout");
+			response.sendRedirect("/");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

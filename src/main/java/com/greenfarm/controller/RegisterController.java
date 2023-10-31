@@ -1,3 +1,4 @@
+
 package com.greenfarm.controller;
 
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.greenfarm.dto.RegisterDTO;
 import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.InvalidTokenException;
@@ -46,10 +48,11 @@ public class RegisterController {
     }
 
     @PostMapping
-    public String registerUser(Model model,@ModelAttribute("userinfo") @Valid UserDTO userInfo, BindingResult bindingResult) {
+    public String registerUser(Model model,@ModelAttribute("userinfo") @Valid RegisterDTO userInfo, BindingResult bindingResult) {
     	if (bindingResult.hasErrors()) {
     	    // Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
-    	    model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
+    	    model.addAttribute("registrationMsg", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
+    	    System.out.println("lỗi này");
     	    return "register";
     	}else if (!userInfo.getPassword().equals(userInfo.getRepeatpassword())) {
     	    // Nếu mật khẩu và xác nhận mật khẩu không khớp, thêm lỗi vào BindingResult.
@@ -65,11 +68,11 @@ public class RegisterController {
     		user.setLastname(userInfo.getLastname());
     		user.setEmail(userInfo.getEmail());
     		user.setPassword(userInfo.getPassword() );
-    		user.setAddress(userInfo.getAddress());
+//    		user.setAddress(userInfo.getAddress());
     		user.setPhonenumber(userInfo.getPhonenumber());
-    		user.setBirthday(userInfo.getBirthday());
-    		user.setImage(userInfo.getImage());
-    		user.setGender(userInfo.getGender());
+//    		user.setBirthday(userInfo.getBirthday());
+//    		user.setImage(userInfo.getImage());
+//    		user.setGender(userInfo.getGender());
     		user.setCreateddate(new Date());
     		userservice.create(user);
 		} catch (Exception e) {

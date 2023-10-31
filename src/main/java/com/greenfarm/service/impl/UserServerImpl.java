@@ -1,6 +1,8 @@
 package com.greenfarm.service.impl;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -9,8 +11,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,14 +25,17 @@ import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.Securetokendao;
 import com.greenfarm.dao.UserDAO;
+import com.greenfarm.dto.Provider;
 import com.greenfarm.entity.Role;
 import com.greenfarm.entity.Securetoken;
 import com.greenfarm.entity.User;
+import com.greenfarm.entity.UserRole;
 import com.greenfarm.exception.InvalidTokenException;
 import com.greenfarm.exception.UnkownIdentifierException;
 import com.greenfarm.exception.UserAlreadyExistException;
 import com.greenfarm.service.EmailService;
 import com.greenfarm.service.Securetokenservice;
+import com.greenfarm.service.UserRoleService;
 import com.greenfarm.service.UserService;
 import com.mysql.cj.util.StringUtils;
 
@@ -38,6 +46,11 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Autowired
 	UserDAO dao;
+	
+	private UserDetails userDetails;
+	
+	@Autowired
+	UserRoleService userRoleService;
 	
 	@Autowired
 	Securetokenservice securetokenservice;
@@ -275,21 +288,21 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	@Override
 	public void loginFormOAuth2(OAuth2AuthenticationToken oauth2) {
 		// TODO Auto-generated method stub
-//		 		String email = oauth2.getPrincipal().getAttribute("email");
-//				String password = Long.toHexString(System.currentTimeMillis());
+		 		String email = oauth2.getPrincipal().getAttribute("email");
+				String password = Long.toHexString(System.currentTimeMillis());
 //				
-//				UserDetails user = User.withUsername(email)
-//						.password(pe.encode(password)).roles("1","2").build();
-//				org.springframework.security.core.Authentication auth = new UsernamePasswordAuthenticationToken(password, null,user.getAuthorities());
-//				SecurityContextHolder.getContext().setAuthentication(auth);
-//				Authentication auth = new UsernamePasswordAuthenticationToken(user , null, user.getAuthorities());
-//				SecurityContextHolder.getContext().setAuthentication(auth);
+				
+				UserDetails user = org.springframework.security.core.userdetails.User.withUsername(email)
+						.password(PE.encode(password)).roles("2").build();
+				Authentication auth = new UsernamePasswordAuthenticationToken(password, null,user.getAuthorities());
+				SecurityContextHolder.getContext().setAuthentication(auth);
+//				
 				
 		
 	}
 
 	@Override
-	public UserDetails createNewUser(String email) {
+	public UserDetails createNewUser(String email) throws UserAlreadyExistException {
 		// TODO Auto-generated method stub
 		// Kiểm tra xem người dùng đã tồn tại trong hệ thống chưa
        
@@ -302,14 +315,38 @@ public class UserServerImpl implements UserService, UserDetailsService {
             User newUser = new User();
             newUser.setEmail(email);
             // Thêm quyền (roles) tùy ý cho tài khoản mới
-            newUser.setRoles(Arrays.asList("ROLE_USER", "ROLE_ADMIN"));
-
+           // newUser.setRoles(Arrays.asList("ROLE_USER", "ROLE_ADMIN"));
+            //.stream()
+			//.map(er -> er.getRole().getName()).collect(Collectors.toList()).toArray(new String[0]))
+           List<UserRole> lusrl = userRoleService.findAll();
+            newUser.setUserRole(lusrl);
             // Lưu tài khoản mới vào cơ sở dữ liệu
-            userRepository.save(newUser);
-
+            newUser.setFirstname("google");
+            newUser.setLastname("google");
+            newUser.setPhonenumber("1234567");
+            dao.save(newUser);
+            
             // Trả về UserDetails của tài khoản mới
-            return newUser;
+            
         }
+		return null;
 	}
+	
+	@Override
+	public void processOAuthPostLogin(String username) {
+        User existUser = dao.findByEmail(username).get();       
+        if (existUser == null) {
+            User newUser = new User();
+            newUser.setFirstname("google");
+            newUser.setLastname("google");
+            newUser.setPhonenumber("1234567");
+            newUser.setEmail(username);
+            newUser.setProvider(Provider.GOOGLE);
+            newUser.setAccountVerified(true);      
+            newUser.setCreateddate(new Date());
+            dao.save(newUser);        
+        }
+         
+    }
 
 }

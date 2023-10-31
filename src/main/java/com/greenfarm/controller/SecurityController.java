@@ -35,7 +35,6 @@ import jakarta.validation.Valid;
 @Controller
 public class SecurityController {
 
-	
 
 	@Autowired
 	PasswordEncoder passwordE;
@@ -121,32 +120,31 @@ public class SecurityController {
 //
 
 //
-//	@RequestMapping("/oauth2/login/form")
-//	public String fbform() {
-//		return "/security/login";
-//	}
-//
-//	@RequestMapping("/oauth2/login/error")
-//	public String fber() {
-//		return "/security/login";
-//	}
-//
-//	@RequestMapping("/oauth2/login/success")
-//	public String fbsuccess(OAuth2AuthenticationToken oauth2) {
-//		acipl.loginFormOAuth2(oauth2);
-//		return "forward:/index/login/success";
-//	}
-//
-//	@RequestMapping("/login/oauth2/code/google")
-//	public String ggform() {
-//		return "security/login";
-//	}
+	@RequestMapping("/oauth2/login/form")
+	public String fbform() {
+		return "security/login";
+	}
+
+	@RequestMapping("/oauth2/login/error")
+	public String fber() {
+		return "security/login";
+	}
+
+	@RequestMapping("/oauth2/login/success")
+	public String fbsuccess(OAuth2AuthenticationToken oauth2) {
+		userService.loginFormOAuth2(oauth2);
+		return "redirect:/";
+	}
+
+	@RequestMapping("/login/oauth2/code/google")
+	public String ggform() {
+		return "security/login";
+	}
 	
 	
 	
 	@GetMapping("/profile")
 	public String profile(Model model) {
-
 		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -188,11 +186,13 @@ public class SecurityController {
 			// Lấy tên người dùng
 			String username = authentication.getName();
 			User user = userService.findByEmail(username);
+			
 			user.setAddress(userchange.getAddress());
 			user.setImage(userchange.getImage());
 			user.setFirstname(userchange.getFirstname());
 			user.setLastname(userchange.getLastname());
 			user.setPhonenumber(userchange.getPhonenumber());
+			user.setGender(userchange.getGender());
 			try {
 				userService.update(user);
 			} catch (Exception e) {

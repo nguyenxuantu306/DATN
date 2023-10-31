@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -45,7 +45,7 @@
 							th:if="${#fields.hasErrors('phonenumber')}"
 							th:errors="*{phonenumber}"></span> <label for="">Phone</label>
 					</div>
-					<div class="inputbox">
+					<!-- <div class="inputbox">
 						<ion-icon name="location-outline"></ion-icon>
 						<input name="address" type="text" required th:field="*{address}">
 						<span class="error" th:if="${#fields.hasErrors('address')}"
@@ -56,7 +56,7 @@
 						<input name="birthday" type="text" required th:field="*{birthday}">
 						<span class="error" th:if="${#fields.hasErrors('birthday')}"
 							th:errors="*{birthday}"></span> <label for="">Birthday</label>
-					</div>
+					</div> -->
 					<div class="inputbox">
 						<ion-icon name="lock-closed-outline"></ion-icon>
 						<input name="password" type="password" required
@@ -72,7 +72,7 @@
 							th:errors="*{repeatpassword}"></span> <label for="">Repeat
 							Password</label>
 					</div>
-					<div class="radio">
+					<!-- <div class="radio">
 						<input name="gender" type="radio" value="true" required
 							th:field="*{gender}"> <label>Male</label> <input
 							name="gender" type="radio" value="false" required
@@ -83,7 +83,7 @@
 						<input name="image" type="file" required th:field="*{image}">
 						<span class="error" th:if="${#fields.hasErrors('image')}"
 							th:errors="*{image}"></span> <label for="">Image</label>
-					</div>
+					</div> -->
 					<button type="submit">Create Account</button>
 					<div class="register">
 						<p>

@@ -44,7 +44,7 @@ public interface UserService {
     void updatePassword(final String password, final String token) throws InvalidTokenException, UnkownIdentifierException;
     boolean loginDisabled(final String username);
     
-    public UserDetails createNewUser(String email);
+    public UserDetails createNewUser(String email) throws UserAlreadyExistException;
     public void loginFormOAuth2(OAuth2AuthenticationToken oauth2);
-    
+    public void processOAuthPostLogin(String username);
 }
