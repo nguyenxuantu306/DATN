@@ -23,10 +23,10 @@
 						<tr ng-repeat="acc in admins">
 							<td style="width: 300px">{{$index + 1}}</td>
 							<td style="width: 300px">{{acc.email}}</td>
-							<th style="width: 300px" ng-repeat="role in roles" class="text-center"><input
+							<td style="width: 300px" ng-repeat="role in roles" class="text-center"><input
 								ng-checked="authority_of(acc,role)"
 								ng-click="authority_changed(acc,role)" type="checkbox">
-							</th>
+							</td>
 						</tr>
 					</tbody>
 				</table>
