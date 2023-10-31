@@ -1,24 +1,17 @@
 package com.greenfarm.restcontroller;
 
-import java.util.Comparator;
-
-
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
-
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,16 +23,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.greenfarm.dao.ProductImageDAO;
 import com.greenfarm.dto.ProductDTO;
-import com.greenfarm.dto.TourImageDTO;
 import com.greenfarm.entity.Product;
-import com.greenfarm.entity.ProductImage;
 import com.greenfarm.entity.Report;
-import com.greenfarm.entity.TourImage;
 import com.greenfarm.service.ProductService;
+
+import io.minio.MinioClient;
+import io.minio.UploadObjectArgs;
+import io.minio.errors.MinioException;
 
 @CrossOrigin("*")
 @RestController
@@ -80,14 +73,41 @@ public class ProductRestController {
 	}
 
 	@PostMapping()
-	public ResponseEntity<ProductDTO> create(@RequestBody Product product) {
-		Product createdProduct = productService.create(product);
+	public ResponseEntity<ProductDTO> create(@RequestBody Product product, @RequestParam("file") MultipartFile file,
+			Model model) {
+		try {
+			MinioClient minioClient = MinioClient.builder()
+					.endpoint("http://192.168.1.41:9090")
+					.credentials("minioadmin", "minioadmin")
+					.build();
 
-		// Sử dụng ModelMapper để ánh xạ từ Product đã tạo thành ProductDTO
-		ProductDTO productDTO = modelMapper.map(createdProduct, ProductDTO.class);
+			String bucketName = "image-shop";
 
-		// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
-		return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
+			String imageName = UUID.randomUUID().toString() + file.getOriginalFilename();
+
+			minioClient.uploadObject(
+					UploadObjectArgs.builder()
+							.bucket(bucketName)
+							.object(imageName)
+							.build());
+
+			String image = "http://192.168.1.41:9090/" + bucketName + "/" + imageName;
+
+			product.setImage(image);
+			Product createdProduct = productService.create(product);
+
+			// Sử dụng ModelMapper để ánh xạ từ Product đã tạo thành ProductDTO
+			ProductDTO productDTO = modelMapper.map(createdProduct, ProductDTO.class);
+
+			// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
+			return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
+		} catch (MinioException | InvalidKeyException | NoSuchAlgorithmException | IOException e) {
+			// Xử lý ngoại lệ
+			model.addAttribute("error", e.getMessage());
+
+		}
+		return null;
+
 	}
 
 	@PutMapping("{productid}")
@@ -177,6 +197,4 @@ public class ProductRestController {
 		return new ResponseEntity<>(productService.getTk_loai(), HttpStatus.OK);
 	}
 
-
-	
 }

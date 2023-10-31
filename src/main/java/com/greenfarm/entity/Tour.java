@@ -5,12 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.xml.stream.events.Comment;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.greenfarm.dto.TourConditionDTO;
-import com.greenfarm.dto.TourOverviewDTO;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -23,17 +20,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@SuppressWarnings("serial")
+@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

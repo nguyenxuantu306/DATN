@@ -10,16 +10,15 @@ import com.greenfarm.entity.Role;
 import com.greenfarm.service.RoleService;
 
 @Service
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
 
 	@Autowired
-	RoleDAO rdao;
-	
+	RoleDAO dao;
+
 	@Override
 	public List<Role> findAll() {
-		return rdao.findAll();
-	}
 
-	
+		return null;
+	}
 
 }

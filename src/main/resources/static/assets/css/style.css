@@ -10352,25 +10352,17 @@ nav ul li a:hover {
     clear: both;
 }
 
-#mini-cart {
-    display: none;
-    position: fixed;
-    top: 90px;
-    right: 0;
-    width: 350px;
-    background: white;
-    border-radius: 3px;
-    padding: 20px;
-}
 
 .cart-container {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: #fff;
-    z-index: 999;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 140px;
+  right: 0;
+  width: 370px;
+  padding-top: 10px;
+  background-color: #fff;
+  z-index: 999;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 

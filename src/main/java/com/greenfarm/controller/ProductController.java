@@ -6,16 +6,15 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,20 +24,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.greenfarm.dto.ProductDTO;
-import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Review;
 import com.greenfarm.entity.User;
-import com.greenfarm.service.ProductService;
 import com.greenfarm.service.ReviewService;
 import com.greenfarm.service.UserService;
 
-import jakarta.validation.Valid;
 
 @Controller
 public class ProductController {
-	@Autowired
-	ProductService productService;
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 
 	@Autowired
 	ReviewService reviewService;
@@ -58,7 +56,7 @@ public class ProductController {
 			model.addAttribute("items", list);
 		} else {
 			Page<Product> productsPage = productService.findAll(pageable);
-			Page<ProductDTO> productDTOPage = productsPage.map(product -> modelMapper.map(product, ProductDTO.class));
+			Page<ProductDTO> productDTOPage = productsPage.map(product -> modelMapper().map(product, ProductDTO.class));
 			model.addAttribute("items", productDTOPage);
 		}
 

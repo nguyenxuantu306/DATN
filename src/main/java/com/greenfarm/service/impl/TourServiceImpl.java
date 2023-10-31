@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.PricingDAO;
@@ -15,8 +13,6 @@ import com.greenfarm.dao.TourDAO;
 import com.greenfarm.dao.TourOverviewDAO;
 import com.greenfarm.dto.TourDTO;
 import com.greenfarm.entity.Pricing;
-import com.greenfarm.entity.Product;
-import com.greenfarm.entity.Top10;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.service.TourService;
 

@@ -1,8 +1,6 @@
 package com.greenfarm.entity;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -27,28 +25,29 @@ import lombok.NoArgsConstructor;
 @Table(name = "securetokens")
 public class Securetoken {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(unique = true)
-    private String token;
+	@Column(unique = true)
+	private String token;
 
-    @CreationTimestamp
-    @Column(updatable = false)
-    private java.sql.Timestamp timeStamp;
+	@CreationTimestamp
+	@Column(updatable = false)
+	private java.sql.Timestamp timeStamp;
 
-    @Column(updatable = false)
-    @Basic(optional = false)
-    private LocalDateTime expireAt;
+	@Column(updatable = false)
+	@Basic(optional = false)
+	private LocalDateTime expireAt;
 
-    @ManyToOne
-    @JoinColumn(name = "userid")
-    private User user;
+	@ManyToOne
+	@JoinColumn(name = "userid")
+	private User user;
 
-    @Transient
-    private boolean isExpired;
-  
-    public boolean isExpired() {
-        return getExpireAt().isBefore(LocalDateTime.now()); // this is generic implementation, you can always make it timezone specific
-    }
+	@Transient
+	private boolean isExpired;
+
+	public boolean isExpired() {
+		return getExpireAt().isBefore(LocalDateTime.now()); // this is generic implementation, you can always make it
+															// timezone specific
+	}
 }

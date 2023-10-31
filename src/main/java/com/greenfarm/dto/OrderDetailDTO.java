@@ -1,4 +1,5 @@
 package com.greenfarm.dto;
+
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.Product;
 
@@ -10,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetailDTO {
-    private Integer orderDetailId;
-    private Integer quantityOrdered;
-    private Float totalPrice;
-    Order order;
-	Product product; 
+	private Integer orderDetailId;
+	private Integer quantityOrdered;
+	private Float totalPrice;
+	Order order;
+	Product product;
 }

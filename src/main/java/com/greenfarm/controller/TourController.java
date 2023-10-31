@@ -1,10 +1,8 @@
 package com.greenfarm.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.dto.TourDTO;
-import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.service.TourService;
 
@@ -58,15 +54,15 @@ public class TourController {
 	@GetMapping("/tour/detail/{tourid}")
 	public String detail(Model model, @PathVariable("tourid") Integer tourid) {
 		Tour item = tourservice.findById(tourid);
-	    
-	    if (item != null) {
-	        TourDTO itemDTO = modelMapper.map(item, TourDTO.class);
-	        model.addAttribute("item", itemDTO);
-	    } else {
-	        // Xử lý trường hợp đối tượng không tồn tại
-	    }
 
-	    return "tour/detail";
+		if (item != null) {
+			TourDTO itemDTO = modelMapper.map(item, TourDTO.class);
+			model.addAttribute("item", itemDTO);
+		} else {
+			// Xử lý trường hợp đối tượng không tồn tại
+		}
+
+		return "tour/detail";
 	}
 	
 }

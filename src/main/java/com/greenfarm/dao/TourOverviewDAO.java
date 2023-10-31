@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.greenfarm.entity.TourOverview;
 
-public interface TourOverviewDAO extends JpaRepository<TourOverview, Integer>{
+public interface TourOverviewDAO extends JpaRepository<TourOverview, Integer> {
 
 }
