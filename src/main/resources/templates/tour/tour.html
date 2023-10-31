@@ -1,95 +1,112 @@
-S<!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout::dynamic(~{::body})}">
-<head>
-<meta charset="UTF-8">
-<title>GreenFarm</title>
+<!DOCTYPE html>
+<html
+  xmlns="http://www.thymeleaf.org"
+  th:replace="~{/layout/layout::dynamic(~{::body})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>GreenFarm</title>
+  </head>
 
-</head>
+  <body>
+    <div class="container">
+      <div class="pt-3">
+        <div class="text-center mb-3 pb-3">
+          <h1>List Tour</h1>
+        </div>
+        <div class="tab-content py-5">
+          <div role="tabpanel" class="tab-pane active" id="plan">
+            <div class="block_search">
+              <form action="/index.php" method="get">
+                <input type="hidden" name="language" value="vi" />
+                <input type="hidden" name="nv" value="tour" />
+                <input type="hidden" name="op" value="search" />
 
-<body>
-	<div class="container-fluid">
-		<div class="pt-3">
-			<div class="text-center mb-3 pb-3">
-				<h1>List Tour</h1>
-			</div>
-			<div class="tab-content py-5">
-				<div role="tabpanel" class="tab-pane active" id="plan">
-					<div class="block_search">
-						<form action="/index.php" method="get">
-							<input type="hidden" name="language" value="vi"> <input
-								type="hidden" name="nv" value="tour"> <input
-								type="hidden" name="op" value="search">
+                <div class="search_panel">
+                  <div class="row">
+                    <div class="col-xs-24 col-sm-8 col-md-6">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="q"
+                        value=""
+                        placeholder="Từ khoá"
+                      />
+                    </div>
+                    <div class="col-xs-24 col-sm-8 col-md-2">
+                      <select class="form-control" name="time">
+                        <option value="0">--- Thời gian ---</option>
+                        <option value="1">1 ngày</option>
+                        <option value="2">2 ngày 1 đêm</option>
+                        <option value="3">3 ngày 2 đêm</option>
+                        <option value="4">4 ngày 3 đêm</option>
+                      </select>
+                    </div>
+                    <div class="col-xs-24 col-sm-8 col-md-2">
+                      <select name="price_spread" class="form-control">
+                        <option value="0">--- Khoảng giá ---</option>
+                        <option value="1000000-3000000">50 - 100 VNĐ</option>
+                        <option value="3000000-5000000">100 - 150 VNĐ</option>
+                        <option value="5000000-7000000">150 - 200 VNĐ</option>
+                        <option value="7000000-9000000">200 - 300 VNĐ</option>
+                        <option value="9000000-11000000">300 - 500 VNĐ</option>
+                      </select>
+                    </div>
 
-							<div class="search_panel">
-								<div class="row">
-									<div class="col-xs-24 col-sm-8 col-md-6">
-										<input type="text" class="form-control" name="q" value=""
-											placeholder="Từ khoá">
-									</div>
-									<div class="col-xs-24 col-sm-8 col-md-2">
-										<select class="form-control" name="time">
-											<option value="0">--- Thời gian ---</option>
-											<option value="1">1 ngày</option>
-											<option value="2">2 ngày 1 đêm</option>
-											<option value="3">3 ngày 2 đêm</option>
-											<option value="4">4 ngày 3 đêm</option>											
-										</select>
-									</div>
-									<div class="col-xs-24 col-sm-8 col-md-2">
-										<select name="price_spread" class="form-control">
-											<option value="0">--- Khoảng giá ---</option>
-											<option value="1000000-3000000">50 - 100 VNĐ</option>
-											<option value="3000000-5000000">100 - 150 VNĐ</option>
-											<option value="5000000-7000000">150 - 200 VNĐ</option>
-											<option value="7000000-9000000">200 - 300 VNĐ</option>
-											<option value="9000000-11000000">300 - 500 VNĐ</option>											
-										</select>
-									</div>
-									
-									<div class="col-xs-24 col-sm-8 col-md-2 text-right">
-										<input type="hidden" name="is_search" value="1"> <input
-											type="submit" class="btn btn-primary" value="Tìm kiếm">
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
-					<div class="package-item bg-white mb-2">
-						<a th:href="@{|/tour/detail/${p.tourid}|}"> <img
-							style="height: 300px; width: 100%" class="img-fluid"
-							th:src="@{|${p.image}|}" alt="" />
-						</a>
-						<div class="p-4">
-							<div class="d-flex justify-content-between mb-3">
-								<small class="m-0"> <i
-									class="fa fa-calendar-alt text-primary mr-2"></i>Liên Hệ
-								</small>
-								<h6 class="m-0">
-									<i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
-								</h6>
-
-							</div>
-							<a th:utext="${p.Tourname}" class="h5 text-decoration-none"
-								href="/tour-detail"></a>
-							<div class="border-top mt-4 pt-4">
-								<div class="d-flex justify-content-between">
-									<h5
-										th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + 'đ'"
-										class="m-0 p-1"></h5>
-									<button class="btn btn-primary">Đặt tour</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</div>
-</body>
+                    <div class="col-xs-24 col-sm-8 col-md-2 text-right">
+                      <input type="hidden" name="is_search" value="1" />
+                      <input
+                        type="submit"
+                        class="btn btn-primary"
+                        value="Tìm kiếm"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
+            <div class="package-item bg-white mb-2">
+              <a th:href="@{|/tour/detail/${p.tourid}|}">
+                <img
+                  style="height: 300px; width: 100%"
+                  class="img-fluid"
+                  th:src="@{|${p.image}|}"
+                  alt=""
+                />
+              </a>
+              <div class="p-4">
+                <div class="d-flex justify-content-between mb-3">
+                  <small class="m-0">
+                    <i class="fa fa-calendar-alt text-primary mr-2"></i>Liên Hệ
+                  </small>
+                  <h6 class="m-0">
+                    <i class="fa fa-star text-primary mr-2"></i>4.5
+                    <small>(250)</small>
+                  </h6>
+                </div>
+                <a
+                  th:utext="${p.Tourname}"
+                  class="h5 text-decoration-none"
+                  href="/tour-detail"
+                ></a>
+                <div class="border-top mt-4 pt-4">
+                  <div class="d-flex justify-content-between">
+                    <h5
+                      th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + 'đ'"
+                      class="m-0 p-1"
+                    ></h5>
+                    <button class="btn btn-primary">Đặt tour</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

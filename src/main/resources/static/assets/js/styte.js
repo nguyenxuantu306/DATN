@@ -275,37 +275,6 @@ quantityInputs.forEach(function(quantityInput) {
             paypalButton.style.display = 'block';
         }
     }
-
-
-    //tính tổng checkout
-    // document.addEventListener("DOMContentLoaded", function() {
-    //   var productList = document.querySelectorAll(".list-group-item");
-    //   var totalPrice = 0;
-    
-    //   productList.forEach(function(product) {
-    //     var priceElement = product.querySelector(".text-muted");
-    //     var quantityElement = product.querySelector("small");
-    
-    //     var price = parseFloat(priceElement.innerText.replace("VNĐ", "").replace(/\./g, "").replace(",", ""));
-    //     var quantity = parseInt(quantityElement.innerText);
-    
-    //     var itemTotal = price * quantity;
-    //     totalPrice += itemTotal;
-    //   });
-    
-    //   // Trừ giảm giá nếu có
-    //   totalPrice -= 5000; // Số tiền giảm giá 5000 VNĐ, tùy chỉnh theo yêu cầu của bạn
-    
-    //   // Hiển thị tổng giá trị trong VNĐ
-    //   var totalPriceElement = document.getElementById("totalPrice");
-    //   if (totalPriceElement) {
-    //     totalPriceElement.innerText = formatCurrency(totalPrice) + " VNĐ";
-    //   }
-    // });
-    
-    // function formatCurrency(value) {
-    //   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Định dạng số tiền với dấu phẩy hàng ngàn
-    // }
     
 
 

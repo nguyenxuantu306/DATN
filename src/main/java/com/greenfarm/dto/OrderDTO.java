@@ -24,4 +24,5 @@ public class OrderDTO {
 	List<OrderDetail> orderDetail;
 	User user;
 	StatusOrder statusOrder;
+
 }

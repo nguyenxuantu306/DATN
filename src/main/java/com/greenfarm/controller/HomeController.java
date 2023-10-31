@@ -1,18 +1,24 @@
 package com.greenfarm.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.greenfarm.dao.CartDAO;
+import com.greenfarm.entity.Cart;
 import com.greenfarm.entity.Top10;
 import com.greenfarm.entity.Top3;
 import com.greenfarm.service.BookingService;
 import com.greenfarm.service.OrderDetailService;
 import com.greenfarm.service.TourService;
+import com.greenfarm.service.UserService;
 
 @Controller
 @RequestMapping("/")
@@ -25,6 +31,12 @@ public class HomeController {
 
 	@Autowired
 	TourService tourService;
+
+	    @Autowired
+    private UserService userService;
+
+	    @Autowired
+    CartDAO cartDAO;
 
 	@RequestMapping("")
 	public String Home(Model model) {
@@ -45,8 +57,10 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/success")
-	public String Success(Model model) {
-		return "success";
+	public String Success(ModelMap modelMap) {
+            return "success";
+        
+		
 	}
 
 	@RequestMapping("/profile")
@@ -79,5 +93,13 @@ public class HomeController {
 	public String admin() {
 		return "redirect:/assetsAdmin/admin/index.html";
 	}
+
+	public double totalPrice(List<Cart> cartItems) {
+        double total = 0;
+        for (Cart cartItem : cartItems) {
+            total += cartItem.getProduct().getPrice() * cartItem.getQuantity();
+        }
+        return total;
+    }
 
 }

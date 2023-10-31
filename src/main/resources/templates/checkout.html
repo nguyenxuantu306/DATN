@@ -20,7 +20,11 @@
             <span class="text-muted">Your cart</span>
             <span class="badge badge-secondary badge-pill">3</span>
           </h4>
-          <form th:method="post" th:action="@{/checkout/payment}" th:object="${orderDetail}">
+          <form
+            th:method="post"
+            th:action="@{/checkout/payment}"
+            th:object="${orderDetail}"
+          >
             <ul class="list-group">
               <div th:each="item : ${cartList}">
                 <div>
@@ -37,7 +41,10 @@
                         th:text="${item.quantity}"
                       ></small>
                     </div>
-                    <span class="text-muted" th:text="${item.quantity * item.product.price}"></span>
+                    <span
+                      class="text-muted"
+                      th:text="${item.quantity * item.product.price}"
+                    ></span>
                   </li>
                 </div>
               </div>
@@ -55,7 +62,6 @@
                 <span>Total (USD)</span>
                 <strong id="totalPrice" th:text="${totalPrice - 5}"></strong>
               </li>
-              <button type="submit" class="btn btn-primary">Thanh toán</button>
             </ul>
           </form>
         </div>
@@ -138,13 +144,12 @@
             <div class="mb-3">
               <label for="address">Address</label>
               <input
-              th:value="${user.address}"
-              th:field="${user.address}"
-              th:placeholder="${user.address}"
+                th:value="${user.address}"
+                th:field="${user.address}"
+                th:placeholder="${user.address}"
                 type="text"
                 class="form-control"
                 id="address"
-                
                 required
               />
               <div class="invalid-feedback">
@@ -187,6 +192,7 @@
                   required
                   onclick="showButton('debit')"
                   checked
+                  value="1"
                 />
                 <label class="custom-control-label" for="debit">COD</label>
               </div>
@@ -198,10 +204,12 @@
                   class="custom-control-input"
                   required
                   onclick="showButton('paypal')"
+                  value="2"
                 />
                 <label class="custom-control-label" for="paypal">PayPal</label>
               </div>
             </div>
+
             <div id="paypal-button" style="display: none">
               <!-- Đặt nội dung nút PayPal ở đây -->
             </div>
@@ -249,8 +257,8 @@
 
           onApprove: function (data, actions) {
             return actions.order.capture().then(function (details) {
-              window.location.href = "/success";
-              removeAllItemsFromCart();
+              window.location.href = "/checkout/payment";
+              
             });
           },
         })
