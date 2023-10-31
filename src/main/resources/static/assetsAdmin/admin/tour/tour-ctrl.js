@@ -22,22 +22,23 @@ app.controller("tour-ctrl", function($scope, $http) {
 
 	// Hiện thị lên form
 	$scope.edit = function(item) {
-		$scope.form = angular.copy(item);
-	};
+		$scope.form = angular.copy(item);	
+	}
 
 	$scope.reset = function() {
 		$scope.error = ['err'];
 		$scope.form = {
-			publication_date: new Date(),
-			image: 'cloud-upload.jpg',
-			available: true,
+			image: 'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',
 		};
-		$('#id').attr('readonly', false);
-		$('#btn-create').removeAttr('disabled');
-		$('#btn-update').attr('disabled', 'disabled');
-		$('#btn-delete').attr('disabled', 'disabled');
 	};
 
+	// Hiện thị lên for
+	$scope.editthemsp = function(){	
+		$scope.form = angular.copy();
+		$scope.form = {			
+			image:'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',			
+		};			
+	}
 
 	// Thêm tour phẩm mới
 	$scope.create = function() {
@@ -47,9 +48,19 @@ app.controller("tour-ctrl", function($scope, $http) {
 			resp.data.enddate = new Date(resp.data.enddate);
 			$scope.items.push(resp.data);
 			$scope.reset();
-			alert("Thêm tour thành công!");
+			// Sử dụng SweetAlert2 cho thông báo thành công
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Thêm tour thành công!',
+			});
 		}).catch(error => {
-			alert("Lỗi thêm mới tour!");
+			// Sử dụng SweetAlert2 cho thông báo lỗi
+			Swal.fire({
+				icon: 'error',
+				title: 'Lỗi!',
+				text: 'Lỗi thêm mới tour!',
+			});
 			console.log("Error", error);
 		});
 	};
@@ -65,9 +76,19 @@ app.controller("tour-ctrl", function($scope, $http) {
 				var index = $scope.items.findIndex(p => p.tourid == item.tourid);
 				$scope.items[index] = item;
 				$scope.reset();
-				alert("Cập nhật tour thành công!");
+				// Sử dụng SweetAlert2 cho thông báo thành công
+				Swal.fire({
+					icon: 'success',
+					title: 'Thành công!',
+					text: 'Cập nhật tour thành công!',
+				});
 			}).catch(error => {
-				alert("Lỗi cập nhật tour!");
+				// Sử dụng SweetAlert2 cho thông báo lỗi
+				Swal.fire({
+					icon: 'error',
+					title: 'Lỗi!',
+					text: 'Lỗi cập nhật tour!',
+				});
 				console.log("Error", error);
 			});
 		} else {
@@ -80,57 +101,68 @@ app.controller("tour-ctrl", function($scope, $http) {
 			var index = $scope.items.findIndex(p => p.tourid == item.tourid);
 			$scope.items.splice(index, 1);
 			$scope.reset();
-			alert("Xóa tour thành công!");
+			// Sử dụng SweetAlert2 cho thông báo thành công
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Xóa tour thành công!',
+			});
+
 		})
 			.catch(error => {
-				alert("Lỗi xóa tour!");
+				// Sử dụng SweetAlert2 cho thông báo lỗi
+				Swal.fire({
+					icon: 'error',
+					title: 'Lỗi!',
+					text: 'Lỗi xóa tour!',
+				});
 				console.log("Error", error);
 			});
 	}
 
-/*	// Upload hình	
-	$scope.imageChanged = function(files) {
-		var data = new FormData();
-		data.append('file', files[0]);
-		$http.post('/rest/upload/images', data, {
-			transformRequest: angular.identity,
-			headers: { 'Content-Type': undefined }
-		}).then(resp => {
-			$scope.form.tourimage = resp.data.name;
-		}).catch(error => {
-			alert("Lỗi upload hình ảnh");
-			console.log("Error", error);
-		})
-	}*/
+	/*	// Upload hình	
+		$scope.imageChanged = function(files) {
+			var data = new FormData();
+			data.append('file', files[0]);
+			$http.post('/rest/upload/images', data, {
+				transformRequest: angular.identity,
+				headers: { 'Content-Type': undefined }
+			}).then(resp => {
+				$scope.form.tourimage = resp.data.name;
+			}).catch(error => {
+				alert("Lỗi upload hình ảnh");
+				console.log("Error", error);
+			})
+		}*/
 	$scope.pager = {
-		page:0,
-		size:5,
-		get items(){
-			var start = this.page*this.size;
-			 return $scope.items.slice(start,start + this.size);
+		page: 0,
+		size: 7,
+		get items() {
+			var start = this.page * this.size;
+			return $scope.items.slice(start, start + this.size);
 		},
-		get count(){
+		get count() {
 			return Math.ceil(1.0 * $scope.items.length / this.size);
 		},
-		first(){
+		first() {
 			this.page = 0;
 		},
-		prev(){
+		prev() {
 			this.page--;
-			if(this.page < 0){
+			if (this.page < 0) {
 				this.last();
 			}
 		},
-		next(){
+		next() {
 			this.page++;
-			if(this.page > this.count){
+			if (this.page > this.count) {
 				this.first();
 			}
 		},
-		last(){
-			this.page = this.count-1;
-		}		
-	}	
+		last() {
+			this.page = this.count - 1;
+		}
+	}
 
 });
 
