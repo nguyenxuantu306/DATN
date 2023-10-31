@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.Product;
@@ -32,18 +35,17 @@ import com.greenfarm.service.UserService;
 
 import jakarta.validation.Valid;
 
-
 @Controller
 public class ProductController {
 	@Autowired
 	ProductService productService;
-	
-	@Autowired 
+
+	@Autowired
 	ReviewService reviewService;
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	ModelMapper modelMapper;
 
@@ -62,27 +64,26 @@ public class ProductController {
 
 		return "product/shop";
 	}
-	
+
 	@GetMapping("/product/detail/{productid}")
 	public String detail(Model model, @PathVariable("productid") Integer productid) {
 		Integer id = productid;
-	    Product item = productService.findById(id);
-	    
-	    if (item != null) {
-	        ProductDTO itemDTO = modelMapper.map(item, ProductDTO.class);
-	        model.addAttribute("item", itemDTO);
-	    } else {
-	        // Xử lý trường hợp đối tượng không tồn tại
-	    }
-	    
-	    
-	    List<Review> review = reviewService.findbyproduct(item);
-	    model.addAttribute("review", review);
-	    model.addAttribute("reviewinsert", new Review());
+		Product item = productService.findById(id);
 
-	    return "product/detail";
+		if (item != null) {
+			ProductDTO itemDTO = modelMapper.map(item, ProductDTO.class);
+			model.addAttribute("item", itemDTO);
+		} else {
+			// Xử lý trường hợp đối tượng không tồn tại
+		}
+
+		List<Review> review = reviewService.findbyproduct(item);
+		model.addAttribute("review", review);
+		model.addAttribute("reviewinsert", new Review());
+
+		return "product/detail";
 	}
-	
+
 //	@PostMapping("/product/detail/{productid}")
 //	public String review(Model model,@PathVariable("productid") Integer productid,@ModelAttribute("reviewinsert") Review reviewinsert) {
 //		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -99,45 +100,80 @@ public class ProductController {
 //
 //		return "redirect:/product/detail/" + productid;		
 //	}
+//	@PostMapping("/product/detail/{productid}")
+//	public String review(Model model, @PathVariable("productid") Integer productid,
+//			@ModelAttribute("reviewinsert") Review reviewinsert) {
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		String username = authentication.getName();
+//		User user = userService.findByEmail(username);
+//		Product product = productService.findById(productid);
+//
+//		// Kiểm tra xem tài khoản đã đánh giá sản phẩm này chưa
+//		boolean hasUserReviewedProduct = reviewService.hasUserReviewedProduct(user, product);
+//
+//		if (hasUserReviewedProduct) {
+//			// Nếu đã đánh giá rồi, hiển thị thông báo lỗi và không lưu đánh giá mới
+//			model.addAttribute("errorMessage", "Bạn đã đánh giá sản phẩm này rồi.");
+//		} else {
+//			// Nếu chưa đánh giá, lưu đánh giá mới và hiển thị thông báo thành công
+//			LocalDateTime currentDateTime = LocalDateTime.now();
+//			reviewinsert.setUser(user);
+//			reviewinsert.setProduct(product);
+//			reviewinsert.setDatepost(currentDateTime);
+//			reviewService.create(reviewinsert);
+//			model.addAttribute("successMessage", "Đánh giá của bạn đã được lưu thành công.");
+//		}
+//
+//		return "redirect:/product/detail/" + productid;
+//	}
+
 	@PostMapping("/product/detail/{productid}")
-	public String review(Model model, @PathVariable("productid") Integer productid, @ModelAttribute("reviewinsert") Review reviewinsert) {
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    String username = authentication.getName();
-	    User user = userService.findByEmail(username);
-	    Product product = productService.findById(productid);
+	public ResponseEntity<String> review(Model model, @PathVariable("productid") Integer productid,
+			@ModelAttribute("reviewinsert") Review reviewinsert) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		User user = userService.findByEmail(username);
+		Product product = productService.findById(productid);
 
-	    // Kiểm tra xem tài khoản đã đánh giá sản phẩm này chưa
-	    boolean hasUserReviewedProduct = reviewService.hasUserReviewedProduct(user, product);
+		// Kiểm tra xem tài khoản đã đánh giá sản phẩm này chưa
+		boolean hasUserReviewedProduct = reviewService.hasUserReviewedProduct(user, product);
 
-	    if (hasUserReviewedProduct) {
-	        // Nếu đã đánh giá rồi, hiển thị thông báo lỗi và không lưu đánh giá mới
-	        model.addAttribute("errorMessage", "Bạn đã đánh giá sản phẩm này rồi.");
-	    } else {
-	        // Nếu chưa đánh giá, lưu đánh giá mới và hiển thị thông báo thành công
-	        LocalDateTime currentDateTime = LocalDateTime.now();
-	        reviewinsert.setUser(user);
-	        reviewinsert.setProduct(product);
-	        reviewinsert.setDatepost(currentDateTime);
-	        reviewService.create(reviewinsert);
-	        model.addAttribute("successMessage", "Đánh giá của bạn đã được lưu thành công.");
-	    }
+		if (hasUserReviewedProduct) {
+			  // Nếu đã đánh giá rồi, gửi thông báo lỗi
+	        ObjectMapper mapper = new ObjectMapper();
+	        ObjectNode responseJson = mapper.createObjectNode();
+	        responseJson.put("errorMessage", "Bạn đã đánh giá sản phẩm này rồi.");
+	        return ResponseEntity.badRequest().body(responseJson.toString());
+		} else {
+			// Nếu chưa đánh giá, lưu đánh giá mới
+			LocalDateTime currentDateTime = LocalDateTime.now();
+			reviewinsert.setUser(user);
+			reviewinsert.setProduct(product);
+			reviewinsert.setDatepost(currentDateTime);
+			reviewService.create(reviewinsert);
 
-	    return "redirect:/product/detail/" + productid;
+			// Gửi thông báo thành công dưới dạng JSON
+			ObjectMapper mapper = new ObjectMapper();
+			ObjectNode responseJson = mapper.createObjectNode();
+			responseJson.put("successMessage", "Đánh giá của bạn đã được lưu thành công.");
+			return ResponseEntity.ok().body(responseJson.toString());
+		}
 	}
 
-	
 	@GetMapping("/product/detail/{productid}/delete/{reviewid}")
-	public String deleteReview(@PathVariable("productid") Integer productid, @PathVariable("reviewid") Integer reviewid) {
-	    // Xác định logic xóa đánh giá dựa trên reviewid
-	    boolean deleteResult = reviewService.deleteReviewById(reviewid);
-	    
-	    if (deleteResult) {
-	        // Nếu xóa thành công, bạn có thể thực hiện chuyển hướng về trang chi tiết sản phẩm
-	        return "redirect:/product/detail/" + productid;
-	    } else {
-	        // Xử lý trường hợp xóa không thành công, ví dụ: hiển thị thông báo lỗi
-	        return "redirect:/product/detail/" + productid + "?error=delete_failed";
-	    }
+	public String deleteReview(@PathVariable("productid") Integer productid,
+			@PathVariable("reviewid") Integer reviewid) {
+		// Xác định logic xóa đánh giá dựa trên reviewid
+		boolean deleteResult = reviewService.deleteReviewById(reviewid);
+
+		if (deleteResult) {
+			// Nếu xóa thành công, bạn có thể thực hiện chuyển hướng về trang chi tiết sản
+			// phẩm
+			return "redirect:/product/detail/" + productid;
+		} else {
+			// Xử lý trường hợp xóa không thành công, ví dụ: hiển thị thông báo lỗi
+			return "redirect:/product/detail/" + productid + "?error=delete_failed";
+		}
 	}
-	
+
 }
