@@ -36,4 +36,6 @@ public interface OrderService {
 	List<ReportRevenue> slstatus();
 	
 	void cancelOrder(Integer orderId);
+
+	List<Order> findAll();
 }

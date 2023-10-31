@@ -22,7 +22,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfarm.dto.OrderDTO;
+import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.service.OrderService;
@@ -37,25 +39,38 @@ public class OrderRestController {
 	@Autowired
 	ModelMapper modelMapper;
 
+//	@GetMapping()
+//	public ResponseEntity<String> getAllOrders(
+//	        @RequestParam(defaultValue = "0") int page,
+//	        @RequestParam(defaultValue = "10") int size) {
+//	    List<Order> orders = orderService.getAllOrders(page, size);
+//	    List<OrderDTO> orderDTOs = orders.stream()
+//	            .map(order -> modelMapper.map(order, OrderDTO.class))
+//	            .collect(Collectors.toList());
+//
+//	    ObjectMapper objectMapper = new ObjectMapper();
+//	    try {
+//	        String json = objectMapper.writeValueAsString(orderDTOs);
+//	        return ResponseEntity.ok(json);
+//	    } catch (JsonProcessingException e) {
+//	        // Xử lý lỗi nếu chuyển đổi sang JSON không thành công
+//	        e.printStackTrace();
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//	    }
+//	}
+	
 	@GetMapping()
-	public ResponseEntity<String> getAllOrders(
-	        @RequestParam(defaultValue = "0") int page,
-	        @RequestParam(defaultValue = "10") int size) {
-	    List<Order> orders = orderService.getAllOrders(page, size);
-	    List<OrderDTO> orderDTOs = orders.stream()
-	            .map(order -> modelMapper.map(order, OrderDTO.class))
-	            .collect(Collectors.toList());
+	public ResponseEntity<List<OrderDTO>> getList() {
+		List<Order> orders = orderService.findAll();
 
-	    ObjectMapper objectMapper = new ObjectMapper();
-	    try {
-	        String json = objectMapper.writeValueAsString(orderDTOs);
-	        return ResponseEntity.ok(json);
-	    } catch (JsonProcessingException e) {
-	        // Xử lý lỗi nếu chuyển đổi sang JSON không thành công
-	        e.printStackTrace();
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	    }
+		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
+		List<OrderDTO> orderDTOs = orders.stream().map(order -> modelMapper.map(order, OrderDTO.class))
+				.collect(Collectors.toList());
+
+		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
+		return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
 	}
+
 
 //	@PostMapping()
 //	public Order create(@RequestBody JsonNode orderData) {
@@ -82,9 +97,21 @@ public class OrderRestController {
 		return orderService.create(orderData);
 	}
 	
+//	@PutMapping("{id}")
+//	public Order update(@PathVariable("id") Integer id, @RequestBody Order order) {
+//		return orderService.update(order);
+//	}
+//	
 	@PutMapping("{id}")
-	public Order update(@PathVariable("id") Integer id, @RequestBody Order order) {
-		return orderService.update(order);
+	public ResponseEntity<OrderDTO> update(@PathVariable("id") Integer id,
+			@RequestBody Order order) {
+		Order updatedOrder = orderService.update(order);
+
+		if (updatedOrder == null) {
+			return ResponseEntity.notFound().build();
+		}
+		OrderDTO orderDTO = modelMapper.map(updatedOrder, OrderDTO.class);
+		return new ResponseEntity<>(orderDTO, HttpStatus.OK);
 	}
 	
 	@GetMapping("/byStatusName")

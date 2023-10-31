@@ -49,12 +49,12 @@
 								<th scope="row">{{$index + 1}}</th>
 								<td>{{item.user.firstname}}</td>
 								<td>{{item.orderdate | date:'dd-MM-yyyy'}}</td>
-								<td>{{calculateTotal(item) | number : 3}}</td>
-								<td style="color: white;" ng-class="{
-							        'bg-info': item.statusOrder.statusorderid === 1,
-							        'bg-warning': item.statusOrder.statusorderid === 2,
-							        'bg-success': item.statusOrder.statusorderid === 3,
-							        'bg-danger': item.statusOrder.statusorderid === 4
+								<td>{{formatPrice(calculateTotal(item))}}</td>
+								<td ng-class="{
+							        'bg-primary': item.statusOrder.statusorderid == 1,
+							        'bg-warning': item.statusOrder.statusorderid == 2,
+							        'bg-success': item.statusOrder.statusorderid == 3,
+							        'bg-danger': item.statusOrder.statusorderid == 4
    									 }">{{item.statusOrder.name}}</td>
 								<td><a type="button" ng-click="edit(item)" data-toggle="modal"
 										data-target="#exampleModal"> <i class="bi bi-info-circle"></i>
@@ -129,7 +129,7 @@
 																	<td>{{orderDetail.product.category.categoryname}}
 																	</td>
 																	<td>{{orderDetail.quantityordered}}</td>
-																	<td>{{orderDetail.totalprice | number : 3}}</td>														
+																	<td>{{formatPrice(orderDetail.totalPrice)}}</td>														
 																</tr>
 															</tbody>
 
@@ -137,8 +137,7 @@
 														<div class="modal-order text-right">
 															<hr>
 															<h4 style="padding-left: 100px" class="total fs-4">
-																Tổng cộng: <strong>{{calculateTotal(form) |
-																	number : 3}}</strong>
+																Tổng cộng: <strong>{{formatPrice(calculateTotal(form))}}</strong>
 															</h4>
 															<hr>
 															<label style="font-size: 20px; color: black;">Cập

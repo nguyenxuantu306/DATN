@@ -124,7 +124,7 @@ public class OrderServiceImpl implements OrderService {
 		if (optionalOrder.isPresent()) {
 			Order order = optionalOrder.get();
 			// Kiểm tra trạng thái đơn hàng trước khi hủy
-			if (order.getStatusOrder().getStatusOrderId() == 1) {
+			if (order.getStatusOrder().getStatusorderid() == 1) {
 				// Cập nhật trạng thái đơn hàng thành "Đã hủy"
 				StatusOrder canceledStatus = getCanceledStatusOrder(); // Lấy trạng thái "Đã hủy" từ cơ sở dữ
 																				// liệu
@@ -134,14 +134,20 @@ public class OrderServiceImpl implements OrderService {
 					order.setStatusOrder(canceledStatus);
 					dao.save(order);
 				} else {
-					System.out.println(order.getStatusOrder().getStatusOrderId());
-					System.out.println(canceledStatus.getStatusOrderId());
+					System.out.println(order.getStatusOrder().getStatusorderid());
+					System.out.println(canceledStatus.getStatusorderid());
 					throw new RuntimeException("Không thể hủy đơn hàng.");
 				}
 			} else {
 				throw new RuntimeException("Không tìm thấy đơn hàng.");
 			}
 		}
+	}
+
+	@Override
+	public List<Order> findAll() {
+		// TODO Auto-generated method stub
+		return dao.findAll();
 	}
 	
 }

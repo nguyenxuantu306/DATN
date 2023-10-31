@@ -32,7 +32,7 @@ public class StatusOrder implements Serializable{
 	List<Order> order;
 	
 
-	public Integer getStatusOrderId() {
+	public Integer getStatusorderid() {
         return statusorderid;
     }
 

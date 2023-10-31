@@ -13,10 +13,16 @@ app.controller("order-ctrl", function($scope, $http) {
 		var total = 0;
 		if (item.orderDetail && item.orderDetail.length > 0) {
 			for (var i = 0; i < item.orderDetail.length; i++) {
-				total += item.orderDetail[i].totalprice;
+				total += item.orderDetail[i].totalPrice;
 			}
 		}
 		return total;
+	};
+
+	// Hàm định dạng giá tiền
+	$scope.formatPrice = function(price) {
+		// Sử dụng hàm toLocaleString để định dạng giá tiền
+		return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
 	};
 
 
@@ -105,21 +111,21 @@ app.controller("order-ctrl", function($scope, $http) {
 	$scope.selectedStatus = "1";
 
 	$scope.filterOrders = function() {
-	    // Lặp qua tất cả các hàng của bảng đơn hàng
-	    var rows = document.querySelectorAll("#orderList .text-center");
-	    for (var i = 0; i < rows.length; i++) {
-	        var row = rows[i];
-	        var statusCell = row.querySelector("td:nth-child(5)"); // Lấy ô chứa trạng thái
-	
-	        // Kiểm tra xem trạng thái của đơn hàng có khớp với trạng thái đã chọn hoặc là trạng thái 1 hay không
-	        if (statusCell.textContent.trim() === selectedStatus || selectedStatus === "1") {
-	            // Hiển thị đơn hàng nếu khớp hoặc nếu đã chọn "Tất cả"
-	            row.style.display = "table-row";
-	        } else {
-	            // Ẩn đơn hàng nếu không khớp
-	            row.style.display = "none";
-	        }
-	    }
+		// Lặp qua tất cả các hàng của bảng đơn hàng
+		var rows = document.querySelectorAll("#orderList .text-center");
+		for (var i = 0; i < rows.length; i++) {
+			var row = rows[i];
+			var statusCell = row.querySelector("td:nth-child(5)"); // Lấy ô chứa trạng thái
+
+			// Kiểm tra xem trạng thái của đơn hàng có khớp với trạng thái đã chọn hoặc là trạng thái 1 hay không
+			if (statusCell.textContent.trim() === selectedStatus || selectedStatus === "1") {
+				// Hiển thị đơn hàng nếu khớp hoặc nếu đã chọn "Tất cả"
+				row.style.display = "table-row";
+			} else {
+				// Ẩn đơn hàng nếu không khớp
+				row.style.display = "none";
+			}
+		}
 	};
 
 	$scope.ngayTaoFilter = ''; // Trường nhập kiểu text
@@ -139,39 +145,35 @@ app.controller("order-ctrl", function($scope, $http) {
 		}
 	};
 
-
-
 	$scope.pager = {
-		page:0,
-		size:5,
-		get items(){
-			var start = this.page*this.size;
-			 return $scope.items.slice(start,start + this.size);
+		page: 0,
+		size: 10,
+		get items() {
+			var start = this.page * this.size;
+			return $scope.items.slice(start, start + this.size);
 		},
-		get count(){
+		get count() {
 			return Math.ceil(1.0 * $scope.items.length / this.size);
 		},
-		first(){
+		first() {
 			this.page = 0;
 		},
-		prev(){
+		prev() {
 			this.page--;
-			if(this.page < 0){
+			if (this.page < 0) {
 				this.last();
 			}
 		},
-		next(){
+		next() {
 			this.page++;
-			if(this.page > this.count){
+			if (this.page > this.count) {
 				this.first();
 			}
 		},
-		last(){
-			this.page = this.count-1;
-		}		
+		last() {
+			this.page = this.count - 1;
+		}
 	}
-
-
 
 });
 
