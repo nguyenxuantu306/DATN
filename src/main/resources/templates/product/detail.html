@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout::dynamic(~{::body})}">
+<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
+
 <head>
-<meta charset="UTF-8" />
-<title>GreenFarm</title>
+	<meta charset="UTF-8" />
+	<title>GreenFarm</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 
@@ -16,21 +17,17 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
 						<li class="breadcrumb-item"><a href="#">Shop</a></li>
-						<li class="breadcrumb-item active" aria-current="page"
-							th:text="*{productname}"></li>
+						<li class="breadcrumb-item active" aria-current="page" th:text="*{productname}"></li>
 					</ol>
 				</nav>
 				<div class="col-lg-6">
-					<img th:src="@{|*{image}|}" alt="" style="width: 500px"
-						height="300px">
+					<img th:src="@{|*{image}|}" alt="" style="width: 500px" height="300px">
 				</div>
 				<div class="col-lg-6">
 					<div class="text-left mb-3 pb-3">
 						<h3 th:text="*{productname}" class="text-uppercase mt-3"></h3>
-						<h2 class="mb-3"
-							style="font-weight: 300; color: #80bb01; font-size: 28px">
-							<span
-								th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"
+						<h2 class="mb-3" style="font-weight: 300; color: #80bb01; font-size: 28px">
+							<span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"
 								style="color: #999; text-decoration: line-through"></span> <span
 								th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span>
 						</h2>
@@ -39,8 +36,7 @@
 							<div class="pro-qty mr-3 mb-xs-3 d-flex">
 								<input type="text" value="1" class="pr-3" />
 								<div class="d-inline-block">
-									<a href="#" class="inc qty-btn">+</a> <a href="#"
-										class="dec qty-btn">-</a>
+									<a href="#" class="inc qty-btn">+</a> <a href="#" class="dec qty-btn">-</a>
 								</div>
 							</div>
 							<button class="add-to-cart-button">
@@ -65,20 +61,16 @@
 				</div>
 
 				<div class="row slider" th:object="${item}">
-					<div class="col-md-12 col-sm-12 col-xs-12 slide"
-						th:each="p : *{category.products}">
+					<div class="col-md-12 col-sm-12 col-xs-12 slide" th:each="p : *{category.products}">
 						<div class="wap-items-ss brbox">
-							<a th:href="@{|/product/detail/${p.productid}|}"
-								class="wap-ss-img"> <img th:src="@{|${p.image}|}"
-								alt="Product Image">
+							<a th:href="@{|/product/detail/${p.productid}|}" class="wap-ss-img"> <img
+									th:src="@{|${p.image}|}" alt="Product Image">
 							</a>
 							<div class="textleft">
-								<a th:href="@{|/product/detail/${p.productid}|}"
-									th:text="${p.productname}"
+								<a th:href="@{|/product/detail/${p.productid}|}" th:text="${p.productname}"
 									style="color: black; text-decoration: none;"></a>
 								<div>
-									<b
-										th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></b>
+									<b th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></b>
 								</div>
 							</div>
 						</div>
@@ -87,7 +79,6 @@
 
 			</div>
 			<br>
-
 			<div class=" mb-3">
 				<h1>ĐÁNH GIÁ SẢN PHẨM</h1>
 			</div>
@@ -164,20 +155,20 @@
 
 
 						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary"
-							data-bs-toggle="modal" data-bs-target="#exampleModal">
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+							data-bs-target="#exampleModal">
 							Đánh giá giúp chúng tôi !</button>
 
 						<!-- Modal -->
-						<div class="modal fade" id="exampleModal" tabindex="-1"
-							aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+							aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-body">
 										<div class="card">
 											<div class="modal-header">
-												<h1 class="modal-title fs-6 text-center"
-													id="exampleModalLabel">GreenFarm xin được cám ơn quý khách!</h1>
+												<h1 class="modal-title fs-6 text-center" id="exampleModalLabel">
+													GreenFarm xin được cám ơn quý khách!</h1>
 											</div>
 											<div class="card-body">
 												<form th:action="@{'/product/detail/' + ${productid}}"
@@ -192,7 +183,8 @@
 															for="star3"></label> <input type="radio" id="star2"
 															name="rating" value="2" /><label class="full"
 															for="star2"></label> <input type="radio" id="star1"
-															name="rating" value="1" /><label class="full"for "star1"></label>
+															name="rating" value="1" /><label class="full"
+															for "star1"></label>
 													</fieldset>
 
 
@@ -203,19 +195,36 @@
 													</div>
 													<div class="d-flex justify-content-between mt-3">
 														<button type="submit" class="btn btn-danger">
-															Gửi đánh giá <i class="fas fa-long-arrow-alt-right ms-1"></i>
+															Gửi đánh giá <i
+																class="fas fa-long-arrow-alt-right ms-1"></i>
 														</button>
-													</div>	
-													
-																									
+													</div>
 												</form>
+
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-
+						<div id="modal" class="modal" tabindex="-1">
+							<div class="modal-dialog modal-dialog-centered">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title">Đánh giá</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal"
+											aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<p id="modal-message"></p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-bs-dismiss="modal">Đóng</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 
 				</div>
@@ -223,28 +232,28 @@
 
 				<div class="col-md-10">
 					<div th:each="review : ${review}" class="cardrating">
-						<div class="row " >
+						<div class="row ">
 							<div class="col-md-6">
 								<img style="width: 50px; height: 50px" class="profile-pic"
-									th:src="@{|/assetsAdmin/images/${review.user.image}|}"
-									alt="User Image" th:text="${review.user.email}" />
+									th:src="@{|/assetsAdmin/images/${review.user.image}|}" alt="User Image"
+									th:text="${review.user.email}" />
 
 							</div>
 
 							<div class="col-md-6" th:if="${#authorization.expression('isAuthenticated()')}">
 								<button style="float: right;" class="btn btn-danger"
 									th:if="${#authorization.expression(review.user.email == #authentication.principal.username)}">
-									<a 	th:href="@{'/product/detail/' + ${productid} + '/delete/' + ${review.reviewid}}">Xóa</a>
-								</button>								
+									<a
+										th:href="@{'/product/detail/' + ${productid} + '/delete/' + ${review.reviewid}}">Xóa</a>
+								</button>
 							</div>
 
 							<div class=" d-flex flex-column">
 								<div>
 									<span class="fa fa-star star-active"
 										th:each="i : ${#numbers.sequence(1, review.rating)}"></span> <span
-										class="fa fa-star-half star-active"
-										th:if="${review.rating % 1 != 0}"></span> <span
-										class="fa fa-star star-inactive"
+										class="fa fa-star-half star-active" th:if="${review.rating % 1 != 0}"></span>
+									<span class="fa fa-star star-inactive"
 										th:each="i : ${#numbers.sequence(review.rating.floatValue() +1,5)}">
 									</span>
 								</div>
@@ -256,17 +265,64 @@
 							</div>
 						</div>
 						<div class="row text-left">
-							<p style="font-family: Arial, Helvetica, sans-serif"
-								class="content" th:text="${review.content}"></p>
+							<p style="font-family: Arial, Helvetica, sans-serif" class="content"
+								th:text="${review.content}"></p>
 						</div>
 					</div>
 
 				</div>
-
-
 			</div>
-
 		</div>
 	</div>
+	<script>
+		$(document).ready(function () {
+			$('form').submit(function (event) {
+				// Ngăn chặn chuyển hướng trình duyệt khi gửi form
+				event.preventDefault();
+
+				// Lấy dữ liệu từ form
+				var formData = $(this).serialize();
+
+				// Gửi yêu cầu Ajax để lưu đánh giá
+				$.ajax({
+					type: 'POST',
+					url: $(this).attr('action'),
+					data: formData,
+					success: function (response) {
+						// Phân tích chuỗi JSON và trích xuất thông báo thành công
+						var responseJSON = JSON.parse(response);
+						var successMessage = responseJSON.successMessage;
+						var errorMessage = responseJSON.errorMessage;
+
+						$('.alert').hide();
+
+
+						if (errorMessage) {
+							// Hiển thị thông báo lỗi bên dưới form
+							$('.alert-danger').text(errorMessage).show();
+						} else {
+							// Hiển thị thông báo thành công trong modal
+							$('#modal-message').text(successMessage);
+							$('#exampleModal').modal('hide');
+							$('#modal').modal('show');
+						}
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						// Hiển thị thông báo lỗi trong alert
+						$('.alert-danger').text(jqXHR.responseText).show();
+						//						alert(jqXHR.responseText);
+					}
+				});
+			});
+			$('#exampleModal').on('hidden.bs.modal', function (e) {
+				$(this).remove();
+			});
+			$('#modal').on('hidden.bs.modal', function (event) {
+				// Chuyển hướng sang trang mới
+				location.reload();
+			});
+		});
+	</script>
 </body>
+
 </html>
