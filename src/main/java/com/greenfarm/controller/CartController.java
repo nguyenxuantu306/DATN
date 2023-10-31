@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +34,7 @@ public class CartController {
 	CartDAO cartDAO;
 
 	@GetMapping
-	public String viewCart(ModelMap modelMap) {
+	public String viewCart(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null && authentication.isAuthenticated()
 				&& !"anonymousUser".equals(authentication.getPrincipal())) {
@@ -42,8 +42,8 @@ public class CartController {
 			User user = userService.findByEmail(userEmail);
 			if (user != null) {
 				List<Cart> cartItems = cartDAO.findByUser(user);
-				modelMap.addAttribute("cartList", cartItems);
-				modelMap.addAttribute("totalPrice", totalPrice(cartItems));
+				model.addAttribute("cartList", cartItems);
+				model.addAttribute("totalPrice", totalPrice(cartItems));
 			}
 		}
 		return "cart";
@@ -77,7 +77,7 @@ public class CartController {
 	}
 
 	@RequestMapping("/update/{productId}")
-	public String viewUpdate(ModelMap modelMap,
+	public String viewUpdate(Model model,
 			@PathVariable("productId") Integer productId,
 			@RequestParam("quantity") Integer newQuantity) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -99,8 +99,8 @@ public class CartController {
 					}
 
 					List<Cart> cartItems = cartDAO.findByUser(user);
-					modelMap.addAttribute("cartItems", cartItems);
-					modelMap.addAttribute("totalPrice", totalPrice(cartItems));
+					model.addAttribute("cartItems", cartItems);
+					model.addAttribute("totalPrice", totalPrice(cartItems));
 				}
 			}
 		}
@@ -109,7 +109,7 @@ public class CartController {
 	}
 
 	@RequestMapping("/remove/{productId}")
-	public String viewRemove(ModelMap modelMap, @PathVariable("productId") Integer productId) {
+	public String viewRemove(Model model, @PathVariable("productId") Integer productId) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null && authentication.isAuthenticated()
 				&& !"anonymousUser".equals(authentication.getPrincipal())) {
@@ -124,8 +124,8 @@ public class CartController {
 					}
 					// Fetch the updated cart items from the database
 					List<Cart> cartItems = cartDAO.findByUser(user);
-					modelMap.addAttribute("cartItems", cartItems);
-					modelMap.addAttribute("totalPrice", totalPrice(cartItems));
+					model.addAttribute("cartItems", cartItems);
+					model.addAttribute("totalPrice", totalPrice(cartItems));
 				}
 			}
 		}
@@ -133,7 +133,7 @@ public class CartController {
 	}
 
 	@RequestMapping("/remove/all")
-	public String removeAllItems(ModelMap modelMap) {
+	public String removeAllItems() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null && authentication.isAuthenticated()
 				&& !"anonymousUser".equals(authentication.getPrincipal())) {

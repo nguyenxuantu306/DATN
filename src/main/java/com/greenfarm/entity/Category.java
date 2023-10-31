@@ -35,7 +35,4 @@ public class Category implements Serializable {
 	@OneToMany(mappedBy = "category")
 	List<Product> products;
 
-	public Category(int categoryid) {
-		this.categoryid = categoryid;
-	}
 }

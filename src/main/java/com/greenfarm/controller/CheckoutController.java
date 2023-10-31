@@ -122,7 +122,7 @@ public class CheckoutController {
                     orderDetailItem.setOrder(orderItem);
                     orderDetailItem.setProduct(cartItem.getProduct());
                     orderDetailItem.setQuantityordered(cartItem.getQuantity());
-                    orderDetailItem.setTotalprice(cartItem.getQuantity() * cartItem.getProduct().getPrice());
+                    orderDetailItem.setTotalPrice(cartItem.getQuantity() * cartItem.getProduct().getPrice());
                     orderDetailItem.setPaymentMethod(paymentMethodObj);
                     orderDetailList.add(orderDetailItem);
 

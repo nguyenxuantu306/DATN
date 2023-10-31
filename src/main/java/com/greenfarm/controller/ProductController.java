@@ -27,16 +27,14 @@ import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Review;
 import com.greenfarm.entity.User;
+import com.greenfarm.service.ProductService;
 import com.greenfarm.service.ReviewService;
 import com.greenfarm.service.UserService;
 
 
 @Controller
 public class ProductController {
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
+
 
 	@Autowired
 	ReviewService reviewService;
@@ -47,6 +45,9 @@ public class ProductController {
 	@Autowired
 	ModelMapper modelMapper;
 
+	@Autowired
+	ProductService productService;
+
 	// List All
 	@GetMapping("/product/shop")
 	public String shopList(Model model, @PageableDefault(size = 12) Pageable pageable,
@@ -56,7 +57,7 @@ public class ProductController {
 			model.addAttribute("items", list);
 		} else {
 			Page<Product> productsPage = productService.findAll(pageable);
-			Page<ProductDTO> productDTOPage = productsPage.map(product -> modelMapper().map(product, ProductDTO.class));
+			Page<ProductDTO> productDTOPage = productsPage.map(product -> modelMapper.map(product, ProductDTO.class));
 			model.addAttribute("items", productDTOPage);
 		}
 

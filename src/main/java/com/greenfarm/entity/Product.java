@@ -2,7 +2,6 @@ package com.greenfarm.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Locale.Category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -48,11 +47,6 @@ public class Product implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	List<OrderDetail> orderDetails;
-
-	@Override
-	public String toString() {
-		return "";
-	}
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
