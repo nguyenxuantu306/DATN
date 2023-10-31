@@ -16,34 +16,10 @@ app.controller("user-ctrl", function($scope, $http) {
 				item.birthday = new Date(item.birthday);
 			})
 		});
-
-
 	}
 
 	// Khởi đầu
 	$scope.initialize();
-
-	/*// Xóa form
-	$scope.reset = function() {
-		$scope.form = {
-			createddate:new Date(),
-			birthday: new Date(),
-			image: 'cloud-upload.jpg',
-			gender:true,
-		};
-		$('#id').attr('readonly', false);
-		$('#btn-create').removeAttr('disabled');
-		$('#btn-update').attr('disabled', 'disabled');
-		$('#btn-delete').attr('disabled', 'disabled');
-	}
-
-	// Hiện thị lên form
-	$scope.edit = function(item) {
-		$scope.form = angular.copy(item);
-		$('#btn-create').attr('disabled', 'disabled');
-		$('#btn-delete').removeAttr('disabled');
-		$('#btn-update').removeAttr('disabled');			
-	}*/
 
 	$scope.isEdit = false; // Mặc định không ở chế độ edit
 
@@ -57,17 +33,17 @@ app.controller("user-ctrl", function($scope, $http) {
 		};
 		$scope.isEdit = false; // Chuyển về chế độ tạo mới
 		$('#id').attr('readonly', false);
-		$('#btn-create').removeAttr('disabled');
-		$('#btn-update').attr('disabled', 'disabled');
-		$('#btn-delete').attr('disabled', 'disabled');
 	}
 
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
 		$scope.isEdit = true; // Chuyển về chế độ edit
-		$('#btn-create').attr('disabled', 'disabled');
-		$('#btn-delete').removeAttr('disabled');
-		$('#btn-update').removeAttr('disabled');
+	}
+	
+	// Hiện thị lên for
+	$scope.editthemsp = function(){	
+		$scope.isEdit = false; // Chuyển về chế độ tạo mới
+		$scope.form = angular.copy();			
 	}
 
 	// Thêm mới
@@ -163,7 +139,7 @@ app.controller("user-ctrl", function($scope, $http) {
 
 	$scope.pager = {
 		page: 0,
-		size: 4,
+		size: 10,
 		get items() {
 			var start = this.page * this.size;
 			return $scope.items.slice(start, start + this.size);

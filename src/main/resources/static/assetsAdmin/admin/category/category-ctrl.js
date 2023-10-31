@@ -5,7 +5,7 @@ app.controller("category-ctrl", function($scope, $http) {
 	$scope.field = [];
 	$scope.error = ['err'];
 	
-	
+	$scope.searchCategory = '';
 	
 	$scope.initialize = function(){
 		// Load products
@@ -33,10 +33,12 @@ app.controller("category-ctrl", function($scope, $http) {
 	
 	// Hiện thị lên form
 	$scope.edit = function(item){
-		$scope.form = angular.copy(item);	
-		$('#btn-create').attr('disabled', 'disabled');
-		$('#btn-delete').removeAttr('disabled');
-		$('#btn-update').removeAttr('disabled');			
+		$scope.form = angular.copy(item);				
+	}
+	
+	// Hiện thị lên for
+	$scope.editthemsp = function(){
+		$scope.form = angular.copy();			
 	}
 	
 	
@@ -117,7 +119,7 @@ app.controller("category-ctrl", function($scope, $http) {
 	
 	$scope.pager = {
 		page:0,
-		size:3,
+		size:5,
 		get items(){
 			var start = this.page*this.size;
 			 return $scope.items.slice(start,start + this.size);

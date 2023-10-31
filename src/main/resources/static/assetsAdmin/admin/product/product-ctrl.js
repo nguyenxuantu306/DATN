@@ -21,6 +21,14 @@ app.controller("product-ctrl", function($scope, $http) {
 		});
 		
 	}
+	// Ban đầu, searchTerm rỗng
+    $scope.searchTerm = '';
+
+    // Hàm lọc sản phẩm
+    $scope.filterProducts = function(product) {
+        // Kiểm tra nếu searchTerm là chuỗi con của tên sản phẩm
+        return product.productname.toLowerCase().includes($scope.searchTerm.toLowerCase());
+    };
 	
 	$scope.sort = function(keyname) {
 		$scope.sortKey = keyname;
@@ -35,19 +43,20 @@ app.controller("product-ctrl", function($scope, $http) {
 		$scope.error = ['err'];
 		$scope.form = {			
 			image:'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',			
-		};
-		$('#id').attr('readonly', false);
-		$('#btn-create').removeAttr('disabled');
-		$('#btn-update').attr('disabled', 'disabled');
-		$('#btn-delete').attr('disabled', 'disabled');
+		};		
 	}
 	
 	// Hiện thị lên form
 	$scope.edit = function(item){
-		$scope.form = angular.copy(item);	
-		$('#btn-create').attr('disabled', 'disabled');
-		$('#btn-delete').removeAttr('disabled');
-		$('#btn-update').removeAttr('disabled');				
+		$scope.form = angular.copy(item);				
+	}
+	
+	// Hiện thị lên for
+	$scope.editthemsp = function(){	
+		$scope.form = angular.copy();
+		$scope.form = {			
+			image:'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',			
+		};			
 	}
 	
 	// Thêm sản phẩm mới
@@ -125,7 +134,7 @@ app.controller("product-ctrl", function($scope, $http) {
 	
 	$scope.pager = {
 		page:0,
-		size:5,
+		size:10,
 		get items(){
 			var start = this.page*this.size;
 			 return $scope.items.slice(start,start + this.size);

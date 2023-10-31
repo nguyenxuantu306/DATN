@@ -11,10 +11,14 @@
 									class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
 									id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 							</div>
-							<input type="search" class="form-control"
-								placeholder="Search Dashboard" aria-label="Tìm kiếm email...">
+							<input ng-model="searchCategory" type="search" class="form-control"
+								placeholder="Tìm kiếm tên loại..." aria-label="Tìm kiếm tên loại...">
 						</div>
-						
+						<div class="col-md-6 text-right">
+                            <button type="button" class="btn btn-success" ng-click="editthemsp()" data-toggle="modal" data-target="#exampleModa2">
+								<i class="fa fa-plus-square"></i></i> Thêm loại sản phẩm
+							</button>
+                        </div>
 					</div>
 					<div class="table-responsive">
 						<table
@@ -29,7 +33,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in pager.items">
+								<tr ng-repeat="item in pager.items | filter:searchCategory">
 									<th>{{$index + 1}}</th>
 									<th style="width: 150px">{{item.categoryname}}</th>
 									<th style="width: 750px">{{item.descriptions}}</th>
@@ -101,18 +105,10 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<div class="panel-footer text-right">
-					<button id="btn-create" ng-click="create()" class="btn btn-success">Thêm</button>
-					<button id="btn-update" disabled="disabled" ng-click="update()"
+				<div class="panel-footer text-right">			
+					<button  ng-click="update()"
 						class="btn btn-success">
-						<b class="glyphicon glyphicon-save"></b> Sửa
-					</button>
-					<button id="btn-delete" disabled="disabled" ng-click="delete(form)"
-						class="btn btn-success">
-						<b class="glyphicon glyphicon-trash"></b> Xóa
-					</button>
-					<button id="btn-reset" ng-click="reset()" class="btn btn-success">
-						<b class="glyphicon glyphicon-refresh"></b> Mới
+						<b class="glyphicon glyphicon-save"></b> Cập nhật loại sản phẩm
 					</button>
 				</div>
 			</div>
@@ -120,5 +116,50 @@
 	</div>
 </div>
 
+<div class="modal fade" id="exampleModa2" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl custom-modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title " id="exampleModalLabel">Chỉnh sửa loại
+					sản phẩm</h3>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="col-lg-12">
+					<div class="card info">
+						<div class="card-body">
+							<div class="basic-form">
+								<form class="row">
+									<div class="form-group col-sm-6">
+										<label>Tên loại : </label> <input name="categoryname"
+											style="height: 55px" type="text" ng-model="form.categoryname"
+											class="form-control input-default">
 
+									</div>
+									<div class="form-group col-sm-6">
+										<label>Mô tả : </label>
+										<textarea name="descriptions" type="text"
+											ng-model="form.descriptions"
+											class="form-control input-default"></textarea>
+
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="panel-footer text-right">
+					<button  ng-click="create()" class="btn btn-success">Thêm</button>					
+					<button  ng-click="reset()" class="btn btn-success">
+						<b class="glyphicon glyphicon-refresh"></b> Mới
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
