@@ -1,6 +1,8 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -28,10 +30,9 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer Orderid;
 
-@Temporal(TemporalType.TIMESTAMP)
-@Column(name = "orderdate")
-private String orderdate;
-
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "orderdate")
+	private LocalDateTime orderdate;
 
 	private String Address;
 

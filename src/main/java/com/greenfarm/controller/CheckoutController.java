@@ -2,6 +2,7 @@ package com.greenfarm.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -96,16 +97,17 @@ public class CheckoutController {
             User user = userService.findByEmail(userDetails.getUsername());
 
             // Chuyển đổi thời gian hiện tại thành Date
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            Date date = new Date();
-            System.out.println(df.format(date));
+//            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//            Date date = new Date();
+//            System.out.println(df.format(date));
 
+            LocalDateTime now = LocalDateTime.now();
             StatusOrder statusOrder = new StatusOrder();
             statusOrder.setStatusorderid(1);
             if (user != null) {
                 Order orderItem = new Order();
                 orderItem.setUser(user);
-                orderItem.setOrderdate(df.format(date));
+                orderItem.setOrderdate(now);
                 orderItem.setAddress(orderDTO.getAddress());
                 orderItem.setStatusOrder(statusOrder);
                 System.out.println(orderDTO.getAddress());
