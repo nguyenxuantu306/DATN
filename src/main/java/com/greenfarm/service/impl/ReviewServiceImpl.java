@@ -10,6 +10,7 @@ import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.Review;
+import com.greenfarm.entity.User;
 import com.greenfarm.service.ReviewService;
 
 
@@ -56,4 +57,10 @@ public class ReviewServiceImpl implements ReviewService {
 	        return dao.getRatingStats();
 	    }
 
+	 @Override
+	    public boolean hasUserReviewedProduct(User user, Product product) {
+	        // Sử dụng phương thức findByUserAndProduct trong reviewRepository để kiểm tra đánh giá
+	        Review existingReview = dao.findReviewByUserAndProduct(user, product);
+	        return existingReview != null;
+	    }
 }

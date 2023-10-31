@@ -88,7 +88,7 @@
 			</div>
 			<br>
 
-			<div class=" mb-3 pb-3">
+			<div class=" mb-3">
 				<h1>ĐÁNH GIÁ SẢN PHẨM</h1>
 			</div>
 
@@ -163,11 +163,10 @@
 						</div>
 
 
-
 						<!-- Button trigger modal -->
 						<button type="button" class="btn btn-primary"
 							data-bs-toggle="modal" data-bs-target="#exampleModal">
-							ĐÁNH GIÁ SẢN PHẨM</button>
+							Đánh giá giúp chúng tôi !</button>
 
 						<!-- Modal -->
 						<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -178,7 +177,7 @@
 										<div class="card">
 											<div class="modal-header">
 												<h1 class="modal-title fs-6 text-center"
-													id="exampleModalLabel">GreenFarm cám ơn quý khách!</h1>
+													id="exampleModalLabel">GreenFarm xin được cám ơn quý khách!</h1>
 											</div>
 											<div class="card-body">
 												<form th:action="@{'/product/detail/' + ${productid}}"
@@ -206,10 +205,10 @@
 														<button type="submit" class="btn btn-danger">
 															Gửi đánh giá <i class="fas fa-long-arrow-alt-right ms-1"></i>
 														</button>
-													</div>
+													</div>	
+													
+																									
 												</form>
-
-
 											</div>
 										</div>
 									</div>
@@ -223,8 +222,8 @@
 
 
 				<div class="col-md-10">
-					<div th:each="review : ${review}" class="card">
-						<div class="row ">
+					<div th:each="review : ${review}" class="cardrating">
+						<div class="row " >
 							<div class="col-md-6">
 								<img style="width: 50px; height: 50px" class="profile-pic"
 									th:src="@{|/assetsAdmin/images/${review.user.image}|}"
@@ -268,13 +267,6 @@
 			</div>
 
 		</div>
-
-
-
 	</div>
-
-
-
-	<div></div>
 </body>
 </html>

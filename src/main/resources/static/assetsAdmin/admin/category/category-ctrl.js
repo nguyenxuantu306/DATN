@@ -11,11 +11,7 @@ app.controller("category-ctrl", function($scope, $http) {
 		// Load products
 		$http.get("/rest/categories").then(resp =>{
 			$scope.items = resp.data;
-		});
-		
-		
-		
-		
+		});		
 	}
 	
 	// Khởi đầu

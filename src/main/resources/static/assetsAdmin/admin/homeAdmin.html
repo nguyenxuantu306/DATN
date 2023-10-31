@@ -31,8 +31,9 @@
 					<div class="d-inline-block py-3">
 						<h2 class="text-white">{{ calculateTotalCount() }}</h2>
 					</div>
-					<button style="margin-top: 20px;" type="button" class="btn btn-light float-right opacity-5"
-						data-toggle="modal" data-target="#exampleModal">
+					<button style="margin-top: 20px;" type="button"
+						class="btn btn-light float-right opacity-5" data-toggle="modal"
+						data-target="#exampleModal">
 						<i class="fa fa-wrench"></i>
 					</button>
 					<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -72,21 +73,22 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-3 col-sm-6 " id="slstatus">
+		
+		<div class="col-lg-3 col-sm-6 ">
 			<div class="card gradient-4">
 				<div class="card-body " style="height: 160px">
 					<h3 class="card-title text-white">Sự hài lòng của khách hàng</h3>
 					<div class="d-inline-block py-3">
-						<h2 class="text-white">{{ calculateTotalCount() }}</h2>
+						<h2 class="text-white">{{ calculateTotalCountstats()}}</h2>
 					</div>
 					<button style="margin-top: 20px;" type="button"
 						class="btn btn-light float-right opacity-5" data-toggle="modal"
-						data-target="#exampleModal">
+						data-target="#exampleModal2">
 						<i class="fa fa-heart"></i>
 					</button>
-					<div class="modal fade" id="exampleModal" tabindex="-1"
+					<div class="modal fade" id="exampleModal2" tabindex="-1"
 						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog modal-xl custom-modal">
+						<div class="modal-dialog modal-xl ">
 							<div class="modal-content">
 								<div class="modal-header">
 									<h3 class="modal-title " id="exampleModalLabel">Chi tiết :
@@ -94,26 +96,30 @@
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
-								<div class="modal-body">
-									<div class="row">
-										<div ng-repeat="item in itemsThongKeSTstatus" class="col-6">
-											<div class="card card-widget">
-												<div class="card-body gradient-3">
-													<div class="media">
-														<span class="card-widget__icon"><i
-															class="fa fa-shopping-bag"></i></span>
-														<div class="media-body p-2">
-															<h2 class="card-widget__title">
-																{{item.group}} : <span>{{item.count}}</span>
-															</h2>
+								<div class="modal-body">									
+									<div style="color: black;" class="table-responsive">
+										<table class="table header-border table-hover verticle-middle">
+											<thead>
+												<tr>
+													<th scope="col">STT</th>
+													<th scope="col">Đánh giá</th>
+													<th scope="col">Tổng</th>
+													<th scope="col">Tỉ lệ</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="stats in itemsThongKestats">
+													<th>{{$index + 1}}</th>
+													<td>{{stats.tinh}} <i style="color: yellow;"
+														class="fa fa-star"></i></td>
+													<td>{{stats.count}}</td>
+													<td><span class="label gradient-4 btn-rounded">
+															{{stats.count/calculateTotalCountstats()*100}}% </span></td>
+												</tr>
+											</tbody>
+										</table>
 
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
 									</div>
-
 								</div>
 							</div>
 						</div>

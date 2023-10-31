@@ -10454,7 +10454,7 @@ a:hover {
     color: #455A64;
 }
 
-/* .card {
+.cardrating {
     border-radius: 5px;
     background-color: #fff;
     padding-left: 60px;
@@ -10462,7 +10462,7 @@ a:hover {
     margin-top: 30px;
     padding-top: 30px;
     padding-bottom: 30px;
-} */
+}
 
 .rating-box {
     width: 130px;

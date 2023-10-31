@@ -20,7 +20,7 @@ import com.greenfarm.service.ReviewService;
 import com.greenfarm.service.UserService;
 
 @RestController
-@RequestMapping("/reviews")
+@RequestMapping("/rest/rating")
 public class RatingRestController {
 
 	@Autowired
