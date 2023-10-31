@@ -45,12 +45,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center" ng-repeat="item in pager.items"  ng-if="((!ngayTaoFilter) || (item.orderdate | date:'dd-MM-yyyy') === ngayTaoFilter) && (selectedStatus == item.statusOrder.statusorderid || selectedStatus == '1')">
-								<th scope="row">{{$index + 1}}</th>
+							<tr class="text-center" ng-repeat="item in pager.items"  ng-if="((!ngayTaoFilter) || (item.orderdate | date:'dd-MM-yyyy') === ngayTaoFilter) && (selectedStatus == item.statusOrder.statusorderid || selectedStatus == '0')">
+								<th  scope="row">{{$index + 1}}</th>
 								<td>{{item.user.firstname}}</td>
 								<td>{{item.orderdate | date:'dd-MM-yyyy'}}</td>
 								<td>{{formatPrice(calculateTotal(item))}}</td>
-								<td ng-class="{
+								<td style="color: white;width: 300px;"  ng-class="{
 							        'bg-primary': item.statusOrder.statusorderid == 1,
 							        'bg-warning': item.statusOrder.statusorderid == 2,
 							        'bg-success': item.statusOrder.statusorderid == 3,
