@@ -185,24 +185,12 @@
             <div class="d-block my-3">
               <div class="custom-control custom-radio">
                 <input
-                  id="debit"
-                  name="paymentMethod"
-                  type="radio"
-                  class="custom-control-input"
-                  required
-                  onclick="showButton('debit')"
-                  checked
-                  value="1"
-                />
-                <label class="custom-control-label" for="debit">COD</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input
                   id="paypal"
                   name="paymentMethod"
                   type="radio"
                   class="custom-control-input"
                   required
+                  checked
                   onclick="showButton('paypal')"
                   value="2"
                 />
@@ -210,45 +198,15 @@
               </div>
             </div>
 
-            <div id="paypal-button" style="display: none">
-              <!-- Đặt nội dung nút PayPal ở đây -->
-            </div>
             <div id="checkout-button">
               <!-- Đặt nội dung nút "Continue to checkout" ở đây -->
               <button class="btn btn-primary btn-lg btn-block" type="submit" th:attr="onclick='removeAllItemsFromCart()'">
-                Continue to checkout
+                Continue to Payment
               </button>
             </div>
           </form>
         </div>
       </div>
     </div>
-
-    <script>
-      paypal
-        .Buttons({
-          createOrder: function (data, actions) {
-            var priceElement = document.getElementById("totalPrice");
-            var price = parseFloat(priceElement.innerText.replace("$", ""));
-
-            return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    value: 10,
-                  },
-                },
-              ],
-            });
-          },
-
-          onApprove: function (data, actions) {
-            return actions.order.capture().then(function (details) {
-				window.location.href = "http://localhost:8080/checkoutPayment";
-            });
-          },
-        })
-        .render("#paypal-button");
-    </script>
   </body>
 </html>

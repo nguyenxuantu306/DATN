@@ -1,10 +1,7 @@
 package com.greenfarm.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +13,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,7 +34,7 @@ import com.greenfarm.entity.User;
 import com.greenfarm.service.UserService;
 
 @Controller
-@RequestMapping("/checkout")
+
 public class CheckoutController {
 
     @Autowired
@@ -66,8 +62,8 @@ public class CheckoutController {
     @Autowired
     ObjectMapper objectMapper;
 
-    @GetMapping
-    public String checkout(ModelMap modelMap) {
+    @GetMapping("/checkout")
+    public String Checkout(ModelMap modelMap) {
         // Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // Kiểm tra nếu người dùng đã xác thực
@@ -88,18 +84,35 @@ public class CheckoutController {
         }
     }
 
-    @PostMapping(value = "/payment")
+    @GetMapping("/checkoutPayment")
+    public String CheckoutPayment(ModelMap modelMap) {
+        // Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Kiểm tra nếu người dùng đã xác thực
+        if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            User user = userService.findByEmail(userDetails.getUsername());
+            modelMap.addAttribute("user", user);
+            if (user != null) {
+                List<Cart> cartItems = cartDAO.findByUser(user);
+                modelMap.addAttribute("cartList", cartItems);
+                modelMap.addAttribute("totalPrice", totalPrice(cartItems));
+            }
+
+            return "checkoutPayment";
+        } else {
+            System.out.println("Xin chào! Bạn chưa đăng nhập.");
+            return "login";
+        }
+    }
+
+    @PostMapping("/checkout/payment")
     public String Payment(ModelMap modelMap, @ModelAttribute("Order") OrderDTO orderDTO,
             @RequestParam("paymentMethod") Integer paymentMethod) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             User user = userService.findByEmail(userDetails.getUsername());
-
-            // Chuyển đổi thời gian hiện tại thành Date
-//            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-//            Date date = new Date();
-//            System.out.println(df.format(date));
 
             LocalDateTime now = LocalDateTime.now();
             StatusOrder statusOrder = new StatusOrder();
@@ -131,12 +144,13 @@ public class CheckoutController {
                 }
 
                 orderDetailDAO.saveAll(orderDetailList);
+                
             }
-
-            return "success";
+            
+            return "redirect:/success";
         } else {
             System.out.println("Xin chào! Bạn chưa đăng nhập.");
-            return "checkout";
+            return "login";
         }
     }
 
