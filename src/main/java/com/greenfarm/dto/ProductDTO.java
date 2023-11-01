@@ -1,6 +1,7 @@
 package com.greenfarm.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.greenfarm.entity.Category;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,8 +17,7 @@ public class ProductDTO {
     private Double price;
     private String image;
     private Integer quantityavailable;
-    @JsonIgnore
-    private CategoryDTO category;
     
+    private Category category;
     
 }

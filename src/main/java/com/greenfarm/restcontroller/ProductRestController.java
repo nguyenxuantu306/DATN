@@ -72,42 +72,54 @@ public class ProductRestController {
 		return new ResponseEntity<>(productDTO, HttpStatus.OK);
 	}
 
+//	@PostMapping()
+//	public ResponseEntity<ProductDTO> create(@RequestBody Product product, @RequestParam("file") MultipartFile file,
+//			Model model) {
+//		try {
+//			MinioClient minioClient = MinioClient.builder()
+//					.endpoint("http://192.168.1.41:9090")
+//					.credentials("minioadmin", "minioadmin")
+//					.build();
+//
+//			String bucketName = "image-shop";
+//
+//			String imageName = UUID.randomUUID().toString() + file.getOriginalFilename();
+//
+//			minioClient.uploadObject(
+//					UploadObjectArgs.builder()
+//							.bucket(bucketName)
+//							.object(imageName)
+//							.build());
+//
+//			String image = "http://192.168.1.41:9090/" + bucketName + "/" + imageName;
+//
+//			product.setImage(image);
+//			Product createdProduct = productService.create(product);
+//
+//			// Sử dụng ModelMapper để ánh xạ từ Product đã tạo thành ProductDTO
+//			ProductDTO productDTO = modelMapper.map(createdProduct, ProductDTO.class);
+//
+//			// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
+//			return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
+//		} catch (MinioException | InvalidKeyException | NoSuchAlgorithmException | IOException e) {
+//			// Xử lý ngoại lệ
+//			model.addAttribute("error", e.getMessage());
+//
+//		}
+//		return null;		
+//	}
+	
 	@PostMapping()
-	public ResponseEntity<ProductDTO> create(@RequestBody Product product, @RequestParam("file") MultipartFile file,
+	public ResponseEntity<ProductDTO> create(@RequestBody Product product,
 			Model model) {
-		try {
-			MinioClient minioClient = MinioClient.builder()
-					.endpoint("http://192.168.1.41:9090")
-					.credentials("minioadmin", "minioadmin")
-					.build();
-
-			String bucketName = "image-shop";
-
-			String imageName = UUID.randomUUID().toString() + file.getOriginalFilename();
-
-			minioClient.uploadObject(
-					UploadObjectArgs.builder()
-							.bucket(bucketName)
-							.object(imageName)
-							.build());
-
-			String image = "http://192.168.1.41:9090/" + bucketName + "/" + imageName;
-
-			product.setImage(image);
+		
 			Product createdProduct = productService.create(product);
 
 			// Sử dụng ModelMapper để ánh xạ từ Product đã tạo thành ProductDTO
 			ProductDTO productDTO = modelMapper.map(createdProduct, ProductDTO.class);
 
 			// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
-			return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
-		} catch (MinioException | InvalidKeyException | NoSuchAlgorithmException | IOException e) {
-			// Xử lý ngoại lệ
-			model.addAttribute("error", e.getMessage());
-
-		}
-		return null;
-
+			return new ResponseEntity<>(productDTO, HttpStatus.CREATED);				
 	}
 
 	@PutMapping("{productid}")
