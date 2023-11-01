@@ -147,6 +147,78 @@ $(document).ready(function() {
 	$('input[type="radio"]').change(handlePriceRangeChange);
 });
 
+// rating và chức năng cơ bản tour
+$(document).ready(function() {
+	$('.slider').slick({
+		slidesToShow: 4, // Số lượng phần tử hiển thị
+		slidesToScroll: 1, // Số lượng phần tử được trượt khi bạn nhấn nút trượt
+		arrows: true, // Hiển thị nút trượt
+		speed: 300
+		// Tốc độ trượt (ms)
+	});
+
+});
+
+
+
+$(document).ready(function() {
+	$('form').submit(function(event) {
+		// Ngăn chặn chuyển hướng trình duyệt khi gửi form
+		event.preventDefault();
+		// Lấy dữ liệu từ form
+		var formData = $(this).serialize();
+
+		// Gửi yêu cầu Ajax để lưu đánh giá
+		$.ajax({
+			type: 'POST',
+			url: $(this).attr('action'),
+			data: formData,
+			success: function(response) {
+				// Phân tích chuỗi JSON và trích xuất thông báo thành công
+				var responseJSON = JSON.parse(response);
+				var successMessage = responseJSON.successMessage;
+				var errorMessage = responseJSON.errorMessage;
+				$('.alert').hide();
+				if (errorMessage) {
+					// Hiển thị thông báo lỗi bên dưới form
+					var errorMessageText = errorMessage.split('.')[0];
+					$('.alert-danger').text(errorMessageText).show();
+				} else {
+					// Hiển thị thông báo thành công trong modal
+					$('#modal-message').text(successMessage);
+					$('#exampleModal').modal('hide');
+					$('#modal').modal('show');
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				var responseJSON = JSON.parse(jqXHR.responseText);
+				var errorMessage = responseJSON.errorMessage;
+				if (errorMessage) {
+					var errorMessageText = errorMessage.split('.')[0]; // Lấy phần đầu của errorMessage trước dấu chấm
+					$('.alert-danger').text(errorMessageText).show();
+				} else {
+					$('.alert-danger').text(textStatus + ' : ' + errorThrown).show();
+				}
+			}
+		});
+	});
+	function resetRatingForm() {
+		$('#rating-form input[type="radio"]').prop('checked', false);
+		$('#rating-form textarea').val('');
+	}
+	$('#ratingModal').on('hidden.bs.modal', function() {
+		resetRatingForm();
+	});
+	$('#exampleModal').on('hidden.bs.modal', function(e) {
+		$(this).remove();
+	});
+	$('#modal').on('hidden.bs.modal', function(event) {
+		// Chuyển hướng sang trang mới
+		location.reload();
+	});
+});
+
+
 // Mini Cart
 
 // JavaScript to handle the mini cart toggle using jQuery
@@ -165,35 +237,35 @@ $(document).ready(function() {
 // AddToCart
 
 function addToCart(productId) {
-  $.ajax({
-    type: "POST",
-    url: "/cart/add/" + productId,
-    data: {
-      productId: productId,
-    },
-    success: function (response) {
-      console.log("Product added to cart:", response);
-    },
-    error: function (error) {
-      window.location.href="http://localhost:8080/login";
-    },
-  });
+	$.ajax({
+		type: "POST",
+		url: "/cart/add/" + productId,
+		data: {
+			productId: productId,
+		},
+		success: function(response) {
+			console.log("Product added to cart:", response);
+		},
+		error: function(error) {
+			window.location.href = "http://localhost:8080/login";
+		},
+	});
 }
 //xóa 1 sản phẩm trong giỏ hàng
 function removeCart(productId) {
-  $.ajax({
-    type: "POST",
-    url: "/cart/remove/" + productId,
-    data: {
-      productId: productId,
-    },
-    success: function (response) {
-      window.location.reload();
-    },
-    error: function (error) {
-      console.error("Error remove product to cart:", error);
-    },
-  });
+	$.ajax({
+		type: "POST",
+		url: "/cart/remove/" + productId,
+		data: {
+			productId: productId,
+		},
+		success: function(response) {
+			window.location.reload();
+		},
+		error: function(error) {
+			console.error("Error remove product to cart:", error);
+		},
+	});
 }
 //xóa tất cả giỏ hàng
 function removeAllItemsFromCart() {
