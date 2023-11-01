@@ -17,8 +17,6 @@ public interface TourService {
 
 	Tour findById(Integer tourid);
 
-	List<Tour> findTourByKeyword(String searchKeyword);
-
 	//Thêm tour
 	Tour create(Tour tour);
 

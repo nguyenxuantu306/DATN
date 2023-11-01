@@ -1,5 +1,6 @@
 package com.greenfarm.restcontroller;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -137,7 +138,7 @@ public class OrderRestController {
 
 	@GetMapping("/filter")
 	public ResponseEntity<List<OrderDTO>> filterOrdersByNgayTao(
-			@RequestParam("ngayTao") @DateTimeFormat(pattern = "dd-MM-yyyy") Date ngayTao) {
+			@RequestParam("ngayTao") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDateTime ngayTao) {
 		List<Order> filteredOrders = orderService.filterOrdersByNgayTao(ngayTao);
 
 		// Sử dụng ModelMapper để ánh xạ từ Order sang OrderDTO

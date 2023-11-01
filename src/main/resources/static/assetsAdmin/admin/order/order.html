@@ -10,7 +10,6 @@
 									class="mdi mdi-magnify"></i></span>
 						</div>
 						<input ng-click="filterOrdersByNgayTao()" type="text" class="form-control" placeholder="Ngày tạo" ng-model="ngayTaoFilter">						
-						<!-- <button ng-click="filterOrdersByNgayTao()">Lọc</button> -->
 					</div>
 					<div class="col-md-4 input-group icons">
 						<select class="select" style="width: 200px;" ng-model="selectedStatus">
@@ -45,10 +44,10 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center" ng-repeat="item in pager.items"  ng-if="((!ngayTaoFilter) || (item.orderdate | date:'dd-MM-yyyy') === ngayTaoFilter) && (selectedStatus == item.statusOrder.statusorderid || selectedStatus == '0')">
+							<tr class="text-center" ng-repeat="item in pager.items"  ng-if="((!ngayTaoFilter) || (item.orderdate) === ngayTaoFilter) && (selectedStatus == item.statusOrder.statusorderid || selectedStatus == '0')">
 								<th  scope="row">{{$index + 1}}</th>
 								<td>{{item.user.firstname}}</td>
-								<td>{{item.orderdate | date:'dd-MM-yyyy'}}</td>
+								<td>{{item.orderdate}}</td>
 								<td>{{formatPrice(calculateTotal(item))}}</td>
 								<td style="color: white;width: 300px;"  ng-class="{
 							        'bg-primary': item.statusOrder.statusorderid == 1,

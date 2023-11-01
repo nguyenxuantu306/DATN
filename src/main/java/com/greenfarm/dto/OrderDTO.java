@@ -1,6 +1,7 @@
 package com.greenfarm.dto;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class OrderDTO {
 
 	private Integer Orderid;
-	private Date orderdate;
+	private LocalDateTime orderdate;
 	private String address;
 
 	List<OrderDetail> orderDetail;

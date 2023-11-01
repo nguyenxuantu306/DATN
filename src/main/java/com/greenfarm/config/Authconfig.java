@@ -34,7 +34,7 @@ public class Authconfig {
 		http.csrf().disable().cors().disable();
 
 		http.authorizeRequests(authorize -> authorize.requestMatchers("/profile").authenticated()
-				.requestMatchers("/assetsAdmin/**", "/admin").hasRole("Administrator").anyRequest().permitAll());
+				.requestMatchers("/assetsAdmin/", "/admin").hasRole("Administrator").anyRequest().permitAll());
 
 		http.formLogin(form -> form.loginPage("/login")
 		/* .loginProcessingUrl("/") */

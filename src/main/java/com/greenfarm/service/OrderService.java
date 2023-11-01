@@ -1,5 +1,6 @@
 package com.greenfarm.service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public interface OrderService {
 	
 	
 	// Hàm lọc theo ngày tạo
-	List<Order> filterOrdersByNgayTao(Date ngayTao);
+	List<Order> filterOrdersByNgayTao(LocalDateTime ngayTao);
 
 	// Thống kê số lượng trạng thái
 	List<ReportRevenue> slstatus();

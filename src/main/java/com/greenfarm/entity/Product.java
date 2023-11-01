@@ -41,7 +41,7 @@ public class Product implements Serializable {
 	private Integer quantityavailable;
 
 	@ManyToOne
-	@JoinColumn(name = "CategoryID")
+	@JoinColumn(name = "categoryid")
 	Category category;
 
 	@JsonIgnore
