@@ -200,6 +200,20 @@
 											aria-label="With textarea"></textarea>
 									</div>
 								</div>
+								<div class="card">
+									<h3 class="text-center">Hình ảnh Tour</h3>
+									<div class="input-group" ng-repeat="p in form.tourImage track by $index">
+										<!-- <img ng-src="{{p.imageurl }}" alt="Hình ảnh Tour" width="50px" height="auto" />-->
+										<div class="input-group mb-3">
+											
+											<span class="input-group-text">Link hình ảnh</span>
+											<input type="text" ng-model="p.imageurl" class="form-control">
+											<button class="btn btn-danger" ng-click="removeImage($index)">Loại
+												bỏ</button>
+										</div>
+									</div>
+									<button class="btn btn-primary" ng-click="addImage()">Thêm hình ảnh khác</button>
+								</div>
 							</div>
 							<div class="panel-footer text-right">
 
@@ -297,8 +311,6 @@
 										</div>
 									</form>
 								</div>
-
-
 								<div class="card">
 									<h3 class="text-center">Điều kiện Tour</h3>
 									<div class="input-group">
@@ -333,7 +345,8 @@
 										<div class="input-group mb-3">
 											<span class="input-group-text">Link hình ảnh</span>
 											<input type="text" ng-model="p.imageurl" class="form-control">
-											<button class="btn btn-danger" ng-click="removeImage($index)">Loại bỏ</button>
+											<button class="btn btn-danger" ng-click="removeImage($index)">Loại
+												bỏ</button>
 										</div>
 									</div>
 									<button class="btn btn-primary" ng-click="addImage()">Thêm hình ảnh khác</button>

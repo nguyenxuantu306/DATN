@@ -18,7 +18,7 @@ app.controller("tour-ctrl", function($scope, $http) {
 	$scope.removeImage = function(index) {
 		$scope.form.tourImage.splice(index, 1);
 	};
-	
+
 	$scope.initialize = function() {
 		// Load tours
 		$http.get("/rest/tours").then(resp => {
@@ -41,6 +41,8 @@ app.controller("tour-ctrl", function($scope, $http) {
 	// Hiện thị lên form
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
+		$scope.form.tourImage = angular.copy(item.tourImage);
+		console.log($scope.form);
 	}
 
 	$scope.reset = function() {
@@ -87,9 +89,7 @@ app.controller("tour-ctrl", function($scope, $http) {
 	// Cập nhật tour
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		if (item.tourid == null) {
-			return $scope.create();
-		} else if (item.tourid != null) {
+		if (item.tourid != null) {
 			$http.put(`/rest/tours/${item.tourid}`, item).then(resp => {
 				var index = $scope.items.findIndex(p => p.tourid == item.tourid);
 				$scope.items[index] = item;
