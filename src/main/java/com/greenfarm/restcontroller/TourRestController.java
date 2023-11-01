@@ -1,7 +1,9 @@
 package com.greenfarm.restcontroller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -206,35 +208,35 @@ public class TourRestController {
 				tour.setPricings(pricings);
 			}
 
-//			List<TourImage> tourImages = tourImageService.findByTourTourid(tourid);
-//			// Tạo một Map để lưu trữ tourImage theo tourImageId
-//			Map<Integer, TourImage> tourImageMap = new HashMap<>();
-//			for (TourImage tourImage : tourImages) {
-//				tourImageMap.put(tourImage.getTourimageid(), tourImage);
-//			}
-//			// Update tour images
-//			for (TourImageDTO tourImageDTO : tourDTO.getTourImage()) {
-//			    Integer tourImageId = tourImageDTO.getTourimageid();
-//			    if (tourImageId != null) {
-//			        TourImage tourImage = tourImageMap.get(tourImageId);
-//			        if (tourImage != null) {
-//			            // Cập nhật thông tin hình ảnh
-//			            tourImage.setTour(tour);
-//			            tourImage.setImageurl(tourImageDTO.getImageurl());
-//			            tourImageService.save(tourImage);
-//			        } else {
-//			            // Nếu không tìm thấy, tạo mới TourImage
-//			            tourImage = new TourImage();
-//			            tourImage.setTour(tour);
-//			            tourImage.setImageurl(tourImageDTO.getImageurl());
-//			            tourImageService.save(tourImage);
-////			            tourImageService.update(tourImage);
-//			            tourImageMap.put(tourImage.getTourimageid(), tourImage);
-//			        }
-//			    }
-//			}
-//
-//			tour.setTourImage(new ArrayList<>(tourImageMap.values()));
+			List<TourImage> tourImages = tourImageService.findByTourTourid(tourid);
+			// Tạo một Map để lưu trữ tourImage theo tourImageId
+			Map<Integer, TourImage> tourImageMap = new HashMap<>();
+			for (TourImage tourImage : tourImages) {
+				tourImageMap.put(tourImage.getTourimageid(), tourImage);
+			}
+			// Update tour images
+			for (TourImageDTO tourImageDTO : tourDTO.getTourImage()) {
+			    Integer tourImageId = tourImageDTO.getTourimageid();
+			    if (tourImageId != null) {
+			        TourImage tourImage = tourImageMap.get(tourImageId);
+			        if (tourImage != null) {
+			            // Cập nhật thông tin hình ảnh
+			            tourImage.setTour(tour);
+			            tourImage.setImageurl(tourImageDTO.getImageurl());
+			            tourImageService.save(tourImage);
+			        } else {
+			            // Nếu không tìm thấy, tạo mới TourImage
+			            tourImage = new TourImage();
+			            tourImage.setTour(tour);
+			            tourImage.setImageurl(tourImageDTO.getImageurl());
+			            tourImageService.save(tourImage);
+//			            tourImageService.update(tourImage);
+			            tourImageMap.put(tourImage.getTourimageid(), tourImage);
+			        }
+			    }
+			}
+
+			tour.setTourImage(new ArrayList<>(tourImageMap.values()));
 
 			// Update tour
 			Tour updatedTour = tourService.update(tour);

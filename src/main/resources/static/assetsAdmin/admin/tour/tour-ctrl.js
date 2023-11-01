@@ -1,9 +1,24 @@
 app.controller("tour-ctrl", function($scope, $http) {
 	$scope.items = [];
-	$scope.form = {};
+	$scope.form = {
+		tourImage: [{ imageurl: "" }]
+	};
 	$scope.field = [];
 	$scope.error = ['err'];
+	$scope.item2 = [];
 
+	console.log($scope.form.tourImage);
+	//Thêm cái image khác
+	$scope.addImage = function() {
+		$scope.form.tourImage.push({
+			imageurl: ''
+		});
+	};
+	//Loại bỏ các image
+	$scope.removeImage = function(index) {
+		$scope.form.tourImage.splice(index, 1);
+	};
+	
 	$scope.initialize = function() {
 		// Load tours
 		$http.get("/rest/tours").then(resp => {
@@ -14,15 +29,18 @@ app.controller("tour-ctrl", function($scope, $http) {
 			})
 		});
 
+		$http.get("/rest/tours/images").then(resp => {
+			$scope.item2 = resp.data;
+		});
+
+
 	}
 	// Khởi đầu
 	$scope.initialize();
 
-
-
 	// Hiện thị lên form
 	$scope.edit = function(item) {
-		$scope.form = angular.copy(item);	
+		$scope.form = angular.copy(item);
 	}
 
 	$scope.reset = function() {
@@ -32,13 +50,13 @@ app.controller("tour-ctrl", function($scope, $http) {
 		};
 	};
 
-	// Hiện thị lên for
-	$scope.editthemsp = function(){	
-		$scope.form = angular.copy();
-		$scope.form = {			
-			image:'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',			
-		};			
-	}
+	/*		// Hiện thị lên for
+			$scope.editthemsp = function() {
+				$scope.form = angular.copy();
+				$scope.form = {
+					image: 'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',
+				};
+			}*/
 
 	// Thêm tour phẩm mới
 	$scope.create = function() {
