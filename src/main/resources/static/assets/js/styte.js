@@ -235,7 +235,7 @@ function addToCart(productId) {
       console.log("Product added to cart:", response);
     },
     error: function (error) {
-      console.error("Error adding product to cart:", error);
+      window.location.href="http://localhost:8080/login";
     },
   });
 }
@@ -251,7 +251,7 @@ function removeCart(productId) {
       window.location.reload();
     },
     error: function (error) {
-      console.error("Error adding product to cart:", error);
+      console.error("Error remove product to cart:", error);
     },
   });
 }
