@@ -27,29 +27,26 @@ public class TourController {
 	
 	
 	@RequestMapping("/tour")
-    public String Tour(@RequestParam(name = "price_spread", required = false) 
-    String priceSpread, Model model) {
-        if (priceSpread != null && !priceSpread.isEmpty()) {
-            String[] priceRange = priceSpread.split("-");
-            if (priceRange.length == 2) {
-                Float minPrice = Float.parseFloat(priceRange[0]);
-                Float maxPrice = Float.parseFloat(priceRange[1]);
-
-                // Sử dụng service để lọc dữ liệu
-                List<TourDTO> tourDTOs = tourservice.findToursByAdultPrice(minPrice, maxPrice);
-
-                model.addAttribute("tourDTOs", tourDTOs);
-
-                return "tour/tour"; // Thay thế bằng tên template của bạn
-            }
-        } else {
-            // Sử dụng service để lấy danh sách tour bình thường
-            List<Tour> list = tourservice.findAll();
-            model.addAttribute("items", list);
-  //         return "tour/tour";
-        }
-		return "tour/tour";
-    }
+	public String Tour(@RequestParam(name = "price_spread", required = false) String priceSpread,
+	                   @RequestParam(name = "search", required = false) String searchTerm,
+	                   Model model) {
+	    if (priceSpread != null && !priceSpread.isEmpty()) {
+	        String[] priceRange = priceSpread.split("-");
+	        if (priceRange.length == 2) {
+	            Float minPrice = Float.parseFloat(priceRange[0]);
+	            Float maxPrice = Float.parseFloat(priceRange[1]);
+	            List<TourDTO> tourDTOs = tourservice.findToursByAdultPrice(minPrice, maxPrice);
+	            model.addAttribute("tourDTOs", tourDTOs);
+	        }
+	    } else if (searchTerm != null && !searchTerm.isEmpty()) {
+	        List<TourDTO> tourDTOs = tourservice.findToursByTourname(searchTerm);
+	        model.addAttribute("tourDTOs", tourDTOs);
+	    } else {
+	        List<Tour> list = tourservice.findAll();
+	        model.addAttribute("items", list);
+	    }
+	    return "tour/tour";
+	}
 	
 	@GetMapping("/tour/detail/{tourid}")
 	public String detail(Model model, @PathVariable("tourid") Integer tourid) {

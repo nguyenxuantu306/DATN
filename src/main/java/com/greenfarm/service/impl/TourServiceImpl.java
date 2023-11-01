@@ -2,6 +2,7 @@ package com.greenfarm.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,14 @@ public class TourServiceImpl implements TourService {
 		}
 
 		return tourDTOs;
+	}
+
+	@Override
+	public List<TourDTO> findToursByTourname(String searchTerm) {
+		List<Tour> tours = dao.findByTournameContainingIgnoreCase(searchTerm);
+        return tours.stream()
+                .map(tour -> modelMapper.map(tour, TourDTO.class))
+                .collect(Collectors.toList());
 	}
 
 }

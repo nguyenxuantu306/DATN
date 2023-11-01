@@ -21,19 +21,12 @@
 
 							<div class="search_panel">
 								<div class="row">
-									<div class="col-xs-24 col-sm-8 col-md-8">
-										<input type="text" class="form-control" name="q" value=""
-											placeholder="Từ khoá">
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" placeholder="Tìm kiếm" name="search" id="searchInput">
+										<div class="input-group-append">
+											<button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
+										</div>
 									</div>
-									<!-- <div class="col-xs-24 col-sm-8 col-md-2">
-										<select class="form-control" name="time">
-											<option value="0">--- Thời gian ---</option>
-											<option value="1">Liên Hệ</option>
-											<option value="2">Hằng Ngày</option>
-											<option value="3">Ngày 11, 18</option>
-											<option value="4">Ngày Chủ Nhật</option>
-										</select>
-									</div> -->
 									<div class="col-xs-24 col-sm-8 col-md-3">
 										<select name="price_spread" class="form-control" id="priceFilter">
 											<option value="">--- Khoảng giá ---</option>
@@ -124,6 +117,24 @@
 
 				// Chuyển hướng đến trang "tour" với giá trị đã chọn trong URL
 				window.location.href = "/tour?price_spread=" + selectedValue;
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function () {
+			// Lắng nghe sự kiện khi người dùng nhập từ khóa vào input search
+			$('#searchInput').on('input', function () {
+				var searchTerm = $(this).val(); // Lấy từ khóa tìm kiếm đã nhập
+
+				// Gửi request tới server để lấy kết quả tìm kiếm
+				$.ajax({
+					url: '/tour', // URL của action xử lý tìm kiếm trên server
+					method: 'get',
+					data: {search: searchTerm},
+					success: function (data) {
+						$('#tourResults').html(data);
+					}
+				});
 			});
 		});
 	</script>
