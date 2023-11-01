@@ -36,16 +36,17 @@
 									</div> -->
 									<div class="col-xs-24 col-sm-8 col-md-3">
 										<select name="price_spread" class="form-control" id="priceFilter">
-											<option value="0 - 11000000">--- Khoảng giá ---</option>
+											<option value="">--- Khoảng giá ---</option>
 											<option value="100000-200000">100 - 200 VNĐ</option>
 											<option value="200000-300000">200 - 300 VNĐ</option>
 											<option value="300000-400000">300 - 400 VNĐ</option>
 											<option value="400000-500000">400 - 500 VNĐ</option>
 											<option value="500000-11000000">500 - Max VNĐ</option>
-										</select>										
+										</select>
 									</div>
-									<div class="col-xs-24 col-sm-8 col-md-1 " >
-										<button style="width:70px" type="submit" class="btn btn-success"><i class="fa fa-list"></i>Lọc</button>
+									<div class="col-xs-24 col-sm-8 col-md-1 ">
+										<button style="width:70px" type="submit" class="btn btn-success"><i
+												class="fa fa-list"></i>Lọc</button>
 									</div>
 								</div>
 							</div>
@@ -115,6 +116,17 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		$(document).ready(function () {
+			$("#priceFilter").on("change", function () {
+				// Lấy giá trị đã chọn trong dropdown
+				var selectedValue = $(this).val();
+
+				// Chuyển hướng đến trang "tour" với giá trị đã chọn trong URL
+				window.location.href = "/tour?price_spread=" + selectedValue;
+			});
+		});
+	</script>
 </body>
 
 </html>
