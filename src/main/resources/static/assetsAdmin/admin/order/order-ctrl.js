@@ -136,11 +136,13 @@ app.controller("order-ctrl", function($scope, $http) {
 			$scope.items = $scope.originalItems;
 		} else {
 			// Nếu trường nhập kiểu text có dữ liệu, lọc đơn hàng dựa trên ngày tạo
+			var formattedInputDate = new Date($scope.ngayTaoFilter + "T00:00:00"); // Chuyển đổi chuỗi ngày thành đối tượng Date
 			$scope.items = $scope.originalItems.filter(function(item) {
-				var formattedInputDate = $scope.ngayTaoFilter.toLowerCase();
-				var formattedOrderDate = new Date(item.orderdate).toDateString().toLowerCase();
+				var orderDate = new Date(item.orderdate.replace('T', ' ') + ":00"); // Chuyển đổi chuỗi ngày thành đối tượng Date
+				var inputDate = formattedInputDate;
 
-				return formattedOrderDate.includes(formattedInputDate);
+				// So sánh ngày tạo và ngày tìm kiếm
+				return orderDate.toDateString() === inputDate.toDateString();
 			});
 		}
 	};

@@ -162,35 +162,6 @@ app.controller("product-ctrl", function($scope, $http) {
 		}		
 	}
 	
-	$(function() {
-		$("#example1").DataTable({
-			"ajax": {
-				"url": "/rest/products",
-				"dataSrc": ""
-			},
-			"columns": [
-				{ "data": "id" },
-				{ "data": "name" },
-				{ "data": "price" },
-				{ "data": "publication_date" },
-				{ "data": "image" },
-				{ "data": "author" },
-				{ "data": "genres" },
-				{ "data": "available" },
-				{
-					/*"data": null,
-					"render": function(data, type, row) {
-						return '<button class="btn btn-success" ng-click="edit(' + row.id + ')">Xem chi tiết</button>';
-					}*/
-				}, 
-
-				// Add more column configurations as needed
-			],
-			"responsive": true, "lengthChange": false, "autoWidth": false,
-		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-	});
-
-
 // Trong AngularJS controller hoặc service
 	$scope.exportExcel = function() {
 		$http.get('/excel-product', { responseType: 'arraybuffer' })
@@ -223,7 +194,7 @@ app.controller("product-ctrl", function($scope, $http) {
 			});
 	};
 
-// Sử dụng AngularJS để lắng nghe sự kiện khi người dùng chọn tệp
+/*// Sử dụng AngularJS để lắng nghe sự kiện khi người dùng chọn tệp
 $scope.selectImage = function() {
     var fileInput = document.getElementById('imageUpload');
     fileInput.click();
@@ -263,13 +234,6 @@ $scope.updateImageFromUrl = function() {
         imagePreview.src = '';
         imagePreview.style.display = 'none';
     }
-};
-
-
-
-
-	
+};*/
 	
 });
-
-	

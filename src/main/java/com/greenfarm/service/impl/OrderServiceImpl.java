@@ -1,5 +1,6 @@
 package com.greenfarm.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -85,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> filterOrdersByNgayTao(Date ngayTao) {
+	public List<Order> filterOrdersByNgayTao(LocalDateTime ngayTao) {
 		// Thực hiện truy vấn để lọc các đơn hàng theo ngày tạo
 		return dao.findByNgayTao(ngayTao);
 	}

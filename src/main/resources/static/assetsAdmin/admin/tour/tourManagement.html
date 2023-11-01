@@ -59,7 +59,7 @@
 									<td>{{item.tourname}}</td>
 									<td>{{item.startdate | date:'dd-MM-yyyy'}}</td>
 									<td>{{item.enddate | date:'dd-MM-yyyy'}}</td>
-									<td>{{item.pricings.childprice}}</td>
+									<td>{{item.pricings.childprice | number : 3}}</td>
 									<td>{{item.availableslots}}</td>
 									<td><span class="text-success"
 										ng-if="item.tourCondition.conditions">Đã có</span> <span

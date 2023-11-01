@@ -1,5 +1,6 @@
 package com.greenfarm.dao;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 	List<Order> findByStatusOrder_Name(String statusName);
 
 	@Query("SELECT o FROM Order o WHERE o.orderdate = ?1")
-	List<Order> findByNgayTao(Date ngayTao);
+	List<Order> findByNgayTao(LocalDateTime ngayTao);
 	
 	@Query("SELECT o FROM Order o WHERE o.user.email =?1")
 	List<Order> findByEfindByIdAccountmail(String email);
