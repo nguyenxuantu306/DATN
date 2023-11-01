@@ -257,15 +257,5 @@ public class TourRestController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
-	// Search Name
-	@GetMapping("/searchtour")
-	public ResponseEntity<List<TourDTO>> searchTours(@RequestParam("keyword") Optional<String> keyword) {
-		String searchKeyword = keyword.orElse("");
-		List<Tour> tourList = tourService.findTourByKeyword(searchKeyword);
-
-		List<TourDTO> tourDTOList = tourList.stream().map(tour -> modelMapper.map(tour, TourDTO.class))
-				.collect(Collectors.toList());
-
-		return ResponseEntity.ok(tourDTOList);
-	}
+	
 }
