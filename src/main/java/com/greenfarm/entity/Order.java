@@ -19,6 +19,7 @@ import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @Entity
@@ -33,6 +34,11 @@ public class Order implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "orderdate")
 	private LocalDateTime orderdate;
+
+	public String getOrderDateFormatted() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		return orderdate.format(formatter);
+	}
 
 	private String Address;
 

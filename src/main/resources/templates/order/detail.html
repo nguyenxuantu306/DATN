@@ -49,7 +49,7 @@
 						<p class="title mb-2 ms-3">
 							Đặt lúc:  
 							<!-- <i th:text="${#dates.format(order.orderdate, 'dd/MM/yyyy HH:mm:ss')}"></i> -->
-							<i th:text="${order.orderdate}"></i>
+							<i th:text="${order.getOrderDateFormatted()}"></i>
 						</p>
 						<div class="card mb-3 border border-0"
 							style="height: 200px; background-color: #fff; box-shadow: 0 0 16px rgba(0, 0, 0, .11);">
