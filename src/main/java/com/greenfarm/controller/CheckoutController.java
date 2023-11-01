@@ -144,9 +144,9 @@ public class CheckoutController {
                 }
 
                 orderDetailDAO.saveAll(orderDetailList);
-
+                
             }
-
+            
             return "redirect:/success";
         } else {
             System.out.println("Xin chào! Bạn chưa đăng nhập.");

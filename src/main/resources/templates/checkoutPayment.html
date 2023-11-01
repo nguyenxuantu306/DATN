@@ -200,7 +200,7 @@
 
             <div id="checkout-button">
               <!-- Đặt nội dung nút "Continue to checkout" ở đây -->
-              <button class="btn btn-primary btn-lg btn-block" type="submit">
+              <button class="btn btn-primary btn-lg btn-block" type="submit" th:attr="onclick='removeAllItemsFromCart()'">
                 Continue to Payment
               </button>
             </div>

@@ -337,18 +337,5 @@ quantityInputs.forEach(function(quantityInput) {
         }
     }
     
-//tạo 1 order
-function checkoutPayment() {
-  $.ajax({
-      type: "POST",
-      url: "/checkout/payment",
-      success: function (response) {
-        window.location.href = "http://localhost:8080/success";
-      },
-      error: function (error) {
-          console.error("Error:", error);
-      },
-  });
-}
 
 
