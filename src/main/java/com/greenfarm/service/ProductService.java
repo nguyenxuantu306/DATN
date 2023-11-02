@@ -2,7 +2,6 @@ package com.greenfarm.service;
 
 import java.util.List;
 
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,7 +13,7 @@ public interface ProductService {
 	// Danh sách sản phẩm
 	List<Product> findAll();
 
-	// Phân trang 
+	// Phân trang
 	Page<Product> findAll(Pageable pageable);
 
 	// tìm sản phẩm theo id
@@ -44,13 +43,10 @@ public interface ProductService {
 	// Sắp xếp theo giá tăng & giảm
 	List<Product> findProductByProductPiceSort(Integer sortprice);
 
-	// Thống kê sản phẩm 
+	// Thống kê sản phẩm
 	List<Report> getTk_sp();
-	
+
 	// Thống kê lại sp
 	List<Report> getTk_loai();
 
-
-
-	
 }

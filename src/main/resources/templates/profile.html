@@ -25,7 +25,7 @@
 															class="d-flex justify-content-center align-items-center rounded"
 															style="height: 140px; background-color: rgb(233, 236, 239);">
 															<img style="max-height: 140px; max-width: 140px"
-																alt="image" th:src="${user.image}">
+																alt="image" th:src="@{|/assetsAdmin/images/${user.image}|}">
 														</div>
 													</div>
 												</div>
@@ -39,10 +39,9 @@
 														<div class="mt-2">
 															<label for="fileInput" class="btn btn-primary"> <i
 																class="fa fa-fw fa-camera"></i> <span>Change
-																	Photo</span> 
-																	<input type="file" id="fileInput" th:value="${user.lastname}" 
-																				th:field="${user.lastname}" name="image"
-																style="display: none" />
+																	Photo</span> <input type="file" id="fileInput"
+																th:value="${user.lastname}" th:field="${user.lastname}"
+																name="image" style="display: none" />
 															</label>
 														</div>
 													</div>
@@ -62,21 +61,24 @@
 											<div class="tab-content pt-3">
 												<div class="tab-pane active">
 													<form class="form" action="/profile"
-														th:action="@{/profile}" th:object="${userchange}" method="post" novalidate>
+														th:action="@{/profile}" th:object="${userchange}"
+														method="post" novalidate>
 														<div class="row">
 															<div class="col">
 																<div class="row">
 																	<div class="col">
 																		<div class="form-group">
-																			<label>First Name</label> <input class="form-control" th:field="${user.firstname}"
-																				type="text" name="name" th:value="${user.firstname}"
+																			<label>First Name</label> <input class="form-control"
+																				th:field="${user.firstname}" type="text" name="name"
+																				th:value="${user.firstname}"
 																				th:placeholder="${user.firstname}" value="" />
 																		</div>
 																	</div>
 																	<div class="col">
 																		<div class="form-group">
 																			<label>Last Name</label> <input class="form-control"
-																				type="text" th:placeholder="${user.lastname}" th:value="${user.lastname}" 
+																				type="text" th:placeholder="${user.lastname}"
+																				th:value="${user.lastname}"
 																				th:field="${user.lastname}" />
 																		</div>
 																	</div>
@@ -91,7 +93,8 @@
 																	<div class="col">
 																		<div class="form-group">
 																			<label>Phone Number</label> <input
-																				class="form-control" type="number" th:value="${user.phonenumber}" 
+																				class="form-control" type="number"
+																				th:value="${user.phonenumber}"
 																				th:field="${user.phonenumber}"
 																				th:placeholder="${user.phonenumber}" value="" />
 																		</div>
@@ -110,8 +113,9 @@
 																	<div class="col">
 																		<div class="form-group">
 																			<label>Address</label> <input class="form-control"
-																				type="text" th:placeholder="${user.address}" th:value="${user.address}" 
-																				th:field="${user.address}"/>
+																				type="text" th:placeholder="${user.address}"
+																				th:value="${user.address}"
+																				th:field="${user.address}" />
 																		</div>
 																	</div>
 																</div>
@@ -168,6 +172,14 @@
 													href="/changepass">Changepassword</a> </span>
 
 											</button>
+										</div>
+										<br>
+										<div class="px-xl-3">
+											<a href="/order/list">
+												<button class="btn btn-block btn-secondary">
+													<i class="fa fa-sign-out"></i>Đơn hàng đã mua
+												</button>
+											</a>
 										</div>
 									</div>
 								</div>

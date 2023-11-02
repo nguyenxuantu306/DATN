@@ -1,98 +1,158 @@
-<div class="row page-titles mx-0">
-	<div class="col p-md-0">
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-			<li class="breadcrumb-item active"><a href="javascript:void(0)">Order</a></li>
-		</ol>
-	</div>
-</div>
-<!-- row -->
 <div class="container-fluid mt-3">
 	<div class="col-lg-12">
 		<div class="card">
 			<div class="card-body">
-				<h4 class="card-title">Order List</h4>
+				<h2 class="card">Danh sách đơn hàng</h2>
+				<div class="row py-3">
+					<div class="col-md-4 input-group icons">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
+									class="mdi mdi-magnify"></i></span>
+						</div>
+						<input ng-click="filterOrdersByNgayTao()" type="text" class="form-control" placeholder="Ngày tạo" ng-model="ngayTaoFilter">						
+					</div>
+					<div class="col-md-4 input-group icons">
+						<select class="select" style="width: 200px;" ng-model="selectedStatus">
+							<option value="1">Chờ xác nhận</option>
+							<option value="2">Đang giao</option>
+							<option value="3">Giao hàng thành công</option>
+							<option value="4">Đã hủy</option>
+						</select>
+					</div>
+					<div class="col-md-4 text-right">
+						<button type="button" class="btn btn-success">
+							<i class="fa fa-file-excel-o"></i> Excel
+						</button>
+						<button type="button" class="btn btn-success">
+							<i class="fa fa-file-pdf-o"></i> PDF
+						</button>
+					</div>
+				</div>
+				<div id="orderList">
+
+				</div>
 				<div class="table-responsive">
 					<table class="table header-border zero-configuration">
 						<thead>
 							<tr class="text-center">
-								<th scope="col">No.</th>
-								<th scope="col">Name</th>
-								<th scope="col">Date</th>
-								<th scope="col">SubTotal</th>
-								<th scope="col">Status</th>
-								<th scope="col">Action</th>
+								<th scope="col">STT</th>
+								<th scope="col">Người mua</th>
+								<th scope="col">Ngày tạo</th>
+								<th scope="col">Tổng</th>
+								<th scope="col">Trạng thái</th>
+								<th scope="col">Xem</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center" ng-repeat="item in pager.items">
-								<th scope="row">{{$index + 1}}</th>
+							<tr class="text-center" ng-repeat="item in pager.items"  ng-if="((!ngayTaoFilter) || (item.orderdate) === ngayTaoFilter) && (selectedStatus == item.statusOrder.statusorderid || selectedStatus == '0')">
+								<th  scope="row">{{$index + 1}}</th>
 								<td>{{item.user.firstname}}</td>
-								<td>{{item.orderdate | date:'dd-MM-yyyy'}}</td>
-								<td>{{calculateTotal(item)}}</td>
-								<td ng-class="{
-							        'bg-primary': item.statusOrder.statusorderid === 1,
-							        'bg-warning': item.statusOrder.statusorderid === 2,
-							        'bg-success': item.statusOrder.statusorderid === 3,
-							        'bg-danger': item.statusOrder.statusorderid === 4
+								<td>{{item.orderdate}}</td>
+								<td>{{formatPrice(calculateTotal(item))}}</td>
+								<td style="color: white;width: 300px;"  ng-class="{
+							        'bg-primary': item.statusOrder.statusorderid == 1,
+							        'bg-warning': item.statusOrder.statusorderid == 2,
+							        'bg-success': item.statusOrder.statusorderid == 3,
+							        'bg-danger': item.statusOrder.statusorderid == 4
    									 }">{{item.statusOrder.name}}</td>
-								<td class="text-center">
-									<a type="button" ng-click="edit(item)" data-toggle="modal"
-										data-target="#exampleModal">
-										<i class="bi bi-info-circle"></i>
-									</a>
-									<!-- Modal -->
-									<div class="modal fade" id="exampleModal" tabindex="-1"
+								<td><a type="button" ng-click="edit(item)" data-toggle="modal"
+										data-target="#exampleModal"> <i class="bi bi-info-circle"></i>
+									</a> <!-- Modal -->
+									<div style="text-align: left;" class="modal fade" id="exampleModal" tabindex="-1"
 										aria-labelledby="exampleModalLabel" aria-hidden="true">
-										<div class="modal-dialog modal-xl">
+										<div class="modal-dialog modal-xl custom-modal">
 											<div class="modal-content">
 												<div class="modal-header">
 													<h1 class="modal-title fs-5" id="exampleModalLabel">
-														Order Detail {{form.orderdate | date:'dd-MM-yyyy'}} -
-														#{{form.orderid}} -
-														{{form.user.firstname}}
-													</h1>
+														Chi tiết đơn hàng : {{form.orderdate | date:'dd-MM-yyyy'}}
+														- #{{form.orderid}} - {{form.user.firstname}}</h1>
 													<button type="button" class="btn-close" data-bs-dismiss="modal"
 														aria-label="Close"></button>
+
+
 												</div>
 												<div class="modal-body pb-5">
+													<div class="row">
+														<div class="col-sm-4">
+															<div class="form-group"
+																style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
+																<div style="font-size: 20px; font-weight: bold;">Địa
+																	chỉ người nhận</div> <label>-
+																	{{form.user.address}}</label> <label>-
+																	{{form.user.email}}</label> <br> <label>-
+																	{{form.user.phonenumber}}</label>
+															</div>
+														</div>
+
+														<div class="col-sm-4">
+															<div class="form-group"
+																style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
+																<div style="font-size: 20px; font-weight: bold;">Hình
+																	thức giao hàng</div> 
+																	<label>-Thời gian giao dữ tính:{{item.orderdate | date:'dd-MM-yyyy'}}</label> <label>-
+																	Được giao bới : Giao hàng nhanh</label> <br> <label>-
+																	Phí vận chuyển : 23,000đ</label>
+															</div>
+														</div>
+
+														<div class="col-sm-4">
+															<div class="form-group"
+																style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
+																<div style="font-size: 20px; font-weight: bold;">Hình
+																	thức thanh toán</div> <label>-
+																	Thanh toán bằng : Paypal</label>													<br> 
+																<label>- Trạng thái : Đã thanh toán thành công </label>
+															</div>
+														</div>
+
+													</div>
 													<div class="table-responsive">
 														<table class="table header-border">
 															<thead>
 																<tr>
-																	<th scope="col">#</th>
-																	<th scope="col">Name</th>
-																	<th scope="col">Category</th>
-																	<th scope="col">Quantity (KG)</th>
-																	<th scope="col">Total</th>
+																	<th scope="col">STT</th>
+																	<th scope="col">Hỉnh ảnh</th>
+																	<th scope="col">Tên sản phẩm</th>
+																	<th scope="col">Loại sản phẩm</th>
+																	<th scope="col">Số lượng (KG)</th>
+																	<th scope="col">Tạm tính</th>				
 																</tr>
 															</thead>
 															<tbody>
 																<tr ng-repeat="orderDetail in form.orderDetail">
 																	<th scope="row">{{$index + 1}}</th>
+																	<td><img ng-src="{{orderDetail.product.image}}"
+																			alt="Product Image" style="width: 80px;">
+																	</td>
 																	<td>{{orderDetail.product.productname}}</td>
 																	<td>{{orderDetail.product.category.categoryname}}
 																	</td>
 																	<td>{{orderDetail.quantityordered}}</td>
-																	<td>{{orderDetail.totalprice}}</td>
+																	<td>{{formatPrice(orderDetail.totalPrice)}}</td>														
 																</tr>
 															</tbody>
 
 														</table>
+														<div class="modal-order text-right">
+															<hr>
+															<h4 style="padding-left: 100px" class="total fs-4">
+																Tổng cộng: <strong>{{formatPrice(calculateTotal(form))}}</strong>
+															</h4>
+															<hr>
+															<label style="font-size: 20px; color: black;">Cập
+																nhật trạng thái : </label> <select
+																class="form-select w-auto select"
+																ng-model="form.statusOrder.statusorderid"
+																style="background-color: #f7f7f7; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: auto; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
+																<option ng-repeat="c in cates"
+																	ng-value="c.statusorderid">{{c.name}}</option>
+															</select>
+															<div style="background-color: #007BFF; color: #fff;"
+																ng-click="update()" class="btn">Save</div>
+														</div>
 													</div>
 												</div>
-												<div class="modal-order">
-													<select class="form-select w-auto select"
-														ng-model="form.statusOrder.statusorderid">
-														<option ng-repeat="c in cates" ng-value="c.statusorderid">
-															{{c.name}}
-														</option>
-													</select>
-													<h4 class="total fs-4">
-														SubTotal: <strong>{{calculateTotal(form)}}</strong>
-													</h4>
-													<div ng-click="update()" class="btn">Save</div>
-												</div>
+
 											</div>
 										</div>
 									</div>

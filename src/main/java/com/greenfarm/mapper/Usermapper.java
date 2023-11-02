@@ -1,15 +1,14 @@
-package com.greenfarm.mapper;
+// package com.greenfarm.mapper;
 
-import org.mapstruct.Mapper;
+// import org.mapstruct.Mapper;
 
-import com.greenfarm.dto.UserDTO;
-import com.greenfarm.entity.User;
+// import com.greenfarm.dto.UserDTO;
+// import com.greenfarm.entity.User;
 
+// @Mapper
+// public interface Usermapper {
 
-@Mapper
-public interface Usermapper {
-	
-	
-	UserDTO toDto(User user);
-	User fromDto(UserDTO userDto);
-}
+// 	UserDTO toDto(User user);
+
+// 	User fromDto(UserDTO userDto);
+// }

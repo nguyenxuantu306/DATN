@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import com.greenfarm.dto.TourDTO;
 import com.greenfarm.entity.Top10;
 import com.greenfarm.entity.Tour;
+import com.greenfarm.entity.TourCondition;
+import com.greenfarm.entity.TourOverview;
 
 public interface TourService {
 
@@ -15,7 +17,15 @@ public interface TourService {
 
 	Tour findById(Integer tourid);
 
-	List<Tour> findTourByKeyword(String searchKeyword);
-	
-	
+	//Thêm tour
+	Tour create(Tour tour);
+
+	Tour update(Tour tour);
+
+	void delete(Integer tourid);
+
+	List<TourDTO> findToursByAdultPrice(Float minPrice, Float maxPrice);
+
+	List<TourDTO> findToursByTourname(String searchTerm);
+
 }

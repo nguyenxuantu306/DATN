@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 public class TourConditionDTO {
 
 	private Integer tourconditionid;
-	private String Conditions;
+	private String conditions;
 	private Tour tour;
 }

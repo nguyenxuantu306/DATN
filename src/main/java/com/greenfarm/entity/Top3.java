@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Top3 implements Serializable{
-	
-	@Id	
+public class Top3 implements Serializable {
+
+	@Id
 	Tour tour;
 	long sum;
 }

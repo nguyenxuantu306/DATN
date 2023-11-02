@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html
+  xmlns="http://www.thymeleaf.org"
+  th:replace="~{/layout/layout::dynamic(~{::body})}"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <title>Checkout</title>
+  </head>
+  <body class="bg-light">
+    <div class="col-md-4 order-md-2 mb-4">
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Your cart</span>
+        <span class="badge badge-secondary badge-pill">3</span>
+      </h4>
+      <ul class="list-group mb-3">
+        <div th:with="totalPrice=0">
+          <div th:each="item : ${cartList}">
+            <div th:with="itemTotal=${item.product.price * item.quantity}">
+              <li
+                class="list-group-item d-flex justify-content-between lh-condensed"
+              >
+                <div>
+                  <h6 class="my-0" th:text="${item.product.productname}"></h6>
+                  <small class="text-muted" th:text="${item.quantity}"></small>
+                </div>
+                <span class="text-muted" th:text="${itemTotal}"></span>
+              </li>
+              <div th:with="totalPrice=${totalPrice + itemTotal}"></div>
+            </div>
+          </div>
+          <li class="list-group-item d-flex justify-content-between bg-light">
+            <div class="text-success">
+              <h6 class="my-0">Promo code</h6>
+              <small>EXAMPLECODE</small>
+            </div>
+            <span class="text-success">-$5</span>
+          </li>
+          <!-- Hiển thị tổng tiền trong thẻ "Total (USD)" -->
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Total (USD)</span>
+            <strong th:text="${totalPrice - 5}"></strong>
+          </li>
+        </div>
+      </ul>
+      <form class="card p-2">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Promo code" />
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-secondary">Redeem</button>
+          </div>
+          
+        </div>
+        <div id="paypal-button"></div>
+      </form>
+    </div>
+    
+
+    <script src="https://www.paypal.com/sdk/js?client-id=ASZnl0CCBGjrS-TwWJ1wE2Urw17vj973eOd9ENBq5g1SyJYBZ2l8iZL8iAdkd7hzpjCrZgdYtKDtYhj0"></script>
+
+    <script>
+      paypal
+        .Buttons({
+          createOrder: function (data, actions) {
+            var priceElement = document.getElementById("price");
+            var price = parseFloat(priceElement.innerText.replace("$", ""));
+
+            return actions.order.create({
+              purchase_units: [
+                {
+                  amount: {
+                    value: 10,
+                  },
+                },
+              ],
+            });
+          },
+          onApprove: function (data, actions) {
+            return actions.order.capture().then(function (details) {
+              window.location.href = "/success";
+              removeAllItemsFromCart();
+            });
+          },
+        })
+        .render("#paypal-button");
+    </script>
+  </body>
+</html>

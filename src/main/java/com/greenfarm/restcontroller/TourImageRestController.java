@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.TourImageDTO;
 import com.greenfarm.entity.TourImage;
-import com.greenfarm.service.ProductService;
 import com.greenfarm.service.TourImageService;
 
 @CrossOrigin("*")
@@ -26,12 +25,12 @@ public class TourImageRestController {
 
 	@Autowired
 	ModelMapper modelMapper;
-	
+
 	@GetMapping("/images")
 	public ResponseEntity<List<TourImageDTO>> getList1() {
 		List<TourImage> tourImages = tourImageService.findAll();
-		List<TourImageDTO> tourImageDTOs = tourImages.stream().map(tourimage -> modelMapper.map(tourimage, TourImageDTO.class))
-				.collect(Collectors.toList());
+		List<TourImageDTO> tourImageDTOs = tourImages.stream()
+				.map(tourimage -> modelMapper.map(tourimage, TourImageDTO.class)).collect(Collectors.toList());
 		return new ResponseEntity<>(tourImageDTOs, HttpStatus.OK);
 	}
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,25 +22,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "productcategories")
 public class Category implements Serializable {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer categoryid;
 
 	private String categoryname;
-	
+
 	private String descriptions;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "category")
 	List<Product> products;
-	
-	public Category(int categoryid) {
-		this.categoryid = categoryid;
-	}
+
 }
-
-
-
-
-

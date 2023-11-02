@@ -6,14 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.BookingDAO;
-import com.greenfarm.entity.Booking;
-import com.greenfarm.entity.Top10;
 import com.greenfarm.entity.Top3;
 import com.greenfarm.service.BookingService;
-import com.greenfarm.service.OrderDetailService;
 
 @Service
-public class BookingServiceImpl implements BookingService{
+public class BookingServiceImpl implements BookingService {
 
 	@Autowired
 	BookingDAO dao;
@@ -23,7 +20,4 @@ public class BookingServiceImpl implements BookingService{
 		return dao.getTop3Tour(pageable1);
 	}
 
-	
-
-	
 }

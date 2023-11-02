@@ -12,14 +12,14 @@ import com.greenfarm.entity.UserRole;
 import com.greenfarm.service.UserRoleService;
 
 @Service
-public class UserRoleServiceImpl implements UserRoleService{
+public class UserRoleServiceImpl implements UserRoleService {
 
 	@Autowired
 	UserRoleDAO dao;
-	
+
 	@Autowired
 	UserDAO udao;
-	
+
 	@Override
 	public List<UserRole> findAll() {
 		return dao.findAll();
@@ -33,15 +33,13 @@ public class UserRoleServiceImpl implements UserRoleService{
 	@Override
 	public void delete(Integer id) {
 		dao.deleteById(id);
-		
+
 	}
 
 	@Override
 	public List<UserRole> findAuthoritesOfAdministrators() {
-		List<User> users  = udao.getAdministrators();
+		List<User> users = udao.getAdministrators();
 		return dao.authoritesOf(users);
 	}
-
-	
 
 }

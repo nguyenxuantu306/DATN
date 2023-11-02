@@ -1,12 +1,8 @@
 package com.greenfarm.dto;
 
-import java.math.BigDecimal;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greenfarm.entity.Category;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,10 +17,7 @@ public class ProductDTO {
     private Double price;
     private String image;
     private Integer quantityavailable;
-    @JsonIgnore
-    private CategoryDTO category;
     
+    private Category category;
     
-    // top 10 
-    private BigDecimal revenue;
 }

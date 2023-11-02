@@ -25,31 +25,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Discounts")
-public class Discount implements Serializable{
-	
+public class Discount implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Discountid;
-	
+
 	private String Name;
-	
+
 	private Float Value;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date Startdate = new Date();
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date Enddate = new Date();
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date Createdate = new Date();
-	
+
 //	private Integer Amount;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "discount")
 	List<ProductDiscount> productDiscounts;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "statusvoucherid")
 	StatusVoucher statusVoucher;

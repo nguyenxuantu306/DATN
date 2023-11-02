@@ -20,13 +20,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "statusvouchers")
-public class StatusVoucher implements Serializable{
+public class StatusVoucher implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer statusvoucherid;
-	
+
 	private String name;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "statusVoucher")
 	List<Discount> discount;

@@ -18,6 +18,11 @@ public class Authconfig {
 	@Autowired
 	UserDetailsService userDetailsService;
 
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+	}
+
 	@Bean
 	public static PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -28,13 +33,10 @@ public class Authconfig {
 	public SecurityFilterChain fillterchain(HttpSecurity http) throws Exception {
 		http.csrf().disable().cors().disable();
 
-		http.authorizeRequests(authorize -> authorize
-				.requestMatchers("/profile").authenticated()
-				.requestMatchers("/assetsAdmin/**", "/admin").hasRole("Administrator")
-				.anyRequest().permitAll());
+		http.authorizeRequests(authorize -> authorize.requestMatchers("/profile").authenticated()
+				.requestMatchers("/assetsAdmin/", "/admin").hasRole("Administrator").anyRequest().permitAll());
 
-		http.formLogin(form -> form
-				.loginPage("/login")
+		http.formLogin(form -> form.loginPage("/login")
 		/* .loginProcessingUrl("/") */
 
 		).logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logoff")).permitAll());
@@ -45,11 +47,6 @@ public class Authconfig {
 //   		.authorizationEndpoint().baseUri("/oauth2/authorization");
 
 		return http.build();
-	}
-
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 }

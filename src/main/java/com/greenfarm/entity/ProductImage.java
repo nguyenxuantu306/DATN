@@ -1,7 +1,6 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ProductImages")
-public class ProductImage implements Serializable{
+public class ProductImage implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Productimageid;
@@ -27,7 +26,7 @@ public class ProductImage implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "productid")
 	private Product product;
-	
+
 	private String imageurl;
-	
+
 }

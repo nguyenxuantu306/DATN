@@ -1,27 +1,19 @@
 package com.greenfarm.service.impl;
 
 import java.util.Comparator;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.util.ArrayBuilders.BooleanBuilder;
 import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.ProductsDAO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.service.ProductService;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -142,5 +134,5 @@ public class ProductServiceImpl implements ProductService {
 	public List<Report> getTk_loai() {
 		return dao.getInventoryByCategory();
 	}
-	
+
 }

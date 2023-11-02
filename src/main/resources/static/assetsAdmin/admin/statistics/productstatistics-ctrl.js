@@ -47,5 +47,36 @@ app.controller('productstatistics-ctrl', function($scope, $http) {
 		},
 	}
 	$scope.initialize();
-
+// Trong AngularJS controller hoặc service
+	$scope.exportExcel = function() {
+		$http.get('/excel-productstatistics', { responseType: 'arraybuffer' })
+			.then(function(response) {
+				var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+				var link = document.createElement('a');
+				link.href = window.URL.createObjectURL(blob);
+				link.download = 'productstatistics.xlsx';
+				link.click();
+			})
+			.catch(function(error) {
+				console.error('Error exporting Excel:', error);
+			});
+	};
+	
+	// PDF
+		
+		$scope.exportPdf = function() {
+		$http.get('/pdf-productstatistics', { responseType: 'arraybuffer' })
+			.then(function(response) {
+				var blob = new Blob([response.data], { type: 'application/pdf' });
+				var objectUrl = URL.createObjectURL(blob);
+				var a = document.createElement('a');
+				a.href = objectUrl;
+				a.download = 'exportProductstatistics.pdf';
+				a.click();
+				URL.revokeObjectURL(objectUrl);
+			})
+			.catch(function(error) {
+				console.error('Error exporting PDF:', error);
+			});
+	};
 });

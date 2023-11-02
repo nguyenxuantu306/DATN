@@ -18,5 +18,4 @@ public class StatusOrderServiceImpl implements StatusOrderService {
 		return dao.findAll();
 	}
 
-
 }

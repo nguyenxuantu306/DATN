@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.greenfarm.entity.TourCondition;
 
-public interface TourConditionDAO extends JpaRepository<TourCondition, Integer>{
+public interface TourConditionDAO extends JpaRepository<TourCondition, Integer> {
 
 }
