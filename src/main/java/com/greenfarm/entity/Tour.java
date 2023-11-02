@@ -35,7 +35,7 @@ public class Tour implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer tourid;
 
-	private String Tourname;
+	private String tourname;
 
 	private String Description;
 

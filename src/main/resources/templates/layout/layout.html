@@ -1,97 +1,87 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	th:fragment="dynamic(view)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(view)">
+
 <head>
-<meta charset="UTF-8" />
-<title>GreenFarm</title>
-<!-- Favicon -->
-<link href="assets/img/favicon.ico" rel="icon">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<meta charset="UTF-8" />
+	<title>GreenFarm</title>
+	<!-- Favicon -->
+	<link href="assets/img/favicon.ico" rel="icon">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-	rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
-<link
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
-	rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<link href="/assets/css/style.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<link href="/assets/css/style.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 
-<!--  silder -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"
-	integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
-	integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<!--  silder -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"
+		integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
+		integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-<style type="text/css">
-/* Thiết lập kiểu dáng cơ bản cho nút "Add to Cart" */
-.add-to-cart-button {
-	background-color: #007bff;
-	color: #fff;
-	border: none;
-	padding: 10px 20px;
-	cursor: pointer;
-	border-radius: 5px;
-	font-size: 16px;
-	display: flex;
-	align-items: center;
-	transition: background-color 0.3s, box-shadow 0.3s;
-	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
+	<style type="text/css">
+		/* Thiết lập kiểu dáng cơ bản cho nút "Add to Cart" */
+		.add-to-cart-button {
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			cursor: pointer;
+			border-radius: 5px;
+			font-size: 16px;
+			display: flex;
+			align-items: center;
+			transition: background-color 0.3s, box-shadow 0.3s;
+			box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+		}
 
-/* Icon trong nút */
-.add-to-cart-button i {
-	margin-right: 5px;
-}
+		/* Icon trong nút */
+		.add-to-cart-button i {
+			margin-right: 5px;
+		}
 
-/* Khi di chuột vào nút */
-.add-to-cart-button:hover {
-	background-color: #0056b3;
-	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-}
+		/* Khi di chuột vào nút */
+		.add-to-cart-button:hover {
+			background-color: #0056b3;
+			box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+		}
 
-.wap-ss-img {
-	text-align: center;
-	width: 100%;
-}
+		.wap-ss-img {
+			text-align: center;
+			width: 100%;
+		}
 
-.wap-ss-img img {
-	height: 250px;
-	margin: 0 auto;
-}
+		.wap-ss-img img {
+			height: 250px;
+			margin: 0 auto;
+		}
 
-.textleft {
-	text-align: center;
-}
+		.textleft {
+			text-align: center;
+		}
 
-.slick-prev:before, .slick-next:before {
-	font-family: fontawesome;
-	font-size: 30px;
-	color: black;
-}
+		.slick-prev:before,
+		.slick-next:before {
+			font-family: fontawesome;
+			font-size: 30px;
+			color: black;
+		}
 
-.slick-prev:before {
-	content: "\f100";
-}
+		.slick-prev:before {
+			content: "\f100";
+		}
 
-.slick-next:before {
-	content: "\f101";
-}
-</style>
-<!--  silder -->
+		.slick-next:before {
+			content: "\f101";
+		}
+	</style>
+	<!--  silder -->
 </head>
 
 <body>
@@ -109,21 +99,20 @@
 	</div>
 
 	<!-- Back to Top -->
-	<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
-		class="fa fa-angle-double-up"></i></a>
+	<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 	<script src="/assets/js/angular.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Template Javascript -->
 	<script src="/assets/js/main.js"></script>
 
 	<script type="text/javascript" src="/assets/js/styte.js"></script>
+		  <script type="text/javascript" src="..\assets\js\shopping-cart-app.js"></script>
 
 	<script>
-		(function() {
-			$("#cart").on("click", function() {
+		(function () {
+			$("#cart").on("click", function () {
 				$("#mini-cart").fadeToggle("fast");
 			});
 		})();
@@ -131,8 +120,8 @@
 
 
 	<script>
-		$(document).ready(function() {
-			$("#cart").on("click", function(e) {
+		$(document).ready(function () {
+			$("#cart").on("click", function (e) {
 				e.preventDefault(); // Ngăn chặn mặc định của thẻ a
 				$("#mini-cart").fadeToggle("fast");
 			});
@@ -141,94 +130,7 @@
 
 	<!-- slider -->
 	<script src="/assets/js/jquery.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.js"></script>
-	<script>
-		$(document).ready(function() {
-			$('.slider').slick({
-				slidesToShow : 4, // Số lượng phần tử hiển thị
-				slidesToScroll : 1, // Số lượng phần tử được trượt khi bạn nhấn nút trượt
-				arrows : true, // Hiển thị nút trượt
-				speed : 300
-			// Tốc độ trượt (ms)
-			});
-
-		});
-	</script>
-	<script>
-		// Lấy nút "Đánh giá" theo id
-		const reviewButton = document.getElementById("review-button");
-
-		// Lấy phần tử chứa danh sách đánh giá theo id
-		const reviewSection = document.getElementById("review-section");
-
-		// Thêm sự kiện bấm vào nút "Đánh giá"
-		reviewButton.addEventListener("click", function() {
-			// Cuộn đến phần tử chứa danh sách đánh giá
-			reviewSection.scrollIntoView({
-				behavior : "smooth"
-			});
-		});
-	</script>
-		<script>
-
-		$(document).ready(function () {
-			$('form').submit(function (event) {
-				// Ngăn chặn chuyển hướng trình duyệt khi gửi form
-				event.preventDefault();
-				// Lấy dữ liệu từ form
-				var formData = $(this).serialize();
-
-				// Gửi yêu cầu Ajax để lưu đánh giá
-				$.ajax({
-					type: 'POST',
-					url: $(this).attr('action'),
-					data: formData,
-					success: function (response) {
-						// Phân tích chuỗi JSON và trích xuất thông báo thành công
-						var responseJSON = JSON.parse(response);
-						var successMessage = responseJSON.successMessage;
-						var errorMessage = responseJSON.errorMessage;
-						$('.alert').hide();
-						if (errorMessage) {
-							// Hiển thị thông báo lỗi bên dưới form
-							var errorMessageText = errorMessage.split('.')[0];
-							$('.alert-danger').text(errorMessageText).show();
-						} else {
-							// Hiển thị thông báo thành công trong modal
-							$('#modal-message').text(successMessage);
-							$('#exampleModal').modal('hide');
-							$('#modal').modal('show');
-						}
-					},
-					error: function (jqXHR, textStatus, errorThrown) {
-						var responseJSON = JSON.parse(jqXHR.responseText);
-						var errorMessage = responseJSON.errorMessage;
-						if (errorMessage) {
-							var errorMessageText = errorMessage.split('.')[0]; // Lấy phần đầu của errorMessage trước dấu chấm
-							$('.alert-danger').text(errorMessageText).show();
-						} else {
-							$('.alert-danger').text(textStatus + ' : ' + errorThrown).show();
-						}
-					}
-				});
-			});
-			function resetRatingForm() {
-				$('#rating-form input[type="radio"]').prop('checked', false);
-				$('#rating-form textarea').val('');
-			}
-			$('#ratingModal').on('hidden.bs.modal', function () {
-				resetRatingForm();
-			});
-			$('#exampleModal').on('hidden.bs.modal', function (e) {
-				$(this).remove();
-			});
-			$('#modal').on('hidden.bs.modal', function (event) {
-				// Chuyển hướng sang trang mới
-				location.reload();
-			});
-		});
-	</script>
-	
+	<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.js"></script>
 </body>
+
 </html>

@@ -1,12 +1,15 @@
 package com.greenfarm.restcontroller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,11 +36,14 @@ import com.greenfarm.service.TourImageService;
 import com.greenfarm.service.TourOverviewService;
 import com.greenfarm.service.TourService;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/tours")
 public class TourRestController {
-
 
 	@Autowired
 	ModelMapper modelMapper;
@@ -107,10 +113,10 @@ public class TourRestController {
 		// Create pricings
 		Pricing pricings = new Pricing();
 		if (tourDTO.getPricings() != null) {
-		pricings.setAdultprice(tourDTO.getPricings().getAdultprice());
-		pricings.setChildprice(tourDTO.getPricings().getChildprice());
-		pricings.setTour(tour);
-		tour.setPricings(pricings);
+			pricings.setAdultprice(tourDTO.getPricings().getAdultprice());
+			pricings.setChildprice(tourDTO.getPricings().getChildprice());
+			pricings.setTour(tour);
+			tour.setPricings(pricings);
 		} else {
 			pricings.setTour(tour);
 			tour.setPricings(pricings);
@@ -141,121 +147,123 @@ public class TourRestController {
 	@PutMapping("/{tourid}")
 	public ResponseEntity<TourDTO> update(@PathVariable("tourid") Integer tourid, @RequestBody TourDTO tourDTO) {
 		try {
-
-			Tour tour = tourService.findById(tourid);
-			if (tour == null) {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
-
-			// Map DTO to entity
-			modelMapper.map(tourDTO, tour);
-
-			if (tourDTO.getTourCondition() != null) {
-				try {
-					Optional<TourCondition> tourConditionOptional = tourConditionService.findByTourId(tourid);
-					TourCondition tourCondition;
-					
-					if (tourConditionOptional.isPresent()) {
-						// Nếu tồn tại lấy ra -> cập nhật
-						tourCondition = tourConditionOptional.get();
-					} else {
-						// Bản ghi không tồn tại, tạo mới
-						tourCondition = new TourCondition();
-					}
-					tourCondition.setConditions(tourDTO.getTourCondition().getConditions());
-					tourCondition.setTour(tour);
-					tour.setTourCondition(tourCondition);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-			}
-
-			if (tourDTO.getTourOverview() != null) {
-				try {
-					Optional<TourOverview> tourOverviewOptional = tourOverviewService.findByTourId(tourid);
-
-					TourOverview tourOverview;
-					if (tourOverviewOptional.isPresent()) {
-						// Nếu tồn tại lấy ra -> cập nhật
-						tourOverview = tourOverviewOptional.get();
-					} else {
-						// Bản ghi không tồn tại, tạo mới
-						tourOverview = new TourOverview();
-					}
-					// Cập nhật thông tin từ tourDTO
-					tourOverview.setTitle(tourDTO.getTourOverview().getTitle());
-					tourOverview.setContent(tourDTO.getTourOverview().getContent());
-					tourOverview.setTour(tour);
-					tour.setTourOverview(tourOverview);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-
-			if (tourDTO.getPricings() != null) {
-				// Update pricings
-				Pricing pricings = pricingService.findByTourId(tourid);
-				if (pricings == null) {
-					pricings = new Pricing();
-					pricings.setTour(tour);
-				}
-				pricings.setAdultprice(tourDTO.getPricings().getAdultprice());
-				pricings.setChildprice(tourDTO.getPricings().getChildprice());
-				pricings.setTour(tour);
-				tour.setPricings(pricings);
-			}
-
-//			List<TourImage> tourImages = tourImageService.findByTourTourid(tourid);
-//			// Tạo một Map để lưu trữ tourImage theo tourImageId
-//			Map<Integer, TourImage> tourImageMap = new HashMap<>();
-//			for (TourImage tourImage : tourImages) {
-//				tourImageMap.put(tourImage.getTourimageid(), tourImage);
-//			}
-//			// Update tour images
-//			for (TourImageDTO tourImageDTO : tourDTO.getTourImage()) {
-//			    Integer tourImageId = tourImageDTO.getTourimageid();
-//			    if (tourImageId != null) {
-//			        TourImage tourImage = tourImageMap.get(tourImageId);
-//			        if (tourImage != null) {
-//			            // Cập nhật thông tin hình ảnh
-//			            tourImage.setTour(tour);
-//			            tourImage.setImageurl(tourImageDTO.getImageurl());
-//			            tourImageService.save(tourImage);
-//			        } else {
-//			            // Nếu không tìm thấy, tạo mới TourImage
-//			            tourImage = new TourImage();
-//			            tourImage.setTour(tour);
-//			            tourImage.setImageurl(tourImageDTO.getImageurl());
-//			            tourImageService.save(tourImage);
-////			            tourImageService.update(tourImage);
-//			            tourImageMap.put(tourImage.getTourimageid(), tourImage);
-//			        }
-//			    }
-//			}
-//
-//			tour.setTourImage(new ArrayList<>(tourImageMap.values()));
-
-			// Update tour
-			Tour updatedTour = tourService.update(tour);
-
+			Tour updatedTour = updateTour(tourDTO, tourid);
 			// Map entity to DTO
 			TourDTO updatedTourDTO = modelMapper.map(updatedTour, TourDTO.class);
-
 			return new ResponseEntity<>(updatedTourDTO, HttpStatus.OK);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			// logger.error("Lỗi xảy ra khi cập nhật tour: " + e.getMessage(), e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	private Tour updateTour(TourDTO tourDTO, Integer tourid) {
+		Tour tour = tourService.findById(tourid);
+		if (tour == null) {
+			return null;
+		}
+
+		// Map DTO to entity
+		modelMapper.map(tourDTO, tour);
+
+		if (tourDTO.getTourCondition() != null) {
+			try {
+				Optional<TourCondition> tourConditionOptional = tourConditionService.findByTourId(tourid);
+				TourCondition tourCondition;
+
+				if (tourConditionOptional.isPresent()) {
+					// Nếu tồn tại lấy ra -> cập nhật
+					tourCondition = tourConditionOptional.get();
+				} else {
+					// Bản ghi không tồn tại, tạo mới
+					tourCondition = new TourCondition();
+				}
+				tourCondition.setConditions(tourDTO.getTourCondition().getConditions());
+				tourCondition.setTour(tour);
+				tour.setTourCondition(tourCondition);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		if (tourDTO.getTourOverview() != null) {
+			try {
+				Optional<TourOverview> tourOverviewOptional = tourOverviewService.findByTourId(tourid);
+
+				TourOverview tourOverview;
+				if (tourOverviewOptional.isPresent()) {
+					// Nếu tồn tại lấy ra -> cập nhật
+					tourOverview = tourOverviewOptional.get();
+				} else {
+					// Bản ghi không tồn tại, tạo mới
+					tourOverview = new TourOverview();
+				}
+				// Cập nhật thông tin từ tourDTO
+				tourOverview.setTitle(tourDTO.getTourOverview().getTitle());
+				tourOverview.setContent(tourDTO.getTourOverview().getContent());
+				tourOverview.setTour(tour);
+				tour.setTourOverview(tourOverview);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		if (tourDTO.getPricings() != null) {
+			// Update pricings
+			Pricing pricings = pricingService.findByTourId(tourid);
+			if (pricings == null) {
+				pricings = new Pricing();
+				pricings.setTour(tour);
+			}
+			pricings.setAdultprice(tourDTO.getPricings().getAdultprice());
+			pricings.setChildprice(tourDTO.getPricings().getChildprice());
+			pricings.setTour(tour);
+			tour.setPricings(pricings);
+		}
+
+		List<TourImage> tourImages = tourImageService.findByTourTourid(tourid);
+		// Tạo một Map để lưu trữ tourImage theo tourImageId
+		Map<Integer, TourImage> tourImageMap = new HashMap<>();
+		for (TourImage tourImage : tourImages) {
+			tourImageMap.put(tourImage.getTourimageid(), tourImage);
+		}
+		// Update tour images
+		for (TourImageDTO tourImageDTO : tourDTO.getTourImage()) {
+			Integer tourImageId = tourImageDTO.getTourimageid();
+			if (tourImageId != null) {
+				TourImage tourImage = tourImageMap.get(tourImageId);
+				if (tourImage != null) {
+					// Cập nhật thông tin hình ảnh
+					tourImage.setTour(tour);
+					tourImage.setImageurl(tourImageDTO.getImageurl());
+					tourImageService.save(tourImage);
+				} else {
+					// Nếu không tìm thấy, tạo mới TourImage
+					tourImage = new TourImage();
+					tourImage.setTour(tour);
+					tourImage.setImageurl(tourImageDTO.getImageurl());
+					tourImageService.save(tourImage);
+//		            tourImageService.update(tourImage);
+					tourImageMap.put(tourImage.getTourimageid(), tourImage);
+				}
+			}
+		}
+
+		tour.setTourImage(new ArrayList<>(tourImageMap.values()));
+
+		// Update tour
+		return tourService.update(tour);
+	}
+	
 
 	@DeleteMapping("{tourid}")
 	public ResponseEntity<Void> delete(@PathVariable("tourid") Integer tourid) {
 		tourService.delete(tourid);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-
 	
+	
+
 }

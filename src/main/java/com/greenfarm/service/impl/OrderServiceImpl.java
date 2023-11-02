@@ -142,4 +142,11 @@ public class OrderServiceImpl implements OrderService {
 		return dao.findAll();
 	}
 
+	
+	// lọc trạng thái trong history_order
+	@Override
+	public List<Order> findByUserEmailAndStatus(String email, String status) {
+        return dao.findByUserEmailAndStatus(email, status);
+    }
+
 }

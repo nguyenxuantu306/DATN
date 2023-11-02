@@ -1,8 +1,23 @@
 app.controller("tour-ctrl", function($scope, $http) {
 	$scope.items = [];
-	$scope.form = {};
+	$scope.form = {
+		tourImage: [{ imageurl: "" }]
+	};
 	$scope.field = [];
 	$scope.error = ['err'];
+	$scope.item2 = [];
+
+	console.log($scope.form.tourImage);
+	//Thêm cái image khác
+	$scope.addImage = function() {
+		$scope.form.tourImage.push({
+			imageurl: ''
+		});
+	};
+	//Loại bỏ các image
+	$scope.removeImage = function(index) {
+		$scope.form.tourImage.splice(index, 1);
+	};
 
 	$scope.initialize = function() {
 		// Load tours
@@ -14,15 +29,20 @@ app.controller("tour-ctrl", function($scope, $http) {
 			})
 		});
 
+		$http.get("/rest/tours/images").then(resp => {
+			$scope.item2 = resp.data;
+		});
+
+
 	}
 	// Khởi đầu
 	$scope.initialize();
 
-
-
 	// Hiện thị lên form
 	$scope.edit = function(item) {
-		$scope.form = angular.copy(item);	
+		$scope.form = angular.copy(item);
+		$scope.form.tourImage = angular.copy(item.tourImage);
+		console.log($scope.form);
 	}
 
 	$scope.reset = function() {
@@ -32,13 +52,13 @@ app.controller("tour-ctrl", function($scope, $http) {
 		};
 	};
 
-	// Hiện thị lên for
-	$scope.editthemsp = function(){	
-		$scope.form = angular.copy();
-		$scope.form = {			
-			image:'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',			
-		};			
-	}
+	/*		// Hiện thị lên for
+			$scope.editthemsp = function() {
+				$scope.form = angular.copy();
+				$scope.form = {
+					image: 'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',
+				};
+			}*/
 
 	// Thêm tour phẩm mới
 	$scope.create = function() {
@@ -69,9 +89,7 @@ app.controller("tour-ctrl", function($scope, $http) {
 	// Cập nhật tour
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		if (item.tourid == null) {
-			return $scope.create();
-		} else if (item.tourid != null) {
+		if (item.tourid != null) {
 			$http.put(`/rest/tours/${item.tourid}`, item).then(resp => {
 				var index = $scope.items.findIndex(p => p.tourid == item.tourid);
 				$scope.items[index] = item;

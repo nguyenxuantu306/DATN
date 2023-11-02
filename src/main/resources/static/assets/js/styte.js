@@ -147,6 +147,18 @@ $(document).ready(function() {
 	$('input[type="radio"]').change(handlePriceRangeChange);
 });
 
+// rating và chức năng cơ bản tour
+$(document).ready(function() {
+	$('.slider').slick({
+		slidesToShow: 4, // Số lượng phần tử hiển thị
+		slidesToScroll: 1, // Số lượng phần tử được trượt khi bạn nhấn nút trượt
+		arrows: true, // Hiển thị nút trượt
+		speed: 300
+		// Tốc độ trượt (ms)
+	});
+
+});
+
 // Mini Cart
 
 // JavaScript to handle the mini cart toggle using jQuery
@@ -165,35 +177,35 @@ $(document).ready(function() {
 // AddToCart
 
 function addToCart(productId) {
-  $.ajax({
-    type: "POST",
-    url: "/cart/add/" + productId,
-    data: {
-      productId: productId,
-    },
-    success: function (response) {
-      console.log("Product added to cart:", response);
-    },
-    error: function (error) {
-      window.location.href="http://localhost:8080/login";
-    },
-  });
+	$.ajax({
+		type: "POST",
+		url: "/cart/add/" + productId,
+		data: {
+			productId: productId,
+		},
+		success: function(response) {
+			console.log("Product added to cart:", response);
+		},
+		error: function(error) {
+			window.location.href = "http://localhost:8080/login";
+		},
+	});
 }
 //xóa 1 sản phẩm trong giỏ hàng
 function removeCart(productId) {
-  $.ajax({
-    type: "POST",
-    url: "/cart/remove/" + productId,
-    data: {
-      productId: productId,
-    },
-    success: function (response) {
-      window.location.reload();
-    },
-    error: function (error) {
-      console.error("Error remove product to cart:", error);
-    },
-  });
+	$.ajax({
+		type: "POST",
+		url: "/cart/remove/" + productId,
+		data: {
+			productId: productId,
+		},
+		success: function(response) {
+			window.location.reload();
+		},
+		error: function(error) {
+			console.error("Error remove product to cart:", error);
+		},
+	});
 }
 //xóa tất cả giỏ hàng
 function removeAllItemsFromCart() {
@@ -276,8 +288,3 @@ function showButton(option) {
 		paypalButton.style.display = 'block';
 	}
 }
-
-
-
-
-

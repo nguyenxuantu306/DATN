@@ -26,4 +26,6 @@ public interface TourService {
 
 	List<TourDTO> findToursByAdultPrice(Float minPrice, Float maxPrice);
 
+	List<TourDTO> findToursByTourname(String searchTerm);
+
 }
