@@ -1,5 +1,5 @@
 package com.greenfarm.restcontroller;
-
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +29,7 @@ import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.service.OrderService;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/orders")
@@ -59,78 +60,73 @@ public class OrderRestController {
 	// }
 	// }
 //
-//	@GetMapping()
-//	public ResponseEntity<List<OrderDTO>> getList() {
-//		List<Order> orders = orderService.findAll();
-//
-//		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
-//		List<OrderDTO> orderDTOs = orders.stream().map(order -> modelMapper.map(order, OrderDTO.class))
-//				.collect(Collectors.toList());
-//
-//		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
-//		return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
-//	}
-//
-//	public ResponseEntity<String> getAllOrders(@RequestParam(defaultValue = "0") int page,
-//			@RequestParam(defaultValue = "10") int size) {
-//		List<Order> orders = orderService.getAllOrders(page, size);
-//		List<OrderDTO> orderDTOs = orders.stream().map(order -> modelMapper.map(order, OrderDTO.class))
-//				.collect(Collectors.toList());
-//
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		try {
-//			String json = objectMapper.writeValueAsString(orderDTOs);
-//			return ResponseEntity.ok(json);
-//		} catch (JsonProcessingException e) {
-//			// Xử lý lỗi nếu chuyển đổi sang JSON không thành công
-//			e.printStackTrace();
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//		}
-//	}
-	
-	
-	public ResponseEntity<String> getAllOrders(
-		    @RequestParam(defaultValue = "0") int page,
-		    @RequestParam(defaultValue = "10") int size,
-		    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDay,
-		    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDay) {
-		    List<Order> orders;
-		    
-		    // Kiểm tra xem người dùng đã cung cấp ngày bắt đầu và ngày kết thúc hay chưa
-		    if (startDay != null && endDay != null) {
-		        // Lọc danh sách đơn hàng từ ngày bắt đầu đến ngày kết thúc
-		        orders = orderService.findOrdersByDateRange(startDay.atStartOfDay(), endDay.atStartOfDay().plusDays(1), page, size);
-		    } else if (startDay != null) {
-		        // Lấy ngày hiện tại
-		        LocalDate currentDate = LocalDate.now();
-		        
-		        // Lọc danh sách đơn hàng từ ngày bắt đầu đến ngày hiện tại
-		        orders = orderService.findOrdersByDateRange(startDay.atStartOfDay(), currentDate.atStartOfDay().plusDays(1), page, size);
-		    } else if (endDay != null) {
-		        // Lọc danh sách đơn hàng từ ngày đầu tiên đến ngày kết thúc
-		        orders = orderService.findOrdersByDateRange(LocalDate.MIN.atStartOfDay(), endDay.atStartOfDay().plusDays(1), page, size);
-		    } else {
-		        // Lấy toàn bộ danh sách đơn hàng nếu không có ngày bắt đầu và ngày kết thúc
-		        orders = orderService.getAllOrders(page, size);
-		    }
+	@GetMapping()
+	public ResponseEntity<List<OrderDTO>> getList() {
+		List<Order> orders = orderService.findAll();
 
-		    List<OrderDTO> orderDTOs = orders.stream()
-		            .map(order -> modelMapper.map(order, OrderDTO.class))
-		            .collect(Collectors.toList());
+		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
+		List<OrderDTO> orderDTOs = orders.stream().map(order -> modelMapper.map(order, OrderDTO.class))
+				.collect(Collectors.toList());
 
-		    ObjectMapper objectMapper = new ObjectMapper();
-		    try {
-		        String json = objectMapper.writeValueAsString(orderDTOs);
-		        return ResponseEntity.ok(json);
-		    } catch (JsonProcessingException e) {
-		        // Xử lý lỗi nếu chuyển đổi sang JSON không thành công
-		        e.printStackTrace();
-		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		    }
+		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
+		return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
+	}
+
+	public ResponseEntity<String> getAllOrders(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size) {
+		List<Order> orders = orderService.getAllOrders(page, size);
+		List<OrderDTO> orderDTOs = orders.stream().map(order -> modelMapper.map(order, OrderDTO.class))
+				.collect(Collectors.toList());
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			String json = objectMapper.writeValueAsString(orderDTOs);
+			return ResponseEntity.ok(json);
+		} catch (JsonProcessingException e) {
+			// Xử lý lỗi nếu chuyển đổi sang JSON không thành công
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-	
-	
-	
+	}
+
+	public ResponseEntity<String> getAllOrders(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate startDay,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate endDay) {
+		List<Order> orders;
+
+		// Kiểm tra xem người dùng đã cung cấp ngày bắt đầu hay chưa
+		if (startDay != null) {
+			// Lấy ngày hiện tại
+			LocalDate currentDate = LocalDate.now();
+
+			// Lọc danh sách đơn hàng từ ngày bắt đầu đến ngày hiện tại
+			orders = orderService.findOrdersByDateRange(startDay.atStartOfDay(), currentDate.atStartOfDay().plusDays(1),
+					page, size);
+		} else if (endDay != null) {
+			// Lọc danh sách đơn hàng từ ngày đầu tiên đến ngày kết thúc
+			orders = orderService.findOrdersByDateRange(LocalDate.MIN.atStartOfDay(), endDay.atStartOfDay().plusDays(1),
+					page, size);
+		} else {
+			// Lấy toàn bộ danh sách đơn hàng nếu không có ngày bắt đầu và ngày kết thúc
+			orders = orderService.getAllOrders(page, size);
+		}
+
+		List<OrderDTO> orderDTOs = orders.stream().map(order -> modelMapper.map(order, OrderDTO.class))
+				.collect(Collectors.toList());
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+		
+		try {
+			String json = objectMapper.writeValueAsString(orderDTOs);
+			return ResponseEntity.ok(json);
+		} catch (JsonProcessingException e) {
+			// Xử lý lỗi nếu chuyển đổi sang JSON không thành công
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
 	// @PostMapping()
 	// public Order create(@RequestBody JsonNode orderData) {
 	// ObjectMapper objectMapper = new ObjectMapper();
@@ -157,8 +153,7 @@ public class OrderRestController {
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<OrderDTO> update(@PathVariable("id") Integer id,
-			@RequestBody Order order) {
+	public ResponseEntity<OrderDTO> update(@PathVariable("id") Integer id, @RequestBody Order order) {
 		Order updatedOrder = orderService.update(order);
 
 		if (updatedOrder == null) {
@@ -173,8 +168,7 @@ public class OrderRestController {
 		List<Order> orders = orderService.getOrdersByStatusName(statusName);
 
 		// Sử dụng ModelMapper để ánh xạ từ Order sang OrderDTO
-		List<OrderDTO> orderDTOs = orders.stream()
-				.map(order -> modelMapper.map(order, OrderDTO.class))
+		List<OrderDTO> orderDTOs = orders.stream().map(order -> modelMapper.map(order, OrderDTO.class))
 				.collect(Collectors.toList());
 
 		return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
@@ -186,8 +180,7 @@ public class OrderRestController {
 		List<Order> filteredOrders = orderService.filterOrdersByNgayTao(ngayTao);
 
 		// Sử dụng ModelMapper để ánh xạ từ Order sang OrderDTO
-		List<OrderDTO> filteredOrderDTOs = filteredOrders.stream()
-				.map(order -> modelMapper.map(order, OrderDTO.class))
+		List<OrderDTO> filteredOrderDTOs = filteredOrders.stream().map(order -> modelMapper.map(order, OrderDTO.class))
 				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(filteredOrderDTOs);

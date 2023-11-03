@@ -177,49 +177,26 @@ app.controller("order-ctrl", function($scope, $http) {
 		}
 	}
 
-	//	$scope.startDateTime = '';
-	//	$scope.endDateTime = '';
-	//
-	//	$scope.filterOrdersByDateRange = function() {
-	//		$http.get("/rest/orders").then(resp => {
-	//			$scope.items = resp.data;
-	//			$scope.items.forEach(item => {
-	//				item.orderDate = new Date(item.orderDate);
-	//			});
-	//
-	//			if ($scope.startDateTime && $scope.endDateTime) {
-	//				const startDate = new Date($scope.startDateTime);
-	//				const endDate = new Date($scope.endDateTime);
-	//				$scope.items = $scope.items.filter(item => {
-	//					const orderDate = new Date(item.orderDate);
-	//					return orderDate >= startDate && orderDate <= endDate;
-	//				});
-	//			}
-	//		});
-	//	};
-	//
-	//	$scope.resetDateFilters = function() {
-	//		$scope.startDateTime = '';
-	//		$scope.endDateTime = '';
-	//		$scope.filterOrdersByDateRange();
-	//	};
+
+
+
+
 	$scope.startDateTime = '';
 	$scope.endDateTime = '';
-
+	$scope.items = [];
+	
 	$scope.filterOrdersByDateRange = function() {
-		$http.get("/rest/orders").then(resp => {
+		$http.get("/rest/orders").then(function(resp) {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
-				item.orderDate = new LocalDateTime(item.orderDate);
-			});
-
-			d
-			Copy
-			const startDate = $scope.startDateTime ? new LocalDateTime($scope.startDateTime) : null;
-			const endDate = $scope.endDateTime ? new LocalDateTime($scope.endDateTime) : null;
+				item.orderDate = new Date(item.orderDate)
+			})
+			console.log($scope.items);
+			const startDate = $scope.startDateTime ? new Date($scope.startDateTime) : null;
+			const endDate = $scope.endDateTime ? new Date($scope.endDateTime) : null;
 
 			$scope.items = $scope.items.filter(item => {
-				const orderDate = new LocalDateTime(item.orderDate);
+				const orderDate = new Date(item.orderDate);
 
 				if (startDate && endDate) {
 					return orderDate >= startDate && orderDate <= endDate;
@@ -232,14 +209,19 @@ app.controller("order-ctrl", function($scope, $http) {
 				// If both startDate and endDate are not selected, don't apply date filter
 				return true;
 			});
+
+			// Display success message
+			alert("Search successful!");
+			console.log(startDate); console.log(endDate);
+		}).catch(function(error) {
+			// Display error message
+			alert("Search failed: " + error);
 		});
 	};
-
 	$scope.resetDateFilters = function() {
 		$scope.startDateTime = '';
 		$scope.endDateTime = '';
 		$scope.filterOrdersByDateRange();
 	};
-
 });
 
