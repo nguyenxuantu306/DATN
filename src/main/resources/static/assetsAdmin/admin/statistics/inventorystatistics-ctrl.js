@@ -5,11 +5,21 @@ app.controller("inventorystatistics-ctrl", function($scope, $http) {
 	}
 	$scope.form = {};
 	$scope.itemsThongKeSp = [];
+	$scope.itemsThongKeTK = [];
+
 
 	$scope.initialize = function() {
 		$http.get('/rest/products/thongke/sp').then(response => {
 			$scope.itemsThongKeSp = response.data;
 			console.log($scope.itemsThongKeSp);
+		}).catch(err => {
+			console.log(err);
+		})
+		
+		
+		$http.get('/rest/products/thongke/top10tk').then(response => {
+			$scope.itemsThongKeTK = response.data;
+			console.log($scope.itemsThongKeTK);
 		}).catch(err => {
 			console.log(err);
 		})
@@ -87,7 +97,7 @@ app.controller("inventorystatistics-ctrl", function($scope, $http) {
 	}
 
 
-/* // biểu đồ 
+ /*// biểu đồ 
 let myChart = document.getElementById('myChart').getContext('2d');
 
 // Global Options
@@ -162,8 +172,8 @@ let massPopChart = new Chart(myChart, {
 fetch('/rest/products/thongke/top10tk')
   .then(response => response.json())
   .then(data => {
-    const labels = data.map(item => item.productname);
-    const values = data.map(item => item.quantityavailable);
+    const labels = data.map(item => item.product.productname);
+    const values = data.map(item => item.product.quantityavailable);
 
     // Vẽ biểu đồ bằng dữ liệu lấy được
     let myChart = document.getElementById('myChart').getContext('2d');
