@@ -1,0 +1,45 @@
+<div class="card">
+	<div class="card-body">
+		<h2 class="card">Danh sách đơn hàng</h2>
+		<div class="row py-3">
+			<div class="col-md-6 input-group icons">
+
+
+				<div>
+					<input type="date-local" id="startDateTime"> <span
+						style="margin: 0 15px;">Đến</span> <input type="date-local"
+						id="endDateTime">
+
+					<button class="btn btn-primary">Lọc</button>
+					<button class="btn btn-secondary">Xóa bộ lọc</button>
+
+					<button class="btn btn-primary">Lọc</button>
+					<button class="btn btn-secondary">Xóa bộ lọc</button>
+				</div>
+			</div>
+			<div class="col-md-3 input-group icons"></div>
+			<div class="col-md-3 text-right"></div>
+		</div>
+		<div id="orderList"></div>
+		<div class="table-responsive">
+			<table class="table header-border zero-configuration">
+				<thead>
+					<tr class="text-center">
+						<th scope="col">STT</th>
+						<th scope="col">Người mua</th>
+						<th scope="col">Ngày tạo</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="text-center" ng-repeat="item in pager.items">
+						<th scope="row">{{$index + 1}}</th>
+						<td>{{item.user.firstname}}</td>
+						<td>{{item.orderdate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+

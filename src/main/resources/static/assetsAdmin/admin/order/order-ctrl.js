@@ -177,5 +177,69 @@ app.controller("order-ctrl", function($scope, $http) {
 		}
 	}
 
+	//	$scope.startDateTime = '';
+	//	$scope.endDateTime = '';
+	//
+	//	$scope.filterOrdersByDateRange = function() {
+	//		$http.get("/rest/orders").then(resp => {
+	//			$scope.items = resp.data;
+	//			$scope.items.forEach(item => {
+	//				item.orderDate = new Date(item.orderDate);
+	//			});
+	//
+	//			if ($scope.startDateTime && $scope.endDateTime) {
+	//				const startDate = new Date($scope.startDateTime);
+	//				const endDate = new Date($scope.endDateTime);
+	//				$scope.items = $scope.items.filter(item => {
+	//					const orderDate = new Date(item.orderDate);
+	//					return orderDate >= startDate && orderDate <= endDate;
+	//				});
+	//			}
+	//		});
+	//	};
+	//
+	//	$scope.resetDateFilters = function() {
+	//		$scope.startDateTime = '';
+	//		$scope.endDateTime = '';
+	//		$scope.filterOrdersByDateRange();
+	//	};
+	$scope.startDateTime = '';
+	$scope.endDateTime = '';
+
+	$scope.filterOrdersByDateRange = function() {
+		$http.get("/rest/orders").then(resp => {
+			$scope.items = resp.data;
+			$scope.items.forEach(item => {
+				item.orderDate = new LocalDateTime(item.orderDate);
+			});
+
+			d
+			Copy
+			const startDate = $scope.startDateTime ? new LocalDateTime($scope.startDateTime) : null;
+			const endDate = $scope.endDateTime ? new LocalDateTime($scope.endDateTime) : null;
+
+			$scope.items = $scope.items.filter(item => {
+				const orderDate = new LocalDateTime(item.orderDate);
+
+				if (startDate && endDate) {
+					return orderDate >= startDate && orderDate <= endDate;
+				} else if (startDate) {
+					return orderDate >= startDate;
+				} else if (endDate) {
+					return orderDate <= endDate;
+				}
+
+				// If both startDate and endDate are not selected, don't apply date filter
+				return true;
+			});
+		});
+	};
+
+	$scope.resetDateFilters = function() {
+		$scope.startDateTime = '';
+		$scope.endDateTime = '';
+		$scope.filterOrdersByDateRange();
+	};
+
 });
 

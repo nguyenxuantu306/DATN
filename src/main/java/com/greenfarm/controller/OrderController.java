@@ -23,7 +23,8 @@ import com.greenfarm.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
+import java.util.Collections;
+import java.util.List;
 @Controller
 public class OrderController {
 
@@ -37,7 +38,13 @@ public class OrderController {
 	@RequestMapping("/order/list")
 	public String list(Model model, HttpServletRequest request) {
 		String email = request.getRemoteUser();
-		model.addAttribute("orders", orderService.findByEfindByIdAccountmail(email));
+		List<Order> orders = orderService.findByEfindByIdAccountmail(email);
+		//model.addAttribute("orders", orderService.findByEfindByIdAccountmail(email));
+		// Sắp xếp danh sách orders theo ngày mua gần nhất (orderDate giảm dần)
+	    Collections.sort(orders, (o1, o2) -> o2.getOrderDateFormatted().compareTo(o1.getOrderDateFormatted()));
+
+	    // Đặt danh sách đã sắp xếp vào model
+	    model.addAttribute("sortedOrders", orders);
 		return "order/list";
 	}
 
@@ -48,17 +55,7 @@ public class OrderController {
 		return "order/detail";
 	}
 	
-	@GetMapping("/byStatusName")
-	public ResponseEntity<List<OrderDTO>> getOrdersByStatusName(@RequestParam("statusName") String statusName) {
-		List<Order> orders = orderService.getOrdersByStatusName(statusName);
-
-		// Sử dụng ModelMapper để ánh xạ từ Order sang OrderDTO
-		List<OrderDTO> orderDTOs = orders.stream()
-				.map(order -> modelMapper.map(order, OrderDTO.class))
-				.collect(Collectors.toList());
-
-		return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
-	}
+	
 	
 
 }

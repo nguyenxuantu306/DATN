@@ -54,68 +54,90 @@
 
 				</div>
 				<div class="col-sm-8">
-					<h6>Đơn hàng đã mua:</h6>
+					<h6 class="fw-bold">Đơn hàng đã mua:</h6>
 
-<!-- 					<div class="col-md-4 input-group icons"> -->
-<!-- 						<select class="select" style="width: 200px;" -->
-<!-- 							ng-model="selectedStatus"> -->
-<!-- 							<option value="1">Chờ xác nhận</option> -->
-<!-- 							<option value="2">Đang giao</option> -->
-<!-- 							<option value="3">Giao hàng thành công</option> -->
-<!-- 							<option value="4">Đã hủy</option> -->
-<!-- 						</select> -->
-<!-- 					</div> -->
-
-
-					<div th:each="order, state:${orders}">
-
-
-
+					<div th:each="order, state:${sortedOrders}">
 						<div class="card border border-0 rounded-0 mt-3"
 							style="padding: 20px; width: auto; border-radius: 3px; background-color: #fff; font-size: 14px; flex-direction: column;">
 							<div class="card-header" style="background-color: #fff;">
 								<span class="fw-bold">Đơn hàng:</span> #[[${order.orderid}]]
 
 								<!-- 								<span class="fw-bold">-- Giao Trước 11:00 *[[${order.orderdate}]] </span>  -->
-								<span class="fw-bold">-- Giao Trước 11:00 *Ngày:
-									[[${order.getOrderDateFormatted()}]] </span> <span
-									th:if="${order.statusOrder.name} =='Đã hủy'"
+								<span class="fw-bold">[[${order.getOrderDateFormatted()}]]
+								</span> <span th:if="${order.statusOrder.name} =='Đã hủy'"
 									class="float-end text-danger fw-bold">
 									[[${order.statusOrder.name}]] </span> <span
 									th:if="${order.statusOrder.name} !='Đã hủy'"
 									class="float-end text-success fw-bold">
 									[[${order.statusOrder.name}]] </span>
 							</div>
+
 							<div class="row g-0 mt-1"
 								th:each="orderDetail : ${order.orderDetail}">
 								<div class="col-md-2">
 									<img th:src="*{orderDetail.product.image}" class="img-fluid"
 										alt="...">
 								</div>
-								<div class="col-md-10">
-									<div class="card-body">
+								<div class="col-md-8">
+									<div class="card-body ">
 										<span> <span
-											th:text="${orderDetail.product.productname}"></span><br>
+											th:text="${orderDetail.product.productname}"> </span><br>
 											<span
-											th:text="'Số lượng: '+${orderDetail.quantityordered}+'kg'"></span>
-											<!-- 											<span th:text="${#numbers.formatDecimal(orderDetail.product.price, 0, 'COMMA', 0, -->
-											<!-- 											'POINT')}+'đ'"></span> -->
+											th:text="'Số lượng: '+${orderDetail.quantityordered}+'kg'"></span><br>
+											Giá: <span
+											th:text="${#numbers.formatDecimal(orderDetail.product.price, 0, 'COMMA', 0,
+																						'POINT')}+'đ'"></span>
 										</span>
 
 									</div>
 
 								</div>
+
+								<div class="col-sm-2">
+									<span
+										th:with="subtotal = ${orderDetail.quantityordered * orderDetail.product.price}">
+										<span
+										th:text="'Tổng: '+${#numbers.formatDecimal(subtotal, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+									</span>
+
+								</div>
+
 							</div>
+							<hr class="">
 							<div class="float-end">
+								<div class="float-end">
 
-								<span th:if="*{order.statusOrder.name} == 'Chờ xác nhận'">
+									<!-- Tính tổng giá cho từng đơn hàng -->
+									<div th:with="totalPrice=0">
+										<div th:each="orderDetail : ${order.orderDetail}">
+											<div
+												th:with="subtotal=${orderDetail.quantityordered * orderDetail.product.price}">
+												<!-- Tăng giá trị của totalPrice bằng subtotal -->
+												<div th:with="totalPrice=${totalPrice + subtotal}"></div>
 
-									<button th:id="'cancelButton_' + ${order.orderid}"
-										class="cancel-button btn mt-3 text-danger float-end btn-white border border-danger ms-2">Hủy
-										đơn</button>
-								</span> <a th:href="@{|/order/detail/${order.orderid}|}"
-									class="btn mt-3 text-success float-end  border border-success">Xem
-									chi tiết</a>
+											</div>
+
+
+										</div>
+
+										<div>
+											<span>Tổng: <span
+												th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="mt-3">
+
+									<span th:if="*{order.statusOrder.name} == 'Chờ xác nhận'">
+
+										<button th:id="'cancelButton_' + ${order.orderid}"
+											class="cancel-button btn mt-3 text-danger float-end btn-white border border-danger ms-2">Hủy
+											đơn</button>
+									</span> <a th:href="@{|/order/detail/${order.orderid}|}"
+										class="btn mt-3 text-success float-end  border border-success">Xem
+										chi tiết</a>
+								</div>
 
 							</div>
 
