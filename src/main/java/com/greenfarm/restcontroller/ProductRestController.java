@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.Top10;
 import com.greenfarm.service.ProductService;
 
 import io.minio.MinioClient;
@@ -199,6 +200,11 @@ public class ProductRestController {
 		return ResponseEntity.ok(productDTOList);
 	}
 
+//	@GetMapping("/thongke/sp")
+//	public ResponseEntity<List<Report>> getTK_SP() {
+//		return new ResponseEntity<>(productService.getTk_sp(), HttpStatus.OK);
+//	}
+	
 	@GetMapping("/thongke/sp")
 	public ResponseEntity<List<Report>> getTK_SP() {
 		return new ResponseEntity<>(productService.getTk_sp(), HttpStatus.OK);
@@ -208,5 +214,10 @@ public class ProductRestController {
 	public ResponseEntity<List<Report>> getTK_Loai() {
 		return new ResponseEntity<>(productService.getTk_loai(), HttpStatus.OK);
 	}
+	
+	@GetMapping("/thongke/top10tk")
+    public List<Top10> getProductTK() {
+        return productService.getReportSpTk();
+    }
 
 }

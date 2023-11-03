@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.Top10;
 
 public interface ProductService {
 
@@ -48,5 +49,9 @@ public interface ProductService {
 
 	// Thống kê lại sp
 	List<Report> getTk_loai();
+
+	// Thống kê sản phẩm tồn kho
+	List<Top10> getReportSpTk();
+
 
 }

@@ -1,6 +1,7 @@
 package com.greenfarm.service.impl;
 
 import java.util.Comparator;
+
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -13,6 +14,7 @@ import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.ProductsDAO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.Top10;
 import com.greenfarm.service.ProductService;
 
 @Service
@@ -133,6 +135,16 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Report> getTk_loai() {
 		return dao.getInventoryByCategory();
+	}
+
+	@Override
+	public List<Top10> getReportSpTk() {
+		List<Top10> productsByQuantityAvailable = dao.getTop10ProductsByQuantityAvailable();
+	    if (productsByQuantityAvailable.size() > 10) {
+	        return productsByQuantityAvailable.subList(0, 10);
+	    } else {
+	        return productsByQuantityAvailable;
+	    }
 	}
 
 }

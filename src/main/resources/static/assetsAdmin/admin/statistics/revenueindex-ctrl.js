@@ -39,6 +39,62 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
     }
     return totalCount;
 	};
+	
+			$(function() {
+			var newCust = [ [ 4, 1 ], [ 5, 3 ], [ 6, 6 ], [ 7, 5 ], [ 8, 7 ],
+					[ 9, 8 ], [ 10, 10 ], ];
+			var retCust = [ [ 4, 1 ], [ 5, 2 ], [ 6, 5 ], [ 7, 3 ], [ 8, 5 ],
+					[ 9, 6 ], [ 10, 9 ], ];
+
+			var plot = $.plot($("#flotLine1"), [ {
+				data : newCust,
+				label : "New Customer",
+				color : "#ff5e5e",
+			}, {
+				data : retCust,
+				label : "Returning Customer",
+				color : "#7571F9",
+			}, ], {
+				series : {
+					lines : {
+						show : true,
+						lineWidth : 1,
+					},
+					shadowSize : 0,
+				},
+				points : {
+					show : false,
+				},
+				legend : {
+					noColumns : 1,
+					position : "nw",
+				},
+				grid : {
+					hoverable : true,
+					clickable : true,
+					borderColor : "#ddd",
+					borderWidth : 0,
+					labelMargin : 5,
+					backgroundColor : "transparent",
+				},
+				yaxis : {
+					min : 0,
+					max : 15,
+					color : "transparent",
+					font : {
+						size : 10,
+						color : "#999",
+					},
+				},
+				xaxis : {
+					color : "transparent",
+					font : {
+						size : 10,
+						color : "#999",
+					},
+				},
+			});
+		});
 			
 	$scope.initialize();
 })

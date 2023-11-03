@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.Top10;
 
 public interface ProductsDAO extends JpaRepository<Product, Integer> {
 
@@ -29,4 +30,9 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 
 	@Query("SELECT p FROM Product p JOIN p.orderDetails od GROUP BY p.productid, p.productname,p.image ORDER BY SUM(od.quantityordered) DESC")
 	List<Product> findTopSellingProducts();
+
+	@Query("SELECT new Top10(o.product, sum(o.quantityordered)) FROM OrderDetail "
+			+ "o GROUP BY o.product ORDER BY sum(o.quantityordered) DESC")
+	List<Top10> getTop10ProductsByQuantityAvailable();
+
 }
