@@ -2,6 +2,7 @@ package com.greenfarm.restcontroller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -157,7 +158,8 @@ public class TourRestController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
+	@Transactional
 	private Tour updateTour(TourDTO tourDTO, Integer tourid) {
 		Tour tour = tourService.findById(tourid);
 		if (tour == null) {
@@ -223,47 +225,51 @@ public class TourRestController {
 			tour.setPricings(pricings);
 		}
 
-		List<TourImage> tourImages = tourImageService.findByTourTourid(tourid);
-		// Tạo một Map để lưu trữ tourImage theo tourImageId
-		Map<Integer, TourImage> tourImageMap = new HashMap<>();
-		for (TourImage tourImage : tourImages) {
-			tourImageMap.put(tourImage.getTourimageid(), tourImage);
-		}
-		// Update tour images
+		List<TourImage> tourImages = new ArrayList<>(tour.getTourImage());
+		List<TourImage> tempTourImages = new ArrayList<>();
+		List<TourImage> tourImagesToDelete = new ArrayList<>();
+
 		for (TourImageDTO tourImageDTO : tourDTO.getTourImage()) {
-			Integer tourImageId = tourImageDTO.getTourimageid();
-			if (tourImageId != null) {
-				TourImage tourImage = tourImageMap.get(tourImageId);
-				if (tourImage != null) {
-					// Cập nhật thông tin hình ảnh
-					tourImage.setTour(tour);
-					tourImage.setImageurl(tourImageDTO.getImageurl());
-					tourImageService.save(tourImage);
-				} else {
-					// Nếu không tìm thấy, tạo mới TourImage
-					tourImage = new TourImage();
-					tourImage.setTour(tour);
-					tourImage.setImageurl(tourImageDTO.getImageurl());
-					tourImageService.save(tourImage);
-//		            tourImageService.update(tourImage);
-					tourImageMap.put(tourImage.getTourimageid(), tourImage);
-				}
-			}
+		    Integer tourImageId = tourImageDTO.getTourimageid();;
+		    Optional<TourImage> optionalTourImage = tourImages.stream()
+                    .filter(ti -> ti.getTourimageid() != null && ti.getTourimageid().equals(tourImageId))
+                    .findFirst();
+		    if (optionalTourImage.isPresent()) {
+		        TourImage tourImage = optionalTourImage.get();
+		        tourImage.setImageurl(tourImageDTO.getImageurl());
+		        tourImage.setTour(tour);
+		        tempTourImages.add(tourImage);
+		    } else {
+		        TourImage tourImage = new TourImage();
+		        tourImage.setImageurl(tourImageDTO.getImageurl());
+		        tourImage.setTour(tour);
+		        tourImageService.save(tourImage);
+		        tempTourImages.add(tourImage);
+		    }
 		}
 
-		tour.setTourImage(new ArrayList<>(tourImageMap.values()));
+		for (TourImage tourImage : tourImages) {
+		    if (!tempTourImages.contains(tourImage)) {
+		        tourImagesToDelete.add(tourImage);
+		    }
+		}
 
-		// Update tour
-		return tourService.update(tour);
-	}
+		tourImages.removeAll(tourImagesToDelete);
+		tourImages.addAll(tempTourImages);
+
+		for (TourImage tourImage : tourImagesToDelete) {
+		    tourImageService.delete(tourImage);
 	
+		}
+
+		tour.setTourImage(tourImages);
+		return tourService.save(tour);
+	}
 
 	@DeleteMapping("{tourid}")
 	public ResponseEntity<Void> delete(@PathVariable("tourid") Integer tourid) {
 		tourService.delete(tourid);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
-	
 
 }

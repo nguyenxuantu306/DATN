@@ -34,7 +34,7 @@ public class Tour implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer tourid;
-
+	
 	private String tourname;
 
 	private String Description;
@@ -59,11 +59,11 @@ public class Tour implements Serializable {
 	private User user;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "tour")
+	@OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
 	private List<Booking> booking;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "tour")
+	@OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
 	private List<Comment> comment;
 
 	@JsonIgnore
@@ -77,10 +77,10 @@ public class Tour implements Serializable {
 	@JsonIgnore
 	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
 	private Pricing pricings;
-	
+
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tour")
-	private List<TourImage> tourImage = new ArrayList<>();
+	private List<TourImage> tourImage;
 
 	@Override
 	public String toString() {

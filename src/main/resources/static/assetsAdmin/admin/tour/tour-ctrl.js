@@ -14,10 +14,9 @@ app.controller("tour-ctrl", function($scope, $http) {
 			imageurl: ''
 		});
 	};
-	//Loại bỏ các image
-	$scope.removeImage = function(index) {
-		$scope.form.tourImage.splice(index, 1);
-	};
+
+
+
 
 	$scope.initialize = function() {
 		// Load tours
@@ -28,22 +27,26 @@ app.controller("tour-ctrl", function($scope, $http) {
 					item.enddate = new Date(item.enddate)
 			})
 		});
-
 		$http.get("/rest/tours/images").then(resp => {
 			$scope.item2 = resp.data;
 		});
-
-
 	}
 	// Khởi đầu
 	$scope.initialize();
 
+	$scope.idi = {};
 	// Hiện thị lên form
 	$scope.edit = function(item) {
+		for (var i = 0; i < item.tourImage.length; i++) {
+			item.tourImage[i].delete = false;
+		}
 		$scope.form = angular.copy(item);
-		$scope.form.tourImage = angular.copy(item.tourImage);
+		$scope.idi = item.tourid;
+		//		$scope.form.tourImage = angular.copy(item.tourImage);
 		console.log($scope.form);
 	}
+	
+	
 
 	$scope.reset = function() {
 		$scope.error = ['err'];
@@ -85,11 +88,21 @@ app.controller("tour-ctrl", function($scope, $http) {
 		});
 	};
 
+		//Loại bỏ các image
+	$scope.removeImage = function(index) {
+		// Loại bỏ TourImage khỏi form
+		$scope.form.tourImage.splice(index, 1);
+	};
 
 	// Cập nhật tour
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
 		if (item.tourid != null) {
+			if (item.tourImage) {
+				item.tourImage.forEach(imageurl => {
+					delete imageurl.tourid;
+				});
+			}
 			$http.put(`/rest/tours/${item.tourid}`, item).then(resp => {
 				var index = $scope.items.findIndex(p => p.tourid == item.tourid);
 				$scope.items[index] = item;

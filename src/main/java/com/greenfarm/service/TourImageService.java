@@ -2,6 +2,8 @@ package com.greenfarm.service;
 
 import java.util.List;
 
+import com.greenfarm.dto.TourImageDTO;
+import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.TourImage;
 
 public interface TourImageService {
@@ -14,8 +16,19 @@ public interface TourImageService {
 
 	void create(List<TourImage> tourImages);
 
-	List<TourImage> findByTourTourid(Integer tourid);
+	TourImage save(TourImage tourImage);
 
-	void save(TourImage tourImage);
+//	void delete(TourImage tourImageId);
 
+	void deleteByTourimageid(Integer tourimageid);
+
+	List<TourImage> findByTour(Tour tour);
+
+	/* TourImage findByTourimageid(Integer tourImageId); */
+
+	void update(TourImage tourImage);
+
+//	void delete(Integer tourImageId);
+
+	void delete(TourImage tourImage);
 }

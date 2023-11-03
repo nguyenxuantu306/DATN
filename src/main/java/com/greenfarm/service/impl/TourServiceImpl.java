@@ -2,11 +2,13 @@ package com.greenfarm.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.greenfarm.dao.PricingDAO;
 import com.greenfarm.dao.TourConditionDAO;
@@ -15,11 +17,14 @@ import com.greenfarm.dao.TourOverviewDAO;
 import com.greenfarm.dto.TourDTO;
 import com.greenfarm.entity.Pricing;
 import com.greenfarm.entity.Tour;
+import com.greenfarm.entity.TourImage;
 import com.greenfarm.service.TourService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class TourServiceImpl implements TourService {
-	
+
 	@Autowired
 	PricingDAO pricingdao;
 
@@ -45,7 +50,6 @@ public class TourServiceImpl implements TourService {
 		return dao.findById(tourid).get();
 	}
 
-	
 	@Override
 	public Tour create(Tour tour) {
 		return dao.save(tour);
@@ -57,8 +61,10 @@ public class TourServiceImpl implements TourService {
 	}
 
 	@Override
-	public void delete(Integer tourid) {
-		dao.deleteById(tourid);
+	public void delete(Integer tourImageId) {
+		Tour tourImage = dao.findById(tourImageId)
+				.orElseThrow(() -> new EntityNotFoundException("Cannot find TourImage with id: " + tourImageId));
+		dao.delete(tourImage);
 	}
 
 	public List<TourDTO> findToursByAdultPrice(Float minPrice, Float maxPrice) {
@@ -82,9 +88,12 @@ public class TourServiceImpl implements TourService {
 	@Override
 	public List<TourDTO> findToursByTourname(String searchTerm) {
 		List<Tour> tours = dao.findByTournameContainingIgnoreCase(searchTerm);
-        return tours.stream()
-                .map(tour -> modelMapper.map(tour, TourDTO.class))
-                .collect(Collectors.toList());
+		return tours.stream().map(tour -> modelMapper.map(tour, TourDTO.class)).collect(Collectors.toList());
+	}
+
+	@Override
+	public Tour save(Tour tour) {
+		return dao.save(tour);
 	}
 
 }
