@@ -31,8 +31,12 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT p FROM Product p JOIN p.orderDetails od GROUP BY p.productid, p.productname,p.image ORDER BY SUM(od.quantityordered) DESC")
 	List<Product> findTopSellingProducts();
 
-	@Query("SELECT new Top10(o.product, sum(o.quantityordered)) FROM OrderDetail "
-			+ "o GROUP BY o.product ORDER BY sum(o.quantityordered) DESC")
-	List<Top10> getTop10ProductsByQuantityAvailable();
+	@Query("SELECT p FROM Product p ORDER BY p.quantityavailable DESC")
+	List<Product> getTop10ProductsByQuantityAvailable();
+
+	@Query("SELECT new Report(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
+			+ " GROUP BY o.product" + " ORDER BY  sum(o.quantityordered) Desc")
+	List<Report> getTop10ProductsBygetReportspbanchay();
+
 
 }

@@ -86,5 +86,45 @@ app.controller('productstatistics-ctrl', function($scope, $http) {
 		priceString = priceString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		return priceString + " đ";
 	}
+	
+	// biểu đồ
+	fetch('/rest/products/thongke/top10spbanchay') // Thay thế bằng đường dẫn của API
+  .then(response => response.json())
+  .then(data => {
+    const labels = data.map(item => item.group.productname);
+    const values = data.map(item => item.count);
+
+    const backgroundColors = generateRandomColors(data.length);
+
+    const chartData = {
+      datasets: [{
+        data: values,
+        backgroundColor: backgroundColors,
+        label: 'Sản phẩm theo tổng giá trị'
+      }],
+      labels: labels
+    };
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+      data: chartData,
+      type: 'polarArea'
+    });
+  });
+
+function generateRandomColors(count) {
+  const colors = [];
+  for (let i = 0; i < count; i++) {
+    const randomColor = `rgba(${getRandomInt(0, 255)}, ${getRandomInt(0, 255)}, ${getRandomInt(0, 255)}, 0.6)`;
+    colors.push(randomColor);
+  }
+  return colors;
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
 
 });

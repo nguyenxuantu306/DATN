@@ -51,7 +51,8 @@ public interface ProductService {
 	List<Report> getTk_loai();
 
 	// Thống kê sản phẩm tồn kho
-	List<Top10> getReportSpTk();
+	List<Product> getReportSpTk();
 
 
+	List<Report> getReportspbanchay();
 }

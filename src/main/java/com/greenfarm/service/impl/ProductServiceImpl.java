@@ -138,12 +138,22 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Top10> getReportSpTk() {
-		List<Top10> productsByQuantityAvailable = dao.getTop10ProductsByQuantityAvailable();
+	public List<Product> getReportSpTk() {
+		List<Product> productsByQuantityAvailable = dao.getTop10ProductsByQuantityAvailable();
 	    if (productsByQuantityAvailable.size() > 10) {
 	        return productsByQuantityAvailable.subList(0, 10);
 	    } else {
 	        return productsByQuantityAvailable;
+	    }
+	}
+	
+	@Override
+	public List<Report> getReportspbanchay() {
+		List<Report> productsBygetReportspbanchay = dao.getTop10ProductsBygetReportspbanchay();
+	    if (productsBygetReportspbanchay.size() > 10) {
+	        return productsBygetReportspbanchay.subList(0, 10);
+	    } else {
+	        return productsBygetReportspbanchay;
 	    }
 	}
 

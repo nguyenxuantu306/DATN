@@ -14,6 +14,11 @@
 							placeholder="Tìm kiếm tên sản phẩm...">
 					</div>
 					<div class="col-md-6 text-right">
+						<button type="button" class="btn btn-success">
+							<a type="button" data-toggle="modal" data-target="#exampleModal">
+								<i class="fas fa-chart-bar"></i> Biểu đồ : Xếp hạng 10 Sản phẩm dư nhiều nhất
+							</a>
+						</button>
 						<button type="button" class="btn btn-success"
 							ng-click="exportExcel()">
 							<i class="fa fa-file-excel-o"></i> Excel
@@ -43,6 +48,7 @@
 								<td>{{item.group.productname}}</td>
 								<td>{{item.group.quantityavailable}}</td>
 								<td>{{item.count}}</td>
+
 							</tr>
 						</tbody>
 					</table>
@@ -67,9 +73,18 @@
 			</div>
 		</div>
 	</div>
-	
-	<h1>Top 10 Sản phẩm dư nhiều nhất</h1>
-    
-   <div  class="container">
-    <canvas id="myChart"></canvas>
-  </div>
+
+	<div class="modal fade" id="exampleModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl custom-modal2">
+			<div class="modal-content">
+
+				<div class="modal-body">
+					<div class="container">
+						<canvas id="myChart"></canvas>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>

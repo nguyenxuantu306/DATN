@@ -216,8 +216,13 @@ public class ProductRestController {
 	}
 	
 	@GetMapping("/thongke/top10tk")
-    public List<Top10> getProductTK() {
+    public List<Product> getProductTK() {
         return productService.getReportSpTk();
+    }
+	
+	@GetMapping("/thongke/top10spbanchay")
+    public List<Report> getProductspbanchay() {
+        return productService.getReportspbanchay();
     }
 
 }
