@@ -38,9 +38,9 @@
 							<tr ng-repeat="item in pager.itemsThongKeSp">
 								<td>{{$index + 1}}</td>
 								<td>{{item.group.productname}}</td>
-								<td>{{item.group.price | number : 3}}đ</td>
+								<td>{{formatPrice(item.group.price)}}</td>
 								<td>{{item.count}}</td>
-								<td>{{item.group.price * item.count | number : 3}}đ</td>
+								<td>{{formatPrice(item.group.price * item.count)}}</td>
 							</tr>
 						</tbody>
 					</table>

@@ -259,11 +259,10 @@ public class TourRestController {
 
 		for (TourImage tourImage : tourImagesToDelete) {
 		    tourImageService.delete(tourImage);
-	
 		}
-
+		
 		tour.setTourImage(tourImages);
-		return tourService.save(tour);
+		return tourService.update(tour);
 	}
 
 	@DeleteMapping("{tourid}")

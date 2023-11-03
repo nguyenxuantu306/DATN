@@ -66,4 +66,9 @@ public class TourImageServiceImpl implements TourImageService {
 		dao.delete(tourImage);
 	}
 
+	@Override
+	public void deleteById(Integer tourimageid) {
+		dao.deleteById(tourimageid);
+	}
+
 }

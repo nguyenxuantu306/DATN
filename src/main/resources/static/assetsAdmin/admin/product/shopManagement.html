@@ -41,7 +41,7 @@
 									<th>STT</th>
 									<th>Hình ảnh</th>
 									<th>Tên sản phẩm</th>
-									<th>Gía</th>
+									<th>Giá</th>
 									<th>Mô tả</th>
 									<th>Số lượng</th>
 									<th>Xem</th>
@@ -54,7 +54,7 @@
 									<td><img ng-src="{{item.image}}" alt="Product Image"
 										style="width: 80px;"></td>
 									<td>{{item.productname}}</td>
-									<td>{{item.price | number : 3}}</td>
+									<td>{{formatPrice(item.price)}}</td>
 									<td style="width: 400px;">{{item.description}}</td>
 									<td>{{item.quantityavailable}}</td>
 									<td><a type="button" ng-click="edit(item)"
@@ -114,34 +114,34 @@
 											<div class="col-md-8">
 												<div class="row">
 													<div class="form-group col-sm-6">
-														<label>Tên sản phẩm : </label> <input name="productname"
+														<label>Tên sản phẩm: </label> <input name="productname"
 															ng-model="form.productname"
 															class="form-control input-default">
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Gía sản phẩm : </label> <input type="number"
+														<label>Giá sản phẩm: </label> <input type="number"
 															ng-model="form.price"
 															class="form-control input-default mr-2">
 													</div>
 													<div class="form-group col-sm-6">
-														<label>số lượng : </label> <input type="number"
+														<label>số lượng: </label> <input type="number"
 															ng-model="form.quantityavailable"
 															class="form-control input-default ">
 													</div>
 
 													<div class="form-group col-sm-6">
-														<label>Loại sản phẩm : </label> <select
+														<label>Loại sản phẩm: </label> <select
 															ng-model="form.category.categoryid" class="w-100"
 															style="height: 45px;">
 															<option ng-repeat="c in cates" ng-value="c.categoryid">{{c.categoryname}}</option>
 														</select>
 													</div>
 													<div class="form-group col-sm-12">
-														<label>Hình ảnh : </label> <input name="image"
+														<label>Hình ảnh: </label> <input name="image"
 															ng-model="form.image" class="form-control input-default">
 													</div>
 													<div class="form-group col-sm-12">
-														<label>Mô tả : </label>
+														<label>Mô tả: </label>
 														<textarea name="description" ng-model="form.description"
 															class="form-control input-default"></textarea>
 													</div>
@@ -190,34 +190,34 @@
 											<div class="col-md-8">
 												<div class="row">
 													<div class="form-group col-sm-6">
-														<label>Tên sản phẩm : </label> <input name="productname"
+														<label>Tên sản phẩm: </label> <input name="productname"
 															ng-model="form.productname"
 															class="form-control input-default">
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Gía sản phẩm : </label> <input type="number"
+														<label>Gía sản phẩm: </label> <input type="number"
 															ng-model="form.price"
 															class="form-control input-default mr-2">
 													</div>
 													<div class="form-group col-sm-6">
-														<label>số lượng : </label> <input type="number"
+														<label>số lượng: </label> <input type="number"
 															ng-model="form.quantityavailable"
 															class="form-control input-default ">
 													</div>
 
 													<div class="form-group col-sm-6">
-														<label>Loại sản phẩm : </label> <select
+														<label>Loại sản phẩm: </label> <select
 															ng-model="form.category.categoryid" class="w-100"
 															style="height: 45px;">
 															<option ng-repeat="c in cates" ng-value="c.categoryid">{{c.categoryname}}</option>
 														</select>
 													</div>
 													<div class="form-group col-sm-12">
-														<label>Hình ảnh : </label> <input name="image"
+														<label>Hình ảnh: </label> <input name="image"
 															ng-model="form.image" class="form-control input-default">
 													</div>
 													<div class="form-group col-sm-12">
-														<label>Mô tả : </label>
+														<label>Mô tả: </label>
 														<textarea name="description" ng-model="form.description"
 															class="form-control input-default"></textarea>
 													</div>

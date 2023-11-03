@@ -79,4 +79,11 @@ app.controller('productstatistics-ctrl', function($scope, $http) {
 				console.error('Error exporting PDF:', error);
 			});
 	};
+	
+	// Hàm định dạng giá tiền
+	$scope.formatPrice = function(price) {
+		// Sử dụng hàm toLocaleString để định dạng giá tiền
+		return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+	};
+
 });

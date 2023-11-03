@@ -15,6 +15,11 @@ app.controller("tour-ctrl", function($scope, $http) {
 		});
 	};
 
+	// Hàm định dạng giá tiền
+	$scope.formatPrice = function(price) {
+		// Sử dụng hàm toLocaleString để định dạng giá tiền
+		return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+	};
 
 
 
@@ -45,8 +50,8 @@ app.controller("tour-ctrl", function($scope, $http) {
 		//		$scope.form.tourImage = angular.copy(item.tourImage);
 		console.log($scope.form);
 	}
-	
-	
+
+
 
 	$scope.reset = function() {
 		$scope.error = ['err'];
@@ -88,7 +93,7 @@ app.controller("tour-ctrl", function($scope, $http) {
 		});
 	};
 
-		//Loại bỏ các image
+	//Loại bỏ các image
 	$scope.removeImage = function(index) {
 		// Loại bỏ TourImage khỏi form
 		$scope.form.tourImage.splice(index, 1);

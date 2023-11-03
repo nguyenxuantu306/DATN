@@ -31,4 +31,6 @@ public interface TourImageService {
 //	void delete(Integer tourImageId);
 
 	void delete(TourImage tourImage);
+
+	void deleteById(Integer tourimageid);
 }
