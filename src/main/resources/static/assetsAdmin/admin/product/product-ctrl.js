@@ -30,6 +30,15 @@ app.controller("product-ctrl", function($scope, $http) {
 		return product.productname.toLowerCase().includes($scope.searchTerm.toLowerCase());
 	};
 
+	$scope.formatCurrency = function(event) {
+		// get input value
+		var input = event.target;
+		var value = input.value;
+		value = value.replace(/[^0-9]/g, '');
+		value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+		input.value = value;
+	}
+
 	$scope.sort = function(keyname) {
 		$scope.sortKey = keyname;
 		$scope.reverse = !$scope.reverse;

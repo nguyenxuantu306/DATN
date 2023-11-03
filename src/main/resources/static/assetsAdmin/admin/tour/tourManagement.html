@@ -15,7 +15,7 @@
 						</div>
 						<div class="col-md-6 text-right">
 							<button type="button" class="btn btn-success" ng-click="editthemsp()" data-toggle="modal"
-								data-target="#exampleModa2">
+								data-target="#exampleModal2">
 								<i class="fa fa-plus-square"></i> Thêm tour mới
 							</button>
 							<button type="button" class="btn btn-success" ng-click="exportExcel()">
@@ -206,7 +206,7 @@
 									<div class="input-group" ng-repeat="p in form.tourImage track by $index">
 										<!-- <img ng-src="{{p.imageurl }}" alt="Hình ảnh Tour" width="50px" height="auto" />-->
 										<div class="input-group mb-3">
-											
+
 											<span class="input-group-text">Link hình ảnh</span>
 											<input type="text" ng-model="p.imageurl" class="form-control">
 											<button class="btn btn-danger" ng-click="removeImage($index)">Loại
@@ -230,7 +230,7 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="exampleModa2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl custom-modal">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -252,18 +252,21 @@
 										<div class="col-6">
 											<div class="form-group d-flex">
 												<div class="form-group d-flex">
+
+
 													<div class="mr-2">
-														<label>Giá người lớn</label> <input type="number"
+														<label>Giá người lớn</label> <input type="text"
 															ng-model="form.pricings.adultprice"
-															class="form-control input-default"
-															placeholder="ChildPrice" />
+															class="form-control input-currency" placeholder="ChildPrice"
+															ng-keyup="formatCurrency($event)" />
 													</div>
 													<div class="mr-2">
-														<label>Giá trẻ em</label> <input type="number"
+														<label>Giá trẻ em</label> <input type="text"
 															ng-model="form.pricings.childprice"
-															class="form-control input-default"
-															placeholder="InfantPrice" />
+															class="form-control input-currency"
+															ng-keyup="formatCurrency($event)" />
 													</div>
+							
 													<div>
 														<label>Lượng người</label> <input type="number"
 															name="availableslots" ng-model="form.availableslots"
@@ -345,7 +348,7 @@
 									<div class="input-group" ng-repeat="p in form.tourImage track by $index">
 										<div class="input-group mb-3">
 											<span class="input-group-text">Link hình ảnh</span>
-					
+
 											<input type="text" ng-model="p.imageurl" class="form-control">
 											<button class="btn btn-danger" ng-click="removeImage($index)">Loại
 												bỏ</button>
