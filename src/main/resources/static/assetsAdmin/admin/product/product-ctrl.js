@@ -4,61 +4,61 @@ app.controller("product-ctrl", function($scope, $http) {
 	$scope.form = {};
 	$scope.field = [];
 	$scope.error = ['err'];
-	
-	$scope.initialize = function(){
+
+	$scope.initialize = function() {
 		// Load products
-		$http.get("/rest/products").then(resp =>{
+		$http.get("/rest/products").then(resp => {
 			$scope.items = resp.data;
-			$scope.items.forEach(item =>{
+			$scope.items.forEach(item => {
 				item.publication_date = new Date(item.publication_date)
 			})
 		});
-		
+
 		// Load categories
-		$http.get("/rest/categories").then(resp =>{
+		$http.get("/rest/categories").then(resp => {
 			$scope.cates = resp.data;
-			
+
 		});
-		
+
 	}
 	// Ban đầu, searchTerm rỗng
-    $scope.searchTerm = '';
+	$scope.searchTerm = '';
 
-    // Hàm lọc sản phẩm
-    $scope.filterProducts = function(product) {
-        // Kiểm tra nếu searchTerm là chuỗi con của tên sản phẩm
-        return product.productname.toLowerCase().includes($scope.searchTerm.toLowerCase());
-    };
-	
+	// Hàm lọc sản phẩm
+	$scope.filterProducts = function(product) {
+		// Kiểm tra nếu searchTerm là chuỗi con của tên sản phẩm
+		return product.productname.toLowerCase().includes($scope.searchTerm.toLowerCase());
+	};
+
 	$scope.sort = function(keyname) {
 		$scope.sortKey = keyname;
 		$scope.reverse = !$scope.reverse;
 	}
-	
+
 	// Khởi đầu
 	$scope.initialize();
-	
+
 	// Xóa form
-	$scope.reset = function(){
+	$scope.reset = function() {
 		$scope.error = ['err'];
-		$scope.form = {			
-			image:'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',			
-		};		
+		$scope.form = {
+			image: 'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',
+		};
 	}
-	
+
 	// Hiện thị lên form
-	$scope.edit = function(item){
-		$scope.form = angular.copy(item);				
+	$scope.edit = function(item) {
+		$scope.form = angular.copy(item);
 	}
-	
+
 	// Hiện thị lên for
-	$scope.editthemsp = function(){	
+	$scope.editthemsp = function() {
 		$scope.form = angular.copy();
-		$scope.form = {			
-			image:'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',			
-		};			
+		$scope.form = {
+			image: 'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',
+		};
 	}
-	
+
 	// Thêm sản phẩm mới
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
@@ -67,102 +67,102 @@ app.controller("product-ctrl", function($scope, $http) {
 			$scope.items.push(resp.data);
 			$scope.reset();
 			// Sử dụng SweetAlert2 cho thông báo thành công
-	        Swal.fire({
-	            icon: 'success',
-	            title: 'Thành công!',
-	            text: 'Thêm sản phẩm thành công!',
-	        });
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Thêm sản phẩm thành công!',
+			});
 		}).catch(error => {
 			// Sử dụng SweetAlert2 cho thông báo lỗi
-	        Swal.fire({
-	            icon: 'error',
-	            title: 'Lỗi!',
-	            text: 'Lỗi thêm sản phẩm',
-	        });
+			Swal.fire({
+				icon: 'error',
+				title: 'Lỗi!',
+				text: 'Lỗi thêm sản phẩm',
+			});
 			console.log("Error", error);
 		});
 	}
 
-	
+
 	// Cập nhật sản phẩm
-	$scope.update = function(){
+	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/products/${item.productid}`,item).then(resp =>{
+		$http.put(`/rest/products/${item.productid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.productid == item.productid);
-			$scope.items[index] = item;				
+			$scope.items[index] = item;
 			// Sử dụng SweetAlert2 cho thông báo thành công
-	        Swal.fire({
-	            icon: 'success',
-	            title: 'Thành công!',
-	            text: 'Cập nhật sản phẩm thành công!',
-	        });
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Cập nhật sản phẩm thành công!',
+			});
 		})
-		.catch(error =>{
-			// Sử dụng SweetAlert2 cho thông báo lỗi
-	        Swal.fire({
-	            icon: 'error',
-	            title: 'Lỗi!',
-	            text: 'Lỗi cập nhật sản phẩm',
-	        });
-			console.log("Error", error);
-		});
+			.catch(error => {
+				// Sử dụng SweetAlert2 cho thông báo lỗi
+				Swal.fire({
+					icon: 'error',
+					title: 'Lỗi!',
+					text: 'Lỗi cập nhật sản phẩm',
+				});
+				console.log("Error", error);
+			});
 	}
-	
+
 	// Xóa sản phẩm 
-	$scope.delete = function(item){
-		$http.delete(`/rest/products/${item.productid}`).then(resp =>{
+	$scope.delete = function(item) {
+		$http.delete(`/rest/products/${item.productid}`).then(resp => {
 			var index = $scope.items.findIndex(p => p.productid == item.productid);
-			$scope.items.splice(index,1);
-			$scope.reset();				
+			$scope.items.splice(index, 1);
+			$scope.reset();
 			// Sử dụng SweetAlert2 cho thông báo thành công
-	        Swal.fire({
-	            icon: 'success',
-	            title: 'Thành công!',
-	            text: 'Xóa sản phẩm thành công!',
-	        });
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Xóa sản phẩm thành công!',
+			});
 		})
-		.catch(error =>{
-			// Sử dụng SweetAlert2 cho thông báo lỗi
-	        Swal.fire({
-	            icon: 'error',
-	            title: 'Lỗi!',
-	            text: 'Lỗi xóa sản phẩm',
-	        });
-			console.log("Error", error);
-		});
+			.catch(error => {
+				// Sử dụng SweetAlert2 cho thông báo lỗi
+				Swal.fire({
+					icon: 'error',
+					title: 'Lỗi!',
+					text: 'Lỗi xóa sản phẩm',
+				});
+				console.log("Error", error);
+			});
 	}
-	
+
 	$scope.pager = {
-		page:0,
-		size:10,
-		get items(){
-			var start = this.page*this.size;
-			 return $scope.items.slice(start,start + this.size);
+		page: 0,
+		size: 10,
+		get items() {
+			var start = this.page * this.size;
+			return $scope.items.slice(start, start + this.size);
 		},
-		get count(){
+		get count() {
 			return Math.ceil(1.0 * $scope.items.length / this.size);
 		},
-		first(){
+		first() {
 			this.page = 0;
 		},
-		prev(){
+		prev() {
 			this.page--;
-			if(this.page < 0){
+			if (this.page < 0) {
 				this.last();
 			}
 		},
-		next(){
+		next() {
 			this.page++;
-			if(this.page > this.count){
+			if (this.page > this.count) {
 				this.first();
 			}
 		},
-		last(){
-			this.page = this.count-1;
-		}		
+		last() {
+			this.page = this.count - 1;
+		}
 	}
-	
-// Trong AngularJS controller hoặc service
+
+	// Trong AngularJS controller hoặc service
 	$scope.exportExcel = function() {
 		$http.get('/excel-product', { responseType: 'arraybuffer' })
 			.then(function(response) {
@@ -177,8 +177,8 @@ app.controller("product-ctrl", function($scope, $http) {
 			});
 	};
 	// PDF
-		
-		$scope.exportPdf = function() {
+
+	$scope.exportPdf = function() {
 		$http.get('/pdf-product', { responseType: 'arraybuffer' })
 			.then(function(response) {
 				var blob = new Blob([response.data], { type: 'application/pdf' });
@@ -193,54 +193,55 @@ app.controller("product-ctrl", function($scope, $http) {
 				console.error('Error exporting PDF:', error);
 			});
 	};
-	
+
 	// Hàm định dạng giá tiền
 	$scope.formatPrice = function(price) {
-		// Sử dụng hàm toLocaleString để định dạng giá tiền
-		return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+		var priceString = price.toString();
+		priceString = priceString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		return priceString + " đ";
+	}
+
+
+	/*// Sử dụng AngularJS để lắng nghe sự kiện khi người dùng chọn tệp
+	$scope.selectImage = function() {
+		var fileInput = document.getElementById('imageUpload');
+		fileInput.click();
 	};
-
-
-/*// Sử dụng AngularJS để lắng nghe sự kiện khi người dùng chọn tệp
-$scope.selectImage = function() {
-    var fileInput = document.getElementById('imageUpload');
-    fileInput.click();
-};
-
-// Xử lý sự kiện khi người dùng chọn tệp
-document.getElementById('imageUpload').addEventListener('change', function(event) {
-    var imagePreview = document.getElementById('imagePreview');
-    var file = event.target.files[0];
-
-    if (file) {
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-            imagePreview.src = e.target.result;
-            imagePreview.style.display = 'block';
-        };
-
-        reader.readAsDataURL(file);
-    } else {
-        // Nếu người dùng không chọn tệp, ẩn hình ảnh
-        imagePreview.src = '';
-        imagePreview.style.display = 'none';
-    }
-});
-
-// Xử lý sự kiện khi trường nhập URL mất focus (ng-blur)
-$scope.updateImageFromUrl = function() {
-    var imageUrl = $scope.form.imageUrl;
-    var imagePreview = document.getElementById('imagePreview');
-
-    if (imageUrl) {
-        imagePreview.src = imageUrl;
-        imagePreview.style.display = 'block';
-    } else {
-        // Nếu URL trống, ẩn hình ảnh
-        imagePreview.src = '';
-        imagePreview.style.display = 'none';
-    }
-};*/
 	
+	// Xử lý sự kiện khi người dùng chọn tệp
+	document.getElementById('imageUpload').addEventListener('change', function(event) {
+		var imagePreview = document.getElementById('imagePreview');
+		var file = event.target.files[0];
+	
+		if (file) {
+			var reader = new FileReader();
+	
+			reader.onload = function(e) {
+				imagePreview.src = e.target.result;
+				imagePreview.style.display = 'block';
+			};
+	
+			reader.readAsDataURL(file);
+		} else {
+			// Nếu người dùng không chọn tệp, ẩn hình ảnh
+			imagePreview.src = '';
+			imagePreview.style.display = 'none';
+		}
+	});
+	
+	// Xử lý sự kiện khi trường nhập URL mất focus (ng-blur)
+	$scope.updateImageFromUrl = function() {
+		var imageUrl = $scope.form.imageUrl;
+		var imagePreview = document.getElementById('imagePreview');
+	
+		if (imageUrl) {
+			imagePreview.src = imageUrl;
+			imagePreview.style.display = 'block';
+		} else {
+			// Nếu URL trống, ẩn hình ảnh
+			imagePreview.src = '';
+			imagePreview.style.display = 'none';
+		}
+	};*/
+
 });

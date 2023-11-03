@@ -59,7 +59,8 @@ app.controller('orderstatistics-ctrl', function($scope, $http) {
 		
 	// Hàm định dạng giá tiền
 	$scope.formatPrice = function(price) {
-		// Sử dụng hàm toLocaleString để định dạng giá tiền
-		return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-	};
+		var priceString = price.toString();
+		priceString = priceString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		return priceString + " đ";
+	}
 })

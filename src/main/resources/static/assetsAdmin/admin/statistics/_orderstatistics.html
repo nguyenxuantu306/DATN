@@ -38,7 +38,7 @@
 								<td>{{item.group.order.orderdate}}</td>
 								<td>{{item.group.totalprice}}</td>
 								<td>{{item.count}}</td>
-								<td>{{item.sum | number :0}}đ</td>
+								<td>{{formatPrice(item.sum)}}</td>
 							</tr>
 						</tbody>
 					</table>

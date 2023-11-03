@@ -47,7 +47,7 @@ app.controller('productstatistics-ctrl', function($scope, $http) {
 		},
 	}
 	$scope.initialize();
-// Trong AngularJS controller hoặc service
+	// Trong AngularJS controller hoặc service
 	$scope.exportExcel = function() {
 		$http.get('/excel-productstatistics', { responseType: 'arraybuffer' })
 			.then(function(response) {
@@ -61,10 +61,10 @@ app.controller('productstatistics-ctrl', function($scope, $http) {
 				console.error('Error exporting Excel:', error);
 			});
 	};
-	
+
 	// PDF
-		
-		$scope.exportPdf = function() {
+
+	$scope.exportPdf = function() {
 		$http.get('/pdf-productstatistics', { responseType: 'arraybuffer' })
 			.then(function(response) {
 				var blob = new Blob([response.data], { type: 'application/pdf' });
@@ -79,11 +79,12 @@ app.controller('productstatistics-ctrl', function($scope, $http) {
 				console.error('Error exporting PDF:', error);
 			});
 	};
-	
+
 	// Hàm định dạng giá tiền
 	$scope.formatPrice = function(price) {
-		// Sử dụng hàm toLocaleString để định dạng giá tiền
-		return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-	};
+		var priceString = price.toString();
+		priceString = priceString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		return priceString + " đ";
+	}
 
 });
