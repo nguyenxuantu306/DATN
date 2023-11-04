@@ -183,15 +183,19 @@ app.controller("order-ctrl", function($scope, $http) {
 
 	$scope.startDateTime = '';
 	$scope.endDateTime = '';
+	$scope.originalItems = [];
 	$scope.items = [];
-	
+
 	$scope.filterOrdersByDateRange = function() {
 		$http.get("/rest/orders").then(function(resp) {
-			$scope.items = resp.data;
-			$scope.items.forEach(item => {
-				item.orderDate = new Date(item.orderDate)
-			})
-			console.log($scope.items);
+			$scope.originalItems = resp.data;
+			$scope.items = $scope.originalItems.map(item => {
+				return {
+					...item,
+					orderDate: new Date(item.orderDate)
+				};
+			});
+
 			const startDate = $scope.startDateTime ? new Date($scope.startDateTime) : null;
 			const endDate = $scope.endDateTime ? new Date($scope.endDateTime) : null;
 
@@ -212,16 +216,21 @@ app.controller("order-ctrl", function($scope, $http) {
 
 			// Display success message
 			alert("Search successful!");
-			console.log(startDate); console.log(endDate);
+			console.log(startDate);
+			console.log(endDate);
 		}).catch(function(error) {
 			// Display error message
 			alert("Search failed: " + error);
 		});
 	};
+
 	$scope.resetDateFilters = function() {
 		$scope.startDateTime = '';
 		$scope.endDateTime = '';
 		$scope.filterOrdersByDateRange();
 	};
+
+
+
 });
 
