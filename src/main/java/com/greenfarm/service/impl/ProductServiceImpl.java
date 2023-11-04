@@ -17,6 +17,8 @@ import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Top10;
 import com.greenfarm.service.ProductService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 	@Autowired
@@ -156,5 +158,21 @@ public class ProductServiceImpl implements ProductService {
 	        return productsBygetReportspbanchay;
 	    }
 	}
+	
+	@Transactional
+    @Override
+    public void purchaseProduct(Integer productId, Integer quantityBought) {
+        Product product = dao.findById(productId).orElse(null);
+        if (product != null) {
+            if (product.getQuantityavailable() >= quantityBought) {
+                product.setQuantityavailable(product.getQuantityavailable() - quantityBought);
+                dao.save(product);
+            } else {
+                throw new RuntimeException("Không đủ sản phẩm để mua.");
+            }
+        } else {
+            throw new RuntimeException("Sản phẩm không tồn tại.");
+        }
+    }
 
 }

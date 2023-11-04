@@ -289,3 +289,51 @@ function showButton(option) {
 	}
 }
 
+// tồn kho 
+function decreaseQuantity(button) {
+    var input = button.nextElementSibling;
+    var currentValue = parseInt(input.value);
+    if (currentValue > 1) {
+        input.value = currentValue - 1;
+        updateQuantity(input);
+    }
+}
+
+function increaseQuantity(button) {
+    var input = button.previousElementSibling;
+    var currentValue = parseInt(input.value);
+    input.value = currentValue + 1;
+    updateQuantity(input);
+}
+
+function updateQuantity(input) {
+    var productId = input.getAttribute("data-productid");
+    var newQuantity = input.value;
+
+    // Gửi yêu cầu đến API để cập nhật số lượng sản phẩm
+    // Sử dụng fetch API hoặc XMLHttpRequest tại đây
+    // Đảm bảo gửi productId và newQuantity đến API
+
+    // Ví dụ sử dụng fetch API:
+    fetch('/rest/products/purchase', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            productId: productId,
+            quantityBought: newQuantity
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            // Cập nhật thành công
+            // Có thể thực hiện các hành động khác sau khi cập nhật
+        } else {
+            // Xử lý lỗi khi cập nhật
+        }
+    })
+    .catch(error => {
+        console.error('Lỗi khi gửi yêu cầu cập nhật: ', error);
+    });
+}

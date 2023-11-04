@@ -37,6 +37,4 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT new Report(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
 			+ " GROUP BY o.product" + " ORDER BY  sum(o.quantityordered) Desc")
 	List<Report> getTop10ProductsBygetReportspbanchay();
-
-
 }

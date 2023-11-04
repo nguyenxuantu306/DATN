@@ -225,4 +225,16 @@ public class ProductRestController {
         return productService.getReportspbanchay();
     }
 
+	@PutMapping("/purchase")
+    public ResponseEntity<?> purchaseProduct(@RequestParam Integer productId, @RequestParam Integer quantityBought) {
+        try {
+            productService.purchaseProduct(productId, quantityBought);
+            return ResponseEntity.ok("Sản phẩm đã được mua thành công.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Lỗi khi mua sản phẩm: " + e.getMessage());
+        }
+    }
+	
+	
+	
 }

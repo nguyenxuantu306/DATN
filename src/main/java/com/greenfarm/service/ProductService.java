@@ -55,4 +55,6 @@ public interface ProductService {
 
 
 	List<Report> getReportspbanchay();
+	
+	void purchaseProduct(Integer productId, Integer quantityBought);
 }
