@@ -29,6 +29,7 @@ import com.greenfarm.entity.Securetoken;
 import com.greenfarm.entity.User;
 import com.greenfarm.entity.UserRole;
 import com.greenfarm.exception.InvalidTokenException;
+import com.greenfarm.exception.UnkownIdentifierException;
 import com.greenfarm.exception.UserAlreadyExistException;
 import com.greenfarm.service.EmailService;
 import com.greenfarm.service.Securetokenservice;

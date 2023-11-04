@@ -35,9 +35,7 @@ public interface UserService {
 
 	boolean checkIfUserExist(final String email);
 
-	void sendRegistrationConfirmationEmail(final User user);
-
-	boolean verifyUser(final String token) throws com.greenfarm.exception.InvalidTokenException;
+	
 
     void sendRegistrationConfirmationEmail(final User user);
     boolean verifyUser(final String token) throws com.greenfarm.exception.InvalidTokenException;
