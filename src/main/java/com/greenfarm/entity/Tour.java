@@ -59,7 +59,7 @@ public class Tour implements Serializable {
 	private User user;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "tour")
 	private List<Booking> booking;
 
 	@JsonIgnore

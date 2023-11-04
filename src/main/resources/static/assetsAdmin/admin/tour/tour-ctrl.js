@@ -202,7 +202,7 @@ app.controller("tour-ctrl", function($scope, $http) {
 	}
 
 
-	$scope.formatCurrency = function(event) {
+/*	$scope.formatCurrency = function(event) {
 		// get input value
 		var input = event.target;
 		var value = input.value;
@@ -215,7 +215,7 @@ app.controller("tour-ctrl", function($scope, $http) {
 
 		// update the input value
 		input.value = value;
-	}
+	}*/
 });
 
 
