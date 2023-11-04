@@ -230,30 +230,29 @@
 					</form>
 				</div>
 			</div>
-		</div>
+<!--		</div>-->
 
 		<!--comment  -->
-		<div style="background-color: #eee;" ng-app="commentApp" ng-controller="comment-ctrl" > 
 		
-		<a>{{scope.tourId}}</a>
+		<div style="background-color: #eee;" > 
+		
+	<!--	<a>{{scope.tourId}}</a>-->
 		
 			<div class="card mb-4"  
-			ng-repeat="item in pager.items">
-									
-			
+			th:each="p : ${item.comment}">
 				<div class="card-body">
 					<div class="d-flex justify-content-between mb-2">
 						<div class="d-flex flex-row align-items-center">
 							<img
 								src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp"
 								alt="avatar" width="25" height="25" />
-							<p class="small mb-0 ms-2 mx-2">{{item.user.firstname}}</p>
+							<p class="small mb-0 ms-2 mx-2" th:text="${p.user.firstname}"></p>
 
-							<p class="text-muted small mb-0">{{item.commentdate}}</p>
+							<p class="text-muted small mb-0" th:text="${p.commentdate}"></p>
 						</div>
 
 					</div>
-					<p> {{item.commenttext}}</p>
+					<p  th:text="${p.commenttext}"> </p>
 
 					<div class="d-flex flex-row align-items-center">
 						<a href="#!" class="d-flex align-items-center me-3"> <i
@@ -310,7 +309,7 @@
 				</div>
 			</div>
 		</div>
-		
+		</div>
 		
 </body>
 
