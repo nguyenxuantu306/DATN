@@ -27,7 +27,9 @@ import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Product;
+import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportRevenue;
+import com.greenfarm.entity.RevenueTK;
 import com.greenfarm.service.OrderDetailService;
 import com.greenfarm.service.OrderService;
 import com.greenfarm.service.ProductService;
@@ -176,26 +178,13 @@ public class OrderRestController {
 		}
 	}
 	
-//	 @PostMapping("/purchase")
-//	    public ResponseEntity<String> purchaseProduct(@RequestBody OrderDetail orderDetail) {
-//	        try {
-//	            Integer productId = orderDetail.getProduct().getProductid();
-//	            Integer quantityToBuy = orderDetail.getQuantityordered();
-//	            
-//	            Product product = productService.purchaseProduct(productId, quantityToBuy);
-//	            
-//	            if (product != null) {
-//	                orderDetail.setTotalPrice(product.getPrice() * quantityToBuy);
-//	                OrderDetail newOrderDetail = orderDetailService.createOrderDetail(orderDetail);
-//	                return ResponseEntity.ok("Mua sản phẩm thành công.");
-//	            }
-//	        } catch (IllegalArgumentException e) {
-//	            return ResponseEntity.badRequest().body(e.getMessage());
-//	        } catch (Exception e) {
-//	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi trong quá trình mua sản phẩm.");
-//	        }
-//	        return ResponseEntity.badRequest().body("Lỗi trong quá trình mua sản phẩm.");
-//	    }
-//	
 	
+	
+//	@GetMapping("/monthly-revenue")
+//    public ResponseEntity<List<Report>> getMonthlyRevenue() {
+//        List<Report> monthlyRevenue = orderService.getMonthlyRevenue();
+//        return new ResponseEntity<>(monthlyRevenue, HttpStatus.OK);
+//    }
+	
+
 }

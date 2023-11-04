@@ -26,7 +26,7 @@
 										<div>
 											<p class="mb-0">
 												<span class="text-muted">Tổng:</span> <span
-													th:text="${totalPrice}"></span>
+													th:text="${totalprice}"></span>
 											</p>
 										</div>
 									</div>
@@ -60,15 +60,14 @@
 															th:text="${cart.product.productname}"></td>
 														<td class="text-center">
 															<button href="javascript:void(0)"
-																onclick="decreaseQuantity(this)">
-																-</button> <input id="quantityBought" name="quantityBought"
-															type="number" class="cart-quantity text-center w-25"
+																onclick="decreaseQuantity(this)">-</button> <input
+															 type="number"
+															class="cart-quantity text-center w-25"
 															th:value="${cart.quantity}"
 															th:data-productid="${cart.product.productid}"
 															onchange="updateQuantity(this)" />
 															<button href="javascript:void(0)"
-																onclick="increaseQuantity(this)">
-																+</button>
+																onclick="increaseQuantity(this)">+</button>
 														</td>
 
 														<td class="text-center" th:text="${cart.product.price}"></td>

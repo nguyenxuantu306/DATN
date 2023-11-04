@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetailDTO {
-	private Integer orderDetailId;
-	private Integer quantityOrdered;
-	private Float totalPrice;
-	Order order;
-	Product product;
+	private Integer orderDetailid;
+	private Integer quantityordered;
+	private Float totalprice;
+	private Order order;
+	private Product product;
 }

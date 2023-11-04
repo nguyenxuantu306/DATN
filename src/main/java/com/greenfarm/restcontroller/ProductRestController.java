@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ThongkeTK;
 import com.greenfarm.entity.Top10;
 import com.greenfarm.service.ProductService;
 
@@ -225,15 +226,19 @@ public class ProductRestController {
         return productService.getReportspbanchay();
     }
 
-	@PutMapping("/purchase")
-    public ResponseEntity<?> purchaseProduct(@RequestParam Integer productId, @RequestParam Integer quantityBought) {
-        try {
-            productService.purchaseProduct(productId, quantityBought);
-            return ResponseEntity.ok("Sản phẩm đã được mua thành công.");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Lỗi khi mua sản phẩm: " + e.getMessage());
-        }
-    }
+//	@PutMapping("/purchase")
+//	public ResponseEntity<?> purchaseProduct(@RequestBody List<ThongkeTK> thongketk) {
+//	    try {
+//	        for (ThongkeTK tk : thongketk) {
+//	            productService.purchaseProduct(tk.getProductid(), tk.getQuantitybought());
+//	        }
+//
+//	        return ResponseEntity.ok("Sản phẩm đã được mua thành công.");
+//	    } catch (Exception e) {
+//	        return ResponseEntity.badRequest().body("Lỗi khi mua sản phẩm: " + e.getMessage());
+//	    }
+//	}
+
 	
 	
 	

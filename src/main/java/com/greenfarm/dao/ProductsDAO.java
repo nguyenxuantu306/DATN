@@ -3,7 +3,10 @@ package com.greenfarm.dao;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
@@ -37,4 +40,12 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT new Report(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
 			+ " GROUP BY o.product" + " ORDER BY  sum(o.quantityordered) Desc")
 	List<Report> getTop10ProductsBygetReportspbanchay();
+	
+	
+//	// Phương thức tùy chỉnh để tìm sản phẩm theo productId và cập nhật số lượng
+// 	@Modifying
+//    @Transactional
+//    @Query("UPDATE Product p SET p.quantityavailable = p.quantityavailable - :quantityBought WHERE p.productid = :productId")
+//    void updateProductQuantity(@Param("productId") Integer productId, @Param("quantityBought") Integer quantityBought);
+	
 }

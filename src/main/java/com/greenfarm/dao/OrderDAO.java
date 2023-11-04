@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportRevenue;
+import com.greenfarm.entity.RevenueTK;
 
 public interface OrderDAO extends JpaRepository<Order, Integer> {
 
@@ -35,4 +37,14 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
     
     @Query("SELECT o FROM Order o WHERE o.user.email = ?1 AND o.statusOrder.name = ?2")
     List<Order> findByUserEmailAndStatus(String email, String status);
+
+    
+//    @Query("SELECT NEW Report(o.orderdate, SUM(od.totalprice)) FROM Order o INNER JOIN o.orderDetail od GROUP BY o.orderdate")
+//    @Query("SELECT new Report(o, sum(o.totalprice)) FROM OrderDetail o"
+//			+ " GROUP BY o" + " ORDER BY sum(o.totalprice)")
+//    List<Report> getMonthlyRevenue();
+
+
+
+
 }

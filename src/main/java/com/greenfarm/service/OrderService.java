@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportRevenue;
+import com.greenfarm.entity.RevenueTK;
 
 public interface OrderService {
 
@@ -41,4 +42,7 @@ public interface OrderService {
 
 	// lọc trạng thái trong history_order
 	List<Order> findByUserEmailAndStatus(String email, String status);
+
+
+//	List<Report> getMonthlyRevenue();
 }

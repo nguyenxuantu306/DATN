@@ -27,7 +27,7 @@ public class OrderDetail implements Serializable {
 
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "orderid")
+	@JoinColumn(name = "Orderid")
 	public Order order;
 
 	@ManyToOne

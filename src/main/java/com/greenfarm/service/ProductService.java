@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ThongkeTK;
 import com.greenfarm.entity.Top10;
 
 public interface ProductService {
@@ -56,5 +58,8 @@ public interface ProductService {
 
 	List<Report> getReportspbanchay();
 	
-	void purchaseProduct(Integer productId, Integer quantityBought);
+//	void purchaseProduct(Integer productId, Integer quantityBought);
+	
+//	void purchaseProduct(ThongkeTK thongketk);
+	
 }

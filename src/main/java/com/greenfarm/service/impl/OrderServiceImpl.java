@@ -17,7 +17,9 @@ import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.StatusOrderDAO;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
+import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportRevenue;
+import com.greenfarm.entity.RevenueTK;
 import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.service.OrderService;
 
@@ -149,4 +151,11 @@ public class OrderServiceImpl implements OrderService {
         return dao.findByUserEmailAndStatus(email, status);
     }
 
+//	@Override
+//	public List<Report> getMonthlyRevenue() {
+//		return dao.getMonthlyRevenue();
+//	}
+
+	
+	
 }
