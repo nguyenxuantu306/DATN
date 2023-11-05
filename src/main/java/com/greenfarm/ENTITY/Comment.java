@@ -25,7 +25,7 @@ public class Comment implements Serializable{
 	private Integer commentid;
 	
 	
-	private String Commenttext;
+	private String commenttext;
 	
 	private Date commentdate = new Date();
 	

@@ -11,9 +11,11 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	$scope.form = {};
 	$scope.field = [];
 	$scope.error = ['err'];
-	$scope.tourId =  $routeParams.tourid;
-	
-	
+	$scope.form = {
+        commenttext: '' // Đảm bảo bạn đã khai báo biến commenttext trong đối tượng form
+    };
+//	$scope.tourId =  $routeParams.tourid;
+	$scope.tour = itemData;
 
 
 	/* $scope.tourId;*/
@@ -21,18 +23,19 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	 
 	$scope.initialize = function() {
 	
-		console.log("tourId: " + $scope.tourId); 
-	
+		console.log("tourId: " + $scope.tour.tourid); 
+		$scope.items.user = $scope.tour.user;
+	console.log("ok :" + $scope.items.user.firstname); 
 		
-		
+			$scope.items.user = $scope.tour.user;
 		
 		// Load comment
-		$http.get("/rest/comment/tour/1").then(resp => {
+		/*$http.get("/rest/comment/tour/1").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
 				item.commentdate = new Date(item.commentdate)
 			})
-		});
+		});*/
 
 	}
 	// Khởi đầu
@@ -48,8 +51,8 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	$scope.reset = function() {
 		$scope.error = ['err'];
 		$scope.form = {
-			image: 'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',
-		};
+			
+			};
 	};
 
 	// Hiện thị lên for
@@ -60,27 +63,37 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 		};			
 	}
 
-	// Thêm tour phẩm mới
+	// Thêm comment  mới
 	$scope.create = function() {
-		var item = angular.copy($scope.form);
-		$http.post(`/rest/comment`, item).then(resp => {
+		$scope.form.tour = $scope.tour;
+		$scope.form.user = $scope.tour.user;
+		$scope.form.commenttext = $scope.form.commenttext;
+
+		$scope.form.commentdate = new Date();
+
+		var item = {};
+		 item = angular.copy($scope.form);
+			
+		$http.post(`/rest/comment`, $scope.form).then(resp => {
 			
 			resp.data.commentdate = new Date(resp.data.commentdate);
 			$scope.items.push(resp.data);
 			$scope.reset();
 			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
+			/*Swal.fire({
 				icon: 'success',
 				title: 'Thành công!',
 				text: 'Thêm tour thành công!',
-			});
+			});*/
+			console.log("cmthành công " ); 
 		}).catch(error => {
 			// Sử dụng SweetAlert2 cho thông báo lỗi
-			Swal.fire({
+			/*Swal.fire({
 				icon: 'error',
 				title: 'Lỗi!',
 				text: 'Lỗi thêm mới tour!',
-			});
+			});*/
+			console.log("cmt lỗi " ); 
 			console.log("Error", error);
 		});
 	};
@@ -117,6 +130,7 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	}
 
 	$scope.delete = function(item) {
+		console.log("comment id to delete  " + $scope.tour.user.email);
 		$http.delete(`/rest/comment/${item.commentid}`).then(resp => {
 			var index = $scope.items.findIndex(p => p.commentid == item.commentid);
 			$scope.items.splice(index, 1);

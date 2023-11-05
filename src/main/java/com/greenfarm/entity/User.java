@@ -86,7 +86,7 @@ public class User implements Serializable {
 	List<Review> Review;
 	
 	
-	/*
-	 * @Enumerated(EnumType.STRING) private Provider provider;
-	 */
+	
+	  @Enumerated(EnumType.STRING) private Provider provider;
+	 
 }
