@@ -143,26 +143,26 @@
 							<button type="button" class="btn btn-success">
 								<a type="button" data-toggle="modal"
 									data-target="#exampleModal3"> <i class="fas fa-chart-bar"></i>
-									Biểu đồ : Thống kê doanh thu từng năm
+									Biểu đồ : Doanh thu từng năm
 								</a>
-							</button>							
+							</button>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-3">
-							<ul class="list-group list-group-flush" id="listItems">
-								<li class="list-group-item"><a href="#" data-year="2020">Năm:
-										2020</a></li>
-								<li class="list-group-item"><a href="#" data-year="2021">Năm:
-										2021</a></li>
-								<li class="list-group-item"><a href="#" data-year="2022">Năm:
-										2022</a></li>
-								<li class="list-group-item"><a href="#" data-year="2023">Năm:
-										2023</a></li>
+						<div class="col-lg-2">
+							<ul style="font-weight: bold;" class="list-group list-group-flush text-center" id="listItems">
+								<li class="list-group-item"><i style="color:green;" class="fas fa-calendar"></i>
+									| <a href="#" data-year="2020">Năm: 2020</a></li>
+								<li class="list-group-item"><i style="color:green;" class="fas fa-calendar"></i>
+									| <a href="#" data-year="2021">Năm: 2021</a></li>
+								<li class="list-group-item"><i style="color:green;" class="fas fa-calendar"></i>
+									| <a href="#" data-year="2022">Năm: 2022</a></li>
+								<li class="list-group-item"><i style="color:green;" class="fas fa-calendar"></i>
+									| <a href="#" data-year="2023">Năm: 2023</a></li>
 								<!-- Thêm các năm khác nếu cần -->
 							</ul>
 						</div>
-						<div class="col-lg-9">
+						<div class="col-lg-10">
 							<div id="chart">
 								<canvas id="myChart"></canvas>
 							</div>
@@ -173,97 +173,33 @@
 		</div>
 	</div>
 </div>
-</div>
 
-<div class="row">
-	<div class="col-lg-12">
-		<div class="card">
-			<h3 class="text-center pt-3">TOUR</h3>
-			<div class="card-body">
-				<div class="active-member">
-					<div class="table-responsive">
-						<table class="table table-xs mb-0 zero-configuration">
-							<thead>
-								<tr>
-									<th>User</th>
-									<th>Name</th>
-									<th>Child</th>
-									<th>Adults</th>
-									<th>Total</th>
-									<th>Date</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>Nguyễn Xuân Tú</td>
-									<td>Tour 1 ngày: Tát mương bắt cá Mỹ Tho - Bến Tre</td>
-									<td>500.000 VNĐ</td>
-									<td>780.000 VNĐ</td>
-									<td>1.280.000 VNĐ</td>
-									<td>10/10/2023 00:00 AM</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-lg-12">
-		<div class="card">
-			<h3 class="text-center pt-3">VEGETABLE</h3>
-			<div class="card-body">
-				<div class="active-member">
-					<div class="table-responsive">
-						<table class="table table-xs mb-0 zero-configuration">
-							<thead>
-								<tr>
-									<th>User</th>
-									<th>Name</th>
-									<th>Price</th>
-									<th>Quantity</th>
-									<th>Total</th>
-									<th>Payment Method</th>
-									<th>Date</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>Nguyễn Xuân Tú</td>
-									<td>Cà rốt</td>
-									<td>10.000 VNĐ</td>
-									<td>10</td>
-									<td>100.000 VNĐ</td>
-									<td>Paypal</td>
-									<td>10/10/2023 00:00 AM</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
-<script>
-	(function() {
-		$("#cart").on("click", function() {
-			$("#mini-cart").fadeToggle("fast");
-		});
-	})();
-</script>
 <div class="modal fade" id="exampleModal3" tabindex="-1"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl custom-modal">
 		<div class="modal-content">
 
 			<div class="modal-body">
-				<div id="chart">
-					<canvas id="myChart2"></canvas>
+				<div class="row">
+					<div class="col-md-3">
+						<h4 class="card">Doanh thu năm</h4>
+						<ul ng-repeat="item in itemsThongKeDT"
+							class="list-group list-group-flush" id="listItems">
+							<li class="list-group-item"><a href="#"
+								data-year="{{item.yearValue}}"> <span  style="color: blue;font-weight: bold;">Năm:
+										{{item.yearValue}} </span> | <span style="font-weight: bold;">{{item.sum
+										| currency:'₫':0}}</span>
+							</a></li>
+						</ul>
+
+					</div>
+					<div class="col-md-9">
+						<div id="chart">
+							<canvas id="myChart2"></canvas>
+						</div>
+					</div>
 				</div>
+
 			</div>
 
 		</div>

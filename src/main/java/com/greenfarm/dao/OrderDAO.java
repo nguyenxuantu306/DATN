@@ -44,14 +44,7 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 			+ "INNER JOIN o.orderDetail od " + "GROUP BY YEAR(o.orderdate)" + "ORDER BY YEAR(o.orderdate)")
 	List<ReportYear> getYearRevenue();
 
-//
-//    @Query("SELECT NEW FindReportYear(YEAR(o.orderdate), MONTH(o.orderdate), SUM(od.totalprice)) " +
-//            "FROM Order o " +
-//            "INNER JOIN o.orderDetail od " +
-//            "WHERE YEAR(o.orderdate) = :year " +
-//            "GROUP BY YEAR(o.orderdate), MONTH(o.orderdate) " +
-//            "ORDER BY YEAR(o.orderdate), MONTH(o.orderdate)")
-//    List<FindReportYear> findYearlyRevenue(@Param("year") Integer year);
+
 
 	@Query("SELECT NEW com.greenfarm.entity.FindReportYear(m.month, coalesce(SUM(od.totalprice), 0)) " +
 		       "FROM (SELECT 1 AS month UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 " +
