@@ -5,9 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportRevenue;
+import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.RevenueTK;
 
 public interface OrderService {
@@ -44,5 +46,11 @@ public interface OrderService {
 	List<Order> findByUserEmailAndStatus(String email, String status);
 
 
+	List<ReportYear> getYearRevenue();
+
+
 //	List<Report> getMonthlyRevenue();
+	
+	List<FindReportYear> findYearlyRevenue(Integer year);
+	
 }

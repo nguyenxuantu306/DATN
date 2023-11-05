@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,7 +44,7 @@ public class Order implements Serializable {
 
 	private String Address;
 
-	// @JsonIgnore
+	@JsonIgnore
 	@OneToMany(mappedBy = "order")
 	public List<OrderDetail> orderDetail;
 

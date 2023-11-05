@@ -24,11 +24,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfarm.dto.OrderDTO;
+import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportRevenue;
+import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.RevenueTK;
 import com.greenfarm.service.OrderDetailService;
 import com.greenfarm.service.OrderService;
@@ -186,5 +188,14 @@ public class OrderRestController {
 //        return new ResponseEntity<>(monthlyRevenue, HttpStatus.OK);
 //    }
 	
-
+	@GetMapping("/year-revenue")
+	public ResponseEntity<List<ReportYear>> getyearRevenue() {
+	      List<ReportYear> yearRevenue = orderService.getYearRevenue();
+	      return new ResponseEntity<>(yearRevenue, HttpStatus.OK);
+	}
+	
+	 @GetMapping("/findyearrevenue/{year}")
+     public List<FindReportYear> getYearlyRevenue(@PathVariable Integer year) {
+        return orderService.findYearlyRevenue(year);
+	 }
 }
