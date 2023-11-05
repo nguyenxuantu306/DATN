@@ -9,13 +9,14 @@
 
 						<div>
 							<!-- 						datetime-local -->
-							<input type="date" id="startDateTime" ng-model="startDateTime"
-								style="height: 45px;"> <span style="margin: 0 15px;">Đến</span>
-							<input type="date" id="endDateTime" ng-model="endDateTime"
-								style="height: 45px;">
-							<button class="btn btn-primary"
-								ng-click="filterOrdersByDateRange()">Lọc</button>
-							<button class="btn btn-secondary" ng-click="resetDateFilters()">Xóa
+							<input type="datetime-local" id="startDateTime"
+								ng-model="startDateTime" style="height: 45px;"> <span
+								style="margin: 0 15px;">Đến</span> <input type="datetime-local"
+								id="endDateTime" ng-model="endDateTime" style="height: 45px;">
+
+							<button class="btn btn-primary" ng-click="filterOrders()">Lọc</button>
+
+							<button class="btn btn-secondary" ng-click="resetFilter()">Xóa
 								bộ lọc</button>
 						</div>
 					</div>
@@ -51,13 +52,14 @@
 							</tr>
 						</thead>
 						<tbody>
-						
-							<tr class="text-center" ng-repeat="item in items| orderBy:'-orderdate'"
+
+							<tr class="text-center"
+								ng-repeat="item in items| orderBy:'-orderdate'"
 								ng-if="((!ngayTaoFilter) || (item.orderdate) === ngayTaoFilter) && (selectedStatus == item.statusOrder.statusorderid || selectedStatus == '0')">
 								<th scope="row">{{$index + 1}}</th>
 								<td>{{item.user.firstname}}</td>
 								<!-- 								<td>{{item.orderdate | date:'dd-MM-yyyy HH:mm a'}}</td> -->
-								<td>{{item.orderdate | date:'dd-MM-yyyy'}}</td>
+								<td>{{ item.orderdate | date:'dd-MM-yyyy hh:mm a' }}</td>
 								<td>{{formatPrice(calculateTotal(item))}}</td>
 								<td style="color: white; width: 300px;"
 									ng-class="{
@@ -67,8 +69,7 @@
 							        'bg-danger': item.statusOrder.statusorderid == 4
    									 }">{{item.statusOrder.name}}</td>
 								<td><a type="button" ng-click="edit(item)"
-									data-toggle="modal" data-target="#exampleModal"> <i
-										class="bi bi-info-circle"></i>
+									data-toggle="modal" data-target="#exampleModal"> <i class="bi bi-sticky"></i>
 								</a> <!-- Modal -->
 									<div style="text-align: left;" class="modal fade"
 										id="exampleModal" tabindex="-1"
@@ -155,13 +156,14 @@
 															<label style="font-size: 20px; color: black;">Cập
 																nhật trạng thái : </label> <select
 																class="form-select w-auto select"
-																ng-model="form.statusOrder.statusorderid"ng-disabled="form.statusOrder.statusorderid === 3 || form.statusOrder.statusorderid === 4"
+																ng-model="form.statusOrder.statusorderid"
+																ng-disabled="form.statusOrder.statusorderid === 3 || form.statusOrder.statusorderid === 4"
 																style="background-color: #f7f7f7; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: auto; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
 																<option ng-repeat="c in cates"
 																	ng-value="c.statusorderid">{{c.name}}</option>
 															</select>
 															<div style="background-color: #007BFF; color: #fff;"
-																ng-click="update()" class="btn" >Save</div>
+																ng-click="update()" class="btn">Save</div>
 														</div>
 													</div>
 												</div>

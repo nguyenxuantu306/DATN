@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.ProductsDAO;
+import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.service.ProductService;
@@ -133,6 +134,12 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Report> getTk_loai() {
 		return dao.getInventoryByCategory();
+	}
+
+	@Override
+	public List<Product> getProductsByCategory(Category category) {
+		// TODO Auto-generated method stub
+		return dao.getProductsByCategory(category);
 	}
 
 }

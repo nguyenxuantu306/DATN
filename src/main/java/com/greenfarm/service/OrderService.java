@@ -12,6 +12,10 @@ import com.greenfarm.entity.ReportRevenue;
 public interface OrderService {
 	List<Order> findOrdersByDateRange(LocalDateTime atStartOfDay, LocalDateTime plusDays, int page, int size);
 	
+	
+	List<Order> findByOrderdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int page, int size);
+
+
 	Order create(JsonNode orderData);
 
 	
@@ -42,6 +46,9 @@ public interface OrderService {
 
 	// lọc trạng thái trong history_order
 	List<Order> findByUserEmailAndStatus(String email, String status);
+
+
+	
 
 
 	

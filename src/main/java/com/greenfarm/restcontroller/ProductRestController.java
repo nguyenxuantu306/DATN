@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.greenfarm.dto.ProductDTO;
+import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.service.ProductService;
@@ -196,5 +197,20 @@ public class ProductRestController {
 	public ResponseEntity<List<Report>> getTK_Loai() {
 		return new ResponseEntity<>(productService.getTk_loai(), HttpStatus.OK);
 	}
+	
+	
+	@GetMapping("/getProductsByCategory/{categoryid}")
+    public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable Integer categoryid) {
+        Category category = new Category();
+        category.setCategoryid(categoryid);
+
+        List<Product> products = productService.getProductsByCategory(category);
+
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 
 }

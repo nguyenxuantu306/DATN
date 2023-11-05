@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -172,6 +174,18 @@ public class OrderServiceImpl implements OrderService {
 	public List<Order> findByUserEmailAndStatus(String email, String status) {
         return dao.findByUserEmailAndStatus(email, status);
     }
+
+
+
+	@Override
+	public List<Order> findByOrderdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int page,
+			int size) {
+		Pageable pageable = PageRequest.of(page, size);
+        return dao.findByOrderdateBetween(startDateTime, endDateTime, pageable);
+	}
+
+
+
 
 	
 

@@ -178,58 +178,120 @@ app.controller("order-ctrl", function($scope, $http) {
 	}
 
 
+	$scope.filterOrders = function() {
+		// Lấy giá trị ngày bắt đầu và kết thúc từ các trường input
+		var startDateTime = $scope.startDateTime;
+		var endDateTime = $scope.endDateTime;
 
+		// Kiểm tra xem các giá trị có hợp lệ không, ví dụ: không được để trống
+		if (startDateTime && endDateTime) {
+			// Chuyển đổi ngày thành định dạng yyyy-MM-ddTHH:mm
+			var formattedStartDateTime = formatDate(startDateTime);
+			var formattedEndDateTime = formatDate(endDateTime);
 
-
-	$scope.startDateTime = '';
-	$scope.endDateTime = '';
-	$scope.originalItems = [];
-	$scope.items = [];
-
-	$scope.filterOrdersByDateRange = function() {
-		$http.get("/rest/orders").then(function(resp) {
-			$scope.originalItems = resp.data;
-			$scope.items = $scope.originalItems.map(item => {
-				return {
-					...item,
-					orderDate: new Date(item.orderDate)
-				};
-			});
-
-			const startDate = $scope.startDateTime ? new Date($scope.startDateTime) : null;
-			const endDate = $scope.endDateTime ? new Date($scope.endDateTime) : null;
-
-			$scope.items = $scope.items.filter(item => {
-				const orderDate = new Date(item.orderDate);
-
-				if (startDate && endDate) {
-					return orderDate >= startDate && orderDate <= endDate;
-				} else if (startDate) {
-					return orderDate >= startDate;
-				} else if (endDate) {
-					return orderDate <= endDate;
+			// Gọi API để tìm kiếm danh sách đơn hàng bằng khoảng ngày sử dụng $http
+			$http.get("/rest/orders/search", {
+				params: {
+					startDateTime: formattedStartDateTime,
+					endDateTime: formattedEndDateTime
 				}
-
-				// If both startDate and endDate are not selected, don't apply date filter
-				return true;
+			}).then(resp => {
+				$scope.items = resp.data;
+			}).catch(error => {
+				console.log("Error status:", error.status);
+				console.log("Error message:", error.data);
+				console.log("Error headers:", error.headers);
+				console.log("Error config:", error.config);
 			});
+		} else {
+			// Xử lý lỗi nếu dữ liệu không hợp lệ
+			console.log("Invalid input data");
+		}
+	};
 
-			// Display success message
-			alert("Search successful!");
-			console.log(startDate);
-			console.log(endDate);
-		}).catch(function(error) {
-			// Display error message
-			alert("Search failed: " + error);
+	function formatDate(date) {
+		const year = date.getFullYear();
+		const month = (date.getMonth() + 1).toString().padStart(2, "0");
+		const day = date.getDate().toString().padStart(2, "0");
+		const hours = date.getHours().toString().padStart(2, "0");
+		const minutes = date.getMinutes().toString().padStart(2, "0");
+		return `${year}-${month}-${day}T${hours}:${minutes}`;
+		
+		
+	}
+
+	$scope.resetFilter = function() {
+		// Xóa giá trị của startDateTime và endDateTime
+		$scope.startDateTime = null;
+		$scope.endDateTime = null;
+
+		loadOrders();
+	};
+
+	function loadOrders() {
+		// Gọi API để tải danh sách đơn hàng với hoặc không có bộ lọc
+		// Sử dụng $http.get hoặc phương thức tải lại tùy thuộc vào mã của bạn
+		$http.get("/rest/orders").then(resp => {
+			$scope.items = resp.data;
+		}).catch(error => {
+			console.log("Error status:", error.status);
+			console.log("Error message:", error.data);
+			console.log("Error headers:", error.headers);
+			console.log("Error config:", error.config);
 		});
-	};
+	}
 
-	$scope.resetDateFilters = function() {
-		$scope.startDateTime = '';
-		$scope.endDateTime = '';
-		$scope.filterOrdersByDateRange();
-	};
 
+
+	//	$scope.startDateTime = '';
+	//	$scope.endDateTime = '';
+	//	$scope.originalItems = [];
+	//	$scope.items = [];
+	//
+	//	$scope.filterOrdersByDateRange = function() {
+	//		$http.get("/rest/orders").then(function(resp) {
+	//			$scope.originalItems = resp.data;
+	//			$scope.items = $scope.originalItems.map(item => {
+	//				return {
+	//					...item,
+	//					orderDate: new Date(item.orderDate)
+	//				};
+	//			});
+	//
+	//			const startDate = $scope.startDateTime ? new Date($scope.startDateTime) : null;
+	//			const endDate = $scope.endDateTime ? new Date($scope.endDateTime) : null;
+	//
+	//			$scope.items = $scope.items.filter(item => {
+	//				const orderDate = new Date(item.orderDate);
+	//
+	//				if (startDate && endDate) {
+	//					return orderDate >= startDate && orderDate <= endDate;
+	//				} else if (startDate) {
+	//					return orderDate >= startDate;
+	//				} else if (endDate) {
+	//					return orderDate <= endDate;
+	//				}
+	//
+	//				// If both startDate and endDate are not selected, don't apply date filter
+	//				return true;
+	//			});
+	//
+	//			// Display success message
+	//			alert("Search successful!");
+	//			console.log(startDate);
+	//			console.log(endDate);
+	//		}).catch(function(error) {
+	//			// Display error message
+	//			alert("Search failed: " + error);
+	//		});
+	//	};
+	//
+	//	$scope.resetDateFilters = function() {
+	//		$scope.startDateTime = '';
+	//		$scope.endDateTime = '';
+	//		$scope.filterOrdersByDateRange();
+	//	};
+	//
 
 
 });

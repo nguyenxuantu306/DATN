@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 
@@ -26,6 +28,10 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT new Report(o.category, sum(o.price), count(o)) " + " FROM Product o " + " GROUP BY o.category"
 			+ " ORDER BY sum(o.price) DESC")
 	List<Report> getInventoryByCategory();
+	
+	@Query("SELECT p FROM Product p WHERE p.category = :category")
+	List<Product> getProductsByCategory(@Param("category") Category category);
+
 
 	@Query("SELECT p FROM Product p JOIN p.orderDetails od GROUP BY p.productid, p.productname,p.image ORDER BY SUM(od.quantityordered) DESC")
 	List<Product> findTopSellingProducts();

@@ -14,10 +14,12 @@
 							placeholder="Tìm kiếm tên sản phẩm...">
 					</div>
 					<div class="col-md-6 text-right">
-						<button type="button" class="btn btn-success"ng-click="exportExcel()">
+						<button type="button" class="btn btn-success"
+							ng-click="exportExcel()">
 							<i class="fa fa-file-excel-o"></i> Excel
 						</button>
-						<button type="button" class="btn btn-success"ng-click="exportPdf()">
+						<button type="button" class="btn btn-success"
+							ng-click="exportPdf()">
 							<i class="fa fa-file-pdf-o"></i> PDF
 						</button>
 					</div>
@@ -29,7 +31,7 @@
 								<td>STT</td>
 								<th scope="col">lĩnh vực</th>
 								<th scope="col">Số sản phẩm</th>
-								<th scope="col">Tổng giá</th>
+								<th scope="col">Xem</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -37,7 +39,55 @@
 								<td>{{$index + 1}}</td>
 								<td>{{item.group.categoryname}}</td>
 								<td>{{item.count}}</td>
-								<td>{{item.sum | number : 3}}đ</td>
+								<td><a type="button"
+									ng-click="showCategoryProducts(item.group)"> <i
+										class="bi bi-sticky"></i>
+								</a>
+									<div style="text-align: left;" class="modal fade"
+										id="exampleModal" tabindex="-1"
+										aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-xl custom-modal">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="exampleModalLabel">
+														Các sản phẩm:</h1>
+													<button type="button" class="btn-close"
+														data-bs-dismiss="modal" aria-label="Close"></button>
+
+
+												</div>
+												<div class="modal-body pb-5">
+
+													<div class="table-responsive">
+														<table class="table header-border">
+															<thead>
+																<tr>
+																	<th scope="col">STT</th>
+																	<th scope="col">Hỉnh ảnh</th>
+																	<th scope="col">Tên sản phẩm</th>
+																	<th scope="col">Giá</th>
+																	<th scope="col">Số lượng (KG)</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr ng-repeat="product in selectedCategoryProducts">
+																	<th scope="row">{{$index + 1}}</th>
+																	<td><img ng-src="{{product.image}}"
+																		alt="Product Image" style="width: 80px;"></td>
+																	<td>{{product.productname}}</td>
+																	<td>{{product.price| formatCurrency}}</td>
+																	<td>{{product.quantityavailable}}</td>
+																</tr>
+															</tbody>
+
+														</table>
+
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div></td>
 							</tr>
 						</tbody>
 					</table>

@@ -36,7 +36,7 @@ public class Order implements Serializable {
 	private LocalDateTime orderdate;
 
 	public String getOrderDateFormatted() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm a");
 		return orderdate.format(formatter);
 	}
 

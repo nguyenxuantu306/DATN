@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 
@@ -48,5 +49,7 @@ public interface ProductService {
 
 	// Thống kê lại sp
 	List<Report> getTk_loai();
+
+	List<Product> getProductsByCategory(Category category);
 
 }
