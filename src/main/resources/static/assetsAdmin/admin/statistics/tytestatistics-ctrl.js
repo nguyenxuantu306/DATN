@@ -50,7 +50,7 @@ app.controller('tytestatistics-ctrl', function($scope, $http) {
 			this.page = this.count - 1;
 		},
 	}
-//
+	//
 	// Sửa phương thức để hiển thị danh sách sản phẩm khi nhấn "Xem"
 	$scope.showCategoryProducts = function(category) {
 		$http.get('/rest/products/getProductsByCategory/' + category.categoryid).then(response => {
@@ -62,7 +62,6 @@ app.controller('tytestatistics-ctrl', function($scope, $http) {
 		});
 	};
 	$scope.initialize();
-
 
 
 	// Trong AngularJS controller hoặc service
