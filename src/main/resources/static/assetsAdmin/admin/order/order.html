@@ -30,10 +30,10 @@
 						</select>
 					</div>
 					<div class="col-md-3 text-right">
-						<button type="button" class="btn btn-success">
+						<button type="button" class="btn btn-success"ng-click="exportExcel()">
 							<i class="fa fa-file-excel-o"></i> Excel
 						</button>
-						<button type="button" class="btn btn-success">
+						<button type="button" class="btn btn-success"ng-click="exportPdf()">
 							<i class="fa fa-file-pdf-o"></i> PDF
 						</button>
 					</div>
@@ -59,7 +59,7 @@
 								<th scope="row">{{$index + 1}}</th>
 								<td>{{item.user.firstname}}</td>
 								<!-- 								<td>{{item.orderdate | date:'dd-MM-yyyy HH:mm a'}}</td> -->
-								<td>{{ item.orderdate | date:'dd-MM-yyyy hh:mm a' }}</td>
+								<td>{{item.orderdate  | date:'dd-MM-yyyy HH:mm a'}}</td>
 								<td>{{formatPrice(calculateTotal(item))}}</td>
 								<td style="color: white; width: 300px;"
 									ng-class="{

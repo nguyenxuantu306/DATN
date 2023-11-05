@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.service.OrderService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,13 +26,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Collections;
 import java.util.List;
+
 @Controller
 public class OrderController {
 
 	@Autowired
 	OrderService orderService;
 
-	
 	@Autowired
 	ModelMapper modelMapper;
 
@@ -54,8 +55,5 @@ public class OrderController {
 		model.addAttribute("order", orderService.findById(orderid));
 		return "order/detail";
 	}
-	
-	
-	
 
 }

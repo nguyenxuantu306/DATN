@@ -60,6 +60,7 @@
 					<div th:each="order, state:${sortedOrders}">
 						<div class="card border border-0 rounded-0 mt-3"
 							style="padding: 20px; width: auto; border-radius: 3px; background-color: #fff; font-size: 14px; flex-direction: column;">
+
 							<div class="card-header" style="background-color: #fff;">
 								<span class="fw-bold">Đơn hàng:</span> #[[${order.orderid}]] <span
 									class="fw-bold" th:text="${order.getOrderDateFormatted()}"></span>
@@ -70,7 +71,7 @@
 									class="float-end text-success fw-bold"
 									th:text="${order.statusOrder.name}"></span>
 							</div>
-
+							<!-- Chi tiết đơn hàng -->
 							<div class="row g-0 mt-1"
 								th:each="orderDetail : ${order.orderDetail}">
 								<div class="col-md-2">
@@ -97,18 +98,12 @@
 								</div>
 							</div>
 							<hr class="">
+
+							<!-- Tổng tiền đơn hàng -->
 							<div class="float-end">
-								<div th:with="totalPrice=0">
-									<div th:each="orderDetail : ${order.orderDetail}">
-										<div
-											th:with="subtotal=${orderDetail.quantityordered * orderDetail.product.price}">
-											<!-- Add subtotal to totalPrice -->
-											<div th:with="totalPrice=${totalPrice + subtotal}"></div>
-										</div>
-									</div>
+								<div>
 									<div>
-										<span>Tổng: <span
-											th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span></span>
+										<span class="orderTotal"></span>
 									</div>
 								</div>
 							</div>
@@ -123,6 +118,9 @@
 							</div>
 						</div>
 					</div>
+
+
+
 				</div>
 
 			</div>
@@ -163,25 +161,28 @@
 		</script>
 
 		<script>
-		    document.addEventListener("DOMContentLoaded", function () {
-		        const orderStatusFilter = document.getElementById("orderStatusFilter");
-		        const orders = document.querySelectorAll("[th:each='order, state:${orders}']");
-		
-		        orderStatusFilter.addEventListener("change", function () {
-		            const selectedStatus = orderStatusFilter.value;
-		
-		            orders.forEach(function (order) {
-		                const orderStatus = order.querySelector("[th:if='${order.statusOrder.name}']");
-		                if (selectedStatus === "" || selectedStatus === orderStatus.innerText.trim()) {
-		                    order.style.display = "block";
-		                } else {
-		                    order.style.display = "none";
-		                }
-		            });
-		        });
-		    });
-	</script>
-	
+  document.addEventListener("DOMContentLoaded", function() {
+    const orderCards = document.querySelectorAll(".card.border.border-0.rounded-0.mt-3");
+
+    orderCards.forEach(function(orderCard) {
+      const subtotalElements = orderCard.querySelectorAll(".col-sm-2 span");
+
+      let orderTotal = 0;
+
+      subtotalElements.forEach(function(subtotalElement) {
+        const subtotalText = subtotalElement.innerText;
+        const subtotal = parseFloat(subtotalText.replace(/[^0-9.-]+/g, ""));
+        orderTotal += subtotal;
+      });
+
+      const orderTotalElement = orderCard.querySelector(".orderTotal");
+      orderTotalElement.textContent = `${orderTotal.toLocaleString()}đ`;
+    });
+  });
+</script>
+
+
+
 
 
 	</main>

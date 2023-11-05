@@ -178,6 +178,9 @@ app.controller("order-ctrl", function($scope, $http) {
 	}
 
 
+
+
+
 	$scope.filterOrders = function() {
 		// Lấy giá trị ngày bắt đầu và kết thúc từ các trường input
 		var startDateTime = $scope.startDateTime;
@@ -185,10 +188,12 @@ app.controller("order-ctrl", function($scope, $http) {
 
 		// Kiểm tra xem các giá trị có hợp lệ không, ví dụ: không được để trống
 		if (startDateTime && endDateTime) {
-			// Chuyển đổi ngày thành định dạng yyyy-MM-ddTHH:mm
-			var formattedStartDateTime = formatDate(startDateTime);
-			var formattedEndDateTime = formatDate(endDateTime);
-
+			// Sử dụng thư viện moment.js để định dạng ngày thời gian
+			var formattedStartDateTime = moment(startDateTime, "DD-MM-YYYY hh:mm A").format();
+			var formattedEndDateTime = moment(endDateTime, "DD-MM-YYYY hh:mm A").format();
+			// Ghi log ngày bắt đầu và kết thúc
+			console.log("Start Date:", formattedStartDateTime);
+			console.log("End Date:", formattedEndDateTime);
 			// Gọi API để tìm kiếm danh sách đơn hàng bằng khoảng ngày sử dụng $http
 			$http.get("/rest/orders/search", {
 				params: {
@@ -197,6 +202,10 @@ app.controller("order-ctrl", function($scope, $http) {
 				}
 			}).then(resp => {
 				$scope.items = resp.data;
+
+				// Hiển thị các ngày tìm kiếm được
+				var searchDates = resp.data.map(item => item.formattedOrderDate);
+				console.log("Các ngày tìm kiếm được:", searchDates);
 			}).catch(error => {
 				console.log("Error status:", error.status);
 				console.log("Error message:", error.data);
@@ -209,16 +218,7 @@ app.controller("order-ctrl", function($scope, $http) {
 		}
 	};
 
-	function formatDate(date) {
-		const year = date.getFullYear();
-		const month = (date.getMonth() + 1).toString().padStart(2, "0");
-		const day = date.getDate().toString().padStart(2, "0");
-		const hours = date.getHours().toString().padStart(2, "0");
-		const minutes = date.getMinutes().toString().padStart(2, "0");
-		return `${year}-${month}-${day}T${hours}:${minutes}`;
-		
-		
-	}
+
 
 	$scope.resetFilter = function() {
 		// Xóa giá trị của startDateTime và endDateTime
@@ -242,6 +242,37 @@ app.controller("order-ctrl", function($scope, $http) {
 	}
 
 
+	// Trong AngularJS controller hoặc service
+	$scope.exportExcel = function() {
+		$http.get('/excel-order', { responseType: 'arraybuffer' })
+			.then(function(response) {
+				var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+				var link = document.createElement('a');
+				link.href = window.URL.createObjectURL(blob);
+				link.download = 'order.xlsx';
+				link.click();
+			})
+			.catch(function(error) {
+				console.error('Error exporting Excel:', error);
+			});
+	};
+	// PDF
+
+	$scope.exportPdf = function() {
+		$http.get('/pdf-order', { responseType: 'arraybuffer' })
+			.then(function(response) {
+				var blob = new Blob([response.data], { type: 'application/pdf' });
+				var objectUrl = URL.createObjectURL(blob);
+				var a = document.createElement('a');
+				a.href = objectUrl;
+				a.download = 'order.pdf';
+				a.click();
+				URL.revokeObjectURL(objectUrl);
+			})
+			.catch(function(error) {
+				console.error('Error exporting PDF:', error);
+			});
+	};
 
 	//	$scope.startDateTime = '';
 	//	$scope.endDateTime = '';

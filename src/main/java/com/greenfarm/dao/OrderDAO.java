@@ -14,11 +14,11 @@ import com.greenfarm.entity.ReportRevenue;
 
 public interface OrderDAO extends JpaRepository<Order, Integer> {
 	
-	@Query("SELECT o FROM Order o WHERE o.orderdate >= :startDay AND o.orderdate < :endDay")
+	@Query("SELECT o FROM Order o WHERE o.orderdate  >= :startDay AND o.orderdate < :endDay")
     List<Order> findOrdersByDateRange(@Param("startDay") LocalDateTime startDay, @Param("endDay") LocalDateTime endDay);
 	
 	
-	@Query("SELECT o FROM Order o WHERE o.orderdate BETWEEN :startDateTime AND :endDateTime")
+	@Query("SELECT o FROM Order o WHERE o.orderdate  BETWEEN :startDateTime AND :endDateTime")
 	List<Order> findByOrderdateBetween(
 	    @Param("startDateTime") LocalDateTime startDateTime, 
 	    @Param("endDateTime") LocalDateTime endDateTime, 

@@ -137,12 +137,45 @@ public class OrderRestController {
 
 
 	
+//	@GetMapping("/search")
+//	public ResponseEntity<String> searchOrdersByDate(
+//	    @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDateTime,
+//	    @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDateTime,
+//	    @RequestParam(defaultValue = "0") int page,
+//	    @RequestParam(defaultValue = "10") int size) {
+//
+//	    List<Order> orders = orderService.findByOrderdateBetween(startDateTime, endDateTime, page, size);
+//
+//	    List<OrderDTO> orderDTOs = orders.stream()
+//	        .map(order -> modelMapper.map(order, OrderDTO.class))
+//	        .collect(Collectors.toList());
+//
+//	    ObjectMapper objectMapper = new ObjectMapper();
+//	    objectMapper.registerModule(new JavaTimeModule());
+//
+//	    try {
+//	        String json = objectMapper.writeValueAsString(orderDTOs);
+//	        return ResponseEntity.ok(json);
+//	    } catch (JsonProcessingException e) {
+//	        e.printStackTrace();
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//	    }
+//	}
+
+	
+	
+	
+
 	@GetMapping("/search")
 	public ResponseEntity<String> searchOrdersByDate(
 	    @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDateTime,
 	    @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDateTime,
 	    @RequestParam(defaultValue = "0") int page,
 	    @RequestParam(defaultValue = "10") int size) {
+
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm a");
+	    String startFormatted = startDateTime.format(formatter);
+	    String endFormatted = endDateTime.format(formatter);
 
 	    List<Order> orders = orderService.findByOrderdateBetween(startDateTime, endDateTime, page, size);
 
@@ -162,10 +195,6 @@ public class OrderRestController {
 	    }
 	}
 
-	
-	
-	
-	
 	
 	
 	
