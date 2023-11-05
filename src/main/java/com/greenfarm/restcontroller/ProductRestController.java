@@ -1,8 +1,5 @@
 package com.greenfarm.restcontroller;
 
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,14 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.Bucket;
+import com.google.firebase.cloud.StorageClient;
 import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.service.FirebaseService;
 import com.greenfarm.service.ProductService;
-
-import io.minio.MinioClient;
-import io.minio.UploadObjectArgs;
-import io.minio.errors.MinioException;
 
 @CrossOrigin("*")
 @RestController
@@ -43,6 +40,9 @@ public class ProductRestController {
 
 	@Autowired
 	ModelMapper modelMapper;
+
+	@Autowired
+	FirebaseService firebaseService;
 
 	@GetMapping()
 	public ResponseEntity<List<ProductDTO>> getList() {
@@ -72,54 +72,29 @@ public class ProductRestController {
 		return new ResponseEntity<>(productDTO, HttpStatus.OK);
 	}
 
-//	@PostMapping()
-//	public ResponseEntity<ProductDTO> create(@RequestBody Product product, @RequestParam("file") MultipartFile file,
-//			Model model) {
-//		try {
-//			MinioClient minioClient = MinioClient.builder()
-//					.endpoint("http://192.168.1.41:9090")
-//					.credentials("minioadmin", "minioadmin")
-//					.build();
-//
-//			String bucketName = "image-shop";
-//
-//			String imageName = UUID.randomUUID().toString() + file.getOriginalFilename();
-//
-//			minioClient.uploadObject(
-//					UploadObjectArgs.builder()
-//							.bucket(bucketName)
-//							.object(imageName)
-//							.build());
-//
-//			String image = "http://192.168.1.41:9090/" + bucketName + "/" + imageName;
-//
-//			product.setImage(image);
-//			Product createdProduct = productService.create(product);
-//
-//			// Sử dụng ModelMapper để ánh xạ từ Product đã tạo thành ProductDTO
-//			ProductDTO productDTO = modelMapper.map(createdProduct, ProductDTO.class);
-//
-//			// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
-//			return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
-//		} catch (MinioException | InvalidKeyException | NoSuchAlgorithmException | IOException e) {
-//			// Xử lý ngoại lệ
-//			model.addAttribute("error", e.getMessage());
-//
-//		}
-//		return null;		
-//	}
-	
 	@PostMapping()
 	public ResponseEntity<ProductDTO> create(@RequestBody Product product,
-			Model model) {
-		
+			Model model, @RequestParam("imageFile") MultipartFile imageFile) {
+		try {
+			Bucket bucket = StorageClient.getInstance().bucket();
+			String imageName = UUID.randomUUID().toString() + imageFile.getOriginalFilename();
+			Blob blob = bucket.create(imageName, imageFile.getBytes(), imageFile.getContentType());
+			String image = blob.getMediaLink(); 
+
+			product.setImage(image);
+
 			Product createdProduct = productService.create(product);
 
 			// Sử dụng ModelMapper để ánh xạ từ Product đã tạo thành ProductDTO
 			ProductDTO productDTO = modelMapper.map(createdProduct, ProductDTO.class);
 
 			// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
-			return new ResponseEntity<>(productDTO, HttpStatus.CREATED);				
+			return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
+		} catch (Exception e) {
+			model.addAttribute("error", e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
 	}
 
 	@PutMapping("{productid}")
