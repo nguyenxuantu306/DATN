@@ -124,7 +124,7 @@ fetch('/rest/orders/year-revenue')
 		fetch(`/rest/orders/findyearrevenue/${selectedYear}`)
 			.then(response => response.json())
 			.then(data => {
-				const labels = data.map(item => 'Tháng ' + item.monthValue);
+				const labels = data.map(item => 'Tháng ' + item.month);
 				const newCust = data.map(item => item.sum);
 
 				// Làm mới biểu đồ
