@@ -1,0 +1,181 @@
+<div class="container-fluid mt-3">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
+				<h2 class="card">Danh sách đặt tour</h2>
+				<div class="row py-3">
+					<div class="col-md-4 input-group icons">
+							<div class="input-daterange input-group">
+								<input type="date" class="form-control" name="start"
+									placeholder="Từ ngày">
+								<div class="input-group-prepend">
+									<span class="input-group-text">đến</span>
+								</div>
+								<input type="date" class="form-control" name="end"
+									placeholder="Đến ngày">
+							</div>
+					</div>
+					<div class="col-md-4 input-group icons">
+						<select class="select" style="width: 200px;" ng-model="selectedStatus">
+							<option value="1">Chờ xác nhận</option>
+							<option value="2">Đặt tour thành công</option>
+							<option value="3">Tour bị hủy</option>
+							<option value="4">Khách hàng cancel</option>
+						</select>
+					</div>
+					<div class="col-md-4 text-right">
+						<button type="button" class="btn btn-success">
+							<i class="fa fa-file-excel-o"></i> Excel
+						</button>
+						<button type="button" class="btn btn-success">
+							<i class="fa fa-file-pdf-o"></i> PDF
+						</button>
+					</div>
+				</div>
+				<div id="orderList">
+
+				</div>
+				<div class="table-responsive">
+					<table class="table header-border zero-configuration">
+						<thead>
+							<tr class="text-center">
+								<th scope="col">STT</th>
+								<th scope="col">Người đặt</th>
+								<th scope="col">Thời gian tạo</th>
+								<th scope="col">Tổng</th>
+								<th scope="col">Hình thức thanh toán</th>
+								<th scope="col">Trạng thái</th>
+								<th scope="col">Xem</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="text-center" ng-repeat="item in items">
+								<th scope="row">{{$index + 1}}</th>
+								<td>{{item.user.email}}</td>
+								<td>{{item.bookingdate  | date:'dd/MM/yyyy - HH:mm:ss' }}</td>
+								<td>{{item.totalprice | number :0 }} đ</td>
+								<td>paypal</td>
+								<td style="color: white;width: 300px;" ng-class="{
+							        'bg-primary': item.statusbooking.statusbookingid == 1,
+							        'bg-success': item.statusbooking.statusbookingid == 2,
+							        'bg-danger': item.statusbooking.statusbookingid == 3,
+							        'bg-warning': item.statusbooking.statusbookingid == 4
+   									 }">{{item.statusbooking.name}}</td>
+								<td><a type="button" ng-click="edit(item)" data-toggle="modal"
+										data-target="#exampleModal"> <i class="bi bi-info-circle"></i>
+									</a> <!-- Modal -->
+									<div style="text-align: left;" class="modal fade" id="exampleModal" tabindex="-1"
+										aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-xl custom-modal">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="exampleModalLabel">
+														Chi tiết đặt tour : {{form.bookingdate | date:'dd-MM-yyyy'}}
+														- #{{form.bookingid}} - {{form.user.email}}</h1>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"
+														aria-label="Close"></button>
+
+
+												</div>
+												<div class="modal-body pb-5">
+													<div class="row">
+														<div class="col-sm-4">
+															<div class="form-group"
+																style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
+																<div style="font-size: 20px; font-weight: bold;">Địa
+																	chỉ người nhận</div> <label>-
+																	{{form.user.address}}</label> <label>-
+																	{{form.user.email}}</label> <br> <label>-
+																	{{form.user.phonenumber}}</label>
+															</div>
+														</div>
+
+														<div class="col-sm-4">
+															<div class="form-group"
+																style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
+																<div style="font-size: 20px; font-weight: bold;">Hình
+																	thức giao hàng</div>
+																<label>-Thời gian giao dữ tính:{{item.orderdate |
+																	date:'dd-MM-yyyy'}}</label> <label>-
+																	Được giao bới : Giao hàng nhanh</label> <br>
+																<label>-
+																	Phí vận chuyển : 23,000đ</label>
+															</div>
+														</div>
+
+														<div class="col-sm-4">
+															<div class="form-group"
+																style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
+																<div style="font-size: 20px; font-weight: bold;">Hình
+																	thức thanh toán</div> <label>-
+																	Thanh toán bằng : Paypal</label> <br>
+																<label>- Trạng thái : Đã thanh toán thành công </label>
+															</div>
+														</div>
+
+													</div>
+													<div class="table-responsive">
+														<table class="table header-border">
+															<thead>
+																<tr>
+																	<th scope="col">STT</th>
+																	<th scope="col">Hỉnh ảnh</th>
+																	<th scope="col">Tên tour</th>
+																	<th scope="col">Dữ liệu tour</th>
+																	<th scope="col">Số lượng người</th>
+																	<th scope="col">Tiền tour</th>
+																	<th scope="col">Tiền người</th>
+																	<th scope="col">Tạm tính</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr ng-repeat="item in items">
+																	<th scope="row">{{$index + 1}}</th>
+																	<td><img ng-src="{{item.tour.image}}"
+																			alt="Tour Image" style="width: 80px;">
+																	</td>
+																	<td style="width:200px">{{item.tour.tourname}}</td>
+																	<td style="width:250px"> Gía người lớn : 200
+																	Gía trẻ em : 100
+																	Gía con nít : 50
+																	Địa điểm : cái gì đó
+																	</td>
+																	<td>{{item.tour.availableslots}}</td>
+																	<td>{{item.totalprice | number}}</td>
+																</tr>
+															</tbody>
+
+														</table>
+														<div class="modal-order text-right">
+															<hr>
+															<h4 style="padding-left: 100px" class="total fs-4">
+																Tổng cộng:
+																<strong>{{formatPrice(calculateTotal(form))}}</strong>
+															</h4>
+															<hr>
+															<label style="font-size: 20px; color: black;">Cập
+																nhật trạng thái : </label> <select
+																class="form-select w-auto select"
+																ng-model="form.statusOrder.statusorderid"
+																style="background-color: #f7f7f7; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: auto; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
+																<option ng-repeat="c in cates"
+																	ng-value="c.statusorderid">{{c.name}}</option>
+															</select>
+															<div style="background-color: #007BFF; color: #fff;"
+																ng-click="update()" class="btn">Save</div>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

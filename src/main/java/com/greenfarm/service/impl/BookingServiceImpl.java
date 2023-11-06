@@ -1,11 +1,17 @@
 package com.greenfarm.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfarm.dao.BookingDAO;
+import com.greenfarm.entity.Booking;
+import com.greenfarm.entity.Order;
 import com.greenfarm.entity.Top3;
 import com.greenfarm.service.BookingService;
 
@@ -20,4 +26,29 @@ public class BookingServiceImpl implements BookingService {
 		return dao.getTop3Tour(pageable1);
 	}
 
+	@Override
+	public List<Booking> findAll() {
+		return dao.findAll();
+	}
+
+	@Override
+	public List<Booking> getAllBookings(int page, int size) {
+		int offset = page * size;
+		return dao.findAll(offset, size);
+	}
+
+	@Override
+	public Booking create(JsonNode bookingData) {
+		ObjectMapper mapper = new ObjectMapper();
+
+		Booking booking = mapper.convertValue(bookingData, Booking.class);
+		dao.save(booking);
+		return booking;
+	}
+
+	
+	@Override
+	public Booking update(Booking booking) {
+		return dao.save(booking);
+	}
 }

@@ -41,12 +41,8 @@ public class Booking implements Serializable {
 	@JoinColumn(name = "tourid")
 	Tour tour;
 
-//	@ManyToOne
-//	@JoinColumn(name = "statusbookingid")
-//	StatusBooking statusBooking;
-
-//	@ManyToOne
-//	@JoinColumn(name = "tourtypeticketid")
-//	TourTypeTicket tourTypeTicket;
+	@ManyToOne
+	@JoinColumn(name = "statusbookingid")
+	StatusBooking statusBooking;
 
 }

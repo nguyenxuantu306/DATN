@@ -181,13 +181,6 @@ public class OrderRestController {
 	}
 	
 	
-	
-//	@GetMapping("/monthly-revenue")
-//    public ResponseEntity<List<Report>> getMonthlyRevenue() {
-//        List<Report> monthlyRevenue = orderService.getMonthlyRevenue();
-//        return new ResponseEntity<>(monthlyRevenue, HttpStatus.OK);
-//    }
-	
 	@GetMapping("/year-revenue")
 	public ResponseEntity<List<ReportYear>> getyearRevenue() {
 	      List<ReportYear> yearRevenue = orderService.getYearRevenue();

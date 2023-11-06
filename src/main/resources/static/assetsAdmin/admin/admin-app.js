@@ -21,6 +21,9 @@ app.config(function($routeProvider) {
 		.when("/order", {
 			templateUrl: "/assetsAdmin/admin/order/order.html",
 			controller: "order-ctrl"
+		}).when("/bookingtour", {
+			templateUrl: "/assetsAdmin/admin/booking/booking.html",
+			controller: "booking-ctrl"
 		}).when("/productS", {
 			templateUrl: "/assetsAdmin/admin/statistics/_productstatistics.html",
 			controller: 'productstatistics-ctrl'
@@ -46,7 +49,7 @@ app.config(function($routeProvider) {
 		.when("/dashboard", {
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
 		})
-
+		
 		.otherwise({
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
 			controller: "revenueindex-ctrl"

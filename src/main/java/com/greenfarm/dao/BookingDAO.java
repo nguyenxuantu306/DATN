@@ -1,11 +1,14 @@
 package com.greenfarm.dao;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.greenfarm.entity.Booking;
+import com.greenfarm.entity.Order;
 import com.greenfarm.entity.Top3;
 
 public interface BookingDAO extends JpaRepository<Booking, Integer> {
@@ -14,4 +17,7 @@ public interface BookingDAO extends JpaRepository<Booking, Integer> {
 			+ "o GROUP BY o.tour ORDER BY sum(o.Numparticipants) DESC")
 	Page<Top3> getTop3Tour(Pageable pageable1);
 
+	
+	@Query("SELECT o FROM Booking o")
+	List<Booking> findAll(int offset, int limit);
 }
