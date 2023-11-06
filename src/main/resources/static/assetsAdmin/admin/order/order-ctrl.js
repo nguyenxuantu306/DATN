@@ -181,44 +181,99 @@ app.controller("order-ctrl", function($scope, $http) {
 
 
 
+	//	$scope.filterOrders = function() {
+	//		// Lấy giá trị ngày bắt đầu và kết thúc từ các trường input
+	//		var startDateTime = $scope.startDateTime;
+	//		var endDateTime = $scope.endDateTime;
+	//
+	//		// Kiểm tra xem các giá trị có hợp lệ không, ví dụ: không được để trống
+	//		if (startDateTime && endDateTime) {
+	//			// Sử dụng thư viện moment.js để định dạng ngày thời gian
+	//			var formattedStartDateTime = moment(startDateTime, "DD-MM-YYYY hh:mm A").format();
+	//			var formattedEndDateTime = moment(endDateTime, "DD-MM-YYYY hh:mm A").format();
+	//			// Ghi log ngày bắt đầu và kết thúc
+	//			console.log("Start Date:", formattedStartDateTime);
+	//			console.log("End Date:", formattedEndDateTime);
+	//			// Gọi API để tìm kiếm danh sách đơn hàng bằng khoảng ngày sử dụng $http
+	//			$http.get("/rest/orders/search", {
+	//				params: {
+	//					startDateTime: formattedStartDateTime,
+	//					endDateTime: formattedEndDateTime
+	//				}
+	//			}).then(resp => {
+	//				$scope.items = resp.data;
+	//
+	//				// Hiển thị các ngày tìm kiếm được
+	//				var searchDates = resp.data.map(item => item.formattedOrderDate);
+	//				console.log("Các ngày tìm kiếm được:", searchDates);
+	//			}).catch(error => {
+	//				console.log("Error status:", error.status);
+	//				console.log("Error message:", error.data);
+	//				console.log("Error headers:", error.headers);
+	//				console.log("Error config:", error.config);
+	//			});
+	//		} else {
+	//			// Xử lý lỗi nếu dữ liệu không hợp lệ
+	//			console.log("Invalid input data");
+	//		}
+	//	};
+
+
+
 	$scope.filterOrders = function() {
-		// Lấy giá trị ngày bắt đầu và kết thúc từ các trường input
 		var startDateTime = $scope.startDateTime;
 		var endDateTime = $scope.endDateTime;
 
-		// Kiểm tra xem các giá trị có hợp lệ không, ví dụ: không được để trống
 		if (startDateTime && endDateTime) {
-			// Sử dụng thư viện moment.js để định dạng ngày thời gian
-			var formattedStartDateTime = moment(startDateTime, "DD-MM-YYYY hh:mm A").format();
-			var formattedEndDateTime = moment(endDateTime, "DD-MM-YYYY hh:mm A").format();
-			// Ghi log ngày bắt đầu và kết thúc
+			var formattedStartDateTime = moment(startDateTime, "DD-MM-YYYY hh:mm A").toDate(); // Chuyển đổi sang đối tượng Date
+			var formattedEndDateTime = moment(endDateTime, "DD-MM-YYYY hh:mm A").toDate(); // Chuyển đổi sang đối tượng Date
+
 			console.log("Start Date:", formattedStartDateTime);
 			console.log("End Date:", formattedEndDateTime);
-			// Gọi API để tìm kiếm danh sách đơn hàng bằng khoảng ngày sử dụng $http
+
 			$http.get("/rest/orders/search", {
 				params: {
-					startDateTime: formattedStartDateTime,
-					endDateTime: formattedEndDateTime
+					startDateTime: formattedStartDateTime.toISOString(),
+					endDateTime: formattedEndDateTime.toISOString()
 				}
-			}).then(resp => {
-				$scope.items = resp.data;
+			})
+				.then(resp => {
+					$scope.items = resp.data;
 
-				// Hiển thị các ngày tìm kiếm được
-				var searchDates = resp.data.map(item => item.formattedOrderDate);
-				console.log("Các ngày tìm kiếm được:", searchDates);
-			}).catch(error => {
-				console.log("Error status:", error.status);
-				console.log("Error message:", error.data);
-				console.log("Error headers:", error.headers);
-				console.log("Error config:", error.config);
-			});
+
+
+					$scope.items.forEach(function(item) {
+						var formattedOrderDate = moment(item.orderdate, "YYYY-MM-DDTHH:mm:ss").toDate();
+						var formattedOrderDateStr = moment(formattedOrderDate).format('DD-MM-YYYY hh:mm A');
+						item.orderdate = formattedOrderDateStr;
+					});
+
+					var searchDates = resp.data.map(item => {
+						return item.orderdate;
+					});
+					console.log("Các ngày tìm kiếm được:", searchDates);
+					$scope.searchDates = searchDates;
+					
+					
+					//					var searchDates = resp.data.map(item => {
+					//						var formattedOrderDate = moment(item.orderdate, "YYYY,MM,DD,hh,mm");
+					//						return formattedOrderDate.format('DD-MM-YYYY hh:mm A');
+					//					});
+					//					console.log("Các ngày tìm kiếm được:", searchDates);
+					//					$scope.searchDates = searchDates;
+
+				})
+				.catch(error => {
+					console.log("Error status:", error.status);
+					console.log("Error message:", error.data);
+					console.log("Error headers:", error.headers);
+					console.log("Error config:", error.config);
+				});
+
 		} else {
-			// Xử lý lỗi nếu dữ liệu không hợp lệ
 			console.log("Invalid input data");
 		}
 	};
-
-
 
 	$scope.resetFilter = function() {
 		// Xóa giá trị của startDateTime và endDateTime

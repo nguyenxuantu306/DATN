@@ -1,4 +1,5 @@
 package com.greenfarm.restcontroller;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -33,6 +34,7 @@ import com.greenfarm.service.OrderService;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalTime;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/orders")
@@ -43,7 +45,6 @@ public class OrderRestController {
 	@Autowired
 	ModelMapper modelMapper;
 
-	
 	@GetMapping()
 	public ResponseEntity<List<OrderDTO>> getList() {
 		List<Order> orders = orderService.findAll();
@@ -56,8 +57,6 @@ public class OrderRestController {
 		return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
 	}
 
-
-	
 //	public ResponseEntity<String> getAllOrders(
 //	        @RequestParam(defaultValue = "0") int page,
 //	        @RequestParam(defaultValue = "10") int size,
@@ -103,9 +102,7 @@ public class OrderRestController {
 //	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 //	    }
 //	}
-	
-		
-		
+
 //	@GetMapping("/search")
 //	public ResponseEntity<String> searchOrdersByDate(
 //	    @RequestParam String startDateTime,
@@ -134,9 +131,6 @@ public class OrderRestController {
 //	    }
 //	}
 
-
-
-	
 //	@GetMapping("/search")
 //	public ResponseEntity<String> searchOrdersByDate(
 //	    @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDateTime,
@@ -162,44 +156,31 @@ public class OrderRestController {
 //	    }
 //	}
 
-	
-	
-	
+
 
 	@GetMapping("/search")
 	public ResponseEntity<String> searchOrdersByDate(
-	    @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDateTime,
-	    @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDateTime,
-	    @RequestParam(defaultValue = "0") int page,
-	    @RequestParam(defaultValue = "10") int size) {
+			@RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDateTime,
+			@RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDateTime,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
 
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm a");
-	    String startFormatted = startDateTime.format(formatter);
-	    String endFormatted = endDateTime.format(formatter);
+		List<Order> orders = orderService.findByOrderdateBetween(startDateTime, endDateTime, page, size);
 
-	    List<Order> orders = orderService.findByOrderdateBetween(startDateTime, endDateTime, page, size);
+		List<OrderDTO> orderDTOs = orders.stream().map(order -> modelMapper.map(order, OrderDTO.class))
+				.collect(Collectors.toList());
 
-	    List<OrderDTO> orderDTOs = orders.stream()
-	        .map(order -> modelMapper.map(order, OrderDTO.class))
-	        .collect(Collectors.toList());
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
 
-	    ObjectMapper objectMapper = new ObjectMapper();
-	    objectMapper.registerModule(new JavaTimeModule());
-
-	    try {
-	        String json = objectMapper.writeValueAsString(orderDTOs);
-	        return ResponseEntity.ok(json);
-	    } catch (JsonProcessingException e) {
-	        e.printStackTrace();
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	    }
+		try {
+			String json = objectMapper.writeValueAsString(orderDTOs);
+			return ResponseEntity.ok(json);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
-	
-	
-	
-	
-	
 	@PostMapping()
 	public Order create(@RequestBody JsonNode orderData) {
 		return orderService.create(orderData);
