@@ -3,24 +3,24 @@
 		<div class="col-lg-3 col-sm-6">
 			<div class="card gradient-1">
 				<div class="card-body">
-					<h3 class="card-title text-white">Sản phẩm đã bán</h3>
+					<h3 class="card-title text-white">Doanh thu</h3>
 					<div class="d-inline-block">
-						<h2 class="text-white">4565</h2>
+						<h2 class="text-white">$ 8541</h2>
 					</div>
 					<span class="float-right display-5 opacity-5"><i
-						class="fa fa-shopping-cart"></i></span>
+						class="fa fa-money"></i></span>
 				</div>
 			</div>
 		</div>
 		<div class="col-lg-3 col-sm-6">
 			<div class="card gradient-2">
 				<div class="card-body">
-					<h3 class="card-title text-white">Lợi nhuận ròng</h3>
+					<h3 class="card-title text-white">Phản hồi của khách hàng</h3>
 					<div class="d-inline-block">
-						<h2 class="text-white">$ 8541</h2>
+						<h2 class="text-white">8541</h2>
 					</div>
 					<span class="float-right display-5 opacity-5"><i
-						class="fa fa-money"></i></span>
+						class="fa fa-thumbs-o-up" aria-hidden="true"></i> </span>
 				</div>
 			</div>
 		</div>
@@ -34,7 +34,7 @@
 					<button style="margin-top: 20px;" type="button"
 						class="btn btn-light float-right opacity-5" data-toggle="modal"
 						data-target="#exampleModal">
-						<i class="fa fa-wrench"></i>
+						<i class="fa fa-shopping-cart"></i>
 					</button>
 					<div class="modal fade" id="exampleModal" tabindex="-1"
 						aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -53,7 +53,7 @@
 												<div class="card-body gradient-3">
 													<div class="media">
 														<span class="card-widget__icon"><i
-															class="fa fa-shopping-bag"></i></span>
+															class="fa fa-shopping-cart"></i></span>
 														<div class="media-body p-2">
 															<h2 class="card-widget__title">
 																{{item.group}} : <span>{{item.count}}</span>
@@ -73,7 +73,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="col-lg-3 col-sm-6 ">
 			<div class="card gradient-4">
 				<div class="card-body " style="height: 160px">
@@ -96,7 +96,7 @@
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
-								<div class="modal-body">									
+								<div class="modal-body">
 									<div style="color: black;" class="table-responsive">
 										<table class="table header-border table-hover verticle-middle">
 											<thead>
@@ -114,7 +114,8 @@
 														class="fa fa-star"></i></td>
 													<td>{{stats.count}}</td>
 													<td><span class="label gradient-4 btn-rounded">
-															{{stats.count/calculateTotalCountstats()*100 |number:2}}% </span></td>
+															{{stats.count/calculateTotalCountstats()*100 |number:2}}%
+													</span></td>
 												</tr>
 											</tbody>
 										</table>
@@ -132,48 +133,36 @@
 
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="row">
-				<div class="col-12">
-					<div class="card">
-						<div class="card-body">
-							<h4 class="card-title">Line Chart</h4>
-							<div id="flotLine1" class="flot-chart"></div>
+			<div class="card">
+				<div class="card-body">
+					<div class="row py-3">
+						<div class="col-md-6 input-group icons">
+							<h3 class="card">Thống kê doanh thu các năm</h3>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="card">
-				<h3 class="text-center pt-3">TOUR</h3>
-				<div class="card-body">
-					<div class="active-member">
-						<div class="table-responsive">
-							<table class="table table-xs mb-0 zero-configuration">
-								<thead>
-									<tr>
-										<th>User</th>
-										<th>Name</th>
-										<th>Child</th>
-										<th>Adults</th>
-										<th>Total</th>
-										<th>Date</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>Nguyễn Xuân Tú</td>
-										<td>Tour 1 ngày: Tát mương bắt cá Mỹ Tho - Bến Tre</td>
-										<td>500.000 VNĐ</td>
-										<td>780.000 VNĐ</td>
-										<td>1.280.000 VNĐ</td>
-										<td>10/10/2023 00:00 AM</td>
-									</tr>
-								</tbody>
-							</table>
+					<div class="row">
+						<div class="col-lg-2">
+							<ul style="font-weight: bold;"
+								class="list-group list-group-flush text-center" id="listItems">
+								<li class="list-group-item"><i style="color: green;"
+									class="fas fa-calendar"></i> | <a href="#" data-year="2020">Năm:
+										2020</a></li>
+								<li class="list-group-item"><i style="color: green;"
+									class="fas fa-calendar"></i> | <a href="#" data-year="2021">Năm:
+										2021</a></li>
+								<li class="list-group-item"><i style="color: green;"
+									class="fas fa-calendar"></i> | <a href="#" data-year="2022">Năm:
+										2022</a></li>
+								<li class="list-group-item"><i style="color: green;"
+									class="fas fa-calendar"></i> | <a href="#" data-year="2023">Năm:
+										2023</a></li>
+								<!-- Thêm các năm khác nếu cần -->
+							</ul>
+						</div>
+						<div class="col-lg-10">
+							<div id="chart">
+								<canvas id="myChart"></canvas>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -183,34 +172,30 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="card">
-				<h3 class="text-center pt-3">VEGETABLE</h3>
 				<div class="card-body">
-					<div class="active-member">
-						<div class="table-responsive">
-							<table class="table table-xs mb-0 zero-configuration">
-								<thead>
-									<tr>
-										<th>User</th>
-										<th>Name</th>
-										<th>Price</th>
-										<th>Quantity</th>
-										<th>Total</th>
-										<th>Payment Method</th>
-										<th>Date</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>Nguyễn Xuân Tú</td>
-										<td>Cà rốt</td>
-										<td>10.000 VNĐ</td>
-										<td>10</td>
-										<td>100.000 VNĐ</td>
-										<td>Paypal</td>
-										<td>10/10/2023 00:00 AM</td>
-									</tr>
-								</tbody>
-							</table>
+					<div class="row py-3">
+						<div class="col-md-6 input-group icons">
+							<h3 class="card">Thống kê doanh thu của năm</h3>
+						</div>
+						<div class="col-md-6 text-right"></div>
+					</div>
+					<div class="row">
+						<div class="col-lg-3">
+							<ul ng-repeat="item in itemsThongKeDT"
+								class="list-group list-group-flush" id="listItems">
+								<li class="list-group-item text-center"><a href="#"> <span
+										style="font-weight: bold;"><i
+											style="color: green;" class="fas fa-calendar"></i> | Năm:
+											{{item.yearValue}} </span> <span
+										style="font-weight: bold; padding: 20px">{{item.sum |
+											currency:'₫':0}}</span>
+								</a></li>
+							</ul>
+						</div>
+						<div class="col-lg-9">
+							<div id="chart">
+								<canvas id="myChart2"></canvas>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -218,68 +203,4 @@
 		</div>
 	</div>
 </div>
-<script>
-	$(function() {
-		var newCust = [ [ 4, 1 ], [ 5, 3 ], [ 6, 6 ], [ 7, 5 ], [ 8, 7 ],
-				[ 9, 8 ], [ 10, 10 ], ];
-		var retCust = [ [ 4, 1 ], [ 5, 2 ], [ 6, 5 ], [ 7, 3 ], [ 8, 5 ],
-				[ 9, 6 ], [ 10, 9 ], ];
-
-		var plot = $.plot($("#flotLine1"), [ {
-			data : newCust,
-			label : "New Customer",
-			color : "#ff5e5e",
-		}, {
-			data : retCust,
-			label : "Returning Customer",
-			color : "#7571F9",
-		}, ], {
-			series : {
-				lines : {
-					show : true,
-					lineWidth : 1,
-				},
-				shadowSize : 0,
-			},
-			points : {
-				show : false,
-			},
-			legend : {
-				noColumns : 1,
-				position : "nw",
-			},
-			grid : {
-				hoverable : true,
-				clickable : true,
-				borderColor : "#ddd",
-				borderWidth : 0,
-				labelMargin : 5,
-				backgroundColor : "transparent",
-			},
-			yaxis : {
-				min : 0,
-				max : 15,
-				color : "transparent",
-				font : {
-					size : 10,
-					color : "#999",
-				},
-			},
-			xaxis : {
-				color : "transparent",
-				font : {
-					size : 10,
-					color : "#999",
-				},
-			},
-		});
-	});
-</script>
-<script>
-	(function() {
-		$("#cart").on("click", function() {
-			$("#mini-cart").fadeToggle("fast");
-		});
-	})();
-</script>
 

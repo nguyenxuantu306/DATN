@@ -288,3 +288,4 @@ function showButton(option) {
 		paypalButton.style.display = 'block';
 	}
 }
+

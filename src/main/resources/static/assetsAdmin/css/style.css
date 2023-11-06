@@ -14705,3 +14705,8 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 .custom-modal {
   max-width: 1000px; /* Điều chỉnh kích thước tùy chọn tại đây */
 }
+
+.custom-modal2 {
+  max-width: 1200px; /* Điều chỉnh kích thước tùy chọn tại đây */
+  max-height: 1200px; /* Điều chỉnh kích thước tùy chọn tại đây */
+}

@@ -1,19 +1,27 @@
 package com.greenfarm.service.impl;
 
 import java.util.Comparator;
+
+
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.ProductsDAO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ThongkeTK;
+import com.greenfarm.entity.Top10;
 import com.greenfarm.service.ProductService;
+
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -134,5 +142,36 @@ public class ProductServiceImpl implements ProductService {
 	public List<Report> getTk_loai() {
 		return dao.getInventoryByCategory();
 	}
+
+	@Override
+	public List<Product> getReportSpTk() {
+		List<Product> productsByQuantityAvailable = dao.getTop10ProductsByQuantityAvailable();
+	    if (productsByQuantityAvailable.size() > 10) {
+	        return productsByQuantityAvailable.subList(0, 10);
+	    } else {
+	        return productsByQuantityAvailable;
+	    }
+	}
+	
+	@Override
+	public List<Report> getReportspbanchay() {
+		List<Report> productsBygetReportspbanchay = dao.getTop10ProductsBygetReportspbanchay();
+	    if (productsBygetReportspbanchay.size() > 10) {
+	        return productsBygetReportspbanchay.subList(0, 10);
+	    } else {
+	        return productsBygetReportspbanchay;
+	    }
+	}
+//	@Transactional
+//    @Override
+//    public void purchaseProduct(Integer productId, Integer quantityBought) {
+//        dao.updateProductQuantity(productId, quantityBought);
+//    }
+
+//	@Override
+//	public void purchaseProduct(ThongkeTK thongketk) {
+//		dao.updateProductQuantity(thongketk.getProductid(),thongketk.getQuantitybought());
+//		
+//	}
 
 }

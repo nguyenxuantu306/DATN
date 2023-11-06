@@ -28,6 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ThongkeTK;
+import com.greenfarm.entity.Top10;
 import com.greenfarm.service.ProductService;
 
 import io.minio.MinioClient;
@@ -199,6 +201,11 @@ public class ProductRestController {
 		return ResponseEntity.ok(productDTOList);
 	}
 
+//	@GetMapping("/thongke/sp")
+//	public ResponseEntity<List<Report>> getTK_SP() {
+//		return new ResponseEntity<>(productService.getTk_sp(), HttpStatus.OK);
+//	}
+	
 	@GetMapping("/thongke/sp")
 	public ResponseEntity<List<Report>> getTK_SP() {
 		return new ResponseEntity<>(productService.getTk_sp(), HttpStatus.OK);
@@ -208,5 +215,31 @@ public class ProductRestController {
 	public ResponseEntity<List<Report>> getTK_Loai() {
 		return new ResponseEntity<>(productService.getTk_loai(), HttpStatus.OK);
 	}
+	
+	@GetMapping("/thongke/top10tk")
+    public List<Product> getProductTK() {
+        return productService.getReportSpTk();
+    }
+	
+	@GetMapping("/thongke/top10spbanchay")
+    public List<Report> getProductspbanchay() {
+        return productService.getReportspbanchay();
+    }
 
+//	@PutMapping("/purchase")
+//	public ResponseEntity<?> purchaseProduct(@RequestBody List<ThongkeTK> thongketk) {
+//	    try {
+//	        for (ThongkeTK tk : thongketk) {
+//	            productService.purchaseProduct(tk.getProductid(), tk.getQuantitybought());
+//	        }
+//
+//	        return ResponseEntity.ok("Sản phẩm đã được mua thành công.");
+//	    } catch (Exception e) {
+//	        return ResponseEntity.badRequest().body("Lỗi khi mua sản phẩm: " + e.getMessage());
+//	    }
+//	}
+
+	
+	
+	
 }

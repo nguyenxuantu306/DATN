@@ -25,9 +25,8 @@ public class OrderDetail implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer orderdetailid;
 
-	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "orderid")
+	@JoinColumn(name = "Orderid")
 	public Order order;
 
 	@ManyToOne

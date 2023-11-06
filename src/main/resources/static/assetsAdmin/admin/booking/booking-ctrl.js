@@ -1,4 +1,4 @@
-app.controller("order-ctrl", function($scope, $http) {
+app.controller("booking-ctrl", function($scope, $http) {
 	/*alert("Quản lý order")*/
 	$scope.items = [];
 	$scope.cates = [];
@@ -8,68 +8,21 @@ app.controller("order-ctrl", function($scope, $http) {
 	$scope.selectedItem = null;
 	$scope.totalPrice = 0;
 
-	//Tính tổng đơn hàng
-	$scope.calculateTotal = function(item) {
-		var total = 0;
-		if (item.orderDetail && item.orderDetail.length > 0) {
-			for (var i = 0; i < item.orderDetail.length; i++) {
-				total += item.orderDetail[i].totalPrice;
-			}
-		}
-		return total;
-	};
-
-
-	$scope.formatPrice = function(price) {
-		var priceString = price.toString();
-		priceString = priceString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		return priceString + " đ";
-	}
-
 
 	$scope.initialize = function() {
 		// Load products
-		$http.get("/rest/orders").then(resp => {
+		$http.get("/rest/bookings").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
 				item.orderDate = new Date(item.orderDate)
 			})
 		});
-
-		// Load orderdetails
-		$http.get("/rest/orderdetails").then(resp => {
-			$scope.items2 = resp.data;
-
-			$scope.totalPrice = $scope.items2.reduce((sum, item) => sum + item.totalprice, 0);
-			console.log($scope.totalPrice);
-		});
-
-		// Load states
-		$http.get("/rest/statusorder").then(resp => {
-			$scope.cates = resp.data;
-		});
-
-		$http.get("/rest/products").then(resp => {
-			$scope.products = resp.data;
-			$scope.products.forEach(item => {
-				item.publication_date = new Date(item.publication_date)
-			})
-		});
-
+		
 	}
 
 	// Khởi đầu
 	$scope.initialize();
-
-	// Xóa form
-	/*$scope.reset = function(){
-		$scope.form = {
-			publication_date:new Date(),
-			image:'cloud-upload.jpg',
-			available:true,
-		};
-	}
-	*/
+	
 	// Hiện thị lên form
 	$scope.edit = function(item) {
 		$scope.selectedItem = item;
@@ -81,7 +34,7 @@ app.controller("order-ctrl", function($scope, $http) {
     $scope.update = function() {
 		var item = angular.copy($scope.form);
 
-		var newStatus = item.statusOrder.statusorderid;
+		var newStatus = item.StatusBooking.statusbookingid;
 		var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
 		// Kiểm tra và trừ số lượng sản phẩm trong giỏ hàng
 		if (newStatus == '2') {
@@ -105,8 +58,8 @@ app.controller("order-ctrl", function($scope, $http) {
 			return;
 		}
 
-		$http.put(`/rest/orders/${item.orderid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.orderid == item.orderid);
+		$http.put(`/rest/bookings/${item.bookingid}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.bookingid == item.bookingid);
 			$scope.items[index] = item;
 			// Sử dụng SweetAlert2 cho thông báo thành công
 			Swal.fire({

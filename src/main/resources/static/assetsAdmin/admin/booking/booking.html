@@ -2,15 +2,9 @@
 	<div class="col-lg-12">
 		<div class="card">
 			<div class="card-body">
-				<h2 class="card">Danh sách đơn hàng</h2>
+				<h2 class="card">Danh sách đặt tour</h2>
 				<div class="row py-3">
 					<div class="col-md-4 input-group icons">
-						<!-- <div class="input-group-prepend">
-							<span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
-									class="mdi mdi-magnify"></i></span>
-						</div>
-						<input ng-click="filterOrdersByNgayTao()" type="text" 
-							placeholder="Ngày tạo" ng-model="ngayTaoFilter"> -->
 							<div class="input-daterange input-group">
 								<input type="date" class="form-control" name="start"
 									placeholder="Từ ngày">
@@ -24,9 +18,9 @@
 					<div class="col-md-4 input-group icons">
 						<select class="select" style="width: 200px;" ng-model="selectedStatus">
 							<option value="1">Chờ xác nhận</option>
-							<option value="2">Đang giao</option>
-							<option value="3">Giao hàng thành công</option>
-							<option value="4">Đã hủy</option>
+							<option value="2">Đặt tour thành công</option>
+							<option value="3">Tour bị hủy</option>
+							<option value="4">Khách hàng cancel</option>
 						</select>
 					</div>
 					<div class="col-md-4 text-right">
@@ -46,26 +40,27 @@
 						<thead>
 							<tr class="text-center">
 								<th scope="col">STT</th>
-								<th scope="col">Người mua</th>
+								<th scope="col">Người đặt</th>
 								<th scope="col">Thời gian tạo</th>
 								<th scope="col">Tổng</th>
+								<th scope="col">Hình thức thanh toán</th>
 								<th scope="col">Trạng thái</th>
 								<th scope="col">Xem</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center" ng-repeat="item in pager.items"
-								ng-if="((!ngayTaoFilter) || (item.orderdate) === ngayTaoFilter) && (selectedStatus == item.statusOrder.statusorderid || selectedStatus == '0')">
+							<tr class="text-center" ng-repeat="item in items">
 								<th scope="row">{{$index + 1}}</th>
-								<td>{{item.user.firstname}}</td>
-								<td>{{item.orderdate  | date:'dd/MM/yyyy - HH:mm:ss' }}</td>
-								<td>{{formatPrice(calculateTotal(item))}}</td>
+								<td>{{item.user.email}}</td>
+								<td>{{item.bookingdate  | date:'dd/MM/yyyy - HH:mm:ss' }}</td>
+								<td>{{item.totalprice | number :0 }} đ</td>
+								<td>paypal</td>
 								<td style="color: white;width: 300px;" ng-class="{
-							        'bg-primary': item.statusOrder.statusorderid == 1,
-							        'bg-warning': item.statusOrder.statusorderid == 2,
-							        'bg-success': item.statusOrder.statusorderid == 3,
-							        'bg-danger': item.statusOrder.statusorderid == 4
-   									 }">{{item.statusOrder.name}}</td>
+							        'bg-primary': item.statusbooking.statusbookingid == 1,
+							        'bg-success': item.statusbooking.statusbookingid == 2,
+							        'bg-danger': item.statusbooking.statusbookingid == 3,
+							        'bg-warning': item.statusbooking.statusbookingid == 4
+   									 }">{{item.statusbooking.name}}</td>
 								<td><a type="button" ng-click="edit(item)" data-toggle="modal"
 										data-target="#exampleModal"> <i class="bi bi-info-circle"></i>
 									</a> <!-- Modal -->
@@ -75,8 +70,8 @@
 											<div class="modal-content">
 												<div class="modal-header">
 													<h1 class="modal-title fs-5" id="exampleModalLabel">
-														Chi tiết đơn hàng : {{form.orderdate | date:'dd-MM-yyyy'}}
-														- #{{form.orderid}} - {{form.user.firstname}}</h1>
+														Chi tiết đặt tour : {{form.bookingdate | date:'dd-MM-yyyy'}}
+														- #{{form.bookingid}} - {{form.user.email}}</h1>
 													<button type="button" class="btn-close" data-bs-dismiss="modal"
 														aria-label="Close"></button>
 
@@ -125,23 +120,28 @@
 																<tr>
 																	<th scope="col">STT</th>
 																	<th scope="col">Hỉnh ảnh</th>
-																	<th scope="col">Tên sản phẩm</th>
-																	<th scope="col">Loại sản phẩm</th>
-																	<th scope="col">Số lượng (KG)</th>
+																	<th scope="col">Tên tour</th>
+																	<th scope="col">Dữ liệu tour</th>
+																	<th scope="col">Số lượng người</th>
+																	<th scope="col">Tiền tour</th>
+																	<th scope="col">Tiền người</th>
 																	<th scope="col">Tạm tính</th>
 																</tr>
 															</thead>
 															<tbody>
-																<tr ng-repeat="orderDetail in form.orderDetail">
+																<tr>
 																	<th scope="row">{{$index + 1}}</th>
-																	<td><img ng-src="{{orderDetail.product.image}}"
-																			alt="Product Image" style="width: 80px;">
+																	<td><img ng-src="{{item.tour.image}}"
+																			alt="Tour Image" style="width: 80px;">
 																	</td>
-																	<td>{{orderDetail.product.productname}}</td>
-																	<td>{{orderDetail.product.category.categoryname}}
+																	<td style="width:200px">{{item.tour.tourname}}</td>
+																	<td style="width:250px"> Gía người lớn : 200
+																	Gía trẻ em : 100
+																	Gía con nít : 50
+																	Địa điểm : cái gì đó
 																	</td>
-																	<td>{{orderDetail.quantityordered}}</td>
-																	<td>{{formatPrice(orderDetail.totalPrice)}}</td>
+																	<td>{{item.tour.availableslots}}</td>
+																	<td>{{item.totalprice | number}}</td>
 																</tr>
 															</tbody>
 

@@ -21,15 +21,15 @@ app.config(function($routeProvider) {
 		.when("/order", {
 			templateUrl: "/assetsAdmin/admin/order/order.html",
 			controller: "order-ctrl"
+		}).when("/bookingtour", {
+			templateUrl: "/assetsAdmin/admin/booking/booking.html",
+			controller: "booking-ctrl"
 		}).when("/productS", {
 			templateUrl: "/assetsAdmin/admin/statistics/_productstatistics.html",
 			controller: 'productstatistics-ctrl'
 		}).when("/tyte", {
 			templateUrl: "/assetsAdmin/admin/statistics/_tytestatistics.html",
 			controller: 'tytestatistics-ctrl'
-		}).when("/orderS", {
-			templateUrl: "/assetsAdmin/admin/statistics/_orderstatistics.html",
-			controller: 'orderstatistics-ctrl'
 		}).when("/authorize", {
 			templateUrl: "/assetsAdmin/admin/authority/authority.html",
 			controller: "authority-ctrl"
@@ -49,7 +49,7 @@ app.config(function($routeProvider) {
 		.when("/dashboard", {
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
 		})
-
+		
 		.otherwise({
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
 			controller: "revenueindex-ctrl"

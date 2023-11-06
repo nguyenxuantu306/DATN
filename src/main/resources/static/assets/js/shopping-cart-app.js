@@ -4,13 +4,13 @@ const app = angular.module("shopping-cart-app", []);
 app.controller("shopping-cart-ctrl", function($scope, $http) {
 
 
-	
-	
-	
+
+
+
 	$scope.selectedStatus = "1";
 
 	$scope.filterOrders = function() {
-			alert("ssss");
+		alert("ssss");
 		// Lặp qua tất cả các hàng của bảng đơn hàng
 		var rows = document.querySelectorAll("#orderList .text-center");
 		for (var i = 0; i < rows.length; i++) {
@@ -27,5 +27,22 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			}
 		}
 	};
+
+	$scope.items = [];
+	$scope.form = {};
+	// tồn kho
+	// Gọi API và truyền tham số
+	$http.Updateslsp({
+		method: 'PUT',  // Sử dụng phương thức PUT
+		url: '/rest/products/purchase?productId=' + productId + '&quantityBought=' + quantityBought
+	}).then(function(resp) {
+		// Xử lý kết quả từ API ở đây
+		$scope.items = resp.data;
+		console.log($scope.items);
+	}, function(error) {
+		// Xử lý lỗi nếu có
+		console.error("Lỗi khi gọi API: " + error);
+	});
+
 });
 
