@@ -253,14 +253,6 @@ app.controller("order-ctrl", function($scope, $http) {
 					});
 					console.log("Các ngày tìm kiếm được:", searchDates);
 					$scope.searchDates = searchDates;
-					
-					
-					//					var searchDates = resp.data.map(item => {
-					//						var formattedOrderDate = moment(item.orderdate, "YYYY,MM,DD,hh,mm");
-					//						return formattedOrderDate.format('DD-MM-YYYY hh:mm A');
-					//					});
-					//					console.log("Các ngày tìm kiếm được:", searchDates);
-					//					$scope.searchDates = searchDates;
 
 				})
 				.catch(error => {
