@@ -34,7 +34,7 @@ app.controller("booking-ctrl", function($scope, $http) {
     $scope.update = function() {
 		var item = angular.copy($scope.form);
 
-		var newStatus = item.statusOrder.statusorderid;
+		var newStatus = item.StatusBooking.statusbookingid;
 		var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
 		// Kiểm tra và trừ số lượng sản phẩm trong giỏ hàng
 		if (newStatus == '2') {
@@ -58,7 +58,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 			return;
 		}
 
-		$http.put(`/rest/orders/${item.bookingid}`, item).then(resp => {
+		$http.put(`/rest/bookings/${item.bookingid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.bookingid == item.bookingid);
 			$scope.items[index] = item;
 			// Sử dụng SweetAlert2 cho thông báo thành công
