@@ -91,9 +91,9 @@
 								</div>
 								<div class="col-sm-2">
 									<span
-										th:with="subtotal=${orderDetail.quantityordered * orderDetail.product.price}">
-										<span
-										th:text="${#numbers.formatDecimal(subtotal, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+										th:with="subtotal=${orderDetail.totalPrice}">
+										<h1
+										th:text="${#numbers.formatDecimal(subtotal, 0, 'COMMA', 0, 'POINT')}+'đ'"></h1>
 									</span>
 								</div>
 							</div>
