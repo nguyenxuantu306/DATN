@@ -5,12 +5,21 @@
 				<h2 class="card">Danh sách đơn hàng</h2>
 				<div class="row py-3">
 					<div class="col-md-4 input-group icons">
-						<div class="input-group-prepend">
+						<!-- <div class="input-group-prepend">
 							<span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
 									class="mdi mdi-magnify"></i></span>
 						</div>
 						<input ng-click="filterOrdersByNgayTao()" type="text" 
-							placeholder="Ngày tạo" ng-model="ngayTaoFilter">
+							placeholder="Ngày tạo" ng-model="ngayTaoFilter"> -->
+							<div class="input-daterange input-group">
+								<input type="date" class="form-control" name="start"
+									placeholder="Từ ngày">
+								<div class="input-group-prepend">
+									<span class="input-group-text">đến</span>
+								</div>
+								<input type="date" class="form-control" name="end"
+									placeholder="Đến ngày">
+							</div>
 					</div>
 					<div class="col-md-4 input-group icons">
 						<select class="select" style="width: 200px;" ng-model="selectedStatus">

@@ -78,8 +78,32 @@ app.controller("order-ctrl", function($scope, $http) {
 	}
 
 	// cập nhật trạng thái
-	$scope.update = function() {
+    $scope.update = function() {
 		var item = angular.copy($scope.form);
+
+		var newStatus = item.statusOrder.statusorderid;
+		var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
+		// Kiểm tra và trừ số lượng sản phẩm trong giỏ hàng
+		if (newStatus == '2') {
+			angular.forEach($scope.form.orderDetail, function(orderDetail) {
+				var product = orderDetail.product;
+				var quantityAvailable = orderDetail.product.quantityavailable;
+
+				// Kiểm tra số lượng sản phẩm trong kho
+				if (quantityAvailable < orderDetail.quantityordered) {
+					// Thông báo lỗi
+					alert("Sản phẩm '" + product.productname + "' không đủ số lượng trong kho.");
+					hasInsufficientQuantity = true; // Đặt biến này thành true nếu sản phẩm không đủ số lượng
+					return false; //Thoát khỏi vòng lặp ngay lập tức
+				}
+				// Trừ số lượng sản phẩm khỏi kho
+				orderDetail.product.quantityavailable -= orderDetail.quantityordered;
+			});
+		}
+
+		if (hasInsufficientQuantity) { // Nếu sản phẩm không đủ số lượng, không cập nhật trạng thái đơn hàng
+			return;
+		}
 
 		$http.put(`/rest/orders/${item.orderid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.orderid == item.orderid);
