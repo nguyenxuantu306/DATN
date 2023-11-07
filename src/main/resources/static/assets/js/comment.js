@@ -1,42 +1,55 @@
 var commentapp = angular.module('commentApp', ['ngRoute']);
 
-commentapp.config(function($routeProvider) {
+commentapp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $routeProvider
-    .when("/tour/detail/:tourid", {
+    .when('/tour/detail/:tourid', {
+      
       controller: 'comment-ctrl'
     });
+
+  
+  $locationProvider.html5Mode({
+  enabled: true,
+  requireBase: false
 });
+}]);
+
+
 commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	$scope.items = [];
 	$scope.form = {};
 	$scope.field = [];
 	$scope.error = ['err'];
-	$scope.form = {
-        commenttext: '' // Đảm bảo bạn đã khai báo biến commenttext trong đối tượng form
-    };
-//	$scope.tourId =  $routeParams.tourid;
 	$scope.tour = itemData;
-
+	 var tourid = $routeParams.tourid;
+	 // $scope.tour = null;
 
 	/* $scope.tourId;*/
 	
 	 
 	$scope.initialize = function() {
 	
+	
 		console.log("tourId: " + $scope.tour.tourid); 
-		$scope.items.user = $scope.tour.user;
-	console.log("ok :" + $scope.items.user.firstname); 
 		
-			$scope.items.user = $scope.tour.user;
 		
 		// Load comment
-		/*$http.get("/rest/comment/tour/1").then(resp => {
+		$http.get("/rest/comment/tour/"+ + $scope.tour.tourid).then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
 				item.commentdate = new Date(item.commentdate)
 			})
-		});*/
-
+		});
+		
+		/*console.log("tourId2: " + tourid); 
+		  
+$http.get('/rest/tours/' + tourid)
+        .then(function(response) {
+            $scope.tour = response.data;
+        })
+        .catch(function(error) {
+            console.log(error);
+        });*/
 	}
 	// Khởi đầu
 	$scope.initialize();
@@ -47,7 +60,7 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);	
 	}
-
+	
 	$scope.reset = function() {
 		$scope.error = ['err'];
 		$scope.form = {
@@ -63,22 +76,27 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 		};			
 	}
 
-	// Thêm comment  mới
+
+// Thêm comment  mới
 	$scope.create = function() {
 		$scope.form.tour = $scope.tour;
 		$scope.form.user = $scope.tour.user;
 		$scope.form.commenttext = $scope.form.commenttext;
-
+		console.log("cmt " +$scope.form.commenttext); 
 		$scope.form.commentdate = new Date();
 
 		var item = {};
 		 item = angular.copy($scope.form);
 			
+			console.log("cmt tour id " +$scope.tour.tourid); 
+			item.user = $scope.tour.user;
 		$http.post(`/rest/comment`, $scope.form).then(resp => {
 			
 			resp.data.commentdate = new Date(resp.data.commentdate);
+			console.log("cmt đang hành công " ); 
 			$scope.items.push(resp.data);
 			$scope.reset();
+			
 			// Sử dụng SweetAlert2 cho thông báo thành công
 			/*Swal.fire({
 				icon: 'success',
@@ -130,7 +148,6 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	}
 
 	$scope.delete = function(item) {
-		console.log("comment id to delete  " + $scope.tour.user.email);
 		$http.delete(`/rest/comment/${item.commentid}`).then(resp => {
 			var index = $scope.items.findIndex(p => p.commentid == item.commentid);
 			$scope.items.splice(index, 1);
@@ -199,5 +216,3 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	}
 
 });
-
-

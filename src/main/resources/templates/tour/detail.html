@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.thymeleaf.org"
 	th:replace="~{/layout/layout::dynamic(~{::body})}">
@@ -230,73 +231,84 @@
 					</form>
 				</div>
 			</div>
-<!--		</div>-->
+			
+			
+			<script th:inline="javascript">
+    var itemData = /*[[${item}]]*/ null; // Biến JavaScript chứa dữ liệu
+</script>
+			<!-- end div tour -->
+		<!-- </div> -->
 
 		<!--comment  -->
-		
 		<div style="background-color: #eee;" ng-app="commentApp" ng-controller="comment-ctrl" > 
 		
-	<!--	<a>{{scope.tourId}}</a>-->
+		<a>{{scope.tourId}}</a>
 		
 			<div class="card mb-4"  
-			th:each="p : ${item.comment}">
+			ng-repeat="item in pager.items">
+									
+			
 				<div class="card-body">
 					<div class="d-flex justify-content-between mb-2">
 						<div class="d-flex flex-row align-items-center">
 							<img
 								src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp"
 								alt="avatar" width="25" height="25" />
-							<p class="small mb-0 ms-2 mx-2" th:text="${p.user.firstname}"></p>
+							<p class="small mb-0 ms-2 mx-2">{{item.user.firstname}}</p>
 
-							<p class="text-muted small mb-0" th:text="${p.commentdate}"></p>
+							<p class="text-muted small mb-0">{{item.commentdate}}</p>
 						</div>
 
 					</div>
-					<p  th:text="${p.commenttext}"> </p>
+					<p> {{item.commenttext}}</p>
 
-					<div class="d-flex flex-row align-items-center">
+					<div class="d-flex flex-row align-items-center" th:if="${#authorization.expression('isAuthenticated()')}" ng-model="p.user.email">
 						<a href="#!" class="d-flex align-items-center me-3"> <i
 							class="far fa-comment-dots me-2"></i>
 							<p class="mb-0">Comment</p>
 						</a>
-						<a href="#!" class="d-flex align-items-center me-3"> <i
+						<div class="list-inline"  th:if="${#authorization.expression(item.user.email == #authentication.principal.username)}">
+						<a  href="#!" class="d-inline-flex align-items-center  me-3  list-inline-item"> <i
 							class="far fa-comment-dots me-2"></i>
 							<p class="mb-0" ng-click="delete(item)">Xóa</p>
 						</a>
-						<a href="#!" class="d-flex align-items-center me-3"> <i
+						
+						<a href="#!" class="d-inline-flex align-items-center  me-3 list-inline-item"> <i
 							class="far fa-comment-dots me-2"></i>
-							<p class="mb-0"  ng-click="update()">Sửa</p>
+							<p class="mb-0" ng-click="edit(item)">Sửa</p>
 						</a>
+						
 					</div>
 				</div>
 			</div>
-
+</div>
+	<div class="panel-footer text-center" >
+							<span class="col-md-6"
+								style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
+								+ 1}} / {{pager.count}} </span>
+							<button ng-click="pager.first()" class="btn btn-success">
+								<i class="fas fa-angle-double-left"></i>
+							</button>
+							<button ng-click="pager.prev()" class="btn btn-success">
+								<i class="fas fa-angle-left"></i>
+							</button>
+							<button ng-click="pager.next()" class="btn btn-success">
+								<i class="fas fa-angle-right"></i>
+							</button>
+							<button ng-click="pager.last()" class="btn btn-success">
+								<i class="fas fa-angle-double-right"></i>
+							</button>
+						</div>
 		
-		<!-- 		<table>
-				<thead>
-				<tr>
-				<th>1</th>
-				<th>2</th>
-				</tr>
-				</thead>
-				<tbody>
-				
-				<tr ng-repeat="item in items">
-				<td>{{$index + 1}}</td>
-				<td>{{item.commentid}}</td>
-				<td>{{item.commenttext}}</td>
-				</tr>
-				</tbody>
-				</table> -->
-
 			<!-- viet coment -->
-			<form class="row">
 			<div class="card-footer py-3 border-0"
 				style="background-color: #f8f9fa;">
 				<div class="d-flex flex-start w-100">
+				
 					<img class="rounded-circle shadow-1-strong me-3"
 						src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
 						alt="avatar" width="40" height="40" />
+							
 					<div class="form-outline w-100">
 						<textarea class="form-control" id="textAreaExample" rows="4" ng-model="form.commenttext"
 							placeholder="Comment" style="background: #fff;"></textarea>
@@ -304,19 +316,17 @@
 					</div>
 				</div>
 				<div class="float-end mt-2 pt-1">
-					<button type="button" class="btn btn-primary btn-sm"  ng-click="create()">Post
+					<button type="button" class="btn btn-primary btn-sm" ng-click="update()">Post
 						comment</button>
-					<button type="button" class="btn btn-outline-primary btn-sm">Cancel</button>
+					<button type="button" class="btn btn-outline-primary btn-sm" ng-click="reset()">Cancel</button>
 				</div>
 			</div>
-			</form>
+		
 		</div>
 		</div>
-		<script th:inline="javascript">
-    var itemData = /*[[${item}]]*/ null;
-</script>
-		
-		
+		</div>
 </body>
 
 </html>
+
+html
