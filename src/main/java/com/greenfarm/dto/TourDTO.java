@@ -33,5 +33,6 @@ public class TourDTO {
     private TourOverviewDTO tourOverview;
     private Pricing pricings;
     private List<TourImageDTO> tourImage;
+    private List<CommentDTO> comment;
      
 }

@@ -20,23 +20,24 @@ public class CustomLogoutHandler implements LogoutHandler {
 	@Autowired
 	UserService userService;
 
-//	@Override
-//	public void logout(HttpServletRequest request, HttpServletResponse response,
-//					   Authentication authentication) {
-//		SecurityContextHolder.clearContext();
-//
-//		try {
-//			final UserEntity userEntity = userService.findUserByUsername(authentication.getName());
-//			System.out.println("Logged Out Handler");
-//			//set status to false
-//			userEntity.setStatus(false);
-//			userService.saveUser(userEntity);
-//			//redirecting to another controller endpoint
-//			response.sendRedirect("/perform-logout");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	// @Override
+	// public void logout(HttpServletRequest request, HttpServletResponse response,
+	// Authentication authentication) {
+	// SecurityContextHolder.clearContext();
+	//
+	// try {
+	// final UserEntity userEntity =
+	// userService.findUserByUsername(authentication.getName());
+	// System.out.println("Logged Out Handler");
+	// //set status to false
+	// userEntity.setStatus(false);
+	// userService.saveUser(userEntity);
+	// //redirecting to another controller endpoint
+	// response.sendRedirect("/perform-logout");
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	// }
 
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
@@ -46,7 +47,7 @@ public class CustomLogoutHandler implements LogoutHandler {
 			System.out.println("Logged Out Handler");
 			// set status to false
 			// redirecting to another controller endpoint
-			response.sendRedirect("/logout");
+			response.sendRedirect("/");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

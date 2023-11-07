@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.greenfarm.dto.Provider;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -81,4 +84,9 @@ public class User implements Serializable {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	List<Review> Review;
+	
+	
+	
+	  @Enumerated(EnumType.STRING) private Provider provider;
+	 
 }
