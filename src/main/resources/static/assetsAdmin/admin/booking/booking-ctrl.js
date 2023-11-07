@@ -14,50 +14,35 @@ app.controller("booking-ctrl", function($scope, $http) {
 		$http.get("/rest/bookings").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
-				item.orderDate = new Date(item.orderDate)
+				item.bookingdate = new Date(item.bookingdate)
 			})
 		});
-		
+		// Load statusBooking
+		$http.get("/rest/statusbooking").then(resp => {
+			$scope.cates = resp.data;
+		});
+
 	}
 
 	// Khởi đầu
 	$scope.initialize();
-	
+
 	// Hiện thị lên form
 	$scope.edit = function(item) {
 		$scope.selectedItem = item;
 		$scope.form = angular.copy(item);
 		/*$(".nav-tabs a:eq(0)").tab('show');*/
 	}
+	//Tính tổng
+	$scope.calculateTotal = function(item) {
+		return (item.adultticketnumber * item.tour.pricings.adultprice) + (item.childticketnumber * item.tour.pricings.childprice);
+	}
+
 
 	// cập nhật trạng thái
-    $scope.update = function() {
+	$scope.update = function() {
 		var item = angular.copy($scope.form);
-
-		var newStatus = item.StatusBooking.statusbookingid;
-		var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
-		// Kiểm tra và trừ số lượng sản phẩm trong giỏ hàng
-		if (newStatus == '2') {
-			angular.forEach($scope.form.orderDetail, function(orderDetail) {
-				var product = orderDetail.product;
-				var quantityAvailable = orderDetail.product.quantityavailable;
-
-				// Kiểm tra số lượng sản phẩm trong kho
-				if (quantityAvailable < orderDetail.quantityordered) {
-					// Thông báo lỗi
-					alert("Sản phẩm '" + product.productname + "' không đủ số lượng trong kho.");
-					hasInsufficientQuantity = true; // Đặt biến này thành true nếu sản phẩm không đủ số lượng
-					return false; //Thoát khỏi vòng lặp ngay lập tức
-				}
-				// Trừ số lượng sản phẩm khỏi kho
-				orderDetail.product.quantityavailable -= orderDetail.quantityordered;
-			});
-		}
-
-		if (hasInsufficientQuantity) { // Nếu sản phẩm không đủ số lượng, không cập nhật trạng thái đơn hàng
-			return;
-		}
-
+		
 		$http.put(`/rest/bookings/${item.bookingid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.bookingid == item.bookingid);
 			$scope.items[index] = item;
@@ -136,8 +121,8 @@ app.controller("booking-ctrl", function($scope, $http) {
 			this.page = this.count - 1;
 		}
 	}
-	
-	$scope.filterOrders = function() {
+
+	/*$scope.filterOrders = function() {
 		var startDateTime = $scope.startDateTime;
 		var endDateTime = $scope.endDateTime;
 
@@ -156,8 +141,6 @@ app.controller("booking-ctrl", function($scope, $http) {
 			})
 				.then(resp => {
 					$scope.items = resp.data;
-
-
 
 					$scope.items.forEach(function(item) {
 						var formattedOrderDate = moment(item.orderdate, "YYYY-MM-DDTHH:mm:ss").toDate();
@@ -182,17 +165,17 @@ app.controller("booking-ctrl", function($scope, $http) {
 		} else {
 			console.log("Invalid input data");
 		}
-	};
+	};*/
 
-	$scope.resetFilter = function() {
+/*	$scope.resetFilter = function() {
 		// Xóa giá trị của startDateTime và endDateTime
 		$scope.startDateTime = null;
 		$scope.endDateTime = null;
 
 		loadOrders();
 	};
-
-	function loadOrders() {
+*/
+	/*function loadOrders() {
 		// Gọi API để tải danh sách đơn hàng với hoặc không có bộ lọc
 		// Sử dụng $http.get hoặc phương thức tải lại tùy thuộc vào mã của bạn
 		$http.get("/rest/orders").then(resp => {
@@ -203,7 +186,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 			console.log("Error headers:", error.headers);
 			console.log("Error config:", error.config);
 		});
-	}
+	}*/
 
 
 	// Trong AngularJS controller hoặc service
@@ -237,6 +220,13 @@ app.controller("booking-ctrl", function($scope, $http) {
 				console.error('Error exporting PDF:', error);
 			});
 	};
+
+	$scope.formatPrice = function(price) {
+		var priceString = price.toString();
+		priceString = priceString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		return priceString + " đ";
+	}
+
 
 });
 

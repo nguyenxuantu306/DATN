@@ -3,6 +3,7 @@ package com.greenfarm.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Pricing;
 import com.greenfarm.entity.TourImage;
 import com.greenfarm.entity.User;
@@ -27,7 +28,7 @@ public class TourDTO {
 	private Integer Availableslots;
 	
 	private User user;
-	
+	private List<Booking> booking;
 	private TourConditionDTO tourCondition;
     private TourOverviewDTO tourOverview;
     private Pricing pricings;

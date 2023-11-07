@@ -1,6 +1,5 @@
 package com.greenfarm.dto;
 
-
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -21,11 +20,12 @@ import lombok.NoArgsConstructor;
 public class BookingDTO {
 
 	private Integer bookingid;
-    private Date bookingdate;
-    private Integer numparticipants;
-    private Float totalprice;
-    private User user;
-    private Tour tour;
-    private StatusBooking statusbooking;
-    
+	private Date bookingdate;
+	private Float totalprice;
+	private Integer adultticketnumber;
+	private Integer childticketnumber;
+	private User user;
+	private Tour tour;
+	private StatusBooking statusbooking;
+
 }

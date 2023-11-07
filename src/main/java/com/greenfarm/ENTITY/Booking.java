@@ -29,9 +29,11 @@ public class Booking implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date Bookingdate = new Date();
 
-	private Integer Numparticipants;
-
 	private Float Totalprice;
+	
+	private Integer Adultticketnumber;
+	
+	private Integer Childticketnumber;
 
 	@ManyToOne
 	@JoinColumn(name = "userid")
@@ -43,6 +45,6 @@ public class Booking implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "statusbookingid")
-	StatusBooking statusBooking;
+	StatusBooking statusbooking;
 
 }

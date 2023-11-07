@@ -7,10 +7,9 @@
 					<div class="col-md-7 input-group icons">
 						<div>
 							<!-- 						datetime-local -->
-							<input type="datetime-local" id="startDateTime"
-								ng-model="startDateTime" style="height: 45px;"> <span
-								style="margin: 0 15px;">Đến</span> <input type="datetime-local"
-								id="endDateTime" ng-model="endDateTime" style="height: 45px;">
+							<input type="datetime-local" id="startDateTime" ng-model="startDateTime"
+								style="height: 45px;"> <span style="margin: 0 15px;">Đến</span> <input
+								type="datetime-local" id="endDateTime" ng-model="endDateTime" style="height: 45px;">
 
 							<button class="btn btn-success" ng-click="filterOrders()">Lọc</button>
 
@@ -45,6 +44,7 @@
 								<th scope="col">STT</th>
 								<th scope="col">Người đặt</th>
 								<th scope="col">Thời gian tạo</th>
+								<th scope="col">Số lượng người</th>
 								<th scope="col">Tổng</th>
 								<th scope="col">Hình thức thanh toán</th>
 								<th scope="col">Trạng thái</th>
@@ -52,10 +52,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center" ng-repeat="item in items" ng-if="item.statusbooking.statusbookingid == selectedStatus || selectedStatus == '0'">
+							<tr class="text-center" ng-repeat="item in items"
+								ng-if="item.statusbooking.statusbookingid == selectedStatus || selectedStatus == '0'">
 								<th scope="row">{{$index + 1}}</th>
 								<td>{{item.user.email}}</td>
-								<td>{{item.bookingdate  | | date:'dd-MM-yyyy HH:mm a'}}</td>
+								<td>{{item.bookingdate | date:'dd-MM-yyyy HH:mm a'}}</td>
+								<td>{{item.adultticketnumber + item.childticketnumber}}</td>
 								<td>{{item.totalprice | number :0 }} đ</td>
 								<td>paypal</td>
 								<td style="color: white;width: 300px;" ng-class="{
@@ -66,7 +68,7 @@
    									 }">{{item.statusbooking.name}}</td>
 								<td><a type="button" ng-click="edit(item)" data-toggle="modal"
 										data-target="#exampleModal"> <i class="bi bi-info-circle"></i>
-									</a> <!-- Modal -->
+									</a>
 									<div style="text-align: left;" class="modal fade" id="exampleModal" tabindex="-1"
 										aria-labelledby="exampleModalLabel" aria-hidden="true">
 										<div class="modal-dialog modal-xl custom-modal">
@@ -125,9 +127,10 @@
 																	<th scope="col">Hỉnh ảnh</th>
 																	<th scope="col">Tên tour</th>
 																	<th scope="col">Dữ liệu tour</th>
-																	<th scope="col">Số lượng người</th>
-																	<th scope="col">Tiền tour</th>
-																	<th scope="col">Tiền người</th>
+																	<th scope="col">Số người lớn</th>
+																	<th scope="col">Số trẻ em</th>
+																	<th scope="col">Tổng tiền người lớn</th>
+																	<th scope="col">Tổng tiền trẻ em</th>
 																	<th scope="col">Tạm tính</th>
 																</tr>
 															</thead>
@@ -137,14 +140,20 @@
 																	<td><img ng-src="{{item.tour.image}}"
 																			alt="Tour Image" style="width: 80px;">
 																	</td>
-																	<td style="width:200px">{{item.tour.tourname}}</td>
-																	<td style="width:250px"> Gía người lớn : 200
-																	Gía trẻ em : 100
-																	Gía con nít : 50
-																	Địa điểm : cái gì đó
+																	<td style="width:150px">{{item.tour.tourname}}</td>
+																	<td style="width:200px"> Gía người lớn:
+																		{{item.tour.pricings.adultprice}} <br />
+																		Gía trẻ em: {{item.tour.pricings.childprice}}
+																		<br />
+																		Địa điểm: cái gì đó là sao nữa
 																	</td>
-																	<td>{{item.tour.availableslots}}</td>
-																	<td>{{item.totalprice | number}}</td>
+																	<td>{{item.adultticketnumber}}</td>
+																	<td>{{item.childticketnumber}}</td>
+																	<td>{{formatPrice(item.adultticketnumber *
+																		item.tour.pricings.adultprice)}}</td>
+																	<td>{{formatPrice(item.childticketnumber *
+																		item.tour.pricings.childprice)}}</td>
+																	<td>{{formatPrice(item.totalprice)}}</td>
 																</tr>
 															</tbody>
 
@@ -153,16 +162,16 @@
 															<hr>
 															<h4 style="padding-left: 100px" class="total fs-4">
 																Tổng cộng:
-																<strong>{{formatPrice(calculateTotal(form))}}</strong>
+																<strong>{{formatPrice(calculateTotal(item))}}</strong>
 															</h4>
 															<hr>
 															<label style="font-size: 20px; color: black;">Cập
 																nhật trạng thái : </label> <select
 																class="form-select w-auto select"
-																ng-model="form.statusOrder.statusorderid"
+																ng-model="item.statusbooking.statusbookingid"
 																style="background-color: #f7f7f7; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: auto; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
 																<option ng-repeat="c in cates"
-																	ng-value="c.statusorderid">{{c.name}}</option>
+																	ng-value="c.statusbookingid">{{c.name}}</option>
 															</select>
 															<div style="background-color: #007BFF; color: #fff;"
 																ng-click="update()" class="btn">Save</div>

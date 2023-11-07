@@ -2,6 +2,8 @@ package com.greenfarm.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,11 +29,11 @@ public class Pricing implements Serializable {
 	private Integer pricingid;
 	private Float adultprice;
 	private Float childprice;
-	private Float infantprice;
+//	private Float infantprice;
 	
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "tourid")
 	private Tour tour;
-	
 	
 }
