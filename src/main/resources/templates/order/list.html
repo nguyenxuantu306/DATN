@@ -1,32 +1,27 @@
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout :: dynamic(~{::body})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout :: dynamic(~{::body})}">
 
 <head>
-<meta charset="utf-8">
-<title>Insert title here</title>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
 </head>
 
 <body>
 	<main>
-		<div class="">
+		<div class="container">
 			<div class="row mt-5">
 				<div class="col-sm-4">
 					<div class="menu mx-3">
 						<span>Tên User</span>
 						<ul class="list-group border border-0 rounded-0 my-3">
 
-							<li class="list-group-item"
-								style="background: #e4e7ed; border-radius: 4px;"><i
-								class="bi bi-card-list"></i> Đơn hàng đã mua</li>
-							<li class="list-group-item mt-3"
-								style="background: #e4e7ed; border-radius: 4px;"><i
-								class="bi bi-person-lines-fill"></i> Thông tin và sổ địa chỉ</li>
+							<li class="list-group-item" style="background: #e4e7ed; border-radius: 4px;"><i
+									class="bi bi-card-list"></i> Đơn hàng đã mua</li>
+							<li class="list-group-item mt-3" style="background: #e4e7ed; border-radius: 4px;"><i
+									class="bi bi-person-lines-fill"></i> Thông tin và sổ địa chỉ</li>
 
 						</ul>
-						<a
-							class=" btn border border-danger my-3 text-decoration-none text-center text-danger fw-bold"
+						<a class=" btn border border-danger my-3 text-decoration-none text-center text-danger fw-bold"
 							style="width: 100%">Đăng xuất</a>
 						<div class="card mt-3" style="background-color: #fff;">
 							<div class="card-header">Tổng điểm tích lũy: 180.616 điểm</div>
@@ -62,48 +57,45 @@
 							style="padding: 20px; width: auto; border-radius: 3px; background-color: #fff; font-size: 14px; flex-direction: column;">
 
 							<div class="card-header" style="background-color: #fff;">
-								<span class="fw-bold">Đơn hàng:</span> #[[${order.orderid}]] <span
-									class="fw-bold" th:text="${order.getOrderDateFormatted()}"></span>
-								<span th:if="${order.statusOrder.name} =='Đã hủy'"
-									class="float-end text-danger fw-bold"
+								<span class="fw-bold">Đơn hàng:</span> #[[${order.orderid}]] <span class="fw-bold"
+									th:text="${order.getOrderDateFormatted()}"></span>
+								<span th:if="${order.statusOrder.name} =='Đã hủy'" class="float-end text-danger fw-bold"
 									th:text="${order.statusOrder.name}"></span> <span
-									th:if="${order.statusOrder.name} !='Đã hủy'"
-									class="float-end text-success fw-bold"
+									th:if="${order.statusOrder.name} !='Đã hủy'" class="float-end text-success fw-bold"
 									th:text="${order.statusOrder.name}"></span>
 							</div>
 							<!-- Chi tiết đơn hàng -->
-							<div class="row g-0 mt-1"
-								th:each="orderDetail : ${order.orderDetail}">
+							<div class="row g-0 mt-1" th:each="orderDetail : ${order.orderDetail}">
 								<div class="col-md-2">
-									<img th:src="*{orderDetail.product.image}" class="img-fluid"
-										alt="...">
+									<img th:src="*{orderDetail.product.image}" class="img-fluid" alt="...">
 								</div>
 								<div class="col-md-8">
 									<div class="card-body">
-										<span> <span
-											th:text="${orderDetail.product.productname}"></span><br>
-											<span
-											th:text="'Số lượng: '+${orderDetail.quantityordered}+'kg'"></span><br>
+										<span> <span th:text="${orderDetail.product.productname}"></span><br>
+											<span th:text="'Số lượng: '+${orderDetail.quantityordered}+'kg'"></span><br>
 											Giá: <span
-											th:text="${#numbers.formatDecimal(orderDetail.product.price, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+												th:text="${#numbers.formatDecimal(orderDetail.product.price, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
 										</span>
 									</div>
 								</div>
 								<div class="col-sm-2">
-									<span
-										th:with="subtotal=${orderDetail.totalPrice}">
-										<h1
-										th:text="${#numbers.formatDecimal(subtotal, 0, 'COMMA', 0, 'POINT')}+'đ'"></h1>
-									</span>
+									<div class="mr-2">
+										<span th:with="subtotal=${orderDetail.totalPrice}">
+											<p class="float-end"
+												th:text="${#numbers.formatDecimal(subtotal, 0, 'COMMA', 0, 'POINT')}+'đ'">
+											</p>
+										</span>
+									</div>
 								</div>
+
 							</div>
 							<hr class="">
 
 							<!-- Tổng tiền đơn hàng -->
-							<div class="float-end">
-								<div>
-									<div class="float-end">
-										<span class="orderTotal "></span>
+							<div>
+								<div class="mr-2">
+									<div class="float-end text-danger">
+										<span class="orderTotal"></span>
 									</div>
 								</div>
 							</div>
@@ -144,7 +136,7 @@
 						.then(function (response) {
 							if (response.status === 200) {
 								// Nếu thành công, bạn có thể thực hiện các tác vụ sau khi đổi trạng thái
-								alert('Đã hủy đơn hàng thành công');								
+								alert('Đã hủy đơn hàng thành công');
 								location.reload();
 							} else {
 								// Xử lý lỗi
@@ -161,25 +153,25 @@
 		</script>
 
 		<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const orderCards = document.querySelectorAll(".card.border.border-0.rounded-0.mt-3");
+			document.addEventListener("DOMContentLoaded", function () {
+				const orderCards = document.querySelectorAll(".card.border.border-0.rounded-0.mt-3");
 
-    orderCards.forEach(function(orderCard) {
-      const subtotalElements = orderCard.querySelectorAll(".col-sm-2 span");
+				orderCards.forEach(function (orderCard) {
+					const subtotalElements = orderCard.querySelectorAll(".col-sm-2 span");
 
-      let orderTotal = 0;
+					let orderTotal = 0;
 
-      subtotalElements.forEach(function(subtotalElement) {
-        const subtotalText = subtotalElement.innerText;
-        const subtotal = parseFloat(subtotalText.replace(/[^0-9.-]+/g, ""));
-        orderTotal += subtotal;
-      });
+					subtotalElements.forEach(function (subtotalElement) {
+						const subtotalText = subtotalElement.innerText;
+						const subtotal = parseFloat(subtotalText.replace(/[^0-9.-]+/g, ""));
+						orderTotal += subtotal;
+					});
 
-      const orderTotalElement = orderCard.querySelector(".orderTotal");
-      orderTotalElement.textContent = `${orderTotal.toLocaleString()}đ`;
-    });
-  });
-</script>
+					const orderTotalElement = orderCard.querySelector(".orderTotal");
+					orderTotalElement.textContent = `${orderTotal.toLocaleString()}đ`;
+				});
+			});
+		</script>
 
 
 
