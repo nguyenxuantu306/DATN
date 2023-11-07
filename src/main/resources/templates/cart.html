@@ -109,28 +109,32 @@
 												<p class="mb-2">$20.00</p>
 											</div>
 
-											<div class="d-flex justify-content-between mb-4">
-												<p class="mb-2">Total(Incl. taxes)</p>
-												<p class="mb-2" th:text="${totalprice - 20}"></p>
-											</div>
-											<a href="/checkout">
-												<button type="button" class="btn btn-info btn-block btn-lg">
-													<div class="d-flex justify-content-between">
-														<span id="price" th:text="${totalprice - 20}"></span> <span>Checkout
-															<i class="fas fa-long-arrow-alt-right ms-2"></i>
-														</span>
-													</div>
-												</button>
-											</a> <br />
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-</body>
+                        <div class="d-flex justify-content-between mb-4">
+                          <p class="mb-2">Total(Incl. taxes)</p>
+                          <p class="mb-2" th:text="${totalPrice}"></p>
+                        </div>
+                        <a href="/checkout"> <button
+                          type="button"
+                          class="btn btn-info btn-block btn-lg"
+                        >
+                          <div class="d-flex justify-content-between">
+                            <span id="price" th:text="${totalPrice}"></span>
+                            <span
+                              >Checkout
+                              <i class="fas fa-long-arrow-alt-right ms-2"></i>
+                            </span>
+                          </div>
+                        </button></a>
+                        <br />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>

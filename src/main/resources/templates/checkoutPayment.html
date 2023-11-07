@@ -55,12 +55,12 @@
                   <h6 class="my-0">Promo code</h6>
                   <small>EXAMPLECODE</small>
                 </div>
-                <span class="text-success">-$5</span>
+                <span class="text-success">-$0</span>
               </li>
               <!-- Hiển thị tổng tiền trong thẻ "Total (USD)" -->
               <li class="list-group-item d-flex justify-content-between">
                 <span>Total (USD)</span>
-                <strong id="totalPrice" th:text="${totalPrice - 5}"></strong>
+                <strong id="totalPrice" th:text="${totalPrice}"></strong>
               </li>
             </ul>
           </form>
@@ -200,7 +200,7 @@
 
             <div id="checkout-button">
               <!-- Đặt nội dung nút "Continue to checkout" ở đây -->
-              <button class="btn btn-primary btn-lg btn-block" type="submit">
+              <button class="btn btn-primary btn-lg btn-block" type="submit" >
                 Continue to Payment
               </button>
             </div>

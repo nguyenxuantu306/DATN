@@ -15,11 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import com.greenfarm.dao.CartDAO;
 import com.greenfarm.dao.OrderDAO;
 import com.greenfarm.dao.OrderDetailDAO;
@@ -51,16 +46,6 @@ public class CheckoutController {
 
     @Autowired
     PaymentMethodDAO paymentMethodDAO;
-
-    ObjectMapper mapper = JsonMapper.builder() // or different mapper for other format
-            .addModule(new ParameterNamesModule())
-            .addModule(new Jdk8Module())
-            .addModule(new JavaTimeModule())
-            // and possibly other configuration, modules, then:
-            .build();
-
-    @Autowired
-    ObjectMapper objectMapper;
 
     @GetMapping("/checkout")
     public String Checkout(ModelMap modelMap) {
@@ -129,7 +114,6 @@ public class CheckoutController {
                 orderDAO.save(orderItem);
                 
                 List<Cart> cartItems = cartDAO.findByUser(user); // Retrieve cart items for the user
-
                 List<OrderDetail> orderDetailList = new ArrayList<>();
 
              
@@ -146,9 +130,9 @@ public class CheckoutController {
                 }
 
                 orderDetailDAO.saveAll(orderDetailList);
-                
+
             }
-            
+
             return "redirect:/success";
         } else {
             System.out.println("Xin chào! Bạn chưa đăng nhập.");
