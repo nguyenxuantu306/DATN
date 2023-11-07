@@ -155,9 +155,10 @@
 																nhật trạng thái : </label> <select
 																class="form-select w-auto select"
 																ng-model="form.statusOrder.statusorderid"
-																ng-disabled="form.statusOrder.statusorderid === 3 || form.statusOrder.statusorderid === 4"
+									
 																style="background-color: #f7f7f7; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: auto; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
 																<option ng-repeat="c in cates"
+																	
 																	ng-value="c.statusorderid">{{c.name}}</option>
 															</select>
 															<div style="background-color: #007BFF; color: #fff;"

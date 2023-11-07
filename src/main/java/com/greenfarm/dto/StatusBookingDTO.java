@@ -20,6 +20,5 @@ public class StatusBookingDTO {
 
 	private Integer statusbookingid;
 	private String name;
-
-	List<BookingDTO> booking;
+	private List<BookingDTO> booking;
 }

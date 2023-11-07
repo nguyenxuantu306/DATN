@@ -70,7 +70,7 @@
 										data-target="#exampleModal"> <i class="bi bi-info-circle"></i>
 									</a>
 									<div style="text-align: left;" class="modal fade" id="exampleModal" tabindex="-1"
-										aria-labelledby="exampleModalLabel" aria-hidden="true">
+										aria-labelledby="exampleModal" aria-hidden="true">
 										<div class="modal-dialog modal-xl custom-modal">
 											<div class="modal-content">
 												<div class="modal-header">
@@ -142,10 +142,9 @@
 																	</td>
 																	<td style="width:150px">{{item.tour.tourname}}</td>
 																	<td style="width:200px"> Gía người lớn:
-																		{{item.tour.pricings.adultprice}} <br />
-																		Gía trẻ em: {{item.tour.pricings.childprice}}
+																		{{formatPrice(item.tour.pricings.adultprice)}} <br />
+																		Gía trẻ em: {{formatPrice(item.tour.pricings.childprice)}}
 																		<br />
-																		Địa điểm: cái gì đó là sao nữa
 																	</td>
 																	<td>{{item.adultticketnumber}}</td>
 																	<td>{{item.childticketnumber}}</td>
@@ -166,10 +165,10 @@
 															</h4>
 															<hr>
 															<label style="font-size: 20px; color: black;">Cập
-																nhật trạng thái : </label> <select
+																nhật trạng thái : </label> <select 
 																class="form-select w-auto select"
-																ng-model="item.statusbooking.statusbookingid"
-																style="background-color: #f7f7f7; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: auto; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
+																ng-model="form.statusbooking.statusbookingid"
+																style="background-color: #f7f7f7; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
 																<option ng-repeat="c in cates"
 																	ng-value="c.statusbookingid">{{c.name}}</option>
 															</select>
