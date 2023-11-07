@@ -63,6 +63,6 @@ public interface ProductService {
 	
 //	void purchaseProduct(ThongkeTK thongketk);
 	
-	// List<Product> getProductsByCategory(Category category);
+	List<Product> getProductsByCategory(Category category);
 
 }

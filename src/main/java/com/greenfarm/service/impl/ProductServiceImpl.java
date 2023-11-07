@@ -174,5 +174,10 @@ public class ProductServiceImpl implements ProductService {
 //		dao.updateProductQuantity(thongketk.getProductid(),thongketk.getQuantitybought());
 //		
 //	}
+	@Override
+	public List<Product> getProductsByCategory(Category category) {
+		// TODO Auto-generated method stub
+		return dao.getProductsByCategory(category);
+	}
 
 }

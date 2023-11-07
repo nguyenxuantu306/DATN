@@ -111,18 +111,17 @@ public class ProductRestController {
 //		}
 //		return null;		
 //	}
-	
+
 	@PostMapping()
-	public ResponseEntity<ProductDTO> create(@RequestBody Product product,
-			Model model) {
-		
-			Product createdProduct = productService.create(product);
+	public ResponseEntity<ProductDTO> create(@RequestBody Product product, Model model) {
 
-			// Sử dụng ModelMapper để ánh xạ từ Product đã tạo thành ProductDTO
-			ProductDTO productDTO = modelMapper.map(createdProduct, ProductDTO.class);
+		Product createdProduct = productService.create(product);
 
-			// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
-			return new ResponseEntity<>(productDTO, HttpStatus.CREATED);				
+		// Sử dụng ModelMapper để ánh xạ từ Product đã tạo thành ProductDTO
+		ProductDTO productDTO = modelMapper.map(createdProduct, ProductDTO.class);
+
+		// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
+		return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
 	}
 
 	@PutMapping("{productid}")
@@ -206,7 +205,7 @@ public class ProductRestController {
 //	public ResponseEntity<List<Report>> getTK_SP() {
 //		return new ResponseEntity<>(productService.getTk_sp(), HttpStatus.OK);
 //	}
-	
+
 	@GetMapping("/thongke/sp")
 	public ResponseEntity<List<Report>> getTK_SP() {
 		return new ResponseEntity<>(productService.getTk_sp(), HttpStatus.OK);
@@ -216,30 +215,30 @@ public class ProductRestController {
 	public ResponseEntity<List<Report>> getTK_Loai() {
 		return new ResponseEntity<>(productService.getTk_loai(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/thongke/top10tk")
-    public List<Product> getProductTK() {
-        return productService.getReportSpTk();
-    }
-	
-	@GetMapping("/thongke/top10spbanchay")
-    public List<Report> getProductspbanchay() {
-        return productService.getReportspbanchay();
+	public List<Product> getProductTK() {
+		return productService.getReportSpTk();
 	}
-	
-	// @GetMapping("/getProductsByCategory/{categoryid}")
-    // public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable Integer categoryid) {
-    //     Category category = new Category();
-    //     category.setCategoryid(categoryid);
 
-    //     List<Product> products = productService.getProductsByCategory(category);
+	@GetMapping("/thongke/top10spbanchay")
+	public List<Report> getProductspbanchay() {
+		return productService.getReportspbanchay();
+	}
 
-    //     if (products.isEmpty()) {
-    //         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    //     }
+	@GetMapping("/getProductsByCategory/{categoryid}")
+	public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable Integer categoryid) {
+		Category category = new Category();
+		category.setCategoryid(categoryid);
 
-    //     return new ResponseEntity<>(products, HttpStatus.OK);
-    // }
+		List<Product> products = productService.getProductsByCategory(category);
+
+		if (products.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+
+		return new ResponseEntity<>(products, HttpStatus.OK);
+	}
 
 //	@PutMapping("/purchase")
 //	public ResponseEntity<?> purchaseProduct(@RequestBody List<ThongkeTK> thongketk) {
@@ -254,7 +253,4 @@ public class ProductRestController {
 //	    }
 //	}
 
-	
-	
-	
 }
