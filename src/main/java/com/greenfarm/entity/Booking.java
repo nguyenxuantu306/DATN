@@ -40,7 +40,6 @@ public class Booking implements Serializable {
 	}
 	
 	
-	private Integer Numparticipants;
 
 	private Float Totalprice;
 	
