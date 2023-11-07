@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class BookingDTO {
 
 	private Integer bookingid;
-    private Date bookingdate;
+    private LocalDateTime bookingdate;
     private Integer numparticipants;
     private Float totalprice;
     private User user;

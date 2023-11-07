@@ -52,10 +52,11 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center" ng-repeat="item in items" ng-if="item.statusbooking.statusbookingid == selectedStatus || selectedStatus == '0'">
+							<tr class="text-center" ng-repeat="item in items | orderBy:'-bookingdate'" 
+							ng-if="item.statusbooking.statusbookingid == selectedStatus || selectedStatus == '0'">
 								<th scope="row">{{$index + 1}}</th>
 								<td>{{item.user.email}}</td>
-								<td>{{item.bookingdate  | | date:'dd-MM-yyyy HH:mm a'}}</td>
+								<td>{{item.bookingdate |date:'dd-MM-yyyy HH:mm a'}}</td>
 								<td>{{item.totalprice | number :0 }} đ</td>
 								<td>paypal</td>
 								<td style="color: white;width: 300px;" ng-class="{

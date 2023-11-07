@@ -117,60 +117,6 @@ public class OrderRestController {
 //	    }
 //	}
 
-//	@GetMapping("/search")
-//	public ResponseEntity<String> searchOrdersByDate(
-//	    @RequestParam String startDateTime,
-//	    @RequestParam String endDateTime,
-//	    @RequestParam(defaultValue = "0") int page,
-//	    @RequestParam(defaultValue = "10") int size) {
-//
-//	    LocalDateTime start = LocalDateTime.parse(startDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-//	    LocalDateTime end = LocalDateTime.parse(endDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-//
-//	    List<Order> orders = orderService.findByOrderdateBetween(start, end, page, size);
-//
-//	    List<OrderDTO> orderDTOs = orders.stream()
-//	        .map(order -> modelMapper.map(order, OrderDTO.class))
-//	        .collect(Collectors.toList());
-//
-//	    ObjectMapper objectMapper = new ObjectMapper();
-//	    objectMapper.registerModule(new JavaTimeModule()); // Đăng ký JavaTimeModule
-//
-//	    try {
-//	        String json = objectMapper.writeValueAsString(orderDTOs);
-//	        return ResponseEntity.ok(json);
-//	    } catch (JsonProcessingException e) {
-//	        e.printStackTrace();
-//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//	    }
-//	}
-
-//	@GetMapping("/search")
-//	public ResponseEntity<String> searchOrdersByDate(
-//	    @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDateTime,
-//	    @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDateTime,
-//	    @RequestParam(defaultValue = "0") int page,
-//	    @RequestParam(defaultValue = "10") int size) {
-//
-//	    List<Order> orders = orderService.findByOrderdateBetween(startDateTime, endDateTime, page, size);
-//
-//	    List<OrderDTO> orderDTOs = orders.stream()
-//	        .map(order -> modelMapper.map(order, OrderDTO.class))
-//	        .collect(Collectors.toList());
-//
-//	    ObjectMapper objectMapper = new ObjectMapper();
-//	    objectMapper.registerModule(new JavaTimeModule());
-//
-//	    try {
-//	        String json = objectMapper.writeValueAsString(orderDTOs);
-//	        return ResponseEntity.ok(json);
-//	    } catch (JsonProcessingException e) {
-//	        e.printStackTrace();
-//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//	    }
-//	}
-
-
 
 	@GetMapping("/search")
 	public ResponseEntity<String> searchOrdersByDate(

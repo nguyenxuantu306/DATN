@@ -1,5 +1,6 @@
 package com.greenfarm.dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -20,4 +21,7 @@ public interface BookingDAO extends JpaRepository<Booking, Integer> {
 	
 	@Query("SELECT o FROM Booking o")
 	List<Booking> findAll(int offset, int limit);
+
+	@Query("SELECT o FROM Booking o WHERE o.bookingdate  BETWEEN :startDateTime AND :endDateTime")
+	List<Booking> findByBookingdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, Pageable pageable);
 }
