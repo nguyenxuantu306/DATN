@@ -100,58 +100,6 @@ public class BookingRestController {
 		BookingDTO bookingDTO = modelMapper.map(updatedBooking, BookingDTO.class);
 		return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
 	}
-//
-//	@GetMapping("/byStatusName")
-//	public ResponseEntity<List<OrderDTO>> getOrdersByStatusName(@RequestParam("statusName") String statusName) {
-//		List<Order> orders = orderService.getOrdersByStatusName(statusName);
-//
-//		// Sử dụng ModelMapper để ánh xạ từ Order sang OrderDTO
-//		List<OrderDTO> orderDTOs = orders.stream()
-//				.map(order -> modelMapper.map(order, OrderDTO.class))
-//				.collect(Collectors.toList());
-//
-//		return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("/filter")
-//	public ResponseEntity<List<OrderDTO>> filterOrdersByNgayTao(
-//			@RequestParam("ngayTao") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDateTime ngayTao) {
-//		List<Order> filteredOrders = orderService.filterOrdersByNgayTao(ngayTao);
-//
-//		// Sử dụng ModelMapper để ánh xạ từ Order sang OrderDTO
-//		List<OrderDTO> filteredOrderDTOs = filteredOrders.stream()
-//				.map(order -> modelMapper.map(order, OrderDTO.class))
-//				.collect(Collectors.toList());
-//
-//		return ResponseEntity.ok(filteredOrderDTOs);
-//	}
-//
-//	// Thống kê số lượng trạng thái
-//	@GetMapping("/slstatus")
-//	public ResponseEntity<List<ReportRevenue>> slstatus() {
-//		return new ResponseEntity<>(orderService.slstatus(), HttpStatus.OK);
-//	}
-//
-//	@PutMapping("/cancel/{orderid}")
-//	public ResponseEntity<String> cancelOrder(@PathVariable("orderid") Integer orderid) {
-//		// Thực hiện các thao tác hủy đơn hàng
-//		try {
-//			orderService.cancelOrder(orderid);
-//			return new ResponseEntity<>("Đã hủy đơn hàng thành công", HttpStatus.OK);
-//		} catch (Exception e) {
-//			return new ResponseEntity<>("Lỗi khi hủy đơn hàng: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
-//	
-//	
-//	@GetMapping("/year-revenue")
-//	public ResponseEntity<List<ReportYear>> getyearRevenue() {
-//	      List<ReportYear> yearRevenue = orderService.getYearRevenue();
-//	      return new ResponseEntity<>(yearRevenue, HttpStatus.OK);
-//	}
-//	
-//	 @GetMapping("/findyearrevenue/{year}")
-//     public List<FindReportYear> getYearlyRevenue(@PathVariable Integer year) {
-//        return orderService.findYearlyRevenue(year);
-//	 }
+
+	
 }

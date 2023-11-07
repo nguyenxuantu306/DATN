@@ -25,7 +25,7 @@
 					Destination</h6>
 				<h1>The Most Crowded Tour</h1>
 			</div>
-			<div class="row">
+			<div class="row text-center">
 				<div th:each="tour : ${topTour.content}" class="col-lg-4 col-md-6 mb-4">
 					<div class="package-item bg-white mb-2">
 					<a th:href="@{|/tour/detail/${tour.tour.tourid}|}"><img style="height: 300px;width: 100%" class="img-fluid "
@@ -38,10 +38,8 @@
 							</div>
 							<a th:href="@{|/tour/detail/${tour.tour.tourid}|}" th:text="${tour.tour.Tourname}" class="h5 text-decoration-none" href="/tour-detail"></a>
 							<div class="border-top mt-4 pt-4">
-								<div class="d-flex justify-content-between">
-									<h6 class="m-0">
-										<i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
-									</h6>
+								<div class="text-center">
+								
 									<h5 th:text="${#numbers.formatDecimal(tour.tour.pricings.Adultprice,0,'COMMA',0,'POINT')} + 'đ'" class="m-0"></h5>
 								</div>
 							</div>
@@ -56,7 +54,7 @@
 					Shop</h6>
 				<h1>Selling Products</h1>
 			</div>
-			<div class="row">
+			<div class="row text-center">
 				<div th:each="product : ${topList.content}"
 					class="col-lg-3 col-md-6 mb-4">
 					<div class="package-item bg-white mb-2">
@@ -67,10 +65,7 @@
 							<a th:href="@{|/product/detail/${product.product.productid}|}" th:text="${product.product.productname}"
 								class="h5 text-decoration-none"></a>
 							<div class="border-top mt-4 pt-4">
-								<div class="d-flex justify-content-between">
-									<h6 class="m-0">
-										<i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
-									</h6>
+								<div class="text-center">							
 									<h5
 										th:text="${#numbers.formatDecimal(product.product.price,0,'COMMA',0,'POINT')} + 'đ'"
 										class="m-0"></h5>

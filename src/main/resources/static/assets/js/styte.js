@@ -2,7 +2,7 @@
 function createProductHTML(product) {
 	var productHTML = `
               <div 
-		class="col-lg-4 col-md-6 mb-4">
+		class="col-lg-4 col-md-6 mb-4 text-center">
 		<div class="package-item bg-white mb-2">
 			<a href="/product/detail/${product.productid}"><img
 				style="height: 250px" class="img-fluid"
@@ -11,10 +11,7 @@ function createProductHTML(product) {
 				<a 
 					class="h5 text-decoration-none" >${product.productname}</a>
 				<div class="border-top mt-4 pt-4">
-					<div class="d-flex justify-content-between">
-						<h6 class="m-0">
-							<i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
-						</h6>
+					<div class="text-center">				
 						<h5 class="m-0">${product.price} đ</h5>
 
 					</div>

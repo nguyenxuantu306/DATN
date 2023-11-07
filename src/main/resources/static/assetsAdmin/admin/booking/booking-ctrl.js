@@ -106,24 +106,6 @@ app.controller("booking-ctrl", function($scope, $http) {
 		}
 	};
 
-	$scope.ngayTaoFilter = ''; // Trường nhập kiểu text
-
-	$scope.filterOrdersByNgayTao = function() {
-		if ($scope.ngayTaoFilter === '') {
-			// Nếu trường nhập kiểu text rỗng, hiển thị toàn bộ đơn hàng
-			$scope.items = $scope.originalItems;
-		} else {
-			// Nếu trường nhập kiểu text có dữ liệu, lọc đơn hàng dựa trên ngày tạo
-			var formattedInputDate = new Date($scope.ngayTaoFilter + "- 00:00:00"); // Chuyển đổi chuỗi ngày thành đối tượng Date
-			$scope.items = $scope.originalItems.filter(function(item) {
-				var orderDate = new Date(item.orderdate.replace('- ', ' ') + ":00"); // Chuyển đổi chuỗi ngày thành đối tượng Date
-				var inputDate = formattedInputDate;
-
-				// So sánh ngày tạo và ngày tìm kiếm
-				return orderDate.toDateString() === inputDate.toDateString();
-			});
-		}
-	};
 
 	$scope.pager = {
 		page: 0,
@@ -154,6 +136,107 @@ app.controller("booking-ctrl", function($scope, $http) {
 			this.page = this.count - 1;
 		}
 	}
+	
+	$scope.filterOrders = function() {
+		var startDateTime = $scope.startDateTime;
+		var endDateTime = $scope.endDateTime;
+
+		if (startDateTime && endDateTime) {
+			var formattedStartDateTime = moment(startDateTime, "DD-MM-YYYY hh:mm A").toDate(); // Chuyển đổi sang đối tượng Date
+			var formattedEndDateTime = moment(endDateTime, "DD-MM-YYYY hh:mm A").toDate(); // Chuyển đổi sang đối tượng Date
+
+			console.log("Start Date:", formattedStartDateTime);
+			console.log("End Date:", formattedEndDateTime);
+
+			$http.get("/rest/orders/search", {
+				params: {
+					startDateTime: formattedStartDateTime.toISOString(),
+					endDateTime: formattedEndDateTime.toISOString()
+				}
+			})
+				.then(resp => {
+					$scope.items = resp.data;
+
+
+
+					$scope.items.forEach(function(item) {
+						var formattedOrderDate = moment(item.orderdate, "YYYY-MM-DDTHH:mm:ss").toDate();
+						var formattedOrderDateStr = moment(formattedOrderDate).format('DD-MM-YYYY hh:mm A');
+						item.orderdate = formattedOrderDateStr;
+					});
+
+					var searchDates = resp.data.map(item => {
+						return item.orderdate;
+					});
+					console.log("Các ngày tìm kiếm được:", searchDates);
+					$scope.searchDates = searchDates;
+
+				})
+				.catch(error => {
+					console.log("Error status:", error.status);
+					console.log("Error message:", error.data);
+					console.log("Error headers:", error.headers);
+					console.log("Error config:", error.config);
+				});
+
+		} else {
+			console.log("Invalid input data");
+		}
+	};
+
+	$scope.resetFilter = function() {
+		// Xóa giá trị của startDateTime và endDateTime
+		$scope.startDateTime = null;
+		$scope.endDateTime = null;
+
+		loadOrders();
+	};
+
+	function loadOrders() {
+		// Gọi API để tải danh sách đơn hàng với hoặc không có bộ lọc
+		// Sử dụng $http.get hoặc phương thức tải lại tùy thuộc vào mã của bạn
+		$http.get("/rest/orders").then(resp => {
+			$scope.items = resp.data;
+		}).catch(error => {
+			console.log("Error status:", error.status);
+			console.log("Error message:", error.data);
+			console.log("Error headers:", error.headers);
+			console.log("Error config:", error.config);
+		});
+	}
+
+
+	// Trong AngularJS controller hoặc service
+	$scope.exportExcel = function() {
+		$http.get('/excel-order', { responseType: 'arraybuffer' })
+			.then(function(response) {
+				var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+				var link = document.createElement('a');
+				link.href = window.URL.createObjectURL(blob);
+				link.download = 'order.xlsx';
+				link.click();
+			})
+			.catch(function(error) {
+				console.error('Error exporting Excel:', error);
+			});
+	};
+	// PDF
+
+	$scope.exportPdf = function() {
+		$http.get('/pdf-order', { responseType: 'arraybuffer' })
+			.then(function(response) {
+				var blob = new Blob([response.data], { type: 'application/pdf' });
+				var objectUrl = URL.createObjectURL(blob);
+				var a = document.createElement('a');
+				a.href = objectUrl;
+				a.download = 'order.pdf';
+				a.click();
+				URL.revokeObjectURL(objectUrl);
+			})
+			.catch(function(error) {
+				console.error('Error exporting PDF:', error);
+			});
+	};
 
 });
 

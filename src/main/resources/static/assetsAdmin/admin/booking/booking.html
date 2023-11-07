@@ -4,26 +4,29 @@
 			<div class="card-body">
 				<h2 class="card">Danh sách đặt tour</h2>
 				<div class="row py-3">
-					<div class="col-md-4 input-group icons">
-							<div class="input-daterange input-group">
-								<input type="date" class="form-control" name="start"
-									placeholder="Từ ngày">
-								<div class="input-group-prepend">
-									<span class="input-group-text">đến</span>
-								</div>
-								<input type="date" class="form-control" name="end"
-									placeholder="Đến ngày">
-							</div>
+					<div class="col-md-7 input-group icons">
+						<div>
+							<!-- 						datetime-local -->
+							<input type="datetime-local" id="startDateTime"
+								ng-model="startDateTime" style="height: 45px;"> <span
+								style="margin: 0 15px;">Đến</span> <input type="datetime-local"
+								id="endDateTime" ng-model="endDateTime" style="height: 45px;">
+
+							<button class="btn btn-success" ng-click="filterOrders()">Lọc</button>
+
+							<button class="btn btn-success" ng-click="resetFilter()">Xóa
+								bộ lọc</button>
+						</div>
 					</div>
-					<div class="col-md-4 input-group icons">
-						<select class="select" style="width: 200px;" ng-model="selectedStatus">
+					<div class="col-md-2  input-group icons ">
+						<select class="select bg-success " ng-model="selectedStatus">
 							<option value="1">Chờ xác nhận</option>
 							<option value="2">Đặt tour thành công</option>
 							<option value="3">Tour bị hủy</option>
 							<option value="4">Khách hàng cancel</option>
 						</select>
 					</div>
-					<div class="col-md-4 text-right">
+					<div class="col-md-3 text-right">
 						<button type="button" class="btn btn-success">
 							<i class="fa fa-file-excel-o"></i> Excel
 						</button>
@@ -49,10 +52,10 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center" ng-repeat="item in items">
+							<tr class="text-center" ng-repeat="item in items" ng-if="item.statusbooking.statusbookingid == selectedStatus || selectedStatus == '0'">
 								<th scope="row">{{$index + 1}}</th>
 								<td>{{item.user.email}}</td>
-								<td>{{item.bookingdate  | date:'dd/MM/yyyy - HH:mm:ss' }}</td>
+								<td>{{item.bookingdate  | | date:'dd-MM-yyyy HH:mm a'}}</td>
 								<td>{{item.totalprice | number :0 }} đ</td>
 								<td>paypal</td>
 								<td style="color: white;width: 300px;" ng-class="{

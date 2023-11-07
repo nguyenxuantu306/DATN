@@ -24,7 +24,6 @@
 									Category</button>
 							</h2>
 
-
 							<div id="collapseOne" class="accordion-collapse collapse show"
 								data-bs-parent="#accordionExample">
 								<div class="accordion-body">
@@ -112,7 +111,7 @@
 						<input type="text" id="searchKeyword" class="input-search"
 							placeholder="Type to Search..." />
 					</div>
-					<div class="row" id="Results">
+					<div class="row text-center" id="Results">
 						<div th:each="p:${items}"
 							class="col-lg-4 col-md-6 mb-4">
 							<div class="package-item bg-white mb-2">
@@ -123,13 +122,10 @@
 									<a th:utext="${p.productname}"
 										class="h5 text-decoration-none" href="/tour-detail"></a>
 									<div class="border-top mt-4 pt-4">
-										<div class="d-flex justify-content-between">
-											<h6 class="m-0">
-												<i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>
-											</h6>
+										<div class="text-center">											
 											<h5
 												th:text="*{#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}+ 'đ'"
-												class="m-0"></h5>
+												class=""></h5>
 										</div>
 									</div>
 								</div>
