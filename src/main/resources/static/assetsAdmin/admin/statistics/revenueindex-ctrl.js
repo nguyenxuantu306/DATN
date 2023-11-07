@@ -4,9 +4,9 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 	$scope.itemsThongKestats = [];
 	$scope.itemsThongKeDT = [];
 
-		$scope.selectedYear = 2023; // Đặt giá trị mặc định là năm 2023
+	$scope.selectedYear = 2023; // Đặt giá trị mặc định là năm 2023
 
-		$scope.itemsThongKeFindDT = [];
+	$scope.itemsThongKeFindDT = [];
 
 	$scope.sort = function(keyname) {
 		$scope.sortKey = keyname;
@@ -31,9 +31,18 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 			$scope.itemsThongKeDT = response.data;
 			console.log($scope.itemsThongKeDT);
 
-		})
+			// Sắp xếp mảng theo năm giảm dần
+			$scope.itemsThongKeDT.sort(function(a, b) {
+				return b.year - a.year;
+			});
 
-	
+			// Lấy ra năm mới nhất
+			if ($scope.itemsThongKeDT.length > 0) {
+				$scope.latestYear = $scope.itemsThongKeDT[0].year;
+				console.log("Năm mới nhất: " + $scope.latestYear);
+			}
+		});
+
 
 		$http.get('/rest/orders/findyearrevenue/' + $scope.selectedYear)
 			.then(function(response) {

@@ -73,7 +73,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 
 	$scope.selectedStatus = "1";
 
-	$scope.filterOrders = function() {
+	$scope.filterBookings = function() {
 		// Lặp qua tất cả các hàng của bảng đơn hàng
 		var rows = document.querySelectorAll("#orderList .text-center");
 		for (var i = 0; i < rows.length; i++) {
@@ -133,7 +133,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 			console.log("Start Date:", formattedStartDateTime);
 			console.log("End Date:", formattedEndDateTime);
 
-			$http.get("/rest/orders/search", {
+			$http.get("/rest/bookings/search", {
 				params: {
 					startDateTime: formattedStartDateTime.toISOString(),
 					endDateTime: formattedEndDateTime.toISOString()
@@ -143,13 +143,13 @@ app.controller("booking-ctrl", function($scope, $http) {
 					$scope.items = resp.data;
 
 					$scope.items.forEach(function(item) {
-						var formattedOrderDate = moment(item.orderdate, "YYYY-MM-DDTHH:mm:ss").toDate();
+						var formattedOrderDate = moment(item.bookingdate, "YYYY-MM-DDTHH:mm:ss").toDate();
 						var formattedOrderDateStr = moment(formattedOrderDate).format('DD-MM-YYYY hh:mm A');
-						item.orderdate = formattedOrderDateStr;
+						item.bookingdate = formattedOrderDateStr;
 					});
 
 					var searchDates = resp.data.map(item => {
-						return item.orderdate;
+						return item.bookingdate;
 					});
 					console.log("Các ngày tìm kiếm được:", searchDates);
 					$scope.searchDates = searchDates;
@@ -178,7 +178,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 	/*function loadOrders() {
 		// Gọi API để tải danh sách đơn hàng với hoặc không có bộ lọc
 		// Sử dụng $http.get hoặc phương thức tải lại tùy thuộc vào mã của bạn
-		$http.get("/rest/orders").then(resp => {
+		$http.get("/rest/bookings").then(resp => {
 			$scope.items = resp.data;
 		}).catch(error => {
 			console.log("Error status:", error.status);

@@ -19,8 +19,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BookingDTO {
 
-	private Integer bookingid;
-	private Date bookingdate;
+	private Integer bookingid; 
+	private LocalDateTime bookingdate;
 	private Float totalprice;
 	private Integer adultticketnumber;
 	private Integer childticketnumber;

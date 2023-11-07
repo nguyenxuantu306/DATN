@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.greenfarm.dto.BookingDTO;
 import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.entity.Booking;
@@ -99,6 +101,29 @@ public class BookingRestController {
 		}
 		BookingDTO bookingDTO = modelMapper.map(updatedBooking, BookingDTO.class);
 		return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping("/search")
+	public ResponseEntity<String> searchBookingsByDate(
+			@RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDateTime,
+			@RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDateTime,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+
+		List<Booking> bookings = bookingService.findByBookingdateBetween(startDateTime, endDateTime, page, size);
+
+		List<BookingDTO> bookingDTOs = bookings.stream().map(booking -> modelMapper.map(booking, BookingDTO.class))
+				.collect(Collectors.toList());
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+
+		try {
+			String json = objectMapper.writeValueAsString(bookingDTOs);
+			return ResponseEntity.ok(json);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
 	

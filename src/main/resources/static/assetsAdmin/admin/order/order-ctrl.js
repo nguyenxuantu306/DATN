@@ -144,41 +144,18 @@ app.controller("order-ctrl", function($scope, $http) {
 	$scope.selectedStatus = "1";
 
 	$scope.filterOrders = function() {
-		// Lặp qua tất cả các hàng của bảng đơn hàng
-		var rows = document.querySelectorAll("#orderList .text-center");
-		for (var i = 0; i < rows.length; i++) {
-			var row = rows[i];
-			var statusCell = row.querySelector("td:nth-child(5)"); // Lấy ô chứa trạng thái
+    // Gửi yêu cầu HTTP đến API /byStatusName với tham số statusName là giá trị đã chọn
+    $http.get('/rest/orders/byStatusName', { params: { statusName: $scope.selectedStatus } })
+        .then(function(response) {
+            // Xử lý dữ liệu trả về từ API
+            $scope.items = response.data;
+        })
+        .catch(function(error) {
+            console.error("Lỗi trong quá trình gửi yêu cầu: " + error);
+        });
+};
 
-			// Kiểm tra xem trạng thái của đơn hàng có khớp với trạng thái đã chọn hoặc là trạng thái 1 hay không
-			if (statusCell.textContent.trim() === selectedStatus || selectedStatus === "1") {
-				// Hiển thị đơn hàng nếu khớp hoặc nếu đã chọn "Tất cả"
-				row.style.display = "table-row";
-			} else {
-				// Ẩn đơn hàng nếu không khớp
-				row.style.display = "none";
-			}
-		}
-	};
 
-	$scope.ngayTaoFilter = ''; // Trường nhập kiểu text
-
-	$scope.filterOrdersByNgayTao = function() {
-		if ($scope.ngayTaoFilter === '') {
-			// Nếu trường nhập kiểu text rỗng, hiển thị toàn bộ đơn hàng
-			$scope.items = $scope.originalItems;
-		} else {
-			// Nếu trường nhập kiểu text có dữ liệu, lọc đơn hàng dựa trên ngày tạo
-			var formattedInputDate = new Date($scope.ngayTaoFilter + "- 00:00:00"); // Chuyển đổi chuỗi ngày thành đối tượng Date
-			$scope.items = $scope.originalItems.filter(function(item) {
-				var orderDate = new Date(item.orderdate.replace('- ', ' ') + ":00"); // Chuyển đổi chuỗi ngày thành đối tượng Date
-				var inputDate = formattedInputDate;
-
-				// So sánh ngày tạo và ngày tìm kiếm
-				return orderDate.toDateString() === inputDate.toDateString();
-			});
-		}
-	};
 
 	$scope.pager = {
 		page: 0,

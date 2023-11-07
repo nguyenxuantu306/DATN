@@ -1,66 +1,63 @@
 <div class="container-fluid mt-3">
-	<div class="col-lg-12">
-		<div class="card">
-			<div class="card-body">
-				<h2 class="card">Danh sách đặt tour</h2>
-				<div class="row py-3">
-					<div class="col-md-7 input-group icons">
-						<div>
-							<!-- 						datetime-local -->
-							<input type="datetime-local" id="startDateTime" ng-model="startDateTime"
-								style="height: 45px;"> <span style="margin: 0 15px;">Đến</span> <input
-								type="datetime-local" id="endDateTime" ng-model="endDateTime" style="height: 45px;">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card">Danh sách đặt tour</h2>
+                <div class="row py-3">
+                    <div class="col-md-7 input-group icons">
+                        <div>
+                            <!-- 						datetime-local -->
+                            <input type="datetime-local" id="startDateTime" ng-model="startDateTime" style="height: 45px;"> <span style="margin: 0 15px;">Đến</span> <input type="datetime-local" id="endDateTime" ng-model="endDateTime" style="height: 45px;">
 
-							<button class="btn btn-success" ng-click="filterOrders()">Lọc</button>
+                            <button class="btn btn-success" ng-click="filterOrders()">Lọc</button>
 
-							<button class="btn btn-success" ng-click="resetFilter()">Xóa
+                            <button class="btn btn-success" ng-click="resetFilter()">Xóa
 								bộ lọc</button>
-						</div>
-					</div>
-					<div class="col-md-2  input-group icons ">
-						<select class="select bg-success " ng-model="selectedStatus">
+                        </div>
+                    </div>
+                    <div class="col-md-2  input-group icons ">
+                        <select class="select bg-success " ng-model="selectedStatus">
 							<option value="1">Chờ xác nhận</option>
 							<option value="2">Đặt tour thành công</option>
 							<option value="3">Tour bị hủy</option>
 							<option value="4">Khách hàng cancel</option>
 						</select>
-					</div>
-					<div class="col-md-3 text-right">
-						<button type="button" class="btn btn-success">
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <button type="button" class="btn btn-success">
 							<i class="fa fa-file-excel-o"></i> Excel
 						</button>
-						<button type="button" class="btn btn-success">
+                        <button type="button" class="btn btn-success">
 							<i class="fa fa-file-pdf-o"></i> PDF
 						</button>
-					</div>
-				</div>
-				<div id="orderList">
+                    </div>
+                </div>
+                <div id="orderList">
 
-				</div>
-				<div class="table-responsive">
-					<table class="table header-border zero-configuration">
-						<thead>
-							<tr class="text-center">
-								<th scope="col">STT</th>
-								<th scope="col">Người đặt</th>
-								<th scope="col">Thời gian tạo</th>
-								<th scope="col">Số lượng người</th>
-								<th scope="col">Tổng</th>
-								<th scope="col">Hình thức thanh toán</th>
-								<th scope="col">Trạng thái</th>
-								<th scope="col">Xem</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="text-center" ng-repeat="item in items"
-								ng-if="item.statusbooking.statusbookingid == selectedStatus || selectedStatus == '0'">
-								<th scope="row">{{$index + 1}}</th>
-								<td>{{item.user.email}}</td>
-								<td>{{item.bookingdate | date:'dd-MM-yyyy HH:mm a'}}</td>
-								<td>{{item.adultticketnumber + item.childticketnumber}}</td>
-								<td>{{item.totalprice | number :0 }} đ</td>
-								<td>paypal</td>
-								<td style="color: white;width: 300px;" ng-class="{
+                </div>
+                <div class="table-responsive">
+                    <table class="table header-border zero-configuration">
+                        <thead>
+                            <tr class="text-center">
+                                <th scope="col">STT</th>
+                                <th scope="col">Người đặt</th>
+                                <th scope="col">Thời gian tạo</th>
+                                <th scope="col">Số lượng người</th>
+                                <th scope="col">Tổng</th>
+                                <th scope="col">Hình thức thanh toán</th>
+                                <th scope="col">Trạng thái</th>
+                                <th scope="col">Xem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="text-center" ng-repeat="item in items | orderBy:'-bookingdate'" ng-if="item.statusbooking.statusbookingid == selectedStatus || selectedStatus == '0'">
+                                <th scope="row">{{$index + 1}}</th>
+                                <td>{{item.user.email}}</td>
+                                <td>{{item.bookingdate | date:'dd-MM-yyyy HH:mm a'}}</td>
+                                <td>{{item.adultticketnumber + item.childticketnumber}}</td>
+                                <td>{{item.totalprice | number :0 }} đ</td>
+                                <td>paypal</td>
+                                <td style="color: white;width: 300px;" ng-class="{
 							        'bg-primary': item.statusbooking.statusbookingid == 1,
 							        'bg-success': item.statusbooking.statusbookingid == 2,
 							        'bg-danger': item.statusbooking.statusbookingid == 3,
@@ -81,42 +78,36 @@
 														aria-label="Close"></button>
 
 
-												</div>
-												<div class="modal-body pb-5">
-													<div class="row">
-														<div class="col-sm-4">
-															<div class="form-group"
-																style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
-																<div style="font-size: 20px; font-weight: bold;">Địa
-																	chỉ người nhận</div> <label>-
+                                                </div>
+                                                <div class="modal-body pb-5">
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group" style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
+                                                                <div style="font-size: 20px; font-weight: bold;">Địa chỉ người nhận</div> <label>-
 																	{{form.user.address}}</label> <label>-
 																	{{form.user.email}}</label> <br> <label>-
 																	{{form.user.phonenumber}}</label>
-															</div>
-														</div>
+                                                            </div>
+                                                        </div>
 
-														<div class="col-sm-4">
-															<div class="form-group"
-																style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
-																<div style="font-size: 20px; font-weight: bold;">Hình
-																	thức giao hàng</div>
-																<label>-Thời gian giao dữ tính:{{item.orderdate |
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group" style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
+                                                                <div style="font-size: 20px; font-weight: bold;">Hình thức giao hàng</div>
+                                                                <label>-Thời gian giao dữ tính:{{item.orderdate |
 																	date:'dd-MM-yyyy'}}</label> <label>-
 																	Được giao bới : Giao hàng nhanh</label> <br>
-																<label>-
+                                                                <label>-
 																	Phí vận chuyển : 23,000đ</label>
-															</div>
-														</div>
+                                                            </div>
+                                                        </div>
 
-														<div class="col-sm-4">
-															<div class="form-group"
-																style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
-																<div style="font-size: 20px; font-weight: bold;">Hình
-																	thức thanh toán</div> <label>-
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group" style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
+                                                                <div style="font-size: 20px; font-weight: bold;">Hình thức thanh toán</div> <label>-
 																	Thanh toán bằng : Paypal</label> <br>
-																<label>- Trạng thái : Đã thanh toán thành công </label>
-															</div>
-														</div>
+                                                                <label>- Trạng thái : Đã thanh toán thành công </label>
+                                                            </div>
+                                                        </div>
 
 													</div>
 													<div class="table-responsive">
@@ -172,21 +163,20 @@
 																<option ng-repeat="c in cates"
 																	ng-value="c.statusbookingid">{{c.name}}</option>
 															</select>
-															<div style="background-color: #007BFF; color: #fff;"
-																ng-click="update()" class="btn">Save</div>
-														</div>
-													</div>
-												</div>
+                                                            <div style="background-color: #007BFF; color: #fff;" ng-click="update()" class="btn">Save</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

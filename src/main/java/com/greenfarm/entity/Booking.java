@@ -1,8 +1,11 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,8 +29,18 @@ public class Booking implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Bookingid;
 
-	@Temporal(TemporalType.DATE)
-	private Date Bookingdate = new Date();
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "bookingdate")
+	private LocalDateTime bookingdate;
+
+	public String getBookingdateFormatted() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm a");
+		return bookingdate.format(formatter);
+	}
+	
+	
+	private Integer Numparticipants;
 
 	private Float Totalprice;
 	

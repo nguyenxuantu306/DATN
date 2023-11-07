@@ -1,5 +1,6 @@
 package com.greenfarm.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,4 +26,6 @@ public interface BookingService {
 	Booking create(JsonNode bookingData);
 
 	Booking update(Booking booking);
+
+	List<Booking> findByBookingdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int page, int size);
 }

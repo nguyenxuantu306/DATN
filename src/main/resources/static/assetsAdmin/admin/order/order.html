@@ -53,7 +53,7 @@
 
 							<tr class="text-center"
 								ng-repeat="item in items| orderBy:'-orderdate'"
-								ng-if="((!ngayTaoFilter) || (item.orderdate) === ngayTaoFilter) && (selectedStatus == item.statusOrder.statusorderid || selectedStatus == '0')">
+								ng-if="selectedStatus == item.statusOrder.statusorderid || selectedStatus == '0'">
 								<th scope="row">{{$index + 1}}</th>
 								<td>{{item.user.firstname}}</td>
 								<td>{{item.orderdate  | date:'dd-MM-yyyy HH:mm a'}}</td>
@@ -112,7 +112,7 @@
 																style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
 																<div style="font-size: 20px; font-weight: bold;">Hình
 																	thức thanh toán</div>
-																<label>- Thanh toán bằng : Paypal</label> <br> <label>-
+																<label>- {{item.order.orderdetail.paymentMethod.methodname}}</label> <br> <label>-
 																	Trạng thái : Đã thanh toán thành công </label>
 															</div>
 														</div>
@@ -139,6 +139,7 @@
 																	<td>{{orderDetail.product.category.categoryname}}
 																	</td>
 																	<td>{{orderDetail.quantityordered}}</td>
+																	<td>{{orderDetail.paymentMethod.methodname}}</td>
 																	<td>{{formatPrice(orderDetail.totalPrice)}}</td>												
 																</tr>
 															</tbody>
