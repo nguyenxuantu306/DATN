@@ -39,7 +39,6 @@ public class Booking implements Serializable {
 		return bookingdate.format(formatter);
 	}
 	
-	
 
 	private Float Totalprice;
 	
