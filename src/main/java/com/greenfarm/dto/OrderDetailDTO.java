@@ -17,5 +17,5 @@ public class OrderDetailDTO {
 	private Float totalprice;
 	private Order order;
 	private Product product;
-	private PaymentMethod paymentmethod;
+
 }

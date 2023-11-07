@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.greenfarm.entity.OrderDetail;
+import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.StatusBooking;
 import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.entity.Tour;
@@ -27,5 +28,5 @@ public class BookingDTO {
 	private User user;
 	private Tour tour;
 	private StatusBooking statusbooking;
-
+	private PaymentMethod paymentmethod;
 }

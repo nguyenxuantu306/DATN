@@ -37,9 +37,7 @@ public class OrderDetail implements Serializable {
 
 	Float totalprice;
 
-	@ManyToOne
-	@JoinColumn(name = "paymentmethodid")
-	PaymentMethod paymentMethod;
+
 	
 	public  Float getTotalPrice() {
 	    return totalprice;

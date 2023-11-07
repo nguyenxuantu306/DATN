@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.greenfarm.entity.OrderDetail;
+import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.entity.User;
 
@@ -26,5 +27,6 @@ public class OrderDTO {
 	List<OrderDetail> orderDetail;
 	User user;
 	StatusOrder statusOrder;
+	private PaymentMethod paymentmethod;
 	//private String formattedOrderDate;
 }
