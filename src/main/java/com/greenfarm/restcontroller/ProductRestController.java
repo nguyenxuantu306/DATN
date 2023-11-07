@@ -2,7 +2,6 @@ package com.greenfarm.restcontroller;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -20,11 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.Bucket;
-import com.google.firebase.cloud.StorageClient;
 import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
@@ -74,15 +69,7 @@ public class ProductRestController {
 
 	@PostMapping()
 	public ResponseEntity<ProductDTO> create(@RequestBody Product product,
-			Model model, @RequestParam("imageFile") MultipartFile imageFile) {
-		try {
-			Bucket bucket = StorageClient.getInstance().bucket();
-			String imageName = UUID.randomUUID().toString() + imageFile.getOriginalFilename();
-			Blob blob = bucket.create(imageName, imageFile.getBytes(), imageFile.getContentType());
-			String image = blob.getMediaLink(); 
-
-			product.setImage(image);
-
+			Model model) {
 			Product createdProduct = productService.create(product);
 
 			// Sử dụng ModelMapper để ánh xạ từ Product đã tạo thành ProductDTO
@@ -90,10 +77,6 @@ public class ProductRestController {
 
 			// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
 			return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
-		} catch (Exception e) {
-			model.addAttribute("error", e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
 		
 	}
 

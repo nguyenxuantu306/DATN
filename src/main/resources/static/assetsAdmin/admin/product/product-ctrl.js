@@ -215,45 +215,42 @@ app.controller("product-ctrl", function ($scope, $http) {
       });
   };
 
-  /*// Sử dụng AngularJS để lắng nghe sự kiện khi người dùng chọn tệp
-$scope.selectImage = function() {
-    var fileInput = document.getElementById('imageUpload');
-    fileInput.click();
-};
+});
 
-// Xử lý sự kiện khi người dùng chọn tệp
-document.getElementById('imageUpload').addEventListener('change', function(event) {
-    var imagePreview = document.getElementById('imagePreview');
-    var file = event.target.files[0];
+// Get references to the file input, URL input, and the preview image element
+const fileInput = document.getElementById("imageFile");
+const imageUrlInput = document.getElementById("imageUrl");
+const previewImage = document.getElementById("previewImage");
 
-    if (file) {
-        var reader = new FileReader();
+// Function to display an image based on the URL
+function displayImageUrl() {
+    const imageUrl = imageUrlInput.value;
+    if (imageUrl) {
+        previewImage.src = imageUrl;
+    } else {
+        // Clear the preview image if URL is empty
+        previewImage.src = "";
+    }
+}
 
-        reader.onload = function(e) {
-            imagePreview.src = e.target.result;
-            imagePreview.style.display = 'block';
+// Function to display an image based on the selected file
+function displayImageFile() {
+    if (fileInput.files.length > 0) {
+        const selectedFile = fileInput.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            previewImage.src = e.target.result;
         };
 
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(selectedFile);
     } else {
-        // Nếu người dùng không chọn tệp, ẩn hình ảnh
-        imagePreview.src = '';
-        imagePreview.style.display = 'none';
+        // Clear the preview image if no file is selected
+        previewImage.src = "";
     }
-});
+}
 
-// Xử lý sự kiện khi trường nhập URL mất focus (ng-blur)
-$scope.updateImageFromUrl = function() {
-    var imageUrl = $scope.form.imageUrl;
-    var imagePreview = document.getElementById('imagePreview');
+// Add event listeners to the URL input and file input for real-time image display
+imageUrlInput.addEventListener("input", displayImageUrl);
+fileInput.addEventListener("change", displayImageFile);
 
-    if (imageUrl) {
-        imagePreview.src = imageUrl;
-        imagePreview.style.display = 'block';
-    } else {
-        // Nếu URL trống, ẩn hình ảnh
-        imagePreview.src = '';
-        imagePreview.style.display = 'none';
-    }
-};*/
-});
