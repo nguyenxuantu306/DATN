@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "statusbookings")
 public class StatusBooking implements Serializable {
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +29,6 @@ public class StatusBooking implements Serializable {
 	private String name;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "statusBooking")
+	@OneToMany(mappedBy = "statusbooking")
 	List<Booking> booking;
 }

@@ -74,7 +74,6 @@ public class Tour implements Serializable {
 	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
 	private TourOverview tourOverview;
 
-	@JsonIgnore
 	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
 	private Pricing pricings;
 
