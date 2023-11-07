@@ -1,6 +1,7 @@
 app.controller('revenueindex-ctrl', function($scope, $http) {
 	$scope.form = {};
 	$scope.itemsThongKeSTstatus = [];
+	$scope.itemsThongKebookingstatus = [];
 	$scope.itemsThongKestats = [];
 	$scope.itemsThongKeDT = [];
 
@@ -18,6 +19,11 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 		$http.get('/rest/orders/slstatus').then(response => {
 			$scope.itemsThongKeSTstatus = response.data;
 			console.log($scope.itemsThongKeSTstatus);
+
+		})
+		$http.get('/rest/bookings/slbookingstatus').then(response => {
+			$scope.itemsThongKebookingstatus = response.data;
+			console.log($scope.itemsThongKebookingstatus);
 
 		})
 
@@ -59,6 +65,14 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 		let totalCount = 0;
 		for (let i = 0; i < $scope.itemsThongKeSTstatus.length; i++) {
 			totalCount += $scope.itemsThongKeSTstatus[i].count;
+		}
+		return totalCount;
+	};
+	
+	$scope.calculateTotalCount1 = function() {
+		let totalCount = 0;
+		for (let i = 0; i < $scope.itemsThongKebookingstatus.length; i++) {
+			totalCount += $scope.itemsThongKebookingstatus[i].count;
 		}
 		return totalCount;
 	};

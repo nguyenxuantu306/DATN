@@ -126,5 +126,10 @@ public class BookingRestController {
 		}
 	}
 
+	// Thống kê số lượng trạng thái
+	@GetMapping("/slbookingstatus")
+	public ResponseEntity<List<ReportRevenue>> slbookingstatus() {
+		return new ResponseEntity<>(bookingService.slbookingstatus(), HttpStatus.OK);
+	}
 	
 }

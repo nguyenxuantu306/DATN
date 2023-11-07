@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.Top3;
 
 public interface BookingDAO extends JpaRepository<Booking, Integer> {
@@ -24,4 +25,7 @@ public interface BookingDAO extends JpaRepository<Booking, Integer> {
 
 	@Query("SELECT o FROM Booking o WHERE o.bookingdate  BETWEEN :startDateTime AND :endDateTime")
 	List<Booking> findByBookingdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, Pageable pageable);
+
+	@Query("SELECT new ReportRevenue(o.statusbooking.name, count(o)) FROM Booking o GROUP BY o.statusbooking.name")
+	List<ReportRevenue> countBookingsByStatus();
 }

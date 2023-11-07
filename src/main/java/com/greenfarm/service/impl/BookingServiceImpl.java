@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfarm.dao.BookingDAO;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.Top3;
 import com.greenfarm.service.BookingService;
 
@@ -59,5 +60,10 @@ public class BookingServiceImpl implements BookingService {
 			int size) {
 		Pageable pageable = PageRequest.of(page, size);
         return dao.findByBookingdateBetween(startDateTime, endDateTime, pageable);
+	}
+
+	@Override
+	public List<ReportRevenue> slbookingstatus() {
+		return dao.countBookingsByStatus();
 	}
 }

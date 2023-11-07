@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfarm.dao.BookingDAO;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.Top3;
 
 public interface BookingService {
@@ -28,4 +29,7 @@ public interface BookingService {
 	Booking update(Booking booking);
 
 	List<Booking> findByBookingdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int page, int size);
+
+	// Thống kê số lượng trạng thái
+	List<ReportRevenue> slbookingstatus();
 }

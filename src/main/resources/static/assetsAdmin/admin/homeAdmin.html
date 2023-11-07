@@ -1,10 +1,10 @@
 <div class="container-fluid mt-3">
 	<div class="row">
-		<div  class="col-lg-3 col-sm-6">
+		<div class="col-lg-3 col-sm-6">
 			<div class="card gradient-1">
 				<div class="card-body">
-					<h3  class="card-title text-white">Doanh thu</h3>
-					<div  class="d-inline-block">
+					<h3 class="card-title text-white">Doanh thu</h3>
+					<div class="d-inline-block">
 						<h2 class="text-white">{{latestYear}}</h2>
 					</div>
 					<span class="float-right display-5 opacity-5"><i
@@ -29,7 +29,9 @@
 				<div class="card-body " style="height: 160px">
 					<h3 class="card-title text-white">Số lượng đơn hàng</h3>
 					<div class="d-inline-block py-3">
-						<h2 class="text-white">{{ calculateTotalCount() }}</h2>
+						<h2 class="text-white">{{ calculateTotalCount() }} | {{
+							calculateTotalCount1() }}</h2>
+
 					</div>
 					<button style="margin-top: 20px;" type="button"
 						class="btn btn-light float-right opacity-5" data-toggle="modal"
@@ -40,15 +42,10 @@
 						aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog modal-xl custom-modal">
 							<div class="modal-content">
-								<div class="modal-header">
-									<h3 class="modal-title " id="exampleModalLabel">Chi tiết :
-										số lượng trạng thái đơn hàng</h3>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
+
 								<div class="modal-body">
-									<div class="row">
-										<div ng-repeat="item in itemsThongKeSTstatus" class="col-6">
+									<div class="row">										
+										<div ng-repeat="item in itemsThongKeSTstatus" class="col-6">											
 											<div class="card card-widget">
 												<div class="card-body gradient-3">
 													<div class="media">
@@ -57,6 +54,25 @@
 														<div class="media-body p-2">
 															<h2 class="card-widget__title">
 																{{item.group}} : <span>{{item.count}}</span>
+															</h2>
+
+														</div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+										
+										<div ng-repeat="tour in itemsThongKebookingstatus"
+											class="col-6">
+											<div class="card card-widget">
+												<div class="card-body gradient-3">
+													<div class="media">
+														<span class="card-widget__icon"><i
+															class="fa fa-suitcase" aria-hidden="true"></i></span>
+														<div class="media-body p-2">
+															<h2 class="card-widget__title">
+																{{tour.group}} : <span>{{tour.count}}</span>
 															</h2>
 
 														</div>
@@ -184,9 +200,8 @@
 							<ul ng-repeat="item in itemsThongKeDT"
 								class="list-group list-group-flush" id="listItems">
 								<li class="list-group-item text-center"><a href="#"> <span
-										style="font-weight: bold;"><i
-											style="color: green;" class="fas fa-calendar"></i> | Năm:
-											{{item.yearValue}} </span> <span
+										style="font-weight: bold;"><i style="color: green;"
+											class="fas fa-calendar"></i> | Năm: {{item.yearValue}} </span> <span
 										style="font-weight: bold; padding: 20px">{{item.sum |
 											currency:'₫':0}}</span>
 								</a></li>
