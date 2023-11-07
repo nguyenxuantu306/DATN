@@ -1,7 +1,7 @@
 app.controller("tour-ctrl", function($scope, $http) {
 	$scope.items = [];
 	$scope.form = {
-		tourImage: [{ imageurl: "" }]
+		tourImage: [{ imageurl: '' }]
 	};
 	$scope.field = [];
 	$scope.error = ['err'];
@@ -52,7 +52,7 @@ app.controller("tour-ctrl", function($scope, $http) {
 	}
 
 
-
+	// Reset form
 	$scope.reset = function() {
 		$scope.error = ['err'];
 		$scope.form = {
@@ -60,16 +60,16 @@ app.controller("tour-ctrl", function($scope, $http) {
 		};
 	};
 
-	/*	// Hiện thị lên for
-		$scope.editthemsp = function() {
-			$scope.form = {};
-			item.tourImage = [{ imageurl: "" }]
-				$scope.form = {
-				image: 'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',
-			};
-		}*/
+	// Hiện thị lên for
+	$scope.editthemsp = function() {
+		$scope.error = ['err'];
+		$scope.form = {
+			image: 'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',
+			tourImage: [{ imageurl: '' }]
+		};
+	}
 
-	// Thêm tour phẩm mới
+	// Thêm tour mới
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
 		$http.post(`/rest/tours`, item).then(resp => {
@@ -202,20 +202,20 @@ app.controller("tour-ctrl", function($scope, $http) {
 	}
 
 
-/*	$scope.formatCurrency = function(event) {
-		// get input value
-		var input = event.target;
-		var value = input.value;
-
-		// replace non-digit characters with empty string
-		value = value.replace(/[^0-9]/g, '');
-
-		// format the value using regex
-		value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-
-		// update the input value
-		input.value = value;
-	}*/
+	/*	$scope.formatCurrency = function(event) {
+			// get input value
+			var input = event.target;
+			var value = input.value;
+	
+			// replace non-digit characters with empty string
+			value = value.replace(/[^0-9]/g, '');
+	
+			// format the value using regex
+			value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+	
+			// update the input value
+			input.value = value;
+		}*/
 });
 
 
