@@ -117,20 +117,22 @@ public class CheckoutController {
             LocalDateTime now = LocalDateTime.now();
             StatusOrder statusOrder = new StatusOrder();
             statusOrder.setStatusorderid(1);
+            PaymentMethod paymentMethodObj = paymentMethodDAO.findById(paymentMethod).get();
             if (user != null) {
                 Order orderItem = new Order();
                 orderItem.setUser(user);
                 orderItem.setOrderdate(now);
                 orderItem.setAddress(orderDTO.getAddress());
                 orderItem.setStatusOrder(statusOrder);
+                orderItem.setPaymentMethod(paymentMethodObj);
                 System.out.println(orderDTO.getAddress());
                 orderDAO.save(orderItem);
-
+                
                 List<Cart> cartItems = cartDAO.findByUser(user); // Retrieve cart items for the user
 
                 List<OrderDetail> orderDetailList = new ArrayList<>();
 
-                PaymentMethod paymentMethodObj = paymentMethodDAO.findById(paymentMethod).get();
+             
 
                 for (Cart cartItem : cartItems) {
                     OrderDetail orderDetailItem = new OrderDetail();
