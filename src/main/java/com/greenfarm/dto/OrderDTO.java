@@ -1,7 +1,7 @@
 package com.greenfarm.dto;
 
-
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -20,10 +20,11 @@ public class OrderDTO {
 
 	private Integer Orderid;
 	private LocalDateTime orderdate;
+
 	private String address;
 
 	List<OrderDetail> orderDetail;
 	User user;
 	StatusOrder statusOrder;
-
+	//private String formattedOrderDate;
 }

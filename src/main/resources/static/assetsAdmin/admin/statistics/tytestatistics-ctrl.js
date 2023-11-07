@@ -5,6 +5,9 @@ app.controller('tytestatistics-ctrl', function($scope, $http) {
 		$scope.reverse = !$scope.reverse;
 	}
 	$scope.itemsThongKeLoai = [];
+	$scope.selectedCategoryProducts = []; // Danh sách sản phẩm thuộc category được chọn
+
+
 	$scope.initialize = function() {
 		$http.get('/rest/products/thongke/loai').then(response => {
 			$scope.itemsThongKeLoai = response.data;
@@ -13,6 +16,9 @@ app.controller('tytestatistics-ctrl', function($scope, $http) {
 			console.log(err);
 		})
 	}
+
+
+
 	$scope.pager = {
 		page: 0,
 		size: 5,
@@ -44,6 +50,17 @@ app.controller('tytestatistics-ctrl', function($scope, $http) {
 			this.page = this.count - 1;
 		},
 	}
+	//
+	// Sửa phương thức để hiển thị danh sách sản phẩm khi nhấn "Xem"
+	$scope.showCategoryProducts = function(category) {
+		$http.get('/rest/products/getProductsByCategory/' + category.categoryid).then(response => {
+			$scope.selectedCategoryProducts = response.data;
+			console.log($scope.selectedCategoryProducts)
+			$('#exampleModal').modal('show');
+		}).catch(err => {
+			console.log(err);
+		});
+	};
 	$scope.initialize();
 
 

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.greenfarm.dto.ProductDTO;
+import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ThongkeTK;
@@ -224,7 +225,21 @@ public class ProductRestController {
 	@GetMapping("/thongke/top10spbanchay")
     public List<Report> getProductspbanchay() {
         return productService.getReportspbanchay();
-    }
+	}
+	
+	// @GetMapping("/getProductsByCategory/{categoryid}")
+    // public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable Integer categoryid) {
+    //     Category category = new Category();
+    //     category.setCategoryid(categoryid);
+
+    //     List<Product> products = productService.getProductsByCategory(category);
+
+    //     if (products.isEmpty()) {
+    //         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    //     }
+
+    //     return new ResponseEntity<>(products, HttpStatus.OK);
+    // }
 
 //	@PutMapping("/purchase")
 //	public ResponseEntity<?> purchaseProduct(@RequestBody List<ThongkeTK> thongketk) {

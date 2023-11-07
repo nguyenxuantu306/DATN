@@ -13,6 +13,11 @@ import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.RevenueTK;
 
 public interface OrderService {
+	List<Order> findOrdersByDateRange(LocalDateTime atStartOfDay, LocalDateTime plusDays, int page, int size);
+	
+	
+	List<Order> findByOrderdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int page, int size);
+
 
 	Order create(JsonNode orderData);
 

@@ -1,12 +1,15 @@
 package com.greenfarm.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -36,6 +39,29 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	StatusOrderDAO statusOrderDAO;
 
+	
+	
+	@Override
+    public List<Order> findOrdersByDateRange(LocalDateTime startDay, LocalDateTime endDay, int page, int size) {
+        // Tính toán số lượng bản ghi bỏ qua (offset)
+        int offset = page * size;
+
+        // Gọi phương thức findOrdersByDateRange trong OrderDAO
+        List<Order> orders = dao.findOrdersByDateRange(startDay, endDay);
+
+        // Kiểm tra và cắt danh sách đơn hàng dựa trên trang và kích thước
+        if (offset < orders.size()) {
+            int toIndex = Math.min(offset + size, orders.size());
+            orders = orders.subList(offset, toIndex);
+        } else {
+            orders = Collections.emptyList();
+        }
+
+        return orders;
+    }
+	
+	
+	
 	@Override
 	public List<Order> getAllOrders(int page, int size) {
 		int offset = page * size;
@@ -166,5 +192,19 @@ public class OrderServiceImpl implements OrderService {
 	public List<FindReportYear> findYearlyRevenue(Integer year) {
 		return dao.findYearlyRevenue(year);
 	}
+
+
+
+	@Override
+	public List<Order> findByOrderdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int page,
+			int size) {
+		Pageable pageable = PageRequest.of(page, size);
+        return dao.findByOrderdateBetween(startDateTime, endDateTime, pageable);
+	}
+
+
+
+
+	
 
 }

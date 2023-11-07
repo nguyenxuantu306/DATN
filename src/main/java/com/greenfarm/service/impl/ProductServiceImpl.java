@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.ProductsDAO;
+import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ThongkeTK;

@@ -5,6 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,12 @@ import com.itextpdf.text.pdf.*;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.greenfarm.entity.Category;
+import com.greenfarm.entity.Order;
+import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.User;
+import com.greenfarm.service.OrderService;
 import com.greenfarm.service.ProductService;
 import com.greenfarm.service.UserService;
 import com.itextpdf.text.Paragraph;
@@ -39,6 +44,9 @@ public class PdfController {
 	@Autowired
 	ProductService productService;
 
+	@Autowired
+	OrderService orderService;
+
 	@GetMapping("/export-to-pdf")
 	public ResponseEntity<byte[]> exportToPDF() throws IOException, DocumentException {
 		List<User> dataList = getAll(); // Hàm này tạo dữ liệu mẫu
@@ -48,8 +56,8 @@ public class PdfController {
 		PdfWriter.getInstance(document, outputStream);
 
 		// Khởi tạo font Unicode từ tệp font
-		BaseFont unicodeFont = BaseFont.createFont("./static/Unicode/arial.ttf",
-				BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+		BaseFont unicodeFont = BaseFont.createFont("./static/Unicode/arial.ttf", BaseFont.IDENTITY_H,
+				BaseFont.EMBEDDED);
 
 		document.open();// Thêm tiêu đề vào tài liệu
 		String title = "Danh sách người dùng";
@@ -70,7 +78,7 @@ public class PdfController {
 		PdfPTable table = new PdfPTable(7); // Số cột trong bảng
 
 		// Thiết lập tiêu đề cho từng cột
-		
+
 		table.addCell(createCell("STT", true, unicodeFonts));
 		table.addCell(createCell("Tên", true, unicodeFonts));
 		table.addCell(createCell("Email", true, unicodeFonts));
@@ -83,7 +91,7 @@ public class PdfController {
 		for (User data : dataList) {
 
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-			
+
 			String createDateString = dateFormat.format(data.getCreateddate());
 
 			// Chuyển đổi số nguyên thành chuỗi trước khi truyền vào createCell
@@ -126,8 +134,6 @@ public class PdfController {
 		return userService.findAll();
 	}
 
-
-	
 	@GetMapping("/pdf-product")
 	public ResponseEntity<byte[]> PDFProduct() throws IOException, DocumentException {
 		List<Product> dataList = getAllProduct(); // Hàm này tạo dữ liệu mẫu
@@ -137,12 +143,12 @@ public class PdfController {
 		PdfWriter.getInstance(document, outputStream);
 
 		// Khởi tạo font Unicode từ tệp font
-		BaseFont unicodeFont = BaseFont.createFont("./static/Unicode/arial.ttf",
-				BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-		
+		BaseFont unicodeFont = BaseFont.createFont("./static/Unicode/arial.ttf", BaseFont.IDENTITY_H,
+				BaseFont.EMBEDDED);
+
 		document.open();// Thêm tiêu đề vào tài liệu
 		String title = "Danh sách sản phẩm";
-		
+
 		document.addTitle(title);
 
 		document.open();
@@ -179,9 +185,8 @@ public class PdfController {
 			table.addCell(createCell(data.getProductname(), false, unicodeFonts));
 			table.addCell(createCell(decimalFormat.format(data.getPrice()), false, unicodeFonts));
 			table.addCell(createCell(String.valueOf(data.getQuantityavailable()), false, unicodeFonts));
-		
-		}
 
+		}
 
 		document.add(table);
 		document.close();
@@ -196,11 +201,11 @@ public class PdfController {
 	public final List<Product> getProduct() {
 		return productService.findAll();
 	}
-	
-	
+
 	public final List<Product> getAllProduct() {
 		return productService.findAll();
 	}
+
 	@GetMapping("/pdf-productstatistics")
 	public ResponseEntity<byte[]> PDFProductStatistics() throws IOException, DocumentException {
 		List<Report> dataList = getProductStatitics(); // Hàm này tạo dữ liệu mẫu
@@ -210,8 +215,8 @@ public class PdfController {
 		PdfWriter.getInstance(document, outputStream);
 
 		// Khởi tạo font Unicode từ tệp font
-		BaseFont unicodeFont = BaseFont.createFont("./static/Unicode/arial.ttf",
-				BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+		BaseFont unicodeFont = BaseFont.createFont("./static/Unicode/arial.ttf", BaseFont.IDENTITY_H,
+				BaseFont.EMBEDDED);
 		// String fontPath = "classpath:static/Unicode/arial.ttf"; // Đường dẫn tương
 		// đối đến tệp font trong thư mục resources
 		// BaseFont font = BaseFont.createFont(fontPath, BaseFont.IDENTITY_H,
@@ -250,14 +255,14 @@ public class PdfController {
 
 		// Thiết lập dữ liệu cho từng hàng
 		for (int i = 0; i < dataList.size(); i++) {
-		    Report data = dataList.get(i);
-		    Product product = (Product) data.getGroup();
+			Report data = dataList.get(i);
+			Product product = (Product) data.getGroup();
 
-		    table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
-		    table.addCell(createCell(product.getProductname(), false, unicodeFonts));
-		    table.addCell(createCell(decimalFormat.format(product.getPrice()), false, unicodeFonts));
-		    table.addCell(createCell(String.valueOf(data.getCount()), false, unicodeFonts));
-		    table.addCell(createCell(decimalFormat.format(product.getPrice() * data.getCount()), false, unicodeFonts));
+			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
+			table.addCell(createCell(product.getProductname(), false, unicodeFonts));
+			table.addCell(createCell(decimalFormat.format(product.getPrice()), false, unicodeFonts));
+			table.addCell(createCell(String.valueOf(data.getCount()), false, unicodeFonts));
+			table.addCell(createCell(decimalFormat.format(product.getPrice() * data.getCount()), false, unicodeFonts));
 		}
 
 		document.add(table);
@@ -273,8 +278,7 @@ public class PdfController {
 	public final List<Report> getProductStatitics() {
 		return productService.getTk_sp();
 	}
-	
-	
+
 	@GetMapping("/pdf-categorytatistics")
 	public ResponseEntity<byte[]> PDCAtegoryStatistics() throws IOException, DocumentException {
 		List<Report> dataList = getCategoryStatitics(); // Hàm này tạo dữ liệu mẫu
@@ -284,10 +288,9 @@ public class PdfController {
 		PdfWriter.getInstance(document, outputStream);
 
 		// Khởi tạo font Unicode từ tệp font
-		BaseFont unicodeFont = BaseFont.createFont("./static/Unicode/arial.ttf",
-				BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+		BaseFont unicodeFont = BaseFont.createFont("./static/Unicode/arial.ttf", BaseFont.IDENTITY_H,
+				BaseFont.EMBEDDED);
 		// String fontPath = "classpath:static/Unicode/arial.ttf"; // Đường dẫn tương
-		
 
 		document.open();// Thêm tiêu đề vào tài liệu
 		String title = "Danh sách thống kê loại sản phẩm";
@@ -339,8 +342,85 @@ public class PdfController {
 
 		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
-	
+
 	public final List<Report> getCategoryStatitics() {
 		return productService.getTk_loai();
+	}
+
+	@GetMapping("/pdf-order")
+	public ResponseEntity<byte[]> PDForder() throws IOException, DocumentException {
+		List<Order> dataList = getAllOrder(); // Hàm này tạo dữ liệu mẫu
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		Document document = new Document();
+		PdfWriter.getInstance(document, outputStream);
+
+		// Khởi tạo font Unicode từ tệp font
+		BaseFont unicodeFont = BaseFont.createFont("./static/Unicode/arial.ttf", BaseFont.IDENTITY_H,
+				BaseFont.EMBEDDED);
+		// String fontPath = "classpath:static/Unicode/arial.ttf"; // Đường dẫn tương
+
+		document.open();// Thêm tiêu đề vào tài liệu
+		String title = "Danh sách đơn hàng";
+		document.addTitle(title);
+
+		document.open();
+
+		// Thêm tiêu đề chính
+		// Tạo font chữ với font Unicode
+		Font unicodeFonts = new Font(unicodeFont, 12, Font.NORMAL, BaseColor.BLACK);
+		Paragraph titleParagraph = new Paragraph(title, unicodeFonts);
+
+		titleParagraph.setAlignment(Element.ALIGN_CENTER);
+		titleParagraph.setSpacingAfter(20); // Khoảng cách dưới tiêu đề chính
+		document.add(titleParagraph);
+
+		// Tạo bảng PDF
+		PdfPTable table = new PdfPTable(5); // Số cột trong bảng
+
+		// Thiết lập tiêu đề cho từng cột
+		table.addCell(createCell("STT", true, unicodeFonts));
+		table.addCell(createCell("Người mua", true, unicodeFonts));
+		table.addCell(createCell("Ngày tạo", true, unicodeFonts));
+		table.addCell(createCell("Tổng", true, unicodeFonts));
+		table.addCell(createCell("Trạng thái", true, unicodeFonts));
+
+		// Định dạng giá tiền
+		DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+		symbols.setGroupingSeparator(',');
+		symbols.setDecimalSeparator('.');
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00 VNĐ", symbols);
+
+		// Thiết lập dữ liệu cho từng hàng
+		for (int i = 0; i < dataList.size(); i++) {
+			Order data = dataList.get(i);
+
+			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
+			table.addCell(createCell(data.getUser().getFirstname(), false, unicodeFonts));
+			table.addCell(createCell(data.getOrderDateFormatted(), false, unicodeFonts));
+
+			List<OrderDetail> orderDetails = data.getOrderDetail();
+			float totalPrice = 0.0f;
+			for (OrderDetail orderDetail : orderDetails) {
+				totalPrice += orderDetail.getTotalPrice();
+			}
+
+			// Định dạng và thêm giá trị tổng giá vào ô
+			table.addCell(createCell(decimalFormat.format(totalPrice), false, unicodeFonts));
+			table.addCell(createCell(data.getStatusOrder().getName(), false, unicodeFonts));
+		}
+
+		document.add(table);
+		document.close();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		headers.setContentDispositionFormData("attachment", "exportPDF.pdf");
+
+		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
+	}
+
+	public final List<Order> getAllOrder() {
+		return orderService.findAll();
 	}
 }
