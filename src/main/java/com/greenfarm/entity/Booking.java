@@ -38,9 +38,6 @@ public class Booking implements Serializable {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm a");
 		return bookingdate.format(formatter);
 	}
-	
-	
-	private Integer Numparticipants;
 
 	private Float Totalprice;
 	
