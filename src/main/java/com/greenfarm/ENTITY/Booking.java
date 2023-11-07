@@ -57,5 +57,9 @@ public class Booking implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "statusbookingid")
 	StatusBooking statusbooking;
+	
+	@ManyToOne
+	@JoinColumn(name = "paymentmethodid")
+	PaymentMethod paymentMethod;
 
 }

@@ -55,6 +55,10 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "statusorderid")
 	StatusOrder statusOrder;
+	
+	@ManyToOne
+	@JoinColumn(name = "paymentmethodid")
+	PaymentMethod paymentMethod;
 }
 
 //
