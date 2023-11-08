@@ -126,12 +126,9 @@
                                                                     <th scope="row">{{$index + 1}}</th>
                                                                     <td><img ng-src="{{item.tour.image}}" alt="Tour Image" style="width: 80px;"></td>
                                                                     <td style="width: 150px">{{item.tour.tourname}}</td>
-                                                                    <td style="width: 200px">Gía người lớn: {{item.tour.pricings.adultprice}} <br /> Gía trẻ em: {{item.tour.pricings.childprice}}>
+                                                                    <td style="width: 200px">Gía người lớn: {{item.tour.pricings.adultprice}} <br /> Gía trẻ em: {{item.tour.pricings.childprice}}
                                                                     </td>
-                                                                    <td style="width:150px">{{item.tour.tourname}}</td>
-                                                                    <td style="width:200px"> Gía người lớn: {{formatPrice(item.tour.pricings.adultprice)}} <br /> Gía trẻ em: {{formatPrice(item.tour.pricings.childprice)}}
-
-                                                                    </td>
+                                 
                                                                     <td>{{item.adultticketnumber}}</td>
                                                                     <td>{{item.childticketnumber}}</td>
                                                                     <td>{{formatPrice(item.adultticketnumber * item.tour.pricings.adultprice)}}

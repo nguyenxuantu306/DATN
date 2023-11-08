@@ -35,8 +35,9 @@
 									<th>STT</th>
 									<th>Hình ảnh</th>
 									<th>Tên tour</th>
-									<th>Ngày bắt đầu</th>
-									<th>Ngày kết thúc</th>
+									<!--<th>Ngày bắt đầu</th>
+									<th>Ngày kết thúc</th>-->
+									<th>Ngày</th>
 									<th>Giá</th>
 									<th>Số lượng người</th>
 									<th>Điều kiện</th>
@@ -51,8 +52,9 @@
 									<td><img ng-src="{{item.image}}" alt="Tour Image"
 											style="width: 80px; height: 80px;"></td>
 									<td>{{item.tourname}}</td>
-									<td>{{item.startdate | date:'dd-MM-yyyy'}}</td>
-									<td>{{item.enddate | date:'dd-MM-yyyy'}}</td>
+									<!--<td>{{item.startdate | date:'dd-MM-yyyy'}}</td>
+									<td>{{item.enddate | date:'dd-MM-yyyy'}}</td>-->
+									<td>{{item.departureday}}</td>
 									<td>{{formatPrice(item.pricings.childprice)}}</td>
 									<td>{{item.availableslots}}</td>
 									<td><span class="text-success" ng-if="item.tourCondition.conditions">Đã có</span>
@@ -132,18 +134,11 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-6">
-											<div class="form-group row ">
-												<div class="col-md-6">
-													<label>Ngày bắt đầu</label> <input
-														class="form-control input-default" type="date" name="startdate"
-														ng-model="form.startdate" placeholder="Start Date" />
-												</div>
-												<div class="col-md-6">
-													<label>Ngày kết thúc</label> <input
-														class="form-control input-default" type="date" name="enddate"
-														ng-model="form.enddate" placeholder="End Date" />
-												</div>
+										<div class="form-group col-6">
+											<div>
+												<label>Ngày khởi hành</label> <input type="text" name="location"
+													ng-model="form.departureday" class="form-control input-default"
+													placeholder="Location" />
 											</div>
 										</div>
 										<div class="form-group col-6">
@@ -263,10 +258,10 @@
 													<div class="mr-2">
 														<label>Giá trẻ em</label> <input type="text"
 															ng-model="form.pricings.childprice"
-															class="form-control input-currency"
+															class="form-control input-currency" placeholder="Adultprice"
 															ng-keyup="formatCurrency($event)" />
 													</div>
-							
+
 													<div>
 														<label>Lượng người</label> <input type="number"
 															name="availableslots" ng-model="form.availableslots"
@@ -275,18 +270,11 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-6">
-											<div class="form-group row ">
-												<div class="col-md-6">
-													<label>Ngày bắt đầu</label> <input
-														class="form-control input-default" type="date" name="startdate"
-														ng-model="form.startdate" placeholder="Start Date" />
-												</div>
-												<div class="col-md-6">
-													<label>Ngày kết thúc</label> <input
-														class="form-control input-default" type="date" name="enddate"
-														ng-model="form.enddate" placeholder="End Date" />
-												</div>
+										<div class="form-group col-6">
+											<div>
+												<label>Ngày khởi hành</label> <input type="text" name="location"
+													ng-model="form.departureday" class="form-control input-default"
+													placeholder="Location" />
 											</div>
 										</div>
 										<div class="form-group col-6">
