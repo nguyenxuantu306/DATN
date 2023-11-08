@@ -44,7 +44,9 @@
 								<div class="d-flex justify-content-between">
 								
 									<h5 th:text="${#numbers.formatDecimal(tour.tour.pricings.Adultprice,0,'COMMA',0,'POINT')} + 'đ'" class="m-0"></h5>
-									<button class="btn btn-primary">Đặt tour</button>
+									<button class="btn btn-primary">
+									<a href="/booking">Đặt tour</a>
+									</button>
 								</div>
 							</div>
 						</div>

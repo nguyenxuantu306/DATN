@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>GreenFarm</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-8" id="radius">
+
+                <div class="card mt-3" id="radius">
+                    <div class="card text-white bg-primary p-2">
+                        <b>DỊCH VỤ TOUR</b>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title" >Mã tour </h4>
+                        <div class="d-flex">
+                            <p class="card-title mt-1" style="font-weight: bold;">Tour yêu cầu </p>
+                            <p style="color: red;font-style: italic" class="mt-1 ml-1"> ( Đặt tour gia đình - cá nhân - công ty - trường học )</p>
+                        </div>
+
+                        <input type="text" class="form-control" style="border-radius: 5px" placeholder="Tour Tham Quan Vườn Rau"
+                            aria-label="Username" aria-describedby="basic-addon1" disabled>
+                        <br>
+                        <div class="row">
+
+                            <div class="col-6">
+                                <label for="" style="font-weight: bold;">Khởi hành</label>
+                                <input type="text" class="form-control" style="border-radius: 5px" placeholder="Liên hệ" aria-label="Username"
+                                    aria-describedby="basic-addon1" disabled>
+                            </div>
+                            <!--  -->
+                            <div class="col-6">
+                                <label for="" style="font-weight: bold;">Phương tiện</label>
+                                <input type="text" class="form-control" style="border-radius: 5px" placeholder="Đến nơi sẽ đưa rước bằng xe tham quan" aria-label="Username"
+                                    aria-describedby="basic-addon1" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <!--  -->
+                <div class="card">
+                    <div class="card text-white bg-primary p-2">
+                        <b>CHI TIẾT TOUR</b>
+                    </div>
+                    <div class="card-body">
+
+                            <h4 class="card-title mr-1" >Mã booking </h4>
+                            <p style="color: red;font-style: italic">(Quý khách vui lòng nhớ số booking để tiện cho các giao dịch sau này)</p>
+
+
+                        <h4 class="card-title">Tour yêu cầu </h4>
+                        <div class="row">
+                            <!--  -->
+                            <div class="row">
+
+                                <div class="col-6">
+                                    <label for="" style="font-weight: bold;">Vé người lớn : </label>
+                                    <input type="number" min="0" style="border-radius: 5px" class="form-control" placeholder=""
+                                        aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                                <!--  -->
+                                <div class="col-6">
+                                    <label for="" style="font-weight: bold;">Vé trẻ em : </label>
+                                    <input type="number" min="0" style="border-radius: 5px" class="form-control" placeholder=""
+                                        aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+
+                            <!--  -->
+                            <div class="row">
+
+                                <div class="col-6 mt-2">
+                                    <label for="" style="font-weight: bold;">Giá người lớn</label>
+                                    <input type="text" class="form-control" style="border-radius: 5px" placeholder="135000" aria-label="Username"
+                                        aria-describedby="basic-addon1" disabled>
+                                </div>
+                                <!--  -->
+                                <div class="col-6 mt-2">
+                                    <label for="" style="font-weight: bold;">Giá trẻ em</label>
+                                    <input type="text" class="form-control" style="border-radius: 5px" placeholder="70000" aria-label="Username"
+                                        aria-describedby="basic-addon1" disabled>
+                                </div>
+                            </div>
+                            <!--  -->
+                            <div class="row">
+                                <!--  -->
+                                <div class="col-6 mt-2">
+                                    <label for="" style="font-weight: bold;">Tổng tiền</label>
+                                    <input type="text" class="form-control" style="border-radius: 5px" placeholder="215000" aria-label="Username"
+                                        aria-describedby="basic-addon1" disabled>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+            <div class="col-4 mt-3" style="border: 1px solid;
+    border-radius: 10px;
+    background: #7AB730;
+    height: 390px;">
+                <h4 style="color: white;
+    text-align: center;
+
+    border-radius: 5px 5px 0px 0px;
+    padding: 6px;
+    margin-top: 7px;">Thông Tin Liên Lạc</h4>
+                <div class="input-group mb-3">
+
+
+                    <input type="text" class="form-control" style="border-radius: 5px" placeholder="Họ tên*" aria-label="Username"
+                        aria-describedby="basic-addon1">
+                </div>
+                <!--  -->
+                <div class="input-group mb-3">
+
+                    <input type="text" class="form-control" style="border-radius: 5px" placeholder="Điện thoại*" aria-label="Username"
+                        aria-describedby="basic-addon1">
+
+                </div>
+                <!--  -->
+                <div class="input-group mb-3">
+
+                    <input type="text" class="form-control" style="border-radius: 5px" placeholder="Email*" aria-label="Username"
+                        aria-describedby="basic-addon1">
+
+                </div>
+                <!--  -->
+                <div class="input-group mb-3">
+
+                    <input type="text" class="form-control" style="border-radius: 5px" placeholder="Địa chỉ" aria-label="Username"
+                        aria-describedby="basic-addon1">
+
+                </div> 
+                <!--  -->
+                <div class="input-group mb-3">
+
+                    <input type="text" class="form-control" style="border-radius: 5px" placeholder="Ghi chú" aria-label="Username"
+                        aria-describedby="basic-addon1">
+
+                </div>
+                <!--  -->
+                <button type="button" class="btn btn-primary"
+                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; border-radius: 5px;width: 267px;background: white;
+    color: #7AB730;">
+                   ĐẶT TOUR
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+</body>
+
+</html>
