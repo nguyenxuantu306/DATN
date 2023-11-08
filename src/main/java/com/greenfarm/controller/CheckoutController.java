@@ -109,7 +109,7 @@ public class CheckoutController {
                 orderItem.setOrderdate(now);
                 orderItem.setAddress(orderDTO.getAddress());
                 orderItem.setStatusOrder(statusOrder);
-                orderItem.setPaymentMethod(paymentMethodObj);
+                orderItem.setPaymentmethod(paymentMethodObj);
                 System.out.println(orderDTO.getAddress());
                 orderDAO.save(orderItem);
                 

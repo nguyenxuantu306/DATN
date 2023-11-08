@@ -80,4 +80,7 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	
+	public Booking findById(Integer bookingid) {
+		return dao.findById(bookingid).get();
+	}
 }

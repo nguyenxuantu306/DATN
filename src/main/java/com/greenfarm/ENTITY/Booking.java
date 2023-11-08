@@ -60,6 +60,6 @@ public class Booking implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "paymentmethodid")
-	PaymentMethod paymentMethod;
+	PaymentMethod paymentmethod;
 
 }

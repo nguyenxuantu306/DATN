@@ -27,10 +27,6 @@ app.controller("tour-ctrl", function($scope, $http) {
 		// Load tours
 		$http.get("/rest/tours").then(resp => {
 			$scope.items = resp.data;
-			$scope.items.forEach(item => {
-				item.startdate = new Date(item.startdate),
-					item.enddate = new Date(item.enddate)
-			})
 		});
 		$http.get("/rest/tours/images").then(resp => {
 			$scope.item2 = resp.data;

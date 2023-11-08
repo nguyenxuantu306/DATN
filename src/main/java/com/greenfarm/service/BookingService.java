@@ -39,4 +39,6 @@ public interface BookingService {
 	List<ReportYear> getbookingYearRevenue();
 	// Thống kê tìm kiếm theo năm của booking
 	List<FindReportYear> findBookingYearlyRevenue(Integer year);
+
+	Booking findById(Integer bookingid);
 }

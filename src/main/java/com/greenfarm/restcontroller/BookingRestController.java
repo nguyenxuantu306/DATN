@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.greenfarm.dto.BookingDTO;
 import com.greenfarm.dto.OrderDTO;
+import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
@@ -66,6 +67,13 @@ public class BookingRestController {
 
 		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(BookingsDTOs, HttpStatus.OK);
+	}
+	
+	@GetMapping("{bookingid}")
+	public ResponseEntity<BookingDTO> getOne(@PathVariable("bookingid") Integer bookingid) {
+		Booking booking = bookingService.findById(bookingid);
+		BookingDTO bookingDTOs = modelMapper.map(booking, BookingDTO.class);
+		return new ResponseEntity<>(bookingDTOs, HttpStatus.OK);
 	}
 
 	public ResponseEntity<String> getAllBookings(@RequestParam(defaultValue = "0") int page,

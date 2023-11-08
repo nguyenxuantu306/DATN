@@ -23,15 +23,15 @@ import lombok.NoArgsConstructor;
 public class PaymentMethod implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Paymentmethodid;
+	private Integer paymentmethodid;
 	private String Methodname;
 	private String Description;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "paymentMethod")
+	@OneToMany(mappedBy = "paymentmethod")
 	List<Order> order;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "paymentMethod")
+	@OneToMany(mappedBy = "paymentmethod")
 	List<Booking> booking;
 }

@@ -27,7 +27,13 @@ public interface BookingDAO extends JpaRepository<Booking, Integer> {
 	List<Booking> findAll(int offset, int limit);
 
 	@Query("SELECT o FROM Booking o WHERE o.bookingdate  BETWEEN :startDateTime AND :endDateTime")
-	List<Booking> findByBookingdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, Pageable pageable);
+	List<Booking> findByBookingdateBetween(
+			
+			@Param("startDateTime") LocalDateTime startDateTime, 
+			
+			@Param("endDateTime") LocalDateTime endDateTime, Pageable pageable
+			
+			);
 
 	@Query("SELECT new ReportRevenue(o.statusbooking.name, count(o)) FROM Booking o GROUP BY o.statusbooking.name")
 	List<ReportRevenue> countBookingsByStatus();
