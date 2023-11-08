@@ -42,4 +42,6 @@ public interface BookingService {
 	Booking findById(Integer bookingid);
 	
 	List<Booking> findByEfindByIdAccountmail(String email);
+
+	void saveBooking(Booking booking);
 }

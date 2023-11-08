@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +28,6 @@ public class Booking implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Bookingid;
 
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "bookingdate")
 	private LocalDateTime bookingdate;
@@ -38,12 +36,11 @@ public class Booking implements Serializable {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm a");
 		return bookingdate.format(formatter);
 	}
-	
 
 	private Float Totalprice;
-	
+
 	private Integer Adultticketnumber;
-	
+
 	private Integer Childticketnumber;
 
 	@ManyToOne
@@ -57,9 +54,10 @@ public class Booking implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "statusbookingid")
 	StatusBooking statusbooking;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "paymentmethodid")
 	PaymentMethod paymentmethod;
 
+	
 }

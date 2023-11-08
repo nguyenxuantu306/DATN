@@ -88,5 +88,9 @@ public class BookingServiceImpl implements BookingService {
 	public List<Booking> findByEfindByIdAccountmail(String email) {
 		// TODO Auto-generated method stub
 		return dao.findByEfindByIdAccountmail(email);
+
+	@Override
+	public void saveBooking(Booking booking) {
+		dao.save(booking);
 	}
 }

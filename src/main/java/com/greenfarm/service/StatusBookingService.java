@@ -9,4 +9,6 @@ public interface StatusBookingService {
 
 	List<StatusBooking> findAll();
 
+	StatusBooking findById(int i);
+
 }
