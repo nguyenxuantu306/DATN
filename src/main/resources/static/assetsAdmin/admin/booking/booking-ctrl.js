@@ -40,7 +40,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 
 
 	// cập nhật trạng thái
-	/*$scope.update = function() {
+	$scope.update = function() {
 		var item = angular.copy($scope.form);
 
 		$http.put(`/rest/bookings/${item.bookingid}`, item).then(resp => {
@@ -63,47 +63,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 				});
 				console.log("Error", error);
 			});
-	}*/
-
-	$scope.update = function() {
-		var item = angular.copy($scope.form);
-
-		// Trước khi cập nhật Booking, lấy dữ liệu PaymentMethod hiện tại
-		$http.get(`/rest/bookings/${item.bookingid}`).then(response => {
-			var existingBooking = response.data;
-			// Cập nhật trường PaymentMethod trong Booking với dữ liệu mới
-			existingBooking.paymentmethod = item.paymentmethod;
-
-			$http.put(`/rest/bookings/${item.bookingid}`, existingBooking).then(resp => {
-				var index = $scope.items.findIndex(p => p.bookingid == item.bookingid);
-				$scope.items[index] = existingBooking;
-				// Sử dụng SweetAlert2 cho thông báo thành công
-				Swal.fire({
-					icon: 'success',
-					title: 'Thành công!',
-					text: 'Cập nhật trạng thái thành công !',
-				});
-				refreshPage();
-			}).catch(error => {
-				// Sử dụng SweetAlert2 cho thông báo lỗi
-				Swal.fire({
-					icon: 'error',
-					title: 'Lỗi!',
-					text: 'Cập nhật trạng thái thất bại !',
-				});
-				console.log("Error", error);
-			});
-		}).catch(error => {
-			// Sử dụng SweetAlert2 cho thông báo lỗi
-			Swal.fire({
-				icon: 'error',
-				title: 'Lỗi!',
-				text: 'Không thể lấy dữ liệu Booking hiện tại !',
-			});
-			console.log("Error", error);
-		});
 	}
-
 
 	function refreshPage() {
 		location.reload();
