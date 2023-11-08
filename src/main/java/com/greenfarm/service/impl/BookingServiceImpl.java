@@ -66,4 +66,9 @@ public class BookingServiceImpl implements BookingService {
 	public List<ReportRevenue> slbookingstatus() {
 		return dao.countBookingsByStatus();
 	}
+
+	@Override
+	public Booking findById(Integer bookingid) {
+		return dao.findById(bookingid).get();
+	}
 }

@@ -32,4 +32,6 @@ public interface BookingService {
 
 	// Thống kê số lượng trạng thái
 	List<ReportRevenue> slbookingstatus();
+
+	Booking findById(Integer bookingid);
 }
