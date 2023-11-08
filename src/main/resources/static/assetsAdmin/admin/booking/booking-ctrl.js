@@ -167,14 +167,14 @@ app.controller("booking-ctrl", function($scope, $http) {
 		}
 	};
 
-		$scope.resetFilter = function() {
-			// Xóa giá trị của startDateTime và endDateTime
-			$scope.startDateTime = null;
-			$scope.endDateTime = null;
-	
-			loadOrders();
-		};
-	
+	$scope.resetFilter = function() {
+		// Xóa giá trị của startDateTime và endDateTime
+		$scope.startDateTime = null;
+		$scope.endDateTime = null;
+
+		loadOrders();
+	};
+
 	function loadOrders() {
 		// Gọi API để tải danh sách đơn hàng với hoặc không có bộ lọc
 		// Sử dụng $http.get hoặc phương thức tải lại tùy thuộc vào mã của bạn
@@ -188,38 +188,36 @@ app.controller("booking-ctrl", function($scope, $http) {
 		});
 	}
 
-
 	// Trong AngularJS controller hoặc service
-	/*	$scope.exportExcel = function() {
-			$http.get('/excel-order', { responseType: 'arraybuffer' })
-				.then(function(response) {
-					var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-					var link = document.createElement('a');
-					link.href = window.URL.createObjectURL(blob);
-					link.download = 'order.xlsx';
-					link.click();
-				})
-				.catch(function(error) {
-					console.error('Error exporting Excel:', error);
-				});
-		};
-		// PDF
-	
-		$scope.exportPdf = function() {
-			$http.get('/pdf-order', { responseType: 'arraybuffer' })
-				.then(function(response) {
-					var blob = new Blob([response.data], { type: 'application/pdf' });
-					var objectUrl = URL.createObjectURL(blob);
-					var a = document.createElement('a');
-					a.href = objectUrl;
-					a.download = 'order.pdf';
-					a.click();
-					URL.revokeObjectURL(objectUrl);
-				})
-				.catch(function(error) {
-					console.error('Error exporting PDF:', error);
-				});
-		};*/
+	$scope.exportExcel = function() {
+		$http.get('/excel-booking', { responseType: 'arraybuffer' })
+			.then(function(response) {
+				var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+				var link = document.createElement('a');
+				link.href = window.URL.createObjectURL(blob);
+				link.download = 'booking.xlsx';
+				link.click();
+			})
+			.catch(function(error) {
+				console.error('Error exporting Excel:', error);
+			});
+	};
+	// PDF
+	$scope.exportPdf = function() {
+		$http.get('/pdf-booking', { responseType: 'arraybuffer' })
+			.then(function(response) {
+				var blob = new Blob([response.data], { type: 'application/pdf' });
+				var objectUrl = URL.createObjectURL(blob);
+				var a = document.createElement('a');
+				a.href = objectUrl;
+				a.download = 'booking.pdf';
+				a.click();
+				URL.revokeObjectURL(objectUrl);
+			})
+			.catch(function(error) {
+				console.error('Error exporting PDF:', error);
+			});
+	}
 
 	$scope.formatPrice = function(price) {
 		var priceString = price.toString();
