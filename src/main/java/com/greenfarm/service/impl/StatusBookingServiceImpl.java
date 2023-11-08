@@ -18,4 +18,9 @@ public class StatusBookingServiceImpl implements StatusBookingService{
 	public List<StatusBooking> findAll() {
 		return dao.findAll();
 	}
+
+	@Override
+	public StatusBooking findById(int i) {
+		return dao.findById(i).get();
+	}
 }

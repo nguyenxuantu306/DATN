@@ -41,4 +41,6 @@ public interface BookingService {
 	List<FindReportYear> findBookingYearlyRevenue(Integer year);
 
 	Booking findById(Integer bookingid);
+
+	void saveBooking(Booking booking);
 }

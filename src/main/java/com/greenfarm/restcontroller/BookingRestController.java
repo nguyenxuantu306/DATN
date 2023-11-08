@@ -93,11 +93,11 @@ public class BookingRestController {
 		}
 	}
 
-
-	@PostMapping()
-	public Booking create(@RequestBody JsonNode bookingData) {
-		return bookingService.create(bookingData);
-	}
+//
+//	@PostMapping()
+//	public Booking create(@RequestBody JsonNode bookingData) {
+//		return bookingService.create(bookingData);
+//	}
 
 	@PutMapping("{id}")
 	public ResponseEntity<BookingDTO> update(@PathVariable("id") Integer id,

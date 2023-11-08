@@ -23,11 +23,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BookingDTO {
 
-	private Integer bookingid; 
+	private Integer Bookingid; 
 	private LocalDateTime bookingdate;
-	private Float totalprice;
-	private Integer adultticketnumber;
-	private Integer childticketnumber;
+	private Float Totalprice;
+	private Integer Adultticketnumber;
+	private Integer Childticketnumber;
 	private User user;
 	private Tour tour;
 	private StatusBooking statusbooking;
