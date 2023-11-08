@@ -63,34 +63,38 @@
 							        'bg-warning': item.statusbooking.statusbookingid == 4
    									 }">{{item.statusbooking.name}}</td>
                                 <td>
-                                    <a type="button" ng-click="edit(item)" data-toggle="modal" data-target="#exampleModal"> <i class="bi bi-info-circle"></i>
+                                    <a type="button" ng-click="edit(item)" data-toggle="modal" data-target="#exampleModal"> <i class="bi bi-sticky"></i>	
                                     </a>
                                     <div style="text-align: left;" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-xl custom-modal">
+                                        <div class="modal-dialog modal-xl custom-modal3">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                        Chi tiết đặt tour : {{form.bookingdate | date: 'dd-MM-yyyy'}} - #{{form.bookingid}} - {{form.user.email}}</h1>
-                                                   <!--  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> ======= Chi tiết đặt tour : {{form.bookingdate | date:'dd-MM-yyyy'}} - #{{form.bookingid}} - {{form.user.email}}</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> >>>>>>> 0630cce74cf02abff7ce4b0f12dedf19228a087f -->
+                                                        Chi tiết đặt tour : {{form.bookingdate | date: 'dd-MM-yyyy'}} - #{{form.bookingid}} - {{form.user.email}}</h1>                                              
 
 
                                                 </div>
                                                 <div class="modal-body pb-5">
                                                     <div class="row">
-                                                        <div class="col-sm-4">
-                                                            <div class="form-group" style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
-                                                                <div style="font-size: 20px; font-weight: bold;">Địa chỉ người nhận</div>
-                                                                <label>- {{form.user.address}}</label><br/>  <labl>-
-																	{{form.user.email}}</label> <br/> <label>-
-																	{{form.user.phonenumber}}</label>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
+                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Địa chỉ người nhận</div>
+                                                                <div style="padding: 10px;">
+                                                                	 <label>- Địa chỉ : {{form.user.address}}</label><br/>  <labl>-
+																	Email người dùng : {{form.user.email}}</label> <br/> <label style="padding-top: 10px" >-
+																	Số điện thoại : {{form.user.phonenumber}}</label>
+                                                                </div>
+                                                       
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="form-group" style="border: 1px solid #000; padding: 10px; border-radius: 5px;">
-                                                                <div style="font-size: 20px; font-weight: bold;">Hình thức thanh toán</div>
-                                                                <label>- {{form.paymentmethod.methodname}}</label> <br> <label>-
-																	Trạng thái : Đã thanh toán thành công </label>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
+                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Hình thức thanh toán</div>
+                                                                <div style="padding: 10px;">
+                                                                	 <label>- Hình thức thanh toán : {{form.paymentmethod.methodname}}</label> <br> <label>-
+																	Trạng thái thanh toán : {{form.statusbooking.name}}</label>
+                                                                </div>
+                                                               
                                                             </div>
                                                         </div>
 
