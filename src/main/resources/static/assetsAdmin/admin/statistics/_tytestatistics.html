@@ -10,8 +10,8 @@
 								class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
 								id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 						</div>
-						<input type="search" class="form-control"
-							placeholder="Tìm kiếm tên sản phẩm...">
+						<input ng-model="searchThongKelSp" type="search" class="form-control"
+							placeholder="Tìm kiếm lọai sản phẩm...">
 					</div>
 					<div class="col-md-6 text-right">
 						<button type="button" class="btn btn-success"
@@ -35,7 +35,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="item in pager.itemsThongKeLoai">
+							<tr ng-repeat="item in pager.itemsThongKeLoai | filter:searchThongKelSp">
 								<td>{{$index + 1}}</td>
 								<td>{{item.group.categoryname}}</td>
 								<td>{{item.count}}</td>

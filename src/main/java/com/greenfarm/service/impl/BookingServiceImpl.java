@@ -13,8 +13,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfarm.dao.BookingDAO;
 import com.greenfarm.entity.Booking;
+import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.ReportRevenue;
+import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.Top3;
 import com.greenfarm.service.BookingService;
 
@@ -65,5 +67,20 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public List<ReportRevenue> slbookingstatus() {
 		return dao.countBookingsByStatus();
+	}
+
+	@Override
+	public List<ReportYear> getbookingYearRevenue() {
+		return dao.getbookingYearRevenue();
+	}
+
+	@Override
+	public List<FindReportYear> findBookingYearlyRevenue(Integer year) {
+		return dao.findBookingYearlyRevenue(year);
+	}
+
+	
+	public Booking findById(Integer bookingid) {
+		return dao.findById(bookingid).get();
 	}
 }
