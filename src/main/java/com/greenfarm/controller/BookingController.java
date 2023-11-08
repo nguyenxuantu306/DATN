@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.greenfarm.dto.OrderDTO;
+import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.service.BookingService;
@@ -39,7 +40,8 @@ public class BookingController {
 
 	@RequestMapping("/booking/list")
 	public String list(Model model, HttpServletRequest request) {
-		
+		String email = request.getRemoteUser();
+		model.addAttribute("bookings", bookingService.findByEfindByIdAccountmail(email));
 		return "booking/mytiket";
 	}	
 	

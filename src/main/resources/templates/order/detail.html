@@ -10,7 +10,7 @@
 
 <body>
 	<main th:object="${order}">
-		<div class="info mt-5">
+		<div class="container mt-5">
 			<div class="row">
 				<div class="col-sm-7">
 					<p class="title mb-2">
@@ -58,7 +58,7 @@
 								<i class="bi bi-credit-card-2-front-fill"> THÔNG TIN NHẬN
 									HÀNG</i>
 							</h5>
-<!-- 							<p class=" ms-3">Thanh toán bằng hình thức: <span th:text="${order.orderDetail}"></span></p> -->
+							<p class=" ms-3">Thanh toán bằng hình thức: <span th:text="${order.paymentmethod.Methodname}"></span></p> 
 						</div>
 					</div>
 				</div>

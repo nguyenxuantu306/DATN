@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfarm.dao.BookingDAO;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.FindReportYear;
-import com.greenfarm.entity.Order;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.Top3;
@@ -82,5 +81,12 @@ public class BookingServiceImpl implements BookingService {
 	
 	public Booking findById(Integer bookingid) {
 		return dao.findById(bookingid).get();
+	}
+	
+	
+	@Override
+	public List<Booking> findByEfindByIdAccountmail(String email) {
+		// TODO Auto-generated method stub
+		return dao.findByEfindByIdAccountmail(email);
 	}
 }

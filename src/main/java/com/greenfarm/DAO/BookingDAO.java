@@ -51,4 +51,7 @@ public interface BookingDAO extends JpaRepository<Booking, Integer> {
 		       "GROUP BY m.month " +
 		       "ORDER BY m.month")
 	List<FindReportYear> findBookingYearlyRevenue(@Param("year") Integer year);
+	
+	@Query("SELECT o FROM Booking o WHERE o.user.email =?1")
+	List<Booking> findByEfindByIdAccountmail(String email);
 }

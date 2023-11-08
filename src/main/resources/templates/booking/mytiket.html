@@ -1,127 +1,147 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout :: dynamic(~{::body})}">
 
 <head>
-	<meta charset="UTF-8" />
-	<title>GreenFarm</title>
+<meta charset="utf-8">
+<title>Insert title here</title>
 </head>
 
 <body>
-	<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-		<li class="nav-item" role="presentation">
-			<button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-				type="button" role="tab" aria-controls="pills-home" aria-selected="true">Tất cả</button>
-		</li>
-		<li class="nav-item" role="presentation">
-			<button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-				type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Chờ xác nhận</button>
-		</li>
-		<li class="nav-item" role="presentation">
-			<button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
-				type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Đã đặt</button>
-		</li>
+	<main>
+		<div class="container">
+			<div class="row mt-3">
+				<div class="col-sm-8">
 
-	</ul>
-	<!-- tất cả -->
-	<div class="tab-content" id="pills-tabContent">
-		<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
-			tabindex="0">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">STT</th>
-						<th scope="col">Tên </th>
-						<th scope="col">Trẻ em</th>
-						<th scope="col">Người lớn</th>
-						<th scope="col">Tổng</th>
-						<th scope="col">Ngày đặt</th>
-						<th scope="col">Trạng thái</th>
-					</tr>
-				</thead>
-				<tbody>
-				<!--	Check đăng nhập bằng tài khoản nào -> ra list danh sách tài khoản đó-->
-					<tr th:each="tiket, iderStat: ${listtiket}">
-						<th scope="row" th:text="${iderStat.count}"></th>
-						<td th:text="${tiket.tour.tourname}"></td>
-						<td th:text="${tiket.tour.pricings.adultprice * tiket.Adultticketnumber}"></td>
-						<td th:text="${tiket.tour.pricings.childprice * tiket.Childticketnumber}"></td>
-				
-						<td th:text="${tiket.tour.pricings.adultprice * tiket.Adultticketnumber} + ${tiket.tour.pricings.childprice * tiket.Childticketnumber}">
-						</td>
-						<td th:text="${tiket.bookingdate}"> </td>
-						<td th:text="${tiket.statusbooking.name}"></td>
-					</tr>
-				</tbody>
-			</table>
+					<h6 class="fw-bold">Lịch sử Booking:</h6>
+
+					<div th:each="booking, state:${bookings}">
+						<div class="card border border-0 rounded-0 mt-3"
+							style="padding: 20px; width: auto; border-radius: 3px; background-color: #fff; font-size: 14px; flex-direction: column;">
+
+							<div class="card-header" style="background-color: #fff;">
+								<span class="fw-bold">Booking:</span> #[[${booking.Bookingid}]]
+								<span class="fw-bold"
+									th:text="${booking.getBookingdateFormatted}"></span> <span
+									th:if="${booking.statusbooking.name} =='Tour bị hủy'"
+									class="float-end text-danger fw-bold"
+									th:text="${booking.statusbooking.name}"></span> <span
+									th:if="${booking.statusbooking.name} !='Tour bị hủy'"
+									class="float-end text-success fw-bold"
+									th:text="${booking.statusbooking.name}"></span>
+							</div>
+							<!-- Chi tiết Booking -->
+							<div class="row g-0 mt-1">
+								<div class="col-md-2">
+									<img th:src="*{booking.tour.image}" class="img-fluid" alt="...">
+								</div>
+								<div class="col-md-8">
+									<div class="card-body">
+										<p th:text="'Tên tour: '+${booking.tour.tourname}"></p>
+										<div class="">
+
+											<span
+												th:text="'Số vé người lớn: '+${booking.Adultticketnumber}+' x'+' '"></span>
+											<span
+												th:text="${#numbers.formatDecimal(booking.tour.pricings.adultprice, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+										</div>
+
+
+										<div>
+
+											<span
+												th:text="'Số vé trẻ em: '+${booking.Childticketnumber}+' x'+' '"></span>
+											<span
+												th:text="${#numbers.formatDecimal(booking.tour.pricings.childprice, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+										</div>
+										<div th:text="'Phương thức thanh toán: '+${booking.paymentmethod.Methodname}"></div>
+
+									</div>
+								</div>
+								<div class="col-sm-2"></div>
+								<div class="">
+									<p class="float-end ">
+										<span class="text-end fw-bold">Tổng giá: </span> <span
+											class="text-danger me-4"
+											th:text="${#numbers.formatDecimal(booking.Totalprice, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+									</p>
+								</div>
+							</div>
+
+
+
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="menu mx-3">
+						<div sec:authorize="isAuthenticated()"><span sec:authentication="name"></span></div>
+
+						<div class="list-group border border-0 rounded-0 my-3">
+
+							<a class="mb-3" href="/order/list">
+								<button type="button"
+									class="list-group-item list-group-item-action"
+									style=" border-radius: 4px;">
+									<i class="bi bi-card-list"></i> Đơn hàng đã đặt
+								</button>
+							</a> 
+							<a class="mb-3" href="/booking/list">
+								<button type="button"
+									class="list-group-item list-group-item-action active"
+									style=" border-radius: 4px;">
+									<i class="bi bi-card-list"></i> Lịch sử Booking
+								</button>
+							</a> 
+							<a href="/profile">
+									<button type="button"
+										class="list-group-item list-group-item-action"
+										style="border-radius: 4px;">
+										<i class="bi bi-person-lines-fill"></i> Thông tin và sổ địa
+										chỉ
+									</button>
+								</a>
+
+
+						</div>
+						<a
+							class=" btn border border-danger my-3 text-decoration-none text-center text-danger fw-bold"
+							style="width: 100%">Đăng xuất</a>
+						<div class="card mt-3" style="background-color: #fff;">
+							<div class="card-header">Tổng điểm tích lũy: 180.616 điểm</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-8">
+										<small>Tích & sử dụng điểm cho khách hàng thân thiết.
+											Sản phẩm của tập đoàn MWG. Tìm hiểu thêm</small>
+
+									</div>
+									<div class="col-sm-4">
+
+										<img src="" alt="Quét mã QR">
+									</div>
+
+								</div>
+								<div class="">
+									<a href="#" class="btn mt-3" style="background-color: #AAAAAA">Dowload
+										App Store</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+
+
 		</div>
-		<!-- chờ xác nhận -->
-		<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">ID</th>
-						<th scope="col">Tên </th>
-						<th scope="col">Trẻ em</th>
-						<th scope="col">Người lớn</th>
-						<th scope="col">Tổng</th>
-						<th scope="col">Ngày đặt</th>
-						<th scope="col">Trạng thái</th>
-					</tr>
-				</thead>
-				<tbody>
-					<!-- <tr th:each="tiket, iderStat: ${listtiket}">
-                    <th scope="row" th:text="${iderStat.count}"></th>
-                    <td th:text="${tiket.tour_id.tourname}"></td>
-                    <td th:text="${tiket.pricing_id.Childprice * tiket.child_tiket}"></td>
-                    <td th:text="${tiket.pricing_id.Adultprice * tiket.adult_tiket}"></td>
-                    <td th:text="${tiket.pricing_id.Childprice * tiket.child_tiket} + ${tiket.pricing_id.Adultprice * tiket.adult_tiket}"></td>
-                    <td th:text="${tiket.create_date}"> </td>
-                    <td th:text="${tiket.status_order_id.name}"></td>
-                </tr>-->
-
-				</tbody>
-			</table>
-		</div>
-		<!-- đã đặt -->
-		<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">ID</th>
-						<th scope="col">Tên </th>
-						<th scope="col">Trẻ em</th>
-						<th scope="col">Người lớn</th>
-						<th scope="col">Tổng</th>
-						<th scope="col">Ngày đặt</th>
-						<th scope="col">Trạng thái</th>
-					</tr>
-				</thead>
-				<tbody>
-					<!--<tr th:each="tiket, iderStat: ${listtiket}">
-                    <th scope="row" th:text="${iderStat.count}"></th>
-                    <td th:text="${tiket.tour_id.tourname}"></td>
-                    <td th:text="${tiket.pricing_id.Childprice * tiket.child_tiket}"></td>
-                    <td th:text="${tiket.pricing_id.Adultprice * tiket.adult_tiket}"></td>
-                    <td th:text="${tiket.pricing_id.Childprice * tiket.child_tiket} + ${tiket.pricing_id.Adultprice * tiket.adult_tiket}"></td>
-                    <td th:text="${tiket.create_date}"> </td>
-                    <td th:text="${tiket.status_order_id.name}"></td>
-                </tr>-->
-				</tbody>
-			</table>
-		</div>
-
-	</div>
-
-	<script>
+		<div class="col-sm-4"></div>
 
 
-		document.getElementById("statusOrder").innerHTML = ages.filter(checkAdult);
-
-		function checkAdult(age) {
-			return age >= 18;
-		}
-	</script>
-
+		
+	</main>
 </body>
 
 </html>
