@@ -132,4 +132,5 @@ public class BookingRestController {
 		return new ResponseEntity<>(bookingService.slbookingstatus(), HttpStatus.OK);
 	}
 	
+	
 }

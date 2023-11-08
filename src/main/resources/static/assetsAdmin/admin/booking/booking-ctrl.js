@@ -122,7 +122,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 		}
 	}
 
-	/*$scope.filterOrders = function() {
+	$scope.filterOrders = function() {
 		var startDateTime = $scope.startDateTime;
 		var endDateTime = $scope.endDateTime;
 
@@ -165,17 +165,17 @@ app.controller("booking-ctrl", function($scope, $http) {
 		} else {
 			console.log("Invalid input data");
 		}
-	};*/
+	};
 
-	/*	$scope.resetFilter = function() {
+		$scope.resetFilter = function() {
 			// Xóa giá trị của startDateTime và endDateTime
 			$scope.startDateTime = null;
 			$scope.endDateTime = null;
 	
 			loadOrders();
 		};
-	*/
-	/*function loadOrders() {
+	
+	function loadOrders() {
 		// Gọi API để tải danh sách đơn hàng với hoặc không có bộ lọc
 		// Sử dụng $http.get hoặc phương thức tải lại tùy thuộc vào mã của bạn
 		$http.get("/rest/bookings").then(resp => {
@@ -186,7 +186,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 			console.log("Error headers:", error.headers);
 			console.log("Error config:", error.config);
 		});
-	}*/
+	}
 
 
 	// Trong AngularJS controller hoặc service
