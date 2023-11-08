@@ -22,8 +22,7 @@ public class TourDTO {
 	private String Tourname;
 	private String Description;
 	private String image;
-	private Date startdate = new Date();
-	private Date enddate = new Date();
+	private String departureday;
 	private String location;
 	private Integer Availableslots;
 	

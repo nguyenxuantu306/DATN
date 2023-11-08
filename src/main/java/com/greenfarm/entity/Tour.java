@@ -40,14 +40,8 @@ public class Tour implements Serializable {
 	private String Description;
 
 	private String image;
-
-	@Temporal(TemporalType.DATE)
-	@Column(name = "Startdate")
-	private Date startdate = new Date();
-
-	@Temporal(TemporalType.DATE)
-	@Column(name = "Enddate")
-	private Date enddate = new Date();
+	
+	private String departureday;
 
 	private String location;
 
