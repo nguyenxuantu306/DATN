@@ -64,6 +64,23 @@ public class UserRestController {
 		// Trả về UserDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
+	
+	@GetMapping("email/{useremail}")
+	public ResponseEntity<UserDTO> getByemail(@PathVariable("useremail") String useremail) throws UnkownIdentifierException {
+		User user = userService.findByEmail(useremail);
+
+		if (user == null) {
+			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy category
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		// Sử dụng modelMapper để ánh xạ từ User sang UserDTO
+		ModelMapper modelMapper = new ModelMapper();
+		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+
+		// Trả về UserDTO bằng ResponseEntity với mã trạng thái 200 OK
+		return new ResponseEntity<>(userDTO, HttpStatus.OK);
+	}
 
 	@PostMapping()
 	public ResponseEntity<UserDTO> create(@RequestBody User user) throws UserAlreadyExistException {

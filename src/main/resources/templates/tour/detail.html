@@ -229,6 +229,8 @@
 			
 			<script th:inline="javascript">
     var itemData = /*[[${item}]]*/ null; // Biến JavaScript chứa dữ liệu
+    var uslog = /*[[${#authentication.principal.username}]]*/ null;
+
 </script>
 			<!-- end div tour -->
 		<!-- </div> -->
@@ -236,10 +238,9 @@
 		<!--comment  -->
 		<div style="background-color: #eee;" ng-app="commentApp" ng-controller="comment-ctrl" > 
 		
-		<a>{{scope.tourId}}</a>
 		
 			<div class="card mb-4"  
-			ng-repeat="item in pager.items">
+			ng-repeat="p in pager.items">
 									
 			
 				<div class="card-body">
@@ -248,28 +249,29 @@
 							<img
 								src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp"
 								alt="avatar" width="25" height="25" />
-							<p class="small mb-0 ms-2 mx-2">{{item.user.firstname}}</p>
-
-							<p class="text-muted small mb-0">{{item.commentdate}}</p>
+							<p class="small mb-0 ms-2 mx-2">{{p.user.firstname}}</p>
+	<p class="small mb-0 ms-2 mx-2">{{p.user.email}}</p>
+							<p class="text-muted small mb-0">{{p.commentdate}}</p>
 						</div>
 
 					</div>
-					<p> {{item.commenttext}}</p>
-
+					<p> {{p.commenttext}}</p>
+						
 					<div class="d-flex flex-row align-items-center" th:if="${#authorization.expression('isAuthenticated()')}" ng-model="p.user.email">
 						<a href="#!" class="d-flex align-items-center me-3"> <i
 							class="far fa-comment-dots me-2"></i>
 							<p class="mb-0">Comment</p>
+							
 						</a>
-						<div class="list-inline"  th:if="${#authorization.expression(item.user.email == #authentication.principal.username)}">
+						<div class="list-inline"  ng-if="isUserLoggedIn(p.user.email)">
 						<a  href="#!" class="d-inline-flex align-items-center  me-3  list-inline-item"> <i
 							class="far fa-comment-dots me-2"></i>
-							<p class="mb-0" ng-click="delete(item)">Xóa</p>
+							<p class="mb-0" ng-click="delete(p)">Xóa</p>
 						</a>
 						
 						<a href="#!" class="d-inline-flex align-items-center  me-3 list-inline-item"> <i
 							class="far fa-comment-dots me-2"></i>
-							<p class="mb-0" ng-click="edit(item)">Sửa</p>
+							<p class="mb-0" ng-click="edit(p)">Sửa</p>
 						</a>
 						
 					</div>
