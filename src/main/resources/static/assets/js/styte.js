@@ -276,13 +276,21 @@ quantityInputs.forEach(function(quantityInput) {
 function showButton(option) {
 	var checkoutButton = document.getElementById('checkout-button');
 	var paypalButton = document.getElementById('paypal-button');
+	var vnpayButton = document.getElementById('vnpay-button');
 
 	if (option === 'debit') {
 		checkoutButton.style.display = 'block';
 		paypalButton.style.display = 'none';
+		vnpayButton.style.display = 'none';
 	} else if (option === 'paypal') {
 		checkoutButton.style.display = 'none';
 		paypalButton.style.display = 'block';
+		vnpayButton.style.display = 'none';
+	}
+	else{
+		checkoutButton.style.display = 'none';
+		vnpayButton.style.display = 'block';
+		paypalButton.style.display = 'none';
 	}
 }
 

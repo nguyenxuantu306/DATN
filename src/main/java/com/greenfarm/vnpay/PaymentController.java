@@ -24,18 +24,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.websocket.server.PathParam;
 
 @RestController
 public class PaymentController {
 
 	@GetMapping("/pay")
-	public String getPay(@PathParam("price") long price) throws UnsupportedEncodingException{
+	public String getPay(@PathParam("totalprice") long totalprice) throws UnsupportedEncodingException{
 		
 		String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
-        long amount = 10000*100;
+        long amount = totalprice*100;
         String bankCode = "NCB";
         
         String vnp_TxnRef = Config.getRandomNumber(8);
@@ -100,44 +101,4 @@ public class PaymentController {
 	}
 
 	
-//    @GetMapping("payment-callback")
-//    public void paymentCallback(@RequestParam Map<String, String> queryParams,HttpServletResponse response) throws IOException {
-//        String vnp_ResponseCode = queryParams.get("vnp_ResponseCode");
-//        String contractId = queryParams.get("contractId");
-//        String registerServiceId = queryParams.get("registerServiceId");
-//        if(contractId!= null && !contractId.equals("")) {
-//            if ("00".equals(vnp_ResponseCode)) {
-//                // Giao dịch thành công
-//                // Thực hiện các xử lý cần thiết, ví dụ: cập nhật CSDL
-//                Contract contract = contractRepository.findById(Integer.parseInt(queryParams.get("contractId")))
-//                .orElseThrow(() -> new NotFoundException("Không tồn tại hợp đồng này của sinh viên"));
-//            contract.setStatus(1);
-//            contractRepository.save(contract);
-//            response.sendRedirect("http://localhost:4200/info-student");
-//            } else {
-//                // Giao dịch thất bại
-//                // Thực hiện các xử lý cần thiết, ví dụ: không cập nhật CSDL\
-//                response.sendRedirect("http://localhost:4200/payment-failed");
-//                
-//            }
-//        }
-//        if(registerServiceId!= null && !registerServiceId.equals("")) {
-//            if ("00".equals(vnp_ResponseCode)) {
-//                // Giao dịch thành công
-//                // Thực hiện các xử lý cần thiết, ví dụ: cập nhật CSDL
-//                RegisterServices registerServices = registerServicesRepository.findById(Integer.parseInt(queryParams.get("registerServiceId")))
-//                .orElseThrow(() -> new NotFoundException("Không tồn tại dịch vụ này của sinh viên"));
-//            registerServices.setStatus(1);
-//            registerServicesRepository.save(registerServices);
-//            response.sendRedirect("http://localhost:4200/info-student");
-//            } else {
-//                // Giao dịch thất bại
-//                // Thực hiện các xử lý cần thiết, ví dụ: không cập nhật CSDL\
-//                response.sendRedirect("http://localhost:4200/payment-failed");
-//                
-//            }
-//        }
-//        
-//
-//    }
 }

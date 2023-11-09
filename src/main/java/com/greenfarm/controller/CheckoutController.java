@@ -32,6 +32,7 @@ import com.greenfarm.entity.Voucher;
 import com.greenfarm.entity.VoucherUser;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.VoucherUserService;
+import com.greenfarm.vnpay2.VNPayService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -39,6 +40,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class CheckoutController {
 
+	@Autowired
+    private VNPayService vnPayService;
+	
 	@Autowired
 	private UserService userService;
 
@@ -161,12 +165,45 @@ public class CheckoutController {
 		}
 	}
 
-	public double totalPrice(List<Cart> cartItems) {
-		double total = 0;
+	public long totalPrice(List<Cart> cartItems) {
+		long total = 0;
 		for (Cart cartItem : cartItems) {
 			total += cartItem.getProduct().getPrice() * cartItem.getQuantity();
 		}
 		return total;
 	}
+	
+	@PostMapping("/submitOrder")
+    public String submidOrder(@RequestParam("totalPrice") int totalPrice,
+                            
+                              HttpServletRequest request){
+        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        String vnpayUrl = vnPayService.createOrder(totalPrice, baseUrl);
+
+        return "redirect:" + vnpayUrl;
+    }
+	
+	@GetMapping("/vnPayPayment")
+    public String GetMapping(HttpServletRequest request,Model model) {
+        int paymentStatus = vnPayService.orderReturn(request);
+
+        String orderInfo = request.getParameter("vnp_OrderInfo");
+        String paymentTime = request.getParameter("vnp_PayDate");
+        String transactionId = request.getParameter("vnp_TransactionNo");
+        String totalPrice = request.getParameter("vnp_Amount");
+
+//        Map<String, Object> res = new HashMap<>();
+//        res.put("orderId", orderInfo);
+//        res.put("totalPrice", totalPrice);
+//        res.put("paymentTime", paymentTime);
+//        res.put("transactionId", transactionId);
+        model.addAttribute("orderId", orderInfo);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("paymentTime", paymentTime);
+        model.addAttribute("transactionId", transactionId);
+        
+//        return new ResponseEntity<>(res, HttpStatus.OK);
+        return "ordersuccess" ;
+    }
 
 }
