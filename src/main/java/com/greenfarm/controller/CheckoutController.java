@@ -28,6 +28,8 @@ import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.entity.User;
+import com.greenfarm.entity.Voucher;
+import com.greenfarm.entity.VoucherUser;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.VoucherUserService;
 
@@ -65,8 +67,16 @@ public class CheckoutController {
 		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 			User user = userService.findByEmail(userDetails.getUsername());
-//			String email = request.getRemoteUser();
-			model.addAttribute("vouchers", voucherUserService.findByUser(user));
+			
+			List<VoucherUser> vouchers = voucherUserService.findByUser(user);
+			
+			if (vouchers != null && !vouchers.isEmpty()) {
+			    model.addAttribute("vouchers", vouchers);
+			} else {
+			    model.addAttribute("error", "Không tìm thấy vouchers hoặc danh sách rỗng.");
+			}
+			
+			
 			modelMap.addAttribute("user", user);
 			if (user != null) {
 			
