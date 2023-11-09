@@ -23,4 +23,5 @@ public class Report implements Serializable {
 	Long count;
 	
 	
+	
 }
