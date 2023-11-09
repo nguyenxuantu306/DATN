@@ -42,7 +42,6 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	public void deleteCommentById(Integer commentid) {
-		// TODO Auto-generated method stub
 		commentDAO.deleteById(commentid);
 	}
 
@@ -52,6 +51,9 @@ public class CommentServiceImpl implements CommentService{
 		return commentDAO.findByTour(tour);
 	}
 
-
+	@Override
+	public List<Comment> getCommentsOrderByDateDesc() {
+	     return commentDAO.findAllByOrderByCommentdateDesc();
+	} 
 
 }

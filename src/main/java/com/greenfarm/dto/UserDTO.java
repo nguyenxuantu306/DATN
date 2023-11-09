@@ -1,6 +1,9 @@
 package com.greenfarm.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import com.greenfarm.entity.Comment;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
@@ -50,4 +53,6 @@ public class UserDTO {
 	// @PastOrPresent(message = "CreatedDate phải ở trong quá khứ hoặc hiện tại mới
 	// tạo")
 	private Date createddate;
+	
+	private List<Comment> comment;
 }
