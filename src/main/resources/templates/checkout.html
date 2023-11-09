@@ -66,26 +66,29 @@
 								</div>
 								<div class="modal-body ">
 									<div class="cupon_area">
-										<div class="check_title">
-											<h2>Have a coupon? <a href="#">Click here to enter your code</a></h2>
-										</div>
+										<a>Mã Voucher</a>
 										<input type="text" placeholder="Enter coupon code">
 										<a class="tp_btn" href="#">Apply Coupon</a>
 									</div>
 									<div class="p-3">
-										<div th:each="voucher : ${vouchers}">
-											<input th:value="${voucher.voucher.discount}" class="form-check-input"
-												type="radio" name="exampleRadios" id="exampleRadios1">
-											<label class="form-check-label" th:text="'Voucher giảm giá: '+ ${voucher.voucher.discount*100} + '%'"
+										<div th:each="voucher : ${vouchers}" style="background-color: azure;"
+											class="mb-2">
+											<img style="width: 50px;"
+												src="https://toppng.com/uploads/preview/voucher-icon-kostenloser-icon-voucher-11553428421ncp0vltb6w.png" />
+
+											<label class="form-check-label"
+												th:text="'Voucher giảm giá: '+ ${voucher.voucher.discount*100} + '%'"
 												for="exampleRadios1">
 											</label>
+											<input th:value="${voucher.voucher.discount}" class="form-check-input"
+												type="radio" name="exampleRadios" id="exampleRadios1">
 										</div>
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-bs-dismiss="modal">Close</button>
-									<button type="button" class="btn btn-primary">Save changes</button>
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">TRỞ
+										LẠI</button>
+									<button type="button" class="btn btn-primary">OK</button>
 								</div>
 							</div>
 						</div>
@@ -225,6 +228,21 @@
 				},
 			})
 			.render("#paypal-button");
+	</script>
+	<script>
+		// Lấy tất cả các div chứa voucher
+		const voucherDivs = document.querySelectorAll('.p-3 .mb-2');
+
+		// Lặp qua từng div
+		voucherDivs.forEach((div) => {
+			// Lấy input radio trong div
+			const radioButton = div.querySelector('.form-check-input');
+
+			// Khi click vào div, chọn input radio
+			div.addEventListener('click', () => {
+				radioButton.checked = true;
+			});
+		});
 	</script>
 </body>
 
