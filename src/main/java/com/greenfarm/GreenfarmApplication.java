@@ -16,8 +16,4 @@ public class GreenfarmApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GreenfarmApplication.class, args);
 	}
-
-
-	
-
 }

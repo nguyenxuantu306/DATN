@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout::dynamic(~{::body})}">
-<head>
-<meta charset="UTF-8">
-<title>GreenFarm</title>
+<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
 
+<head>
+	<meta charset="UTF-8">
+	<title>GreenFarm</title>
+	
 </head>
 
 <body>
@@ -18,28 +18,26 @@
 					<div class="accordion" id="accordionExample">
 						<div class="accordion-item">
 							<h2 class="accordion-header">
-								<button class="accordion-button" type="button"
-									data-bs-toggle="collapse" data-bs-target="#collapseOne"
-									aria-expanded="true" aria-controls="collapseOne">
+								<button class="accordion-button" type="button" data-bs-toggle="collapse"
+									data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 									Category</button>
 							</h2>
 
 							<div id="collapseOne" class="accordion-collapse collapse show"
 								data-bs-parent="#accordionExample">
 								<div class="accordion-body">
-									<ul th:each="c:${cates}" class="list-unstyled"
-										style="font-size: 20px;">
+									<ul th:each="c:${cates}" class="list-unstyled" style="font-size: 20px;">
 										<li><a style="color: black;"
-											th:href="@{|/product/shop?cid=${c.categoryid}|}">[[${c.categoryname}]]</a></li>
+												th:href="@{|/product/shop?cid=${c.categoryid}|}">[[${c.categoryname}]]</a>
+										</li>
 									</ul>
 								</div>
 							</div>
 						</div>
 						<div class="accordion-item">
 							<h2 class="accordion-header">
-								<button class="accordion-button collapsed" type="button"
-									data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-									aria-expanded="false" aria-controls="collapseTwo">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+									data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 									Price</button>
 							</h2>
 							<div id="collapseTwo" class="accordion-collapse collapse"
@@ -47,34 +45,32 @@
 								<div class="accordion-body" style="font-size: 14px;">
 									<form id="filterForm" method="get">
 										<div class="form-check">
-											<input class="form-check-input" type="radio"
-												name="priceRange" value="under30k" id="flexRadioDefault0"
-												checked> <label class="form-check-label"
-												for="flexRadioDefault0"> Dưới 30,000₫ </label>
+											<input class="form-check-input" type="radio" name="priceRange"
+												value="under30k" id="flexRadioDefault0" checked> <label
+												class="form-check-label" for="flexRadioDefault0"> Dưới 30,000₫ </label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" type="radio"
-												name="priceRange" value="30kTo70k" id="flexRadioDefault0"
-												checked> <label class="form-check-label"
-												for="flexRadioDefault0"> 30,000₫ - 70,000₫ </label>
+											<input class="form-check-input" type="radio" name="priceRange"
+												value="30kTo70k" id="flexRadioDefault0" checked> <label
+												class="form-check-label" for="flexRadioDefault0"> 30,000₫ - 70,000₫
+											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" type="radio"
-												name="priceRange" value="70kTo100k" id="flexRadioDefault0"
-												checked> <label class="form-check-label"
-												for="flexRadioDefault0"> 70,000₫ - 100,000₫ </label>
+											<input class="form-check-input" type="radio" name="priceRange"
+												value="70kTo100k" id="flexRadioDefault0" checked> <label
+												class="form-check-label" for="flexRadioDefault0"> 70,000₫ - 100,000₫
+											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" type="radio"
-												name="priceRange" value="100kTo150k" id="flexRadioDefault0"
-												checked> <label class="form-check-label"
-												for="flexRadioDefault0"> 100,000₫ - 150,000₫ </label>
+											<input class="form-check-input" type="radio" name="priceRange"
+												value="100kTo150k" id="flexRadioDefault0" checked> <label
+												class="form-check-label" for="flexRadioDefault0"> 100,000₫ - 150,000₫
+											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" type="radio"
-												name="priceRange" value="over150k" id="flexRadioDefault0"
-												checked> <label class="form-check-label"
-												for="flexRadioDefault0"> Trên 150,000₫ </label>
+											<input class="form-check-input" type="radio" name="priceRange"
+												value="over150k" id="flexRadioDefault0" checked> <label
+												class="form-check-label" for="flexRadioDefault0"> Trên 150,000₫ </label>
 										</div>
 									</form>
 								</div>
@@ -82,9 +78,8 @@
 						</div>
 						<div class="accordion-item">
 							<h2 class="accordion-header">
-								<button class="accordion-button collapsed" type="button"
-									data-bs-toggle="collapse" data-bs-target="#collapseThree"
-									aria-expanded="false" aria-controls="collapseThree">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+									data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
 									Arrange</button>
 							</h2>
 							<div id="collapseThree" class="accordion-collapse collapse"
@@ -108,38 +103,34 @@
 						<button id="searchForm" class="btn-search">
 							<i class="fas fa-search"></i>
 						</button>
-						<input type="text" id="searchKeyword" class="input-search"
-							placeholder="Type to Search..." />
+						<input type="text" id="searchKeyword" class="input-search" placeholder="Type to Search..." />
 					</div>
 					<div class="row text-center" id="Results">
-						<div th:each="p:${items}"
-							class="col-lg-4 col-md-6 mb-4">
+						<div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
 							<div class="package-item bg-white mb-2">
-								<a th:href="@{|/product/detail/${p.productid}|}"><img
-									style="height: 250px" class="img-fluid"
-									th:src="@{|${p.image}|}" alt=""></a>
+								<a th:href="@{|/product/detail/${p.productid}|}" style="display: block; position: relative;">
+									<img style="height: 250px" class="img-fluid" th:src="@{|${p.image}|}" alt="">
+
+									<span th:if="${p.quantityavailable < 5}" class="out-of-stock-label">Hết hàng</span>
+								</a>
+
 								<div class="p-4">
-									<a th:utext="${p.productname}"
-										class="h5 text-decoration-none" href="/tour-detail"></a>
+									<a th:utext="${p.productname}" class="h5 text-decoration-none"
+										href="/tour-detail"></a>
 									<div class="border-top mt-4 pt-4">
-										<div class="text-center">											
-											<h5
-												th:text="*{#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}+ 'đ'"
+										<div class="text-center">
+											<h5 th:text="*{#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}+ 'đ'"
 												class=""></h5>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-
 					</div>
-	
-
 				</div>
-				
-				
 			</div>
 		</div>
 	</div>
 </body>
+
 </html>
