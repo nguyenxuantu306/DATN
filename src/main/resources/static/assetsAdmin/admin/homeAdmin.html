@@ -33,14 +33,17 @@
 		<div class="col-lg-3 col-sm-6">
 			<div class="card">
 				<div class="social-graph-wrapper widget-linkedin">
-					<h4 class="text-white py-2 ">Đăng ký & Tổng tiền mua hàng</h4>
-					<span class="s-icon"><i class="fa fa-user"></i></span>
-					<span class="s-icon"><i class="fa fa-person"></i></span>
+					<h4 class="text-white py-2 ">Người đăng ký & Tổng mua hàng</h4>
+					<span class="s-icon"><i class="fa fa-user"></i></span> <span
+						class="s-icon"><button type="button" class="btn btn-light"
+							data-toggle="modal" data-target="#exampleModal4">
+							<i class="fa fa-person"></i>
+						</button></span>
 				</div>
 				<div class="row">
 					<div class="col-6 border-right">
 						<div class="pt-3 pb-3 pl-0 pr-0 text-center">
-							<h4 class="m-1">100 </h4>
+							<h4 class="m-1">{{ numberOfRegistrations }}</h4>
 							<p class="m-0">Shop & Tour</p>
 						</div>
 					</div>
@@ -204,6 +207,7 @@
 
 </div>
 
+<!-- Thống kê số lượng trạng thái của đơn hàng -->
 <div class="modal fade" id="exampleModal" tabindex="-1"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl custom-modal">
@@ -234,6 +238,8 @@
 		</div>
 	</div>
 </div>
+
+<!-- Thống kê số lượng trạng thái của đặt vé -->
 <div class="modal fade" id="exampleModal3" tabindex="-1"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl custom-modal">
@@ -265,6 +271,7 @@
 	</div>
 </div>
 
+<!-- Thống kê đánh giá sao -->
 <div class="modal fade" id="exampleModal2" tabindex="-1"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl ">
@@ -298,6 +305,61 @@
 						</tbody>
 					</table>
 
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Thống kê đánh giá sao -->
+<div class="modal fade" id="exampleModal4" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl ">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title " id="exampleModalLabel">Tổng tiền mua
+					hàng của người dùng :</h3>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div style="color: black;" class="table-responsive">
+					<table class="table header-border table-hover verticle-middle">
+						<thead>
+							<tr>
+								<th scope="col">STT</th>
+								<th scope="col">Email</th>
+								<th scope="col">Số điện thoại</th>
+								<th scope="col">Tổng tiền đã mua hàng</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="user in pager.itemsThongKetotaluser">
+								<th>{{$index + 1}}</th>
+								<td>{{user.group.email}}</td>
+								<td>{{user.group.phonenumber}}</td>
+								<td><span class="label gradient-4 btn-rounded">
+										{{user.sum |number:0}} đ</span></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="panel-footer text-right">
+						<span class="col-md-6"
+							style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
+							+ 1}} / {{pager.count}} </span>
+						<button ng-click="pager.first()" class="btn btn-success">
+							<i class="fas fa-angle-double-left"></i>
+						</button>
+						<button ng-click="pager.prev()" class="btn btn-success">
+							<i class="fas fa-angle-left"></i>
+						</button>
+						<button ng-click="pager.next()" class="btn btn-success">
+							<i class="fas fa-angle-right"></i>
+						</button>
+						<button ng-click="pager.last()" class="btn btn-success">
+							<i class="fas fa-angle-double-right"></i>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>

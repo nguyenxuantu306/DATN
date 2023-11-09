@@ -77,7 +77,7 @@
 												src="https://toppng.com/uploads/preview/voucher-icon-kostenloser-icon-voucher-11553428421ncp0vltb6w.png" />
 
 											<label class="form-check-label"
-												th:text="'Voucher giảm giá: '+ ${voucher.voucher.discount*100} + '%'"
+												th:text="'Voucher giảm giá: '+ ${#numbers.formatDecimal(voucher.voucher.discount*100, 0, 'POINT', 0, 'COMMA')} + '%'"
 												for="exampleRadios1">
 											</label>
 											<input th:value="${voucher.voucher.discount}" class="form-check-input"
