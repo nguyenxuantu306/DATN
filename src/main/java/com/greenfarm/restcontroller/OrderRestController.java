@@ -49,12 +49,12 @@ import java.time.LocalTime;
 public class OrderRestController {
 	@Autowired
 	OrderService orderService;
-	
-	 @Autowired
-	 private ProductService productService;
 
-	 @Autowired
-	 private OrderDetailService orderDetailService;
+	@Autowired
+	private ProductService productService;
+
+	@Autowired
+	private OrderDetailService orderDetailService;
 
 	@Autowired
 	ModelMapper modelMapper;
@@ -116,7 +116,6 @@ public class OrderRestController {
 //	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 //	    }
 //	}
-
 
 	@GetMapping("/search")
 	public ResponseEntity<String> searchOrdersByDate(
@@ -196,16 +195,15 @@ public class OrderRestController {
 			return new ResponseEntity<>("Lỗi khi hủy đơn hàng: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	
+
 	@GetMapping("/year-revenue")
 	public ResponseEntity<List<ReportYear>> getyearRevenue() {
-	      List<ReportYear> yearRevenue = orderService.getYearRevenue();
-	      return new ResponseEntity<>(yearRevenue, HttpStatus.OK);
+		List<ReportYear> yearRevenue = orderService.getYearRevenue();
+		return new ResponseEntity<>(yearRevenue, HttpStatus.OK);
 	}
-	
-	 @GetMapping("/findyearrevenue/{year}")
-     public List<FindReportYear> getYearlyRevenue(@PathVariable Integer year) {
-        return orderService.findYearlyRevenue(year);
-	 }
+
+	@GetMapping("/findyearrevenue/{year}")
+	public List<FindReportYear> getYearlyRevenue(@PathVariable Integer year) {
+		return orderService.findYearlyRevenue(year);
+	}
 }
