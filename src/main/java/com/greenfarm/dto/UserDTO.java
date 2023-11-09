@@ -38,13 +38,13 @@ public class UserDTO {
 	private String phonenumber;
 
 	private String image;
-	@NotEmpty(message = "Thiếu Address")
+	//@NotEmpty(message = "Thiếu Address")
 	private String address;
-	@NotNull(message = "Gender không được để trống")
-	@AssertTrue(message = "Trường Gender phải là true")
+	//@NotNull(message = "Gender không được để trống")
+	//@AssertTrue(message = "Trường Gender phải là true")
 	private Boolean gender;
-	@NotNull(message = "Trường Birthday không được để trống")
-	@Past(message = "Birthday phải ở trong quá khứ")
+	//@NotNull(message = "Trường Birthday không được để trống")
+	//@Past(message = "Birthday phải ở trong quá khứ")
 	private Date birthday;
 	// @NotNull(message = "Trường CreatedDate không được để trống")
 	// @PastOrPresent(message = "CreatedDate phải ở trong quá khứ hoặc hiện tại mới
