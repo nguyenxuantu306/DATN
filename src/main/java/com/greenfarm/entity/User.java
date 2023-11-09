@@ -84,9 +84,12 @@ public class User implements Serializable {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	List<Review> Review;
+
+	@Enumerated(EnumType.STRING)
+	private Provider provider;
 	
-	
-	
-	  @Enumerated(EnumType.STRING) private Provider provider;
-	 
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	List<VoucherUser> voucheruser;
+
 }

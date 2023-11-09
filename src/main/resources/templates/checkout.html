@@ -1,257 +1,231 @@
 <!DOCTYPE html>
-<html
-  xmlns="http://www.thymeleaf.org"
-  th:replace="~{/layout/layout::dynamic(~{::body})}"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <title>Checkout</title>
-  </head>
-  <body class="bg-light">
-    <script src="https://www.paypal.com/sdk/js?client-id=ASZnl0CCBGjrS-TwWJ1wE2Urw17vj973eOd9ENBq5g1SyJYBZ2l8iZL8iAdkd7hzpjCrZgdYtKDtYhj0"></script>
-    <div class="container">
-      <div class="row py-5">
-        <div class="col-md-4 order-md-2 mb-4">
-          <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Your cart</span>
-            <span class="badge badge-secondary badge-pill">3</span>
-          </h4>
-          <form
-            th:method="post"
-            th:action="@{/checkout/payment}"
-            th:object="${orderDetail}"
-          >
-            <ul class="list-group">
-              <div th:each="item : ${cartList}">
-                <div>
-                  <li
-                    class="list-group-item d-flex justify-content-between lh-condensed"
-                  >
-                    <div>
-                      <h6
-                        class="my-0"
-                        th:text="${item.product.productname}"
-                      ></h6>
-                      <small
-                        class="text-muted" name="quantityBought"
-                        th:text="${item.quantity}" 
-                      ></small>
-                    </div>
-                    <span
-                      class="text-muted"
-                      th:text="${item.quantity * item.product.price}"
-                    ></span>
-                  </li>
-                </div>
-              </div>
-              <li
-                class="list-group-item d-flex justify-content-between bg-light"
-              >
-                <div class="text-success">
-                  <h6 class="my-0">Promo code</h6>
-                  <small>EXAMPLECODE</small>
-                </div>
-                <span class="text-success">-$0</span>
-              </li>
-              <!-- Hiển thị tổng tiền trong thẻ "Total (USD)" -->
-              <li class="list-group-item d-flex justify-content-between">
-                <span>Total (USD)</span>
-                <strong id="totalPrice" th:text="${totalPrice}"></strong>
-              </li>
-            </ul>
-          </form>
-        </div>
-        <div class="col-md-8 order-md-1">
-          <h4 class="mb-3">Billing address</h4>
-          <form
-            class="needs-validation"
-            novalidate
-            th:object="${Order}"
-            th:method="Post"
-            th:action="@{/checkout/payment}"
-          >
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="firstName">First name</label>
-                <input
-                  th:field="${user.firstname}"
-                  th:value="${user.firstname}"
-                  th:placeholder="${user.firstname}"
-                  type="text"
-                  class="form-control"
-                  id="firstName"
-                  placeholder=""
-                  value=""
-                  required
-                />
-                <div class="invalid-feedback">
-                  Valid first name is required.
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="lastName">Last name</label>
-                <input
-                  th:placeholder="${user.lastname}"
-                  th:value="${user.lastname}"
-                  th:field="${user.lastname}"
-                  type="text"
-                  class="form-control"
-                  id="lastName"
-                  placeholder=""
-                  value=""
-                  required
-                />
-                <div class="invalid-feedback">Valid last name is required.</div>
-              </div>
-            </div>
+<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
 
-            <div class="mb-3">
-              <label for="email"
-                >Email <span class="text-muted">(Optional)</span></label
-              >
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                th:placeholder="${user.email}"
-                readonly="readonly"
-              />
-              <div class="invalid-feedback">
-                Please enter a valid email address for shipping updates.
-              </div>
-            </div>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<title>Checkout</title>
+</head>
 
-            <div class="mb-3">
-              <label for="address">Phone</label>
-              <input
-                type="tel"
-                class="form-control"
-                id="address"
-                th:value="${user.phonenumber}"
-                th:field="${user.phonenumber}"
-                th:placeholder="${user.phonenumber}"
-                required
-              />
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
-            </div>
+<body class="bg-light">
+	<script
+		src="https://www.paypal.com/sdk/js?client-id=ASZnl0CCBGjrS-TwWJ1wE2Urw17vj973eOd9ENBq5g1SyJYBZ2l8iZL8iAdkd7hzpjCrZgdYtKDtYhj0"></script>
+	<div class="container">
+		<div class="row py-5">
+			<div class="col-md-4 order-md-2 mb-4">
+				<h4 class="d-flex justify-content-between align-items-center mb-3">
+					<span class="text-muted">Your cart</span>
+					<span class="badge badge-secondary badge-pill">3</span>
+				</h4>
+				<form th:method="post" th:action="@{/checkout/payment}" th:object="${orderDetail}">
+					<ul class="list-group">
+						<div th:each="item : ${cartList}">
+							<div>
+								<li class="list-group-item d-flex justify-content-between lh-condensed">
+									<div>
+										<h6 class="my-0" th:text="${item.product.productname}"></h6>
+										<small class="text-muted" name="quantityBought"
+											th:text="${item.quantity}"></small>
+									</div>
+									<span class="text-muted" th:text="${item.quantity * item.product.price}"></span>
+								</li>
+							</div>
+						</div>
+						<li class="list-group-item d-flex justify-content-between bg-light">
+							<div class="text-success">
+								<h6 class="my-0">Promo code</h6>
+								<small>EXAMPLECODE</small>
+							</div>
+							<span class="text-success">-$0</span>
+						</li>
+						<!-- Hiển thị tổng tiền trong thẻ "Total (USD)" -->
+						<li class="list-group-item d-flex justify-content-between">
+							<span>Total (USD)</span>
+							<strong id="totalPrice" th:text="${totalPrice}"></strong>
+						</li>
+					</ul>
+				</form>
 
-            <div class="mb-3">
-              <label for="address">Address</label>
-              <input
-                th:value="${user.address}"
-                th:field="${user.address}"
-                th:placeholder="${user.address}"
-                type="text"
-                class="form-control"
-                id="address"
-                required
-              />
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
-            </div>
+				<div>
 
-            <hr class="mb-4" />
-            <div class="custom-control custom-checkbox">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                id="same-address"
-              />
-              <label class="custom-control-label" for="same-address"
-                >Shipping address is the same as my billing address</label
-              >
-            </div>
-            <div class="custom-control custom-checkbox">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                id="save-info"
-              />
-              <label class="custom-control-label" for="save-info"
-                >Save this information for next time</label
-              >
-            </div>
-            <hr class="mb-4" />
 
-            <h4 class="mb-3">Payment</h4>
+					<!-- Button trigger modal -->
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						Chọn hoặc nhập mã voucher
+					</button>
 
-            <div class="d-block my-3">
-              <div class="custom-control custom-radio">
-                <input
-                  id="debit"
-                  name="paymentMethod"
-                  type="radio"
-                  class="custom-control-input"
-                  required
-                  onclick="showButton('debit')"
-                  checked
-                  value="1"
-                />
-                <label class="custom-control-label" for="debit">COD</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input
-                  id="paypal"
-                  name="paymentMethod"
-                  type="radio"
-                  class="custom-control-input"
-                  required
-                  onclick="showButton('paypal')"
-                  value="2"
-                />
-                <label class="custom-control-label" for="paypal">PayPal</label>
-              </div>
-            </div>
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="exampleModalLabel">Chọn GreenFram Voucher</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body ">
+									<div class="cupon_area">
+										<div class="check_title">
+											<h2>Have a coupon? <a href="#">Click here to enter your code</a></h2>
+										</div>
+										<input type="text" placeholder="Enter coupon code">
+										<a class="tp_btn" href="#">Apply Coupon</a>
+									</div>
+									<div class="p-3">
+										<div th:each="voucher : ${vouchers}">
+											<input th:value="${voucher.voucher.discount}" class="form-check-input"
+												type="radio" name="exampleRadios" id="exampleRadios1">
+											<label class="form-check-label" th:text="'Voucher giảm giá: '+ ${#numbers.formatDecimal(voucher.voucher.discount*100, 0, 'POINT', 0, 'COMMA')} + '%'"
+												for="exampleRadios1">
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal">Close</button>
+									<button type="button" class="btn btn-primary">Save changes</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--<form action="" method="">
+						<label for="voucher">Chọn Voucher:</label>
+						<select>
+							<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+								value="option1" checked>
+							<label class="form-check-label" for="exampleRadios1">
+								Default radio
+							</label>
+							
+							
+							<option th:each="voucher : ${vouchers}">
+								<span th:value="${voucher.voucher.discount}" th:text="${voucher.voucher.code}"></span>
+							</option>
+						</select>
+						<input type="submit" value="Chọn Voucher">
+					</form>-->
+				</div>
+			</div>
 
-            <div id="paypal-button" style="display: none">
-              <!-- Đặt nội dung nút PayPal ở đây -->
-            </div>
-            <div id="checkout-button">
-              <!-- Đặt nội dung nút "Continue to checkout" ở đây -->
-              <button
-                class="btn btn-primary btn-lg btn-block"
-                type="submit"          
-              >
-                Continue to checkout
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+			<div class="col-md-8 order-md-1">
+				<h4 class="mb-3">Billing address</h4>
+				<form class="needs-validation" novalidate th:object="${Order}" th:method="Post"
+					th:action="@{/checkout/payment}">
+					<div class="row">
+						<div class="col-md-6 mb-3">
+							<label for="firstName">First name</label>
+							<input th:field="${user.firstname}" th:value="${user.firstname}"
+								th:placeholder="${user.firstname}" type="text" class="form-control" id="firstName"
+								placeholder="" value="" required />
+							<div class="invalid-feedback">
+								Valid first name is required.
+							</div>
+						</div>
+						<div class="col-md-6 mb-3">
+							<label for="lastName">Last name</label>
+							<input th:placeholder="${user.lastname}" th:value="${user.lastname}"
+								th:field="${user.lastname}" type="text" class="form-control" id="lastName"
+								placeholder="" value="" required />
+							<div class="invalid-feedback">Valid last name is required.</div>
+						</div>
+					</div>
 
-    <script>
-      paypal
-        .Buttons({
-          createOrder: function (data, actions) {
-            var priceElement = document.getElementById("totalPrice");
-            var price = parseFloat(priceElement.innerText.replace("$", ""));
+					<div class="mb-3">
+						<label for="email">Email <span class="text-muted">(Optional)</span></label>
+						<input type="email" class="form-control" id="email" th:placeholder="${user.email}"
+							readonly="readonly" />
+						<div class="invalid-feedback">
+							Please enter a valid email address for shipping updates.
+						</div>
+					</div>
 
-            return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    value: 10,
-                  },
-                },
-              ],
-            });
-          },
+					<div class="mb-3">
+						<label for="address">Phone</label>
+						<input type="tel" class="form-control" id="address" th:value="${user.phonenumber}"
+							th:field="${user.phonenumber}" th:placeholder="${user.phonenumber}" required />
+						<div class="invalid-feedback">
+							Please enter your shipping address.
+						</div>
+					</div>
 
-          onApprove: function (data, actions) {
-            return actions.order.capture().then(function (details) {
-              window.location.href = "http://localhost:8080/checkoutPayment";
-            });
-          },
-        })
-        .render("#paypal-button");
-    </script>
-  </body>
+					<div class="mb-3">
+						<label for="address">Address</label>
+						<input th:value="${user.address}" th:field="${user.address}" th:placeholder="${user.address}"
+							type="text" class="form-control" id="address" required />
+						<div class="invalid-feedback">
+							Please enter your shipping address.
+						</div>
+					</div>
+
+					<hr class="mb-4" />
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="same-address" />
+						<label class="custom-control-label" for="same-address">Shipping address is the same as my
+							billing address</label>
+					</div>
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="save-info" />
+						<label class="custom-control-label" for="save-info">Save this information for next time</label>
+					</div>
+					<hr class="mb-4" />
+
+					<h4 class="mb-3">Payment</h4>
+
+					<div class="d-block my-3">
+						<div class="custom-control custom-radio">
+							<input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required
+								onclick="showButton('debit')" checked value="1" />
+							<label class="custom-control-label" for="debit">COD</label>
+						</div>
+						<div class="custom-control custom-radio">
+							<input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required
+								onclick="showButton('paypal')" value="2" />
+							<label class="custom-control-label" for="paypal">PayPal</label>
+						</div>
+					</div>
+
+					<div id="paypal-button" style="display: none">
+						<!-- Đặt nội dung nút PayPal ở đây -->
+					</div>
+					<div id="checkout-button">
+						<!-- Đặt nội dung nút "Continue to checkout" ở đây -->
+						<button class="btn btn-primary btn-lg btn-block" type="submit">
+							Continue to checkout
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		paypal
+			.Buttons({
+				createOrder: function (data, actions) {
+					var priceElement = document.getElementById("totalPrice");
+					var price = parseFloat(priceElement.innerText.replace("$", ""));
+
+					return actions.order.create({
+						purchase_units: [
+							{
+								amount: {
+									value: 10,
+								},
+							},
+						],
+					});
+				},
+
+				onApprove: function (data, actions) {
+					return actions.order.capture().then(function (details) {
+						window.location.href = "http://localhost:8080/checkoutPayment";
+					});
+				},
+			})
+			.render("#paypal-button");
+	</script>
+</body>
+
 </html>
