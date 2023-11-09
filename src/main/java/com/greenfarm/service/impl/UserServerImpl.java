@@ -346,4 +346,9 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		return dao.totalPurchaseByUser();
 	}
 
+	@Override
+	public List<Report> getBookingTotalPurchaseByUser() {
+		return dao.BookingTotalPurchaseByUser();
+	}
+
 }

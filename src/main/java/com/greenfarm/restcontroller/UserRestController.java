@@ -146,5 +146,12 @@ public class UserRestController {
         List<Report> totalPurchaseList = userService.getTotalPurchaseByUser();
         return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
     }
+	
+	//Tổng tiền đặt vé của các user
+		@GetMapping("/bookingtotal-purchase")
+	    public ResponseEntity<List<Report>> getBookingTotalPurchaseByUser() {
+	        List<Report> totalPurchaseList = userService.getBookingTotalPurchaseByUser();
+	        return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
+	    }
 
 }

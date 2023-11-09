@@ -6,6 +6,8 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 	$scope.itemsThongKeDT = [];
 	$scope.itemsThongKeDTTOUR = [];
 	$scope.itemsThongKetotaluser = [];
+	$scope.itemsThongKeBookingtotaluser = [];
+	$scope.itemsThongKeCountcomment = [];
 	$scope.latestYear = [];
 	$scope.selectedYear = 2023; // Đặt giá trị mặc định là năm 2023
 
@@ -56,11 +58,29 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 			// Sử dụng $scope.items.length để đếm số người đăng ký
 			$scope.numberOfRegistrations = $scope.items.length;
 		});
-		
+
+		$http.get('/rest/comment').then(response => {
+			$scope.items = response.data;
+			$scope.items.forEach(item => {
+				item.commentdate = new Date(item.commentdate);
+			});
+
+			// Đếm số lượt comment
+			$scope.numberOfComments = $scope.items.length;
+		});
+
+
 		// Thống kê tổng tiền mua hàng của từng user
 		$http.get('/rest/users/total-purchase').then(response => {
 			$scope.itemsThongKetotaluser = response.data;
 			console.log($scope.itemsThongKetotaluser);
+
+		});
+
+		// Thống kê tổng tiền đặt vé của từng user
+		$http.get('/rest/users/bookingtotal-purchase').then(response => {
+			$scope.itemsThongKeBookingtotaluser = response.data;
+			console.log($scope.itemsThongKeBookingtotaluser);
 
 		});
 
@@ -268,6 +288,14 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 		},
 		get count() {
 			return Math.ceil(1.0 * $scope.itemsThongKetotaluser.length
+				/ this.size);
+		},
+		get itemsThongKeBookingtotaluser() {
+			var start = this.page * this.size;
+			return $scope.itemsThongKeBookingtotaluser.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.itemsThongKeBookingtotaluser.length
 				/ this.size);
 		},
 		first() {
