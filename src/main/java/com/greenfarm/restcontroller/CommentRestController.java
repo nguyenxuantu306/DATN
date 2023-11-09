@@ -1,5 +1,6 @@
 package com.greenfarm.restcontroller;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,16 +43,26 @@ public class CommentRestController {
 	@Autowired
 	TourService tourService;
 	
+//	@GetMapping()
+//	public ResponseEntity<List<CommentDTO>> getListcomment(){
+//		List<Comment> comments = commentService.getComments();
+//		List<CommentDTO> commenDtos = comments.stream().map(comment -> modelMapper.map(comment, CommentDTO.class))
+//				.collect(Collectors.toList());
+//				
+//		return new ResponseEntity<>(commenDtos, HttpStatus.OK);
+//		
+//	}
 	@GetMapping()
 	public ResponseEntity<List<CommentDTO>> getListcomment(){
-		List<Comment> comments = commentService.getComments();
+		List<Comment> comments = commentService.getCommentsOrderByDateDesc();
 		List<CommentDTO> commenDtos = comments.stream().map(comment -> modelMapper.map(comment, CommentDTO.class))
 				.collect(Collectors.toList());
-				
+
 		return new ResponseEntity<>(commenDtos, HttpStatus.OK);
 		
-	}
-	
+	} 
+
+
 	@GetMapping("/tour/{tourid}")
 	public ResponseEntity<List<CommentDTO>> getListcommentbytour(@PathVariable("tourid") Integer tourid){
 		Tour tour = tourService.findById(tourid);

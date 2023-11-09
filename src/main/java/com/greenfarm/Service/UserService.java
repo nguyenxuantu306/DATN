@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
+import com.greenfarm.entity.Report;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.InvalidTokenException;
 import com.greenfarm.exception.UnkownIdentifierException;
@@ -50,4 +51,7 @@ public interface UserService {
     public UserDetails createNewUser(String email) throws UserAlreadyExistException;
     public void loginFormOAuth2(OAuth2AuthenticationToken oauth2);
     public void processOAuthPostLogin(String username);
+
+    //Tổng tiền mua hàng của các user
+	List<Report> getTotalPurchaseByUser();
 }

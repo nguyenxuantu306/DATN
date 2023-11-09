@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.UserDTO;
+import com.greenfarm.entity.Report;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.UnkownIdentifierException;
 import com.greenfarm.exception.UserAlreadyExistException;
@@ -154,5 +155,13 @@ public class UserRestController {
 		}
 		return userService.findAll();
 	}
+	
+	
+	//Tổng tiền mua hàng của các user
+	@GetMapping("/total-purchase")
+    public ResponseEntity<List<Report>> getTotalPurchaseByUser() {
+        List<Report> totalPurchaseList = userService.getTotalPurchaseByUser();
+        return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
+    }
 
 }

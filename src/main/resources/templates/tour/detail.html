@@ -1,37 +1,35 @@
-
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout::dynamic(~{::body})}">
+<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
 
 <head>
-<meta charset="UTF-8" />
-<title>GreenFarm</title>
+	<meta charset="UTF-8" />
+	<title>GreenFarm</title>
 
-<style>
-.rating-title {
-	font-size: 18px;
-	color: #005294;
-	text-transform: uppercase;
-	margin-bottom: 15px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-weight: 300;
-}
+	<style>
+		.rating-title {
+			font-size: 18px;
+			color: #005294;
+			text-transform: uppercase;
+			margin-bottom: 15px;
+			font-family: Arial, Helvetica, sans-serif;
+			font-weight: 300;
+		}
 
-.rating-title label {
-	font-size: 14px;
-	color: #333;
-	font-weight: normal;
-}
+		.rating-title label {
+			font-size: 14px;
+			color: #333;
+			font-weight: normal;
+		}
 
-.rating-title input {
-	display: block;
-	width: 100%;
-	height: 40px;
-	border: 1px solid #eee;
-	padding-left: 10px;
-	border-radius: 5px;
-}
-</style>
+		.rating-title input {
+			display: block;
+			width: 100%;
+			height: 40px;
+			border: 1px solid #eee;
+			padding-left: 10px;
+			border-radius: 5px;
+		}
+	</style>
 </head>
 
 <body>
@@ -41,20 +39,17 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
 					<li class="breadcrumb-item"><a href="#">Tour</a></li>
-					<li th:text="*{Tourname}" class="breadcrumb-item active"
-						aria-current="page"></li>
+					<li th:text="*{Tourname}" class="breadcrumb-item active" aria-current="page"></li>
 				</ol>
 			</nav>
 			<div class="text-left mb-3">
 				<h3 th:text="*{Tourname}" class="text-primary text-uppercase"></h3>
 				<h5>
-					Giá tour gốc/khách: <span th:text="*{pricings.Adultprice}"
-						style="color: #fb752e"></span>
+					Giá tour gốc/khách: <span th:text="*{pricings.Adultprice}" style="color: #fb752e"></span>
 				</h5>
 			</div>
 			<div class="d-grid gap-2 d-md-block">
-				<div
-					style="display: flex; justify-content: space-between; align-items: center;">
+				<div style="display: flex; justify-content: space-between; align-items: center;">
 					<a href="/booking" class="btn btn-lg btn-primary p-2">Đặt ngay</a>
 				</div>
 			</div>
@@ -63,45 +58,41 @@
 			<div class="mt-2 mb-2">
 				<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 					<li class="nav-item" role="presentation">
-						<button class="nav-link active" id="pills-tour-tab"
-							data-bs-toggle="pill" data-bs-target="#pills-tour" type="button"
-							role="tab" aria-controls="pills-tour" aria-selected="true">
+						<button class="nav-link active" id="pills-tour-tab" data-bs-toggle="pill"
+							data-bs-target="#pills-tour" type="button" role="tab" aria-controls="pills-tour"
+							aria-selected="true">
 							Chương trình tour</button>
 					</li>
 					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="pills-profile-tab"
-							data-bs-toggle="pill" data-bs-target="#pills-profile"
-							type="button" role="tab" aria-controls="pills-profile"
+						<button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+							data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
 							aria-selected="false">Bảng giá</button>
 					</li>
 					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="pills-infomation-tab"
-							data-bs-toggle="pill" data-bs-target="#pills-infomation"
-							type="button" role="tab" aria-controls="pills-infomation"
+						<button class="nav-link" id="pills-infomation-tab" data-bs-toggle="pill"
+							data-bs-target="#pills-infomation" type="button" role="tab" aria-controls="pills-infomation"
 							aria-selected="false">Thông tin tour</button>
 					</li>
 					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="pills-overview-tab"
-							data-bs-toggle="pill" data-bs-target="#pills-overview"
-							type="button" role="tab" aria-controls="pills-overview"
+						<button class="nav-link" id="pills-overview-tab" data-bs-toggle="pill"
+							data-bs-target="#pills-overview" type="button" role="tab" aria-controls="pills-overview"
 							aria-selected="false">Tổng quan tour</button>
 					</li>
 					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="pills-condition-tab"
-							data-bs-toggle="pill" data-bs-target="#pills-condition"
-							type="button" role="tab" aria-controls="pills-condition"
+						<button class="nav-link" id="pills-condition-tab" data-bs-toggle="pill"
+							data-bs-target="#pills-condition" type="button" role="tab" aria-controls="pills-condition"
 							aria-selected="false">Điều kiện tour</button>
 					</li>
 					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="pills-image-tab"
-							data-bs-toggle="pill" data-bs-target="#pills-image" type="button"
-							role="tab" aria-controls="pills-image" aria-selected="false">
+						<button class="nav-link" id="pills-image-tab" data-bs-toggle="pill"
+							data-bs-target="#pills-image" type="button" role="tab" aria-controls="pills-image"
+							aria-selected="false">
 							Hình ảnh tour</button>
 					</li>
 				</ul>
 				<div class="tab-content" id="pills-tabContent">
-					<div class="tab-pane fade show active" id="pills-tour"
-						role="tabpanel" aria-labelledby="pills-tour-tab" tabindex="0">
+					<div class="tab-pane fade show active" id="pills-tour" role="tabpanel"
+						aria-labelledby="pills-tour-tab" tabindex="0">
 						<h3>CHƯƠNG TRÌNH TOUR</h3>
 						<div class="row">
 							<div class="col-lg-6 col-md-12 mb-4">
@@ -132,15 +123,15 @@
 
 						</div>
 					</div>
-					<div class="tab-pane fade" id="pills-profile" role="tabpanel"
-						aria-labelledby="pills-profile-tab" tabindex="0">
+					<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
+						tabindex="0">
 						<h3>BẢNG GIÁ</h3>
 						<table class="table" style="text-align: center">
 							<thead>
 								<tr>
 									<th scope="col">STT</th>
 									<th scope="col">Giá người lớn</th>
-									<th scope="col">Giá trẻ em</th>									
+									<th scope="col">Giá trẻ em</th>
 									<th scope="col">Hành động</th>
 								</tr>
 							</thead>
@@ -148,7 +139,7 @@
 								<tr>
 									<th scope="row">1</th>
 									<td th:text="*{pricings.Adultprice}"></td>
-									<td th:text="*{pricings.Childprice}"></td>								
+									<td th:text="*{pricings.Childprice}"></td>
 									<td><a href="#" class="btn btn-md btn-primary p-2">Đặt
 											ngay</a></td>
 								</tr>
@@ -158,8 +149,7 @@
 					<div class="tab-pane fade" id="pills-infomation" role="tabpanel"
 						aria-labelledby="pills-infomation-tab" tabindex="0">
 						<h3>THÔNG TIN TOUR</h3>
-						<div class="d-flex flex-center flex-between mt-5"
-							style="justify-content: space-between">
+						<div class="d-flex flex-center flex-between mt-5" style="justify-content: space-between">
 							<div>
 								<i class="fa fa-calendar-check-o" aria-hidden="true"></i> XNMT
 								01
@@ -168,18 +158,15 @@
 								<i class="fa fa-bullhorn" aria-hidden="true"></i>Hằng ngày
 							</div>
 							<div>
-								<i th:text="*{location}" class="fa fa-map-marker"
-									aria-hidden="true"></i>
+								<i th:text="*{location}" class="fa fa-map-marker" aria-hidden="true"></i>
 							</div>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="pills-overview" role="tabpanel"
-						aria-labelledby="pills-overview-tab" tabindex="0">
+					<div class="tab-pane fade" id="pills-overview" role="tabpanel" aria-labelledby="pills-overview-tab"
+						tabindex="0">
 						<h3>TỔNG QUAN TOUR</h3>
-						<h3 th:text="*{tourOverview.Title}" class="m-auto text-center"
-							style="width: 50%"></h3>
-						<p th:text="*{tourOverview.Content}" class="m-auto text-center"
-							style="width: 70%"></p>
+						<h3 th:text="*{tourOverview.Title}" class="m-auto text-center" style="width: 50%"></h3>
+						<p th:text="*{tourOverview.Content}" class="m-auto text-center" style="width: 70%"></p>
 					</div>
 					<div class="tab-pane fade" id="pills-condition" role="tabpanel"
 						aria-labelledby="pills-condition-tab" tabindex="0">
@@ -187,13 +174,13 @@
 
 						<p th:text="*{tourCondition.Conditions}"></p>
 					</div>
-					<div class="tab-pane fade" id="pills-image" role="tabpanel"
-						aria-labelledby="pills-image-tab" tabindex="0">
+					<div class="tab-pane fade" id="pills-image" role="tabpanel" aria-labelledby="pills-image-tab"
+						tabindex="0">
 						<h3>HÌNH ẢNH TOUR</h3>
 						<div class="row">
 							<div class="col-md-4" th:each="image : ${item.tourImage}">
-								<img style="height: 400px" th:src="${image.Imageurl}"
-									class="img-fluid" alt="đây là hình" />
+								<img style="height: 400px" th:src="${image.Imageurl}" class="img-fluid"
+									alt="đây là hình" />
 							</div>
 						</div>
 					</div>
@@ -206,121 +193,175 @@
 							TRÌNH TUOR XIN CỨ HỎI, CHÚNG TÔI TRẢ LỜI</div>
 						<div class="row d-flex flex-between">
 							<div class="col-lg-4 col-md-12 d-grid">
-								<label for="">1. Nhập họ tên</label> <input type="text" name=""
-									id="" placeholder="*" />
+								<label for="">1. Nhập họ tên</label> <input type="text" name="" id="" placeholder="*" />
 							</div>
 							<div class="col-lg-4 col-md-12 d-grid">
-								<label for="">1. Nhập email</label> <input type="email" name=""
-									id="" placeholder="*" />
+								<label for="">1. Nhập email</label> <input type="email" name="" id="" placeholder="*" />
 							</div>
 							<div class="col-lg-4 col-md-12 d-grid">
-								<label for="">1. Nhập số điện thoại</label> <input type="number"
-									name="" id="" placeholder="*" />
+								<label for="">1. Nhập số điện thoại</label> <input type="number" name="" id=""
+									placeholder="*" />
 							</div>
 							<div class="col-lg-12 d-grid" width="100%">
-								<label for="">4. Viết nhận xét của bạn vào bên dưới</label> <input
-									type="text" name="" id="" placeholder="" style="height: 150px" />
+								<label for="">4. Viết nhận xét của bạn vào bên dưới</label> <input type="text" name=""
+									id="" placeholder="" style="height: 150px" />
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
-			
-			
+
+
 			<script th:inline="javascript">
-    var itemData = /*[[${item}]]*/ null; // Biến JavaScript chứa dữ liệu
-    var uslog = /*[[${#authentication.principal.username}]]*/ null;
+				var itemData = /*[[${item}]]*/ null; // Biến JavaScript chứa dữ liệu
+				var uslog = /*[[${#authentication.principal.username}]]*/ null;
 
-</script>
+			</script>
 			<!-- end div tour -->
-		<!-- </div> -->
+			<!-- </div> -->
 
-		<!--comment  -->
-		<div style="background-color: #eee;" ng-app="commentApp" ng-controller="comment-ctrl" > 
-		
-		
-			<div class="card mb-4"  
-			ng-repeat="p in pager.items">
-									
-			
-				<div class="card-body">
-					<div class="d-flex justify-content-between mb-2">
-						<div class="d-flex flex-row align-items-center">
-							<img
-								src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp"
-								alt="avatar" width="25" height="25" />
-							<p class="small mb-0 ms-2 mx-2">{{p.user.firstname}}</p>
-	<p class="small mb-0 ms-2 mx-2">{{p.user.email}}</p>
-							<p class="text-muted small mb-0">{{p.commentdate}}</p>
+			<!--comment  -->
+			<div style="background-color: #eee;" ng-app="commentApp" ng-controller="comment-ctrl">
+
+
+				<div class="card mb-4" ng-repeat="p in pager.items">
+
+
+					<div class="card-body">
+						<div class="d-flex justify-content-between mb-2">
+							<div class="d-flex flex-row align-items-center">
+								<img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp" alt="avatar"
+									width="25" height="25" />
+								<p class="small mb-0 ms-2 mx-2">{{p.user.firstname}}</p>
+								<p class="small mb-0 ms-2 mx-2">{{p.user.email}}</p>
+								<p class="text-muted small mb-0">{{p.commentdate}}</p>
+							</div>
+							<p> {{item.commenttext}}</p>
+
+							<<<<<<< HEAD </div>
+								<p> {{p.commenttext}}</p>
+
+								<div class="d-flex flex-row align-items-center"
+									th:if="${#authorization.expression('isAuthenticated()')}" ng-model="p.user.email">
+									<a href="#!" class="d-flex align-items-center me-3"> <i
+											class="far fa-comment-dots me-2"></i>
+										<p class="mb-0">Comment</p>
+
+									</a>
+									<div class="list-inline" ng-if="isUserLoggedIn(p.user.email)">
+										<a href="#!" class="d-inline-flex align-items-center  me-3  list-inline-item">
+											<i class="far fa-comment-dots me-2"></i>
+											<p class="mb-0" ng-click="delete(p)">Xóa</p>
+										</a>
+
+										<a href="#!" class="d-inline-flex align-items-center  me-3 list-inline-item"> <i
+												class="far fa-comment-dots me-2"></i>
+											<p class="mb-0" ng-click="edit(p)">Sửa</p>
+										</a>
+
+									</div>
+								</div>
 						</div>
+					</div>
+					<div class="panel-footer text-center">
+						<span class="col-md-6"
+							style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
+							+ 1}} / {{pager.count}} </span>
+						<button ng-click="pager.first()" class="btn btn-success">
+							<i class="fas fa-angle-double-left"></i>
+						</button>
+						<button ng-click="pager.prev()" class="btn btn-success">
+							<i class="fas fa-angle-left"></i>
+						</button>
+						<button ng-click="pager.next()" class="btn btn-success">
+							<i class="fas fa-angle-right"></i>
+						</button>
+						<button ng-click="pager.last()" class="btn btn-success">
+							<i class="fas fa-angle-double-right"></i>
+						</button>
+						=======
+						<div class="d-flex flex-row align-items-center"
+							th:if="${#authorization.expression('isAuthenticated()')}" ng-model="p.user.email">
+							<a href="#!" class="d-flex align-items-center me-3"> <i
+									class="far fa-comment-dots me-2"></i>
+								<p class="mb-0">Comment</p>
+							</a>
+							<div class="list-inline"
+								th:if="${#authorization.expression(item.user.email == #authentication.principal.username)}">
+								<a href="#!" class="d-inline-flex align-items-center  me-3  list-inline-item"> <i
+										class="far fa-comment-dots me-2"></i>
+									<p class="mb-0" ng-click="delete(item)">Xóa</p>
+								</a>
 
-					</div>
-					<p> {{p.commenttext}}</p>
-						
-					<div class="d-flex flex-row align-items-center" th:if="${#authorization.expression('isAuthenticated()')}" ng-model="p.user.email">
-						<a href="#!" class="d-flex align-items-center me-3"> <i
-							class="far fa-comment-dots me-2"></i>
-							<p class="mb-0">Comment</p>
-							
-						</a>
-						<div class="list-inline"  ng-if="isUserLoggedIn(p.user.email)">
-						<a  href="#!" class="d-inline-flex align-items-center  me-3  list-inline-item"> <i
-							class="far fa-comment-dots me-2"></i>
-							<p class="mb-0" ng-click="delete(p)">Xóa</p>
-						</a>
-						
-						<a href="#!" class="d-inline-flex align-items-center  me-3 list-inline-item"> <i
-							class="far fa-comment-dots me-2"></i>
-							<p class="mb-0" ng-click="edit(p)">Sửa</p>
-						</a>
-						
-					</div>
-				</div>
-			</div>
-</div>
-	<div class="panel-footer text-center" >
-							<span class="col-md-6"
-								style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
-								+ 1}} / {{pager.count}} </span>
-							<button ng-click="pager.first()" class="btn btn-success">
-								<i class="fas fa-angle-double-left"></i>
-							</button>
-							<button ng-click="pager.prev()" class="btn btn-success">
-								<i class="fas fa-angle-left"></i>
-							</button>
-							<button ng-click="pager.next()" class="btn btn-success">
-								<i class="fas fa-angle-right"></i>
-							</button>
-							<button ng-click="pager.last()" class="btn btn-success">
-								<i class="fas fa-angle-double-right"></i>
-							</button>
+								<a href="#!" class="d-inline-flex align-items-center  me-3 list-inline-item"> <i
+										class="far fa-comment-dots me-2"></i>
+									<p class="mb-0" ng-click="edit(item)">Sửa</p>
+								</a>
+
+							</div>
+							>>>>>>> 11977bef1983442ff58e420602e94b21d0b6cd65
 						</div>
-		
-			<!-- viet coment -->
-			<div class="card-footer py-3 border-0"
-				style="background-color: #f8f9fa;">
-				<div class="d-flex flex-start w-100">
-				
-					<img class="rounded-circle shadow-1-strong me-3"
-						src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
-						alt="avatar" width="40" height="40" />
-							
-					<div class="form-outline w-100">
-						<textarea class="form-control" id="textAreaExample" rows="4" ng-model="form.commenttext"
-							placeholder="Comment" style="background: #fff;"></textarea>
-
 					</div>
 				</div>
-				<div class="float-end mt-2 pt-1">
-					<button type="button" class="btn btn-primary btn-sm" ng-click="update()">Post
-						comment</button>
-					<button type="button" class="btn btn-outline-primary btn-sm" ng-click="reset()">Cancel</button>
+				<div class="panel-footer text-center">
+					<span class="col-md-6"
+						style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
+						+ 1}} / {{pager.count}} </span>
+					<button ng-click="pager.first()" class="btn btn-success">
+						<i class="fas fa-angle-double-left"></i>
+					</button>
+					<button ng-click="pager.prev()" class="btn btn-success">
+						<i class="fas fa-angle-left"></i>
+					</button>
+					<button ng-click="pager.next()" class="btn btn-success">
+						<i class="fas fa-angle-right"></i>
+					</button>
+					<button ng-click="pager.last()" class="btn btn-success">
+						<i class="fas fa-angle-double-right"></i>
+					</button>
 				</div>
+
+				<!-- viet coment -->
+				<div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+					<div class="d-flex flex-start w-100">
+
+						<img class="rounded-circle shadow-1-strong me-3"
+							src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
+							height="40" />
+
+						<div class="form-outline w-100">
+							<textarea class="form-control" id="textAreaExample" rows="4" ng-model="form.commenttext"
+								placeholder="Comment" style="background: #fff;"></textarea>
+
+						</div>
+					</div>
+					<div class="float-end mt-2 pt-1">
+						<button type="button" class="btn btn-primary btn-sm" ng-click="update()">Post
+							comment</button>
+						<button type="button" class="btn btn-outline-primary btn-sm" ng-click="reset()">Cancel</button>
+					</div>
+				</div>
+
 			</div>
-		
 		</div>
-		</div>
-		</div>
+	</div>
+	<script>
+		// Lấy commentid từ URL
+		var commentIdMatch = window.location.href.match(/#comment-(\d+)/);
+		if (commentIdMatch) {
+			var commentid = commentIdMatch[1];
+			// Chờ toàn bộ trang web được tải hoàn tất trước khi cuộn xuống
+			angular.element(document).ready(function () {
+				$timeout(function () {
+					// Sử dụng commentid để cuộn xuống vị trí bình luận
+					var commentElement = document.getElementById('commentid');
+					if (commentElement) {
+						commentElement.scrollIntoView();
+					}
+				});
+			});
+		}
+	</script>
 </body>
 
 </html>
