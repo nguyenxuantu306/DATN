@@ -20,6 +20,7 @@ import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.entity.User;
+import com.greenfarm.service.CartService;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.VoucherUserService;
 
@@ -38,6 +39,9 @@ public class VNPayController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	CartService cartService;
+	
 	@Autowired
 	CartDAO cartDAO;
 
@@ -114,6 +118,7 @@ public class VNPayController {
 				model.addAttribute("orderConfirmation", orderItem);
 				model.addAttribute("total", total);
 				model.addAttribute("cartConfirmation", cartItems);
+				cartService.delete(cartItems);
 			}
 
 			return "success";

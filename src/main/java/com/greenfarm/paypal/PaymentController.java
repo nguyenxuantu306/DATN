@@ -30,6 +30,7 @@ import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.entity.User;
+import com.greenfarm.service.CartService;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.VoucherUserService;
 import com.paypal.api.payments.Links;
@@ -44,6 +45,9 @@ public class PaymentController {
 	@Autowired
 	CartDAO cartDAO;
 
+	@Autowired
+	CartService cartService;
+	
 	@Autowired
 	OrderDAO orderDAO;
 
@@ -129,6 +133,7 @@ public class PaymentController {
 						model.addAttribute("orderConfirmation", orderItem);
 						model.addAttribute("total", total);
 						model.addAttribute("cartConfirmation", cartItems);
+						cartService.delete(cartItems);
 					}
 				} else {
 					System.out.println("Xin chào! Bạn chưa đăng nhập.");
