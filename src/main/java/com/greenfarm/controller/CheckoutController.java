@@ -31,6 +31,7 @@ import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.entity.User;
 import com.greenfarm.entity.Voucher;
 import com.greenfarm.entity.VoucherUser;
+import com.greenfarm.service.CartService;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.VoucherUserService;
 import com.greenfarm.vnpay.VNPayService;
@@ -48,6 +49,9 @@ public class CheckoutController {
 
 	@Autowired
 	CartDAO cartDAO;
+	
+	@Autowired
+	CartService cartService;
 
 	@Autowired
 	OrderDAO orderDAO;
@@ -129,7 +133,7 @@ public class CheckoutController {
 			LocalDateTime now = LocalDateTime.now();
 			StatusOrder statusOrder = new StatusOrder();
 			statusOrder.setStatusorderid(1);
-			PaymentMethod paymentMethodObj = paymentMethodDAO.findById(paymentMethod).get();
+			PaymentMethod paymentMethodObj = paymentMethodDAO.findById(1).get();
 			if (user != null) {
 				Order orderItem = new Order();
 				orderItem.setUser(user);
@@ -140,29 +144,29 @@ public class CheckoutController {
 				System.out.println(orderDTO.getAddress());
 				orderDAO.save(orderItem);
 
-				List<Cart> cartItems = cartDAO.findByUser(user); // Retrieve cart items for the user
+				List<Cart> cartItems = cartDAO.findByUser(user); 
 				List<OrderDetail> orderDetailList = new ArrayList<>();
 
+				float total = 0;
 				for (Cart cartItem : cartItems) {
 					OrderDetail orderDetailItem = new OrderDetail();
 					orderDetailItem.setOrder(orderItem);
 					orderDetailItem.setProduct(cartItem.getProduct());
 					orderDetailItem.setQuantityordered(cartItem.getQuantity());
 					orderDetailItem.setTotalPrice(cartItem.getQuantity() * cartItem.getProduct().getPrice());
-					// orderDetailItem.setPaymentMethod(paymentMethodObj);
 					orderDetailList.add(orderDetailItem);
-					
+					total += cartItem.getQuantity() * cartItem.getProduct().getPrice();
 					
 				}
 
 				orderDetailDAO.saveAll(orderDetailList);
+				model.addAttribute("total", total);
 				model.addAttribute("orderConfirmation", orderItem);
 				model.addAttribute("cartConfirmation", cartItems);
-//				model.addAttribute("orderdetailConfirmation", total);
-							
+				cartService.delete(cartItems);
 			}
 
-			return "/success";
+			return "success";
 		} else {
 			System.out.println("Xin chào! Bạn chưa đăng nhập.");
 			return "login";

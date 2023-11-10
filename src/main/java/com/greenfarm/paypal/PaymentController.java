@@ -55,10 +55,10 @@ public class PaymentController {
 
 	@Autowired
 	VoucherUserService voucherUserService;
-	
+
 	public static final String URL_PAYPAL_SUCCESS = "success";
 	public static final String URL_PAYPAL_CANCEL = "pay/cancel";
-	
+
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
@@ -89,9 +89,8 @@ public class PaymentController {
 	}
 
 	@GetMapping(URL_PAYPAL_SUCCESS)
-	public String successPay(@RequestParam("paymentId") String paymentId, 
-			@RequestParam("PayerID") String payerId, @ModelAttribute("Order") OrderDTO orderDTO
-			, Model model) {
+	public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId,
+			@ModelAttribute("Order") OrderDTO orderDTO, Model model) {
 		try {
 			Payment payment = paypalService.executePayment(paymentId, payerId);
 			if (payment.getState().equals("approved")) {
@@ -112,24 +111,24 @@ public class PaymentController {
 						orderItem.setAddress(user.getAddress());
 						orderItem.setStatusOrder(statusOrder);
 						orderItem.setPaymentmethod(paymentMethodObj);
-						System.out.println(orderDTO.getAddress());
 						orderDAO.save(orderItem);
 
-						List<Cart> cartItems = cartDAO.findByUser(user); // Retrieve cart items for the user
+						List<Cart> cartItems = cartDAO.findByUser(user); 
 						List<OrderDetail> orderDetailList = new ArrayList<>();
-
+						float total = 0;
 						for (Cart cartItem : cartItems) {
 							OrderDetail orderDetailItem = new OrderDetail();
 							orderDetailItem.setOrder(orderItem);
 							orderDetailItem.setProduct(cartItem.getProduct());
 							orderDetailItem.setQuantityordered(cartItem.getQuantity());
 							orderDetailItem.setTotalPrice(cartItem.getQuantity() * cartItem.getProduct().getPrice());
-							// orderDetailItem.setPaymentMethod(paymentMethodObj);
 							orderDetailList.add(orderDetailItem);
-
+							total += cartItem.getQuantity() * cartItem.getProduct().getPrice();
 						}
 						orderDetailDAO.saveAll(orderDetailList);
 						model.addAttribute("orderConfirmation", orderItem);
+						model.addAttribute("total", total);
+						model.addAttribute("cartConfirmation", cartItems);
 					}
 				} else {
 					System.out.println("Xin chào! Bạn chưa đăng nhập.");
