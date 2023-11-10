@@ -150,15 +150,13 @@ public class CheckoutController {
 					orderDetailItem.setQuantityordered(cartItem.getQuantity());
 					orderDetailItem.setTotalPrice(cartItem.getQuantity() * cartItem.getProduct().getPrice());
 					// orderDetailItem.setPaymentMethod(paymentMethodObj);
-					orderDetailList.add(orderDetailItem);
-					
-					
+					orderDetailList.add(orderDetailItem);					
 				}
 
 				orderDetailDAO.saveAll(orderDetailList);
 				model.addAttribute("orderConfirmation", orderItem);
 				model.addAttribute("cartConfirmation", cartItems);
-//				model.addAttribute("orderdetailConfirmation", total);
+				model.addAttribute("orderdetailConfirmation", orderDetailList);
 							
 			}
 

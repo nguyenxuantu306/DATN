@@ -10,6 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,11 +26,16 @@ import lombok.NoArgsConstructor;
 public class Comment implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@NotNull(message = "Commentid không được để trống")
+	@Positive(message = "Commentid không được là số âm")
 	private Integer commentid;
 	
-	
+	@NotBlank(message = "Commenttext không được phép trống (chỉ chứa khoảng trắng)")
 	private String commenttext;
 	
+	
+	@NotNull(message = "Comment date không được phép trống")
+//	@Past(message = "Comment date phải là ngày ở trong khóa khứ")
 	private Date commentdate = new Date();
 	
 	

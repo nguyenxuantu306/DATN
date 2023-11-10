@@ -11,6 +11,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,10 +26,14 @@ import lombok.NoArgsConstructor;
 public class TourOverview implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@NotNull(message = "Touroverviewid không được để trống")
+	@Positive(message = "Touroverviewid không được là số âm")
 	private Integer touroverviewid;
 	
+	@NotBlank(message = "Title không được phép trống")
 	private String Title;
 	
+	@NotBlank(message = "Content không được phép trống")
 	private String Content;
 	
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)

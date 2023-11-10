@@ -10,6 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,8 +27,11 @@ import lombok.Setter;
 public class TourImage implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@NotNull(message = "Tourimageid không được để trống")
+	@Positive(message = "Tourimageid không được là số âm")
 	Integer tourimageid;
 
+	@NotBlank(message = "Imageurl không được phép trống")
 	String Imageurl;
 	
 	@ManyToOne(cascade = CascadeType.ALL)

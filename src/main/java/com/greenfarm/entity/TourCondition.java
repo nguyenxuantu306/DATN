@@ -10,6 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,8 +25,11 @@ import lombok.NoArgsConstructor;
 public class TourCondition implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@NotNull(message = "Tourconditionid không được để trống")
+	@Positive(message = "Tourconditionid không được là số âm")
 	private Integer tourconditionid;
 	
+	@NotBlank(message = "Conditions không được phép trống")
 	private String conditions;
 	
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
