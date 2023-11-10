@@ -26,6 +26,8 @@ public interface CommentService {
 	
 	
 	void deleteCommentById(Integer commentid);
+
+	List<Comment> getCommentsOrderByDateDesc();
 	
 	
 

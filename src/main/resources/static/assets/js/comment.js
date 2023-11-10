@@ -17,21 +17,29 @@ commentapp.config(['$routeProvider', '$locationProvider', function($routeProvide
 
 commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	$scope.items = [];
+	$scope.users = {};
 	$scope.form = {};
 	$scope.field = [];
 	$scope.error = ['err'];
 	$scope.tour = itemData;
-	 var tourid = $routeParams.tourid;
+	$scope.loggedInUser = uslog;
+	 
 	 // $scope.tour = null;
 
 	/* $scope.tourId;*/
-	
+	// Lấy thông tin người dùng đăng nhập
+    //var loggedInUser = 'email@example.com'; // Thay thế bằng email của người dùng đăng nhập
+    
+    // Kiểm tra nếu người dùng đang xem là người dùng đăng nhập
+    $scope.isUserLoggedIn = function (email) {
+        return email === $scope.loggedInUser;
+    };
 	 
 	$scope.initialize = function() {
 	
 	
 		console.log("tourId: " + $scope.tour.tourid); 
-		
+		console.log("tourId: " + $scope.loggedInUser); 
 		
 		// Load comment
 		$http.get("/rest/comment/tour/"+ + $scope.tour.tourid).then(resp => {
@@ -75,12 +83,18 @@ $http.get('/rest/tours/' + tourid)
 			image:'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',			
 		};			
 	}
-
+$http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
+			$scope.users = resp.data;
+			
+		});
 
 // Thêm comment  mới
 	$scope.create = function() {
+		
+		/*console.log("cmt user " +$scope.loggedInUser); 
+		console.log("cmt user check" +$scope.users.userid); */
 		$scope.form.tour = $scope.tour;
-		$scope.form.user = $scope.tour.user;
+		$scope.form.user = $scope.users ;
 		$scope.form.commenttext = $scope.form.commenttext;
 		console.log("cmt " +$scope.form.commenttext); 
 		$scope.form.commentdate = new Date();
@@ -89,7 +103,7 @@ $http.get('/rest/tours/' + tourid)
 		 item = angular.copy($scope.form);
 			
 			console.log("cmt tour id " +$scope.tour.tourid); 
-			item.user = $scope.tour.user;
+			item.user = $scope.users ;
 		$http.post(`/rest/comment`, $scope.form).then(resp => {
 			
 			resp.data.commentdate = new Date(resp.data.commentdate);
