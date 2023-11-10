@@ -286,11 +286,11 @@ function showButton(option) {
 		checkoutButton.style.display = 'none';
 		paypalButton.style.display = 'block';
 		vnpayButton.style.display = 'none';
-	}
-	else{
+	} else {
 		checkoutButton.style.display = 'none';
 		vnpayButton.style.display = 'block';
 		paypalButton.style.display = 'none';
 	}
 }
+
 

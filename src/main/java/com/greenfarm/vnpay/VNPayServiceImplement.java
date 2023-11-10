@@ -1,10 +1,10 @@
-package com.greenfarm.vnpay2;
-
-import com.greenfarm.vnpay2.VNPayConfig;
+package com.greenfarm.vnpay;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
+
+import com.greenfarm.vnpay.VNPayConfig;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

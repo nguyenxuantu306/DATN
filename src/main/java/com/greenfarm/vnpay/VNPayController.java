@@ -1,4 +1,4 @@
-package com.greenfarm.vnpay2;
+package com.greenfarm.vnpay;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +56,7 @@ public class VNPayController {
 	@Autowired
 	private VNPayService vnPayService;
 
-	@GetMapping("/index2")
-	public String home1() {
-		return "checkout";
-	}
+	
 
 	@PostMapping("/submitOrder")
 	public String submidOrder(@RequestParam("totalPrice") int totalPrice,

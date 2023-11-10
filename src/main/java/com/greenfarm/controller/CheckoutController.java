@@ -33,7 +33,7 @@ import com.greenfarm.entity.Voucher;
 import com.greenfarm.entity.VoucherUser;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.VoucherUserService;
-import com.greenfarm.vnpay2.VNPayService;
+import com.greenfarm.vnpay.VNPayService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -96,27 +96,27 @@ public class CheckoutController {
 		}
 	}
 
-	@GetMapping("/checkoutPayment")
-	public String CheckoutPayment(ModelMap modelMap) {
-		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		// Kiểm tra nếu người dùng đã xác thực
-		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			User user = userService.findByEmail(userDetails.getUsername());
-			modelMap.addAttribute("user", user);
-			if (user != null) {
-				List<Cart> cartItems = cartDAO.findByUser(user);
-				modelMap.addAttribute("cartList", cartItems);
-				modelMap.addAttribute("totalPrice", totalPrice(cartItems));
-			}
-
-			return "checkoutPayment";
-		} else {
-			System.out.println("Xin chào! Bạn chưa đăng nhập.");
-			return "login";
-		}
-	}
+//	@GetMapping("/checkoutPayment")
+//	public String CheckoutPayment(ModelMap modelMap) {
+//		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		// Kiểm tra nếu người dùng đã xác thực
+//		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
+//			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//			User user = userService.findByEmail(userDetails.getUsername());
+//			modelMap.addAttribute("user", user);
+//			if (user != null) {
+//				List<Cart> cartItems = cartDAO.findByUser(user);
+//				modelMap.addAttribute("cartList", cartItems);
+//				modelMap.addAttribute("totalPrice", totalPrice(cartItems));
+//			}
+//
+//			return "checkoutPayment";
+//		} else {
+//			System.out.println("Xin chào! Bạn chưa đăng nhập.");
+//			return "login";
+//		}
+//	}
 
 	@PostMapping("/checkout/payment")
 	public String Payment(ModelMap modelMap, @ModelAttribute("Order") OrderDTO orderDTO,
@@ -151,11 +151,15 @@ public class CheckoutController {
 					orderDetailItem.setTotalPrice(cartItem.getQuantity() * cartItem.getProduct().getPrice());
 					// orderDetailItem.setPaymentMethod(paymentMethodObj);
 					orderDetailList.add(orderDetailItem);
-
+					
+					
 				}
 
 				orderDetailDAO.saveAll(orderDetailList);
 				model.addAttribute("orderConfirmation", orderItem);
+				model.addAttribute("cartConfirmation", cartItems);
+//				model.addAttribute("orderdetailConfirmation", total);
+							
 			}
 
 			return "/success";
@@ -173,42 +177,4 @@ public class CheckoutController {
 		return total;
 	}
 	
-//	@Autowired
-//    private VNPayService vnPayService;
-//	
-//	
-//	@PostMapping("/submitOrder")
-//    public String submidOrder(@RequestParam("totalPrice") int totalPrice,
-//                            
-//                              HttpServletRequest request){
-//        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-//        String vnpayUrl = vnPayService.createOrder(totalPrice, baseUrl);
-//
-//        return "redirect:" + vnpayUrl;
-//    }
-	
-
-//	@GetMapping("/vnPayPayment")
-//    public String GetMapping(HttpServletRequest request,Model model) {
-//        int paymentStatus = vnPayService.orderReturn(request);
-//
-//        String orderInfo = request.getParameter("vnp_OrderInfo");
-//        String paymentTime = request.getParameter("vnp_PayDate");
-//        String transactionId = request.getParameter("vnp_TransactionNo");
-//        String totalPrice = request.getParameter("vnp_Amount");
-//
-////        Map<String, Object> res = new HashMap<>();
-////        res.put("orderId", orderInfo);
-////        res.put("totalPrice", totalPrice);
-////        res.put("paymentTime", paymentTime);
-////        res.put("transactionId", transactionId);
-//        model.addAttribute("orderId", orderInfo);
-//        model.addAttribute("totalPrice", totalPrice);
-//        model.addAttribute("paymentTime", paymentTime);
-//        model.addAttribute("transactionId", transactionId);
-//        
-////        return new ResponseEntity<>(res, HttpStatus.OK);
-//        return "ordersuccess" ;
-//    }
-
 }

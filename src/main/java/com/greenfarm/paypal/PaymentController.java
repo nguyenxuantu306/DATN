@@ -128,7 +128,6 @@ public class PaymentController {
 							orderDetailList.add(orderDetailItem);
 
 						}
-						System.out.println("hehehe");
 						orderDetailDAO.saveAll(orderDetailList);
 						model.addAttribute("orderConfirmation", orderItem);
 					}

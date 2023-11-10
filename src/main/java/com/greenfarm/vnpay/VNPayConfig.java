@@ -1,4 +1,4 @@
-package com.greenfarm.vnpay2;
+package com.greenfarm.vnpay;
 
 import java.io.UnsupportedEncodingException;
 
