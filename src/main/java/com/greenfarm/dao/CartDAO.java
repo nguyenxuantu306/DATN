@@ -15,4 +15,5 @@ public interface CartDAO extends JpaRepository<Cart, Integer> {
 	HashMap<Integer, Cart> getCartItemsByUser(User user);
 
 	List<Cart> findByUser(User user);
+
 }

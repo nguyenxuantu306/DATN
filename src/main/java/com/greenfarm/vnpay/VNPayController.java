@@ -96,24 +96,27 @@ public class VNPayController {
 				orderItem.setPaymentmethod(paymentMethodObj);
 				orderDAO.save(orderItem);
 
-				List<Cart> cartItems = cartDAO.findByUser(user); // Retrieve cart items for the user
+				List<Cart> cartItems = cartDAO.findByUser(user); 
 				List<OrderDetail> orderDetailList = new ArrayList<>();
-
+				
+				float total = 0;
 				for (Cart cartItem : cartItems) {
 					OrderDetail orderDetailItem = new OrderDetail();
 					orderDetailItem.setOrder(orderItem);
 					orderDetailItem.setProduct(cartItem.getProduct());
 					orderDetailItem.setQuantityordered(cartItem.getQuantity());
 					orderDetailItem.setTotalPrice(cartItem.getQuantity() * cartItem.getProduct().getPrice());
-					// orderDetailItem.setPaymentMethod(paymentMethodObj);
 					orderDetailList.add(orderDetailItem);
+					total += cartItem.getQuantity() * cartItem.getProduct().getPrice();
 
 				}
 				orderDetailDAO.saveAll(orderDetailList);
 				model.addAttribute("orderConfirmation", orderItem);
+				model.addAttribute("total", total);
+				model.addAttribute("cartConfirmation", cartItems);
 			}
 
-			return "/success";
+			return "success";
 		} else {
 			System.out.println("Xin chào! Bạn chưa đăng nhập.");
 			return "login";
