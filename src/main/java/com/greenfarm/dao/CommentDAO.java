@@ -10,4 +10,6 @@ import com.greenfarm.entity.Tour;
 public interface CommentDAO extends JpaRepository<Comment, Integer> {
 
 	List<Comment> findByTour(Tour tour);
+
+	List<Comment> findAllByOrderByCommentdateDesc();
 }
