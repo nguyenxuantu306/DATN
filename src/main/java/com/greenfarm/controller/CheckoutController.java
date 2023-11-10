@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,11 +38,10 @@ import com.greenfarm.vnpay2.VNPayService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-
+@CrossOrigin(origins = "http://localhost:8080")
 public class CheckoutController {
 
-	@Autowired
-    private VNPayService vnPayService;
+
 	
 	@Autowired
 	private UserService userService;
@@ -120,7 +120,7 @@ public class CheckoutController {
 
 	@PostMapping("/checkout/payment")
 	public String Payment(ModelMap modelMap, @ModelAttribute("Order") OrderDTO orderDTO,
-			@RequestParam("paymentMethod") Integer paymentMethod) {
+			@RequestParam("paymentMethod") Integer paymentMethod, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -155,10 +155,10 @@ public class CheckoutController {
 				}
 
 				orderDetailDAO.saveAll(orderDetailList);
-
+				model.addAttribute("orderConfirmation", orderItem);
 			}
 
-			return "redirect:/success";
+			return "/success";
 		} else {
 			System.out.println("Xin chào! Bạn chưa đăng nhập.");
 			return "login";
@@ -173,37 +173,42 @@ public class CheckoutController {
 		return total;
 	}
 	
-	@PostMapping("/submitOrder")
-    public String submidOrder(@RequestParam("totalPrice") int totalPrice,
-                            
-                              HttpServletRequest request){
-        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-        String vnpayUrl = vnPayService.createOrder(totalPrice, baseUrl);
-
-        return "redirect:" + vnpayUrl;
-    }
+//	@Autowired
+//    private VNPayService vnPayService;
+//	
+//	
+//	@PostMapping("/submitOrder")
+//    public String submidOrder(@RequestParam("totalPrice") int totalPrice,
+//                            
+//                              HttpServletRequest request){
+//        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+//        String vnpayUrl = vnPayService.createOrder(totalPrice, baseUrl);
+//
+//        return "redirect:" + vnpayUrl;
+//    }
 	
-	@GetMapping("/vnPayPayment")
-    public String GetMapping(HttpServletRequest request,Model model) {
-        int paymentStatus = vnPayService.orderReturn(request);
 
-        String orderInfo = request.getParameter("vnp_OrderInfo");
-        String paymentTime = request.getParameter("vnp_PayDate");
-        String transactionId = request.getParameter("vnp_TransactionNo");
-        String totalPrice = request.getParameter("vnp_Amount");
-
-//        Map<String, Object> res = new HashMap<>();
-//        res.put("orderId", orderInfo);
-//        res.put("totalPrice", totalPrice);
-//        res.put("paymentTime", paymentTime);
-//        res.put("transactionId", transactionId);
-        model.addAttribute("orderId", orderInfo);
-        model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("paymentTime", paymentTime);
-        model.addAttribute("transactionId", transactionId);
-        
-//        return new ResponseEntity<>(res, HttpStatus.OK);
-        return "ordersuccess" ;
-    }
+//	@GetMapping("/vnPayPayment")
+//    public String GetMapping(HttpServletRequest request,Model model) {
+//        int paymentStatus = vnPayService.orderReturn(request);
+//
+//        String orderInfo = request.getParameter("vnp_OrderInfo");
+//        String paymentTime = request.getParameter("vnp_PayDate");
+//        String transactionId = request.getParameter("vnp_TransactionNo");
+//        String totalPrice = request.getParameter("vnp_Amount");
+//
+////        Map<String, Object> res = new HashMap<>();
+////        res.put("orderId", orderInfo);
+////        res.put("totalPrice", totalPrice);
+////        res.put("paymentTime", paymentTime);
+////        res.put("transactionId", transactionId);
+//        model.addAttribute("orderId", orderInfo);
+//        model.addAttribute("totalPrice", totalPrice);
+//        model.addAttribute("paymentTime", paymentTime);
+//        model.addAttribute("transactionId", transactionId);
+//        
+////        return new ResponseEntity<>(res, HttpStatus.OK);
+//        return "ordersuccess" ;
+//    }
 
 }

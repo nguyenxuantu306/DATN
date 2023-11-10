@@ -4,6 +4,7 @@ import com.greenfarm.vnpay2.VNPayConfig;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
+@CrossOrigin
 public class VNPayServiceImplement implements VNPayService {
 
     @Override
