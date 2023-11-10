@@ -20,7 +20,7 @@ public interface ReCommentService {
 	// get all ratings
 	List<ReComment> getReComments();
 	
-	List<ReComment> ReCommentbyComments(Comment comment);
+//	List<ReComment> ReCommentbyComments(Comment comment);
 	
 	ReComment findById(Integer ReCommentid);
 	

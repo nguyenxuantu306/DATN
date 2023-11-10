@@ -10,6 +10,6 @@ import com.greenfarm.entity.Tour;
 
 public interface ReCommentDAO extends JpaRepository<ReComment, Integer> {
 	
-	List<ReComment> findByComments(Comment comment);
+	/* List<ReComment> findByComments(Comment comment); */
 	
 }

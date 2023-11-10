@@ -53,15 +53,15 @@ public class ReCommentRestController {
 		
 	}
 	
-	@GetMapping("/comment/{comment}")
-	public ResponseEntity<List<ReCommentDTO>> getlisstrecommentbycomment(@RequestBody Comment comment){
-		List<ReComment> list = recommentService.ReCommentbyComments(comment);
-		List<ReCommentDTO> reCommentDTOs = list.stream().map(recomment -> modelMapper.map(recomment, ReCommentDTO.class)).collect(Collectors.toList());
-		
-		
-		return null;
-		
-	};
+//	@GetMapping("/comment/{comment}")
+//	public ResponseEntity<List<ReCommentDTO>> getlisstrecommentbycomment(@RequestBody Comment comment){
+//		List<ReComment> list = recommentService.ReCommentbyComments(comment);
+//		List<ReCommentDTO> reCommentDTOs = list.stream().map(recomment -> modelMapper.map(recomment, ReCommentDTO.class)).collect(Collectors.toList());
+//		
+//		
+//		return null;
+//		
+//	};
 //	
 //	@GetMapping("/tour/{tourid}")
 //	public ResponseEntity<List<ReCommentDTO>> getListcommentbytour(@PathVariable("tourid") Integer tourid){
