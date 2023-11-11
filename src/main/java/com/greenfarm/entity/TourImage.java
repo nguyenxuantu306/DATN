@@ -30,7 +30,6 @@ public class TourImage implements Serializable {
 	@Positive(message = "Tourimageid không được là số âm")
 	Integer tourimageid;
 
-	@NotBlank(message = "Imageurl không được phép trống")
 	String Imageurl;
 	
 	@ManyToOne(cascade = CascadeType.ALL)

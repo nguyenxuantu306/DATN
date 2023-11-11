@@ -77,6 +77,10 @@ public class VNPayController {
 			@ModelAttribute("Order") OrderDTO orderDTO) {
 		int paymentStatus = vnPayService.orderReturn(request);
 
+		if(paymentStatus != 1 ) {
+			return "orderfail";
+		}
+		
 		String orderInfo = request.getParameter("vnp_OrderInfo");
 		String paymentTime = request.getParameter("vnp_PayDate");
 		String transactionId = request.getParameter("vnp_TransactionNo");
