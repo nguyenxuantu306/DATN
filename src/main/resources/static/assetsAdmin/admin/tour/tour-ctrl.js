@@ -212,6 +212,40 @@ app.controller("tour-ctrl", function($scope, $http) {
 			// update the input value
 			input.value = value;
 		}*/
+		
+		
+		// Trong AngularJS controller hoặc service
+	$scope.exportExcel = function() {
+		$http.get('/excel-tour', { responseType: 'arraybuffer' })
+			.then(function(response) {
+				var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+				var link = document.createElement('a');
+				link.href = window.URL.createObjectURL(blob);
+				link.download = 'tour.xlsx';
+				link.click();
+			})
+			.catch(function(error) {
+				console.error('Error exporting Excel:', error);
+			});
+	};
+
+	// PDF
+
+	$scope.exportPdf = function() {
+		$http.get('/pdf-tour', { responseType: 'arraybuffer' })
+			.then(function(response) {
+				var blob = new Blob([response.data], { type: 'application/pdf' });
+				var objectUrl = URL.createObjectURL(blob);
+				var a = document.createElement('a');
+				a.href = objectUrl;
+				a.download = 'exportTour.pdf';
+				a.click();
+				URL.revokeObjectURL(objectUrl);
+			})
+			.catch(function(error) {
+				console.error('Error exporting PDF:', error);
+			});
+	};
 });
 
 

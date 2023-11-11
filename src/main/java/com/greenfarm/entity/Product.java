@@ -14,6 +14,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,14 +34,22 @@ public class Product implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer productid;
 
+	@NotBlank(message = "Bạn chưa nhập tên rau")
+	@Size(max = 255, message = "Tên rau phải ít hơn 255 ký tự")
 	private String productname;
 
+	@NotBlank(message = "Mô tả rau không được để trống")
+	@Size(max = 1000, message = "Mô tả phải ít hơn 1000 ký tự")
 	private String Description;
 
+	@NotNull(message = "Bạn chưa nhập giá rau")
+	@Positive(message = "Giá phải lớn hơn 0")
 	private Float price;
 
 	private String image;
 
+	@NotNull(message = "Số lượng rau là bắt buộc")
+	@Positive(message = "Số lượng phải lớn hơn 0 ")
 	private Integer quantityavailable;
 
 	@ManyToOne
@@ -47,8 +59,8 @@ public class Product implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	List<OrderDetail> orderDetails;
-	
+
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
 	List<Review> Review;
 }

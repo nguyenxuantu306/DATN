@@ -19,14 +19,18 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.User;
+import com.greenfarm.service.BookingService;
 import com.greenfarm.service.OrderService;
 import com.greenfarm.service.ProductService;
+import com.greenfarm.service.TourService;
 import com.greenfarm.service.UserService;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -46,6 +50,12 @@ public class PdfController {
 
 	@Autowired
 	OrderService orderService;
+
+	@Autowired
+	BookingService bookingService;
+
+	@Autowired
+	TourService tourService;
 
 	@GetMapping("/export-to-pdf")
 	public ResponseEntity<byte[]> exportToPDF() throws IOException, DocumentException {
@@ -420,7 +430,234 @@ public class PdfController {
 		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
 
+	@GetMapping("/pdf-booking")
+	public ResponseEntity<byte[]> ExcelBooking() throws IOException, DocumentException {
+		List<Booking> dataList = getAllBookings(); // Hàm này tạo dữ liệu mẫu
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		Document document = new Document();
+		PdfWriter.getInstance(document, outputStream);
+
+		// Khởi tạo font Unicode từ tệp font
+		BaseFont unicodeFont = BaseFont.createFont("./static/Unicode/arial.ttf", BaseFont.IDENTITY_H,
+				BaseFont.EMBEDDED);
+		// String fontPath = "classpath:static/Unicode/arial.ttf"; // Đường dẫn tương
+
+		document.open();// Thêm tiêu đề vào tài liệu
+		String title = "Danh sách Booking tours";
+		document.addTitle(title);
+
+		document.open();
+
+		// Thêm tiêu đề chính
+		// Tạo font chữ với font Unicode
+		Font unicodeFonts = new Font(unicodeFont, 12, Font.NORMAL, BaseColor.BLACK);
+		Paragraph titleParagraph = new Paragraph(title, unicodeFonts);
+
+		titleParagraph.setAlignment(Element.ALIGN_CENTER);
+		titleParagraph.setSpacingAfter(20); // Khoảng cách dưới tiêu đề chính
+		document.add(titleParagraph);
+
+		// Tạo bảng PDF
+		PdfPTable table = new PdfPTable(7); // Số cột trong bảng
+
+		// Thiết lập tiêu đề cho từng cột
+		table.addCell(createCell("STT", true, unicodeFonts));
+		table.addCell(createCell("Tên tour", true, unicodeFonts));
+		table.addCell(createCell("Người đặt", true, unicodeFonts));
+		table.addCell(createCell("Thời gian tạo", true, unicodeFonts));
+		table.addCell(createCell("Số lượng người", true, unicodeFonts));
+		table.addCell(createCell("Tổng", true, unicodeFonts));
+		table.addCell(createCell("Trạng thái", true, unicodeFonts));
+
+		// Định dạng giá tiền
+		DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+		symbols.setGroupingSeparator(',');
+		symbols.setDecimalSeparator('.');
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00 VNĐ", symbols);
+
+		// Thiết lập dữ liệu cho từng hàng
+		for (int i = 0; i < dataList.size(); i++) {
+			Booking data = dataList.get(i);
+
+			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
+			table.addCell(createCell(data.getTour().getTourname(), false, unicodeFonts));
+			table.addCell(createCell(data.getUser().getFirstname(), false, unicodeFonts));
+			table.addCell(createCell(data.getBookingdateFormatted(), false, unicodeFonts));
+			table.addCell(
+					createCell(data.getAdultticketnumber() + data.getBookingdateFormatted(), false, unicodeFonts));
+			table.addCell(createCell(decimalFormat.format(data.getTotalprice()), false, unicodeFonts));
+			table.addCell(createCell(data.getStatusbooking().getName(), false, unicodeFonts));
+
+		}
+
+		document.add(table);
+		document.close();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		headers.setContentDispositionFormData("attachment", "exportPDF.pdf");
+
+		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
+	}
+
+	@GetMapping("/pdf-inventorystatistics")
+	public ResponseEntity<byte[]> PDFInventorystatistics() throws IOException, DocumentException {
+		List<Report> dataList = Inventorystatistics(); // Hàm này tạo dữ liệu mẫu
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		Document document = new Document();
+		PdfWriter.getInstance(document, outputStream);
+
+		// Khởi tạo font Unicode từ tệp font
+		BaseFont unicodeFont = BaseFont.createFont("./static/Unicode/arial.ttf", BaseFont.IDENTITY_H,
+				BaseFont.EMBEDDED);
+		// String fontPath = "classpath:static/Unicode/arial.ttf"; // Đường dẫn tương
+		// đối đến tệp font trong thư mục resources
+		// BaseFont font = BaseFont.createFont(fontPath, BaseFont.IDENTITY_H,
+		// BaseFont.EMBEDDED);
+
+		document.open();// Thêm tiêu đề vào tài liệu
+		String title = "Thống kê hàng tồn kho";
+		document.addTitle(title);
+
+		document.open();
+
+		// Thêm tiêu đề chính
+		// Tạo font chữ với font Unicode
+		Font unicodeFonts = new Font(unicodeFont, 12, Font.NORMAL, BaseColor.BLACK);
+		Paragraph titleParagraph = new Paragraph(title, unicodeFonts);
+
+		titleParagraph.setAlignment(Element.ALIGN_CENTER);
+		titleParagraph.setSpacingAfter(20); // Khoảng cách dưới tiêu đề chính
+		document.add(titleParagraph);
+
+		// Tạo bảng PDF
+		PdfPTable table = new PdfPTable(4); // Số cột trong bảng
+
+		// Thiết lập tiêu đề cho từng cột
+		table.addCell(createCell("STT", true, unicodeFonts));
+		table.addCell(createCell("Tên sản phẩm", true, unicodeFonts));
+		table.addCell(createCell("SL còn trong kho", true, unicodeFonts));
+		table.addCell(createCell("Số lượng đã bán", true, unicodeFonts));
+
+		// Thiết lập dữ liệu cho từng hàng
+		for (int i = 0; i < dataList.size(); i++) {
+			Report data = dataList.get(i);
+			Product product = (Product) data.getGroup();
+
+			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
+			table.addCell(createCell(product.getProductname(), false, unicodeFonts));
+			table.addCell(createCell(String.valueOf(product.getQuantityavailable()), false, unicodeFonts));
+			table.addCell(createCell(String.valueOf(data.getCount()), false, unicodeFonts));
+		}
+
+		document.add(table);
+		document.close();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		headers.setContentDispositionFormData("attachment", "exportPDF.pdf");
+
+		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
+	}
+
+	@GetMapping("/pdf-tour")
+	public ResponseEntity<byte[]> PDFTour() throws IOException, DocumentException {
+		List<Tour> dataList = getAllTour(); // Hàm này tạo dữ liệu mẫu
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		Document document = new Document();
+		PdfWriter.getInstance(document, outputStream);
+
+		// Khởi tạo font Unicode từ tệp font
+		BaseFont unicodeFont = BaseFont.createFont("./static/Unicode/arial.ttf", BaseFont.IDENTITY_H,
+				BaseFont.EMBEDDED);
+
+		document.open();// Thêm tiêu đề vào tài liệu
+		String title = "Danh sách Tour";
+
+		document.addTitle(title);
+
+		document.open();
+
+		// Thêm tiêu đề chính
+		// Tạo font chữ với font Unicode
+		Font unicodeFonts = new Font(unicodeFont, 12, Font.NORMAL, BaseColor.BLACK);
+		Paragraph titleParagraph = new Paragraph(title, unicodeFonts);
+
+		titleParagraph.setAlignment(Element.ALIGN_CENTER);
+		titleParagraph.setSpacingAfter(20); // Khoảng cách dưới tiêu đề chính
+		document.add(titleParagraph);
+
+		// Tạo bảng PDF
+		PdfPTable table = new PdfPTable(7); // Số cột trong bảng
+
+		// Thiết lập tiêu đề cho từng cột
+		table.addCell(createCell("STT", true, unicodeFonts));
+		table.addCell(createCell("Tên Tour", true, unicodeFonts));
+		table.addCell(createCell("Ngày", true, unicodeFonts));
+		table.addCell(createCell("Giá", true, unicodeFonts));
+		table.addCell(createCell("Số lượng người", true, unicodeFonts));
+		table.addCell(createCell("Điều kiện", true, unicodeFonts));
+		table.addCell(createCell("Tổng quan", true, unicodeFonts));
+
+		// Định dạng giá tiền
+		DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+		symbols.setGroupingSeparator(',');
+		symbols.setDecimalSeparator('.');
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00 VNĐ", symbols);
+
+		// Thiết lập dữ liệu cho từng hàng
+		for (int i = 0; i < dataList.size(); i++) {
+			Tour data = dataList.get(i);
+
+			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
+			table.addCell(createCell(data.getTourname(), false, unicodeFonts));
+			table.addCell(createCell(data.getDepartureday(), false, unicodeFonts));
+			table.addCell(createCell(decimalFormat.format(data.getPricings().getAdultprice()), false, unicodeFonts));
+			table.addCell(createCell(String.valueOf(data.getAvailableslots()), false, unicodeFonts));
+
+			// Kiểm tra và hiển thị "đã có" nếu điều kiện được đáp ứng
+			String tourConditions = data.getTourCondition().getConditions();
+			String tourOverviewContent = data.getTourOverview().getContent();
+
+			if (tourConditions != null && !tourConditions.isEmpty()) {
+				table.addCell(createCell("Đã có", false, unicodeFonts));
+			} else {
+				table.addCell(createCell("", false, unicodeFonts));
+			}
+
+			if (tourOverviewContent != null && !tourOverviewContent.isEmpty()) {
+				table.addCell(createCell("Đã có", false, unicodeFonts));
+			} else {
+				table.addCell(createCell("", false, unicodeFonts));
+			}
+		}
+
+		document.add(table);
+		document.close();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		headers.setContentDispositionFormData("attachment", "exportPDF.pdf");
+
+		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
+	}
+
 	public final List<Order> getAllOrder() {
 		return orderService.findAll();
+	}
+
+	public final List<Booking> getAllBookings() {
+		return bookingService.findAll();
+	}
+
+	public final List<Report> Inventorystatistics() {
+		return productService.getTk_sp();
+	}
+
+	public final List<Tour> getAllTour() {
+		return tourService.findAll();
 	}
 }

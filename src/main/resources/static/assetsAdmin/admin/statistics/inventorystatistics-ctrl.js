@@ -50,14 +50,14 @@ app.controller("inventorystatistics-ctrl", function($scope, $http) {
 		},
 	}
 	$scope.initialize();
-	/*// Trong AngularJS controller hoặc service
+	// Trong AngularJS controller hoặc service
 	$scope.exportExcel = function() {
-		$http.get('/excel-productstatistics', { responseType: 'arraybuffer' })
+		$http.get('/excel-inventorystatistics', { responseType: 'arraybuffer' })
 			.then(function(response) {
 				var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 				var link = document.createElement('a');
 				link.href = window.URL.createObjectURL(blob);
-				link.download = 'productstatistics.xlsx';
+				link.download = 'inventorystatistics.xlsx';
 				link.click();
 			})
 			.catch(function(error) {
@@ -68,20 +68,20 @@ app.controller("inventorystatistics-ctrl", function($scope, $http) {
 	// PDF
 
 	$scope.exportPdf = function() {
-		$http.get('/pdf-productstatistics', { responseType: 'arraybuffer' })
+		$http.get('/pdf-inventorystatistics', { responseType: 'arraybuffer' })
 			.then(function(response) {
 				var blob = new Blob([response.data], { type: 'application/pdf' });
 				var objectUrl = URL.createObjectURL(blob);
 				var a = document.createElement('a');
 				a.href = objectUrl;
-				a.download = 'exportProductstatistics.pdf';
+				a.download = 'exportInventorystatistics.pdf';
 				a.click();
 				URL.revokeObjectURL(objectUrl);
 			})
 			.catch(function(error) {
 				console.error('Error exporting PDF:', error);
 			});
-	};*/
+	};
 
 	// Hàm định dạng giá tiền
 	$scope.formatPrice = function(price) {
