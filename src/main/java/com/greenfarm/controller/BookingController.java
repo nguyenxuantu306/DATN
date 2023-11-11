@@ -25,6 +25,7 @@ import com.greenfarm.dto.TourDTO;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
+import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.StatusBooking;
 import com.greenfarm.entity.Tour;
@@ -86,17 +87,24 @@ public class BookingController {
 		return "booking/bookingtour";
 	}
 
-	// Tự viết đi nhé
 	@PostMapping("/booking/create")
 	public String createBooking(@ModelAttribute("booking") BookingDTO bookingDto) {
 		Booking booking = modelMapper.map(bookingDto, Booking.class);
+		//Thời gian 
 		booking.setBookingdate(LocalDateTime.now());
+		
+		//Trạng thái
 		StatusBooking statusBooking = statusBookingService.findById(1);
 		booking.setStatusbooking(statusBooking);
-		System.out.println(booking.getTour());
 		
+		//Phương thức thanh toán
+		PaymentMethod paymentMethod = new PaymentMethod();
+		paymentMethod.setPaymentmethodid(1);
+		booking.setPaymentmethod(paymentMethod);
+
 		bookingService.saveBooking(booking);
 		return "redirect:/booking/success";
 	}
+	
 
 }
