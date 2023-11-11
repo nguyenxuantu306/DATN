@@ -1,32 +1,23 @@
-package com.greenfarm.entity;
+package com.greenfarm.dto;
 
-import java.io.Serializable;
+import java.util.List;
 
-import jakarta.persistence.Entity;
+import com.greenfarm.entity.Product;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Productimages")
-public class ProductImage implements Serializable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductImageDTO {
 	private Integer productimageid;
-
-	@ManyToOne
-	@JoinColumn(name = "productid")
-	private Product product;
-
 	private String imageurl;
-
+	private Product product;
 }

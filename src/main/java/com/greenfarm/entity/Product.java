@@ -52,6 +52,8 @@ public class Product implements Serializable {
 	@Positive(message = "Số lượng phải lớn hơn 0 ")
 	private Integer quantityavailable;
 
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "categoryid")
 	Category category;
@@ -61,6 +63,10 @@ public class Product implements Serializable {
 	List<OrderDetail> orderDetails;
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+	@OneToMany(mappedBy = "product")
+	List<ProductImage> productimage;
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
 	List<Review> Review;
 }
