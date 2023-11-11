@@ -25,7 +25,6 @@ import lombok.NoArgsConstructor;
 public class TourCondition implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull(message = "Tourconditionid không được để trống")
 	@Positive(message = "Tourconditionid không được là số âm")
 	private Integer tourconditionid;
 	

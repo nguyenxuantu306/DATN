@@ -11,14 +11,17 @@
 									class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
 									id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 							</div>
-							<input ng-model="searchCategory" type="search" class="form-control"
-								placeholder="Tìm kiếm tên loại..." aria-label="Tìm kiếm tên loại...">
+							<input ng-model="searchCategory" type="search"
+								class="form-control" placeholder="Tìm kiếm tên loại..."
+								aria-label="Tìm kiếm tên loại...">
 						</div>
 						<div class="col-md-6 text-right">
-                            <button type="button" class="btn btn-success" ng-click="editthemsp()" data-toggle="modal" data-target="#exampleModa2">
+							<button type="button" class="btn btn-success"
+								ng-click="editthemsp()" data-toggle="modal"
+								data-target="#exampleModa2">
 								<i class="fa fa-plus-square"></i></i> Thêm loại sản phẩm
 							</button>
-                        </div>
+						</div>
 					</div>
 					<div class="table-responsive">
 						<table
@@ -105,9 +108,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<div class="panel-footer text-right">			
-					<button  ng-click="update()"
-						class="btn btn-success">
+				<div class="panel-footer text-right">
+					<button ng-click="update()" class="btn btn-success">
 						<b class="glyphicon glyphicon-save"></b> Cập nhật loại sản phẩm
 					</button>
 				</div>
@@ -131,33 +133,60 @@
 					<div class="card info">
 						<div class="card-body">
 							<div class="basic-form">
-								<form class="row">
-									<div class="form-group col-sm-6">
-										<label>Tên loại : </label> <input name="categoryname"
-											style="height: 55px" type="text" ng-model="form.categoryname"
-											class="form-control input-default">
 
+
+								<form class="row" name="frmvalidate" ng-submit="submitForm()"
+									novalidate>
+									<div class="form-group col-sm-6">
+										<label>Tên loại:</label> <input name="categoryname"
+											ng-minlength="5" style="height: 55px" type="text"
+											ng-model="form.categoryname"
+											class="form-control input-default" required /> <label
+											ng-show="frmvalidate.$submitted && frmvalidate.categoryname.$error.required"
+											class="alert alert-danger">Vui lòng nhập họ tên !</label> <label
+											ng-show="frmvalidate.$submitted && frmvalidate.categoryname.$error.minlength"
+											class="alert alert-danger">Tên loại phải có ít nhất
+											10 ký tự!</label>
 									</div>
-									<div class="form-group col-sm-6">
-										<label>Mô tả : </label>
-										<textarea name="descriptions" type="text"
-											ng-model="form.descriptions"
-											class="form-control input-default"></textarea>
 
+									<div class="form-group col-sm-6">
+										<label>Mô tả:</label>
+										<textarea name="descriptions" ng-minlength="10" type="text"
+											ng-model="form.descriptions"
+											class="form-control input-default" required></textarea>
+										<label
+											ng-show="frmvalidate.$submitted && frmvalidate.descriptions.$error.required"
+											class="alert alert-danger">Vui lòng nhập mô tả !</label> <label
+											ng-show="frmvalidate.$submitted && frmvalidate.descriptions.$error.minlength"
+											class="alert alert-danger">Mô tả phải có ít nhất 10
+											ký tự!</label>
+									</div>
+
+									<div class="panel-footer text-right">
+										<button type="submit" name="submit"
+											ng-click="frmvalidate.$valid && create()"
+											class="btn btn-success">Thêm</button>
+										<button type="reset" class="btn btn-success">
+											<b class="glyphicon glyphicon-refresh"></b> Reset
+										</button>
 									</div>
 								</form>
+
+
+
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<div class="panel-footer text-right">
+				<!-- <div class="panel-footer text-right">
 					<button  ng-click="create()" class="btn btn-success">Thêm</button>					
 					<button  ng-click="reset()" class="btn btn-success">
 						<b class="glyphicon glyphicon-refresh"></b> Mới
 					</button>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>

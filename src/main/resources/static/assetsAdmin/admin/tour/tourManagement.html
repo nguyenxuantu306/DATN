@@ -3,38 +3,43 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<h2 class="card">Danh sách Tour</h2>
+					<h2 class="card">Danh sách các địa điểm tham quan</h2>
 					<div class="row py-3">
 						<div class="col-md-6 input-group icons">
 							<div class="input-group-prepend">
-								<span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
-										class="mdi mdi-magnify"></i></span>
+								<span
+									class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
+									id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 							</div>
-							<input ng-model="searchTourName" type="search" class="form-control"
-								placeholder="Tìm kiếm tên tour...">
+							<input ng-model="searchTourName" type="search"
+								class="form-control" placeholder="Tìm kiếm tên tour...">
 						</div>
 						<div class="col-md-6 text-right">
-							<button type="button" class="btn btn-success" ng-click="editthemsp()" data-toggle="modal"
+							<button type="button" class="btn btn-success"
+								ng-click="editthemsp()" data-toggle="modal"
 								data-target="#exampleModal2">
-								<i class="fa fa-plus-square"></i> Thêm tour mới
+								<i class="fa fa-plus-square"></i> Thêm địa điểm mới
 							</button>
-							<button type="button" class="btn btn-success" ng-click="exportExcel()">
+							<button type="button" class="btn btn-success"
+								ng-click="exportExcel()">
 								<i class="fa fa-file-excel-o"></i> Excel
 							</button>
 
-							<button type="button" class="btn btn-success" ng-click="exportPdf()">
+							<button type="button" class="btn btn-success"
+								ng-click="exportPdf()">
 
 								<i class="fa fa-file-pdf-o"></i> PDF
 							</button>
 						</div>
 					</div>
 					<div class="table-responsive">
-						<table class="table table-striped table-bordered zero-configuration">
+						<table
+							class="table table-striped table-bordered zero-configuration">
 							<thead>
 								<tr>
 									<th>STT</th>
 									<th>Hình ảnh</th>
-									<th>Tên tour</th>
+									<th>Tên địa điểm</th>
 									<!--<th>Ngày bắt đầu</th>
 									<th>Ngày kết thúc</th>-->
 									<th>Ngày</th>
@@ -47,25 +52,29 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in pager.items | filter: { tourname: searchTourName }">
+								<tr
+									ng-repeat="item in pager.items | filter: { tourname: searchTourName }">
 									<th>{{$index + 1}}</th>
 									<td><img ng-src="{{item.image}}" alt="Tour Image"
-											style="width: 80px; height: 80px;"></td>
+										style="width: 80px; height: 80px;"></td>
 									<td>{{item.tourname}}</td>
 									<!--<td>{{item.startdate | date:'dd-MM-yyyy'}}</td>
 									<td>{{item.enddate | date:'dd-MM-yyyy'}}</td>-->
 									<td>{{item.departureday}}</td>
 									<td>{{formatPrice(item.pricings.childprice)}}</td>
 									<td>{{item.availableslots}}</td>
-									<td><span class="text-success" ng-if="item.tourCondition.conditions">Đã có</span>
-										<span ng-if="!item.tourCondition.conditions">Chưa có</span>
-									</td>
-									<td><span class="text-success" ng-if="item.tourOverview.content">Đã có</span> <span
-											ng-if="!item.tourOverview.content">Chưa có</span></td>
-									<td><a type="button" ng-click="edit(item)" data-toggle="modal"
-											data-target="#exampleModal"> <i class="bi bi-pencil-square"></i>
-										</a></td>
-									<td><a ng-click="delete(item)"><i class="bi bi-trash3-fill p-2"></i></a></td>
+									<td><span class="text-success"
+										ng-if="item.tourCondition.conditions">Đã có</span> <span
+										ng-if="!item.tourCondition.conditions">Chưa có</span></td>
+									<td><span class="text-success"
+										ng-if="item.tourOverview.content">Đã có</span> <span
+										ng-if="!item.tourOverview.content">Chưa có</span></td>
+									<td><a type="button" ng-click="edit(item)"
+										data-toggle="modal" data-target="#exampleModal"> <i
+											class="bi bi-pencil-square"></i>
+									</a></td>
+									<td><a ng-click="delete(item)"><i
+											class="bi bi-trash3-fill p-2"></i></a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -92,12 +101,14 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl custom-modal">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h3 class="modal-title " id="exampleModalLabel">Chỉnh sửa Tour</h3>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
 				<div class="col-lg-12">
@@ -106,10 +117,13 @@
 							<div class="col-lg-12">
 								<div class="basic-form">
 									<form class="row">
-										<div class="form-group col-6">
+										<div class="form-group col-6"
+											ng-class="{'has-error': isInvalid('tourname')}">
 											<label>Tên tour</label> <input type="text" name="tourname"
 												ng-model="form.tourname" class="form-control input-default"
 												placeholder="Name" />
+											<p class="help-block" ng-show="isInvalid('tourname')">Tên
+												tour không được để trống</p>
 										</div>
 										<div class="col-6">
 											<div class="form-group d-flex">
@@ -136,9 +150,9 @@
 										</div>
 										<div class="form-group col-6">
 											<div>
-												<label>Ngày khởi hành</label> <input type="text" name="location"
-													ng-model="form.departureday" class="form-control input-default"
-													placeholder="Location" />
+												<label>Ngày khởi hành</label> <input type="text"
+													name="location" ng-model="form.departureday"
+													class="form-control input-default" placeholder="Location" />
 											</div>
 										</div>
 										<div class="form-group col-6">
@@ -150,7 +164,7 @@
 										</div>
 										<div class=" form-group col-md-4">
 											<label for="image"> <img ng-src="{{form.image}}"
-													style="width: 250px; height: 300px">
+												style="width: 250px; height: 300px">
 											</label>
 
 										</div>
@@ -173,7 +187,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Điều kiện</span>
 										</div>
-										<textarea class="form-control" rows="5" ng-model="form.tourCondition.conditions"
+										<textarea class="form-control" rows="5"
+											ng-model="form.tourCondition.conditions"
 											aria-label="With textarea"></textarea>
 									</div>
 								</div>
@@ -184,36 +199,41 @@
 											<span class="input-group-text" id="inputGroup-sizing-default">Tiêu
 												đề</span>
 										</div>
-										<input type="text" ng-model="form.tourOverview.title" class="form-control"
-											aria-label="Default" aria-describedby="inputGroup-sizing-default">
+										<input type="text" ng-model="form.tourOverview.title"
+											class="form-control" aria-label="Default"
+											aria-describedby="inputGroup-sizing-default">
 									</div>
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<span class="input-group-text">Nội dung</span>
 										</div>
-										<textarea class="form-control" rows="5" ng-model="form.tourOverview.content"
+										<textarea class="form-control" rows="5"
+											ng-model="form.tourOverview.content"
 											aria-label="With textarea"></textarea>
 									</div>
 								</div>
 								<!--<input type="text" name="tourid" ng-model="form.tourid" readonly>-->
 								<div class="card">
 									<h3 class="text-center">Hình ảnh Tour</h3>
-									<div class="input-group" ng-repeat="p in form.tourImage track by $index">
+									<div class="input-group"
+										ng-repeat="p in form.tourImage track by $index">
 										<!-- <img ng-src="{{p.imageurl }}" alt="Hình ảnh Tour" width="50px" height="auto" />-->
 										<div class="input-group mb-3">
 
-											<span class="input-group-text">Link hình ảnh</span>
-											<input type="text" ng-model="p.imageurl" class="form-control">
+											<span class="input-group-text">Link hình ảnh</span> <input
+												type="text" ng-model="p.imageurl" class="form-control">
 											<button class="btn btn-danger" ng-click="removeImage($index)">Loại
 												bỏ</button>
 										</div>
 									</div>
-									<button class="btn btn-primary" ng-click="addImage()">Thêm hình ảnh khác</button>
+									<button class="btn btn-primary" ng-click="addImage()">Thêm
+										hình ảnh khác</button>
 								</div>
 							</div>
 							<div class="panel-footer text-right">
 
-								<button ng-click="update()" class="btn btn-success">
+								<button type="submit" ng-click="update()"
+									class="btn btn-success">
 									<b class="glyphicon glyphicon-save"></b> Cập nhật tour
 								</button>
 
@@ -225,12 +245,15 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal2" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl custom-modal">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="modal-title " id="exampleModalLabel">Chỉnh sửa Tour</h3>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<h3 class="modal-title " id="exampleModalLabel">Thêm mới địa
+					điểm tham quan</h3>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
 				<div class="col-lg-12">
@@ -238,43 +261,98 @@
 						<div class="card-body">
 							<div class="col-lg-12">
 								<div class="basic-form">
-									<form class="row">
+									<form class="row" name="frmvalidate" ng-submit="submitForm()"
+										novalidate>
 										<div class="form-group col-6">
-											<label>Tên tour</label> <input type="text" name="tourname"
-												ng-model="form.tourname" class="form-control input-default"
-												placeholder="Name" />
+											<label>Tên địa điểm</label> <input type="text"
+												name="tourname" ng-model="form.tourname" ng-minlength="5"
+												class="form-control input-default" placeholder="Name"
+												required /> <label
+												ng-show="frmvalidate.$submitted && frmvalidate.tourname.$error.required"
+												class="alert alert-danger">Vui lòng nhập địa điểm !</label>
+											<label
+												ng-show="frmvalidate.$submitted && frmvalidate.tourname.$error.minlength"
+												class="alert alert-danger">Tên địa điểm phải có ít
+												nhất 5 ký tự!</label>
 										</div>
-										<div class="col-6">
-											<div class="form-group d-flex">
-												<div class="form-group d-flex">
 
-
-													<div class="mr-2">
-														<label>Giá người lớn</label> <input type="text"
-															ng-model="form.pricings.adultprice"
-															class="form-control input-currency" placeholder="ChildPrice"
-															ng-keyup="formatCurrency($event)" />
-													</div>
-													<div class="mr-2">
-														<label>Giá trẻ em</label> <input type="text"
-															ng-model="form.pricings.childprice"
-															class="form-control input-currency" placeholder="Adultprice"
-															ng-keyup="formatCurrency($event)" />
-													</div>
-
+										<div class="form-group col-6">											
+												<div class="form-group ">
 													<div>
 														<label>Lượng người</label> <input type="number"
 															name="availableslots" ng-model="form.availableslots"
-															class="form-control input-default" placeholder="Quantity" />
+															class="form-control input-default" placeholder="Quantity"
+															ng-min="0" ng-max="50" required /> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.availableslots.$error.required"
+															class="alert alert-danger">Lượng người không được
+															để trống!</label> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.availableslots.$error.min"
+															class="alert alert-danger">Lượng người ít nhất là
+															0!</label> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.availableslots.$error.max"
+															class="alert alert-danger">Lượng người nhiều nhất
+															là 50!</label>
+
+													</div>
+												</div>											
+										</div>
+										<div class="form-group col-6">										
+												<div class="form-group ">
+													<div>
+														<label>Giá người lớn</label> <input type="number"
+															ng-model="form.pricings.adultprice" name="adultprice"
+															class="form-control input-currency"
+															placeholder="ChildPrice"
+															ng-keyup="formatCurrency($event)" ng-min="0"
+															ng-max="3000" required />
+														<!-- Sử dụng ng-min và ng-max để xác định khoảng giá trị hợp lệ -->
+
+														<label
+															ng-show="frmvalidate.$submitted && frmvalidate.adultprice.$error.required"
+															class="alert alert-danger">Giá người lớn không
+															được để trống!</label> <label											
+															ng-show="frmvalidate.$submitted && frmvalidate.adultprice.$error.min"
+															class="alert alert-danger">Giá người lớn không
+															được nhỏ hơn 0!</label> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.adultprice.$error.max"
+															class="alert alert-danger">Giá người lớn không
+															được lớn hơn 2000!</label>
+
+													</div>
+												</div>										
+										</div>
+										<div class="form-group col-6">
+											<div class="form-group ">
+												<div class="form-group ">
+													<div>
+														<label>Giá trẻ em</label> <input type="number"
+															ng-model="form.pricings.childprice" name="childprice"
+															class="form-control input-currency"
+															placeholder="Adultprice"
+															ng-keyup="formatCurrency($event)" ng-min="0"
+															ng-max="3000" required  /> 
+													
+															<label
+															ng-show="frmvalidate.$submitted && frmvalidate.adultprice.$error.required"
+															class="alert alert-danger">Giá trẻ em không
+															được để trống!</label> <label											
+															ng-show="frmvalidate.$submitted && frmvalidate.adultprice.$error.min"
+															class="alert alert-danger">Giá trẻ em không
+															được nhỏ hơn 0!</label> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.adultprice.$error.max"
+															class="alert alert-danger">Giá trẻ em không
+															được lớn hơn 2000!</label>
+
 													</div>
 												</div>
 											</div>
 										</div>
+						
 										<div class="form-group col-6">
 											<div>
-												<label>Ngày khởi hành</label> <input type="text" name="location"
-													ng-model="form.departureday" class="form-control input-default"
-													placeholder="Location" />
+												<label>Ngày khởi hành</label> <input type="text"
+													name="location" ng-model="form.departureday"
+													class="form-control input-default" placeholder="Location" />
 											</div>
 										</div>
 										<div class="form-group col-6">
@@ -286,7 +364,7 @@
 										</div>
 										<div class=" form-group col-md-4">
 											<label for="image"> <img ng-src="{{form.image}}"
-													style="width: 250px; height: 300px">
+												style="width: 250px; height: 300px">
 											</label>
 
 										</div>
@@ -301,55 +379,69 @@
 													ng-model="form.image">
 											</div>
 										</div>
+										<div class=" form-group col-md-12">
+											<div class="card">
+												<h3 class="text-center">Điều kiện Tour</h3>
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Điều kiện</span>
+													</div>
+													<textarea class="form-control" rows="5"
+														ng-model="form.tourCondition.conditions"
+														aria-label="With textarea"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class=" form-group col-md-12">
+											<div class="card">
+												<h3 class="text-center">Tổng quan Tour</h3>
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<span class="input-group-text"
+															id="inputGroup-sizing-default">Tiêu đề</span>
+													</div>
+													<input type="text" ng-model="form.tourOverview.title"
+														class="form-control" aria-label="Default"
+														aria-describedby="inputGroup-sizing-default">
+												</div>
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Nội dung</span>
+													</div>
+													<textarea class="form-control" rows="5"
+														ng-model="form.tourOverview.content"
+														aria-label="With textarea"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class=" form-group col-md-12">
+											<div class="card">
+												<h3 class="text-center">Hình ảnh Tour</h3>
+												<div class="input-group"
+													ng-repeat="p in form.tourImage track by $index">
+													<div class="input-group mb-3">
+														<span class="input-group-text">Link hình ảnh</span> <input
+															type="text" ng-model="p.imageurl" class="form-control">
+														<button class="btn btn-danger"
+															ng-click="removeImage($index)">Loại bỏ</button>
+													</div>
+												</div>
+												<button class="btn btn-primary" ng-click="addImage()">Thêm
+													hình ảnh khác</button>
+											</div>
+										</div>
+
+										<div class="panel-footer text-right">
+											<button type="submit" name="submit"
+												ng-click="frmvalidate.$valid && create()"
+												class="btn btn-success">Thêm</button>
+											<button type="reset" class="btn btn-success">
+												<b class="glyphicon glyphicon-refresh"></b> Reset
+											</button>
+										</div>
 									</form>
 								</div>
-								<div class="card">
-									<h3 class="text-center">Điều kiện Tour</h3>
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text">Điều kiện</span>
-										</div>
-										<textarea class="form-control" rows="5" ng-model="form.tourCondition.conditions"
-											aria-label="With textarea"></textarea>
-									</div>
-								</div>
-								<div class="card">
-									<h3 class="text-center">Tổng quan Tour</h3>
-									<div class="input-group mb-3">
-										<div class="input-group-prepend">
-											<span class="input-group-text" id="inputGroup-sizing-default">Tiêu
-												đề</span>
-										</div>
-										<input type="text" ng-model="form.tourOverview.title" class="form-control"
-											aria-label="Default" aria-describedby="inputGroup-sizing-default">
-									</div>
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text">Nội dung</span>
-										</div>
-										<textarea class="form-control" rows="5" ng-model="form.tourOverview.content"
-											aria-label="With textarea"></textarea>
-									</div>
-								</div>
-								<div class="card">
-									<h3 class="text-center">Hình ảnh Tour</h3>
-									<div class="input-group" ng-repeat="p in form.tourImage track by $index">
-										<div class="input-group mb-3">
-											<span class="input-group-text">Link hình ảnh</span>
 
-											<input type="text" ng-model="p.imageurl" class="form-control">
-											<button class="btn btn-danger" ng-click="removeImage($index)">Loại
-												bỏ</button>
-										</div>
-									</div>
-									<button class="btn btn-primary" ng-click="addImage()">Thêm hình ảnh khác</button>
-								</div>
-							</div>
-							<div class="panel-footer text-right">
-								<button ng-click="create()" class="btn btn-success">Thêm</button>
-								<button ng-click="reset()" class="btn btn-success">
-									<b class="glyphicon glyphicon-refresh"></b> Mới
-								</button>
 							</div>
 						</div>
 					</div>
@@ -357,4 +449,3 @@
 			</div>
 		</div>
 	</div>
-</div>

@@ -27,7 +27,6 @@ import lombok.Setter;
 public class TourImage implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull(message = "Tourimageid không được để trống")
 	@Positive(message = "Tourimageid không được là số âm")
 	Integer tourimageid;
 

@@ -134,6 +134,7 @@ public class CheckoutController {
 			StatusOrder statusOrder = new StatusOrder();
 			statusOrder.setStatusorderid(1);
 			PaymentMethod paymentMethodObj = paymentMethodDAO.findById(1).get();
+			
 			if (user != null) {
 				Order orderItem = new Order();
 				orderItem.setUser(user);

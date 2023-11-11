@@ -37,7 +37,6 @@ import lombok.NoArgsConstructor;
 public class Tour implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull(message = "TourID không được để trống")
 	@Positive(message = "TourID không được là số âm")
 	private Integer tourid;
 	
@@ -56,7 +55,7 @@ public class Tour implements Serializable {
 	@NotBlank(message = "Location không được để trống")
 	private String location;
 
-	@NotBlank(message = "Availableslots không được để trống")
+	@NotNull(message = "Availableslots không được để trống")
 	@Column(name = "Availableslots")
 	private Integer Availableslots;
 

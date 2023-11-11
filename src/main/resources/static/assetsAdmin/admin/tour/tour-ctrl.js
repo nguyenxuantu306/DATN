@@ -32,6 +32,8 @@ app.controller("tour-ctrl", function($scope, $http) {
 			$scope.item2 = resp.data;
 		});
 	}
+
+
 	// Khởi đầu
 	$scope.initialize();
 
@@ -79,6 +81,10 @@ app.controller("tour-ctrl", function($scope, $http) {
 				title: 'Thành công!',
 				text: 'Thêm tour thành công!',
 			});
+			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+			$scope.frmvalidate.$setPristine();
+			$scope.frmvalidate.$setUntouched();
+			$scope.frmvalidate.$submitted = false;
 		}).catch(error => {
 			// Sử dụng SweetAlert2 cho thông báo lỗi
 			Swal.fire({
@@ -212,6 +218,10 @@ app.controller("tour-ctrl", function($scope, $http) {
 			// update the input value
 			input.value = value;
 		}*/
+
+	// Hàm validation
+	
+
 });
 
 

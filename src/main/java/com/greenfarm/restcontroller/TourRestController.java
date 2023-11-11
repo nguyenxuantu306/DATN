@@ -16,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +49,7 @@ import com.greenfarm.service.TourService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @CrossOrigin("*")
 @RestController
@@ -93,7 +95,13 @@ public class TourRestController {
 	}
 
 	@PostMapping()
-	public ResponseEntity<TourDTO> create(@RequestBody TourDTO tourDTO) {
+	public ResponseEntity<TourDTO> create(@RequestBody @Valid TourDTO tourDTO, BindingResult result) {
+		
+//		if (result.hasErrors()) {
+//	        // Lỗi validation, trả về danh sách lỗi
+//	        return  ResponseEntity.badRequest().body(result.getAllErrors());
+//	    }
+		
 		// Map DTO to entity
 		Tour tour = modelMapper.map(tourDTO, Tour.class);
 

@@ -61,7 +61,7 @@
 										
 
 									</div>
-									<a th:utext="${p.Tourname}" class="h5 text-decoration-none" href="/tour-detail"></a>
+									<a th:utext="${p.Tourname}" class="h5 text-decoration-none" th:href="@{|/tour/detail/${p.tourid}|}"></a>
 									<div class="border-top mt-4 pt-4">
 										<div class="d-flex justify-content-between">
 											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + 'đ'"
@@ -90,7 +90,7 @@
 										
 
 									</div>
-									<a th:utext="${p.Tourname}" class="h5 text-decoration-none" href="/tour-detail"></a>
+									<a th:utext="${p.Tourname}" class="h5 text-decoration-none" th:href="@{|/tour/detail/${p.tourid}|}"></a>
 									<div class="border-top mt-4 pt-4">
 										<div class="d-flex justify-content-between">
 											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + 'đ'"
