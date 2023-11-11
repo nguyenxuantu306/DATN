@@ -40,6 +40,8 @@ public class Product implements Serializable {
 
 	private Integer quantityavailable;
 
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "categoryid")
 	Category category;
@@ -47,6 +49,10 @@ public class Product implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	List<OrderDetail> orderDetails;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "product")
+	List<ProductImage> productimage;
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
