@@ -1,58 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="assets/login/login.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Change Password</title>
+<link rel="stylesheet" href="assets/login/login.css">
 </head>
 <body>
-    <section>
-        <div class="form-box">
-            <div class="form-value">
-                <form action="/changepass" th:object="${passchange}" method="post">  <!-- th:action="@{/changepass}" -->
-                    <h2>Change Password</h2>
-                    <!-- Hiển thị lỗi nếu có -->
-        
-        
+	<section>
+		<div class="form-box">
+			<div class="form-value">
+				<form action="/changepass" th:object="${passchange}" method="post">
+					<!-- th:action="@{/changepass}" -->
+					<h2>Change Password</h2>
+					<!-- Hiển thị lỗi nếu có -->
+					<div class="inputbox">
+						<ion-icon name="lock-outline"></ion-icon>
+						<input name="currentpass" type="password"
+							th:field="*{currentpass}" required> <label for="">Current
+							Password</label>
+						<div th:if="${#fields.hasErrors('currentpass')}"
+							th:errors="*{currentpass}"></div>
+					</div>
+					<div class="inputbox">
+						<ion-icon name="lock-closed-outline"></ion-icon>
+						<input name="newpass" type="password" th:field="*{newpass}"
+							required="required"> <label for="">New Password</label>
+						<div th:if="${#fields.hasErrors('newpass')}"
+							th:errors="*{newpass}"></div>
+					</div>
+					<div class="inputbox">
+						<ion-icon name="lock-closed-outline"></ion-icon>
+						<input name="confirmpass" type="password"
+							th:field="*{confirmpass}" required="required"> <label
+							for="">Confirm Password</label>
+						<div th:if="${#fields.hasErrors('confirmpass')}"
+							th:errors="*{confirmpass}"></div>
+					</div>
+					<div class="forget">
+						<label for=""> <a href="/forgot">Forget Password</a></label>
+					</div>
+					<button>Change</button>
+					<div class="register">
+						<p>
+							Return Profile Page <a href="/profile">Profile</a>
+						</p>
+						<a href="/"><ion-icon class="iconHome" name="home-outline"></ion-icon></a>
+					</div>
 
-                    
-                    <div class="inputbox">
-                        <ion-icon name="lock-outline"></ion-icon>
-                        <input name="currentpass" type="password" th:field="*{currentpass}" required>
-                        <label for="">Current Password</label>
-                        <div th:if="${#fields.hasErrors('currentpass')}" th:errors="*{currentpass}"></div>
-                    </div>
-                    <div class="inputbox">
-                        <ion-icon name="lock-closed-outline"></ion-icon>
-                        <input name="newpass" type="password" th:field="*{newpass}" required="required">
-                       
-                        <label for="">New Password</label>
-                         <div th:if="${#fields.hasErrors('newpass')}" th:errors="*{newpass}"></div>
-                    </div>
-                    <div class="inputbox">
-                        <ion-icon name="lock-closed-outline"></ion-icon>
-                        <input name="confirmpass" type="password" th:field="*{confirmpass}" required="required">
-                        <label for="">Confirm Password</label>
-                                <div th:if="${#fields.hasErrors('confirmpass')}" th:errors="*{confirmpass}"></div>
-                    </div>
-                    <div class="forget">
-                        <label for=""> <a href="/forgot">Forget Password</a></label>
-                    </div>
-                    <button>Change</button>
-                    <div class="register">
-                        <p>Return Profile Page <a href="/profile">Profile</a></p>
-                        <a href="/"><ion-icon class="iconHome" name="home-outline"></ion-icon></a>
-                    </div>
-                    
-                </form>
-            </div>
-        </div>
-    </section>
+				</form>
+			</div>
+		</div>
+	</section>
 
 
 
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+	<script type="module"
+		src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule
+		src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

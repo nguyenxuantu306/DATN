@@ -42,6 +42,8 @@
                   ><i class="fa fa-shopping-cart"></i>
                   <span class="badge">3</span></a
                 >
+                <a class="text-primary pl-3" href="?language=vi_VN">VN </a>
+                <a class="text-primary pl-3" href="?language=en">EN </a>
               </div>
             </div>
           </div>
@@ -78,12 +80,11 @@
 
           <ul class="shopping-cart-items">
             <li class="clearfix" th:each="item : ${cartList}">
-              <img
-                th:src="${item.product.image}"
-                alt="item1"
-                width="50%"
-              />
-              <span class="item-name" th:text="${item.product.productname}"></span>
+              <img th:src="${item.product.image}" alt="item1" width="50%" />
+              <span
+                class="item-name"
+                th:text="${item.product.productname}"
+              ></span>
               <span class="item-price" th:text="${item.product.price}"></span>
               <span class="item-price">x</span>
               <span class="item-quantity" th:text="${item.quantity}"></span>
@@ -121,14 +122,47 @@
               id="navbarCollapse"
             >
               <div class="navbar-nav ml-auto">
-                <a href="/" class="nav-item nav-link">Home</a>
-                <a href="/product/shop" class="nav-item nav-link">Shop</a>
-                <a href="/tour" class="nav-item nav-link">Tour</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
-                <a class="nav-item nav-link data-toggle" href="/cart">Cart</a>
+                <a
+                  href="/"
+                  class="nav-item nav-link"
+                  th:text="#{header.label.home}"
+                  >Home</a
+                >
+                <a
+                  href="/product/shop"
+                  class="nav-item nav-link"
+                  th:text="#{header.label.shop}"
+                  >Shop</a
+                >
+                <a
+                  href="/tour"
+                  class="nav-item nav-link"
+                  th:text="#{header.label.tour}"
+                  >Tour</a
+                >
+                <a
+                  href="about.html"
+                  class="nav-item nav-link"
+                  th:text="#{header.label.about}"
+                  >About</a
+                >
+                <a
+                  href="contact.html"
+                  class="nav-item nav-link"
+                  th:text="#{header.label.contact}"
+                  >Contact</a
+                >
+                <a
+                  class="nav-item nav-link data-toggle"
+                  href="/cart"
+                  th:text="#{header.label.cart}"
+                  >Cart</a
+                >
                 <div sec:authorize="isAnonymous()">
-                  <a class="nav-item nav-link data-toggle" th:href="@{/login}"
+                  <a
+                    class="nav-item nav-link data-toggle"
+                    th:href="@{/login}"
+                    th:text="#{label.login}"
                     >Login</a
                   >
                 </div>
