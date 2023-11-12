@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout::dynamic(~{::body})}">
+<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
 
 <head>
 	<meta charset="UTF-8" />
@@ -24,36 +23,49 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
 						<li class="breadcrumb-item"><a href="#">Shop</a></li>
-						<li class="breadcrumb-item active" aria-current="page"
-							th:text="*{productname}"></li>
+						<li class="breadcrumb-item active" aria-current="page" th:text="*{productname}"></li>
 					</ol>
 				</nav>
 				<div class="col-lg-6">
-					<img th:src="@{|*{image}|}" alt="" style="width: 500px"
-						height="400px">
+					<img th:src="@{|*{image}|}" alt="" style="width: 500px" height="400px">
+					
+					<div class="tab-content produc_tab_c">
+						<div class="tab-pane fade show active " id="p_tab1" role="tabpanel">
+							<div class="modal_img row">
+								<div th:each="productImage: ${item.productimage}" class="col-md-2 justify-content-center">
+									<div class="view_img">
+										<a class="large_view" th:href="${productImage.imageurl}"><i
+												class="fa fa-search-plus"></i></a>
+									</div>
+									<a href="" class="d-block">
+										<img th:src="${productImage.imageurl}" alt=""
+											style="width: 80px; height: 80px" />
+									</a>
+									<div class="img_icone">
+										<img src="assets\img\cart\span-new.png" alt="">
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="col-lg-6">
 					<div class="text-left mb-3 pb-3">
 						<h3 th:text="*{productname}" class="text-uppercase mt-3"></h3>
-						<h2 class="mb-3"
-							style="font-weight: 300; color: #80bb01; font-size: 28px">
-							<span
-								th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"
+						<h2 class="mb-3" style="font-weight: 300; color: #80bb01; font-size: 28px">
+							<span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"
 								style="color: #999; text-decoration: line-through"></span> <span
 								th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span>
 						</h2>
 						<p th:text="*{description}" class="product-description mb-3"></p>
-						SL : <p th:text="*{quantityavailable}" class="product-description mb-3"></p>
+						SL: <span th:text="*{quantityavailable}" class="product-description mb-3"></span>
 						<div class="cart-button mt-5 mb-5 d-flex">
-                
 
-                <button
-                  class="add-to-cart-button"
-                  th:onclick="'addToCart(\'' + ${item.productid} + '\')'"
-                >
-                  <i class="fas fa-shopping-cart"></i> Add to Cart
-                </button>
-              </div>
+							<button class="add-to-cart-button" th:onclick="'addToCart(\'' + ${item.productid} + '\')'">
+								<i class="fas fa-shopping-cart"></i> Add to Cart
+							</button>
+						</div>
 						<div class="categories ">
 							<h5>
 								CATEGORIES: <span><a th:text="*{category.categoryname}"></span>
@@ -62,297 +74,310 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-lg-6 col-md-6">
+					<!--<div class="product_tab fix">
+						<div class="product_tab_button">
+							<ul class="nav" role="tablist">
+								<li>
+									<a class="active" data-toggle="tab" href="#p_tab1" role="tab" aria-controls="p_tab1"
+										aria-selected="false"><img th:src="@{|*{Image1}|}" alt=""></a>
+								</li>
+								<li>
+									<a data-toggle="tab" href="#p_tab2" role="tab" aria-controls="p_tab2"
+										aria-selected="false"><img th:src="@{|*{image2}|}" alt=""></a>
+								</li>
+								<li>
+									<a data-toggle="tab" href="#p_tab3" role="tab" aria-controls="p_tab3"
+										aria-selected="false"><img th:src="@{|*{image3}|}" alt=""></a>
+								</li>
+							</ul>
+						</div>-->
+
+				</div>
 			</div>
 
+		</div>-->
 
 
+		<div id="wapper">
+			<div class=" mb-3 pb-3">
+				<h1>SẢN PHẨM LIÊN QUAN</h1>
+			</div>
 
-			<div id="wapper">
-				<div class=" mb-3 pb-3">
-					<h1>SẢN PHẨM LIÊN QUAN</h1>
-				</div>
-
-				<div class="row slider" th:object="${item}">
-					<div class="col-md-12 col-sm-12 col-xs-12 slide"
-						th:each="p : *{category.products}">
-						<div class="wap-items-ss brbox">
-							<a th:href="@{|/product/detail/${p.productid}|}"
-								class="wap-ss-img"> <img th:src="@{|${p.image}|}"
-								alt="Product Image">
-							</a>
-							<div class="textleft">
-								<a th:href="@{|/product/detail/${p.productid}|}"
-									th:text="${p.productname}"
-									style="color: black; text-decoration: none;"></a>
-								<div>
-									<b
-										th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></b>
-								</div>
+			<div class="row slider" th:object="${item}">
+				<div class="col-md-12 col-sm-12 col-xs-12 slide" th:each="p : *{category.products}">
+					<div class="wap-items-ss brbox">
+						<a th:href="@{|/product/detail/${p.productid}|}" class="wap-ss-img"> <img
+								th:src="@{|${p.image}|}" alt="Product Image">
+						</a>
+						<div class="textleft">
+							<a th:href="@{|/product/detail/${p.productid}|}" th:text="${p.productname}"
+								style="color: black; text-decoration: none;"></a>
+							<div>
+								<b th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></b>
 							</div>
 						</div>
 					</div>
 				</div>
-
-			</div>
-			<br>
-			<div class=" mb-3">
-				<h1>ĐÁNH GIÁ SẢN PHẨM</h1>
 			</div>
 
-			<div class="row ">
-				<div class="col-12 text-center">
-					<div class="card">
-						<div class="row justify-content-left d-flex">
-							<div class="col-md-6 d-flex flex-column">
-								<div class="rating-box">
-									<h1 class="pt-4">4.0</h1>
-									<p class="">out of 5</p>
-								</div>
-								<div>
-									<span class="fa fa-star star-active mx-1"></span> <span
-										class="fa fa-star star-active mx-1"></span> <span
-										class="fa fa-star star-active mx-1"></span> <span
-										class="fa fa-star star-active mx-1"></span> <span
-										class="fa fa-star star-inactive mx-1"></span>
-								</div>
+		</div>
+		<br>
+		<div class=" mb-3">
+			<h1>ĐÁNH GIÁ SẢN PHẨM</h1>
+		</div>
+
+		<div class="row ">
+			<div class="col-12 text-center">
+				<div class="card">
+					<div class="row justify-content-left d-flex">
+						<div class="col-md-6 d-flex flex-column">
+							<div class="rating-box">
+								<h1 class="pt-4">4.0</h1>
+								<p class="">out of 5</p>
 							</div>
-							<div class="col-md-6">
-								<div class="rating-bar0 justify-content-center">
-									<table class="text-left mx-auto">
-										<tr>
-											<td class="rating-label">5</td>
-											<td class="rating-bar">
-												<div class="bar-container">
-													<div class="bar-5"></div>
-												</div>
-											</td>
-											<td class="text-right">123</td>
-										</tr>
-										<tr>
-											<td class="rating-label">4</td>
-											<td class="rating-bar">
-												<div class="bar-container">
-													<div class="bar-4"></div>
-												</div>
-											</td>
-											<td class="text-right">23</td>
-										</tr>
-										<tr>
-											<td class="rating-label">3</td>
-											<td class="rating-bar">
-												<div class="bar-container">
-													<div class="bar-3"></div>
-												</div>
-											</td>
-											<td class="text-right">10</td>
-										</tr>
-										<tr>
-											<td class="rating-label">2</td>
-											<td class="rating-bar">
-												<div class="bar-container">
-													<div class="bar-2"></div>
-												</div>
-											</td>
-											<td class="text-right">3</td>
-										</tr>
-										<tr>
-											<td class="rating-label">1</td>
-											<td class="rating-bar">
-												<div class="bar-container">
-													<div class="bar-1"></div>
-												</div>
-											</td>
-											<td class="text-right">0</td>
-										</tr>
-									</table>
-								</div>
+							<div>
+								<span class="fa fa-star star-active mx-1"></span> <span
+									class="fa fa-star star-active mx-1"></span> <span
+									class="fa fa-star star-active mx-1"></span> <span
+									class="fa fa-star star-active mx-1"></span> <span
+									class="fa fa-star star-inactive mx-1"></span>
 							</div>
 						</div>
-
-
-						<!-- Button trigger modal -->
-						<button  type="button" class="btn btn-primary"
-							data-bs-toggle="modal" data-bs-target="#exampleModal">
-							Đánh giá giúp chúng tôi !</button>
-
-						<!-- Modal -->
-						<div class="modal fade" id="exampleModal" tabindex="-1"
-							aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-body">
-										<div class="card">
-											<div class="modal-header">
-												<h1 class="modal-title fs-6 text-center"
-													id="exampleModalLabel">GreenFarm xin được cám ơn quý
-													khách!</h1>
+						<div class="col-md-6">
+							<div class="rating-bar0 justify-content-center">
+								<table class="text-left mx-auto">
+									<tr>
+										<td class="rating-label">5</td>
+										<td class="rating-bar">
+											<div class="bar-container">
+												<div class="bar-5"></div>
 											</div>
-											<div class="card-body">
-												<form th:action="@{'/product/detail/' + ${productid}}"
-													th:object="${reviewinsert}" method="post">
-													<fieldset style="font-size: 40px;" class="rating"
-														th:field="*{rating}">
-														<input type="radio" id="star5" name="rating" value="5" /><label
-															class="full" for="star5"></label> <input type="radio"
-															id="star4" name="rating" value="4" /><label class="full"
-															for="star4"></label> <input type="radio" id="star3"
-															name="rating" value="3" /><label class="full"
-															for="star3"></label> <input type="radio" id="star2"
-															name="rating" value="2" /><label class="full"
-															for="star2"></label> <input type="radio" id="star1"
-															name="rating" value="1" /><label class="full"for "star1"></label>
-													</fieldset>
-
-
-													<div class="form-outline">
-														<textarea th:field="*{content}" class="form-control"
-															id="textAreaExample" rows="4"></textarea>
-
-													</div>
-													<div class="d-flex justify-content-between mt-3">
-														<button type="submit" class="btn btn-danger">
-															Gửi đánh giá <i id="review-button"
-																class="fas fa-long-arrow-alt-right ms-1"></i>
-														</button>
-														<span class="alert-danger">
-
-														</span>
-													</div>
-												</form>
-
+										</td>
+										<td class="text-right">123</td>
+									</tr>
+									<tr>
+										<td class="rating-label">4</td>
+										<td class="rating-bar">
+											<div class="bar-container">
+												<div class="bar-4"></div>
 											</div>
+										</td>
+										<td class="text-right">23</td>
+									</tr>
+									<tr>
+										<td class="rating-label">3</td>
+										<td class="rating-bar">
+											<div class="bar-container">
+												<div class="bar-3"></div>
+											</div>
+										</td>
+										<td class="text-right">10</td>
+									</tr>
+									<tr>
+										<td class="rating-label">2</td>
+										<td class="rating-bar">
+											<div class="bar-container">
+												<div class="bar-2"></div>
+											</div>
+										</td>
+										<td class="text-right">3</td>
+									</tr>
+									<tr>
+										<td class="rating-label">1</td>
+										<td class="rating-bar">
+											<div class="bar-container">
+												<div class="bar-1"></div>
+											</div>
+										</td>
+										<td class="text-right">0</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+
+
+					<!-- Button trigger modal -->
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						Đánh giá giúp chúng tôi !</button>
+
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-body">
+									<div class="card">
+										<div class="modal-header">
+											<h1 class="modal-title fs-6 text-center" id="exampleModalLabel">
+												GreenFarm xin được cám ơn quý
+												khách!</h1>
+										</div>
+										<div class="card-body">
+											<form th:action="@{'/product/detail/' + ${productid}}"
+												th:object="${reviewinsert}" method="post">
+												<fieldset style="font-size: 40px;" class="rating" th:field="*{rating}">
+													<input type="radio" id="star5" name="rating" value="5" /><label
+														class="full" for="star5"></label>
+													<input type="radio" id="star4" name="rating" value="4" /><label
+														class="full" for="star4"></label>
+													<input type="radio" id="star3" name="rating" value="3" /><label
+														class="full" for="star3"></label>
+													<input type="radio" id="star2" name="rating" value="2" /><label
+														class="full" for="star2"></label>
+													<input type="radio" id="star1" name="rating" value="1" /><label
+														class="full" for "star1"></label>
+												</fieldset>
+
+
+												<div class="form-outline">
+													<textarea th:field="*{content}" class="form-control"
+														id="textAreaExample" rows="4"></textarea>
+
+												</div>
+												<div class="d-flex justify-content-between mt-3">
+													<button type="submit" class="btn btn-danger">
+														Gửi đánh giá <i id="review-button"
+															class="fas fa-long-arrow-alt-right ms-1"></i>
+													</button>
+													<span class="alert-danger">
+
+													</span>
+												</div>
+											</form>
+
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div id="modal" class="modal" tabindex="-1">
-							<div class="modal-dialog modal-dialog-centered">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title">Đánh giá</h5>
-										<button type="button" class="btn-close"
-											data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-									<div class="modal-body">
-										<p id="modal-message"></p>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary"
-											data-bs-dismiss="modal">Đóng</button>
-									</div>
+					</div>
+					<div id="modal" class="modal" tabindex="-1">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Đánh giá</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<p id="modal-message"></p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal">Đóng</button>
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
 
+			</div>
 
-				<div id="review-section" class="col-12">
-					<div th:each="review : ${review}" class="cardrating">
-						<div class="row ">
-							<div class="col-md-6">
-								<img style="width: 50px; height: 50px" class="profile-pic"
-									th:src="@{|/assetsAdmin/images/${review.user.image}|}"
-									alt="User Image" th:text="${review.user.email}" />
 
-							</div>
+			<div id="review-section" class="col-12">
+				<div th:each="review : ${review}" class="cardrating">
+					<div class="row ">
+						<div class="col-md-6">
+							<img style="width: 50px; height: 50px" class="profile-pic"
+								th:src="@{|/assetsAdmin/images/${review.user.image}|}" alt="User Image"
+								th:text="${review.user.email}" />
 
-							<div class="col-md-6"
-								th:if="${#authorization.expression('isAuthenticated()')}">
-								<button style="float: right;" class="btn btn-danger"
-									th:if="${#authorization.expression(review.user.email == #authentication.principal.username)}">
-									<a
-										th:href="@{'/product/detail/' + ${productid} + '/delete/' + ${review.reviewid}}">Xóa</a>
-								</button>
-							</div>
-
-							<div class=" d-flex flex-column">
-								<div>
-									<span class="fa fa-star star-active"
-										th:each="i : ${#numbers.sequence(1, review.rating)}"></span> <span
-										class="fa fa-star-half star-active"
-										th:if="${review.rating % 1 != 0}"></span> <span
-										class="fa fa-star star-inactive"
-										th:each="i : ${#numbers.sequence(review.rating.floatValue() +1,5)}">
-									</span>
-								</div>
-								<div>
-									<span th:text="${review.product.category.categoryname}"></span>
-									| <span th:text="${review.datepost}" class=""></span>
-								</div>
-
-							</div>
 						</div>
-						<div class="row text-left">
-							<p style="font-family: Arial, Helvetica, sans-serif"
-								class="content" th:text="${review.content}"></p>
+
+						<div class="col-md-6" th:if="${#authorization.expression('isAuthenticated()')}">
+							<button style="float: right;" class="btn btn-danger"
+								th:if="${#authorization.expression(review.user.email == #authentication.principal.username)}">
+								<a
+									th:href="@{'/product/detail/' + ${productid} + '/delete/' + ${review.reviewid}}">Xóa</a>
+							</button>
+						</div>
+
+						<div class=" d-flex flex-column">
+							<div>
+								<span class="fa fa-star star-active"
+									th:each="i : ${#numbers.sequence(1, review.rating)}"></span> <span
+									class="fa fa-star-half star-active" th:if="${review.rating % 1 != 0}"></span>
+								<span class="fa fa-star star-inactive"
+									th:each="i : ${#numbers.sequence(review.rating.floatValue() +1,5)}">
+								</span>
+							</div>
+							<div>
+								<span th:text="${review.product.category.categoryname}"></span>
+								| <span th:text="${review.datepost}" class=""></span>
+							</div>
+
 						</div>
 					</div>
-
+					<div class="row text-left">
+						<p style="font-family: Arial, Helvetica, sans-serif" class="content"
+							th:text="${review.content}"></p>
+					</div>
 				</div>
+
 			</div>
 		</div>
 	</div>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('form').submit(function(event) {
-		// Ngăn chặn chuyển hướng trình duyệt khi gửi form
-		event.preventDefault();
-		// Lấy dữ liệu từ form
-		var formData = $(this).serialize();
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('form').submit(function (event) {
+				// Ngăn chặn chuyển hướng trình duyệt khi gửi form
+				event.preventDefault();
+				// Lấy dữ liệu từ form
+				var formData = $(this).serialize();
 
-		// Gửi yêu cầu Ajax để lưu đánh giá
-		$.ajax({
-			type: 'POST',
-			url: $(this).attr('action'),
-			data: formData,
-			success: function(response) {
-				// Phân tích chuỗi JSON và trích xuất thông báo thành công
-				var responseJSON = JSON.parse(response);
-				var successMessage = responseJSON.successMessage;
-				var errorMessage = responseJSON.errorMessage;
-				$('.alert').hide();
-				if (errorMessage) {
-					// Hiển thị thông báo lỗi bên dưới form
-					var errorMessageText = errorMessage.split('.')[0];
-					$('.alert-danger').text(errorMessageText).show();
-				} else {
-					// Hiển thị thông báo thành công trong modal
-					$('#modal-message').text(successMessage);
-					$('#exampleModal').modal('hide');
-					$('#modal').modal('show');
-				}
-			},
-			error: function(jqXHR, textStatus, errorThrown) {
-				var responseJSON = JSON.parse(jqXHR.responseText);
-				var errorMessage = responseJSON.errorMessage;
-				if (errorMessage) {
-					var errorMessageText = errorMessage.split('.')[0]; // Lấy phần đầu của errorMessage trước dấu chấm
-					$('.alert-danger').text(errorMessageText).show();
-				} else {
-					$('.alert-danger').text(textStatus + ' : ' + errorThrown).show();
-				}
+				// Gửi yêu cầu Ajax để lưu đánh giá
+				$.ajax({
+					type: 'POST',
+					url: $(this).attr('action'),
+					data: formData,
+					success: function (response) {
+						// Phân tích chuỗi JSON và trích xuất thông báo thành công
+						var responseJSON = JSON.parse(response);
+						var successMessage = responseJSON.successMessage;
+						var errorMessage = responseJSON.errorMessage;
+						$('.alert').hide();
+						if (errorMessage) {
+							// Hiển thị thông báo lỗi bên dưới form
+							var errorMessageText = errorMessage.split('.')[0];
+							$('.alert-danger').text(errorMessageText).show();
+						} else {
+							// Hiển thị thông báo thành công trong modal
+							$('#modal-message').text(successMessage);
+							$('#exampleModal').modal('hide');
+							$('#modal').modal('show');
+						}
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						var responseJSON = JSON.parse(jqXHR.responseText);
+						var errorMessage = responseJSON.errorMessage;
+						if (errorMessage) {
+							var errorMessageText = errorMessage.split('.')[0]; // Lấy phần đầu của errorMessage trước dấu chấm
+							$('.alert-danger').text(errorMessageText).show();
+						} else {
+							$('.alert-danger').text(textStatus + ' : ' + errorThrown).show();
+						}
+					}
+				});
+			});
+			function resetRatingForm() {
+				$('#rating-form input[type="radio"]').prop('checked', false);
+				$('#rating-form textarea').val('');
 			}
+			$('#ratingModal').on('hidden.bs.modal', function () {
+				resetRatingForm();
+			});
+			$('#exampleModal').on('hidden.bs.modal', function (e) {
+				$(this).remove();
+			});
+			$('#modal').on('hidden.bs.modal', function (event) {
+				// Chuyển hướng sang trang mới
+				location.reload();
+			});
 		});
-	});
-	function resetRatingForm() {
-		$('#rating-form input[type="radio"]').prop('checked', false);
-		$('#rating-form textarea').val('');
-	}
-	$('#ratingModal').on('hidden.bs.modal', function() {
-		resetRatingForm();
-	});
-	$('#exampleModal').on('hidden.bs.modal', function(e) {
-		$(this).remove();
-	});
-	$('#modal').on('hidden.bs.modal', function(event) {
-		// Chuyển hướng sang trang mới
-		location.reload();
-	});
-});
-</script>
+	</script>
 </body>
 
 </html>

@@ -66,7 +66,7 @@
 										<div class="d-flex justify-content-between">
 											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + 'đ'"
 												class="m-0 p-1"></h5>
-											<button class="btn btn-primary"><a href="/booking">Đặt tour</a></button>
+											<button class="btn btn-primary"><a th:href="@{|/booking/${p.tourid}|}">Đặt tour</a></button>
 										</div>
 									</div>
 								</div>
@@ -95,7 +95,7 @@
 										<div class="d-flex justify-content-between">
 											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + 'đ'"
 												class="m-0 p-1"></h5>
-											<button class="btn btn-primary"><a href="/booking">Đặt tour</a></button>
+											<button class="btn btn-primary"><a th:href="@{|/booking/${p.tourid}|}">Đặt tour</a></button>
 										</div>
 									</div>
 								</div>

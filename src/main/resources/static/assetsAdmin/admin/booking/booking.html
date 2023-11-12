@@ -118,17 +118,17 @@
                                                                 <tr>
                                                                     <th scope="row">{{$index + 1}}</th>
                                                                     <td><img ng-src="{{item.tour.image}}" alt="Tour Image" style="width: 80px;"></td>
-                                                                    <td style="width: 150px">{{item.tour.tourname}}</td>
-                                                                    <td style="width: 200px">Giá người lớn: {{item.tour.pricings.adultprice}} <br /> Giá trẻ em: {{item.tour.pricings.childprice}}
+                                                                    <td style="width: 150px">{{form.tour.tourname}}</td>
+                                                                    <td style="width: 200px">Giá người lớn: {{form.tour.pricings.adultprice}} <br /> Giá trẻ em: {{item.tour.pricings.childprice}}
                                                                     </td>
                                  
-                                                                    <td>{{item.adultticketnumber}}</td>
-                                                                    <td>{{item.childticketnumber}}</td>
-                                                                    <td>{{formatPrice(item.adultticketnumber * item.tour.pricings.adultprice)}}
+                                                                    <td>{{form.adultticketnumber}}</td>
+                                                                    <td>{{form.childticketnumber}}</td>
+                                                                    <td>{{formatPrice(form.adultticketnumber * form.tour.pricings.adultprice)}}
                                                                     </td>
-                                                                    <td>{{formatPrice(item.childticketnumber * item.tour.pricings.childprice)}}
+                                                                    <td>{{formatPrice(form.childticketnumber * form.tour.pricings.childprice)}}
                                                                     </td>
-                                                                    <td>{{formatPrice(item.totalprice)}}</td>
+                                                                    <td>{{formatPrice(form.totalprice)}}</td>
                                                                 </tr>
                                                             </tbody>
 
@@ -136,7 +136,7 @@
                                                         <div class="modal-order text-right">
                                                             <hr>
                                                             <h4 style="padding-left: 100px" class="total fs-4">
-                                                                Tổng cộng: <strong>{{formatPrice(calculateTotal(item))}}</strong>
+                                                                Tổng cộng: <strong>{{formatPrice(calculateTotal(form))}}</strong>
                                                             </h4>
 
                                                             <hr>

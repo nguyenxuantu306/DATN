@@ -35,7 +35,7 @@
 															<h4 class="pt-sm-2 pb-1 mb-0 text-nowrap"
 																th:text="${user.firstname + ' ' + user.lastname}">
 																Full Name</h4>
-															<p class="mb-0" th:text="${roles}">@user</p>
+															<p class="mb-0" th:text="${roles}">@User</p>
 															<div class="mt-2">
 																<label for="fileInput" class="btn btn-primary">
 																	<i class="fa fa-fw fa-camera"></i> <span>Change
@@ -46,9 +46,9 @@
 															</div>
 														</div>
 														<div class="text-center text-sm-right">
-															<span class="badge badge-secondary" th:text="${roles}">administrator</span>
+															<span class="badge badge-secondary" th:text="${roles}">@Administrator</span>
 															<div class="text-muted">
-																<small>Joined</small> <small
+																<small th:text="${user.firstname + ' ' + user.lastname}"></small> <small
 																	th:text="${user.createddate}"> </small>
 															</div>
 														</div>
