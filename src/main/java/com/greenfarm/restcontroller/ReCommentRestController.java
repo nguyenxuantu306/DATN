@@ -4,32 +4,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.greenfarm.dto.CommentDTO;
 import com.greenfarm.dto.ReCommentDTO;
-import com.greenfarm.dto.CommentDTO;
-import com.greenfarm.entity.Comment;
 import com.greenfarm.entity.ReComment;
-import com.greenfarm.entity.ReportRevenue;
-import com.greenfarm.entity.Tour;
-import com.greenfarm.entity.Comment;
 import com.greenfarm.service.CommentService;
 import com.greenfarm.service.ReCommentService;
-import com.greenfarm.service.TourService;
 
 @CrossOrigin("*")
 @RestController
@@ -52,7 +38,7 @@ public class ReCommentRestController {
 		return new ResponseEntity<>(reCommentDTOs, HttpStatus.OK);
 		
 	}
-	
+}
 //	@GetMapping("/comment/{comment}")
 //	public ResponseEntity<List<ReCommentDTO>> getlisstrecommentbycomment(@RequestBody Comment comment){
 //		List<ReComment> list = recommentService.ReCommentbyComments(comment);

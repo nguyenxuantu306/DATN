@@ -1,13 +1,12 @@
 package com.greenfarm.config;
 
 import java.time.Duration;
-import java.util.Locale;
 
-import org.hibernate.validator.spi.messageinterpolation.LocaleResolver;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
@@ -21,19 +20,21 @@ public class WebMvcConfig implements WebMvcConfigurer {
         CookieLocaleResolver resolver = new CookieLocaleResolver();
         resolver.setCookieDomain("myAppLocaleCookie");
         // resolver.setDefaultLocale(Locale.ENGLISH);
-
+        // 60 minutes
         Duration maxAge = Duration.ofSeconds(3600);
         resolver.setCookieMaxAge(maxAge);
-        return null;
+        return resolver;
     }
 
     @Bean(name = "messageSource")
-    public MessageSource getMessageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+    public MessageSource getMessageResource() {
+        ReloadableResourceBundleMessageSource messageResource = new ReloadableResourceBundleMessageSource();
 
-        messageSource.setBasename("classpath:i18n/messages");
-        messageSource.setDefaultEncoding("UTF-8");
-        return messageSource;
+        // Đọc vào file i18n/messages_xxx.properties
+        // Ví dụ: i18n/messages_en.properties
+        messageResource.setBasename("classpath:i18n/messages");
+        messageResource.setDefaultEncoding("UTF-8");
+        return messageResource;
     }
 
     @Override
