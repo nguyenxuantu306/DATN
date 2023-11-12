@@ -13,94 +13,109 @@
 			<div class="row mt-3">
 				<div class="col-sm-8">
 
-					<h6 class="fw-bold">Lịch sử Booking:</h6>
 
-					<div th:each="booking, state:${bookings}">
-						<div class="card border border-0 rounded-0 mt-3"
-							style="padding: 20px; width: auto; border-radius: 3px; background-color: #fff; font-size: 14px; flex-direction: column;">
+					<div th:if="${not #lists.isEmpty(bookings)}">
+						<div th:each="booking, state:${bookings}">
+							<h6 class="fw-bold">Lịch sử Booking:</h6>
+							<div class="card border border-0 rounded-0 mt-3"
+								style="padding: 20px; width: auto; border-radius: 3px; background-color: #fff; font-size: 14px; flex-direction: column;">
 
-							<div class="card-header" style="background-color: #fff;">
-								<span class="fw-bold">Booking:</span> #[[${booking.Bookingid}]]
-								<span class="fw-bold"
-									th:text="${booking.getBookingdateFormatted}"></span> <span
-									th:if="${booking.statusbooking.name} =='Tour bị hủy'"
-									class="float-end text-danger fw-bold"
-									th:text="${booking.statusbooking.name}"></span> <span
-									th:if="${booking.statusbooking.name} !='Tour bị hủy'"
-									class="float-end text-success fw-bold"
-									th:text="${booking.statusbooking.name}"></span>
-							</div>
-							<!-- Chi tiết Booking -->
-							<div class="row g-0 mt-1">
-								<div class="col-md-2">
-									<img th:src="*{booking.tour.image}" class="img-fluid" alt="...">
+								<div class="card-header" style="background-color: #fff;">
+									<span class="fw-bold">Booking:</span> #[[${booking.Bookingid}]]
+									<span class="fw-bold"
+										th:text="${booking.getBookingdateFormatted}"></span> <span
+										th:if="${booking.statusbooking.name} =='Tour bị hủy'"
+										class="float-end text-danger fw-bold"
+										th:text="${booking.statusbooking.name}"></span> <span
+										th:if="${booking.statusbooking.name} !='Tour bị hủy'"
+										class="float-end text-success fw-bold"
+										th:text="${booking.statusbooking.name}"></span>
 								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<p th:text="'Tên tour: '+${booking.tour.tourname}"></p>
-										<div class="">
+								<!-- Chi tiết Booking -->
+								<div class="row g-0 mt-1">
+									<div class="col-md-2">
+										<img th:src="*{booking.tour.image}" class="img-fluid"
+											alt="...">
+									</div>
+									<div class="col-md-8">
+										<div class="card-body">
+											<p th:text="'Tên tour: '+${booking.tour.tourname}"></p>
+											<div class="">
 
-											<span
-												th:text="'Số vé người lớn: '+${booking.Adultticketnumber}+' x'+' '"></span>
-											<span
-												th:text="${#numbers.formatDecimal(booking.tour.pricings.adultprice, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+												<span
+													th:text="'Số vé người lớn: '+${booking.Adultticketnumber}+' x'+' '"></span>
+												<span
+													th:text="${#numbers.formatDecimal(booking.tour.pricings.adultprice, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+											</div>
+
+
+											<div>
+
+												<span
+													th:text="'Số vé trẻ em: '+${booking.Childticketnumber}+' x'+' '"></span>
+												<span
+													th:text="${#numbers.formatDecimal(booking.tour.pricings.childprice, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+											</div>
+											<div
+												th:text="'Phương thức thanh toán: '+${booking.paymentmethod.Methodname}"></div>
+
 										</div>
-
-
-										<div>
-
-											<span
-												th:text="'Số vé trẻ em: '+${booking.Childticketnumber}+' x'+' '"></span>
-											<span
-												th:text="${#numbers.formatDecimal(booking.tour.pricings.childprice, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
-										</div>
-										<div th:text="'Phương thức thanh toán: '+${booking.paymentmethod.Methodname}"></div>
-
+									</div>
+									<div class="col-sm-2"></div>
+									<div class="">
+										<p class="float-end ">
+											<span class="text-end fw-bold">Tổng giá: </span> <span
+												class="text-danger me-4"
+												th:text="${#numbers.formatDecimal(booking.Totalprice, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+										</p>
 									</div>
 								</div>
-								<div class="col-sm-2"></div>
-								<div class="">
-									<p class="float-end ">
-										<span class="text-end fw-bold">Tổng giá: </span> <span
-											class="text-danger me-4"
-											th:text="${#numbers.formatDecimal(booking.Totalprice, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
-									</p>
-								</div>
+
+
+
 							</div>
+						</div>
+					</div>
+					<div th:if="${#lists.isEmpty(bookings)}">
+						<div class="card mx-auto rounded-0 mt-4"
+							style="width: 550px; height: 200px;">
+							<div class="card-body">
+								<p
+									class="card-title text-center fw-bold text-uppercase text-muted"
+									style="margin-top: 50px;">RẤT TIẾC BẠN CHƯA đặt tour TẠI
+									GREENFARM</p>
 
-
-
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="menu mx-3">
-						<div sec:authorize="isAuthenticated()"><span sec:authentication="name"></span></div>
+						<div sec:authorize="isAuthenticated()">
+							<span sec:authentication="name"></span>
+						</div>
 
 						<div class="list-group border border-0 rounded-0 my-3">
 
 							<a class="mb-3" href="/order/list">
 								<button type="button"
 									class="list-group-item list-group-item-action"
-									style=" border-radius: 4px;">
+									style="border-radius: 4px;">
 									<i class="bi bi-card-list"></i> Đơn hàng đã đặt
 								</button>
-							</a> 
-							<a class="mb-3" href="/booking/list">
+							</a> <a class="mb-3" href="/booking/list">
 								<button type="button"
 									class="list-group-item list-group-item-action active"
-									style=" border-radius: 4px;">
+									style="border-radius: 4px;">
 									<i class="bi bi-card-list"></i> Lịch sử Booking
 								</button>
-							</a> 
-							<a href="/profile">
-									<button type="button"
-										class="list-group-item list-group-item-action"
-										style="border-radius: 4px;">
-										<i class="bi bi-person-lines-fill"></i> Thông tin và sổ địa
-										chỉ
-									</button>
-								</a>
+							</a> <a href="/profile">
+								<button type="button"
+									class="list-group-item list-group-item-action"
+									style="border-radius: 4px;">
+									<i class="bi bi-person-lines-fill"></i> Thông tin và sổ địa chỉ
+								</button>
+							</a>
 
 
 						</div>
@@ -138,9 +153,6 @@
 
 		</div>
 		<div class="col-sm-4"></div>
-
-
-		
 	</main>
 </body>
 
