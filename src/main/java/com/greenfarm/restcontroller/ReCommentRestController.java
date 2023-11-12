@@ -52,6 +52,7 @@ public class ReCommentRestController {
 		return new ResponseEntity<>(reCommentDTOs, HttpStatus.OK);
 		
 	}
+}
 	
 //	@GetMapping("/comment/{comment}")
 //	public ResponseEntity<List<ReCommentDTO>> getlisstrecommentbycomment(@RequestBody Comment comment){

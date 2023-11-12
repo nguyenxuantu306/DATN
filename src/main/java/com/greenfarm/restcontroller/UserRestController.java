@@ -55,35 +55,20 @@ public class UserRestController {
 	@GetMapping("{userid}")
 	public ResponseEntity<UserDTO> getOne(@PathVariable("userid") @Valid Integer userid, BindingResult bindingResult)
 			throws UnkownIdentifierException {
-		if (bindingResult.hasErrors()) {
-			// Trả về mã trạng thái 400 Bad Request nếu có lỗi validation
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
 
 		User user = userService.findById(userid);
 
 		if (user == null) {
+			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy category
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
+		// Sử dụng modelMapper để ánh xạ từ User sang UserDTO
 		ModelMapper modelMapper = new ModelMapper();
 		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 
+		// Trả về UserDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
-
-		// User user = userService.findById(userid);
-//
-//		if (user == null) {
-//			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy category
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
-//
-//		// Sử dụng modelMapper để ánh xạ từ User sang UserDTO
-//		ModelMapper modelMapper = new ModelMapper();
-//		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-//
-//		// Trả về UserDTO bằng ResponseEntity với mã trạng thái 200 OK
-//		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
 	@GetMapping("email/{useremail}")
@@ -106,8 +91,7 @@ public class UserRestController {
 
 	@PostMapping("/add")
 	public ResponseEntity<UserDTO> create(@Valid @RequestBody User user) throws UserAlreadyExistException {
-		
-		
+
 		User createdUser = userService.create(user);
 
 		if (createdUser == null) {
