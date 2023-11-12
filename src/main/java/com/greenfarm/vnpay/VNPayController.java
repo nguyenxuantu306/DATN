@@ -72,13 +72,13 @@ public class VNPayController {
 		return "redirect:" + vnpayUrl;
 	}
 
-	@GetMapping("/vnPayPayment")
+	@GetMapping("/cancelVNpay")
 	public String GetMapping(HttpServletRequest request, Model model, 
 			@ModelAttribute("Order") OrderDTO orderDTO) {
 		int paymentStatus = vnPayService.orderReturn(request);
 
 		if(paymentStatus != 1 ) {
-			return "orderfail";
+			return "cancel";
 		}
 		
 		String orderInfo = request.getParameter("vnp_OrderInfo");

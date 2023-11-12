@@ -318,6 +318,9 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 			this.page = this.count - 1;
 		},
 	}
+	// Hợp nhất hai mảng thành một mảng tổng hợp
+	$scope.combinedArray = $scope.pager.itemsThongKetotaluser.concat($scope.pager.itemsThongKeBookingtotaluser);
+
 
 	$scope.initialize();
 })

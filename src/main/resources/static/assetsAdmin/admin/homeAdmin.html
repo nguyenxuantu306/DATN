@@ -334,7 +334,7 @@
 								<th scope="col">STT</th>
 								<th scope="col">Email</th>
 								<th scope="col">Số điện thoại</th>
-								<th scope="col">Tổng tiền đã mua hàng</th>
+								<th scope="col" style="text-align: center;">Tổng tiền đã mua hàng</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -342,7 +342,7 @@
 								<th>{{$index + 1}}</th>
 								<td>{{user.group.email}}</td>
 								<td>{{user.group.phonenumber}}</td>
-								<td><span class="label gradient-4 btn-rounded">
+								<td style="text-align: center;"><span class="label gradient-4 btn-rounded">
 										{{user.sum |number:0}} đ</span></td>
 							</tr>
 						</tbody>
@@ -356,16 +356,16 @@
 								<th scope="col">STT</th>
 								<th scope="col">Email</th>
 								<th scope="col">Số điện thoại</th>
-								<th scope="col">Tổng tiền đã đặt vé</th>
+								<th scope="col" style="text-align: center;">Tổng tiền đã đặt vé</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="user in pager.itemsThongKeBookingtotaluser">
+							<tr ng-repeat="tour in pager.itemsThongKeBookingtotaluser">
 								<th>{{$index + 1}}</th>
-								<td>{{user.group.email}}</td>
-								<td>{{user.group.phonenumber}}</td>
-								<td><span class="label gradient-4 btn-rounded">
-										{{user.sum |number:0}} đ</span></td>
+								<td>{{tour.group.email}}</td>
+								<td>{{tour.group.phonenumber}}</td>
+								<td style="text-align: center;"><span class="label gradient-4 btn-rounded">
+										{{tour.sum |number:0}} đ</span></td>
 							</tr>
 						</tbody>
 					</table>

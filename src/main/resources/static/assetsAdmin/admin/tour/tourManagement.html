@@ -101,7 +101,8 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1"
+
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl custom-modal">
 		<div class="modal-content">
@@ -209,12 +210,12 @@
 											aria-label="With textarea"></textarea>
 									</div>
 								</div>
-								<!--<input type="text" name="tourid" ng-model="form.tourid" readonly>-->
+								<input type="text" name="tourid" ng-model="form.tourid" readonly>
 								<div class="card">
 									<h3 class="text-center">Hình ảnh Tour</h3>
 									<div class="input-group"
 										ng-repeat="p in form.tourImage track by $index">
-										<!-- <img ng-src="{{p.imageurl }}" alt="Hình ảnh Tour" width="50px" height="auto" />-->
+										<img ng-src="{{p.imageurl }}" alt="Hình ảnh Tour" width="50px" height="auto" />
 										<div class="input-group mb-3">
 
 											<span class="input-group-text">Link hình ảnh</span> <input
@@ -241,8 +242,8 @@
 			</div>
 		</div>
 	</div>
-</div>
-<div class="modal fade" id="exampleModal2" tabindex="-1"
+</div> -->
+<div class="modal fade" id="exampleModal" tabindex="-1"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl custom-modal">
 		<div class="modal-content">
@@ -258,65 +259,61 @@
 						<div class="card-body">
 							<div class="col-lg-12">
 								<div class="basic-form">
-									<form class="row" name="frmvalidate" ng-submit="submitForm()"
-										novalidate>
+									<form class="row" name="frmvalidateupdate"
+										ng-submit="submitForm1()" novalidate>
 										<div class="form-group col-6">
 											<label>Tên địa điểm</label> <input type="text"
 												name="tourname" ng-model="form.tourname" ng-minlength="5"
 												class="form-control input-default" placeholder="Name"
 												required /> <label
-												ng-show="frmvalidate.$submitted && frmvalidate.tourname.$error.required"
-												class="alert alert-danger">Vui lòng nhập địa điểm !</label>
-											<label
-												ng-show="frmvalidate.$submitted && frmvalidate.tourname.$error.minlength"
-												class="alert alert-danger">Tên địa điểm phải có ít
-												nhất 5 ký tự!</label>
+												ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.tourname.$error.required"
+												style="color: red;">Vui lòng nhập địa điểm !</label> <label
+												ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.tourname.$error.minlength"
+												style="color: red;">Tên địa điểm phải có ít nhất 5
+												ký tự!</label>
 										</div>
 
-										<div class="form-group col-6">											
-												<div class="form-group ">
-													<div>
-														<label>Lượng người</label> <input type="number"
-															name="availableslots" ng-model="form.availableslots"
-															class="form-control input-default" placeholder="Quantity"
-															ng-min="0" ng-max="50" required /> <label
-															ng-show="frmvalidate.$submitted && frmvalidate.availableslots.$error.required"
-															class="alert alert-danger">Lượng người không được
-															để trống!</label> <label
-															ng-show="frmvalidate.$submitted && frmvalidate.availableslots.$error.min"
-															class="alert alert-danger">Lượng người ít nhất là
-															0!</label> <label
-															ng-show="frmvalidate.$submitted && frmvalidate.availableslots.$error.max"
-															class="alert alert-danger">Lượng người nhiều nhất
-															là 50!</label>
+										<div class="form-group col-6">
+											<div class="form-group ">
+												<div>
+													<label>Lượng người</label> <input type="number"
+														name="availableslots" ng-model="form.availableslots"
+														class="form-control input-default" placeholder="Quantity"
+														ng-min="0" ng-max="50" required /> <label
+														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.availableslots.$error.required"
+														style="color: red;">Lượng người không được để
+														trống!</label> <label
+														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.availableslots.$error.min"
+														style="color: red;">Lượng người ít nhất là 0!</label> <label
+														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.availableslots.$error.max"
+														style="color: red;">Lượng người nhiều nhất là 50!</label>
 
-													</div>
-												</div>											
+												</div>
+											</div>
 										</div>
-										<div class="form-group col-6">										
-												<div class="form-group ">
-													<div>
-														<label>Giá người lớn</label> <input type="number"
-															ng-model="form.pricings.adultprice" name="adultprice"
-															class="form-control input-currency"
-															placeholder="ChildPrice"
-															ng-keyup="formatCurrency($event)" ng-min="0"
-															ng-max="3000" required />
-														<!-- Sử dụng ng-min và ng-max để xác định khoảng giá trị hợp lệ -->
+										<div class="form-group col-6">
+											<div class="form-group ">
+												<div>
+													<label>Giá người lớn</label> <input type="number"
+														ng-model="form.pricings.adultprice" name="adultprice"
+														class="form-control input-currency"
+														placeholder="ChildPrice" ng-keyup="formatCurrency($event)"
+														ng-min="0" ng-max="5000000" required />
+													<!-- Sử dụng ng-min và ng-max để xác định khoảng giá trị hợp lệ -->
 
-														<label
-															ng-show="frmvalidate.$submitted && frmvalidate.adultprice.$error.required"
-															class="alert alert-danger">Giá người lớn không
-															được để trống!</label> <label											
-															ng-show="frmvalidate.$submitted && frmvalidate.adultprice.$error.min"
-															class="alert alert-danger">Giá người lớn không
-															được nhỏ hơn 0!</label> <label
-															ng-show="frmvalidate.$submitted && frmvalidate.adultprice.$error.max"
-															class="alert alert-danger">Giá người lớn không
-															được lớn hơn 2000!</label>
+													<label
+														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.adultprice.$error.required"
+														style="color: red;">Giá người lớn không được để
+														trống!</label> <label
+														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.adultprice.$error.min"
+														style="color: red;">Giá người lớn không được nhỏ
+														hơn 0!</label> <label
+														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.adultprice.$error.max"
+														style="color: red;">Giá người lớn không được lớn
+														hơn 5000000!</label>
 
-													</div>
-												</div>										
+												</div>
+											</div>
 										</div>
 										<div class="form-group col-6">
 											<div class="form-group ">
@@ -327,36 +324,40 @@
 															class="form-control input-currency"
 															placeholder="Adultprice"
 															ng-keyup="formatCurrency($event)" ng-min="0"
-															ng-max="3000" required  /> 
-													
-															<label
-															ng-show="frmvalidate.$submitted && frmvalidate.adultprice.$error.required"
-															class="alert alert-danger">Giá trẻ em không
-															được để trống!</label> <label											
-															ng-show="frmvalidate.$submitted && frmvalidate.adultprice.$error.min"
-															class="alert alert-danger">Giá trẻ em không
-															được nhỏ hơn 0!</label> <label
-															ng-show="frmvalidate.$submitted && frmvalidate.adultprice.$error.max"
-															class="alert alert-danger">Giá trẻ em không
-															được lớn hơn 2000!</label>
+															ng-max="5000000" required /> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.adultprice.$error.required"
+															style="color: red;">Giá trẻ em không được để
+															trống!</label> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.adultprice.$error.min"
+															style="color: red;">Giá trẻ em không được nhỏ hơn
+															0!</label> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.adultprice.$error.max"
+															style="color: red;">Giá trẻ em không được lớn hơn
+															5000000!</label>
 
 													</div>
 												</div>
 											</div>
 										</div>
-						
+
 										<div class="form-group col-6">
 											<div>
 												<label>Ngày khởi hành</label> <input type="text"
-													name="location" ng-model="form.departureday"
-													class="form-control input-default" placeholder="Location" />
+													name="departureday" ng-model="form.departureday"
+													class="form-control input-default"
+													placeholder="Ngày khởi hành" required /> <label
+													ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.departureday.$error.required"
+													style="color: red;">Ngày khởi hành không được để
+													trống!</label>
 											</div>
 										</div>
 										<div class="form-group col-6">
 											<div>
 												<label>Địa điểm</label> <input type="text" name="location"
 													ng-model="form.location" class="form-control input-default"
-													placeholder="Location" />
+													placeholder="Location" required /> <label
+													ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.location.$error.required"
+													style="color: red;">Địa điểm không được để trống!</label>
 											</div>
 										</div>
 										<div class=" form-group col-md-4">
@@ -368,12 +369,22 @@
 										<div class=" form-group col-md-8">
 											<label>Lịch trình hoạt động</label>
 											<div>
-												<textarea ng-model="form.description" rows="6" cols="74"></textarea>
+												<textarea ng-model="form.description" rows="6" cols="74"
+													name="description" required></textarea>
+												<label
+													ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.description.$error.required"
+													style="color: red;">Lịch trình hoạt động không được
+													để trống!</label>
 											</div>
+
+
 											<div class="">
-												<label for="formFile" class="form-label">Hình ảnh
-													Tour</label> <input class="form-control" type="text"
-													ng-model="form.image">
+												<label for="formFile" class="form-label">Hình ảnh địa điểm
+													</label> <input class="form-control" type="text" name="image"
+													ng-model="form.image" required /> <label
+													ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.image.$error.required"
+													style="color: red;">Hình ảnh địa điểm không được để
+													trống!</label>
 											</div>
 										</div>
 										<div class=" form-group col-md-12">
@@ -384,11 +395,15 @@
 														<span class="input-group-text">Điều kiện</span>
 													</div>
 													<textarea class="form-control" rows="5"
-														ng-model="form.tourCondition.conditions"
-														aria-label="With textarea"></textarea>
+														ng-model="form.tourCondition.conditions" name="conditions"
+														aria-label="With textarea" required></textarea>
 												</div>
+												<label
+													ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.conditions.$error.required"
+													style="color: red;">Điều kiện không được để trống!</label>
 											</div>
 										</div>
+
 										<div class=" form-group col-md-12">
 											<div class="card">
 												<h3 class="text-center">Tổng quan Tour</h3>
@@ -398,17 +413,247 @@
 															id="inputGroup-sizing-default">Tiêu đề</span>
 													</div>
 													<input type="text" ng-model="form.tourOverview.title"
-														class="form-control" aria-label="Default"
-														aria-describedby="inputGroup-sizing-default">
+														name="title" class="form-control" aria-label="Default"
+														aria-describedby="inputGroup-sizing-default" required>
 												</div>
+												<label
+													ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.title.$error.required"
+													style="color: red;">Tiêu đề không được để trống!</label>
 												<div class="input-group">
 													<div class="input-group-prepend">
 														<span class="input-group-text">Nội dung</span>
 													</div>
-													<textarea class="form-control" rows="5"
+													<textarea class="form-control" rows="5" name="content"
 														ng-model="form.tourOverview.content"
-														aria-label="With textarea"></textarea>
+														aria-label="With textarea" required></textarea>
+
 												</div>
+												<label
+													ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.content.$error.required"
+													style="color: red;">Nội dung không được để trống!</label>
+											</div>
+										</div>
+										<div class=" form-group col-md-12">
+											<div class="card">
+												<h3 class="text-center">Hình ảnh Tour</h3>
+												<div class="input-group"
+													ng-repeat="p in form.tourImage track by $index">
+													<div class="input-group mb-3">
+														<span class="input-group-text">Link hình ảnh</span> <input
+															type="text" ng-model="p.imageurl" class="form-control">
+														<button class="btn btn-danger"
+															ng-click="removeImage($index)">Loại bỏ</button>
+													</div>
+												</div>
+												<button class="btn btn-primary" ng-click="addImage()">Thêm
+													hình ảnh khác</button>
+											</div>
+										</div>
+
+										<div class="panel-footer text-right">
+											<button type="submit" name="submitupdate"
+												ng-click="frmvalidateupdate.$valid && update()"
+												class="btn btn-success">Thêm</button>									
+										</div>
+									</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="modal fade" id="exampleModal2" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl custom-modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title " id="exampleModalLabel">Thêm mới địa
+					điểm tham quan</h3>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="col-lg-12">
+					<div class="card ">
+						<div class="card-body">
+							<div class="col-lg-12">
+								<div class="basic-form">
+									<form class="row" name="frmvalidateadd"
+										ng-submit="submitForm()" novalidate>
+										<div class="form-group col-6">
+											<label>Tên địa điểm</label> <input type="text"
+												name="tourname" ng-model="form.tourname" ng-minlength="5"
+												class="form-control input-default" placeholder="Name"
+												required /> <label
+												ng-show="frmvalidateadd.$submitted && frmvalidateadd.tourname.$error.required"
+												style="color: red;">Vui lòng nhập địa điểm !</label> <label
+												ng-show="frmvalidateadd.$submitted && frmvalidateadd.tourname.$error.minlength"
+												style="color: red;">Tên địa điểm phải có ít nhất 5
+												ký tự!</label>
+										</div>
+
+										<div class="form-group col-6">
+											<div class="form-group ">
+												<div>
+													<label>Lượng người</label> <input type="number"
+														name="availableslots" ng-model="form.availableslots"
+														class="form-control input-default" placeholder="Quantity"
+														ng-min="0" ng-max="50" required /> <label
+														ng-show="frmvalidateadd.$submitted && frmvalidateadd.availableslots.$error.required"
+														style="color: red;">Lượng người không được để
+														trống!</label> <label
+														ng-show="frmvalidateadd.$submitted && frmvalidateadd.availableslots.$error.min"
+														style="color: red;">Lượng người ít nhất là 0!</label> <label
+														ng-show="frmvalidateadd.$submitted && frmvalidateadd.availableslots.$error.max"
+														style="color: red;">Lượng người nhiều nhất là 50!</label>
+
+												</div>
+											</div>
+										</div>
+										<div class="form-group col-6">
+											<div class="form-group ">
+												<div>
+													<label>Giá người lớn</label> <input type="number"
+														ng-model="form.pricings.adultprice" name="adultprice"
+														class="form-control input-currency"
+														placeholder="ChildPrice" ng-keyup="formatCurrency($event)"
+														ng-min="0" ng-max="5000000" required />
+													<!-- Sử dụng ng-min và ng-max để xác định khoảng giá trị hợp lệ -->
+
+													<label
+														ng-show="frmvalidateadd.$submitted && frmvalidateadd.adultprice.$error.required"
+														style="color: red;">Giá người lớn không được để
+														trống!</label> <label
+														ng-show="frmvalidateadd.$submitted && frmvalidateadd.adultprice.$error.min"
+														style="color: red;">Giá người lớn không được nhỏ
+														hơn 0!</label> <label
+														ng-show="frmvalidateadd.$submitted && frmvalidateadd.adultprice.$error.max"
+														style="color: red;">Giá người lớn không được lớn
+														hơn 5000000!</label>
+
+												</div>
+											</div>
+										</div>
+										<div class="form-group col-6">
+											<div class="form-group ">
+												<div class="form-group ">
+													<div>
+														<label>Giá trẻ em</label> <input type="number"
+															ng-model="form.pricings.childprice" name="childprice"
+															class="form-control input-currency"
+															placeholder="Adultprice"
+															ng-keyup="formatCurrency($event)" ng-min="0"
+															ng-max="5000000" required /> <label
+															ng-show="frmvalidateadd.$submitted && frmvalidateadd.adultprice.$error.required"
+															style="color: red;">Giá trẻ em không được để
+															trống!</label> <label
+															ng-show="frmvalidateadd.$submitted && frmvalidateadd.adultprice.$error.min"
+															style="color: red;">Giá trẻ em không được nhỏ hơn
+															0!</label> <label
+															ng-show="frmvalidateadd.$submitted && frmvalidateadd.adultprice.$error.max"
+															style="color: red;">Giá trẻ em không được lớn hơn
+															5000000!</label>
+
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group col-6">
+											<div>
+												<label>Ngày khởi hành</label> <input type="text"
+													name="departureday" ng-model="form.departureday"
+													class="form-control input-default"
+													placeholder="Ngày khởi hành" required /> <label
+													ng-show="frmvalidateadd.$submitted && frmvalidateadd.departureday.$error.required"
+													style="color: red;">Ngày khởi hành không được để
+													trống!</label>
+											</div>
+										</div>
+										<div class="form-group col-6">
+											<div>
+												<label>Địa điểm</label> <input type="text" name="location"
+													ng-model="form.location" class="form-control input-default"
+													placeholder="Location" required /> <label
+													ng-show="frmvalidateadd.$submitted && frmvalidateadd.location.$error.required"
+													style="color: red;">Địa điểm không được để trống!</label>
+											</div>
+										</div>
+										<div class=" form-group col-md-4">
+											<label for="image"> <img ng-src="{{form.image}}"
+												style="width: 250px; height: 300px">
+											</label>
+
+										</div>
+										<div class=" form-group col-md-8">
+											<label>Lịch trình hoạt động</label>
+											<div>
+												<textarea ng-model="form.description" rows="6" cols="74"
+													name="description" required></textarea>
+												<label
+													ng-show="frmvalidateadd.$submitted && frmvalidateadd.description.$error.required"
+													style="color: red;">Lịch trình hoạt động không được
+													để trống!</label>
+											</div>
+
+
+											<div class="">
+												<label for="formFile" class="form-label">Hình ảnh địa điểm
+													</label> <input class="form-control" type="text" name="image"
+													ng-model="form.image" required /> <label
+													ng-show="frmvalidateadd.$submitted && frmvalidateadd.image.$error.required"
+													style="color: red;">Hình ảnh địa điểm không được để
+													trống!</label>
+											</div>
+										</div>
+										<div class=" form-group col-md-12">
+											<div class="card">
+												<h3 class="text-center">Điều kiện Tour</h3>
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Điều kiện</span>
+													</div>
+													<textarea class="form-control" rows="5"
+														ng-model="form.tourCondition.conditions" name="conditions"
+														aria-label="With textarea" required></textarea>
+												</div>
+												<label
+													ng-show="frmvalidateadd.$submitted && frmvalidateadd.conditions.$error.required"
+													style="color: red;">Điều kiện không được để trống!</label>
+											</div>
+										</div>
+
+										<div class=" form-group col-md-12">
+											<div class="card">
+												<h3 class="text-center">Tổng quan Tour</h3>
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<span class="input-group-text"
+															id="inputGroup-sizing-default">Tiêu đề</span>
+													</div>
+													<input type="text" ng-model="form.tourOverview.title"
+														name="title" class="form-control" aria-label="Default"
+														aria-describedby="inputGroup-sizing-default" required>
+												</div>
+												<label
+													ng-show="frmvalidateadd.$submitted && frmvalidateadd.title.$error.required"
+													style="color: red;">Tiêu đề không được để trống!</label>
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Nội dung</span>
+													</div>
+													<textarea class="form-control" rows="5" name="content"
+														ng-model="form.tourOverview.content"
+														aria-label="With textarea" required></textarea>
+
+												</div>
+												<label
+													ng-show="frmvalidateadd.$submitted && frmvalidateadd.content.$error.required"
+													style="color: red;">Nội dung không được để trống!</label>
 											</div>
 										</div>
 										<div class=" form-group col-md-12">
@@ -430,7 +675,7 @@
 
 										<div class="panel-footer text-right">
 											<button type="submit" name="submit"
-												ng-click="frmvalidate.$valid && create()"
+												ng-click="frmvalidateadd.$valid && create()"
 												class="btn btn-success">Thêm</button>
 											<button type="reset" class="btn btn-success">
 												<b class="glyphicon glyphicon-refresh"></b> Reset
@@ -445,4 +690,5 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
