@@ -23,13 +23,13 @@
 			<div class="text-center my-3 pb-3">
 				<h6 class="text-primary text-uppercase" style="letter-spacing: 5px">
 					Destination</h6>
-				<h1>The Most Crowded Tour</h1>
+				<h1>The most outstanding tour</h1>
 			</div>
 			<div class="row">
 				<div th:each="tour : ${topTour.content}" class="col-lg-4 col-md-6 mb-4">
 					<div class="package-item bg-white mb-2">
 					<a th:href="@{|/tour/detail/${tour.tour.tourid}|}"><img style="height: 300px;width: 100%" class="img-fluid "
-							th:src="@{|${tour.tour.image}|}" alt="" /></a>	
+							th:src="@{|${tour.tour.image}|}" alt="" /></a>
 						<div class="p-4">
 							<div class="d-flex justify-content-between mb-3">
 								<small
@@ -71,7 +71,7 @@
 							<a th:href="@{|/product/detail/${product.product.productid}|}" th:text="${product.product.productname}"
 								class="h5 text-decoration-none"></a>
 							<div class="border-top mt-4 pt-4">
-								<div class="text-center">							
+								<div class="text-center">
 									<h5
 										th:text="${#numbers.formatDecimal(product.product.price,0,'COMMA',0,'POINT')} + 'đ'"
 										class="m-0"></h5>
@@ -80,11 +80,8 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
-
 		</div>
 </body>
-
 </html>
 
