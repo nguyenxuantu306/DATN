@@ -37,11 +37,11 @@ public class ReCommentServiceImpl implements ReCommentService{
 		return reCommentDAO.findAll();
 	}
 
-	@Override
-	public List<ReComment> ReCommentbyComments(Comment comment) {
-		// TODO Auto-generated method stub
-		return reCommentDAO.findByComments(comment);
-	}
+//	@Override
+//	public List<ReComment> ReCommentbyComments(Comment comment) {
+//		// TODO Auto-generated method stub
+//		return reCommentDAO.findByComments(comment);
+//	}
 
 	@Override
 	public ReComment findById(Integer ReCommentid) {

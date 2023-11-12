@@ -26,12 +26,14 @@ import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.BookingService;
 import com.greenfarm.service.CategoryService;
 import com.greenfarm.service.OrderDetailService;
 import com.greenfarm.service.OrderService;
 import com.greenfarm.service.ProductService;
+import com.greenfarm.service.TourService;
 import com.greenfarm.service.UserService;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -56,6 +58,11 @@ public class ExcelController {
 	
 	@Autowired
 	BookingService bookingService;
+	
+	
+
+	@Autowired
+	TourService tourService;
 	
 	@GetMapping("/print-to-excel")
 	public ResponseEntity<byte[]> printToExcel() throws IOException {
@@ -241,22 +248,7 @@ public class ExcelController {
 	    // Áp dụng kiểu định dạng giá tiền cho cột "product.getPrice() * data.getCount()" (cột 4)
 	    sheet.setDefaultColumnStyle(4, currencyStyle);
 	    
-	    for (int i = 0; i < dataList.size(); i++) {
-	        Product data = dataList.get(i);
-	        Row row = sheet.createRow(rowIdx++);
-
-	        row.createCell(0).setCellValue(i + 1);
-	        row.createCell(1).setCellValue(data.getProductname());
-
-	        Cell priceCell = row.createCell(2);
-	        priceCell.setCellValue(data.getPrice());
-	        priceCell.setCellStyle(currencyStyle);
-
-	        row.createCell(3).setCellValue(data.getQuantityavailable());
-	    }
-
-	 // Tự động thay đổi độ rộng các cột
-	    sheet.autoSizeColumn(1);
+	   
 	    
 	    // Tự động điều chỉnh cỡ các cột
 	    for (int i = 0; i < 4; i++) {
@@ -270,7 +262,6 @@ public class ExcelController {
 
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-	    headers.setContentDispositionFormData("attachment", "categorystatistics.xlsx");
 	    headers.setContentDispositionFormData("attachment", "product.xlsx");
 
 	    return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
@@ -664,9 +655,6 @@ public class ExcelController {
 	    DataFormat dataFormat = workbook.createDataFormat();
 	    currencyStyle.setDataFormat(dataFormat.getFormat("#,##0.00 [$VNĐ]"));
 
-//	    // Căn giữa nội dung hàng trong ô
-//	    currencyStyle.setAlignment(HorizontalAlignment.CENTER);
-//	    currencyStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 	    
 	 // Căn giữa nội dung hàng trong ô theo chiều ngang từ trái qua phải
 	    currencyStyle.setAlignment(HorizontalAlignment.LEFT);
@@ -680,6 +668,7 @@ public class ExcelController {
 	        row.createCell(3).setCellValue(data.getBookingdateFormatted());
 	        row.createCell(4).setCellValue(data.getAdultticketnumber()+data.getChildticketnumber());
 	        row.createCell(5).setCellValue(data.getTotalprice());
+	        row.createCell(6).setCellValue(data.getStatusbooking().getName());
 	       
 	    }
 
@@ -700,6 +689,232 @@ public class ExcelController {
 	    return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@GetMapping("/excel-inventorystatistics")
+	public ResponseEntity<byte[]> ExcelInventorystatistics() throws IOException {
+	    List<Report> dataList = Inventorystatistics(); // Lấy dữ liệu từ hàm getAll()
+
+	    Workbook workbook = new XSSFWorkbook();
+	    Sheet sheet = workbook.createSheet("Thống kê hàng tồn kho");
+
+	    // Đặt tiêu đề cho tài liệu Excel
+	    String title = "Thống kê hàng tồn kho";
+	    Row titleRow = sheet.createRow(0);
+	    Cell titleCell = titleRow.createCell(2);
+	    titleCell.setCellValue(title);
+
+	    // Thiết lập font và kiểu chữ cho tiêu đề
+	    Font titleFont = workbook.createFont();
+	    titleFont.setBold(true);
+	    titleFont.setFontHeightInPoints((short) 16);
+	    titleFont.setColor(IndexedColors.BLUE.getIndex());
+
+	    CellStyle titleCellStyle = workbook.createCellStyle();
+	    titleCellStyle.setFont(titleFont);
+	    titleCellStyle.setAlignment(HorizontalAlignment.CENTER);
+	    titleCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+
+	    // Áp dụng định dạng cho ô tiêu đề
+	    titleCell.setCellStyle(titleCellStyle);
+
+	    // Tạo hàng tiêu đề và đặt giá trị cho các ô
+	    Row headerRow = sheet.createRow(1);
+	    headerRow.createCell(0).setCellValue("STT");
+	    headerRow.createCell(1).setCellValue("Tên SP");
+	    headerRow.createCell(2).setCellValue("SL còn trong kho ");
+	    headerRow.createCell(3).setCellValue("Số lượng đã bán");
+	    
+	    // Thiết lập font, kiểu chữ và màu sắc cho hàng tiêu đề
+	    Font headerFont = workbook.createFont();
+	    headerFont.setBold(true);
+	    headerFont.setFontHeightInPoints((short) 12);
+	    headerFont.setColor(IndexedColors.WHITE.getIndex());
+
+	    CellStyle headerCellStyle = workbook.createCellStyle();
+	    headerCellStyle.setFont(headerFont);
+	    headerCellStyle.setFillForegroundColor(IndexedColors.BLUE.getIndex());
+	    headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    headerCellStyle.setAlignment(HorizontalAlignment.CENTER);
+
+	    // Áp dụng định dạng cho hàng tiêu đề
+	    for (Cell cell : headerRow) {
+	        cell.setCellStyle(headerCellStyle);
+	    }
+
+	    // Định dạng dữ liệu và tạo các hàng dữ liệu
+	    CellStyle dataCellStyle = workbook.createCellStyle();
+	    dataCellStyle.setDataFormat(workbook.createDataFormat().getFormat("dd/MM/yyyy"));
+
+	    int rowIdx = 2;
+	    
+	
+	    
+	    for (int i = 0; i < dataList.size(); i++) {
+	        Report data = dataList.get(i);
+	        Row row = sheet.createRow(rowIdx++);
+	        row.createCell(0).setCellValue(i + 1);
+	        Product product = (Product) data.getGroup();
+	        row.createCell(1).setCellValue(product.getProductname());
+	        row.createCell(2).setCellValue(product.getQuantityavailable());
+	        row.createCell(3).setCellValue(data.getCount());
+	    }
+
+	    // Tự động điều chỉnh cỡ các cột
+	    for (int i = 0; i < 4; i++) {
+	        sheet.autoSizeColumn(i);
+	    }
+
+	    // Gửi file Excel như là phản hồi HTTP
+	    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	    workbook.write(outputStream);
+	    workbook.close();
+
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	    headers.setContentDispositionFormData("attachment", "Inventorystatistics.xlsx");
+
+	    return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
+	}
+	
+	
+	@GetMapping("/excel-tour")
+	public ResponseEntity<byte[]> ExcelTour() throws IOException {
+	    List<Tour> dataList = getAllTour(); // Lấy dữ liệu từ hàm getAll()
+
+	    Workbook workbook = new XSSFWorkbook();
+	    Sheet sheet = workbook.createSheet("Danh sách Tours");
+
+	    // Đặt tiêu đề cho tài liệu Excel
+	    String title = "Danh sách Tours";
+	    Row titleRow = sheet.createRow(0);
+	    Cell titleCell = titleRow.createCell(3);
+	    titleCell.setCellValue(title);
+
+	    // Thiết lập font và kiểu chữ cho tiêu đề
+	    Font titleFont = workbook.createFont();
+	    titleFont.setBold(true);
+	    titleFont.setFontHeightInPoints((short) 16);
+	    titleFont.setColor(IndexedColors.BLUE.getIndex());
+
+	    CellStyle titleCellStyle = workbook.createCellStyle();
+	    titleCellStyle.setFont(titleFont);
+	    titleCellStyle.setAlignment(HorizontalAlignment.CENTER);
+	    titleCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+
+	    // Áp dụng định dạng cho ô tiêu đề
+	    titleCell.setCellStyle(titleCellStyle);
+
+	    // Tạo hàng tiêu đề và đặt giá trị cho các ô
+	    Row headerRow = sheet.createRow(1);
+	    headerRow.createCell(0).setCellValue("STT");
+	    headerRow.createCell(1).setCellValue("Tên Tours");
+	    headerRow.createCell(2).setCellValue("Ngày");
+	    headerRow.createCell(3).setCellValue("Giá");
+	    headerRow.createCell(4).setCellValue("Số lượng");
+	    headerRow.createCell(5).setCellValue("Điều kiện");
+	    headerRow.createCell(6).setCellValue("Tổng quan");
+	    
+	    // Thiết lập font, kiểu chữ và màu sắc cho hàng tiêu đề
+	    Font headerFont = workbook.createFont();
+	    headerFont.setBold(true);
+	    headerFont.setFontHeightInPoints((short) 12);
+	    headerFont.setColor(IndexedColors.WHITE.getIndex());
+
+	    CellStyle headerCellStyle = workbook.createCellStyle();
+	    headerCellStyle.setFont(headerFont);
+	    headerCellStyle.setFillForegroundColor(IndexedColors.BLUE.getIndex());
+	    headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    headerCellStyle.setAlignment(HorizontalAlignment.CENTER);
+
+	    // Áp dụng định dạng cho hàng tiêu đề
+	    for (Cell cell : headerRow) {
+	        cell.setCellStyle(headerCellStyle);
+	    }
+	    int rowIdx = 2;
+	 // Định dạng giá tiền
+	    CellStyle currencyStyle = workbook.createCellStyle();
+	    DataFormat dataFormat = workbook.createDataFormat();
+	    currencyStyle.setDataFormat(dataFormat.getFormat("#,##0.00 [$VNĐ]"));
+	    sheet.setDefaultColumnStyle(3, currencyStyle);
+
+	    for (int i = 0; i < dataList.size(); i++) {
+	        Tour data = dataList.get(i);
+	        Row row = sheet.createRow(rowIdx++);
+	        
+	        row.createCell(0).setCellValue(i + 1);
+	        row.createCell(1).setCellValue(data.getTourname());
+	        row.createCell(2).setCellValue(data.getDepartureday());
+
+	        // Định dạng giá tiền
+	        Cell formattedSumCell = row.createCell(3);
+	        formattedSumCell.setCellValue(data.getPricings().getAdultprice());
+	        formattedSumCell.setCellStyle(currencyStyle);
+
+	        row.createCell(4).setCellValue(data.getAvailableslots());
+
+	        // Kiểm tra và hiển thị "đã có" nếu điều kiện được đáp ứng
+	        String tourConditions = data.getTourCondition().getConditions();
+	        String tourOverviewContent = data.getTourOverview().getContent();
+
+	        Cell conditionCell = row.createCell(5);
+	        if (tourConditions != null && !tourConditions.isEmpty()) {
+	            conditionCell.setCellValue("Đã có");
+	        } else {
+	            conditionCell.setCellValue("");
+	        }
+
+	        Cell overviewCell = row.createCell(6);
+	        if (tourOverviewContent != null && !tourOverviewContent.isEmpty()) {
+	            overviewCell.setCellValue("Đã có");
+	        } else {
+	            overviewCell.setCellValue("");
+	        }
+	    }
+
+
+	    // Tự động thay đổi độ rộng cột "sum"
+	    sheet.autoSizeColumn(2);
+
+	   
+
+	    // Áp dụng kiểu định dạng giá tiền cho cột "product.getPrice() * data.getCount()" (cột 4)
+	    sheet.setDefaultColumnStyle(3, currencyStyle);
+	    
+	    
+	 // Tự động thay đổi độ rộng các cột
+	    sheet.autoSizeColumn(1);
+	    
+	    // Tự động điều chỉnh cỡ các cột
+	    for (int i = 0; i < 7; i++) {
+	        sheet.autoSizeColumn(i);
+	    }
+
+	    // Gửi file Excel như là phản hồi HTTP
+	    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	    workbook.write(outputStream);
+	    workbook.close();
+
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	    headers.setContentDispositionFormData("attachment", "tour.xlsx");
+
+	    return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
+	}
 	public final List<User> getAll() {
 		return userService.findAll();
 	}
@@ -724,5 +939,13 @@ public class ExcelController {
 	
 	public final List<Booking> getAllBookings() {
 		return bookingService.findAll();
+	}
+	
+	public final List<Report> Inventorystatistics() {
+		return productService.getTk_sp();
+	}
+	
+	public final List<Tour> getAllTour() {
+		return tourService.findAll();
 	}
 }
