@@ -37,11 +37,6 @@ public class ReCommentServiceImpl implements ReCommentService{
 		return reCommentDAO.findAll();
 	}
 
-//	@Override
-//	public List<ReComment> ReCommentbyComments(Comment comment) {
-//		// TODO Auto-generated method stub
-//		return reCommentDAO.findByComments(comment);
-//	}
 
 	@Override
 	public ReComment findById(Integer ReCommentid) {
@@ -59,6 +54,12 @@ public class ReCommentServiceImpl implements ReCommentService{
 	public void deleteReCommentById(Integer ReCommentid) {
 		// TODO Auto-generated method stub
 		reCommentDAO.deleteById(ReCommentid);
+	}
+
+	@Override
+	public List<ReComment> getrecommenComments(Comment comment) {
+		// TODO Auto-generated method stub
+		return reCommentDAO.findByComment(comment);
 	}
 
 
