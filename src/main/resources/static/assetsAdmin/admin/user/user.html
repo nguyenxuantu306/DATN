@@ -1,5 +1,5 @@
 <div class="container-fluid">
-	<div class="row">
+	<form th:action="@{/rest/users/add}" th:object="${user}" method="post"  class="row form">
 		<div class="col-12">
 			<div class="card">
 				<div class="card-body">
@@ -12,19 +12,23 @@
 									id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 							</div>
 							<input type="search" class="form-control" ng-model="searchEmail"
-								placeholder="Tìm kiếm email..."  aria-label="Tìm kiếm email...">
+								placeholder="Tìm kiếm email..." aria-label="Tìm kiếm email...">
 						</div>
 						<div class="col-md-6 text-right">
-							<button type="button" class="btn btn-success" ng-click="editthemsp()" data-toggle="modal" data-target="#exampleModa2">
-								<i class="fa fa-plus-square"></i></i> Thêm người dùng
+							<button type="button" class="btn btn-success"
+								ng-click="editthemsp()" data-toggle="modal"
+								data-target="#exampleModa2">
+								<i class="fa fa-plus-square"></i> Thêm người dùng
 							</button>
-							<button type="button" class="btn btn-success"ng-click="exportExcel()">
+							<button type="button" class="btn btn-success"
+								ng-click="exportExcel()">
 								<i class="fa fa-file-excel-o"></i> Excel
 							</button>
-							<button type="button" class="btn btn-success"ng-click="exportPdf()">
+							<button type="button" class="btn btn-success"
+								ng-click="exportPdf()">
 								<i class="fa fa-file-pdf-o"></i> PDF
 							</button>
-							
+
 						</div>
 					</div>
 					<div class="table-responsive">
@@ -45,7 +49,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in pager.items | filter: { email: searchEmail }">
+								<tr
+									ng-repeat="item in pager.items | filter: { email: searchEmail }">
 									<td>{{$index + 1}}</td>
 									<th><img ng-src="/assetsAdmin/images/{{item.image}}"
 										alt="Hình ảnh" style="width: 70px; height: 100px"></th>
@@ -100,7 +105,7 @@
 							<div class="card">
 								<div class="card-body">
 									<div class="basic-form">
-										<form class="row ">
+										<div class="row">
 											<div class="col-md-4">
 												<label for="image"> <img
 													ng-src="{{'/assetsAdmin/images/' +form.image}}"
@@ -110,7 +115,7 @@
 											</div>
 											<div class="col-md-8">
 												<div class="row">
-													
+
 													<div class="form-group col-sm-6">
 														<label>Mật khẩu : </label> <input name="password"
 															type="password" ng-model="form.password"
@@ -169,24 +174,24 @@
 													</div>
 												</div>
 											</div>
+										</div>
 									</div>
-									</form>
+
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<div class="panel-footer text-right">							
-							<button ng-click="update()"
-								class="btn btn-success">
+						<div class="panel-footer text-right">
+							<button ng-click="update()" class="btn btn-success">
 								<b class="glyphicon glyphicon-save"></b> Cập nhật người dùng
-							</button>							
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-				<div class="modal fade" id="exampleModa2" tabindex="-1"
+		<div class="modal fade" id="exampleModa2" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-xl custom-modal">
 				<div class="modal-content">
@@ -201,7 +206,7 @@
 							<div class="card">
 								<div class="card-body">
 									<div class="basic-form">
-										<form class="row ">
+										<div class="row ">
 											<div class="col-md-4">
 												<label for="image"> <img
 													ng-src="{{'/assetsAdmin/images/' +form.image}}"
@@ -211,7 +216,7 @@
 											</div>
 											<div class="col-md-8">
 												<div class="row">
-													
+
 													<div class="form-group col-sm-6">
 														<label>Mật khẩu : </label> <input name="password"
 															type="password" ng-model="form.password"
@@ -270,17 +275,18 @@
 													</div>
 												</div>
 											</div>
+										</div>
 									</div>
-									</form>
+
+
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<div class="panel-footer text-right">
-							<button ng-click="create()"
-								class="btn btn-success">Thêm</button>														
-							<button  ng-click="reset()" class="btn btn-success">
+							<button ng-click="create()" class="btn btn-success">Thêm</button>
+							<button ng-click="reset()" class="btn btn-success">
 								<b class="glyphicon glyphicon-refresh"></b> Mới
 							</button>
 						</div>
@@ -288,6 +294,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 </div>
 

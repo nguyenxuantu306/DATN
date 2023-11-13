@@ -85,16 +85,17 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public User create(User user) throws UserAlreadyExistException {
-		if (!emailExists(user.getEmail())) {
+		if (emailExists(user.getEmail())) {
 			throw new UserAlreadyExistException("đã có tài khoản dùng email này");
-		}
-		User userentity = new User();
-		BeanUtils.copyProperties(user, userentity);
-		userentity.setPassword(PE.encode(userentity.getPassword()));
-		dao.save(userentity);
-		sendRegistrationConfirmationEmail(userentity);
+		} else {
+			User userentity = new User();
+			BeanUtils.copyProperties(user, userentity);
+			userentity.setPassword(PE.encode(userentity.getPassword()));
+			dao.save(userentity);
+			sendRegistrationConfirmationEmail(userentity);
 
-		return userentity;
+			return userentity;
+		}
 	}
 
 	@Override
