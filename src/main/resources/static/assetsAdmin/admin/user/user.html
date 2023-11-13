@@ -106,87 +106,139 @@
 						<div class="card">
 							<div class="card-body">
 								<div class="basic-form">
-									<div class="row">
-										<div class="col-md-4">
-											<label for="image"> <img
-												ng-src="{{'/assetsAdmin/images/' +form.image}}"
-												style="max-width: 100%; height: 300px">
-											</label>
+									<form class="row" name="frmvalidateupdate" ng-submit="submitForm1()"
+										novalidate>
+										<div class="row">
+											<div class="col-md-4">
+												<label for="image"> <img
+													ng-src="{{'/assetsAdmin/images/' +form.image}}"
+													style="max-width: 100%; height: 300px">
+												</label>
 
-										</div>
-										<div class="col-md-8">
-											<div class="row">
+											</div>
+											<div class="col-md-8">
+												<div class="row">
+													<div class="form-group col-sm-6">
+														<label>Mật khẩu : </label> <input name="password"
+															type="password" ng-model="form.password"
+															ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$/"
+															class="form-control input-default" ng-readonly="isEdit"
+															required> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.password.$error.required"
+															style="color: red;">Vui lòng nhập mật khẩu !</label> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.password.$error.pattern"
+															style="color: red;">Mật khẩu phải có từ 8 đến 16
+															ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.</label>
+													</div>
 
-												<div class="form-group col-sm-6">
-													<label>Mật khẩu : </label> <input name="password"
-														type="password" ng-model="form.password"
-														class="form-control input-default" ng-readonly="isEdit">
-												</div>
 
-												<div class="form-group col-sm-6">
-													<label>Địa chỉ : </label> <input name="address" type="text"
-														ng-model="form.address" class="form-control input-default">
-												</div>
-												<div class="form-group col-sm-6">
-													<label>Ngày tạo : </label> <input
-														ng-model="form.createddate" type="date"
-														class="form-control input-default">
-												</div>
-												<div class="form-group col-sm-6">
-													<label>Email : </label> <input name="email" type="text"
-														ng-model="form.email" class="form-control input-default">
-												</div>
+													<div class="form-group col-sm-6">
+														<label>Địa chỉ : </label> <input name="address"
+															type="text" ng-model="form.address"
+															placeholder="VD : Công viên..."
+															class="form-control input-default" required> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.address.$error.required"
+															style="color: red;">Vui lòng nhập địa chỉ !</label> <label>
+													</div>
+													<div class="form-group col-sm-6">
+														<label>Ngày tạo : </label> <input
+															ng-model="form.createddate" type="date"
+															name="createddate" class="form-control input-default"
+															required> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.createddate.$error.required"
+															style="color: red;">Vui lòng nhập ngày tạo !</label> <label>
+													</div>
+													<div class="form-group col-sm-6">
+														<label>Email: </label> <input name="email" type="text"
+															ng-model="form.email" class="form-control input-default"
+															required placeholder="VD : hungnvps20689@fpt.edu.vn"
+															ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/">
+														<label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.email.$error.required"
+															style="color: red;">Vui lòng nhập email!</label> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.email.$error.pattern"
+															style="color: red;">Email không hợp lệ. Vui lòng
+															nhập đúng định dạng email.</label>
 
-												<div class="form-group col-sm-6">
-													<label>Giới tính : </label>
-													<div class="form-control">
-														<input form-control ng-model="form.gender" ng-value="true"
-															type="radio" name="gender" required> Nam <input
-															form-control ng-model="form.gender" ng-value="false"
-															type="radio" name="gender" required> Nữ
+													</div>
+
+													<div class="form-group col-sm-6">
+														<label>Giới tính : </label>
+														<div class="form-control">
+															<input form-control ng-model="form.gender"
+																ng-value="true" type="radio" name="gender" required>
+															Nam <input form-control ng-model="form.gender"
+																ng-value="false" type="radio" name="gender" required>
+															Nữ
+														</div>
+														<label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.gender.$error.required"
+															style="color: red;">Vui lòng chọn giới tính!</label>
+													</div>
+													<div class="form-group col-sm-6">
+														<label>Tên đầu : </label> <input name="firstname"
+															type="text" ng-model="form.firstname"
+															placeholder="VD : Hưng"
+															class="form-control input-default" required> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.firstname.$error.required"
+															style="color: red;">Vui lòng nhập tên đầu!</label>
+													</div>
+													<div class="form-group col-sm-6">
+														<label>Tên cuối : </label> <input name="lastname"
+															placeholder="VD : Nguyễn" type="text"
+															ng-model="form.lastname"
+															class="form-control input-default" required> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.lastname.$error.required"
+															style="color: red;">Vui lòng nhập tên cuôí!</label>
+													</div>
+													<div class="form-group col-sm-6">
+														<label>Số điện thoại: </label> <input name="phonenumber"
+															type="text" ng-model="form.phonenumber"
+															placeholder="VD : 0999999999"
+															class="form-control input-default" required
+															ng-pattern="/^[0-9]{10}$/"> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.phonenumber.$error.required"
+															style="color: red;">Vui lòng nhập số điện thoại!</label>
+														<label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.phonenumber.$error.pattern"
+															style="color: red;">Số điện thoại không hợp lệ.
+															Vui lòng nhập đúng định dạng!</label>
+
+													</div>
+													<div class="form-group col-sm-6">
+														<label>Ngày sinh : </label> <input
+															ng-model="form.birthday" type="date" id="birthday"
+															name="birthday" class="form-control input-default"
+															required> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.birthday.$error.required"
+															style="color: red;">Vui lòng chọn ngày sinh!</label>
+													</div>
+													<div class="form-group col-sm-6">
+														<label>Hình ảnh : </label> <input type="file"
+															class="form-control" id="image" name="image"
+															ng-model="form.image"
+															onchange="angular.element(this).scope().imageChanged(this.files)"
+															required> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.image.$error.required"
+															style="color: red;">Hình ảnh trống!</label>
 													</div>
 												</div>
-												<div class="form-group col-sm-6">
-													<label>Tên đầu : </label> <input name="firstname"
-														type="text" ng-model="form.firstname"
-														class="form-control input-default">
-												</div>
-												<div class="form-group col-sm-6">
-													<label>Tên cuối : </label> <input name="lastname"
-														type="text" ng-model="form.lastname"
-														class="form-control input-default">
-												</div>
-												<div class="form-group col-sm-6">
-													<label>Số điện thoại : </label> <input name="phonenumber"
-														type="text" ng-model="form.phonenumber"
-														class="form-control input-default">
-												</div>
-												<div class="form-group col-sm-6">
-													<label>Ngày sinh : </label> <input ng-model="form.birthday"
-														type="date" id="birthday"
-														class="form-control input-default">
-												</div>
-												<div class="form-group col-sm-6">
-													<label>Hình ảnh : </label> <input type="file"
-														class="form-control" id="image" ng-model="form.image"
-														onchange="angular.element(this).scope().imageChanged(this.files)">
-												</div>
+											</div>
+											<div class="panel-footer ">
+												<button type="submit" name="submit"
+													ng-click="frmvalidateupdate.$valid && update()"
+													class="btn btn-success">Cập nhật người dùng</button>
+										
 											</div>
 										</div>
-									</div>
+									</form>
 								</div>
 
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<div class="panel-footer text-right">
-						<button ng-click="update()" class="btn btn-success">
-							<b class="glyphicon glyphicon-save"></b> Cập nhật người dùng
-						</button>
-					</div>
-				</div>
+
 			</div>
 		</div>
 	</div>
@@ -234,6 +286,7 @@
 													<div class="form-group col-sm-6">
 														<label>Địa chỉ : </label> <input name="address"
 															type="text" ng-model="form.address"
+															placeholder="VD : Công viên..."
 															class="form-control input-default" required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.address.$error.required"
 															style="color: red;">Vui lòng nhập địa chỉ !</label> <label>
@@ -249,7 +302,7 @@
 													<div class="form-group col-sm-6">
 														<label>Email: </label> <input name="email" type="text"
 															ng-model="form.email" class="form-control input-default"
-															required
+															required placeholder="VD : hungnvps20689@fpt.edu.vn"
 															ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/">
 														<label
 															ng-show="frmvalidate.$submitted && frmvalidate.email.$error.required"
@@ -276,13 +329,15 @@
 													<div class="form-group col-sm-6">
 														<label>Tên đầu : </label> <input name="firstname"
 															type="text" ng-model="form.firstname"
+															placeholder="VD : Hưng"
 															class="form-control input-default" required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.firstname.$error.required"
 															style="color: red;">Vui lòng nhập tên đầu!</label>
 													</div>
 													<div class="form-group col-sm-6">
 														<label>Tên cuối : </label> <input name="lastname"
-															type="text" ng-model="form.lastname"
+															placeholder="VD : Nguyễn" type="text"
+															ng-model="form.lastname"
 															class="form-control input-default" required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.lastname.$error.required"
 															style="color: red;">Vui lòng nhập tên cuôí!</label>
@@ -290,6 +345,7 @@
 													<div class="form-group col-sm-6">
 														<label>Số điện thoại: </label> <input name="phonenumber"
 															type="text" ng-model="form.phonenumber"
+															placeholder="VD : 0999999999"
 															class="form-control input-default" required
 															ng-pattern="/^[0-9]{10}$/"> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.phonenumber.$error.required"
@@ -302,17 +358,18 @@
 													</div>
 													<div class="form-group col-sm-6">
 														<label>Ngày sinh : </label> <input
-															ng-model="form.birthday" type="date" id="birthday" name="birthday"
-															class="form-control input-default" required> <label
+															ng-model="form.birthday" type="date" id="birthday"
+															name="birthday" class="form-control input-default"
+															required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.birthday.$error.required"
 															style="color: red;">Vui lòng chọn ngày sinh!</label>
 													</div>
 													<div class="form-group col-sm-6">
 														<label>Hình ảnh : </label> <input type="file"
-															class="form-control" id="image" name="image" ng-model="form.image"
+															class="form-control" id="image" name="image"
+															ng-model="form.image"
 															onchange="angular.element(this).scope().imageChanged(this.files)"
-															required>
-															<label
+															required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.image.$error.required"
 															style="color: red;">Hình ảnh trống!</label>
 													</div>
