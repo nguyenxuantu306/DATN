@@ -11496,3 +11496,12 @@ h1 {
     border: 1px solid #000;
     border-radius: 5px 0 0 5px; /* Đặt border radius ở dưới góc trái */
 }
+
+.thumbnail-image.selected {
+    border: 2px solid gold; /* Độ rộng và màu sắc của đường viền */
+}
+
+/* Thêm hiệu ứng chuyển động cho viền */
+.thumbnail-image.selected:hover {
+    border: 2px solid gold; /* Giữ viền màu vàng khi hover */
+}
