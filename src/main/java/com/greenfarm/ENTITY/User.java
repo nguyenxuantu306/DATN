@@ -48,6 +48,7 @@ public class User implements Serializable {
 	String password;
 
 	@Column(unique = true)
+	@Pattern(regexp = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", message = "Email phải đúng định dạng.")
 	@NotBlank(message = "Email là bắt buộc")
 	@Email(message = "Email không hợp lệ!")
 	String email;

@@ -60,6 +60,10 @@ app.controller("user-ctrl", function($scope, $http) {
 				title: 'Thành công!',
 				text: 'Thêm tài khoản thành công!',
 			});
+			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+			$scope.frmvalidate.$setPristine();
+			$scope.frmvalidate.$setUntouched();
+			$scope.frmvalidate.$submitted = false;
 
 		}).catch(error => {
 			// Sử dụng SweetAlert2 cho thông báo lỗi
@@ -85,6 +89,11 @@ app.controller("user-ctrl", function($scope, $http) {
 				title: 'Thành công!',
 				text: 'Cập nhật thành công!',
 			});
+			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+				$scope.frmvalidateupdate.$setPristine();
+				$scope.frmvalidateupdate.$setUntouched();
+				$scope.frmvalidateupdate.$submitted = false;
+				$scope.edit(item);
 		})
 			.catch(error => {
 				// Sử dụng SweetAlert2 cho thông báo lỗi
