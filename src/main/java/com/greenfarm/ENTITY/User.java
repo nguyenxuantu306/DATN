@@ -59,7 +59,10 @@ public class User implements Serializable {
 	@NotBlank(message = "Mô tả là bắt buộc")
 	String lastname;
 
-	@Pattern(regexp = "^[1-9][0-9]*$", message = "Số điện thoại phải là số nguyên dương và không chứa ký tự khác")
+	/*
+	 * @Pattern(regexp = "^[1-9][0-9]*$", message =
+	 * "Số điện thoại phải là số nguyên dương và không chứa ký tự khác")
+	 */
 	String phonenumber;
 
 	@NotBlank(message = "Ảnh đại diện là bắt buộc")

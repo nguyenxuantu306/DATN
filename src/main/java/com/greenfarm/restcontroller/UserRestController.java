@@ -87,7 +87,7 @@ public class UserRestController {
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
-	@PostMapping("/add")
+	@PostMapping()
 	public ResponseEntity<UserDTO> create(@Valid @RequestBody User user) throws UserAlreadyExistException {
 		User createdUser = userService.create(user);
 
