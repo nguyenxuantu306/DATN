@@ -130,10 +130,10 @@
 						<div th:if="${items.totalPages > 1}" class="pagination justify-content-center">
 							<ul class="pagination justify-content-center">
 								<li th:class="${items.number == 0} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{${url}(page=0)}" class="page-link">First</a>
+									<a th:href="@{${url}(page=0)}" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
 								</li>
 								<li th:class="${items.number == 0} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{${url}(page=${items.number - 1})}" class="page-link">Previous</a>
+									<a th:href="@{${url}(page=${items.number - 1})}" class="page-link"><i class="bi bi-chevron-left"></i></a>
 								</li>
 								<li th:each="pageNumber : ${#numbers.sequence(0, items.totalPages - 1)}"
 									th:class="${items.number == pageNumber} ? 'page-item active' : 'page-item'">
@@ -142,11 +142,11 @@
 								</li>
 								<li
 									th:class="${items.number == items.totalPages - 1} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{${url}(page=${items.number + 1})}" class="page-link">Next</a>
+									<a th:href="@{${url}(page=${items.number + 1})}" class="page-link"><i class="bi bi-chevron-right"></i></a>
 								</li>
 								<li
 									th:class="${items.number == items.totalPages - 1} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{${url}(page=${items.totalPages - 1})}" class="page-link">Last</a>
+									<a th:href="@{${url}(page=${items.totalPages - 1})}" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
 								</li>
 							</ul>
 						</div>

@@ -79,11 +79,11 @@
 						<div class="col-md-12">
 							<ul class="pagination justify-content-center">
 								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=1&size=${size}|}" class="page-link">First</a>
+									<a th:href="@{|/tour?page=1&size=${size}|}" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
 								</li>
 								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
 									<a th:href="@{|/tour?page=${currentPage - 1}&size=${size}|}"
-										class="page-link">Previous</a>
+										class="page-link"><i class="bi bi-chevron-left"></i></a>
 								</li>
 								<li th:each="i: ${#numbers.sequence(1, totalPages)}"
 									th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
@@ -91,10 +91,10 @@
 								</li>
 								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
 									<a th:href="@{|/tour?page=${currentPage + 1}&size=${size}|}"
-										class="page-link">Next</a>
+										class="page-link"><i class="bi bi-chevron-right"></i></a>
 								</li>
 								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=${totalPages}&size=${size}|}" class="page-link">Last</a>
+									<a th:href="@{|/tour?page=${totalPages}&size=${size}|}" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
 								</li>
 							</ul>
 						</div>
@@ -134,11 +134,11 @@
 						<div class="col-md-12">
 							<ul class="pagination justify-content-center">
 								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=1&size=${6}|}" class="page-link">First</a>
+									<a th:href="@{|/tour?page=1&size=${6}|}" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
 								</li>
 								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
 									<a th:href="@{|/tour?page=${currentPage - 1}&size=${6}|}"
-										class="page-link">Previous</a>
+										class="page-link"><i class="bi bi-chevron-left"></i></a>
 								</li>
 								<li th:each="i: ${#numbers.sequence(1, totalPages)}"
 									th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
@@ -146,10 +146,10 @@
 								</li>
 								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
 									<a th:href="@{|/tour?page=${currentPage + 1}&size=${6}|}"
-										class="page-link">Next</a>
+										class="page-link"><i class="bi bi-chevron-right"></i></a>
 								</li>
 								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=${totalPages}&size=${6}|}" class="page-link">Last</a>
+									<a th:href="@{|/tour?page=${totalPages}&size=${6}|}" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
 								</li>
 							</ul>
 						</div>
