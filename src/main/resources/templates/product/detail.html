@@ -17,9 +17,8 @@
 </head>
 
 <body>
-	<div class="container shop-detail ">
+	<div class="container shop-detail">
 		<div class="pt-3">
-
 			<div th:object="${item}" class="row">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
@@ -29,14 +28,14 @@
 					</ol>
 				</nav>
 				<div class="col-lg-6 border-1">
-					<img id="mainImage" th:src="@{|*{image}|}" alt="" style="width: 100%;">
+					<img id="mainImage" th:src="@{|*{image}|}" alt="" style="width: 100%; height: 400px;">
 
 					<div class="tab-content produc_tab_c mt-2">
-						<div class="tab-pane fade show active" id="p_tab1" role="tabpanel">
+						<div class="tab-pane fade show active" role="tabpanel">
 							<div class="modal_img row justify-content-center">
 								<div th:each="productImage: ${item.productimage}"
 									class="col-md-2 justify-content-center">
-								<!--	<div class="view_img">
+									<!--	<div class="view_img">
 										<a class="large_view" href="#" data-imageurl="${productImage.imageurl}">
 											<i class="fa fa-search-plus"></i>
 										</a>
@@ -70,63 +69,43 @@
 								<i class="fas fa-shopping-cart"></i> Add to Cart
 							</button>
 						</div>
-						<div class="categories ">
+						<div class="">
 							<h5>
-								CATEGORIES: <span><a th:text="*{category.categoryname}"></span>
+								Categories: <span th:text="*{category.categoryname}"></span>
 							</h5>
-
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-6 col-md-6">
-					<!--<div class="product_tab fix">
-						<div class="product_tab_button">
-							<ul class="nav" role="tablist">
-								<li>
-									<a class="active" data-toggle="tab" href="#p_tab1" role="tab" aria-controls="p_tab1"
-										aria-selected="false"><img th:src="@{|*{Image1}|}" alt=""></a>
-								</li>
-								<li>
-									<a data-toggle="tab" href="#p_tab2" role="tab" aria-controls="p_tab2"
-										aria-selected="false"><img th:src="@{|*{image2}|}" alt=""></a>
-								</li>
-								<li>
-									<a data-toggle="tab" href="#p_tab3" role="tab" aria-controls="p_tab3"
-										aria-selected="false"><img th:src="@{|*{image3}|}" alt=""></a>
-								</li>
-							</ul>
-						</div>-->
-
-				</div>
 			</div>
-
 		</div>
 
+		<div class="">
+			<div id="wapper">
+				<div class="mb-3 pb-3">
+					<h1>SẢN PHẨM LIÊN QUAN</h1>
+				</div>
 
-		<div id="wapper">
-			<div class=" mb-3 pb-3">
-				<h1>SẢN PHẨM LIÊN QUAN</h1>
-			</div>
-
-			<div class="row slider" th:object="${item}">
-				<div class="col-md-12 col-sm-12 col-xs-12 slide" th:each="p : *{category.products}">
-					<div class="wap-items-ss brbox">
-						<a th:href="@{|/product/detail/${p.productid}|}" class="wap-ss-img"> <img
-								th:src="@{|${p.image}|}" alt="Product Image">
-						</a>
-						<div class="textleft">
-							<a th:href="@{|/product/detail/${p.productid}|}" th:text="${p.productname}"
-								style="color: black; text-decoration: none;"></a>
-							<div>
-								<b th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></b>
+				<div class="row slider" th:object="${item}">
+					<div class="col-md-12 col-sm-12 col-xs-12 slide" th:each="p : *{category.products}">
+						<div class="wap-items-ss brbox">
+							<a th:href="@{|/product/detail/${p.productid}|}" class="wap-ss-img"> <img
+									th:src="@{|${p.image}|}" alt="Product Image" style="width: 100%;" height="250px">
+							</a>
+							<div class="textleft">
+								<a th:href="@{|/product/detail/${p.productid}|}" th:text="${p.productname}"
+									style="color: black; text-decoration: none;"></a>
+								<div>
+									<b th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></b>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
 		</div>
 		<br>
+
+
 		<div class=" mb-3">
 			<h1>ĐÁNH GIÁ SẢN PHẨM</h1>
 		</div>
