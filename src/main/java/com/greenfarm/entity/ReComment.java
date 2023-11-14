@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Recomments")
+@Table(name = "recomments")
 public class ReComment implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +35,6 @@ public class ReComment implements Serializable{
 	private User user;
 	
 	@ManyToOne	
-	@JoinColumn(name = "commentid")
+	@JoinColumn(name = "CommentID")
 	Comment comment;
 }

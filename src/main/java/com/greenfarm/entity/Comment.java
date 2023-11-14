@@ -2,7 +2,11 @@ package com.greenfarm.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -39,8 +43,15 @@ public class Comment implements Serializable{
 	@JoinColumn(name = "TourID")
 	Tour tour;
 	
-	@OneToMany
-	@JoinColumn(name = "reComments")
-	private ReComment reComment;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+	private List<ReComment> recomment;
+//	@ManyToOne
+//	@JoinColumn(name = "recomments")
+//	private ReComment reComment;
+	@Override
+	public String toString() {
+		return "";
+	}
 }

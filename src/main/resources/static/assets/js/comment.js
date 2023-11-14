@@ -17,7 +17,7 @@ commentapp.config(['$routeProvider', '$locationProvider', function($routeProvide
 
 commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	$scope.items = [];
-	$scope.recomments = [];
+	$scope.listrecm = [];
 	$scope.users = {};
 	$scope.form = {};
 	$scope.field = [];
@@ -33,7 +33,7 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
     
     // Kiểm tra nếu người dùng đang xem là người dùng đăng nhập
     $scope.isUserLoggedIn = function (email) {
-        return email === $scope.loggedInUser;
+        return email === uslog;
     };
 	 
 	$scope.initialize = function() {
@@ -46,30 +46,27 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 		$http.get("/rest/comment/tour/"+ + $scope.tour.tourid).then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
-				console.log("tourId: " + item.commentid); 
-				item.commentdate = new Date(item.commentdate)
-				$http.get("/rest/recomment/comment/1").then(resp => {
-			$scope.recomments = resp.data;
-			$scope.recomments.forEach(item => {
+				/*recomment*/
+				$http.get("/rest/recomment/comment/"+ +item.commentid).then(resp => {
+			$scope.listrecm = resp.data;
+			$scope.listrecm.forEach(item => {
 				console.log("recm id: " + item.recommentid); 
+				console.log("recm id: " + item.recommenttext); 
 				item.recommentdate = new Date(item.recommentdate)
 			})
 		});
+				console.log("cmid: " + item.commentid); 
+				console.log("cmid: " + item.commenttext); 
+				item.commentdate = new Date(item.commentdate)
+				
+				
 			})
 		});
 		
 		
 		
 		
-		/*console.log("tourId2: " + tourid); 
-		  
-$http.get('/rest/tours/' + tourid)
-        .then(function(response) {
-            $scope.tour = response.data;
-        })
-        .catch(function(error) {
-            console.log(error);
-        });*/
+	
 	}
 	// Khởi đầu
 	$scope.initialize();
@@ -95,6 +92,7 @@ $http.get('/rest/tours/' + tourid)
 			image:'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',			
 		};			
 	}
+	
 $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 			$scope.users = resp.data;
 			
