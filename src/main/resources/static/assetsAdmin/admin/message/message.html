@@ -10,14 +10,10 @@
 								<span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
 										class="mdi mdi-magnify"></i></span>
 							</div>
-							<input ng-model="searchCategory" type="search" class="form-control"
-								placeholder="Tìm kiếm nội dung..." aria-label="Tìm kiếm theo nội dung...">
+							<input ng-model="searchByUser" type="search" class="form-control"
+								placeholder="Tìm kiếm theo email..." aria-label="Tìm kiếm theo nội dung...">
 						</div>
-						<div class="col-md-6 text-right">
-							<button type="button" class="btn btn-success" ng-click="editthemsp()" data-toggle="modal"
-								data-target="#exampleModa2">
-								<i class="fa fa-plus-square"></i></i> Thêm bình luận
-							</button>
+						<div class="col-md-6 text-right">						
 							<button type="button" class="btn btn-success" ng-click="exportExcel()">
 								<i class="fa fa-file-excel-o"></i> Excel
 							</button>
@@ -41,7 +37,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in items">
+								<tr ng-repeat="item in pager.items | filter:searchByUser">
 									<th>{{$index + 1}}</th>
 									<th style="width: 250px;" class="d-flex">
 										<img ng-if="item.user.image" ng-src="/assetsAdmin/images/{{item.user.image}}"

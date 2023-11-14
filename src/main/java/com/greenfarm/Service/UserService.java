@@ -54,4 +54,9 @@ public interface UserService {
 
     //Tổng tiền mua hàng của các user
 	List<Report> getTotalPurchaseByUser();
+	
+	//Tổng tiền đặt vé của các user
+	List<Report> getBookingTotalPurchaseByUser();
+
+	
 }

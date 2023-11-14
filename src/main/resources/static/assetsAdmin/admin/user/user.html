@@ -1,110 +1,111 @@
 <div class="container-fluid">
-	<form th:action="@{/rest/users/add}" th:object="${user}" method="post"  class="row form">
-		<div class="col-12">
-			<div class="card">
-				<div class="card-body">
-					<h2 class="card">Danh sách người dùng</h2>
-					<div class="row py-3">
-						<div class="col-md-6 input-group icons">
-							<div class="input-group-prepend">
-								<span
-									class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
-									id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
-							</div>
-							<input type="search" class="form-control" ng-model="searchEmail"
-								placeholder="Tìm kiếm email..." aria-label="Tìm kiếm email...">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<h2 class="card">Danh sách người dùng</h2>
+				<div class="row py-3">
+					<div class="col-md-6 input-group icons">
+						<div class="input-group-prepend">
+							<span
+								class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
+								id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 						</div>
-						<div class="col-md-6 text-right">
-							<button type="button" class="btn btn-success"
-								ng-click="editthemsp()" data-toggle="modal"
-								data-target="#exampleModa2">
-								<i class="fa fa-plus-square"></i> Thêm người dùng
-							</button>
-							<button type="button" class="btn btn-success"
-								ng-click="exportExcel()">
-								<i class="fa fa-file-excel-o"></i> Excel
-							</button>
-							<button type="button" class="btn btn-success"
-								ng-click="exportPdf()">
-								<i class="fa fa-file-pdf-o"></i> PDF
-							</button>
-
-						</div>
+						<input type="search" class="form-control" ng-model="searchEmail"
+							placeholder="Tìm kiếm email..." aria-label="Tìm kiếm email...">
 					</div>
-					<div class="table-responsive">
-						<table
-							class="table table-striped table-bordered zero-configuration">
-							<thead>
-								<tr>
-									<th>STT</th>
-									<th>Hình ảnh</th>
-									<th>Tên</th>
-									<th>Email</th>
-									<th>Điện thoại</th>
-									<th>Địa chỉ</th>
-									<th>Giới tính</th>
-									<th>Ngày tạo</th>
-									<th>Xem</th>
-									<th>Xóa</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr
-									ng-repeat="item in pager.items | filter: { email: searchEmail }">
-									<td>{{$index + 1}}</td>
-									<th><img ng-src="/assetsAdmin/images/{{item.image}}"
-										alt="Hình ảnh" style="width: 70px; height: 100px"></th>
-									<td>{{item.firstname}}</td>
-									<td>{{item.email}}</td>
-									<td>{{item.phonenumber}}</td>
-									<td style="width: 250px;">{{item.address}}</td>
-									<td>{{item.gender?'Nam':'Nữ'}}</td>
-									<td>{{item.createddate | date:'dd-MM-yyyy'}}</td>
-									<td><a type="button" ng-click="edit(item)"
-										data-toggle="modal" data-target="#exampleModal"> <i
-											class="bi bi-pencil-square"></i>
-									</a></td>
-									<td><a ng-click="delete(item)"><i
-											class="bi bi-trash3-fill p-2"></i></a></td>
-								</tr>
-							</tbody>
-						</table>
-						<div class="panel-footer text-right">
-							<span class="col-md-6"
-								style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
-								+ 1}} / {{pager.count}} </span>
-							<button ng-click="pager.first()" class="btn btn-success">
-								<i class="fas fa-angle-double-left"></i>
-							</button>
-							<button ng-click="pager.prev()" class="btn btn-success">
-								<i class="fas fa-angle-left"></i>
-							</button>
-							<button ng-click="pager.next()" class="btn btn-success">
-								<i class="fas fa-angle-right"></i>
-							</button>
-							<button ng-click="pager.last()" class="btn btn-success">
-								<i class="fas fa-angle-double-right"></i>
-							</button>
-						</div>
+					<div class="col-md-6 text-right">
+						<button type="button" class="btn btn-success"
+							ng-click="editthemsp()" data-toggle="modal"
+							data-target="#exampleModa2">
+							<i class="fa fa-plus-square"></i> Thêm người dùng
+						</button>
+						<button type="button" class="btn btn-success"
+							ng-click="exportExcel()">
+							<i class="fa fa-file-excel-o"></i> Excel
+						</button>
+						<button type="button" class="btn btn-success"
+							ng-click="exportPdf()">
+							<i class="fa fa-file-pdf-o"></i> PDF
+						</button>
+
+					</div>
+				</div>
+				<div class="table-responsive">
+					<table
+						class="table table-striped table-bordered zero-configuration">
+						<thead>
+							<tr>
+								<th>STT</th>
+								<th>Hình ảnh</th>
+								<th>Tên</th>
+								<th>Email</th>
+								<th>Điện thoại</th>
+								<th>Địa chỉ</th>
+								<th>Giới tính</th>
+								<th>Ngày tạo</th>
+								<th>Xem</th>
+								<th>Xóa</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								ng-repeat="item in pager.items | filter: { email: searchEmail }">
+								<td>{{$index + 1}}</td>
+								<th><img ng-src="/assetsAdmin/images/{{item.image}}"
+									alt="Hình ảnh" style="width: 70px; height: 100px"></th>
+								<td>{{item.firstname}}</td>
+								<td>{{item.email}}</td>
+								<td>{{item.phonenumber}}</td>
+								<td style="width: 250px;">{{item.address}}</td>
+								<td>{{item.gender?'Nam':'Nữ'}}</td>
+								<td>{{item.createddate | date:'dd-MM-yyyy'}}</td>
+								<td><a type="button" ng-click="edit(item)"
+									data-toggle="modal" data-target="#exampleModal"> <i
+										class="bi bi-pencil-square"></i>
+								</a></td>
+								<td><a ng-click="delete(item)"><i
+										class="bi bi-trash3-fill p-2"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="panel-footer text-right">
+						<span class="col-md-6"
+							style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
+							+ 1}} / {{pager.count}} </span>
+						<button ng-click="pager.first()" class="btn btn-success">
+							<i class="fas fa-angle-double-left"></i>
+						</button>
+						<button ng-click="pager.prev()" class="btn btn-success">
+							<i class="fas fa-angle-left"></i>
+						</button>
+						<button ng-click="pager.next()" class="btn btn-success">
+							<i class="fas fa-angle-right"></i>
+						</button>
+						<button ng-click="pager.last()" class="btn btn-success">
+							<i class="fas fa-angle-double-right"></i>
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="exampleModal" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-xl custom-modal">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h3 class="modal-title " id="exampleModalLabel">Chỉnh sửa
-							người dùng</h3>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<div class="col-lg-12">
-							<div class="card">
-								<div class="card-body">
-									<div class="basic-form">
+	</div>
+	<div class="modal fade" id="exampleModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl custom-modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title " id="exampleModalLabel">Cập nhật người
+						dùng</h3>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="basic-form">
+									<form class="row" name="frmvalidateupdate"
+										ng-submit="submitForm1()" novalidate>
 										<div class="row">
 											<div class="col-md-4">
 												<label for="image"> <img
@@ -115,26 +116,48 @@
 											</div>
 											<div class="col-md-8">
 												<div class="row">
-
 													<div class="form-group col-sm-6">
 														<label>Mật khẩu : </label> <input name="password"
 															type="password" ng-model="form.password"
-															class="form-control input-default" ng-readonly="isEdit">
+															ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$/"
+															class="form-control input-default" ng-readonly="isEdit"
+															required> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.password.$error.required"
+															style="color: red;">Vui lòng nhập mật khẩu !</label> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.password.$error.pattern"
+															style="color: red;">Mật khẩu phải có từ 8 đến 16
+															ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.</label>
 													</div>
+
 
 													<div class="form-group col-sm-6">
 														<label>Địa chỉ : </label> <input name="address"
 															type="text" ng-model="form.address"
-															class="form-control input-default">
+															placeholder="VD : Công viên..."
+															class="form-control input-default" required> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.address.$error.required"
+															style="color: red;">Vui lòng nhập địa chỉ !</label> <label>
 													</div>
 													<div class="form-group col-sm-6">
 														<label>Ngày tạo : </label> <input
 															ng-model="form.createddate" type="date"
-															class="form-control input-default">
+															name="createddate" class="form-control input-default"
+															required> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.createddate.$error.required"
+															style="color: red;">Vui lòng nhập ngày tạo !</label> <label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Email : </label> <input name="email" type="text"
-															ng-model="form.email" class="form-control input-default">
+														<label>Email: </label> <input name="email" type="text"
+															ng-model="form.email" class="form-control input-default"
+															required placeholder="VD : hungnvps20689@fpt.edu.vn"
+															ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/">
+														<label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.email.$error.required"
+															style="color: red;">Vui lòng nhập email!</label> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.email.$error.pattern"
+															style="color: red;">Email không hợp lệ. Vui lòng
+															nhập đúng định dạng email.</label>
+
 													</div>
 
 													<div class="form-group col-sm-6">
@@ -146,67 +169,98 @@
 																ng-value="false" type="radio" name="gender" required>
 															Nữ
 														</div>
+														<label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.gender.$error.required"
+															style="color: red;">Vui lòng chọn giới tính!</label>
 													</div>
 													<div class="form-group col-sm-6">
 														<label>Tên đầu : </label> <input name="firstname"
 															type="text" ng-model="form.firstname"
-															class="form-control input-default">
+															placeholder="VD : Hưng"
+															class="form-control input-default" required> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.firstname.$error.required"
+															style="color: red;">Vui lòng nhập tên đầu!</label>
 													</div>
 													<div class="form-group col-sm-6">
 														<label>Tên cuối : </label> <input name="lastname"
-															type="text" ng-model="form.lastname"
-															class="form-control input-default">
+															placeholder="VD : Nguyễn" type="text"
+															ng-model="form.lastname"
+															class="form-control input-default" required> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.lastname.$error.required"
+															style="color: red;">Vui lòng nhập tên cuôí!</label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Số điện thoại : </label> <input name="phonenumber"
+														<label>Số điện thoại: </label> <input name="phonenumber"
 															type="text" ng-model="form.phonenumber"
-															class="form-control input-default">
+															placeholder="VD : 0999999999"
+															class="form-control input-default" required
+															ng-pattern="/^[0-9]{10}$/"> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.phonenumber.$error.required"
+															style="color: red;">Vui lòng nhập số điện thoại!</label>
+														<label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.phonenumber.$error.pattern"
+															style="color: red;">Số điện thoại không hợp lệ.
+															Vui lòng nhập đúng định dạng!</label>
+
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Ngày sinh : </label> <input
-															ng-model="form.birthday" type="date" id="birthday"
-															class="form-control input-default">
+														<label>Ngày sinh: </label> <input ng-model="form.birthday"
+															type="date" id="birthday" name="birthday"
+															class="form-control input-default" required
+															max="{{getCurrentDate() | date:'yyyy-MM-dd'}}"> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.birthday.$error.required"
+															style="color: red;">Vui lòng chọn ngày sinh!</label> <label
+															ng-show="frmvalidateupdate.$submitted && !isDateBeforeToday()"
+															style="color: red;">Ngày sinh không thể ở tương
+															lai!</label>
 													</div>
 													<div class="form-group col-sm-6">
 														<label>Hình ảnh : </label> <input type="file"
-															class="form-control" id="image" ng-model="form.image"
-															onchange="angular.element(this).scope().imageChanged(this.files)">
+															class="form-control" id="image" name="image"
+															ng-model="form.image"
+															onchange="angular.element(this).scope().imageChanged(this.files)"
+															required> <label
+															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.image.$error.required"
+															style="color: red;">Hình ảnh trống!</label>
 													</div>
 												</div>
 											</div>
-										</div>
-									</div>
+											<div class="panel-footer ">
+												<button type="submit" name="submit"
+													ng-click="frmvalidateupdate.$valid && update()"
+													class="btn btn-success">Cập nhật người dùng</button>
 
+											</div>
+										</div>
+									</form>
 								</div>
+
 							</div>
 						</div>
 					</div>
-					<div class="modal-footer">
-						<div class="panel-footer text-right">
-							<button ng-click="update()" class="btn btn-success">
-								<b class="glyphicon glyphicon-save"></b> Cập nhật người dùng
-							</button>
-						</div>
-					</div>
 				</div>
+
 			</div>
 		</div>
-		<div class="modal fade" id="exampleModa2" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-xl custom-modal">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h3 class="modal-title " id="exampleModalLabel">Chỉnh sửa
-							người dùng</h3>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<div class="col-lg-12">
-							<div class="card">
-								<div class="card-body">
-									<div class="basic-form">
-										<div class="row ">
+	</div>
+	<div class="modal fade" id="exampleModa2" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl custom-modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title " id="exampleModalLabel">Thêm người
+						dùng</h3>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="basic-form">
+									<form class="row" name="frmvalidate" ng-submit="submitForm()"
+										novalidate>
+										<div class="row">
 											<div class="col-md-4">
 												<label for="image"> <img
 													ng-src="{{'/assetsAdmin/images/' +form.image}}"
@@ -216,26 +270,48 @@
 											</div>
 											<div class="col-md-8">
 												<div class="row">
-
 													<div class="form-group col-sm-6">
 														<label>Mật khẩu : </label> <input name="password"
 															type="password" ng-model="form.password"
-															class="form-control input-default" ng-readonly="isEdit">
+															ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$/"
+															class="form-control input-default" ng-readonly="isEdit"
+															required> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.password.$error.required"
+															style="color: red;">Vui lòng nhập mật khẩu !</label> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.password.$error.pattern"
+															style="color: red;">Mật khẩu phải có từ 8 đến 16
+															ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.</label>
 													</div>
+
 
 													<div class="form-group col-sm-6">
 														<label>Địa chỉ : </label> <input name="address"
 															type="text" ng-model="form.address"
-															class="form-control input-default">
+															placeholder="VD : Công viên..."
+															class="form-control input-default" required> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.address.$error.required"
+															style="color: red;">Vui lòng nhập địa chỉ !</label> <label>
 													</div>
 													<div class="form-group col-sm-6">
 														<label>Ngày tạo : </label> <input
 															ng-model="form.createddate" type="date"
-															class="form-control input-default">
+															name="createddate" class="form-control input-default"
+															required> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.createddate.$error.required"
+															style="color: red;">Vui lòng nhập ngày tạo !</label> <label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Email : </label> <input name="email" type="text"
-															ng-model="form.email" class="form-control input-default">
+														<label>Email: </label> <input name="email" type="text"
+															ng-model="form.email" class="form-control input-default"
+															required placeholder="VD : hungnvps20689@fpt.edu.vn"
+															ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/">
+														<label
+															ng-show="frmvalidate.$submitted && frmvalidate.email.$error.required"
+															style="color: red;">Vui lòng nhập email!</label> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.email.$error.pattern"
+															style="color: red;">Email không hợp lệ. Vui lòng
+															nhập đúng định dạng email.</label>
+
 													</div>
 
 													<div class="form-group col-sm-6">
@@ -247,53 +323,82 @@
 																ng-value="false" type="radio" name="gender" required>
 															Nữ
 														</div>
+														<label
+															ng-show="frmvalidate.$submitted && frmvalidate.gender.$error.required"
+															style="color: red;">Vui lòng chọn giới tính!</label>
 													</div>
 													<div class="form-group col-sm-6">
 														<label>Tên đầu : </label> <input name="firstname"
 															type="text" ng-model="form.firstname"
-															class="form-control input-default">
+															placeholder="VD : Hưng"
+															class="form-control input-default" required> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.firstname.$error.required"
+															style="color: red;">Vui lòng nhập tên đầu!</label>
 													</div>
 													<div class="form-group col-sm-6">
 														<label>Tên cuối : </label> <input name="lastname"
-															type="text" ng-model="form.lastname"
-															class="form-control input-default">
+															placeholder="VD : Nguyễn" type="text"
+															ng-model="form.lastname"
+															class="form-control input-default" required> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.lastname.$error.required"
+															style="color: red;">Vui lòng nhập tên cuôí!</label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Số điện thoại : </label> <input name="phonenumber"
+														<label>Số điện thoại: </label> <input name="phonenumber"
 															type="text" ng-model="form.phonenumber"
-															class="form-control input-default">
+															placeholder="VD : 0999999999"
+															class="form-control input-default" required
+															ng-pattern="/^[0-9]{10}$/"> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.phonenumber.$error.required"
+															style="color: red;">Vui lòng nhập số điện thoại!</label>
+														<label
+															ng-show="frmvalidate.$submitted && frmvalidate.phonenumber.$error.pattern"
+															style="color: red;">Số điện thoại không hợp lệ.
+															Vui lòng nhập đúng định dạng!</label>
+
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Ngày sinh : </label> <input
-															ng-model="form.birthday" type="date" id="birthday"
-															class="form-control input-default">
+														<label>Ngày sinh: </label> <input ng-model="form.birthday"
+															type="date" id="birthday" name="birthday"
+															class="form-control input-default" required
+															max="{{getCurrentDate() | date:'yyyy-MM-dd'}}"> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.birthday.$error.required"
+															style="color: red;">Vui lòng chọn ngày sinh!</label> <label
+															ng-show="frmvalidate.$submitted && !isDateBeforeToday()"
+															style="color: red;">Ngày sinh không thể ở tương
+															lai!</label>
 													</div>
 													<div class="form-group col-sm-6">
 														<label>Hình ảnh : </label> <input type="file"
-															class="form-control" id="image" ng-model="form.image"
-															onchange="angular.element(this).scope().imageChanged(this.files)">
+															class="form-control" id="image" name="image"
+															ng-model="form.image"
+															onchange="angular.element(this).scope().imageChanged(this.files)"
+															required> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.image.$error.required"
+															style="color: red;">Hình ảnh trống!</label>
 													</div>
 												</div>
 											</div>
+											<div class="panel-footer ">
+												<button type="submit" name="submit"
+													ng-click="frmvalidate.$valid && create()"
+													class="btn btn-success">Thêm người dùng</button>
+												<button type="reset" class="btn btn-success">
+													<b class="glyphicon glyphicon-refresh"></b> Reset
+												</button>
+											</div>
 										</div>
-									</div>
-
-
+									</form>
 								</div>
+
+
 							</div>
 						</div>
 					</div>
-					<div class="modal-footer">
-						<div class="panel-footer text-right">
-							<button ng-click="create()" class="btn btn-success">Thêm</button>
-							<button ng-click="reset()" class="btn btn-success">
-								<b class="glyphicon glyphicon-refresh"></b> Mới
-							</button>
-						</div>
-					</div>
 				</div>
+
 			</div>
 		</div>
-	</form>
+	</div>
 </div>
 

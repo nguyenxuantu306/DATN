@@ -48,6 +48,7 @@ public class User implements Serializable {
 	String password;
 
 	@Column(unique = true)
+	@Pattern(regexp = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", message = "Email phải đúng định dạng.")
 	@NotBlank(message = "Email là bắt buộc")
 	@Email(message = "Email không hợp lệ!")
 	String email;
@@ -58,7 +59,10 @@ public class User implements Serializable {
 	@NotBlank(message = "Mô tả là bắt buộc")
 	String lastname;
 
-	@Pattern(regexp = "^[1-9][0-9]*$", message = "Số điện thoại phải là số nguyên dương và không chứa ký tự khác")
+	/*
+	 * @Pattern(regexp = "^[1-9][0-9]*$", message =
+	 * "Số điện thoại phải là số nguyên dương và không chứa ký tự khác")
+	 */
 	String phonenumber;
 
 	@NotBlank(message = "Ảnh đại diện là bắt buộc")

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,20 +31,27 @@ import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.entity.User;
 import com.greenfarm.entity.Voucher;
 import com.greenfarm.entity.VoucherUser;
+import com.greenfarm.service.CartService;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.VoucherUserService;
+import com.greenfarm.vnpay.VNPayService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-
+@CrossOrigin(origins = "http://localhost:8080")
 public class CheckoutController {
 
+
+	
 	@Autowired
 	private UserService userService;
 
 	@Autowired
 	CartDAO cartDAO;
+	
+	@Autowired
+	CartService cartService;
 
 	@Autowired
 	OrderDAO orderDAO;
@@ -92,31 +100,10 @@ public class CheckoutController {
 		}
 	}
 
-	@GetMapping("/checkoutPayment")
-	public String CheckoutPayment(ModelMap modelMap) {
-		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		// Kiểm tra nếu người dùng đã xác thực
-		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			User user = userService.findByEmail(userDetails.getUsername());
-			modelMap.addAttribute("user", user);
-			if (user != null) {
-				List<Cart> cartItems = cartDAO.findByUser(user);
-				modelMap.addAttribute("cartList", cartItems);
-				modelMap.addAttribute("totalPrice", totalPrice(cartItems));
-			}
-
-			return "checkoutPayment";
-		} else {
-			System.out.println("Xin chào! Bạn chưa đăng nhập.");
-			return "login";
-		}
-	}
 
 	@PostMapping("/checkout/payment")
 	public String Payment(ModelMap modelMap, @ModelAttribute("Order") OrderDTO orderDTO,
-			@RequestParam("paymentMethod") Integer paymentMethod) {
+			@RequestParam("paymentMethod") Integer paymentMethod, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -125,7 +112,8 @@ public class CheckoutController {
 			LocalDateTime now = LocalDateTime.now();
 			StatusOrder statusOrder = new StatusOrder();
 			statusOrder.setStatusorderid(1);
-			PaymentMethod paymentMethodObj = paymentMethodDAO.findById(paymentMethod).get();
+			PaymentMethod paymentMethodObj = paymentMethodDAO.findById(1).get();
+			
 			if (user != null) {
 				Order orderItem = new Order();
 				orderItem.setUser(user);
@@ -136,37 +124,41 @@ public class CheckoutController {
 				System.out.println(orderDTO.getAddress());
 				orderDAO.save(orderItem);
 
-				List<Cart> cartItems = cartDAO.findByUser(user); // Retrieve cart items for the user
+				List<Cart> cartItems = cartDAO.findByUser(user); 
 				List<OrderDetail> orderDetailList = new ArrayList<>();
 
+				float total = 0;
 				for (Cart cartItem : cartItems) {
 					OrderDetail orderDetailItem = new OrderDetail();
 					orderDetailItem.setOrder(orderItem);
 					orderDetailItem.setProduct(cartItem.getProduct());
 					orderDetailItem.setQuantityordered(cartItem.getQuantity());
 					orderDetailItem.setTotalPrice(cartItem.getQuantity() * cartItem.getProduct().getPrice());
-					// orderDetailItem.setPaymentMethod(paymentMethodObj);
 					orderDetailList.add(orderDetailItem);
-
+					total += cartItem.getQuantity() * cartItem.getProduct().getPrice();
+					
 				}
 
 				orderDetailDAO.saveAll(orderDetailList);
-
+				model.addAttribute("total", total);
+				model.addAttribute("orderConfirmation", orderItem);
+				model.addAttribute("cartConfirmation", cartItems);
+				cartService.delete(cartItems);
 			}
 
-			return "redirect:/success";
+			return "success";
 		} else {
 			System.out.println("Xin chào! Bạn chưa đăng nhập.");
 			return "login";
 		}
 	}
 
-	public double totalPrice(List<Cart> cartItems) {
-		double total = 0;
+	public long totalPrice(List<Cart> cartItems) {
+		long total = 0;
 		for (Cart cartItem : cartItems) {
 			total += cartItem.getProduct().getPrice() * cartItem.getQuantity();
 		}
 		return total;
 	}
-
+	
 }

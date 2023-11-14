@@ -5,6 +5,8 @@ app.controller("category-ctrl", function($scope, $http) {
 	$scope.field = [];
 	$scope.error = ['err'];
 	
+	
+	
 	$scope.searchCategory = '';
 	
 	$scope.initialize = function(){
@@ -53,14 +55,18 @@ app.controller("category-ctrl", function($scope, $http) {
 	        Swal.fire({
 	            icon: 'success',
 	            title: 'Thành công!',
-	            text: 'Thêm loại sản phẩm thành công!',
+	            text: 'Thêm danh mục sản phẩm thành công!',
 	        });
+        	$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+			$scope.frmvalidate.$setPristine();
+			$scope.frmvalidate.$setUntouched();
+			$scope.frmvalidate.$submitted = false;
 		}).catch(error => {
 			// Sử dụng SweetAlert2 cho thông báo lỗi
 	        Swal.fire({
 	            icon: 'error',
 	            title: 'Lỗi!',
-	            text: 'Lỗi thêm loại sản phẩm',
+	            text: 'Lỗi thêm danh mục sản phẩm',
 	        });
 			console.log("Error", error);
 		});
@@ -77,15 +83,20 @@ app.controller("category-ctrl", function($scope, $http) {
 	        Swal.fire({
 	            icon: 'success',
 	            title: 'Thành công!',
-	            text: 'Cập nhật loại sản phẩm thành công!',
+	            text: 'Cập nhật danh mục thành công!',
 	        });
+	        $scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+				$scope.frmvalidateupdate.$setPristine();
+				$scope.frmvalidateupdate.$setUntouched();
+				$scope.frmvalidateupdate.$submitted = false;
+				$scope.edit(item);
 		})
 		.catch(error =>{
 			// Sử dụng SweetAlert2 cho thông báo lỗi
 	        Swal.fire({
 	            icon: 'error',
 	            title: 'Lỗi!',
-	            text: 'Lỗi Cập nhật loại sản phẩm',
+	            text: 'Lỗi Cập nhật danh mục sản phẩm',
 	        });
 			console.log("Error",error);
 		});
@@ -101,7 +112,7 @@ app.controller("category-ctrl", function($scope, $http) {
 	        Swal.fire({
 	            icon: 'success',
 	            title: 'Thành công!',
-	            text: 'Xóa loại sản phẩm thành công!',
+	            text: 'Xóa danh mục thành công!',
 	        });	  
 		})
 		.catch(error =>{
@@ -109,7 +120,7 @@ app.controller("category-ctrl", function($scope, $http) {
 	        Swal.fire({
 	            icon: 'error',
 	            title: 'Lỗi!',
-	            text: 'Lỗi loại sản phẩm',
+	            text: 'Lỗi danh mục sản phẩm',
 	        });	       
 			console.log("Error",error);
 		});
@@ -146,6 +157,8 @@ app.controller("category-ctrl", function($scope, $http) {
 			this.page = this.count-1;
 		}		
 	}	
+	
+	
 });
 
 	

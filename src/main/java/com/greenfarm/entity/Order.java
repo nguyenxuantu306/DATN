@@ -60,15 +60,3 @@ public class Order implements Serializable {
 	@JoinColumn(name = "Paymentmethodid")
 	PaymentMethod paymentmethod;
 }
-
-//
-//<div class="">
-//Tổng hóa đơn: <span th:with="total=0"> <span
-//	th:each="orderDetail : ${order.orderDetail}"> <span
-//		th:with="subtotal=${orderDetail.quantityordered * orderDetail.product.price}">
-//			<span th:with="total=${total + subtotal}"></span>
-//	</span>
-//</span> <span
-//	th:text="'đ' + ${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')}"></span>
-//</span>
-//</div>

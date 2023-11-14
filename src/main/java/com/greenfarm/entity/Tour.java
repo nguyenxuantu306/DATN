@@ -1,6 +1,7 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,9 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,18 +37,25 @@ import lombok.NoArgsConstructor;
 public class Tour implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Positive(message = "TourID không được là số âm")
 	private Integer tourid;
 	
+	@NotBlank(message = "Tour name không được phép trống (chỉ chứa khoảng trắng)")
 	private String tourname;
 
+	@NotBlank(message = "Description không được để trống")
 	private String Description;
 
+	@NotBlank(message = "Image URL không được để trống")
 	private String image;
 	
+	@NotBlank(message = "Departure không được để trống")
 	private String departureday;
 
+	@NotBlank(message = "Location không được để trống")
 	private String location;
 
+	@NotNull(message = "Availableslots không được để trống")
 	@Column(name = "Availableslots")
 	private Integer Availableslots;
 

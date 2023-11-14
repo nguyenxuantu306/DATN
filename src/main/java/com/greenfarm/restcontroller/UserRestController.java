@@ -87,7 +87,7 @@ public class UserRestController {
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
-	@PostMapping("/add")
+	@PostMapping()
 	public ResponseEntity<UserDTO> create(@Valid @RequestBody User user) throws UserAlreadyExistException {
 		User createdUser = userService.create(user);
 
@@ -146,9 +146,16 @@ public class UserRestController {
 
 	// Tổng tiền mua hàng của các user
 	@GetMapping("/total-purchase")
-	public ResponseEntity<List<Report>> getTotalPurchaseByUser() {
-		List<Report> totalPurchaseList = userService.getTotalPurchaseByUser();
-		return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
-	}
+    public ResponseEntity<List<Report>> getTotalPurchaseByUser() {
+        List<Report> totalPurchaseList = userService.getTotalPurchaseByUser();
+        return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
+    }
+	
+	//Tổng tiền đặt vé của các user
+		@GetMapping("/bookingtotal-purchase")
+	    public ResponseEntity<List<Report>> getBookingTotalPurchaseByUser() {
+	        List<Report> totalPurchaseList = userService.getBookingTotalPurchaseByUser();
+	        return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
+	    }
 
 }

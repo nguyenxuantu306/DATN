@@ -26,7 +26,13 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 		       "ORDER BY SUM(CASE WHEN so.name = 'Giao hàng thành công' THEN od.totalprice ELSE 0 END)")
 		List<Report> totalPurchaseByUser();
 
+	
+	@Query("SELECT NEW Report(u, SUM(CASE WHEN sb.name = 'Đặt tour thành công' THEN b.Totalprice ELSE 0 END), COUNT(b)) " +
+			"FROM User u " +
+			"LEFT JOIN u.booking b " +
+			"LEFT JOIN b.statusbooking sb " +
+			"GROUP BY u " +
+			"ORDER BY SUM(CASE WHEN sb.name = 'Giao hàng thành công' THEN b.Totalprice ELSE 0 END)")
+		List<Report> BookingTotalPurchaseByUser();
 
-//	@Query("SELECT new Report(o, sum(o.totalprice * o.quantityordered), sum(o.quantityordered)) FROM OrderDetail o"
-//			+ " GROUP BY o" + " ORDER BY sum(o.totalprice *o.quantityordered) DESC")
 }

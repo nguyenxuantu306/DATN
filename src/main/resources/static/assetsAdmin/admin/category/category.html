@@ -3,7 +3,7 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<h2 class="card">Danh sách loại sản phẩm</h2>
+					<h2 class="card">Danh sách danh mục sản phẩm</h2>
 					<div class="row py-3">
 						<div class="col-md-6 input-group icons">
 							<div class="input-group-prepend">
@@ -11,14 +11,17 @@
 									class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
 									id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 							</div>
-							<input ng-model="searchCategory" type="search" class="form-control"
-								placeholder="Tìm kiếm tên loại..." aria-label="Tìm kiếm tên loại...">
+							<input ng-model="searchCategory" type="search"
+								class="form-control" placeholder="Tìm kiếm tên loại..."
+								aria-label="Tìm kiếm tên loại...">
 						</div>
 						<div class="col-md-6 text-right">
-                            <button type="button" class="btn btn-success" ng-click="editthemsp()" data-toggle="modal" data-target="#exampleModa2">
-								<i class="fa fa-plus-square"></i></i> Thêm loại sản phẩm
+							<button type="button" class="btn btn-success"
+								ng-click="editthemsp()" data-toggle="modal"
+								data-target="#exampleModa2">
+								<i class="fa fa-plus-square"></i></i> Thêm danh mục
 							</button>
-                        </div>
+						</div>
 					</div>
 					<div class="table-responsive">
 						<table
@@ -74,7 +77,7 @@
 	<div class="modal-dialog modal-xl custom-modal">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="modal-title " id="exampleModalLabel">Chỉnh sửa loại
+				<h3 class="modal-title " id="exampleModalLabel">Cập nhật danh mục
 					sản phẩm</h3>
 				<button type="button" class="btn-close" data-bs-dismiss="modal"
 					aria-label="Close"></button>
@@ -83,20 +86,48 @@
 				<div class="col-lg-12">
 					<div class="card info">
 						<div class="card-body">
-							<div class="basic-form">
-								<form class="row">
+							<div class="basic-form">						
+								<form class="row" name="frmvalidateupdate" ng-submit="submitForm1()"
+									novalidate>
 									<div class="form-group col-sm-6">
-										<label>Tên loại : </label> <input name="categoryname"
-											style="height: 55px" type="text" ng-model="form.categoryname"
-											class="form-control input-default">
-
+										<label>Tên loại:</label> <input name="categoryname"
+											ng-minlength="5" ng-maxlength="255" style="height: 55px" type="text"
+											ng-model="form.categoryname"
+											class="form-control input-default" placeholder="VD : Nhóm lá" required /> <label
+											ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.categoryname.$error.required"
+											style="color: red;">Vui lòng nhập danh mục !</label> <label
+											ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.categoryname.$error.minlength"
+											style="color: red;">Tên danh mục phải có ít nhất
+											5 ký tự!</label>
+											<label
+											ng-show="frmvalidate.$submitted && frmvalidate.categoryname.$error.maxlength"
+											style="color: red;">Tên danh mục chỉ tối đa 255
+											ký tự!</label>
+											
 									</div>
-									<div class="form-group col-sm-6">
-										<label>Mô tả : </label>
-										<textarea name="descriptions" type="text"
-											ng-model="form.descriptions"
-											class="form-control input-default"></textarea>
 
+									<div class="form-group col-sm-6">
+										<label>Mô tả:</label>
+										<textarea name="descriptions" ng-minlength="5" ng-maxlength="255" type="text"
+											ng-model="form.descriptions"
+											class="form-control input-default" placeholder="VD : Nhóm lá bao gồm..." required></textarea>
+										<label
+											ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.descriptions.$error.required"
+											style="color: red;">Vui lòng nhập mô tả !</label> <label
+											ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.descriptions.$error.minlength"
+											style="color: red;">Mô tả phải có ít nhất 5
+											ký tự!</label>
+											<label
+											ng-show="frmvalidate.$submitted && frmvalidate.descriptions.$error.maxlength"
+											style="color: red;">Mô tả chỉ tối đa 255
+											ký tự!</label>
+									</div>
+
+									<div class="panel-footer text-right">
+										<button type="submit" name="submit"
+											ng-click="frmvalidateupdate.$valid && update()"
+											class="btn btn-success">Cập nhật danh mục</button>
+										
 									</div>
 								</form>
 							</div>
@@ -104,14 +135,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<div class="panel-footer text-right">			
-					<button  ng-click="update()"
-						class="btn btn-success">
-						<b class="glyphicon glyphicon-save"></b> Cập nhật loại sản phẩm
-					</button>
-				</div>
-			</div>
+			
 		</div>
 	</div>
 </div>
@@ -121,7 +145,7 @@
 	<div class="modal-dialog modal-xl custom-modal">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="modal-title " id="exampleModalLabel">Chỉnh sửa loại
+				<h3 class="modal-title " id="exampleModalLabel">Thêm danh mục
 					sản phẩm</h3>
 				<button type="button" class="btn-close" data-bs-dismiss="modal"
 					aria-label="Close"></button>
@@ -131,34 +155,62 @@
 					<div class="card info">
 						<div class="card-body">
 							<div class="basic-form">
-								<form class="row">
-									<div class="form-group col-sm-6">
-										<label>Tên loại : </label> <input name="categoryname"
-											style="height: 55px" type="text" ng-model="form.categoryname"
-											class="form-control input-default">
 
+
+								<form class="row" name="frmvalidate" ng-submit="submitForm()" novalidate>
+									<div class="form-group col-sm-6">
+										<label>Tên loại:</label> <input name="categoryname"
+											ng-minlength="5" ng-maxlength="255" style="height: 55px" type="text"
+											ng-model="form.categoryname"
+											class="form-control input-default" placeholder="VD : Nhóm lá" required /> 
+											<label
+											ng-show="frmvalidate.$submitted && frmvalidate.categoryname.$error.required"
+											style="color: red;">Vui lòng nhập danh mục !</label> <label
+											ng-show="frmvalidate.$submitted && frmvalidate.categoryname.$error.minlength"
+											style="color: red;">Tên danh mục phải có ít nhất
+											5 ký tự!</label>
+											<label
+											ng-show="frmvalidate.$submitted && frmvalidate.categoryname.$error.maxlength"
+											style="color: red;">Tên danh mục chỉ tối đa 255
+											ký tự!</label>
 									</div>
-									<div class="form-group col-sm-6">
-										<label>Mô tả : </label>
-										<textarea name="descriptions" type="text"
-											ng-model="form.descriptions"
-											class="form-control input-default"></textarea>
 
+									<div class="form-group col-sm-6">
+										<label>Mô tả:</label>
+										<textarea name="descriptions" ng-minlength="5" ng-maxlength="255" type="text"
+											ng-model="form.descriptions"
+											class="form-control input-default" placeholder="VD : Nhóm lá bao gồm..." required></textarea>
+										<label
+											ng-show="frmvalidate.$submitted && frmvalidate.descriptions.$error.required"
+											style="color: red;">Vui lòng nhập mô tả !</label> <label
+											ng-show="frmvalidate.$submitted && frmvalidate.descriptions.$error.minlength"
+											style="color: red;">Mô tả phải có ít nhất 5
+											ký tự!</label>
+											<label
+											ng-show="frmvalidate.$submitted && frmvalidate.descriptions.$error.maxlength"
+											style="color: red;">Mô tả chỉ tối đa 255
+											ký tự!</label>
+									</div>
+
+									<div class="panel-footer text-right">
+										<button type="submit" name="submit"
+											ng-click="frmvalidate.$valid && create()"
+											class="btn btn-success">Thêm</button>
+										<button type="reset" class="btn btn-success">
+											<b class="glyphicon glyphicon-refresh"></b> Reset
+										</button>
 									</div>
 								</form>
+
+
+
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<div class="panel-footer text-right">
-					<button  ng-click="create()" class="btn btn-success">Thêm</button>					
-					<button  ng-click="reset()" class="btn btn-success">
-						<b class="glyphicon glyphicon-refresh"></b> Mới
-					</button>
-				</div>
-			</div>
+		
 		</div>
 	</div>
 </div>
