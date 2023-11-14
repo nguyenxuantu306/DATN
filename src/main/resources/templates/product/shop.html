@@ -117,7 +117,7 @@
 
 								<div class="p-4">
 									<a th:utext="${p.productname}" class="h5 text-decoration-none"
-										href="/tour-detail"></a>
+										th:href="@{|/product/detail/${p.productid}|}"></a>
 									<div class="border-top mt-4 pt-4">
 										<div class="text-center">
 											<h5 th:text="*{#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}+ 'đ'"
