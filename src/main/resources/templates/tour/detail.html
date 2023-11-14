@@ -122,7 +122,7 @@
                                     <th scope="row">1</th>
                                     <td th:text="*{pricings.Adultprice}"></td>
                                     <td th:text="*{pricings.Childprice}"></td>
-                                    <td><a href="#" class="btn btn-md btn-primary p-2">Đặt
+                                    <td><a th:href="@{|/booking/${tourid}|}" class="btn btn-md btn-primary p-2">Đặt
 											ngay</a></td>
                                 </tr>
                             </tbody>

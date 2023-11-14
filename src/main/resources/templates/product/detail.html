@@ -22,8 +22,10 @@
 			<div th:object="${item}" class="row">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#" th:text="#{shopDetail.label.breadcrumbHome}">Trang chủ</a></li>
-						<li class="breadcrumb-item"><a href="#" th:text="#{shopDetail.label.breadcrumbShop}">Shop</a></li>
+						<li class="breadcrumb-item"><a href="#" th:text="#{shopDetail.label.breadcrumbHome}">Trang
+								chủ</a></li>
+						<li class="breadcrumb-item"><a href="#" th:text="#{shopDetail.label.breadcrumbShop}">Shop</a>
+						</li>
 						<li class="breadcrumb-item active" aria-current="page" th:text="*{productname}"></li>
 					</ol>
 				</nav>
@@ -53,7 +55,7 @@
 					</div>
 				</div>
 
-				<div class="col-lg-6">
+				<div class="col-lg-6 product-details">
 					<div class="text-left mb-3 pb-3">
 						<h3 th:text="*{productname}" class="text-uppercase mt-3"></h3>
 						<h2 class="mb-3" style="font-weight: 300; color: #80bb01; font-size: 28px">
@@ -65,13 +67,35 @@
 						SL: <span th:text="*{quantityavailable}" class="product-description mb-3"></span>
 						<div class="cart-button mt-5 mb-5 d-flex">
 
-							<button class="add-to-cart-button" th:onclick="'addToCart(\'' + ${item.productid} + '\')'" th:text="#{shopDetail.label.addToCart}">
-								<i class="fas fa-shopping-cart"></i> Add to Cart
+							<button class="btn border-primary mr-2"
+								th:onclick="'addToCartAndDisplayModal(\'' + ${item.productid} + '\')'">
+								<i class="fas fa-shopping-cart"></i> <span
+									th:text="#{shopDetail.label.addToCart}"></span>
+							</button>
+
+							<!-- Modal hiện thông báo thêm thành công -->
+							<div class="modal fade" id="addToCartModal" tabindex="-1" role="dialog"
+								aria-labelledby="addToCartModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-body text-center">
+											<img style="width: 50px;" src="https://images.fpt.shop/unsafe/filters:quality(5)/fptshop.com.vn/uploads/images/tin-tuc/148929/Originals/tich_xanh_titktok_2.png">
+											<!-- You can customize the form or message content here -->
+											<p>Sản phẩm đã được thêm vào giỏ hàng</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<button class="btn btn-primary"
+								th:onclick="'addToCartAndRedirect(\'' + ${item.productid} + '\')'">
+								Mua ngay
 							</button>
 						</div>
 						<div class="">
 							<h5>
-								<span th:text="#{shopDetail.label.category}">CATEGORIES: </span> <span><a th:text="*{category.categoryname}"></span>
+								<span th:text="#{shopDetail.label.category}">CATEGORIES: </span> <span><a
+										th:text="*{category.categoryname}"/></span>
 							</h5>
 						</div>
 					</div>
@@ -86,7 +110,7 @@
 				<div class="col-md-12 col-sm-12 col-xs-12 slide" th:each="p : *{category.products}">
 					<div class="wap-items-ss brbox">
 						<a th:href="@{|/product/detail/${p.productid}|}" class="wap-ss-img"> <img
-								th:src="@{|${p.image}|}" alt="Product Image">
+								th:src="@{|${p.image}|}" alt="Product Image" style="width: 270px;">
 						</a>
 						<div class="textleft">
 							<a th:href="@{|/product/detail/${p.productid}|}" th:text="${p.productname}"
@@ -175,7 +199,8 @@
 
 
 					<!-- Button trigger modal -->
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" th:text="#{shopDetail.label.reviews}">
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+						th:text="#{shopDetail.label.reviews}">
 						Đánh giá giúp chúng tôi !</button>
 
 					<!-- Modal -->
@@ -186,7 +211,8 @@
 								<div class="modal-body">
 									<div class="card">
 										<div class="modal-header">
-											<h1 class="modal-title fs-6 text-center" id="exampleModalLabel" th:text="#{shopDetail.label.thanhks}">
+											<h1 class="modal-title fs-6 text-center" id="exampleModalLabel"
+												th:text="#{shopDetail.label.thanhks}">
 												GreenFarm xin được cám ơn quý
 												khách!</h1>
 										</div>
@@ -213,7 +239,8 @@
 
 												</div>
 												<div class="d-flex justify-content-between mt-3">
-													<button type="submit" class="btn btn-danger" th:text="#{shopDetail.label.sendReviews}">
+													<button type="submit" class="btn btn-danger"
+														th:text="#{shopDetail.label.sendReviews}">
 														Gửi đánh giá <i id="review-button"
 															class="fas fa-long-arrow-alt-right ms-1"></i>
 													</button>
@@ -241,8 +268,8 @@
 									<p id="modal-message"></p>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-bs-dismiss="modal" th:text="#{shopDetail.label.close}">Đóng</button>
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+										th:text="#{shopDetail.label.close}">Đóng</button>
 								</div>
 							</div>
 						</div>
@@ -265,8 +292,8 @@
 						<div class="col-md-6" th:if="${#authorization.expression('isAuthenticated()')}">
 							<button style="float: right;" class="btn btn-danger"
 								th:if="${#authorization.expression(review.user.email == #authentication.principal.username)}">
-								<a
-									th:href="@{'/product/detail/' + ${productid} + '/delete/' + ${review.reviewid}}" th:text="#{shopDetail.label.delete}">Xóa</a>
+								<a th:href="@{'/product/detail/' + ${productid} + '/delete/' + ${review.reviewid}}"
+									th:text="#{shopDetail.label.delete}">Xóa</a>
 							</button>
 						</div>
 
@@ -288,7 +315,8 @@
 					</div>
 					<div class="row text-left">
 						<p style="font-family: Arial, Helvetica, sans-serif" class="content"
-							th:text="${review.content}"></p>
+							th:text="${review.content}">
+						</p>
 					</div>
 				</div>
 
@@ -374,6 +402,27 @@
 			});
 		});
 	</script>
+	<script th:inline="javascript">
+		function addToCartAndRedirect(productId) {
+			addToCart(productId);
+
+			// Redirect to the "/cart" page
+			window.location.href = '/cart';
+		};
+		function addToCartAndDisplayModal(productId) {
+			// Call your existing addToCart function (assuming it's already defined)
+			addToCart(productId);
+
+			// Display the modal
+			$('#addToCartModal').modal('show');
+
+			// Automatically close the modal after 2 seconds (adjust as needed)
+			setTimeout(function () {
+				$('#addToCartModal').modal('hide');
+			}, 2000);
+		}
+	</script>
+
 </body>
 
 </html>

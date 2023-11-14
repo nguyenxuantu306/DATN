@@ -1,227 +1,181 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{/layout/layout :: dynamic(~{::body})}"
->
-  <head>
-    <meta charset="utf-8" />
-    <title>Detail Product</title>
-  </head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout :: dynamic(~{::body})}">
 
-  <body>
-    <main th:object="${order}">
-      <div class="container mt-5">
-        <div class="row">
-          <div class="col-sm-7">
-            <p class="title mb-2" th:text="#{orderDetail.label.orderDetail}">
-              Chi tiết đơn hàng:#:<i th:text="${orderid}"></i>
-              <i th:if="${order.statusOrder.name}=='Đã hủy'" class="text-danger"
-                >[[${order.statusOrder.name}]]</i
-              >
-              <i
-                th:if="${order.statusOrder.name}!='Đã hủy'"
-                class="text-success"
-                >[[${order.statusOrder.name}]]</i
-              >
-            </p>
-            <div
-              class="card mb-3 border border-0"
-              style="
+<head>
+	<meta charset="utf-8" />
+	<title>Detail Product</title>
+</head>
+
+<body>
+	<main th:object="${order}">
+		<div class="container mt-5">
+			<div class="row">
+				<div class="col-sm-7">
+					<p class="title mb-2" th:text="#{orderDetail.label.orderDetail}">
+						Chi tiết đơn hàng:#:<i th:text="${orderid}"></i>
+						<i th:if="${order.statusOrder.name}=='Đã hủy'"
+							class="text-danger">[[${order.statusOrder.name}]]</i>
+						<i th:if="${order.statusOrder.name}!='Đã hủy'"
+							class="text-success">[[${order.statusOrder.name}]]</i>
+					</p>
+					<div class="card mb-3 border border-0" style="
                 width: 650px;
                 height: 200px;
                 background-color: #fff;
                 box-shadow: 0 0 16px rgba(0, 0, 0, 0.11);
-              "
-            >
-              <div class="row g-0 ms-3">
-                <h5 class="card-title mt-3">
-                  <i
-                    class="bi bi-person-square"
-                    th:text="#{orderDetail.label.deliveryInfomation}"
-                  >
-                    THÔNG TIN NHẬN HÀNG</i
-                  >
-                </h5>
-                <div class="col-md-3 fw-bold">
-                  <p th:text="#{orderDetail.label.receiver}">Người nhận:</p>
-                  <p th:text="#{orderDetail.label.address}">Địa chỉ:</p>
-                  <p th:text="#{orderDetail.label.deliveryTime}">Giao lúc:</p>
-                </div>
-                <div class="col-md-9">
-                  <p
-                    th:text="${order.user.firstname}+ ' '+${order.user.lastname}"
-                  ></p>
-                  <p th:text="${order.user.address}"></p>
-                  <p>3h sáng</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-5">
-            <div class="">
-              <p class="title mb-2 ms-3">
-                <span th:text="#{orderDetail.label.setTime}">Đặt lúc:</span>
+              ">
+						<div class="row g-0 ms-3">
+							<h5 class="card-title mt-3">
+								<i class="bi bi-person-square" th:text="#{orderDetail.label.deliveryInfomation}">
+									THÔNG TIN NHẬN HÀNG</i>
+							</h5>
+							<div class="col-md-3 fw-bold">
+								<p th:text="#{orderDetail.label.receiver}">Người nhận:</p>
+								<p th:text="#{orderDetail.label.address}">Địa chỉ:</p>
+								<p th:text="#{orderDetail.label.deliveryTime}">Giao lúc:</p>
+							</div>
+							<div class="col-md-9">
+								<p th:text="${order.user.firstname}+ ' '+${order.user.lastname}"></p>
+								<p th:text="${order.user.address}"></p>
+								<p>3h sáng</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-5">
+					<div class="">
+						<p class="title mb-2 ms-3">
+							<span th:text="#{orderDetail.label.setTime}">Đặt lúc:</span>
 
-                <!-- <i th:text="${#dates.format(order.orderdate, 'dd/MM/yyyy HH:mm:ss')}"></i> -->
-                <i th:text="${order.getOrderDateFormatted()}"></i>
-              </p>
-              <div
-                class="card mb-3 border border-0"
-                style="
+							<!-- <i th:text="${#dates.format(order.orderdate, 'dd/MM/yyyy HH:mm:ss')}"></i> -->
+							<i th:text="${order.getOrderDateFormatted()}"></i>
+						</p>
+						<div class="card mb-3 border border-0" style="
                   height: 200px;
                   background-color: #fff;
                   box-shadow: 0 0 16px rgba(0, 0, 0, 0.11);
-                "
-              >
-                <h5 class="card-title mt-3 ms-3">
-                  <i
-                    class="bi bi-credit-card-2-front-fill"
-                    th:text="#{orderDetail.label.billingInformation}"
-                  >
-                    THÔNG TIN THANH TOÁN</i
-                  >
-                </h5>
-                <p class="ms-3">
-                  <span th:text="#{orderDetail.label.paymentByForm}"
-                    >Thanh toán bằng hình thức: </span
-                  ><span th:text="${order.paymentmethod.Methodname}"></span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="row mx-1"
-          style="
+                ">
+							<h5 class="card-title mt-3 ms-3">
+								<i class="bi bi-credit-card-2-front-fill"
+									th:text="#{orderDetail.label.billingInformation}">
+									THÔNG TIN THANH TOÁN</i>
+							</h5>
+							<p class="ms-3">
+								<span th:text="#{orderDetail.label.paymentByForm}">Thanh toán bằng hình thức:
+								</span><span th:text="${order.paymentmethod.Methodname}"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mx-1" style="
             height: auto;
             background-color: #fff;
             box-shadow: 0 0 16px rgba(0, 0, 0, 0.11);
-          "
-        >
-          <h5 class="mt-3">
-            <i class="bi bi-person-heart"></i>
-            <span th:text="#{orderDetail.label.productInformation}"
-              >THÔNG TIN SẢN PHẨM</span
-            >
-          </h5>
+          ">
+				<h5 class="mt-3">
+					<i class="bi bi-person-heart"></i>
+					<span th:text="#{orderDetail.label.productInformation}">THÔNG TIN SẢN PHẨM</span>
+				</h5>
 
-          <div
-            class="row border-bottom ms-1"
-            th:each="detail: *{orderDetail}"
-            th:object="${detail}"
-          >
-            <div class="col-sm-8">
-              <div class="card mb-3 border border-0 mt-3">
-                <div class="row g-0">
-                  <div class="col-md-2">
-                    <img
-                      th:src="*{product.image}"
-                      alt="Hình ảnh sản phẩm"
-                      style="max-width: 100px"
-                      class="m-3"
-                    />
-                  </div>
-                  <div class="col-md-10">
-                    <div class="card-body">
-                      <h5 class="card-title fw-bold">
-                        [[*{product.productname}]]
-                      </h5>
-                      <small class="card-text"
-                        ><span th:text="#{orderDetail.label.cost}">Giá: </span>
-                        [[*{#numbers.formatDecimal(product.price, 0, 'COMMA', 0,
-                        'POINT')}]] VNĐ</small
-                      >
-                      <small class="card-text"
-                        ><br />
-                        <span th:text="#{orderDetail.label.quatity}"
-                          >Số lượng: </span
-                        ><span>[[*{quantityordered}]]kg</span> </small
-                      ><br />
+				<div class="row border-bottom ms-1" th:each="detail: *{orderDetail}" th:object="${detail}">
+					<div class="col-sm-8">
+						<div class="card mb-3 border border-0 mt-3">
+							<div class="row g-0">
+								<div class="col-md-2">
+									<img th:src="*{product.image}" alt="Hình ảnh sản phẩm" style="max-width: 100px"
+										class="m-3" />
+								</div>
+								<div class="col-md-10">
+									<div class="card-body">
+										<h5 class="card-title fw-bold">
+											[[*{product.productname}]]
+										</h5>
+										<small class="card-text"><span th:text="#{orderDetail.label.cost}">Giá: </span>
+											[[*{#numbers.formatDecimal(product.price, 0, 'COMMA', 0,
+											'POINT')}]] VNĐ</small>
+										<small class="card-text"><br />
+											<span th:text="#{orderDetail.label.quatity}">Số lượng:
+											</span><span>[[*{quantityordered}]]kg</span> </small><br />
 
-                      <small
-                        class="card-text"
-                        th:text="#{orderDetail.label.promotion}"
-                        >Khuyến mãi</small
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+										<small class="card-text" th:text="#{orderDetail.label.promotion}">Khuyến
+											mãi</small>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 
-            <div class="col-sm-4">
-              <div class="row">
-                <div class="col"></div>
-                <div class="col text-end mt-5">
-                  <p class="total-price">
-                    [[*{#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0,
-                    'POINT')}]] VNĐ
-                  </p>
+					<div class="col-sm-4">
+						<div class="row">
+							<div class="col"></div>
+							<div class="col text-end mt-5">
+								<p class="total-price">
+									[[*{#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0,
+									'POINT')}]] VNĐ
+								</p>
 
-                  <p class="text-decoration-line-through">Giá chưa KM</p>
-                </div>
-              </div>
-            </div>
-          </div>
+								<p class="text-decoration-line-through">Giá chưa KM</p>
+							</div>
+						</div>
+					</div>
+				</div>
 
-          <div class="row border-top">
-            <div class="col-sm-6 offset-6">
-              <div class="row mt-3">
-                <div class="col-sm-8">
-                  <p th:text="#{orderDetail.label.subtotal}">Tạm tính:</p>
-                  <p th:text="#{orderDetail.label.total}">Tổng tiền:</p>
-                  <p th:text="#{orderDetail.label.totalPayment}">
-                    Số tiền đã thanh toán:
-                  </p>
-                </div>
+				<div class="row border-top">
+					<div class="col-sm-6 offset-6">
+						<div class="row mt-3">
+							<div class="col-sm-8">
+								<p th:text="#{orderDetail.label.subtotal}">Tạm tính:</p>
+								<p th:text="#{orderDetail.label.total}">Tổng tiền:</p>
+								<p th:text="#{orderDetail.label.totalPayment}">
+									Số tiền đã thanh toán:
+								</p>
+							</div>
 
-                <div class="col-sm-4 text-end">
-                  <p><span id="tempTotalPriceSum">0 VNĐ</span></p>
-                  <p class="text-danger fw-bold">
-                    <span id="totalPriceSum">0 VNĐ</span>
-                  </p>
-                  <p></p>
-                </div>
-              </div>
-            </div>
-          </div>
+							<div class="col-sm-4 text-end">
+								<p><span id="tempTotalPriceSum">0 VNĐ</span></p>
+								<p class="text-danger fw-bold">
+									<span id="totalPriceSum">0 VNĐ</span>
+								</p>
+								<p></p>
+							</div>
+						</div>
+					</div>
+				</div>
 
-          <div class="text-center">
-            <a
-              class="btn btn-white border border-danger text-danger fw-bold dh mb-3 rounded-3"
-              th:href="@{/order/list}"
-              th:text="#{orderDetail.label.back}"
-              >VỀ TRANG DANH SÁCH ĐƠN HÀNG</a
-            >
-          </div>
-        </div>
-      </div>
-      <script>
-        // Đợi tài liệu HTML được tải hoàn toàn
-        document.addEventListener("DOMContentLoaded", function () {
-          // Lấy tất cả các phần tử có class "total-price"
-          const totalPrices = document.querySelectorAll(".total-price");
-          let totalPriceSum = 0;
-          let tempTotalPriceSum = 0;
+				<div class="text-center">
+					<a class="btn btn-white border border-danger text-danger fw-bold dh mb-3 rounded-3"
+						th:href="@{/order/list}" th:text="#{orderDetail.label.back}">VỀ TRANG DANH SÁCH ĐƠN HÀNG</a>
+				</div>
+			</div>
+		</div>
+		<script>
+			// Đợi tài liệu HTML được tải hoàn toàn
+			document.addEventListener("DOMContentLoaded", function () {
+				// Lấy tất cả các phần tử có class "total-price"
+				const totalPrices = document.querySelectorAll(".total-price");
+				let totalPriceSum = 0;
+				let tempTotalPriceSum = 0;
 
-          // Duyệt qua mảng các giá trị totalPrice và cộng dồn chúng vào biến tổng
-          totalPrices.forEach(function (totalPriceElement) {
-            const totalPrice = parseFloat(
-              totalPriceElement.innerText.replace(/\D/g, "")
-            );
-            tempTotalPriceSum += totalPrice;
-          });
+				// Duyệt qua mảng các giá trị totalPrice và cộng dồn chúng vào biến tổng
+				totalPrices.forEach(function (totalPriceElement) {
+					const totalPrice = parseFloat(
+						totalPriceElement.innerText.replace(/\D/g, "")
+					);
+					tempTotalPriceSum += totalPrice;
+				});
 
-          // Cập nhật giá trị tổng trên trang web
-          const tempTotalPriceSumElement =
-            document.getElementById("tempTotalPriceSum");
-          tempTotalPriceSumElement.textContent = `${tempTotalPriceSum.toLocaleString()} VNĐ`;
+				// Cập nhật giá trị tổng trên trang web
+				const tempTotalPriceSumElement =
+					document.getElementById("tempTotalPriceSum");
+				tempTotalPriceSumElement.textContent = `${tempTotalPriceSum.toLocaleString()} VNĐ`;
 
-          const totalPriceSumElement = document.getElementById("totalPriceSum");
-          totalPriceSumElement.textContent = `${tempTotalPriceSum.toLocaleString()} VNĐ`;
-          //	document.getElementById("totalPriceSum").textContent = `Tổng tiền: ${totalPriceSum.toLocaleString()} VNĐ`;
-        });
-      </script>
-    </main>
-  </body>
+				const totalPriceSumElement = document.getElementById("totalPriceSum");
+				totalPriceSumElement.textContent = `${tempTotalPriceSum.toLocaleString()} VNĐ`;
+				//	document.getElementById("totalPriceSum").textContent = `Tổng tiền: ${totalPriceSum.toLocaleString()} VNĐ`;
+			});
+		</script>
+	</main>
+</body>
+
 </html>
