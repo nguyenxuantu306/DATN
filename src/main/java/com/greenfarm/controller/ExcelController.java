@@ -25,6 +25,7 @@ import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Product;
+import com.greenfarm.entity.ReComment;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.User;
@@ -33,6 +34,7 @@ import com.greenfarm.service.CategoryService;
 import com.greenfarm.service.OrderDetailService;
 import com.greenfarm.service.OrderService;
 import com.greenfarm.service.ProductService;
+import com.greenfarm.service.ReCommentService;
 import com.greenfarm.service.TourService;
 import com.greenfarm.service.UserService;
 import java.text.DecimalFormat;
@@ -63,6 +65,7 @@ public class ExcelController {
 
 	@Autowired
 	TourService tourService;
+
 	
 	@GetMapping("/print-to-excel")
 	public ResponseEntity<byte[]> printToExcel() throws IOException {
@@ -915,6 +918,8 @@ public class ExcelController {
 
 	    return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
+	
+	
 	public final List<User> getAll() {
 		return userService.findAll();
 	}
@@ -948,4 +953,6 @@ public class ExcelController {
 	public final List<Tour> getAllTour() {
 		return tourService.findAll();
 	}
+	
+	
 }

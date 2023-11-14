@@ -11482,17 +11482,25 @@ h1 {
 	color: #FFED85;
 }
 
-.package-item > a {
-    position: relative;
+.package-item>a {
+	position: relative;
 }
 
-.package-item > a .out-of-stock-label {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: rgb(0, 0, 0);
-    color: #ffffff;
-    padding: 5px;
-    border: 1px solid #000;
-    border-radius: 5px 0 0 5px; /* Đặt border radius ở dưới góc trái */
+.package-item>a .out-of-stock-label {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-color: rgb(0, 0, 0);
+	color: #ffffff;
+	padding: 5px;
+	border: 1px solid #000;
+	border-radius: 5px 0 0 5px;
+}
+
+.thumbnail-image.selected {
+	border: 2px solid gold;
+}
+
+.thumbnail-image.selected:hover {
+	border: 2px solid gold;
 }

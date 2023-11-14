@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -94,6 +97,37 @@ public class TourServiceImpl implements TourService {
 	@Override
 	public Tour save(Tour tour) {
 		return dao.save(tour);
+	}
+
+	@Override
+	public Page<TourDTO> findToursByAdultPriceWithPagination(Float minPrice, Float maxPrice, Pageable pageable) {
+	    Page<Tour> tourPage = dao.findByAdultprice(minPrice, maxPrice, pageable);
+
+	    List<TourDTO> tourDTOs = tourPage.getContent().stream()
+	                                   .map(tour -> convertToDTOUsingModelMapper(tour))
+	                                   .collect(Collectors.toList());
+
+	    return new PageImpl<>(tourDTOs, pageable, tourPage.getTotalElements());
+	}
+	
+	private TourDTO convertToDTOUsingModelMapper(Tour tour) {
+	    return modelMapper.map(tour, TourDTO.class);
+	}
+
+	@Override
+	public Page<TourDTO> findToursByTournameWithPagination(String searchTerm, Pageable pageable) {
+	    Page<Tour> tourPage = dao.findByTournameContainingIgnoreCase(searchTerm, pageable);
+
+	    List<TourDTO> tourDTOs = tourPage.getContent().stream()
+	                                   .map(tour -> convertToDTOUsingModelMapper(tour))
+	                                   .collect(Collectors.toList());
+
+	    return new PageImpl<>(tourDTOs, pageable, tourPage.getTotalElements());
+	}
+
+	@Override
+	public Page<Tour> findAllWithPagination(Pageable pageable) {
+		return dao.findAll(pageable);
 	}
 
 }

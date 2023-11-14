@@ -55,35 +55,19 @@ public class UserRestController {
 	@GetMapping("{userid}")
 	public ResponseEntity<UserDTO> getOne(@PathVariable("userid") @Valid Integer userid, BindingResult bindingResult)
 			throws UnkownIdentifierException {
-		if (bindingResult.hasErrors()) {
-			// Trả về mã trạng thái 400 Bad Request nếu có lỗi validation
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
 
 		User user = userService.findById(userid);
 
 		if (user == null) {
+			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy category
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		ModelMapper modelMapper = new ModelMapper();
+		// Sử dụng modelMapper để ánh xạ từ User sang UserDTO
 		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 
+		// Trả về UserDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
-
-		// User user = userService.findById(userid);
-//
-//		if (user == null) {
-//			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy category
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
-//
-//		// Sử dụng modelMapper để ánh xạ từ User sang UserDTO
-//		ModelMapper modelMapper = new ModelMapper();
-//		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-//
-//		// Trả về UserDTO bằng ResponseEntity với mã trạng thái 200 OK
-//		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
 	@GetMapping("email/{useremail}")
@@ -97,7 +81,6 @@ public class UserRestController {
 		}
 
 		// Sử dụng modelMapper để ánh xạ từ User sang UserDTO
-		ModelMapper modelMapper = new ModelMapper();
 		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 
 		// Trả về UserDTO bằng ResponseEntity với mã trạng thái 200 OK
@@ -106,8 +89,6 @@ public class UserRestController {
 
 	@PostMapping("/add")
 	public ResponseEntity<UserDTO> create(@Valid @RequestBody User user) throws UserAlreadyExistException {
-		
-		
 		User createdUser = userService.create(user);
 
 		if (createdUser == null) {
@@ -116,7 +97,6 @@ public class UserRestController {
 		}
 
 		// Sử dụng ModelMapper để ánh xạ từ User sang UserDTO
-		ModelMapper modelMapper = new ModelMapper();
 		UserDTO userDTO = modelMapper.map(createdUser, UserDTO.class);
 
 		// Trả về UserDTO bằng ResponseEntity với mã trạng thái 201 Created
@@ -124,34 +104,19 @@ public class UserRestController {
 	}
 
 	@PutMapping("{userid}")
-	public ResponseEntity<UserDTO> update(@PathVariable("userid") Integer userid, @RequestBody User updateUser)
+	public ResponseEntity<UserDTO> update(@PathVariable("userid") Integer userid, @RequestBody User user)
 			throws UnkownIdentifierException {
-		User existingUser = userService.findById(userid);
+		User updatedUser = userService.update(user);
 
-		if (existingUser == null) {
+		if (updatedUser == null) {
 			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy User
 			return ResponseEntity.notFound().build();
 		}
 
-		// Cập nhật thông tin của existingUser với dữ liệu từ updateUser
-		existingUser.setEmail(updateUser.getEmail());
-		existingUser.setFirstname(updateUser.getFirstname());
-		existingUser.setLastname(updateUser.getLastname());
-		existingUser.setPhonenumber(updateUser.getPhonenumber());
-		existingUser.setGender(updateUser.getGender());
-		existingUser.setBirthday(updateUser.getBirthday());
-		existingUser.setCreateddate(updateUser.getCreateddate());
-		// Các cập nhật khác (nếu có)
-
-		// Thực hiện cập nhật trong service
-		User updatedUserResult = userService.update(existingUser);
-
-		// Sử dụng modelMapper để ánh xạ từ updatedUserResult sang UserDTO
-		ModelMapper modelMapper = new ModelMapper();
-		UserDTO updatedUserDTO = modelMapper.map(updatedUserResult, UserDTO.class);
-
+		UserDTO updatedUserDTO = modelMapper.map(updatedUser, UserDTO.class);
+		
 		// Trả về updatedUserDTO bằng ResponseEntity với mã trạng thái 200 OK
-		return ResponseEntity.ok(updatedUserDTO);
+		return new ResponseEntity<>(updatedUserDTO, HttpStatus.OK);
 	}
 
 	@DeleteMapping("{userid}")

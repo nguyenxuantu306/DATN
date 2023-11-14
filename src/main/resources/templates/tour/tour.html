@@ -22,7 +22,8 @@
 							<div class="search_panel">
 								<div class="row">
 									<div class="col-md-10 input-group">
-										<input type="text" class="form-control mr-3" placeholder="Tìm kiếm tên..." name="search" id="searchInput">
+										<input type="text" class="form-control mr-3" placeholder="Tìm kiếm tên..."
+											name="search" id="searchInput">
 										<div class="input-group-append ">
 											<button class="btn btn-primary" type="submit">Tìm kiếm</button>
 										</div>
@@ -55,10 +56,10 @@
 								<div class="p-4">
 									<div class="d-flex justify-content-between mb-3">
 										<small class="m-0"> <i class="fa fa-calendar-alt text-primary ">
-										<span style="font-size:18px" th:text="${p.departureday}"></span>
-										</i>
+												<span style="font-size:18px" th:text="${p.departureday}"></span>
+											</i>
 										</small>
-										
+
 
 									</div>
 									<a th:utext="${p.Tourname}" class="h5 text-decoration-none" href="/tour-detail"></a>
@@ -66,14 +67,40 @@
 										<div class="d-flex justify-content-between">
 											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + 'đ'"
 												class="m-0 p-1"></h5>
-											<button class="btn btn-primary"><a th:href="@{|/booking/${p.tourid}|}">Đặt tour</a></button>
+											<button class="btn btn-primary"><a th:href="@{|/booking/${p.tourid}|}">Đặt
+													tour</a></button>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<ul class="pagination justify-content-center">
+								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{|/tour?page=1&size=${size}|}" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
+								</li>
+								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{|/tour?page=${currentPage - 1}&size=${size}|}"
+										class="page-link"><i class="bi bi-chevron-left"></i></a>
+								</li>
+								<li th:each="i: ${#numbers.sequence(1, totalPages)}"
+									th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
+									<a th:href="@{|/tour?page=${i}&size=${size}|}" class="page-link" th:text="${i}"></a>
+								</li>
+								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{|/tour?page=${currentPage + 1}&size=${size}|}"
+										class="page-link"><i class="bi bi-chevron-right"></i></a>
+								</li>
+								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{|/tour?page=${totalPages}&size=${size}|}" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+								</li>
+							</ul>
+						</div>
+					</div>
 				</div>
+
 				<div th:unless="${tourDTOs != null}">
 					<div class="row">
 						<div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
@@ -84,10 +111,10 @@
 								<div class="p-4">
 									<div class="d-flex justify-content-between mb-3">
 										<small class="m-0"> <i class="fa fa-calendar-alt text-primary">
-										<span style="font-size:18px" th:text="${p.departureday}"></span>
-										</i>
+												<span style="font-size:18px" th:text="${p.departureday}"></span>
+											</i>
 										</small>
-										
+
 
 									</div>
 									<a th:utext="${p.Tourname}" class="h5 text-decoration-none" href="/tour-detail"></a>
@@ -95,11 +122,36 @@
 										<div class="d-flex justify-content-between">
 											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + 'đ'"
 												class="m-0 p-1"></h5>
-											<button class="btn btn-primary"><a th:href="@{|/booking/${p.tourid}|}">Đặt tour</a></button>
+											<button class="btn btn-primary"><a th:href="@{|/booking/${p.tourid}|}">Đặt
+													tour</a></button>
 										</div>
 									</div>
 								</div>
 							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<ul class="pagination justify-content-center">
+								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{|/tour?page=1&size=${6}|}" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
+								</li>
+								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{|/tour?page=${currentPage - 1}&size=${6}|}"
+										class="page-link"><i class="bi bi-chevron-left"></i></a>
+								</li>
+								<li th:each="i: ${#numbers.sequence(1, totalPages)}"
+									th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
+									<a th:href="@{|/tour?page=${i}&size=${6}|}" class="page-link" th:text="${i}"></a>
+								</li>
+								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{|/tour?page=${currentPage + 1}&size=${6}|}"
+										class="page-link"><i class="bi bi-chevron-right"></i></a>
+								</li>
+								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{|/tour?page=${totalPages}&size=${6}|}" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>

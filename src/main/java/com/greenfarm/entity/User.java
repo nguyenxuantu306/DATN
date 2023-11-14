@@ -20,6 +20,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,17 +40,37 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Positive(message = "IdUser phải lớn hơn 0")
 	Integer userid;
 
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
+	@NotEmpty(message = "Thiếu password")
 	String password;
+
 	@Column(unique = true)
+	@NotBlank(message = "Email là bắt buộc")
+	@Email(message = "Email không hợp lệ!")
 	String email;
+
+	@NotBlank(message = "Mô tả là bắt buộc")
 	String firstname;
+
+	@NotBlank(message = "Mô tả là bắt buộc")
 	String lastname;
+
+	@Pattern(regexp = "^[1-9][0-9]*$", message = "Số điện thoại phải là số nguyên dương và không chứa ký tự khác")
 	String phonenumber;
+
+	@NotBlank(message = "Ảnh đại diện là bắt buộc")
 	String image;
+
+	@NotBlank(message = "Địa chỉ là bắt buộc")
 	String address;
+
+	@NotNull(message = "Giới tính là bắt buộc")
 	Boolean gender;
+
+	@Past(message = "Ngày sinh phải trước ngày hiện tại")
 	@Temporal(TemporalType.DATE)
 	Date birthday = new Date();
 
@@ -87,7 +114,7 @@ public class User implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	private Provider provider;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<VoucherUser> voucheruser;

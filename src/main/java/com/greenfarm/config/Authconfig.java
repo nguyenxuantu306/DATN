@@ -57,8 +57,10 @@ public class Authconfig {
 	public SecurityFilterChain fillterchain(HttpSecurity http) throws Exception {
 		http.csrf().disable().cors().disable();
 
-		http.authorizeRequests(authorize -> authorize.requestMatchers("/profile").authenticated()
-				.requestMatchers("/assetsAdmin/", "/admin").hasRole("Administrator").anyRequest().permitAll());
+		http.authorizeRequests(authorize -> authorize
+				.requestMatchers("/profile", "/booking/*","/checkout", "/cart").authenticated()
+				.requestMatchers("/assetsAdmin/", "/admin")
+				.hasRole("Administrator").anyRequest().permitAll());
 
 		http.formLogin(form -> form.loginPage("/login")
 		/* .loginProcessingUrl("/") */

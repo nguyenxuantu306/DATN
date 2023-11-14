@@ -32,6 +32,7 @@ public class Product implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Positive(message="ID phải lớn hơn 0")
 	private Integer productid;
 
 	@NotBlank(message = "Bạn chưa nhập tên rau")
@@ -46,6 +47,7 @@ public class Product implements Serializable {
 	@Positive(message = "Giá phải lớn hơn 0")
 	private Float price;
 
+	@NotBlank(message = "Ảnh rau là bắt buộc")
 	private String image;
 
 	@NotNull(message = "Số lượng rau là bắt buộc")

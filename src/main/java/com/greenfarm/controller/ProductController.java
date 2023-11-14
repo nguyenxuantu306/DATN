@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -51,17 +53,21 @@ public class ProductController {
 	// List All
 	@GetMapping("/product/shop")
 	public String shopList(Model model, @PageableDefault(size = 9) Pageable pageable,
-			@RequestParam("cid") Optional<String> cid) {
-		if (cid.isPresent()) {
-			List<Product> list = productService.findByCategoryId(cid.get());
-			model.addAttribute("items", list);
-		} else {
-			Page<Product> productsPage = productService.findAll(pageable);
-			Page<ProductDTO> productDTOPage = productsPage.map(product -> modelMapper.map(product, ProductDTO.class));
-			model.addAttribute("items", productDTOPage);
-		}
+	        @RequestParam("cid") Optional<String> cid, UriComponentsBuilder uriBuilder) {
+	    if (cid.isPresent()) {
+	        List<Product> list = productService.findByCategoryId(cid.get());
+	        model.addAttribute("items", new PageImpl<>(list, pageable, list.size()));
+	    } else {
+	        Page<Product> productsPage = productService.findAll(pageable);
+	        Page<ProductDTO> productDTOPage = productsPage.map(product -> modelMapper.map(product, ProductDTO.class));
+	        model.addAttribute("items", productDTOPage);
 
-		return "product/shop";
+	        // Thêm thông tin URL phân trang
+	        String url = uriBuilder.path("/product/shop").queryParam("page", "{page}").build().toUriString();
+	        model.addAttribute("url", url);
+	    }
+
+	    return "product/shop";
 	}
 
 	@GetMapping("/product/detail/{productid}")
