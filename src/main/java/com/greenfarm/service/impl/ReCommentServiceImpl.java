@@ -18,46 +18,38 @@ public class ReCommentServiceImpl implements ReCommentService{
 	
 	@Override
 	public List<ReComment> findAll() {
-		// TODO Auto-generated method stub
 		return reCommentDAO.findAll();
 	}
 
 	@Override
 	public ReComment create(ReComment ReComment) {
-		// TODO Auto-generated method stub
 		return reCommentDAO.save(ReComment);
 	}
 
 	@Override
 	public List<ReComment> getReComments() {
-		// TODO Auto-generated method stub
 		return reCommentDAO.findAll();
 	}
 
-	@Override
-	public List<ReComment> ReCommentbyComments(Comment comment) {
-		// TODO Auto-generated method stub
-		return reCommentDAO.findByComments(comment);
-	}
 
 	@Override
 	public ReComment findById(Integer ReCommentid) {
-		// TODO Auto-generated method stub
 		return reCommentDAO.findById(ReCommentid).get();
 	}
 
 	@Override
 	public ReComment update(ReComment ReComment) {
-		// TODO Auto-generated method stub
 		return reCommentDAO.save(ReComment);
 	}
 
 	@Override
 	public void deleteReCommentById(Integer ReCommentid) {
-		// TODO Auto-generated method stub
 		reCommentDAO.deleteById(ReCommentid);
 	}
 
-
+	@Override
+	public List<ReComment> getrecommenComments(Comment comment) {
+		return reCommentDAO.findByComment(comment);
+	}
 
 }
