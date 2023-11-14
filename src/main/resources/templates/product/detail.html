@@ -21,8 +21,8 @@
 			<div th:object="${item}" class="row">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-						<li class="breadcrumb-item"><a href="#">Shop</a></li>
+						<li class="breadcrumb-item"><a href="#" th:text="#{shopDetail.label.breadcrumbHome}">Trang chủ</a></li>
+						<li class="breadcrumb-item"><a href="#" th:text="#{shopDetail.label.breadcrumbShop}">Shop</a></li>
 						<li class="breadcrumb-item active" aria-current="page" th:text="*{productname}"></li>
 					</ol>
 				</nav>
@@ -62,13 +62,13 @@
 						SL: <span th:text="*{quantityavailable}" class="product-description mb-3"></span>
 						<div class="cart-button mt-5 mb-5 d-flex">
 
-							<button class="add-to-cart-button" th:onclick="'addToCart(\'' + ${item.productid} + '\')'">
+							<button class="add-to-cart-button" th:onclick="'addToCart(\'' + ${item.productid} + '\')'" th:text="#{shopDetail.label.addToCart}">
 								<i class="fas fa-shopping-cart"></i> Add to Cart
 							</button>
 						</div>
 						<div class="categories ">
 							<h5>
-								CATEGORIES: <span><a th:text="*{category.categoryname}"></span>
+								<span th:text="#{shopDetail.label.category}">CATEGORIES: </span> <span><a th:text="*{category.categoryname}"></span>
 							</h5>
 
 						</div>
@@ -96,12 +96,12 @@
 				</div>
 			</div>
 
-		</div>-->
+		</div>
 
 
 		<div id="wapper">
 			<div class=" mb-3 pb-3">
-				<h1>SẢN PHẨM LIÊN QUAN</h1>
+				<h1 th:text="#{shopDetail.label.relatedProduct}">SẢN PHẨM LIÊN QUAN</h1>
 			</div>
 
 			<div class="row slider" th:object="${item}">
@@ -124,7 +124,7 @@
 		</div>
 		<br>
 		<div class=" mb-3">
-			<h1>ĐÁNH GIÁ SẢN PHẨM</h1>
+			<h1 th:text="#{shopDetail.label.productReviews}">ĐÁNH GIÁ SẢN PHẨM</h1>
 		</div>
 
 		<div class="row ">
@@ -199,7 +199,7 @@
 
 
 					<!-- Button trigger modal -->
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" th:text="#{shopDetail.label.reviews}">
 						Đánh giá giúp chúng tôi !</button>
 
 					<!-- Modal -->
@@ -210,7 +210,7 @@
 								<div class="modal-body">
 									<div class="card">
 										<div class="modal-header">
-											<h1 class="modal-title fs-6 text-center" id="exampleModalLabel">
+											<h1 class="modal-title fs-6 text-center" id="exampleModalLabel" th:text="#{shopDetail.label.thanhks}">
 												GreenFarm xin được cám ơn quý
 												khách!</h1>
 										</div>
@@ -237,7 +237,7 @@
 
 												</div>
 												<div class="d-flex justify-content-between mt-3">
-													<button type="submit" class="btn btn-danger">
+													<button type="submit" class="btn btn-danger" th:text="#{shopDetail.label.sendReviews}">
 														Gửi đánh giá <i id="review-button"
 															class="fas fa-long-arrow-alt-right ms-1"></i>
 													</button>
@@ -257,7 +257,7 @@
 						<div class="modal-dialog modal-dialog-centered">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title">Đánh giá</h5>
+									<h5 class="modal-title" th:text="#{shopDetail.label.reviews}">Đánh giá</h5>
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
@@ -266,7 +266,7 @@
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary"
-										data-bs-dismiss="modal">Đóng</button>
+										data-bs-dismiss="modal" th:text="#{shopDetail.label.close}">Đóng</button>
 								</div>
 							</div>
 						</div>
@@ -290,7 +290,7 @@
 							<button style="float: right;" class="btn btn-danger"
 								th:if="${#authorization.expression(review.user.email == #authentication.principal.username)}">
 								<a
-									th:href="@{'/product/detail/' + ${productid} + '/delete/' + ${review.reviewid}}">Xóa</a>
+									th:href="@{'/product/detail/' + ${productid} + '/delete/' + ${review.reviewid}}" th:text="#{shopDetail.label.delete}">Xóa</a>
 							</button>
 						</div>
 

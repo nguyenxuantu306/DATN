@@ -1,6 +1,7 @@
 package com.greenfarm.config;
 
 import java.time.Duration;
+import java.util.Locale;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +19,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean(name = "localeResolver")
     public LocaleResolver getLocaleResolver() {
         CookieLocaleResolver resolver = new CookieLocaleResolver();
-        resolver.setCookieDomain("myAppLocaleCookie");
-        // resolver.setDefaultLocale(Locale.ENGLISH);
-        // 60 minutes
+        resolver.setDefaultLocale(new Locale("vi"));
+        resolver.setCookiePath("/");
         Duration maxAge = Duration.ofSeconds(3600);
         resolver.setCookieMaxAge(maxAge);
         return resolver;
@@ -41,7 +41,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         LocaleChangeInterceptor localeInterceptor = new LocaleChangeInterceptor();
         localeInterceptor.setParamName("language");
-        registry.addInterceptor(localeInterceptor).addPathPatterns("/*");
+        registry.addInterceptor(localeInterceptor).addPathPatterns("/**");
     }
-
 }
