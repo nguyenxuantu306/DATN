@@ -17,6 +17,7 @@ commentapp.config(['$routeProvider', '$locationProvider', function($routeProvide
 
 commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	$scope.items = [];
+	$scope.recomments = [];
 	$scope.users = {};
 	$scope.form = {};
 	$scope.field = [];
@@ -45,9 +46,20 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 		$http.get("/rest/comment/tour/"+ + $scope.tour.tourid).then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
+				console.log("tourId: " + item.commentid); 
 				item.commentdate = new Date(item.commentdate)
+				$http.get("/rest/recomment/comment/1").then(resp => {
+			$scope.recomments = resp.data;
+			$scope.recomments.forEach(item => {
+				console.log("recm id: " + item.recommentid); 
+				item.recommentdate = new Date(item.recommentdate)
 			})
 		});
+			})
+		});
+		
+		
+		
 		
 		/*console.log("tourId2: " + tourid); 
 		  

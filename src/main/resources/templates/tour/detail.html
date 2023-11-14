@@ -228,6 +228,7 @@
 
 
 					<div class="card-body">
+					<div>
 						<div class="d-flex justify-content-between mb-2">
 							<div class="d-flex flex-row align-items-center">
 								<img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp" alt="avatar"
@@ -236,9 +237,9 @@
 								<p class="small mb-0 ms-2 mx-2">{{p.user.email}}</p>
 								<p class="text-muted small mb-0">{{p.commentdate}}</p>
 							</div>
-							<p> {{item.commenttext}}</p>
+							
 
-							<<<<<<< HEAD </div>
+							 </div>
 								<p> {{p.commenttext}}</p>
 
 								<div class="d-flex flex-row align-items-center"
@@ -261,6 +262,42 @@
 
 									</div>
 								</div>
+								</div>
+								<!-- //recomment -->
+								<div class="row" ng-repeat="re in pager.items">
+								<div class="col-2"></div>
+									<div class="col-10">
+						<div class="d-flex justify-content-between mb-2">
+							<div class="d-flex flex-row align-items-center">
+								<img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp" alt="avatar"
+									width="25" height="25" />
+								<p class="small mb-0 ms-2 mx-2">{{re.user.firstname}}</p>
+								<p class="small mb-0 ms-2 mx-2">{{re.user.email}}</p>
+								<p class="text-muted small mb-0">{{re.recommentdate}}</p>
+							</div>
+							
+
+							 </div>
+								<p> {{re.recommenttext}}</p>
+
+								<div class="d-flex flex-row align-items-center"
+									th:if="${#authorization.expression('isAuthenticated()')}" ng-model="p.user.email">
+									
+									<div class="list-inline" ng-if="isUserLoggedIn(p.user.email)">
+										<a href="#!" class="d-inline-flex align-items-center  me-3  list-inline-item">
+											<i class="far fa-comment-dots me-2"></i>
+											<p class="mb-0" ng-click="delete(p)">Xóa</p>
+										</a>
+
+										<a href="#!" class="d-inline-flex align-items-center  me-3 list-inline-item"> <i
+												class="far fa-comment-dots me-2"></i>
+											<p class="mb-0" ng-click="edit(p)">Sửa</p>
+										</a>
+
+									</div>
+								</div>
+								</div>
+								</div>
 						</div>
 					</div>
 					<div class="panel-footer text-center">
@@ -279,46 +316,7 @@
 						<button ng-click="pager.last()" class="btn btn-success">
 							<i class="fas fa-angle-double-right"></i>
 						</button>
-						=======
-						<div class="d-flex flex-row align-items-center"
-							th:if="${#authorization.expression('isAuthenticated()')}" ng-model="p.user.email">
-							<a href="#!" class="d-flex align-items-center me-3"> <i
-									class="far fa-comment-dots me-2"></i>
-								<p class="mb-0">Comment</p>
-							</a>
-							<div class="list-inline"
-								th:if="${#authorization.expression(item.user.email == #authentication.principal.username)}">
-								<a href="#!" class="d-inline-flex align-items-center  me-3  list-inline-item"> <i
-										class="far fa-comment-dots me-2"></i>
-									<p class="mb-0" ng-click="delete(item)">Xóa</p>
-								</a>
-
-								<a href="#!" class="d-inline-flex align-items-center  me-3 list-inline-item"> <i
-										class="far fa-comment-dots me-2"></i>
-									<p class="mb-0" ng-click="edit(item)">Sửa</p>
-								</a>
-
-							</div>
-							>>>>>>> 11977bef1983442ff58e420602e94b21d0b6cd65
-						</div>
-					</div>
-				</div>
-				<div class="panel-footer text-center">
-					<span class="col-md-6"
-						style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
-						+ 1}} / {{pager.count}} </span>
-					<button ng-click="pager.first()" class="btn btn-success">
-						<i class="fas fa-angle-double-left"></i>
-					</button>
-					<button ng-click="pager.prev()" class="btn btn-success">
-						<i class="fas fa-angle-left"></i>
-					</button>
-					<button ng-click="pager.next()" class="btn btn-success">
-						<i class="fas fa-angle-right"></i>
-					</button>
-					<button ng-click="pager.last()" class="btn btn-success">
-						<i class="fas fa-angle-double-right"></i>
-					</button>
+						
 				</div>
 
 				<!-- viet coment -->
