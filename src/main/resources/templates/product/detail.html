@@ -53,8 +53,7 @@
 						<h2 class="mb-3" style="font-weight: 300; color: #80bb01; font-size: 28px">
 							<!--<span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"
 								style="color: #999; text-decoration: line-through"></span>-->
-								 <span
-								th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span>
+							<span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span>
 						</h2>
 						<p th:text="*{description}" class="product-description mb-3"></p>
 						SL: <span th:text="*{quantityavailable}" class="product-description mb-3"></span>
@@ -72,7 +71,8 @@
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-body text-center">
-											<img style="width: 50px;" src="https://images.fpt.shop/unsafe/filters:quality(5)/fptshop.com.vn/uploads/images/tin-tuc/148929/Originals/tich_xanh_titktok_2.png">
+											<img style="width: 50px;"
+												src="https://images.fpt.shop/unsafe/filters:quality(5)/fptshop.com.vn/uploads/images/tin-tuc/148929/Originals/tich_xanh_titktok_2.png">
 											<!-- You can customize the form or message content here -->
 											<p>Sản phẩm đã được thêm vào giỏ hàng</p>
 										</div>
@@ -88,7 +88,7 @@
 						<div class="">
 							<h5>
 								<span th:text="#{shopDetail.label.category}">CATEGORIES: </span> <span><a
-										th:text="*{category.categoryname}"/></span>
+										th:text="*{category.categoryname}" /></span>
 							</h5>
 						</div>
 					</div>
@@ -222,7 +222,7 @@
 													<input type="radio" id="star2" name="rating" value="2" /><label
 														class="full" for="star2"></label>
 													<input type="radio" id="star1" name="rating" value="1" /><label
-														class="full" for "star1"></label>
+														class="full" for="star1"></label>
 												</fieldset>
 
 
@@ -295,9 +295,12 @@
 								<span class="fa fa-star star-active"
 									th:each="i : ${#numbers.sequence(1, review.rating)}"></span> <span
 									class="fa fa-star-half star-active" th:if="${review.rating % 1 != 0}"></span>
-								<span class="fa fa-star star-inactive"
-									th:each="i : ${#numbers.sequence(review.rating.floatValue() +1,5)}">
+								<span th:if="${review.rating != 5}">
+									<span class="fa fa-star star-inactive"
+										th:each="i : ${#numbers.sequence(review.rating.floatValue() +1,5)}">
+									</span>
 								</span>
+
 							</div>
 							<div>
 								<span th:text="${review.product.category.categoryname}"></span>
