@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>GreenFarm</title>
-	
+
 </head>
 
 <body>
@@ -108,7 +108,8 @@
 					<div class="row text-center" id="Results">
 						<div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
 							<div class="package-item bg-white mb-2">
-								<a th:href="@{|/product/detail/${p.productid}|}" style="display: block; position: relative;">
+								<a th:href="@{|/product/detail/${p.productid}|}"
+									style="display: block; position: relative;">
 									<img style="height: 250px" class="img-fluid" th:src="@{|${p.image}|}" alt="">
 
 									<span th:if="${p.quantityavailable < 5}" class="out-of-stock-label" th:text="#{shop.label.outOfStock}">Hết hàng</span>
@@ -126,6 +127,30 @@
 								</div>
 							</div>
 						</div>
+						<div th:if="${items.totalPages > 1}" class="pagination justify-content-center">
+							<ul class="pagination justify-content-center">
+								<li th:class="${items.number == 0} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{${url}(page=0)}" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
+								</li>
+								<li th:class="${items.number == 0} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{${url}(page=${items.number - 1})}" class="page-link"><i class="bi bi-chevron-left"></i></a>
+								</li>
+								<li th:each="pageNumber : ${#numbers.sequence(0, items.totalPages - 1)}"
+									th:class="${items.number == pageNumber} ? 'page-item active' : 'page-item'">
+									<a th:href="@{${url}(page=${pageNumber})}" class="page-link"
+										th:text="${pageNumber + 1}"></a>
+								</li>
+								<li
+									th:class="${items.number == items.totalPages - 1} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{${url}(page=${items.number + 1})}" class="page-link"><i class="bi bi-chevron-right"></i></a>
+								</li>
+								<li
+									th:class="${items.number == items.totalPages - 1} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{${url}(page=${items.totalPages - 1})}" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+								</li>
+							</ul>
+						</div>
+
 					</div>
 				</div>
 			</div>

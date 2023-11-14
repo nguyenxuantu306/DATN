@@ -483,86 +483,183 @@
                   </div>
                   <p>{{p.commenttext}}</p>
 
-                  <div
-                    class="d-flex flex-row align-items-center"
-                    th:if="${#authorization.expression('isAuthenticated()')}"
-                    ng-model="p.user.email"
-                  >
-                    <div
-                      class="list-inline"
-                      ng-if="isUserLoggedIn(p.user.email)"
-                    >
-                      <a
-                        href="#!"
-                        class="d-inline-flex align-items-center me-3 list-inline-item"
-                      >
-                        <i class="far fa-comment-dots me-2"></i>
-                        <p
-                          class="mb-0"
-                          ng-click="delete(p)"
-                          th:text="#{detailTour.label.delete}"
-                        >
-                          Xóa
-                        </p>
-                      </a>
+				<div class="container-fluid py-3 my-3"
+					style="padding: 10px; background: #f9f9f9; border-radius: 15px; border: 1px solid #eee;">
+					<form action="">
+						<div class="rating-title py-3">QUÝ KHÁCH CHƯA RÕ VỀ CHƯƠNG
+							TRÌNH TUOR XIN CỨ HỎI, CHÚNG TÔI TRẢ LỜI</div>
+						<div class="row d-flex flex-between">
+							<div class="col-lg-4 col-md-12 d-grid">
+								<label for="">1. Nhập họ tên</label> <input type="text" name="" id="" placeholder="*" />
+							</div>
+							<div class="col-lg-4 col-md-12 d-grid">
+								<label for="">1. Nhập email</label> <input type="email" name="" id="" placeholder="*" />
+							</div>
+							<div class="col-lg-4 col-md-12 d-grid">
+								<label for="">1. Nhập số điện thoại</label> <input type="number" name="" id=""
+									placeholder="*" />
+							</div>
+							<div class="col-lg-12 d-grid" width="100%">
+								<label for="">4. Viết nhận xét của bạn vào bên dưới</label> <input type="text" name=""
+									id="" placeholder="" style="height: 150px" />
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<script th:inline="javascript">
+			var itemData = /*[[${item}]]*/ null; // Biến JavaScript chứa dữ liệu
+    /*<![CDATA[*/
+    var uslog = /*[[${#authorization.expression('isAuthenticated()') ? #authentication.principal.username : null}]]*/ null;
+    /*]]>*/
+</script>
+			
+			<!-- end div tour -->
+			<!-- </div> -->
 
-                      <a
-                        href="#!"
-                        class="d-inline-flex align-items-center me-3 list-inline-item"
-                      >
-                        <i class="far fa-comment-dots me-2"></i>
-                        <p
-                          class="mb-0"
-                          ng-click="edit(p)"
-                          th:text="#{detailTour.label.edit}"
-                        >
-                          Sửa
-                        </p>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="panel-footer text-center">
-            <span
-              class="col-md-6"
-              style="
-                text-align: right;
-                font-weight: bold;
-                color: black;
-                font-size: 15px;
-              "
-              >{{pager.page + 1}} / {{pager.count}}
-            </span>
-            <button ng-click="pager.first()" class="btn btn-success">
-              <i class="fas fa-angle-double-left"></i>
-            </button>
-            <button ng-click="pager.prev()" class="btn btn-success">
-              <i class="fas fa-angle-left"></i>
-            </button>
-            <button ng-click="pager.next()" class="btn btn-success">
-              <i class="fas fa-angle-right"></i>
-            </button>
-            <button ng-click="pager.last()" class="btn btn-success">
-              <i class="fas fa-angle-double-right"></i>
-            </button>
-          </div>
+			<!--comment  -->
+			<div style="background-color: #eee;" ng-app="commentApp" ng-controller="comment-ctrl">
 
-          <!-- viet coment -->
-          <div
-            class="card-footer py-3 border-0"
-            style="background-color: #f8f9fa"
-          >
-            <div class="d-flex flex-start w-100">
-              <img
-                class="rounded-circle shadow-1-strong me-3"
-                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
-                alt="avatar"
-                width="40"
-                height="40"
-              />
+
+				<div class="card mb-4" ng-repeat="p in pager.items">
+
+
+					<div class="card-body">
+					
+					<div>
+						<div class="d-flex justify-content-between mb-2">
+							<div class="d-flex flex-row align-items-center">
+								<img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp" alt="avatar"
+									width="25" height="25" />
+								<p class="small mb-0 ms-2 mx-2">{{p.user.firstname}}</p>
+								<p class="text-muted small mb-0">{{p.commentdate}}</p>
+							</div>
+							
+
+							 </div>
+								<p> {{p.commenttext}}</p>
+
+								<div class="d-flex flex-row align-items-center"
+									th:if="${#authorization.expression('isAuthenticated()')}" ng-model="p.user.email">
+									<a href="#!" class="d-flex align-items-center me-3"> <i
+											class="far fa-comment-dots me-2"></i>
+										<p class="mb-0">Comment</p>
+
+									</a>
+									<div class="list-inline" ng-if="isUserLoggedIn(p.user.email)">
+										<a href="#!" class="d-inline-flex align-items-center  me-3  list-inline-item">
+											<i class="far fa-comment-dots me-2"></i>
+											<p class="mb-0" ng-click="delete(p)">Xóa</p>
+										</a>
+
+										<a href="#!" class="d-inline-flex align-items-center  me-3 list-inline-item"> <i
+												class="far fa-comment-dots me-2"></i>
+											<p class="mb-0" ng-click="edit(p)">Sửa</p>
+										</a>
+
+									</div>
+								</div>
+								</div>
+								<!-- //recomment -->
+								<div class="row" ng-repeat="recm in p.recomment">
+								
+								<div class="col-2"></div>
+									<div class="col-10">
+						<div class="d-flex justify-content-between mb-2">
+							<div class="d-flex flex-row align-items-center">
+								<img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp" alt="avatar"
+									width="25" height="25" />
+								<p class="small mb-0 ms-2 mx-2">{{recm.user.firstname}}</p>
+								<p class="text-muted small mb-0">{{recm.recommentdate}}</p>
+							</div>
+							
+
+							 </div>
+								<p> {{recm.recommenttext}}</p>
+
+								<div class="d-flex flex-row align-items-center"
+									th:if="${#authorization.expression('isAuthenticated()')}" ng-model="p.user.email">
+									
+									<div class="list-inline" ng-if="isUserLoggedIn(recm.user.email)">
+										<a href="#!" class="d-inline-flex align-items-center  me-3  list-inline-item">
+											<i class="far fa-comment-dots me-2"></i>
+											<p class="mb-0" ng-click="delete(p)">Xóa</p>
+										</a>
+
+										<a href="#!" class="d-inline-flex align-items-center  me-3 list-inline-item"> <i
+												class="far fa-comment-dots me-2"></i>
+											<p class="mb-0" ng-click="edit(p)">Sửa</p>
+										</a>
+
+									</div>
+								</div>
+								</div>
+								
+								</div>
+								
+						</div>
+					</div>
+					<div class="panel-footer text-center">
+						<span class="col-md-6"
+							style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
+							+ 1}} / {{pager.count}} </span>
+						<button ng-click="pager.first()" class="btn btn-success">
+							<i class="fas fa-angle-double-left"></i>
+						</button>
+						<button ng-click="pager.prev()" class="btn btn-success">
+							<i class="fas fa-angle-left"></i>
+						</button>
+						<button ng-click="pager.next()" class="btn btn-success">
+							<i class="fas fa-angle-right"></i>
+						</button>
+						<button ng-click="pager.last()" class="btn btn-success">
+							<i class="fas fa-angle-double-right"></i>
+						</button>
+						
+				</div>
+
+				<!-- viet coment -->
+				<div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+					<div class="d-flex flex-start w-100">
+
+						<img class="rounded-circle shadow-1-strong me-3"
+							src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
+							height="40" />
+
+						<div class="form-outline w-100">
+							<textarea class="form-control" id="textAreaExample" rows="4" ng-model="form.commenttext"
+								placeholder="Comment" style="background: #fff;"></textarea>
+
+						</div>
+					</div>
+					<div class="float-end mt-2 pt-1">
+						<button type="button" class="btn btn-primary btn-sm" ng-click="update()">Post
+							comment</button>
+						<button type="button" class="btn btn-outline-primary btn-sm" ng-click="reset()">Cancel</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<script>
+		// Lấy commentid từ URL
+		var commentIdMatch = window.location.href.match(/#comment-(\d+)/);
+		if (commentIdMatch) {
+			var commentid = commentIdMatch[1];
+			// Chờ toàn bộ trang web được tải hoàn tất trước khi cuộn xuống
+			angular.element(document).ready(function () {
+				$timeout(function () {
+					// Sử dụng commentid để cuộn xuống vị trí bình luận
+					var commentElement = document.getElementById('commentid');
+					if (commentElement) {
+						commentElement.scrollIntoView();
+					}
+				});
+			});
+		}
+	</script>
+</body>
 
               <div class="form-outline w-100">
                 <textarea

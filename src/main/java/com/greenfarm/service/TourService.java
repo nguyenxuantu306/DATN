@@ -36,4 +36,8 @@ public interface TourService {
 		return UUID.randomUUID().toString();
 	}
 
+	Page<TourDTO> findToursByAdultPriceWithPagination(Float minPrice, Float maxPrice, Pageable pageable);
+    Page<TourDTO> findToursByTournameWithPagination(String searchTerm, Pageable pageable);
+    Page<Tour> findAllWithPagination(Pageable pageable);
+
 }
