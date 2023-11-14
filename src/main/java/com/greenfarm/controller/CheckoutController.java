@@ -100,27 +100,6 @@ public class CheckoutController {
 		}
 	}
 
-//	@GetMapping("/checkoutPayment")
-//	public String CheckoutPayment(ModelMap modelMap) {
-//		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		// Kiểm tra nếu người dùng đã xác thực
-//		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
-//			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//			User user = userService.findByEmail(userDetails.getUsername());
-//			modelMap.addAttribute("user", user);
-//			if (user != null) {
-//				List<Cart> cartItems = cartDAO.findByUser(user);
-//				modelMap.addAttribute("cartList", cartItems);
-//				modelMap.addAttribute("totalPrice", totalPrice(cartItems));
-//			}
-//
-//			return "checkoutPayment";
-//		} else {
-//			System.out.println("Xin chào! Bạn chưa đăng nhập.");
-//			return "login";
-//		}
-//	}
 
 	@PostMapping("/checkout/payment")
 	public String Payment(ModelMap modelMap, @ModelAttribute("Order") OrderDTO orderDTO,
