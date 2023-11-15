@@ -6622,7 +6622,9 @@ button.bg-dark:focus {
   .text-lg-left {
     text-align: left !important; }
   .text-lg-right {
-    text-align: right !important; }
+    text-align: right !important; 
+    align-items: center;
+  }
   .text-lg-center {
     text-align: center !important; } }
 
