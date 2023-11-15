@@ -184,12 +184,14 @@ function addToCart(productId) {
             quantity: quantity  // Truyền số lượng vào data để gửi đến Controller
         },
         success: function(response) {
-            console.log("Product added to cart:", response);
-            // Xử lý khi thêm vào giỏ hàng thành công
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Thêm sản phẩm thành công!',
+			});
         },
         error: function(error) {
             window.location.href = "http://localhost:8080/login";
-            // Xử lý khi có lỗi xảy ra
         },
     });
 }

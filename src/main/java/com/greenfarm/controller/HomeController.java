@@ -50,44 +50,16 @@ public class HomeController {
 
 		return "user/index";
 	}
-
-	@RequestMapping("/paypal")
-	public String Paypal(Model model) {
-		return "paypal";
-	}
 	
 	@RequestMapping("/success")
 	public String Success(ModelMap modelMap) {
             return "success";
-        
-		
 	}
 
 	@RequestMapping("/profile")
 	public String Profile(Model model) {
 		return "profile";
 	}
-
-	@RequestMapping("/shop-list")
-	public String ShopList(Model model) {
-		return "product/shopList";
-	}
-
-	@RequestMapping("/tour-detail")
-	public String TourDetail(Model model) {
-		return "tour/detail";
-	}
-
-//
-//    @RequestMapping("/register")
-//    public String Register(Model model) {
-//        return "register";
-//    }
-
-//    @RequestMapping("/cart")
-//    public String Cart(Model model) {
-//        return "cart";
-//    }
 
 	@RequestMapping({ "/admin", "/admin/home/index" })
 	public String admin() {
