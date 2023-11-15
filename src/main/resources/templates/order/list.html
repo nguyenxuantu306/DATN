@@ -1,246 +1,190 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{/layout/layout :: dynamic(~{::body})}"
->
-  <head>
-    <meta charset="utf-8" />
-    <title>Insert title here</title>
-  </head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout :: dynamic(~{::body})}">
 
-  <body>
-    <main>
-      <div class="container">
-        <div class="row mt-3">
-          <div class="col-sm-8">
-            <h6 class="fw-bold" th:text="#{orderList.label.purchasedOrder}">
-              Đơn hàng đã mua:
-            </h6>
-            <div th:each="order, state:${sortedOrders}">
-              <div
-                class="card border border-0 rounded-0 mt-3"
-                style="
+<head>
+	<meta charset="utf-8" />
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<main>
+		<div class="container">
+			<div class="row mt-3">
+				<div class="col-sm-8">
+					<h6 class="fw-bold" th:text="#{orderList.label.purchasedOrder}">
+						Đơn hàng đã mua:
+					</h6>
+					<div th:each="order, state:${sortedOrders}">
+						<div class="card border border-0 rounded-0 mt-3" style="
                   padding: 20px;
                   width: auto;
                   border-radius: 3px;
                   background-color: #fff;
                   font-size: 14px;
                   flex-direction: column;
-                "
-              >
-                <div class="card-header" style="background-color: #fff">
-                  <span class="fw-bold" th:text="#{orderList.label.order}"
-                    >Đơn hàng:</span
-                  >
-                  #[[${order.orderid}]]
-                  <span
-                    class="fw-bold"
-                    th:text="${order.getOrderDateFormatted()}"
-                  ></span>
-                  <span
-                    th:if="${order.statusOrder.name} =='Đã hủy'"
-                    class="float-end text-danger fw-bold"
-                    th:text="${order.statusOrder.name}"
-                  ></span>
-                  <span
-                    th:if="${order.statusOrder.name} !='Đã hủy'"
-                    class="float-end text-success fw-bold"
-                    th:text="${order.statusOrder.name}"
-                  ></span>
-                </div>
-                <!-- Chi tiết đơn hàng -->
-                <div
-                  class="row g-0 mt-1"
-                  th:each="orderDetail : ${order.orderDetail}"
-                >
-                  <div class="col-md-2">
-                    <img
-                      th:src="*{orderDetail.product.image}"
-                      class="img-fluid"
-                      alt="..."
-                    />
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <span>
-                        <span
-                          th:text="${orderDetail.product.productname}"
-                        ></span
-                        ><br />
-                        <span
-                          th:text="'Số lượng: '+${orderDetail.quantityordered}+'kg'"
-                        ></span
-                        ><br />
-                        Giá:
-                        <span
-                          th:text="${#numbers.formatDecimal(orderDetail.product.price, 0, 'COMMA', 0, 'POINT')}+'đ'"
-                        ></span>
-                      </span>
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="mr-2">
-                      <span th:with="subtotal=${orderDetail.totalPrice}">
-                        <p
-                          class="float-end"
-                          th:text="${#numbers.formatDecimal(subtotal, 0, 'COMMA', 0, 'POINT')}+'đ'"
-                        ></p>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <hr class="" />
-                <!-- Tổng tiền đơn hàng -->
-                <div>
-                  <div class="mr-2">
-                    <div class="float-end text-danger">
-                      <span class="orderTotal"></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="mt-3">
-                  <span th:if="*{order.statusOrder.name} == 'Chờ xác nhận'">
-                    <button
-                      th:id="'cancelButton_' + ${order.orderid}"
-                      class="cancel-button btn mt-3 text-danger float-end btn-white border border-danger ms-2"
-                      th:text="#{orderList.label.cancelOrder}"
-                    >
-                      Hủy đơn
-                    </button>
-                  </span>
-                  <a
-                    th:href="@{|/order/detail/${order.orderid}|}"
-                    class="btn mt-3 text-success float-end border border-success"
-                    th:text="#{orderList.label.seeDetail}"
-                    >Xem chi tiết</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="menu mx-3">
-              <div sec:authorize="isAuthenticated()">
-                <span sec:authentication="name"></span>
-              </div>
-              <div class="list-group border border-0 rounded-0 my-3">
-                <a class="mb-3" href="/order/list">
-                  <button
-                    type="button"
-                    class="list-group-item list-group-item-action active"
-                    style="border-radius: 4px"
-                    th:text="#{profile.label.myOrder}"
-                  >
-                    <i class="bi bi-card-list"></i> Đơn hàng đã đặt
-                  </button>
-                </a>
-                <a class="mb-3" href="/booking/list">
-                  <button
-                    type="button"
-                    class="list-group-item list-group-item-action"
-                    style="border-radius: 4px"
-                    th:text="#{profile.label.myTicket}"
-                  >
-                    <i class="bi bi-card-list"></i> Lịch sử Booking
-                  </button>
-                </a>
-                <a href="/profile">
-                  <button
-                    type="button"
-                    class="list-group-item list-group-item-action"
-                    style="border-radius: 4px"
-                    th:text="#{profile.label.profile}"
-                  >
-                    <i class="bi bi-person-lines-fill"></i> Thông tin và sổ địa
-                    chỉ
-                  </button>
-                </a>
-              </div>
-              <a
-                class="btn border border-danger my-3 text-decoration-none text-center text-danger fw-bold"
-                style="width: 100%"
-                href="/logoff"
-                th:text="#{profile.label.logout}"
-                >Đăng xuất</a
-              >
-              <div class="card mt-3" style="background-color: #fff">
-                <div class="card-header">Tổng điểm tích lũy: 180.616 điểm</div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <small
-                        >Tích & sử dụng điểm cho khách hàng thân thiết. Sản phẩm
-                        của tập đoàn MWG. Tìm hiểu thêm</small
-                      >
-                    </div>
-                    <div class="col-sm-4">
-                      <img src="" alt="Quét mã QR" />
-                    </div>
-                  </div>
-                  <div class="">
-                    <a
-                      href="#"
-                      class="btn mt-3"
-                      style="background-color: #aaaaaa"
-                      >Dowload App Store</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <script>
-        // Lấy tất cả các nút "Hủy đơn" bằng class
-        var cancelButtons = document.querySelectorAll(".cancel-button");
-        // Thêm sự kiện click cho mỗi nút "Hủy đơn"
-        cancelButtons.forEach(function (button) {
-          button.addEventListener("click", function () {
-            var orderId = this.id.split("_")[1]; // Lấy orderId từ id của nút
-            // Gửi yêu cầu PUT đến server
-            fetch(`/rest/orders/cancel/${orderId}`, {
-              method: "PUT",
-            })
-              .then(function (response) {
-                if (response.status === 200) {
-                  // Nếu thành công, bạn có thể thực hiện các tác vụ sau khi đổi trạng thái
-                  alert("Đã hủy đơn hàng thành công");
-                  location.reload();
-                } else {
-                  // Xử lý lỗi
-                  response.text().then(function (errorMessage) {
-                    console.error("Lỗi khi hủy đơn hàng: " + errorMessage);
-                  });
-                }
-              })
-              .catch(function (error) {
-                console.error("Lỗi khi gửi yêu cầu: " + error);
-              });
-          });
-        });
-      </script>
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          const orderCards = document.querySelectorAll(
-            ".card.border.border-0.rounded-0.mt-3"
-          );
-          orderCards.forEach(function (orderCard) {
-            const subtotalElements =
-              orderCard.querySelectorAll(".col-sm-2 span");
-            let orderTotal = 0;
-            subtotalElements.forEach(function (subtotalElement) {
-              const subtotalText = subtotalElement.innerText;
-              const subtotal = parseFloat(
-                subtotalText.replace(/[^0-9.-]+/g, "")
-              );
-              orderTotal += subtotal;
-            });
-            const orderTotalElement = orderCard.querySelector(".orderTotal");
-            orderTotalElement.textContent = `${orderTotal.toLocaleString()}đ`;
-          });
-        });
-      </script>
-    </main>
-  </body>
+                ">
+							<div class="card-header" style="background-color: #fff">
+								<span class="fw-bold" th:text="#{orderList.label.order}">Đơn hàng:</span>
+								#[[${order.orderid}]]
+								<span class="fw-bold" th:text="${order.getOrderDateFormatted()}"></span>
+								<span th:if="${order.statusOrder.name} =='Đã hủy'" class="float-end text-danger fw-bold"
+									th:text="${order.statusOrder.name}"></span>
+								<span th:if="${order.statusOrder.name} !='Đã hủy'"
+									class="float-end text-success fw-bold" th:text="${order.statusOrder.name}"></span>
+							</div>
+							<!-- Chi tiết đơn hàng -->
+							<div class="row g-0 mt-1" th:each="orderDetail : ${order.orderDetail}">
+								<div class="col-md-2">
+									<img th:src="*{orderDetail.product.image}" class="img-fluid" alt="..." />
+								</div>
+								<div class="col-md-8">
+									<div class="card-body">
+										<span>
+											<span th:text="${orderDetail.product.productname}"></span><br />
+											<span
+												th:text="'Số lượng: '+${orderDetail.quantityordered}+'kg'"></span><br />
+											Giá:
+											<span
+												th:text="${#numbers.formatDecimal(orderDetail.product.price, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+										</span>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="mr-2">
+										<span th:with="subtotal=${orderDetail.totalPrice}">
+											<p class="float-end"
+												th:text="${#numbers.formatDecimal(subtotal, 0, 'COMMA', 0, 'POINT')}+'đ'">
+											</p>
+										</span>
+									</div>
+								</div>
+							</div>
+							<hr class="" />
+							<!-- Tổng tiền đơn hàng -->
+							<div>
+								<div class="mr-2">
+									<div class="float-end text-danger">
+										<span class="orderTotal"></span>
+									</div>
+								</div>
+							</div>
+							<div class="mt-3">
+								<span th:if="*{order.statusOrder.name} == 'Chờ xác nhận'">
+									<button th:id="'cancelButton_' + ${order.orderid}"
+										class="cancel-button btn mt-3 text-danger float-end btn-white border border-danger ms-2"
+										th:text="#{orderList.label.cancelOrder}">
+										Hủy đơn
+									</button>
+								</span>
+								<a th:href="@{|/order/detail/${order.orderid}|}"
+									class="btn mt-3 text-success float-end border border-success"
+									th:text="#{orderList.label.seeDetail}">Xem chi tiết</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="menu mx-3">
+						<div sec:authorize="isAuthenticated()">
+							<span sec:authentication="name"></span>
+						</div>
+						<div class="list-group border border-0 rounded-0 my-3">
+							<a class="mb-3" href="/order/list">
+								<button type="button" class="list-group-item list-group-item-action active"
+									style="border-radius: 4px">
+									<i class="bi bi-card-list"></i>
+									 <span th:text="#{profile.label.myOrder}"></span>
+								</button>
+							</a>
+							<a class="mb-3" href="/booking/list">
+								<button type="button" class="list-group-item list-group-item-action"
+									style="border-radius: 4px">
+									<i class="bi bi-card-list"></i> 
+									<span th:text="#{profile.label.myTicket}"></span>
+								</button>
+							</a>
+							<a href="/profile">
+								<button type="button" class="list-group-item list-group-item-action"
+									style="border-radius: 4px">
+									<i class="bi bi-person-lines-fill"></i> 
+									<span th:text="#{profile.label.profile}"></span>
+								</button>
+							</a>
+						</div>
+						<a class="btn border border-danger my-3 text-decoration-none text-center text-danger fw-bold"
+							style="width: 100%" href="/logoff" th:text="#{profile.label.logout}">Đăng xuất</a>
+						<div class="card mt-3" style="background-color: #fff">
+							<div class="card-header">Tổng điểm tích lũy: 180.616 điểm</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-8">
+										<small>Tích & sử dụng điểm cho khách hàng thân thiết. Sản phẩm
+											của tập đoàn MWG. Tìm hiểu thêm</small>
+									</div>
+									<div class="col-sm-4">
+										<img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/QR_Code_example.png" style="width: 50px;" alt="Quét mã QR" />
+									</div>
+								</div>
+								<div class="">
+									<a href="#" class="btn mt-3" style="background-color: #aaaaaa">Dowload App Store</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			// Lấy tất cả các nút "Hủy đơn" bằng class
+			var cancelButtons = document.querySelectorAll(".cancel-button");
+			// Thêm sự kiện click cho mỗi nút "Hủy đơn"
+			cancelButtons.forEach(function (button) {
+				button.addEventListener("click", function () {
+					var orderId = this.id.split("_")[1]; // Lấy orderId từ id của nút
+					// Gửi yêu cầu PUT đến server
+					fetch(`/rest/orders/cancel/${orderId}`, {
+						method: "PUT",
+					})
+						.then(function (response) {
+							if (response.status === 200) {
+								// Nếu thành công, bạn có thể thực hiện các tác vụ sau khi đổi trạng thái
+								alert("Đã hủy đơn hàng thành công");
+								location.reload();
+							} else {
+								// Xử lý lỗi
+								response.text().then(function (errorMessage) {
+									console.error("Lỗi khi hủy đơn hàng: " + errorMessage);
+								});
+							}
+						})
+						.catch(function (error) {
+							console.error("Lỗi khi gửi yêu cầu: " + error);
+						});
+				});
+			});
+		</script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const orderCards = document.querySelectorAll(
+					".card.border.border-0.rounded-0.mt-3"
+				);
+				orderCards.forEach(function (orderCard) {
+					const subtotalElements =
+						orderCard.querySelectorAll(".col-sm-2 span");
+					let orderTotal = 0;
+					subtotalElements.forEach(function (subtotalElement) {
+						const subtotalText = subtotalElement.innerText;
+						const subtotal = parseFloat(
+							subtotalText.replace(/[^0-9.-]+/g, "")
+						);
+						orderTotal += subtotal;
+					});
+					const orderTotalElement = orderCard.querySelector(".orderTotal");
+					orderTotalElement.textContent = `${orderTotal.toLocaleString()}đ`;
+				});
+			});
+		</script>
+	</main>
+</body>
+
 </html>

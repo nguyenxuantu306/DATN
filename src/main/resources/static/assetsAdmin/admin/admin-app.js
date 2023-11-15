@@ -46,10 +46,6 @@ app.config(function($routeProvider) {
 			templateUrl: "/assetsAdmin/admin/statistics/_inventorystatistics.html",
 			controller: "inventorystatistics-ctrl"
 		})
-		.when("/revenue", {
-			templateUrl: "/assetsAdmin/admin/statistics/_revenuestatistics.html",
-			controller: "revenue-statistics-ctrl"
-		})
 		.when("/dashboard", {
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
 		})

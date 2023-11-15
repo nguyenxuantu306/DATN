@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout::dynamic(~{::body})}">
+<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
 
 <head>
-<meta charset="UTF-8" />
-<title>GreenFarm</title>
+	<meta charset="UTF-8" />
+	<title>GreenFarm</title>
 </head>
 
 <body>
@@ -12,47 +11,47 @@
 		<!-- Header Start -->
 		<div class=" page-header">
 			<div class="container">
-				<div
-					class="d-flex flex-column align-items-center justify-content-center"
-					style="min-height: 400px">
-					
+				<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
+
 				</div>
 			</div>
 		</div>
 		<div class="pb-3">
 			<div class="text-center my-3 pb-3">
-				<h6 class="text-primary text-uppercase" style="letter-spacing: 5px" th:text="#{index.label.destination}">
+				<h6 class="text-primary text-uppercase" style="letter-spacing: 5px"
+					th:text="#{index.label.destination}">
 					Destination</h6>
 				<h1 th:text="#{index.label.outstanding}">The most outstanding tour</h1>
 			</div>
 			<div class="row">
 				<div th:each="tour : ${topTour.content}" class="col-lg-4 col-md-6 mb-4">
 					<div class="package-item bg-white mb-2">
-					<a th:href="@{|/tour/detail/${tour.tour.tourid}|}"><img style="height: 300px;width: 100%" class="img-fluid "
-							th:src="@{|${tour.tour.image}|}" alt="" /></a>
+						<a th:href="@{|/tour/detail/${tour.tour.tourid}|}"><img style="height: 300px;width: 100%"
+								class="img-fluid " th:src="@{|${tour.tour.image}|}" alt="" /></a>
 						<div class="p-4">
 							<div class="d-flex justify-content-between mb-3">
-								<small
-									class="m-0"><i
-									class="fa fa-calendar-alt text-primary mr-2">
-									<span style="font-size:18px" th:text="${tour.tour.departureday}"></span>
-									
-									</i></small> 
+								<small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2">
+										<span style="font-size:18px" th:text="${tour.tour.departureday}"></span>
+
+									</i></small>
 							</div>
-							<a th:href="@{|/tour/detail/${tour.tour.tourid}|}" th:text="${tour.tour.Tourname}" class="h5 text-decoration-none" href="/tour-detail"></a>
+							<a th:href="@{|/tour/detail/${tour.tour.tourid}|}" th:text="${tour.tour.Tourname}"
+								class="h5 text-decoration-none" href="/tour-detail"></a>
 							<div class="border-top mt-4 pt-4">
 								<div class="d-flex justify-content-between">
-								
-									<h5 th:text="${#numbers.formatDecimal(tour.tour.pricings.Adultprice,0,'COMMA',0,'POINT')} + 'đ'" class="m-0"></h5>
+
+									<h5 th:text="${#numbers.formatDecimal(tour.tour.pricings.Adultprice,0,'COMMA',0,'POINT')} + 'đ'"
+										class="m-0"></h5>
 									<button class="btn btn-primary">
-									<a th:href="@{|/booking/${tour.tour.tourid}|}" th:text="#{label.booking}">Đặt tour</a>
+										<a th:href="@{|/booking/${tour.tour.tourid}|}" th:text="#{label.booking}">Đặt
+											tour</a>
 									</button>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-					
+
 			</div>
 
 			<div class="text-center mb-3 pb-3">
@@ -61,19 +60,17 @@
 				<h1 th:text="#{index.label.selling}">Selling Products</h1>
 			</div>
 			<div class="row text-center">
-				<div th:each="product : ${topList.content}"
-					class="col-lg-3 col-md-6 mb-4">
+				<div th:each="product : ${topList.content}" class="col-lg-3 col-md-6 mb-4">
 					<div class="package-item bg-white mb-2">
-					<a th:href="@{|/product/detail/${product.product.productid}|}"><img   style="height: 250px" class="img-fluid "
-							th:src="@{|${product.product.image}|}" alt="" />
+						<a th:href="@{|/product/detail/${product.product.productid}|}"><img style="height: 250px"
+								class="img-fluid " th:src="@{|${product.product.image}|}" alt="" />
 						</a>
 						<div class="p-4">
-							<a th:href="@{|/product/detail/${product.product.productid}|}" th:text="${product.product.productname}"
-								class="h5 text-decoration-none"></a>
+							<a th:href="@{|/product/detail/${product.product.productid}|}"
+								th:text="${product.product.productname}" class="h5 text-decoration-none"></a>
 							<div class="border-top mt-4 pt-4">
 								<div class="text-center">
-									<h5
-										th:text="${#numbers.formatDecimal(product.product.price,0,'COMMA',0,'POINT')} + 'đ'"
+									<h5 th:text="${#numbers.formatDecimal(product.product.price,0,'COMMA',0,'POINT')} + 'đ'"
 										class="m-0"></h5>
 								</div>
 							</div>
@@ -83,5 +80,5 @@
 			</div>
 		</div>
 </body>
-</html>
 
+</html>

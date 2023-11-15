@@ -84,7 +84,7 @@ public class BookingController {
 		booking.setPaymentmethod(paymentMethod);
 
 		bookingService.saveBooking(booking);
-		return "redirect:/success";
+		return "successboking";
 	}
 	
 
