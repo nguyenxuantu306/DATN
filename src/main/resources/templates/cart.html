@@ -12,181 +12,192 @@
     <section class="mt-5 h-100 h-custom" style="background-color: #eee">
       <div class="h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col">
-            <div class="card">
-              <div class="card-body p-4">
-                <div class="row">
-                  <div class="col-lg-9">
-                    <h5 class="mb-3">
-                      <a href="/product/shop" class="text-body"
-                        ><i class="fas fa-long-arrow-alt-left me-2"></i>
-                        <span th:text="#{cart.label.continueShopping}"
-                          >Continue shopping</span
-                        ></a
-                      >
-                    </h5>
-                    <hr />
-                    <div
-                      class="d-flex justify-content-between align-items-center mb-4"
-                    >
-                      <div>
-                        <p class="mb-0">
-                          <span class="text-muted" th:text="#{cart.label.total}"
-                            >Tổng:</span
-                          ><span th:text="${totalprice}"></span>
-                        </p>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="table-responsive bg-white">
-                        <table class="table align-middle mb-0 bg-white">
-                          <thead class="bg-white" id="praject-table">
-                            <tr>
-                              <th
-                                class="text-center"
-                                style="width: 65px"
-                                th:text="#{cart.label.numerical}"
-                              >
-                                S.No
-                              </th>
-                              <th
-                                class="text-center"
-                                th:text="#{cart.label.image}"
-                              >
-                                Hình
-                              </th>
-                              <th
-                                class="text-center"
-                                th:text="#{cart.label.name}"
-                              >
-                                Tên
-                              </th>
-                              <th
-                                class="text-center"
-                                th:text="#{cart.label.quantity}"
-                              >
-                                Số lượng
-                              </th>
-                              <th
-                                class="text-center"
-                                th:text="#{cart.label.price}"
-                              >
-                                Giá
-                              </th>
-                              <th
-                                class="text-center"
-                                th:text="#{cart.label.total}"
-                              >
-                                Tổng
-                              </th>
-                              <th class="text-center" th:text="#{label.action}">
-                                Hành Động
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr th:each="cart, iterStat : ${cartList}">
-                              <td
-                                class="text-center"
-                                th:text="${iterStat.count}"
-                              ></td>
-                              <td class="text-center">Hình</td>
-                              <td
-                                class="text-center"
-                                th:text="${cart.product.productname}"
-                              ></td>
-                              <td class="text-center">
-                                <button
-                                  href="javascript:void(0)"
-                                  onclick="decreaseQuantity(this)"
-                                >
-                                  -
-                                </button>
-                                <input
-                                  type="number"
-                                  class="cart-quantity text-center w-25"
-                                  th:value="${cart.quantity}"
-                                  th:data-productid="${cart.product.productid}"
-                                  onchange="updateQuantity(this)"
-                                />
-                                <button
-                                  href="javascript:void(0)"
-                                  onclick="increaseQuantity(this)"
-                                >
-                                  +
-                                </button>
-                              </td>
-
-                              <td
-                                class="text-center"
-                                th:text="${cart.product.price}"
-                              ></td>
-                              <td
-                                class="text-center"
-                                th:text="${cart.product.price} * ${cart.quantity}"
-                              ></td>
-                              <td class="text-center">
-                                <button
-                                  th:attr="onclick='removeCart(\'' + ${cart.product.productid} + '\')'"
-                                >
-                                  <i class="bi bi-trash3-fill"></i>
-                                </button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-3">
-                    <div
-                      class="card text-white rounded-3"
-                      style="background-color: #000000"
-                    >
-                      <div class="card-body">
-                        <div
-                          class="d-flex justify-content-between align-items-center mb-4"
+          <div th:if="${#lists.isEmpty(cartList)}">
+            <p class="text-center fw-bold fs-4">Chưa thêm sản phẩm nào vào giỏ hàng!</p>
+          </div>
+          <div th:if="${not #lists.isEmpty(cartList)}">
+            <div class="col">
+              <div class="card">
+                <div class="card-body p-4">
+                  <div class="row">
+                    <div class="col-lg-9">
+                      <h5 class="mb-3">
+                        <a href="/product/shop" class="text-body"
+                          ><i class="fas fa-long-arrow-alt-left me-2"></i>
+                          <span th:text="#{cart.label.continueShopping}"
+                            >Continue shopping</span
+                          ></a
                         >
-                          <h5
-                            class="mb-0 text-white"
-                            th:text="#{cart.label.cartDetail}"
-                          >
-                            Card details
-                          </h5>
-                          <img
-                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                            class="img-fluid rounded-3"
-                            style="width: 45px"
-                            alt="Avatar"
-                          />
-                        </div>
-                        <hr class="my-4" />
-                        <div class="d-flex justify-content-between">
-                          <p class="mb-2" th:text="#{cart.label.subtotal}">
-                            Subtotal
+                      </h5>
+                      <hr />
+                      <div
+                        class="d-flex justify-content-between align-items-center mb-4"
+                      >
+                        <div>
+                          <p class="mb-0">
+                            <span
+                              class="text-muted"
+                              th:text="#{cart.label.total}"
+                              >Tổng:</span
+                            ><span th:text="${totalprice}"></span>
                           </p>
-                          <p class="mb-2" th:text="${totalprice}"></p>
                         </div>
-                        <div class="d-flex justify-content-between">
-                          <p class="mb-2" th:text="#{cart.label.shipping}">
-                            Shipping
-                          </p>
-                          <p class="mb-2">$20.00</p>
+                      </div>
+                      <div>
+                        <div class="table-responsive bg-white">
+                          <table class="table align-middle mb-0 bg-white">
+                            <thead class="bg-white" id="praject-table">
+                              <tr>
+                                <th
+                                  class="text-center"
+                                  style="width: 65px"
+                                  th:text="#{cart.label.numerical}"
+                                >
+                                  S.No
+                                </th>
+                                <th
+                                  class="text-center"
+                                  th:text="#{cart.label.image}"
+                                >
+                                  Hình
+                                </th>
+                                <th
+                                  class="text-center"
+                                  th:text="#{cart.label.name}"
+                                >
+                                  Tên
+                                </th>
+                                <th
+                                  class="text-center"
+                                  th:text="#{cart.label.quantity}"
+                                >
+                                  Số lượng
+                                </th>
+                                <th
+                                  class="text-center"
+                                  th:text="#{cart.label.price}"
+                                >
+                                  Giá
+                                </th>
+                                <th
+                                  class="text-center"
+                                  th:text="#{cart.label.total}"
+                                >
+                                  Tổng
+                                </th>
+                                <th
+                                  class="text-center"
+                                  th:text="#{label.action}"
+                                >
+                                  Hành Động
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr th:each="cart, iterStat : ${cartList}">
+                                <td
+                                  class="text-center"
+                                  th:text="${iterStat.count}"
+                                ></td>
+                                <td class="text-center">Hình</td>
+                                <td
+                                  class="text-center"
+                                  th:text="${cart.product.productname}"
+                                ></td>
+                                <td class="text-center">
+                                  <button
+                                    href="javascript:void(0)"
+                                    onclick="decreaseQuantity(this)"
+                                  >
+                                    -
+                                  </button>
+                                  <input
+                                    type="number"
+                                    class="cart-quantity text-center w-25"
+                                    th:value="${cart.quantity}"
+                                    th:data-productid="${cart.product.productid}"
+                                    onchange="updateQuantity(this)"
+                                  />
+                                  <button
+                                    href="javascript:void(0)"
+                                    onclick="increaseQuantity(this)"
+                                  >
+                                    +
+                                  </button>
+                                </td>
+                                <td
+                                  class="text-center"
+                                  th:text="${cart.product.price}"
+                                ></td>
+                                <td
+                                  class="text-center"
+                                  th:text="${cart.product.price} * ${cart.quantity}"
+                                ></td>
+                                <td class="text-center">
+                                  <button
+                                    th:attr="onclick='removeCart(\'' + ${cart.product.productid} + '\')'"
+                                  >
+                                    <i class="bi bi-trash3-fill"></i>
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
-                        <a href="/checkout">
-                          <button
-                            type="button"
-                            class="btn btn-info btn-block btn-lg"
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div
+                        class="card text-white rounded-3"
+                        style="background-color: #000000"
+                      >
+                        <div class="card-body">
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-4"
                           >
-                            <div class="d-flex justify-content-between">
-                              <span id="price" th:text="${totalPrice}"></span>
-                              <span th:text="#{cart.label.submit}"
-                                >Checkout
-                                <i class="fas fa-long-arrow-alt-right ms-2"></i>
-                              </span>
-                            </div></button
-                        ></a>
-                        <br />
+                            <h5
+                              class="mb-0 text-white"
+                              th:text="#{cart.label.cartDetail}"
+                            >
+                              Card details
+                            </h5>
+                            <img
+                              src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
+                              class="img-fluid rounded-3"
+                              style="width: 45px"
+                              alt="Avatar"
+                            />
+                          </div>
+                          <hr class="my-4" />
+                          <div class="d-flex justify-content-between">
+                            <p class="mb-2" th:text="#{cart.label.subtotal}">
+                              Subtotal
+                            </p>
+                            <p class="mb-2" th:text="${totalprice}"></p>
+                          </div>
+                          <div class="d-flex justify-content-between">
+                            <p class="mb-2" th:text="#{cart.label.shipping}">
+                              Shipping
+                            </p>
+                            <p class="mb-2">$20.00</p>
+                          </div>
+                          <a href="/checkout">
+                            <button
+                              type="button"
+                              class="btn btn-info btn-block btn-lg"
+                            >
+                              <div class="d-flex justify-content-between">
+                                <span id="price" th:text="${totalPrice}"></span>
+                                <span th:text="#{cart.label.submit}"
+                                  >Checkout
+                                  <i
+                                    class="fas fa-long-arrow-alt-right ms-2"
+                                  ></i>
+                                </span>
+                              </div></button
+                          ></a>
+                          <br />
+                        </div>
                       </div>
                     </div>
                   </div>

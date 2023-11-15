@@ -50,7 +50,7 @@ public class CartController {
 	}
 
 	@RequestMapping("/add/{productId}")
-	public String addToCart(HttpSession session, @PathVariable("productId") Integer productId) {
+	public String addToCart(HttpSession session, @PathVariable("productId") Integer productId, @RequestParam("quantity") Integer quantity) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null && authentication.isAuthenticated()
 				&& !"anonymousUser".equals(authentication.getPrincipal())) {
@@ -61,12 +61,12 @@ public class CartController {
 				if (product != null) {
 					Cart cartItem = cartDAO.findByUserAndProduct(user, product);
 					if (cartItem != null) {
-						cartItem.setQuantity(cartItem.getQuantity() + 1);
+						cartItem.setQuantity(cartItem.getQuantity() + quantity);
 					} else {
 						cartItem = new Cart();
 						cartItem.setUser(user);
 						cartItem.setProduct(product);
-						cartItem.setQuantity(1);
+						cartItem.setQuantity(quantity);
 					}
 					cartDAO.save(cartItem);
 				}

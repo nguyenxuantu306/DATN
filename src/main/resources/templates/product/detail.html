@@ -65,9 +65,15 @@
 						SL: <span th:text="*{quantityavailable}" class="product-description mb-3"></span>
 						<div class="cart-button mt-5 mb-5 d-flex">
 
-							<button class="add-to-cart-button" th:onclick="'addToCart(\'' + ${item.productid} + '\')'" th:text="#{shopDetail.label.addToCart}">
-								<i class="fas fa-shopping-cart"></i> Add to Cart
-							</button>
+							<div class="d-flex">
+								<button onclick="decQuantity()">-</button>
+								<input class="w-50 text-center" type="number" id="quantityInput" name="quantity" value="1" min="1"/>
+								<button onclick="incQuantity()">+</button>
+							</div>
+							
+						<button class="add-to-cart-button" th:onclick="'addToCart(\'' + ${item.productid} + '\')'" th:text="#{shopDetail.label.addToCart}">
+							<i class="fas fa-shopping-cart"></i> Add to Cart
+						</button>
 						</div>
 						<div class="">
 							<h5>
@@ -373,7 +379,24 @@
 				$("#mainImage").attr("src", newImageUrl);
 			});
 		});
+
+		function incQuantity() {
+			var quantityInput = document.getElementById('quantityInput');
+			var currentQuantity = parseInt(quantityInput.value);
+			if (!isNaN(currentQuantity)) {
+				quantityInput.value = currentQuantity + 1;
+			}
+		}
+	
+		function decQuantity() {
+			var quantityInput = document.getElementById('quantityInput');
+			var currentQuantity = parseInt(quantityInput.value);
+			if (!isNaN(currentQuantity) && currentQuantity > 1) {
+				quantityInput.value = currentQuantity - 1;
+			}
+		}
 	</script>
+	
 </body>
 
 </html>
