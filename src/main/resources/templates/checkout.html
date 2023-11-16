@@ -48,9 +48,9 @@
 							<span>Khuyến mãi</span> <strong id="totalPriceValue"></strong>
 						</li>
 						<div id="discountedPriceDisplay">
-							
+
 						</div>
-						
+
 
 					</ul>
 				</form>
@@ -96,7 +96,8 @@
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">TRỞ
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+										onclick="cancelVoucherSelection()">TRỞ
 										LẠI</button>
 									<button type="button" class="btn btn-primary" data-bs-dismiss="modal"
 										onclick="applyVoucher()">OK</button>
@@ -165,10 +166,14 @@
 					<hr class="mb-4" />
 
 
-					<input type="hidden" id="hiddenTotalPrice" name="hiddenTotalPrice" th:value="${totalPrice}">
+					<input type="hidden" id="hiddenTotalPrice" name="hiddenTotalPrice" th:value="${totalPrice}"
+						th:data-original-price="${totalPrice}">
 
 
-					<!--		<input type="hidden" id="totalPrice" name="totalPrice" th:value="${totalPrice}">-->
+
+					<!--	<input type="hidden" id="totalPrice" name="totalPrice" th:value="${totalPrice}">-->
+
+
 					<h4 class="mb-3">Payment</h4>
 
 					<div class="d-block my-3">
@@ -189,7 +194,7 @@
 						</div>
 					</div>
 
-					<input type="hidden" id="voucherid" name="voucherid">
+					<input type="hidden" id="voucherid" th:value="0" name="voucherid">
 
 					<div id="paypal-button" style="display: none;">
 						<button onclick="changeFormActionPaypal()" class="btn btn-primary btn-lg btn-block"
@@ -233,21 +238,21 @@
 	</script>
 
 
-	<script>
+	<!--	<script>
 		// Lấy tất cả các div chứa voucher
 		const voucherDivs = document.querySelectorAll('.p-3 .mb-2');
 
 		// Lặp qua từng div
 		voucherDivs.forEach((div) => {
 			// Lấy input radio trong div
-			const radioButton = div.querySelector('.form-check-input');
+			const radioButton = div.querySelector('.');
 
 			// Khi click vào div, chọn input radio
 			div.addEventListener('click', () => {
 				radioButton.checked = true;
 			});
 		});
-	</script>
+	</script>-->
 
 	<script type="text/javascript">
 		// Lắng nghe sự kiện khi nút "OK" trong modal được nhấn
@@ -283,6 +288,7 @@
 
 			// Update the hidden input field with the selected voucher ID
 			document.getElementById('voucherid').value = selectedVoucherId;
+
 		}
 
 		function applyVoucher() {
@@ -291,8 +297,8 @@
 
 			var totalPrice = parseFloat(hiddenTotalPrice.value);
 
-			// Tính giá sau khi áp dụng voucher
-			var discountedPrice = totalPrice * (1 - voucherDiscount);
+			var originalTotalPrice = parseFloat(hiddenTotalPrice.getAttribute('data-original-price'));
+			var discountedPrice = originalTotalPrice * (1 - voucherDiscount);
 
 			// Hiển thị giá sau khi áp dụng voucher
 			//discountedPriceDisplay.textContent = discountedPrice;
@@ -304,10 +310,34 @@
 				discountedPriceDisplay.parentElement.style.display = 'none';
 			}
 
-
 			hiddenTotalPrice.value = discountedPrice;
 		}
+
+		function cancelVoucherSelection() {
+			voucherDiscount = 0;
+			selectedVoucherId = 0;
+
+			// Reset the hidden input field
+			//document.getElementById('voucherid').value = selectedVoucherId;
+
+			// Optionally, you may want to update the UI to reflect the cancellation
+			// For example, clear any displayed voucher information
+			//var discountedPriceDisplay = document.getElementById('discountedPriceDisplay');
+			//discountedPriceDisplay.parentElement.style.display = 'none';
+		}
+
+
 	</script>
+	<!--document.getElementById('okButton').addEventListener('click', function () {
+			// Lấy ra radio button được chọn
+			var selectedRadioButton = document.querySelector('.voucher-radio:checked');
+			// Gọi hàm xử lý cho radio button được chọn
+			if (selectedRadioButton) {
+				handleCheckboxClick(selectedRadioButton);
+			}
+			// Áp dụng voucher
+			applyVoucher();
+		});-->
 
 </body>
 

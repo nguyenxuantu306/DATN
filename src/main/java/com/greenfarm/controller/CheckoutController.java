@@ -2,6 +2,7 @@ package com.greenfarm.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -150,7 +151,8 @@ public class CheckoutController {
 				List<VoucherOrder> voucherLists = new ArrayList<>();
 				String[] voucherIds = request.getParameterValues("voucherid");
 
-				if (voucherIds != null) {
+				if (voucherIds != null && voucherIds.length > 0&&
+						!Arrays.asList(voucherIds).contains("0")) {
 				    for (String voucherId : voucherIds) {
 				        // Lấy thông tin Voucher từ voucherId
 				        Voucher voucher = voucherService.findByVoucherid(Long.parseLong(voucherId));
