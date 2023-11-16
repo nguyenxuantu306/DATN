@@ -29,6 +29,7 @@ import com.greenfarm.service.VoucherService;
 import com.greenfarm.service.VoucherUserService;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -75,16 +76,20 @@ public class VNPayController {
 	@PostMapping("/submitOrder")
 	public String submidOrder(@RequestParam("hiddenTotalPrice") int totalPrice,
 
-			HttpServletRequest request) {
+			HttpServletRequest request,@RequestParam(name = "voucherid", required = false) String[] voucherIds ) {
 		String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 		String vnpayUrl = vnPayService.createOrder(totalPrice, baseUrl);
-
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("voucherid", voucherIds);
+		
 		return "redirect:" + vnpayUrl;
 	}
 
 	@GetMapping("/cancelVNpay")
 	public String GetMapping(Model model, 
-			@ModelAttribute("Order") OrderDTO orderDTO, HttpServletRequest request) {
+			@ModelAttribute("Order") OrderDTO orderDTO, 
+			HttpServletRequest request) {
 		int paymentStatus = vnPayService.orderReturn(request);
 
 		if(paymentStatus != 1 ) {
@@ -133,8 +138,9 @@ public class VNPayController {
 				
 				float discountedTotal = 0;
 				List<VoucherOrder> voucherLists = new ArrayList<>();
-
-				String[] voucherIds = request.getParameterValues("voucherid");
+				HttpSession session = request.getSession();
+				String[] voucherIds = (String[]) session.getAttribute("voucherid");
+				
 				if (voucherIds != null && voucherIds.length > 0&&
 						!Arrays.asList(voucherIds).contains("0")) {
 				    for (String voucherId : voucherIds) {

@@ -1,6 +1,7 @@
 package com.greenfarm.paypal;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class PaymentController {
 
 	@Autowired
 	CartService cartService;
-	
+
 	@Autowired
 	OrderDAO orderDAO;
 
@@ -64,10 +65,10 @@ public class PaymentController {
 
 	@Autowired
 	VoucherUserService voucherUserService;
-	
+
 	@Autowired
 	VoucherService voucherService;
-	
+
 	@Autowired
 	VoucherOrderDAO voucherOrderDAO;
 
@@ -80,12 +81,17 @@ public class PaymentController {
 	private PaypalService paypalService;
 
 	@PostMapping("/submitOrderPaypal")
-	public String pay(HttpServletRequest request, @RequestParam("hiddenTotalPrice") double totalPrice) {
+	public String pay(HttpServletRequest request, @RequestParam("hiddenTotalPrice") double totalPrice,
+			@RequestParam(name = "voucherid", required = false) String[] voucherIds) {
 		String cancelUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
 		String successUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_SUCCESS;
+
+		
 		try {
 			Payment payment = paypalService.createPayment(totalPrice, "USD", PaypalPaymentMethod.paypal,
 					PaypalPaymentIntent.sale, "payment description", cancelUrl, successUrl);
+			HttpSession session = request.getSession();
+			session.setAttribute("voucherid", voucherIds);
 			for (Links links : payment.getLinks())
 				if (links.getRel().equals("approval_url"))
 					return "redirect:" + links.getHref();
@@ -104,8 +110,8 @@ public class PaymentController {
 	}
 
 	@GetMapping(URL_PAYPAL_SUCCESS)
-	public String successPay(@RequestParam("paymentId") String paymentId,HttpServletRequest request, @RequestParam("PayerID") String payerId,
-			@ModelAttribute("Order") OrderDTO orderDTO, Model model) {
+	public String successPay(@RequestParam("paymentId") String paymentId, HttpServletRequest request,
+			@RequestParam("PayerID") String payerId, @ModelAttribute("Order") OrderDTO orderDTO, Model model) {
 		try {
 			Payment payment = paypalService.executePayment(paymentId, payerId);
 			if (payment.getState().equals("approved")) {
@@ -127,7 +133,7 @@ public class PaymentController {
 						orderItem.setPaymentmethod(paymentMethodObj);
 						orderDAO.save(orderItem);
 
-						List<Cart> cartItems = cartDAO.findByUser(user); 
+						List<Cart> cartItems = cartDAO.findByUser(user);
 						List<OrderDetail> orderDetailList = new ArrayList<>();
 						float total = 0;
 						for (Cart cartItem : cartItems) {
@@ -140,31 +146,31 @@ public class PaymentController {
 							total += cartItem.getQuantity() * cartItem.getProduct().getPrice();
 						}
 						orderDetailDAO.saveAll(orderDetailList);
-						
+
 						float discountedTotal = 0;
 						List<VoucherOrder> voucherLists = new ArrayList<>();
-						String[] voucherIds = request.getParameterValues("voucherid");
+						HttpSession session = request.getSession();
+						String[] voucherIds = (String[]) session.getAttribute("voucherid");
 
-						if (voucherIds != null && voucherIds.length > 0&&
-								!Arrays.asList(voucherIds).contains("0")) {
-						    for (String voucherId : voucherIds) {
-						        // Lấy thông tin Voucher từ voucherId
-						        Voucher voucher = voucherService.findByVoucherid(Long.parseLong(voucherId));
+						if (voucherIds != null && voucherIds.length > 0 && !Arrays.asList(voucherIds).contains("0")) {
+							for (String voucherId : voucherIds) {
+								// Lấy thông tin Voucher từ voucherId
+								Voucher voucher = voucherService.findByVoucherid(Long.parseLong(voucherId));
 
-						        // Tạo mới VoucherOrder và thêm vào danh sách
-						        VoucherOrder voucherOrder = new VoucherOrder();
-						        voucherOrder.setOrder(orderItem);
-						        voucherOrder.setVoucher(voucher);
-						        voucherLists.add(voucherOrder);
+								// Tạo mới VoucherOrder và thêm vào danh sách
+								VoucherOrder voucherOrder = new VoucherOrder();
+								voucherOrder.setOrder(orderItem);
+								voucherOrder.setVoucher(voucher);
+								voucherLists.add(voucherOrder);
 
-						        // Áp dụng giảm giá từ voucher vào tổng giá trị đơn hàng
-						        discountedTotal =  total - (total *voucher.getDiscount());
-						    }
+								// Áp dụng giảm giá từ voucher vào tổng giá trị đơn hàng
+								discountedTotal = total - (total * voucher.getDiscount());
+							}
 						} else {
 							System.out.println("heheehdeoco");
 						}
 
-						voucherOrderDAO.saveAll(voucherLists); 
+						voucherOrderDAO.saveAll(voucherLists);
 						model.addAttribute("totalDiscount", discountedTotal);
 						model.addAttribute("orderConfirmation", orderItem);
 						model.addAttribute("total", total);

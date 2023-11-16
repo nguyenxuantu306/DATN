@@ -97,8 +97,7 @@
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-										onclick="cancelVoucherSelection()">TRỞ
-										LẠI</button>
+										onclick="cancelVoucherSelection()">HỦY</button>
 									<button type="button" class="btn btn-primary" data-bs-dismiss="modal"
 										onclick="applyVoucher()">OK</button>
 								</div>
@@ -194,7 +193,7 @@
 						</div>
 					</div>
 
-					<input type="hidden" id="voucherid" th:value="0" name="voucherid">
+					<input type="hidden" name="voucherid" id="voucherid" th:value="0">
 
 					<div id="paypal-button" style="display: none;">
 						<button onclick="changeFormActionPaypal()" class="btn btn-primary btn-lg btn-block"
@@ -292,25 +291,30 @@
 		}
 
 		function applyVoucher() {
-			var hiddenTotalPrice = document.getElementById('hiddenTotalPrice');
-			var discountedPriceDisplay = document.getElementById('discountedPriceDisplay');
+			var checkedRadio = document.querySelector('.voucher-radio:checked');
+			if (checkedRadio.checked == true) {
 
-			var totalPrice = parseFloat(hiddenTotalPrice.value);
 
-			var originalTotalPrice = parseFloat(hiddenTotalPrice.getAttribute('data-original-price'));
-			var discountedPrice = originalTotalPrice * (1 - voucherDiscount);
+				var hiddenTotalPrice = document.getElementById('hiddenTotalPrice');
+				var discountedPriceDisplay = document.getElementById('discountedPriceDisplay');
 
-			// Hiển thị giá sau khi áp dụng voucher
-			//discountedPriceDisplay.textContent = discountedPrice;
+				var totalPrice = parseFloat(hiddenTotalPrice.value);
 
-			if (voucherDiscount > 0) {
-				discountedPriceDisplay.textContent = 'Giá sau khi áp dụng voucher: ' + discountedPrice;
-				discountedPriceDisplay.parentElement.style.display = 'block';
-			} else {
-				discountedPriceDisplay.parentElement.style.display = 'none';
+				var originalTotalPrice = parseFloat(hiddenTotalPrice.getAttribute('data-original-price'));
+				var discountedPrice = originalTotalPrice * (1 - voucherDiscount);
+
+				// Hiển thị giá sau khi áp dụng voucher
+				//discountedPriceDisplay.textContent = discountedPrice;
+
+				if (voucherDiscount > 0) {
+					discountedPriceDisplay.textContent = 'Giá sau khi áp dụng voucher: ' + discountedPrice;
+					discountedPriceDisplay.parentElement.style.display = 'block';
+				} else {
+					discountedPriceDisplay.parentElement.style.display = 'none';
+				}
+
+				hiddenTotalPrice.value = discountedPrice;
 			}
-
-			hiddenTotalPrice.value = discountedPrice;
 		}
 
 		function cancelVoucherSelection() {
@@ -318,26 +322,27 @@
 			selectedVoucherId = 0;
 
 			// Reset the hidden input field
-			//document.getElementById('voucherid').value = selectedVoucherId;
+			document.getElementById('voucherid').value = selectedVoucherId;
 
 			// Optionally, you may want to update the UI to reflect the cancellation
 			// For example, clear any displayed voucher information
-			//var discountedPriceDisplay = document.getElementById('discountedPriceDisplay');
-			//discountedPriceDisplay.parentElement.style.display = 'none';
+			var discountedPriceDisplay = document.getElementById('discountedPriceDisplay');
+			discountedPriceDisplay.style.display = 'none';
+
+			var totalPriceValue = document.getElementById('totalPriceValue');
+			totalPriceValue.textContent = "";
+
+			var totalPrice = document.getElementById('data-original-price');
+			hiddenTotalPrice.value = totalPrice;
+
+			var checkedRadio = document.querySelector('.voucher-radio:checked');
+			if (checkedRadio) {
+				checkedRadio.checked = false;
+			}
 		}
 
 
 	</script>
-	<!--document.getElementById('okButton').addEventListener('click', function () {
-			// Lấy ra radio button được chọn
-			var selectedRadioButton = document.querySelector('.voucher-radio:checked');
-			// Gọi hàm xử lý cho radio button được chọn
-			if (selectedRadioButton) {
-				handleCheckboxClick(selectedRadioButton);
-			}
-			// Áp dụng voucher
-			applyVoucher();
-		});-->
 
 </body>
 
