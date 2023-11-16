@@ -23,22 +23,7 @@
             </div>
             <div class="col-lg-6 text-center text-lg-right">
               <div class="d-inline-flex align-items-center">
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-twitter"></i>
-                </a>
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-instagram"></i>
-                </a>
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-youtube"></i>
-                </a>
-                <span class="text-primary">|</span>
+                <span class="text-primary"></span>
                 <a class="text-primary px-3" href="#" id="cart-toggle"
                   ><i class="fa fa-shopping-cart"></i></a
                 >
@@ -105,7 +90,7 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div
-              class="collapse navbar-collapse justify-content-between px-3"
+              class="collapse navbar-collapse justify-content-between "
               id="navbarCollapse"
             >
               <div class="navbar-nav ml-auto font-weight-bold">
@@ -128,13 +113,13 @@
                   >Tour</a
                 >
                 <a
-                  href="about.html"
+                  href="/contact"
                   class="nav-item nav-link"
                   th:text="#{header.label.about}"
                   >About</a
                 >
                 <a
-                  href="contact.html"
+                  href="/contact"
                   class="nav-item nav-link"
                   th:text="#{header.label.contact}"
                   >Contact</a
@@ -156,7 +141,7 @@
                 <div sec:authorize="isAuthenticated()">
                   <a th:href="@{/profile}" class="rounded-circle">
                     <img
-                      src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                      src="https://i.pinimg.com/1200x/89/90/48/899048ab0cc455154006fdb9676964b3.jpg"
                       style="padding: 15px; width: 85px"
                       alt="Avatar"
                     />

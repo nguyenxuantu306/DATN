@@ -60,6 +60,16 @@ public class HomeController {
 	public String Profile(Model model) {
 		return "profile";
 	}
+	
+	@RequestMapping("/contact")
+	public String Contact(Model model) {
+		return "contact";
+	}
+	
+	@RequestMapping("/foodter")
+	public String foodter(Model model) {
+		return "foodter";
+	}
 
 	@RequestMapping({ "/admin", "/admin/home/index" })
 	public String admin() {

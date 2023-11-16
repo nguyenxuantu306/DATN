@@ -43,7 +43,7 @@ public class User implements Serializable {
 	@Positive(message = "IdUser phải lớn hơn 0")
 	Integer userid;
 
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,100}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
 	@NotEmpty(message = "Thiếu password")
 	String password;
 
@@ -53,16 +53,14 @@ public class User implements Serializable {
 	@Email(message = "Email không hợp lệ!")
 	String email;
 
-	@NotBlank(message = "Mô tả là bắt buộc")
+	@NotBlank(message = "Tên đầu là bắt buộc")
 	String firstname;
 
-	@NotBlank(message = "Mô tả là bắt buộc")
+	@NotBlank(message = "Tên cuối là bắt buộc")
 	String lastname;
 
-	/*
-	 * @Pattern(regexp = "^[1-9][0-9]*$", message =
-	 * "Số điện thoại phải là số nguyên dương và không chứa ký tự khác")
-	 */
+	
+	@Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại phải là số nguyên dương và không chứa ký tự khác") 
 	String phonenumber;
 
 	@NotBlank(message = "Ảnh đại diện là bắt buộc")
@@ -78,6 +76,7 @@ public class User implements Serializable {
 	@Temporal(TemporalType.DATE)
 	Date birthday = new Date();
 
+	@Past(message = "Ngày tạo phải trước ngày hiện tại")
 	@Temporal(TemporalType.DATE)
 	Date createddate = new Date();
 

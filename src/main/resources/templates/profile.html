@@ -25,7 +25,7 @@
                                 background-color: rgb(233, 236, 239);
                               ">
 														<img style="max-height: 140px; max-width: 140px" alt="image"
-															th:src="@{|/assetsAdmin/images/${user.image}|}" />
+															th:src="@{|/assets/images/${user.image}|}" />
 													</div>
 												</div>
 											</div>
@@ -217,9 +217,10 @@
 							</button>
 						</a>
 					</div>
-					<a class="btn border border-danger my-3 text-decoration-none text-center text-danger fw-bold"
-						style="width: 100%" href="/logoff" th:text="#{profile.label.logout}">Đăng xuất</a>
-					<div class="card mt-3" style="background-color: #fff">
+					<a class="btn border border-danger my-3 text-decoration-none text-center text-white fw-bold"
+   style="width: 100%; background-color: red;" href="/logoff" th:text="#{profile.label.logout}">Đăng xuất</a>
+
+					<!-- <div class="card mt-3" style="background-color: #fff">
 						<div class="card-header">Tổng điểm tích lũy: 180.616 điểm</div>
 						<div class="card-body">
 							<div class="row">
@@ -235,7 +236,7 @@
 								<a href="#" class="btn mt-3" style="background-color: #aaaaaa">Dowload App Store</a>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
