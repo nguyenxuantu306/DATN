@@ -143,8 +143,12 @@
 					})
 						.then(function (response) {
 							if (response.status === 200) {
-								// Nếu thành công, bạn có thể thực hiện các tác vụ sau khi đổi trạng thái
-								alert("Đã hủy đơn hàng thành công");
+								// Nếu thành công, bạn có thể thực hiện các tác vụ sau khi đổi trạng thái						
+								Swal.fire({
+						            icon: 'success',
+						            title: 'Thành công!',
+						            text: 'Đã hủy đơn hàng thành công!',
+						        });
 								location.reload();
 							} else {
 								// Xử lý lỗi
