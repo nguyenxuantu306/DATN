@@ -66,9 +66,9 @@ public class HomeController {
 		return "contact";
 	}
 	
-	@RequestMapping("/foodter")
+	@RequestMapping("/about")
 	public String foodter(Model model) {
-		return "foodter";
+		return "about";
 	}
 
 	@RequestMapping({ "/admin", "/admin/home/index" })
