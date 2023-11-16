@@ -23,6 +23,7 @@ import com.greenfarm.dao.CartDAO;
 import com.greenfarm.dao.OrderDAO;
 import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.PaymentMethodDAO;
+import com.greenfarm.dao.VoucherOrderDAO;
 import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.entity.Cart;
 import com.greenfarm.entity.Order;
@@ -30,8 +31,11 @@ import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.entity.User;
+import com.greenfarm.entity.Voucher;
+import com.greenfarm.entity.VoucherOrder;
 import com.greenfarm.service.CartService;
 import com.greenfarm.service.UserService;
+import com.greenfarm.service.VoucherService;
 import com.greenfarm.service.VoucherUserService;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
@@ -59,6 +63,12 @@ public class PaymentController {
 
 	@Autowired
 	VoucherUserService voucherUserService;
+	
+	@Autowired
+	VoucherService voucherService;
+	
+	@Autowired
+	VoucherOrderDAO voucherOrderDAO;
 
 	public static final String URL_PAYPAL_SUCCESS = "success";
 	public static final String URL_PAYPAL_CANCEL = "pay/cancel";
@@ -69,7 +79,7 @@ public class PaymentController {
 	private PaypalService paypalService;
 
 	@PostMapping("/submitOrderPaypal")
-	public String pay(HttpServletRequest request, @RequestParam("totalPrice") double totalPrice) {
+	public String pay(HttpServletRequest request, @RequestParam("hiddenTotalPrice") double totalPrice) {
 		String cancelUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
 		String successUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_SUCCESS;
 		try {
@@ -93,7 +103,7 @@ public class PaymentController {
 	}
 
 	@GetMapping(URL_PAYPAL_SUCCESS)
-	public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId,
+	public String successPay(@RequestParam("paymentId") String paymentId,HttpServletRequest request, @RequestParam("PayerID") String payerId,
 			@ModelAttribute("Order") OrderDTO orderDTO, Model model) {
 		try {
 			Payment payment = paypalService.executePayment(paymentId, payerId);
@@ -108,7 +118,6 @@ public class PaymentController {
 					statusOrder.setStatusorderid(1);
 					PaymentMethod paymentMethodObj = paymentMethodDAO.findById(3).get();
 					if (user != null) {
-						System.out.println("hehehe");
 						Order orderItem = new Order();
 						orderItem.setUser(user);
 						orderItem.setOrderdate(now);
@@ -130,6 +139,31 @@ public class PaymentController {
 							total += cartItem.getQuantity() * cartItem.getProduct().getPrice();
 						}
 						orderDetailDAO.saveAll(orderDetailList);
+						
+						float discountedTotal = 0;
+						List<VoucherOrder> voucherLists = new ArrayList<>();
+						String[] voucherIds = request.getParameterValues("voucherid");
+
+						if (voucherIds != null) {
+						    for (String voucherId : voucherIds) {
+						        // Lấy thông tin Voucher từ voucherId
+						        Voucher voucher = voucherService.findByVoucherid(Long.parseLong(voucherId));
+
+						        // Tạo mới VoucherOrder và thêm vào danh sách
+						        VoucherOrder voucherOrder = new VoucherOrder();
+						        voucherOrder.setOrder(orderItem);
+						        voucherOrder.setVoucher(voucher);
+						        voucherLists.add(voucherOrder);
+
+						        // Áp dụng giảm giá từ voucher vào tổng giá trị đơn hàng
+						        discountedTotal =  total - (total *voucher.getDiscount());
+						    }
+						} else {
+							System.out.println("heheehdeoco");
+						}
+
+						voucherOrderDAO.saveAll(voucherLists); 
+						model.addAttribute("totalDiscount", discountedTotal);
 						model.addAttribute("orderConfirmation", orderItem);
 						model.addAttribute("total", total);
 						model.addAttribute("cartConfirmation", cartItems);

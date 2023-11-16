@@ -97,7 +97,7 @@ function sortProductsByPrice(sortType) {
 }
 
 // Hàm xử lý sự kiện khi người dùng thay đổi giá trị radio
-function handlePriceRangeChange() {
+/*function handlePriceRangeChange() {
 	var priceRange = $('input[name="priceRange"]:checked').val();
 	$.ajax({
 		url: "/rest/products/filter-by-custom-price-range",
@@ -142,7 +142,7 @@ $(document).ready(function() {
 
 	// Gắn kết sự kiện khi người dùng thay đổi giá trị radio
 	$('input[type="radio"]').change(handlePriceRangeChange);
-});
+});*/
 
 // rating và chức năng cơ bản tour
 $(document).ready(function() {

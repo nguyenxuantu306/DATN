@@ -9,6 +9,7 @@ import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.entity.User;
+import com.greenfarm.entity.VoucherOrder;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,4 +30,5 @@ public class OrderDTO {
 	StatusOrder statusOrder;
 	private PaymentMethod paymentmethod;
 	//private String formattedOrderDate;
+	private List<VoucherOrder> voucherorder;
 }

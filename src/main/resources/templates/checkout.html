@@ -1,232 +1,314 @@
 <!DOCTYPE html>
-<html
-  xmlns="http://www.thymeleaf.org"
-  th:replace="~{/layout/layout::dynamic(~{::body})}"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <title>Checkout</title>
-  </head>
+<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Checkout</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<title>Checkout</title>
+</head>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<title>Checkout</title>
 </head>
 
 <body class="bg-light">
-    <div class="container">
-        <div class="row py-5">
-            <div class="col-md-4 order-md-2 mb-4">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Your cart</span> <span class="badge badge-secondary badge-pill">3</span>
-                </h4>
-                <form th:method="post" th:action="@{/checkout/payment}" th:object="${orderDetail}">
-                    <ul class="list-group">
-                        <div th:each="item : ${cartList}">
-                            <div>
-                                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div>
-                                        <h6 class="my-0" th:text="${item.product.productname}"></h6>
-                                        <small class="text-muted" name="quantityBought" th:text="${item.quantity}"></small>
-                                    </div> <span class="text-muted" th:text="${item.quantity * item.product.price}"></span>
-                                </li>
-                            </div>
-                        </div>
-                        <li class="list-group-item d-flex justify-content-between bg-light">
-                            <div class="text-success">
-                                <h6 class="my-0">Promo code</h6>
-                                <small>EXAMPLECODE</small>
-                            </div> <span class="text-success">-$0</span>
-                        </li>
-                        <!-- Hiển thị tổng tiền trong thẻ "Total (USD)" -->
-                        <li class="list-group-item d-flex justify-content-between"><span>Total
+	<div class="container">
+		<div class="row py-5">
+			<div class="col-md-4 order-md-2 mb-4">
+				<h4 class="d-flex justify-content-between align-items-center mb-3">
+					<span class="text-muted">Your cart</span> <span class="badge badge-secondary badge-pill">3</span>
+				</h4>
+				<form th:method="post" th:action="@{/checkout/payment}" th:object="${orderDetail}">
+					<ul class="list-group">
+						<div th:each="item : ${cartList}">
+							<div>
+								<li class="list-group-item d-flex justify-content-between lh-condensed">
+									<div>
+										<h6 class="my-0" th:text="${item.product.productname}"></h6>
+										<small class="text-muted" name="quantityBought"
+											th:text="${item.quantity}"></small>
+									</div> <span class="text-muted"
+										th:text="${item.quantity * item.product.price}"></span>
+								</li>
+							</div>
+						</div>
+						<li class="list-group-item d-flex justify-content-between bg-light">
+							<div class="text-success">
+								<h6 class="my-0">Promo code</h6>
+								<small>EXAMPLECODE</small>
+							</div> <span class="text-success">-$0</span>
+						</li>
+						<!-- Hiển thị tổng tiền trong thẻ "Total (USD)" -->
+						<li class="list-group-item d-flex justify-content-between"><span>Total
 								(USD)</span> <strong id="totalPrice" th:text="${totalPrice}"></strong>
-                        </li>
-                        <input type="hidden" id="hiddenTotalPrice" name="hiddenTotalPrice" th:value="${totalPrice}">
-                        <li class="list-group-item d-flex justify-content-between"><span>Khuyến
-								mãi</span> <strong id="totalPriceValue"></strong></li>
-                    </ul>
-                </form>
+						</li>
+						<li class="list-group-item d-flex justify-content-between">
+							<span>Khuyến mãi</span> <strong id="totalPriceValue"></strong>
+						</li>
+						<div id="discountedPriceDisplay">
+							
+						</div>
+						
 
-                <div>
+					</ul>
+				</form>
 
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+				<div>
+
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						Chọn hoặc nhập mã voucher</button>
 
 
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Chọn GreenFram Voucher</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body ">
-                                    <div class="cupon_area">
-                                        <a>Mã Voucher</a> <input type="text" placeholder="Enter coupon code"> <a class="tp_btn" href="#">Apply Coupon</a>
-                                    </div>
-                                    <div class="p-3">
-                                        <div th:each="voucher : ${vouchers}" style="background-color: azure;" class="mb-2">
-                                            <img style="width: 60px;" src="https://toppng.com/uploads/preview/voucher-icon-kostenloser-icon-voucher-11553428421ncp0vltb6w.png" />
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="exampleModalLabel">Chọn GreenFram Voucher</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body ">
+									<div class="cupon_area">
+										<a>Mã Voucher</a> <input type="text" placeholder="Enter coupon code"> <a
+											class="tp_btn" href="#">Apply Coupon</a>
+									</div>
+									<div class="p-3">
+										<div th:each="voucher : ${vouchers}" style="background-color: azure;"
+											class="mb-2">
+											<img style="width: 60px;"
+												src="https://toppng.com/uploads/preview/voucher-icon-kostenloser-icon-voucher-11553428421ncp0vltb6w.png" />
 
-                                            <label th:text="'Voucher giảm giá: '+ ${#numbers.formatDecimal(voucher.voucher.discount*100, 0, 'POINT', 0, 'COMMA')} + '%'">
+											<label
+												th:text="'Voucher giảm giá: '+ ${#numbers.formatDecimal(voucher.voucher.discount*100, 0, 'POINT', 0, 'COMMA')} + '%'">
 											</label>
-                                            <div class="float-end p-3">
-                                                <input th:value="${voucher.voucher.discount}" class="form-check-input voucher-radio" type="radio" name="exampleRadios" id="exampleRadios1">
-                                            </div>
+											<div class="float-end p-3">
+												<input th:value="${voucher.voucher.discount}"
+													th:data-voucherid="${voucher.voucher.voucherid}"
+													onclick="handleCheckboxClick(this)"
+													class="form-check-input voucher-radio" type="radio"
+													name="exampleRadios">
+											</div>
+										</div>
 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">TRỞ LẠI</button>
-                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">TRỞ
+										LẠI</button>
+									<button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+										onclick="applyVoucher()">OK</button>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                </div>
-            </div>
+				</div>
+			</div>
 
-            <div class="col-md-8 order-md-1">
-                <h4 class="mb-3">Billing address</h4>
-                <form id="myForm" class="needs-validation" novalidate th:object="${Order}" th:method="post" th:action="@{/checkout/payment}">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="firstName">First name</label> <input th:field="${user.firstname}" th:value="${user.firstname}" th:placeholder="${user.firstname}" type="text" class="form-control" id="firstName" placeholder="" value="" required
-                            />
-                            <div class="invalid-feedback">Valid first name is required.
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="lastName">Last name</label> <input th:placeholder="${user.lastname}" th:value="${user.lastname}" th:field="${user.lastname}" type="text" class="form-control" id="lastName" placeholder="" value="" required />
-                            <div class="invalid-feedback">Valid last name is required.</div>
-                        </div>
-                    </div>
+			<div class="col-md-8 order-md-1">
+				<h4 class="mb-3">Billing address</h4>
+				<form id="myForm" class="needs-validation" novalidate th:object="${Order}" th:method="post"
+					th:action="@{/checkout/payment}">
+					<div class="row">
+						<div class="col-md-6 mb-3">
+							<label for="firstName">First name</label> <input th:field="${user.firstname}"
+								th:value="${user.firstname}" th:placeholder="${user.firstname}" type="text"
+								class="form-control" id="firstName" placeholder="" value="" required />
+							<div class="invalid-feedback">Valid first name is required.
+							</div>
+						</div>
+						<div class="col-md-6 mb-3">
+							<label for="lastName">Last name</label> <input th:placeholder="${user.lastname}"
+								th:value="${user.lastname}" th:field="${user.lastname}" type="text" class="form-control"
+								id="lastName" placeholder="" value="" required />
+							<div class="invalid-feedback">Valid last name is required.</div>
+						</div>
+					</div>
 
-                    <div class="mb-3">
-                        <label for="email">Email <span class="text-muted">(Optional)</span></label>
-                        <input type="email" class="form-control" id="email" th:placeholder="${user.email}" readonly="readonly" />
-                        <div class="invalid-feedback">Please enter a valid email address for shipping updates.</div>
-                    </div>
+					<div class="mb-3">
+						<label for="email">Email <span class="text-muted">(Optional)</span></label>
+						<input type="email" class="form-control" id="email" th:placeholder="${user.email}"
+							readonly="readonly" />
+						<div class="invalid-feedback">Please enter a valid email address for shipping updates.</div>
+					</div>
 
-                    <div class="mb-3">
-                        <label for="address">Phone</label> <input type="tel" class="form-control" id="address" th:value="${user.phonenumber}" th:field="${user.phonenumber}" th:placeholder="${user.phonenumber}" required />
-                        <div class="invalid-feedback">Please enter your shipping address.
-                        </div>
-                    </div>
+					<div class="mb-3">
+						<label for="address">Phone</label> <input type="tel" class="form-control" id="address"
+							th:value="${user.phonenumber}" th:field="${user.phonenumber}"
+							th:placeholder="${user.phonenumber}" required />
+						<div class="invalid-feedback">Please enter your shipping address.
+						</div>
+					</div>
 
-                    <div class="mb-3">
-                        <label for="address">Address</label> <input th:value="${user.address}" th:field="${user.address}" th:placeholder="${user.address}" type="text" class="form-control" id="address" required />
-                        <div class="invalid-feedback">Please enter your shipping address.
-                        </div>
-                    </div>
+					<div class="mb-3">
+						<label for="address">Address</label> <input th:value="${user.address}"
+							th:field="${user.address}" th:placeholder="${user.address}" type="text" class="form-control"
+							id="address" required />
+						<div class="invalid-feedback">Please enter your shipping address.
+						</div>
+					</div>
 
-                    <hr class="mb-4" />
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="same-address" /> <label class="custom-control-label" for="same-address">Shipping address is the same as my
+					<hr class="mb-4" />
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="same-address" /> <label
+							class="custom-control-label" for="same-address">Shipping address is the same as my
 							billing address</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="save-info" />
-                        <label class="custom-control-label" for="save-info">Save
+					</div>
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="save-info" />
+						<label class="custom-control-label" for="save-info">Save
 							this information for next time</label>
-                    </div>
-                    <hr class="mb-4" />
-
-                    <input type="hidden" id="totalPrice" name="totalPrice" th:value="${totalPrice}">
-                    <h4 class="mb-3">Payment</h4>
-
-                    <div class="d-block my-3">
-                        <div class="custom-control custom-radio">
-                            <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required onclick="showButton('debit')" checked value="1" /> <label class="custom-control-label" for="debit">COD</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required onclick="showButton('paypal')" value="2" /> <label class="custom-control-label" for="paypal">PayPal</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input id="vnpay" name="paymentMethod" type="radio" class="custom-control-input" required onclick="showButton('vnpay')" value="3" /> <label class="custom-control-label" for="vnpay">VNPAY</label>
-                        </div>
-                    </div>
+					</div>
+					<hr class="mb-4" />
 
 
-                    <div id="paypal-button" style="display: none;">
-                        <button onclick="changeFormActionPaypal()" class="btn btn-primary btn-lg btn-block" type="submit">
+					<input type="hidden" id="hiddenTotalPrice" name="hiddenTotalPrice" th:value="${totalPrice}">
+
+
+					<!--		<input type="hidden" id="totalPrice" name="totalPrice" th:value="${totalPrice}">-->
+					<h4 class="mb-3">Payment</h4>
+
+					<div class="d-block my-3">
+						<div class="custom-control custom-radio">
+							<input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required
+								onclick="showButton('debit')" checked value="1" /> <label class="custom-control-label"
+								for="debit">COD</label>
+						</div>
+						<div class="custom-control custom-radio">
+							<input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required
+								onclick="showButton('paypal')" value="2" /> <label class="custom-control-label"
+								for="paypal">PayPal</label>
+						</div>
+						<div class="custom-control custom-radio">
+							<input id="vnpay" name="paymentMethod" type="radio" class="custom-control-input" required
+								onclick="showButton('vnpay')" value="3" /> <label class="custom-control-label"
+								for="vnpay">VNPAY</label>
+						</div>
+					</div>
+
+					<input type="hidden" id="voucherid" name="voucherid">
+
+					<div id="paypal-button" style="display: none;">
+						<button onclick="changeFormActionPaypal()" class="btn btn-primary btn-lg btn-block"
+							type="submit">
 							PLACE ORDER</button>
-                    </div>
-                    <div id="vnpay-button" style="display: none;">
-                        <button onclick="changeFormAction()" class="btn btn-primary btn-lg btn-block" type="submit">
+					</div>
+					<div id="vnpay-button" style="display: none;">
+						<button onclick="changeFormAction()" class="btn btn-primary btn-lg btn-block" type="submit">
 							PLACE ORDER</button>
-                    </div>
-                    <div id="checkout-button">
-                        <!-- Đặt nội dung nút "Continue to checkout" ở đây -->
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">
+					</div>
+					<div id="checkout-button">
+						<!-- Đặt nội dung nút "Continue to checkout" ở đây -->
+						<button class="btn btn-primary btn-lg btn-block" type="submit">
 							PLACE ORDER</button>
 
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function changeFormAction() {
-            // Lấy đối tượng form
-            var form = document.getElementById("myForm");
-
-            // Đặt action mới cho form
-            form.action = "/submitOrder";
-        }
-
-        function changeFormActionPaypal() {
-            // Lấy đối tượng form
-            var form = document.getElementById("myForm");
-
-            // Đặt action mới cho form
-            form.action = "/submitOrderPaypal";
-        }
-    </script>
+					</div>
 
 
-    <script>
-        // Lấy tất cả các div chứa voucher
-        const voucherDivs = document.querySelectorAll('.p-3 .mb-2');
 
-        // Lặp qua từng div
-        voucherDivs.forEach((div) => {
-            // Lấy input radio trong div
-            const radioButton = div.querySelector('.form-check-input');
+				</form>
+			</div>
+		</div>
+	</div>
 
-            // Khi click vào div, chọn input radio
-            div.addEventListener('click', () => {
-                radioButton.checked = true;
-            });
-        });
-    </script>
+	<script>
+		function changeFormAction() {
+			// Lấy đối tượng form
+			var form = document.getElementById("myForm");
 
-    <script type="text/javascript">
-        // Lắng nghe sự kiện khi nút "OK" trong modal được nhấn
-        var okButton = document.querySelector('.modal-footer .btn-primary');
-        okButton.addEventListener('click', function() {
-            // Lấy giá trị giảm giá từ radio button được chọn
-            var selectedDiscount = parseFloat(document.querySelector('.voucher-radio:checked').value);
+			// Đặt action mới cho form
+			form.action = "/submitOrder";
+		}
 
-            // Cập nhật giá trị trong phần tử <strong> có id "totalPriceValue"
-            var totalPriceValue = document.getElementById("totalPriceValue");
-            totalPriceValue.textContent = (100 * selectedDiscount) + '%';
+		function changeFormActionPaypal() {
+			// Lấy đối tượng form
+			var form = document.getElementById("myForm");
 
-            // Đóng modal
-            var modal = new bootstrap.Modal(document.getElementById("exampleModal"));
-            modal.hide();
-        });
-    </script>
+			// Đặt action mới cho form
+			form.action = "/submitOrderPaypal";
+		}
+	</script>
+
+
+	<script>
+		// Lấy tất cả các div chứa voucher
+		const voucherDivs = document.querySelectorAll('.p-3 .mb-2');
+
+		// Lặp qua từng div
+		voucherDivs.forEach((div) => {
+			// Lấy input radio trong div
+			const radioButton = div.querySelector('.form-check-input');
+
+			// Khi click vào div, chọn input radio
+			div.addEventListener('click', () => {
+				radioButton.checked = true;
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		// Lắng nghe sự kiện khi nút "OK" trong modal được nhấn
+		var okButton = document.querySelector('.modal-footer .btn-primary');
+		okButton.addEventListener('click', function () {
+			// Lấy giá trị giảm giá từ radio button được chọn
+			var selectedDiscount = parseFloat(document.querySelector('.voucher-radio:checked').value);
+
+			// Cập nhật giá trị trong phần tử <strong> có id "totalPriceValue"
+			var totalPriceValue = document.getElementById("totalPriceValue");
+			totalPriceValue.textContent = (100 * selectedDiscount) + '%';
+
+			// Đóng modal
+			var modal = new bootstrap.Modal(document.getElementById("exampleModal"));
+			modal.hide();
+		});
+	</script>
+
+	<script type="text/javascript">
+		var voucherDiscount = 0; // Biến để lưu giá sau khi áp dụng voucher
+		var selectedVoucherId = 0; // Biến để lưu ID của voucher đã chọn
+
+		function handleCheckboxClick(checkbox) {
+			if (checkbox.checked) {
+				voucherDiscount = parseFloat(checkbox.value);
+				selectedVoucherId = parseInt(checkbox.getAttribute('data-voucherid'));
+
+				console.log(selectedVoucherId);
+			} else {
+				voucherDiscount = 0;
+				selectedVoucherId = 0;
+			}
+
+			// Update the hidden input field with the selected voucher ID
+			document.getElementById('voucherid').value = selectedVoucherId;
+		}
+
+		function applyVoucher() {
+			var hiddenTotalPrice = document.getElementById('hiddenTotalPrice');
+			var discountedPriceDisplay = document.getElementById('discountedPriceDisplay');
+
+			var totalPrice = parseFloat(hiddenTotalPrice.value);
+
+			// Tính giá sau khi áp dụng voucher
+			var discountedPrice = totalPrice * (1 - voucherDiscount);
+
+			// Hiển thị giá sau khi áp dụng voucher
+			//discountedPriceDisplay.textContent = discountedPrice;
+
+			if (voucherDiscount > 0) {
+				discountedPriceDisplay.textContent = 'Giá sau khi áp dụng voucher: ' + discountedPrice;
+				discountedPriceDisplay.parentElement.style.display = 'block';
+			} else {
+				discountedPriceDisplay.parentElement.style.display = 'none';
+			}
+
+
+			hiddenTotalPrice.value = discountedPrice;
+		}
+	</script>
+
 </body>
 
 </html>
