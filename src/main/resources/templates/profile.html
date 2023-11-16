@@ -216,10 +216,19 @@
 								<span th:text="#{profile.label.profile}"></span>
 							</button>
 						</a>
+
 					</div>
 					<a class="btn border border-danger my-3 text-decoration-none text-center text-white fw-bold"
-   style="width: 100%; background-color: red;" href="/logoff" th:text="#{profile.label.logout}">Đăng xuất</a>
-
+						style="width: 100%; background-color: red;" href="/logoff"
+						th:text="#{profile.label.logout}">Đăng xuất</a>
+						
+					<a href="/changepass">
+							<button type="button" class="list-group-item text-center list-group-item-action active"
+								style="border-radius: 4px">
+								<span>Đổi mật khẩu</span>
+								<!--<span th:text="#{profile.label.profile}"></span>-->
+							</button>
+						</a>
 					<!-- <div class="card mt-3" style="background-color: #fff">
 						<div class="card-header">Tổng điểm tích lũy: 180.616 điểm</div>
 						<div class="card-body">
