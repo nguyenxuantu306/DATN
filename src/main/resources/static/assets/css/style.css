@@ -7041,10 +7041,6 @@ button.bg-dark:focus {
 		display: inline-block !important;
 	}
 
-	.d-lg-block {
-		display: block !important;
-	}
-
 	.d-lg-table {
 		display: table !important;
 	}

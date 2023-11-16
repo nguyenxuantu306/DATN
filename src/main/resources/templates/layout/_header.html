@@ -11,7 +11,7 @@
   <body>
     <div th:fragment="header" class="header_area">
       <!-- Topbar Start -->
-      <div class="container-fluid bg-light pt-3d-none d-lg-block">
+      <div class="container-fluid bg-light pt-3d-none pt-3">
         <div class="container">
           <div class="row">
             <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
@@ -23,45 +23,20 @@
             </div>
             <div class="col-lg-6 text-center text-lg-right">
               <div class="d-inline-flex align-items-center">
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-twitter"></i>
-                </a>
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-instagram"></i>
-                </a>
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-youtube"></i>
-                </a>
+                <span class="text-primary"></span>
                 <a class="text-primary px-3" href="#" id="cart-toggle"
                   ><i class="fa fa-shopping-cart"></i></a
                 >
-                <a class="text-primary px-3" href="?language=vi_VN">VN </a>
-                <a class="text-primary pl-3" href="?language=en">EN </a>
+                <a class="text-primary px-3" href="?language=vi_VN"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/vn.png">
+                </a>
+                <a class="text-primary pl-3" href="?language=en"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/us.png"> </a>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div sec:authorize="isAuthenticated()" class="col-md-12 text-right">
-        <div class="bg-primary p-1 d-inline-block">
-          <div class="d-flex">
-            <div
-              th:if="${#authorization.expression('hasRole(''Administrator'')')}"
-              class="mr-3"
-            >
-              <a class="text-white" th:href="@{/admin}">Administration</a>
-            </div>
-            <div><a class="text-white" th:href="@{/logoff}">Logoff</a></div>
-          </div>
-        </div>
-      </div>
+
 
       <!-- Topbar End -->
       <!-- Topbar End -->
@@ -115,7 +90,7 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div
-              class="collapse navbar-collapse justify-content-between px-3"
+              class="collapse navbar-collapse justify-content-between "
               id="navbarCollapse"
             >
               <div class="navbar-nav ml-auto font-weight-bold">
@@ -138,13 +113,13 @@
                   >Tour</a
                 >
                 <a
-                  href="about.html"
+                  href="/contact"
                   class="nav-item nav-link"
                   th:text="#{header.label.about}"
                   >About</a
                 >
                 <a
-                  href="contact.html"
+                  href="/contact"
                   class="nav-item nav-link"
                   th:text="#{header.label.contact}"
                   >Contact</a
@@ -166,7 +141,7 @@
                 <div sec:authorize="isAuthenticated()">
                   <a th:href="@{/profile}" class="rounded-circle">
                     <img
-                      src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                      src="https://i.pinimg.com/1200x/89/90/48/899048ab0cc455154006fdb9676964b3.jpg"
                       style="padding: 15px; width: 85px"
                       alt="Avatar"
                     />

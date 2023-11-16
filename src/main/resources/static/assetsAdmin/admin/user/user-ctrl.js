@@ -17,6 +17,13 @@ app.controller("user-ctrl", function($scope, $http) {
 			})
 		});
 	}
+	// validation ngày tạo
+	 $scope.isDateBeforeCreatedate = function() {
+        var selectedDate = new Date($scope.form.createddate);
+        var currentDate = new Date();
+        return selectedDate < currentDate;
+    };
+	
 	// validation ngày sinh
 	 $scope.isDateBeforeToday = function() {
         var selectedDate = new Date($scope.form.birthday);

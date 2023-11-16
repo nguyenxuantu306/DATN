@@ -51,7 +51,7 @@
 							<tr
 								ng-repeat="item in pager.items | filter: { email: searchEmail }">
 								<td>{{$index + 1}}</td>
-								<th><img ng-src="/assetsAdmin/images/{{item.image}}"
+								<th><img ng-src="/assets/images/{{item.image}}"
 									alt="Hình ảnh" style="width: 70px; height: 100px"></th>
 								<td>{{item.firstname}}</td>
 								<td>{{item.email}}</td>
@@ -109,7 +109,7 @@
 										<div class="row">
 											<div class="col-md-4">
 												<label for="image"> <img
-													ng-src="{{'/assetsAdmin/images/' +form.image}}"
+													ng-src="{{'/assets/images/' +form.image}}"
 													style="max-width: 100%; height: 300px">
 												</label>
 
@@ -119,7 +119,7 @@
 													<div class="form-group col-sm-6">
 														<label>Mật khẩu : </label> <input name="password"
 															type="password" ng-model="form.password"
-															ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$/"
+															ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,100}$/"
 															class="form-control input-default" ng-readonly="isEdit"
 															required> <label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.password.$error.required"
@@ -144,7 +144,10 @@
 															name="createddate" class="form-control input-default"
 															required> <label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.createddate.$error.required"
-															style="color: red;">Vui lòng nhập ngày tạo !</label> <label>
+															style="color: red;">Vui lòng nhập ngày tạo !</label> <label
+															ng-show="frmvalidateupdate.$submitted && !isDateBeforeCreatedate()"
+															style="color: red;">Ngày tạo không thể ở tương
+															lai!</label>
 													</div>
 													<div class="form-group col-sm-6">
 														<label>Email: </label> <input name="email" type="text"
@@ -273,7 +276,7 @@
 													<div class="form-group col-sm-6">
 														<label>Mật khẩu : </label> <input name="password"
 															type="password" ng-model="form.password"
-															ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$/"
+															ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,100}$/"
 															class="form-control input-default" ng-readonly="isEdit"
 															required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.password.$error.required"
@@ -298,7 +301,10 @@
 															name="createddate" class="form-control input-default"
 															required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.createddate.$error.required"
-															style="color: red;">Vui lòng nhập ngày tạo !</label> <label>
+															style="color: red;">Vui lòng nhập ngày tạo !</label> <label
+															ng-show="frmvalidate.$submitted && !isDateBeforeCreatedate()"
+															style="color: red;">Ngày tạo không thể ở tương
+															lai!</label>
 													</div>
 													<div class="form-group col-sm-6">
 														<label>Email: </label> <input name="email" type="text"
