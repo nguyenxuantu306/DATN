@@ -19,6 +19,38 @@ app.controller("order-ctrl", function($scope, $http) {
 		return total;
 	};
 
+	//Tính tổng đơn hàng
+	$scope.calculateTotalVoucher = function(item) {
+		var totalVoucher = 0.0;
+
+		// Tính tổng giá trị sản phẩm trong đơn hàng
+		if (item.orderDetail && item.orderDetail.length > 0) {
+			for (var i = 0; i < item.orderDetail.length; i++) {
+				totalVoucher += item.orderDetail[i].totalPrice;
+			}
+		}
+
+		// Áp dụng giảm giá từ voucher nếu có
+		if (item.voucherorder && item.voucherorder.voucher && item.voucherorder.voucher.discount) {
+			var voucherDiscount =  item.voucherorder.voucher.discount;
+			console.log(voucherDiscount);
+			var discountAmount = totalVoucher * voucherDiscount;
+
+			// Giảm giá từ voucher
+			totalVoucher -= discountAmount;
+		}
+		
+		var voucherDiscount =  item.voucherorder.voucher;
+		console.log(voucherDiscount);
+
+		// Đảm bảo tổng không âm
+		if (totalVoucher < 0) {
+			totalVoucher = 0;
+		}
+
+		return totalVoucher;
+	};
+
 
 	$scope.formatPrice = function(price) {
 		var priceString = price.toString();
@@ -100,7 +132,7 @@ app.controller("order-ctrl", function($scope, $http) {
 
 				$http.put(`/rest/products/${orderDetail.product.productid}`, orderDetail.product)
 					.then(function(response) {
-						console.log("Update success" , response);
+						console.log("Update success", response);
 					})
 					.catch(function(error) {
 						// Xử lý lỗi
@@ -144,16 +176,16 @@ app.controller("order-ctrl", function($scope, $http) {
 	$scope.selectedStatus = "1";
 
 	$scope.filterOrders = function() {
-    // Gửi yêu cầu HTTP đến API /byStatusName với tham số statusName là giá trị đã chọn
-    $http.get('/rest/orders/byStatusName', { params: { statusName: $scope.selectedStatus } })
-        .then(function(response) {
-            // Xử lý dữ liệu trả về từ API
-            $scope.items = response.data;
-        })
-        .catch(function(error) {
-            console.error("Lỗi trong quá trình gửi yêu cầu: " + error);
-        });
-};
+		// Gửi yêu cầu HTTP đến API /byStatusName với tham số statusName là giá trị đã chọn
+		$http.get('/rest/orders/byStatusName', { params: { statusName: $scope.selectedStatus } })
+			.then(function(response) {
+				// Xử lý dữ liệu trả về từ API
+				$scope.items = response.data;
+			})
+			.catch(function(error) {
+				console.error("Lỗi trong quá trình gửi yêu cầu: " + error);
+			});
+	};
 
 
 

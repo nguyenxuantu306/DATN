@@ -3,6 +3,7 @@ package com.greenfarm.controller;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,8 @@ import com.greenfarm.dao.CartDAO;
 import com.greenfarm.dao.OrderDAO;
 import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.PaymentMethodDAO;
+import com.greenfarm.dao.VoucherDAO;
+import com.greenfarm.dao.VoucherOrderDAO;
 import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.entity.Cart;
 import com.greenfarm.entity.Order;
@@ -30,9 +33,11 @@ import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.entity.User;
 import com.greenfarm.entity.Voucher;
+import com.greenfarm.entity.VoucherOrder;
 import com.greenfarm.entity.VoucherUser;
 import com.greenfarm.service.CartService;
 import com.greenfarm.service.UserService;
+import com.greenfarm.service.VoucherService;
 import com.greenfarm.service.VoucherUserService;
 import com.greenfarm.vnpay.VNPayService;
 
@@ -42,14 +47,12 @@ import jakarta.servlet.http.HttpServletRequest;
 @CrossOrigin(origins = "http://localhost:8080")
 public class CheckoutController {
 
-
-	
 	@Autowired
 	private UserService userService;
 
 	@Autowired
 	CartDAO cartDAO;
-	
+
 	@Autowired
 	CartService cartService;
 
@@ -65,29 +68,33 @@ public class CheckoutController {
 	@Autowired
 	VoucherUserService voucherUserService;
 
+	@Autowired
+	VoucherService voucherService;
+
+	@Autowired
+	VoucherOrderDAO voucherOrderDAO;
+
 	@GetMapping("/checkout")
-	public String Checkout(ModelMap modelMap, HttpServletRequest request,Model model) {
-		
-		
+	public String Checkout(ModelMap modelMap, HttpServletRequest request, Model model) {
+
 		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		// Kiểm tra nếu người dùng đã xác thực
 		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 			User user = userService.findByEmail(userDetails.getUsername());
-			
+
 			List<VoucherUser> vouchers = voucherUserService.findByUser(user);
-			
+
 			if (vouchers != null && !vouchers.isEmpty()) {
-			    model.addAttribute("vouchers", vouchers);
+				model.addAttribute("vouchers", vouchers);
 			} else {
-			    model.addAttribute("error", "Không tìm thấy vouchers hoặc danh sách rỗng.");
+				model.addAttribute("error", "Không tìm thấy vouchers hoặc danh sách rỗng.");
 			}
-			
-			
+
 			modelMap.addAttribute("user", user);
 			if (user != null) {
-			
+
 				List<Cart> cartItems = cartDAO.findByUser(user);
 				modelMap.addAttribute("cartList", cartItems);
 				modelMap.addAttribute("totalPrice", totalPrice(cartItems));
@@ -100,10 +107,8 @@ public class CheckoutController {
 		}
 	}
 
-
 	@PostMapping("/checkout/payment")
-	public String Payment(ModelMap modelMap, @ModelAttribute("Order") OrderDTO orderDTO,
-			@RequestParam("paymentMethod") Integer paymentMethod, Model model) {
+	public String Payment(Model model, @ModelAttribute("Order") OrderDTO orderDTO, HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -113,7 +118,7 @@ public class CheckoutController {
 			StatusOrder statusOrder = new StatusOrder();
 			statusOrder.setStatusorderid(1);
 			PaymentMethod paymentMethodObj = paymentMethodDAO.findById(1).get();
-			
+
 			if (user != null) {
 				Order orderItem = new Order();
 				orderItem.setUser(user);
@@ -121,10 +126,11 @@ public class CheckoutController {
 				orderItem.setAddress(orderDTO.getAddress());
 				orderItem.setStatusOrder(statusOrder);
 				orderItem.setPaymentmethod(paymentMethodObj);
+				orderItem.setVoucherorder(orderDTO.getVoucherorder());
 				System.out.println(orderDTO.getAddress());
 				orderDAO.save(orderItem);
 
-				List<Cart> cartItems = cartDAO.findByUser(user); 
+				List<Cart> cartItems = cartDAO.findByUser(user);
 				List<OrderDetail> orderDetailList = new ArrayList<>();
 
 				float total = 0;
@@ -136,10 +142,34 @@ public class CheckoutController {
 					orderDetailItem.setTotalPrice(cartItem.getQuantity() * cartItem.getProduct().getPrice());
 					orderDetailList.add(orderDetailItem);
 					total += cartItem.getQuantity() * cartItem.getProduct().getPrice();
-					
+
+				}
+				orderDetailDAO.saveAll(orderDetailList);
+
+				float discountedTotal = 0;
+				List<VoucherOrder> voucherLists = new ArrayList<>();
+				String[] voucherIds = request.getParameterValues("voucherid");
+
+				if (voucherIds != null) {
+				    for (String voucherId : voucherIds) {
+				        // Lấy thông tin Voucher từ voucherId
+				        Voucher voucher = voucherService.findByVoucherid(Long.parseLong(voucherId));
+
+				        // Tạo mới VoucherOrder và thêm vào danh sách
+				        VoucherOrder voucherOrder = new VoucherOrder();
+				        voucherOrder.setOrder(orderItem);
+				        voucherOrder.setVoucher(voucher);
+				        voucherLists.add(voucherOrder);
+
+				        // Áp dụng giảm giá từ voucher vào tổng giá trị đơn hàng
+				        discountedTotal =  total - (total *voucher.getDiscount());
+				      }
 				}
 
-				orderDetailDAO.saveAll(orderDetailList);
+
+				voucherOrderDAO.saveAll(voucherLists); 
+
+				model.addAttribute("totalDiscount", discountedTotal);
 				model.addAttribute("total", total);
 				model.addAttribute("orderConfirmation", orderItem);
 				model.addAttribute("cartConfirmation", cartItems);
@@ -147,18 +177,20 @@ public class CheckoutController {
 			}
 
 			return "success";
-		} else {
+		} else
+
+		{
 			System.out.println("Xin chào! Bạn chưa đăng nhập.");
 			return "login";
 		}
 	}
 
-	public long totalPrice(List<Cart> cartItems) {
+	private long totalPrice(List<Cart> cartItems) {
 		long total = 0;
 		for (Cart cartItem : cartItems) {
 			total += cartItem.getProduct().getPrice() * cartItem.getQuantity();
 		}
 		return total;
 	}
-	
+
 }

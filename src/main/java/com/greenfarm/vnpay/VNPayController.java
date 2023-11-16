@@ -13,6 +13,7 @@ import com.greenfarm.dao.CartDAO;
 import com.greenfarm.dao.OrderDAO;
 import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.PaymentMethodDAO;
+import com.greenfarm.dao.VoucherOrderDAO;
 import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.entity.Cart;
 import com.greenfarm.entity.Order;
@@ -20,8 +21,11 @@ import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.entity.User;
+import com.greenfarm.entity.Voucher;
+import com.greenfarm.entity.VoucherOrder;
 import com.greenfarm.service.CartService;
 import com.greenfarm.service.UserService;
+import com.greenfarm.service.VoucherService;
 import com.greenfarm.service.VoucherUserService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -60,10 +64,15 @@ public class VNPayController {
 	@Autowired
 	private VNPayService vnPayService;
 
+	@Autowired
+	VoucherService voucherService;
+	
+	@Autowired
+	VoucherOrderDAO voucherOrderDAO;
 	
 
 	@PostMapping("/submitOrder")
-	public String submidOrder(@RequestParam("totalPrice") int totalPrice,
+	public String submidOrder(@RequestParam("hiddenTotalPrice") int totalPrice,
 
 			HttpServletRequest request) {
 		String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
@@ -73,8 +82,8 @@ public class VNPayController {
 	}
 
 	@GetMapping("/cancelVNpay")
-	public String GetMapping(HttpServletRequest request, Model model, 
-			@ModelAttribute("Order") OrderDTO orderDTO) {
+	public String GetMapping(Model model, 
+			@ModelAttribute("Order") OrderDTO orderDTO, HttpServletRequest request) {
 		int paymentStatus = vnPayService.orderReturn(request);
 
 		if(paymentStatus != 1 ) {
@@ -95,6 +104,7 @@ public class VNPayController {
 			StatusOrder statusOrder = new StatusOrder();
 			statusOrder.setStatusorderid(1);
 			PaymentMethod paymentMethodObj = paymentMethodDAO.findById(2).get();
+		
 			if (user != null) {
 				Order orderItem = new Order();
 				orderItem.setUser(user);
@@ -119,6 +129,33 @@ public class VNPayController {
 
 				}
 				orderDetailDAO.saveAll(orderDetailList);
+				
+				float discountedTotal = 0;
+				List<VoucherOrder> voucherLists = new ArrayList<>();
+
+				String[] voucherIds = request.getParameterValues("voucherid");
+				if (voucherIds != null) {
+				    for (String voucherId : voucherIds) {
+				        // Lấy thông tin Voucher từ voucherId
+				        Voucher voucher = voucherService.findByVoucherid(Long.parseLong(voucherId));
+
+				        // Tạo mới VoucherOrder và thêm vào danh sách
+				        VoucherOrder voucherOrder = new VoucherOrder();
+				        voucherOrder.setOrder(orderItem);
+				        voucherOrder.setVoucher(voucher);
+				        voucherLists.add(voucherOrder);
+
+				        // Áp dụng giảm giá từ voucher vào tổng giá trị đơn hàng
+				        discountedTotal =  total - (total *voucher.getDiscount());
+				    }
+				} else {
+					System.out.println("heheehdeoco");
+				}
+
+
+				voucherOrderDAO.saveAll(voucherLists);
+
+				model.addAttribute("totalDiscount", discountedTotal);
 				model.addAttribute("orderConfirmation", orderItem);
 				model.addAttribute("total", total);
 				model.addAttribute("cartConfirmation", cartItems);
@@ -131,4 +168,5 @@ public class VNPayController {
 			return "login";
 		}
 	}
+	
 }

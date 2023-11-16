@@ -1,6 +1,7 @@
 package com.greenfarm.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.greenfarm.dao.VoucherDAO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Voucher;
+import com.greenfarm.entity.VoucherOrder;
 import com.greenfarm.service.VoucherService;
 
 @Service
@@ -39,5 +41,13 @@ public class VoucherServiceImple implements VoucherService {
 	public void delete(Integer voucherid) {
 		dao.deleteById(voucherid);
 	}
+
+
+
+	@Override
+	public Voucher findByVoucherid(long parseLong) {
+		return dao.findByVoucherid(parseLong);
+	}
+
 
 }
