@@ -55,6 +55,7 @@ public class Product implements Serializable {
 	private Integer quantityavailable;
 
 	
+	private Boolean isdeleted = Boolean.FALSE;
 	
 	@ManyToOne
 	@JoinColumn(name = "categoryid")

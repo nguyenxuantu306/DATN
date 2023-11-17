@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> findAll() {
-		return dao.findAll();
+		return dao.findAllByIsdeletedFalse();
 	}
 
 	public Page<Product> findAll(Pageable pageable) {
@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void delete(Integer id) {
-		dao.deleteById(id);
+		dao.deleteByIsDeleted(id);
 	}
 
 	@Override

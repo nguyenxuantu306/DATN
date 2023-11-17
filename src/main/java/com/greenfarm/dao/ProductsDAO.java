@@ -30,10 +30,9 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT new Report(o.category, sum(o.price), count(o)) " + " FROM Product o " + " GROUP BY o.category"
 			+ " ORDER BY sum(o.price) DESC")
 	List<Report> getInventoryByCategory();
-	
+
 	@Query("SELECT p FROM Product p WHERE p.category = :category")
 	List<Product> getProductsByCategory(@Param("category") Category category);
-
 
 	@Query("SELECT p FROM Product p JOIN p.orderDetails od GROUP BY p.productid, p.productname,p.image ORDER BY SUM(od.quantityordered) DESC")
 	List<Product> findTopSellingProducts();
@@ -44,12 +43,24 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT new Report(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
 			+ " GROUP BY o.product" + " ORDER BY  sum(o.quantityordered) Desc")
 	List<Report> getTop10ProductsBygetReportspbanchay();
-	
-	
+
+	@Query("SELECT p FROM Product p WHERE p.productid = :id")
+	Product findProductById(@Param("id") Integer id);
+
+	default void deleteByIsDeleted(Integer id) {
+		Product product = findProductById(id);
+		if (product != null) {
+			product.setIsdeleted(true);
+			save(product);
+		}
+	}
+
+	List<Product> findAllByIsdeletedFalse();
+
 //	// Phương thức tùy chỉnh để tìm sản phẩm theo productId và cập nhật số lượng
 // 	@Modifying
 //    @Transactional
 //    @Query("UPDATE Product p SET p.quantityavailable = p.quantityavailable - :quantityBought WHERE p.productid = :productId")
 //    void updateProductQuantity(@Param("productId") Integer productId, @Param("quantityBought") Integer quantityBought);
-	
+
 }
