@@ -289,7 +289,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		// TODO Auto-generated method stub
 		// Kiểm tra xem người dùng đã tồn tại trong hệ thống chưa
 
-		if (!emailExists(email)) {
+		if (emailExists(email)) {
 			// Nếu người dùng đã tồn tại, trả về UserDetails của họ
 			throw new UserAlreadyExistException("đã có tài khoản dùng email này");
 		} else {
