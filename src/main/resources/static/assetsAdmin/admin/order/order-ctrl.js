@@ -22,7 +22,8 @@ app.controller("order-ctrl", function($scope, $http) {
 	//Tính tổng đơn hàng
 	$scope.calculateTotalVoucher = function(item) {
 		var totalVoucher = 0.0;
-
+		var voucherDiscount = 0.0;
+		var discountAmount = 0.0;
 		// Tính tổng giá trị sản phẩm trong đơn hàng
 		if (item.orderDetail && item.orderDetail.length > 0) {
 			for (var i = 0; i < item.orderDetail.length; i++) {
@@ -30,18 +31,18 @@ app.controller("order-ctrl", function($scope, $http) {
 			}
 		}
 
+
 		// Áp dụng giảm giá từ voucher nếu có
-		if (item.voucherorder && item.voucherorder.voucher && item.voucherorder.voucher.discount) {
-			var voucherDiscount =  item.voucherorder.voucher.discount;
-			console.log(voucherDiscount);
-			var discountAmount = totalVoucher * voucherDiscount;
+		if (item.voucherorder && item.voucherorder.length > 0 && item.voucherorder[0].voucher && item.voucherorder[0].voucher.discount) {
+			voucherDiscount = item.voucherorder[0].voucher.discount;
+			discountAmount = totalVoucher * voucherDiscount;
 
 			// Giảm giá từ voucher
 			totalVoucher -= discountAmount;
+		} else {
+			console.log("Không có voucher hoặc thông tin voucher không đúng!");
+			//console.log(item);
 		}
-		
-		var voucherDiscount =  item.voucherorder.voucher;
-		console.log(voucherDiscount);
 
 		// Đảm bảo tổng không âm
 		if (totalVoucher < 0) {
@@ -72,8 +73,8 @@ app.controller("order-ctrl", function($scope, $http) {
 		$http.get("/rest/orderdetails").then(resp => {
 			$scope.items2 = resp.data;
 
-			$scope.totalPrice = $scope.items2.reduce((sum, item) => sum + item.totalprice, 0);
-			console.log($scope.totalPrice);
+			/*	$scope.totalPrice = $scope.items2.reduce((sum, item) => sum + item.totalprice, 0);
+				console.log($scope.totalPrice);*/
 		});
 
 		// Load states

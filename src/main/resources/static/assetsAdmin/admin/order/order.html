@@ -6,11 +6,10 @@
 				<div class="row py-3">
 					<div class="col-md-7 input-group icons">
 						<div>
-							<!-- 						datetime-local -->
-							<input type="datetime-local" id="startDateTime"
-								ng-model="startDateTime" style="height: 45px;"> <span
-								style="margin: 0 15px;">Đến</span> <input type="datetime-local"
-								id="endDateTime" ng-model="endDateTime" style="height: 45px;">
+							<!-- datetime-local -->
+							<input type="datetime-local" id="startDateTime" ng-model="startDateTime"
+								style="height: 45px;"> <span style="margin: 0 15px;">Đến</span> <input
+								type="datetime-local" id="endDateTime" ng-model="endDateTime" style="height: 45px;">
 
 							<button class="btn btn-success" ng-click="filterOrders()">Lọc</button>
 
@@ -19,8 +18,7 @@
 						</div>
 					</div>
 					<div class="col-md-2 input-group icons ">
-						<select class="select bg-success" style="width: 200px;"
-							ng-model="selectedStatus">
+						<select class="select bg-success" style="width: 200px;" ng-model="selectedStatus">
 							<option value="1">Chờ xác nhận</option>
 							<option value="2">Đang giao</option>
 							<option value="3">Giao hàng thành công</option>
@@ -28,10 +26,10 @@
 						</select>
 					</div>
 					<div class="col-md-3 text-right">
-						<button type="button" class="btn btn-success"ng-click="exportExcel()">
+						<button type="button" class="btn btn-success" ng-click="exportExcel()">
 							<i class="fa fa-file-excel-o"></i> Excel
 						</button>
-						<button type="button" class="btn btn-success"ng-click="exportPdf()">
+						<button type="button" class="btn btn-success" ng-click="exportPdf()">
 							<i class="fa fa-file-pdf-o"></i> PDF
 						</button>
 					</div>
@@ -51,25 +49,22 @@
 						</thead>
 						<tbody>
 
-							<tr class="text-center"
-								ng-repeat="item in pager.items| orderBy:'-orderdate'"
+							<tr class="text-center" ng-repeat="item in pager.items| orderBy:'-orderdate'"
 								ng-if="selectedStatus == item.statusOrder.statusorderid || selectedStatus == '0'">
 								<th scope="row">{{$index + 1}}</th>
 								<td>{{item.user.firstname}}</td>
-								<td>{{item.orderdate  | date:'dd-MM-yyyy HH:mm a'}}</td>
+								<td>{{item.orderdate | date:'dd-MM-yyyy HH:mm a'}}</td>
 								<td>{{formatPrice(calculateTotal(item))}}</td>
-								<td style="color: white; width: 300px;"
-									ng-class="{
+								<td style="color: white; width: 300px;" ng-class="{
 							        'bg-primary': item.statusOrder.statusorderid == 1,
 							        'bg-warning': item.statusOrder.statusorderid == 2,
 							        'bg-success': item.statusOrder.statusorderid == 3,
 							        'bg-danger': item.statusOrder.statusorderid == 4
    									 }">{{item.statusOrder.name}}</td>
-								<td><a type="button" ng-click="edit(item)"
-									data-toggle="modal" data-target="#exampleModal"> <i class="bi bi-sticky"></i>
-								</a> <!-- Modal -->
-									<div style="text-align: left;" class="modal fade"
-										id="exampleModal" tabindex="-1"
+								<td><a type="button" ng-click="edit(item)" data-toggle="modal"
+										data-target="#exampleModal"> <i class="bi bi-sticky"></i>
+									</a> <!-- Modal -->
+									<div style="text-align: left;" class="modal fade" id="exampleModal" tabindex="-1"
 										aria-labelledby="exampleModalLabel" aria-hidden="true">
 										<div class="modal-dialog modal-xl custom-modal">
 											<div class="modal-content">
@@ -77,8 +72,8 @@
 													<h1 class="modal-title fs-5" id="exampleModalLabel">
 														Chi tiết đơn hàng : {{form.orderdate | date:'dd-MM-yyyy'}}
 														- #{{form.orderid}} - {{form.user.firstname}}</h1>
-													<button type="button" class="btn-close"
-														data-bs-dismiss="modal" aria-label="Close"></button>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"
+														aria-label="Close"></button>
 
 
 												</div>
@@ -87,22 +82,33 @@
 														<div class="col-sm-6">
 															<div class="form-group"
 																style="border: 1px solid #000;border-radius: 5px;height:130px">
-																<div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Địa chỉ người nhận</div>
-                                                                <div style="padding: 10px;">
-                                                                	 <label>- Địa chỉ : {{form.user.address}}</label><br/>  <labl>-
-																	Email người dùng : {{form.user.email}}</label> <br/> <label style="padding-top: 10px" >-
-																	Số điện thoại : {{form.user.phonenumber}}</label>
-                                                                </div>
+																<div
+																	style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">
+																	Địa chỉ người nhận</div>
+																<div style="padding: 10px;">
+																	<label>- Địa chỉ :
+																		{{form.user.address}}</label><br />
+																	<labl>-
+																		Email người dùng : {{form.user.email}}</label>
+																		<br /> <label style="padding-top: 10px">-
+																			Số điện thoại :
+																			{{form.user.phonenumber}}</label>
+																</div>
 															</div>
-														</div>														
+														</div>
 														<div class="col-sm-6">
 															<div class="form-group"
 																style="border: 1px solid #000;border-radius: 5px;height:130px">
-																<div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Hình thức thanh toán</div>
-                                                                <div style="padding: 10px;">
-                                                                	 <label>- Hình thức thanh toán : {{form.paymentmethod.methodname}}</label> <br> <label>-
-																	Trạng thái thanh toán : {{form.statusOrder.name}}</label>
-                                                                </div>
+																<div
+																	style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">
+																	Hình thức thanh toán</div>
+																<div style="padding: 10px;">
+																	<label>- Hình thức thanh toán :
+																		{{form.paymentmethod.methodname}}</label> <br>
+																	<label>-
+																		Trạng thái thanh toán :
+																		{{form.statusOrder.name}}</label>
+																</div>
 															</div>
 														</div>
 
@@ -116,19 +122,20 @@
 																	<th scope="col">Tên sản phẩm</th>
 																	<th scope="col">Loại sản phẩm</th>
 																	<th scope="col">Số lượng (KG)</th>
-																	<th scope="col">Tạm tính</th>															
+																	<th scope="col">Tạm tính</th>
 																</tr>
 															</thead>
 															<tbody>
 																<tr ng-repeat="orderDetail in form.orderDetail">
 																	<th scope="row">{{$index + 1}}</th>
 																	<td><img ng-src="{{orderDetail.product.image}}"
-																		alt="Product Image" style="width: 80px;"></td>
+																			alt="Product Image" style="width: 80px;">
+																	</td>
 																	<td>{{orderDetail.product.productname}}</td>
 																	<td>{{orderDetail.product.category.categoryname}}
 																	</td>
-																	<td>{{orderDetail.quantityordered}}</td>							
-																	<td>{{formatPrice(orderDetail.totalPrice)}}</td>												
+																	<td>{{orderDetail.quantityordered}}</td>
+																	<td>{{formatPrice(orderDetail.totalPrice)}}</td>
 																</tr>
 															</tbody>
 
@@ -139,7 +146,7 @@
 																Tổng cộng:
 																<strong>{{formatPrice(calculateTotal(form))}}</strong>
 															</h4>
-															<h4 style="padding-left: 100px" class="total fs-4">
+															<h4 ng:if="form.voucherorder != null && form.voucherorder.length > 0" style="padding-left: 100px" class="total fs-4">
 																Giá khuyến mãi:
 																<strong>{{formatPrice(calculateTotalVoucher(form))}}</strong>
 															</h4>
@@ -148,10 +155,8 @@
 																nhật trạng thái : </label> <select
 																class="form-select w-auto select"
 																ng-model="form.statusOrder.statusorderid"
-									
 																style="background-color: #f7f7f7; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: auto; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
 																<option ng-repeat="c in cates"
-																	
 																	ng-value="c.statusorderid">{{c.name}}</option>
 															</select>
 															<div style="background-color: #007BFF; color: #fff;"
@@ -162,11 +167,12 @@
 
 											</div>
 										</div>
-									</div></td>
+									</div>
+								</td>
 							</tr>
 						</tbody>
 					</table>
-					
+
 				</div>
 			</div>
 		</div>

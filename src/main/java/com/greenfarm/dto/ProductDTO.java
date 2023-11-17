@@ -23,7 +23,7 @@ public class ProductDTO {
     private Double price;
     private String image;
     private Integer quantityavailable;
-    
+	private Boolean isdeleted = Boolean.FALSE;
     private Category category;
     private List<ProductImage> productimage;
 }
