@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
+<html xmlns="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout::dynamic(~{::body})}">
 
 <head>
-	<meta charset="UTF-8" />
-	<title>GreenFarm</title>
+<meta charset="UTF-8" />
+<title>GreenFarm</title>
 </head>
 
 <body>
@@ -19,13 +20,11 @@
 										<div class="row">
 											<div class="col-12 col-sm-auto mb-3">
 												<div class="mx-auto" style="width: 140px">
-													<div class="d-flex justify-content-center align-items-center rounded"
-														style="
-                                height: 140px;
-                                background-color: rgb(233, 236, 239);
-                              ">
-														<img style="max-height: 140px; max-width: 140px" alt="image"
-															th:src="@{|/assets/images/${user.image}|}" />
+													<div
+														class="d-flex justify-content-center align-items-center rounded"
+														style="height: 140px; background-color: rgb(233, 236, 239);">
+														<img style="max-height: 140px; max-width: 140px"
+															alt="image" th:src="@{|/assets/images/${user.image}|}" />
 													</div>
 												</div>
 											</div>
@@ -34,36 +33,30 @@
 												<div class="text-center text-sm-left mb-2 mb-sm-0">
 													<h4 class="pt-sm-2 pb-1 mb-0 text-nowrap"
 														th:text="${user.firstname + ' ' + user.lastname}">
-														Full Name
-													</h4>
+														Full Name</h4>
 													<p class="mb-0" th:text="${roles}">@User</p>
 													<div class="mt-2">
-														<label for="fileInput" class="btn btn-primary">
-															<i class="fa fa-fw fa-camera"></i>
-															<span th:text="#{profile.label.changePhoto}">Change
-																Photo</span>
-															<input type="file" id="fileInput"
-																th:value="${user.lastname}" th:field="${user.lastname}"
-																name="image" style="display: none" />
+														<label for="fileInput" class="btn btn-primary"> <i
+															class="fa fa-fw fa-camera"></i> <span
+															th:text="#{profile.label.changePhoto}">Change
+																Photo</span> <input type="file" id="fileInput"
+															th:value="${user.lastname}" th:field="${user.lastname}"
+															name="image" style="display: none" />
 														</label>
 													</div>
 												</div>
 												<div class="text-center text-sm-right">
-													<span class="badge badge-secondary"
-														th:text="${roles}">@Administrator</span>
+													<span class="badge badge-secondary" th:text="${roles}">@Administrator</span>
 													<div class="text-muted">
-														<small
-															th:text="${user.firstname + ' ' + user.lastname}"></small>
+														<small th:text="${user.firstname + ' ' + user.lastname}"></small>
 														<small th:text="${user.createddate}"> </small>
 													</div>
 												</div>
 											</div>
 										</div>
 										<ul class="nav nav-tabs">
-											<li class="nav-item">
-												<a href class="active nav-link"
-													th:text="#{profile.label.setting}">Settings</a>
-											</li>
+											<li class="nav-item"><a href class="active nav-link"
+												th:text="#{profile.label.setting}">Settings</a></li>
 										</ul>
 										<div class="tab-content pt-3">
 											<div class="tab-pane active">
@@ -74,21 +67,17 @@
 															<div class="row">
 																<div class="col">
 																	<div class="form-group">
-																		<label
-																			th:text="#{profile.label.firstName}">First
-																			Name</label>
-																		<input class="form-control"
-																			th:field="${user.firstname}" type="text"
-																			name="name" th:value="${user.firstname}"
-																			th:placeholder="${user.firstname}"
-																			value="" />
+																		<label th:text="#{profile.label.firstName}">First
+																			Name</label> <input class="form-control"
+																			th:field="${user.firstname}" type="text" name="name"
+																			th:value="${user.firstname}"
+																			th:placeholder="${user.firstname}" value="" />
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label th:text="#{profile.label.lastName}">Last
-																			Name</label>
-																		<input class="form-control" type="text"
+																			Name</label> <input class="form-control" type="text"
 																			th:placeholder="${user.lastname}"
 																			th:value="${user.lastname}"
 																			th:field="${user.lastname}" />
@@ -98,72 +87,58 @@
 															<div class="row">
 																<div class="col">
 																	<div class="form-group">
-																		<label
-																			th:text="#{profile.label.birthday}">Birthday</label>
+																		<label th:text="#{profile.label.birthday}">Birthday</label>
 																		<input class="form-control"
-																			th:placeholder="${user.birthday}"
-																			value="" />
+																			th:placeholder="${user.birthday}" value="" />
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
-																		<label th:text="#{label.phone}">Phone
-																			Number</label>
-																		<input class="form-control" type="number"
+																		<label th:text="#{label.phone}">Phone Number</label> <input
+																			class="form-control" type="number"
 																			th:value="${user.phonenumber}"
 																			th:field="${user.phonenumber}"
-																			th:placeholder="${user.phonenumber}"
-																			value="" />
+																			th:placeholder="${user.phonenumber}" value="" />
 																	</div>
 																</div>
 															</div>
 															<div class="row">
 																<div class="col">
 																	<div class="form-group">
-																		<label th:text="#{label.email}">Email</label>
-																		<input class="form-control" type="email"
-																			th:placeholder="${user.email}"
-																			readonly="readonly" />
+																		<label th:text="#{label.email}">Email</label> <input
+																			class="form-control" type="email"
+																			th:placeholder="${user.email}" readonly="readonly" />
 																	</div>
 																</div>
 															</div>
 															<div class="row">
 																<div class="col">
 																	<div class="form-group">
-																		<label
-																			th:text="#{profile.label.address}">Address</label>
+																		<label th:text="#{profile.label.address}">Address</label>
 																		<input class="form-control" type="text"
 																			th:placeholder="${user.address}"
-																			th:value="${user.address}"
-																			th:field="${user.address}" />
+																			th:value="${user.address}" th:field="${user.address}" />
 																	</div>
 																</div>
 															</div>
 															<div class="row">
 																<div class="col mb-3">
 																	<div class="form-group">
-																		<label
-																			th:text="#{profile.label.gender}">Gender</label>
+																		<label th:text="#{profile.label.gender}">Gender</label>
 																		<div class="form-check">
 																			<input class="form-check-input"
-																				th:field="${user.gender}" value="1"
-																				type="radio" name="flexRadioDefault"
-																				checked />
-																			<label class="form-check-label"
-																				for="flexRadioDefault1"
-																				th:text="#{profile.label.genderMale}">
-																				Male
+																				th:field="${user.gender}" value="1" type="radio"
+																				name="flexRadioDefault" checked /> <label
+																				class="form-check-label" for="flexRadioDefault1"
+																				th:text="#{profile.label.genderMale}"> Male
 																			</label>
 																		</div>
 																		<div class="form-check">
 																			<input class="form-check-input" type="radio"
-																				th:field="${user.gender}" value="0"
-																				checked />
-																			<label class="form-check-label"
-																				for="flexRadioDefault2"
+																				th:field="${user.gender}" value="0" checked /> <label
+																				class="form-check-label" for="flexRadioDefault2"
 																				th:text="#{profile.label.genderFemale}">
-																				Female
-																			</label>
+																				Female </label>
 																		</div>
 																	</div>
 																</div>
@@ -174,8 +149,7 @@
 													<div class="row">
 														<div class="col d-flex justify-content-end">
 															<button class="btn btn-primary" type="submit"
-																th:text="#{profile.label.submit}">
-																Save Changes
+																th:text="#{profile.label.submit}">Save Changes
 															</button>
 														</div>
 													</div>
@@ -196,39 +170,47 @@
 					</div>
 					<div class="list-group border border-0 rounded-0 my-3">
 						<a class="mb-3" href="/order/list">
-							<button type="button" class="list-group-item list-group-item-action"
+							<button type="button"
+								class="list-group-item list-group-item-action"
 								style="border-radius: 4px">
-								<i class="bi bi-card-list"></i>
-								<span th:text="#{profile.label.myOrder}"></span>
+								<i class="bi bi-card-list"></i> <span
+									th:text="#{profile.label.myOrder}"></span>
 							</button>
-						</a>
-						<a class="mb-3" href="/booking/list">
-							<button type="button" class="list-group-item list-group-item-action"
+						</a> <a class="mb-3" href="/booking/list">
+							<button type="button"
+								class="list-group-item list-group-item-action"
 								style="border-radius: 4px">
-								<i class="bi bi-card-list"></i>
-								<span th:text="#{profile.label.myTicket}"></span>
+								<i class="bi bi-card-list"></i> <span
+									th:text="#{profile.label.myTicket}"></span>
 							</button>
-						</a>
-						<a href="/profile">
-							<button type="button" class="list-group-item list-group-item-action active"
+						</a> <a class="mb-3" href="/profile">
+							<button type="button"
+								class="list-group-item list-group-item-action active"
 								style="border-radius: 4px">
-								<i class="bi bi-person-lines-fill"></i>
-								<span th:text="#{profile.label.profile}"></span>
+								<i class="bi bi-person-lines-fill"></i> <span
+									th:text="#{profile.label.profile}"></span>
+							</button>
+						</a> <a class="mb-3" href="/changepass">
+							<button type="button"
+								class="list-group-item list-group-item-action active"
+								style="border-radius: 4px">
+								<i class="bi bi-key-fill"></i> <span>Đổi mật khẩu</span>
+							</button>
+						</a> <a  class="mb-3" href="/forgot">
+							<button type="button"
+								class="list-group-item list-group-item-action active"
+								style="border-radius: 4px">
+								<i class="bi bi-lock-fill"></i> <span>Quên mật khẩu</span>
 							</button>
 						</a>
 
+
+
 					</div>
-					<a class="btn border border-danger my-3 text-decoration-none text-center text-white fw-bold"
+					<a
+						class="btn border border-danger my-3 text-decoration-none text-center text-white fw-bold"
 						style="width: 100%; background-color: red;" href="/logoff"
 						th:text="#{profile.label.logout}">Đăng xuất</a>
-						
-					<a href="/changepass">
-							<button type="button" class="list-group-item text-center list-group-item-action active"
-								style="border-radius: 4px">
-								<span>Đổi mật khẩu</span>
-								<!--<span th:text="#{profile.label.profile}"></span>-->
-							</button>
-						</a>
 					<!-- <div class="card mt-3" style="background-color: #fff">
 						<div class="card-header">Tổng điểm tích lũy: 180.616 điểm</div>
 						<div class="card-body">

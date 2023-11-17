@@ -66,6 +66,11 @@ public class HomeController {
 		return "contact";
 	}
 	
+//	@RequestMapping("/login23")
+//	public String Contact1(Model model) {
+//		return "security/register";
+//	}
+	
 	@RequestMapping("/about")
 	public String foodter(Model model) {
 		return "about";
