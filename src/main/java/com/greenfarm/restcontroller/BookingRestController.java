@@ -1,11 +1,15 @@
 package com.greenfarm.restcontroller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -25,6 +29,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.greenfarm.controller.MailControl;
 import com.greenfarm.dto.BookingDTO;
 import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.dto.ProductDTO;
@@ -37,11 +42,17 @@ import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.RevenueTK;
+import com.greenfarm.entity.StatusBooking;
 import com.greenfarm.service.BookingService;
+import com.greenfarm.service.EmailService;
 import com.greenfarm.service.OrderDetailService;
 import com.greenfarm.service.OrderService;
 import com.greenfarm.service.ProductService;
+import com.greenfarm.service.StatusBookingService;
 import com.greenfarm.service.TourService;
+
+import jakarta.mail.MessagingException;
+import lombok.extern.log4j.Log4j;
 
 @CrossOrigin("*")
 @RestController
@@ -56,6 +67,8 @@ public class BookingRestController {
 	@Autowired
 	ModelMapper modelMapper;
 
+	@Autowired
+	EmailService emailService;
 
 	@GetMapping()
 	public ResponseEntity<List<BookingDTO>> getList() {
@@ -151,4 +164,45 @@ public class BookingRestController {
        return bookingService.findBookingYearlyRevenue(year);
 	 }
 	
+	private static final Logger LOG = LoggerFactory.getLogger(MailControl.class);
+	
+	@GetMapping("/sendbooking/{bookingid}")
+	public void sendbooking(@PathVariable("bookingid") Integer bookingid) throws FileNotFoundException, MessagingException {
+		System.out.println("Gui mail den khach hang");
+		Booking booking = bookingService.findById(bookingid);
+		File attachmentFile = new File("D:/FPTPOLYTECHNIC/DUANTOTNGHIEP/DATN/src/main/resources/qrcode/don"+bookingid+".png");
+		String diachiqr = "D:/FPTPOLYTECHNIC/DUANTOTNGHIEP/DATN/src/main/resources/qrcode/don"+bookingid+".png";
+		System.out.println("D:/FPTPOLYTECHNIC/DUANTOTNGHIEP/DATN/src/main/resources/qrcode/don"+bookingid+".png");
+		System.out.println(booking.getUser().getEmail());
+//		try {
+			emailService.sendEmailWithBooking(booking.getUser().getEmail(),  "Order Confirmation", "Thanks for your recent order", diachiqr);
+//		} catch (MessagingException | FileNotFoundException mailException) {
+//			// TODO: handle exception
+//			LOG.error("Error while sending out email..{}", mailException.getStackTrace());
+//
+//		}
+	}
+	
+	@Autowired 
+	StatusBookingService statusBookingService;
+	@PutMapping("/kiemtrave/{bookingid}")
+	public void updatekiemtrave(@PathVariable("bookingid") Integer bookingid) {
+		Booking booking = bookingService.findById(bookingid);
+		if (booking.getStatusbooking().getStatusbookingid() == 5) {
+			System.out.println("vé đã được sử dụng");
+		}else {
+			StatusBooking statusBooking = statusBookingService.findById(5);
+			booking.setStatusbooking(statusBooking);
+			Booking updatedBooking = bookingService.update(booking);
+		}
+		
+//
+//		if (updatedBooking == null) {
+//			return ResponseEntity.notFound().build();
+//		}
+//		BookingDTO bookingDTO = modelMapper.map(updatedBooking, BookingDTO.class);
+//		return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
+//	}
+		
+}
 }

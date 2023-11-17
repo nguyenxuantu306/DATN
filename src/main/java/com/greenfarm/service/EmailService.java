@@ -15,4 +15,6 @@ public interface EmailService {
 
 	public void sendMail(AbstractEmailContext email) throws MessagingException;
 
+	public void sendEmailWithBooking(String toAddress, String subject, String message, String attachment)
+			throws MessagingException, FileNotFoundException;
 }

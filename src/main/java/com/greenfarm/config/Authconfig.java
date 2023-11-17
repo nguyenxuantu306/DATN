@@ -43,6 +43,9 @@ public class Authconfig {
 	@Autowired
 	private CustomLogoutHandler customLogoutHandler;
 
+	@Autowired
+	private CustomAuthSucessHandler authSucessHandler;
+	
 	@Value("${spring.security.oauth2.client.registration.client-id}")
 	private String clientId;
 
@@ -67,6 +70,7 @@ public class Authconfig {
 				.hasRole("Administrator").anyRequest().permitAll());
 
 		http.formLogin(form -> form.loginPage("/login")
+				.successHandler(authSucessHandler)
 		/* .loginProcessingUrl("/") */
 
 		).logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logoff")).permitAll());

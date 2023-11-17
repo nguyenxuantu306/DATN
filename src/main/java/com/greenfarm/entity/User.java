@@ -63,16 +63,16 @@ public class User implements Serializable {
 	@Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại phải là số nguyên dương và không chứa ký tự khác") 
 	String phonenumber;
 
-	@NotBlank(message = "Ảnh đại diện là bắt buộc")
+	//@NotBlank(message = "Ảnh đại diện là bắt buộc")
 	String image;
 
-	@NotBlank(message = "Địa chỉ là bắt buộc")
+	//@NotBlank(message = "Địa chỉ là bắt buộc")
 	String address;
 
-	@NotNull(message = "Giới tính là bắt buộc")
+	//@NotNull(message = "Giới tính là bắt buộc")
 	Boolean gender;
 
-	@Past(message = "Ngày sinh phải trước ngày hiện tại")
+	//@Past(message = "Ngày sinh phải trước ngày hiện tại")
 	@Temporal(TemporalType.DATE)
 	Date birthday = new Date();
 

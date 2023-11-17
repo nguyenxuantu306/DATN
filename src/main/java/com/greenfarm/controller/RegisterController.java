@@ -19,6 +19,7 @@ import com.greenfarm.dto.RegisterDTO;
 import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.InvalidTokenException;
+import com.greenfarm.exception.UserAlreadyExistException;
 import com.mysql.cj.util.StringUtils;
 
 import jakarta.validation.Valid;
@@ -33,52 +34,55 @@ public class RegisterController {
 	com.greenfarm.service.UserService userservice;
 
 	@GetMapping
-	public String registerUser(Model model, @ModelAttribute("userinfo") @Valid RegisterDTO userInfo,
+	public String registerUserq(Model model, @ModelAttribute("userinfo") @Valid RegisterDTO userInfo,
 			BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			// Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
-			model.addAttribute("registrationMsg", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
-			System.out.println("lỗi này");
-			return "register";
-		} else if (!userInfo.getPassword().equals(userInfo.getRepeatpassword())) {
-			// Nếu mật khẩu và xác nhận mật khẩu không khớp, thêm lỗi vào BindingResult.
-			bindingResult.rejectValue("repeatpassword", "error.userDTO", "Mật khẩu và xác nhận mật khẩu không khớp");
-		}
+		/*
+		 * if (bindingResult.hasErrors()) { // Nếu có lỗi từ dữ liệu người dùng, không
+		 * cần kiểm tra tiếp và xử lý lỗi. model.addAttribute("registrationMsg",
+		 * "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
+		 * System.out.println("lỗi này"); return "register"; } else if
+		 * (!userInfo.getPassword().equals(userInfo.getRepeatpassword())) { // Nếu mật
+		 * khẩu và xác nhận mật khẩu không khớp, thêm lỗi vào BindingResult.
+		 * bindingResult.rejectValue("repeatpassword", "error.userDTO",
+		 * "Mật khẩu và xác nhận mật khẩu không khớp"); }
+		 */
 
 		// Nếu không có lỗi, tiếp tục xử lý đăng ký tài khoản.
 		// đăng ký
-		try {
-			// User user = Usermapper.INSTANCE.fromDto(userInfo);
-			User user = new User();
-			user.setFirstname(userInfo.getFirstname());
-			user.setLastname(userInfo.getLastname());
-			user.setEmail(userInfo.getEmail());
-			user.setPassword(userInfo.getPassword());
-			// user.setAddress(userInfo.getAddress());
-			user.setPhonenumber(userInfo.getPhonenumber());
-			// user.setBirthday(userInfo.getBirthday());
-			// user.setImage(userInfo.getImage());
-			// user.setGender(userInfo.getGender());
-			user.setCreateddate(new Date());
-			userservice.create(user);
-		} catch (Exception e) {
-			// TODO: handle exception
-			bindingResult.rejectValue("email", "error.userDTO", "An account already exists for this email.");
-			model.addAttribute("registrationForm", userInfo);
-			return "register";
-		}
+//		try {
+//			// User user = Usermapper.INSTANCE.fromDto(userInfo);
+//			User user = new User();
+//			user.setFirstname(userInfo.getFirstname());
+//			user.setLastname(userInfo.getLastname());
+//			user.setEmail(userInfo.getEmail());
+//			user.setPassword(userInfo.getPassword());
+//			// user.setAddress(userInfo.getAddress());
+//			user.setPhonenumber(userInfo.getPhonenumber());
+//			// user.setBirthday(userInfo.getBirthday());
+//			// user.setImage(userInfo.getImage());
+//			// user.setGender(userInfo.getGender());
+//			user.setCreateddate(new Date());
+//			userservice.create(user);
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			bindingResult.rejectValue("email", "error.userDTO", "An account already exists for this email.");
+//			model.addAttribute("registrationForm", userInfo);
+//			return "register";
+//		}
 		return "register";
 	}
 
 	@PostMapping
 	public String registerUser(Model model, @ModelAttribute("userinfo") @Valid UserDTO userInfo,
-			BindingResult bindingResult) {
+			BindingResult bindingResult) throws UserAlreadyExistException {
 		if (bindingResult.hasErrors()) {
 			// Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
 			model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
+			System.out.println("pas");
 			return "register";
 		} else if (!userInfo.getPassword().equals(userInfo.getRepeatpassword())) {
 			// Nếu mật khẩu và xác nhận mật khẩu không khớp, thêm lỗi vào BindingResult.
+			System.out.println("mail");
 			bindingResult.rejectValue("repeatpassword", "error.userDTO", "Mật khẩu và xác nhận mật khẩu không khớp");
 		}
 
@@ -91,13 +95,15 @@ public class RegisterController {
 			user.setLastname(userInfo.getLastname());
 			user.setEmail(userInfo.getEmail());
 			user.setPassword(userInfo.getPassword());
-			user.setAddress(userInfo.getAddress());
+			user.setAddress(null);
 			user.setPhonenumber(userInfo.getPhonenumber());
-			user.setBirthday(userInfo.getBirthday());
-			user.setImage(userInfo.getImage());
-			user.setGender(userInfo.getGender());
+			user.setBirthday(null);
+			user.setImage(null);
+			user.setGender(null);
 			user.setCreateddate(new Date());
+			System.out.println(user.getCreateddate());
 			userservice.create(user);
+			return "redirect:/login";
 		} catch (Exception e) {
 			bindingResult.rejectValue("email", "error.userDTO", "An account already exists for this email.");
 			model.addAttribute("registrationForm", userInfo);
@@ -108,7 +114,7 @@ public class RegisterController {
 		// messageSource.getMessage("user.registration.verification.email.msg", null,
 		// LocaleContextHolder.getLocale()));
 
-		return "register";
+		
 
 	}
 
