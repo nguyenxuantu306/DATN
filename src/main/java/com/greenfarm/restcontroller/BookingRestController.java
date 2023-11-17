@@ -170,9 +170,9 @@ public class BookingRestController {
 	public void sendbooking(@PathVariable("bookingid") Integer bookingid) throws FileNotFoundException, MessagingException {
 		System.out.println("Gui mail den khach hang");
 		Booking booking = bookingService.findById(bookingid);
-		File attachmentFile = new File("D:/FPTPOLYTECHNIC/DUANTOTNGHIEP/DATN/src/main/resources/qrcode/don"+bookingid+".png");
-		String diachiqr = "D:/FPTPOLYTECHNIC/DUANTOTNGHIEP/DATN/src/main/resources/qrcode/don"+bookingid+".png";
-		System.out.println("D:/FPTPOLYTECHNIC/DUANTOTNGHIEP/DATN/src/main/resources/qrcode/don"+bookingid+".png");
+		File attachmentFile = new File("../DATN/src/main/resources/qrcode/don"+bookingid+".png");
+		String diachiqr = "../DATN/src/main/resources/qrcode/don"+bookingid+".png";
+		System.out.println("../DATN/src/main/resources/qrcode/don"+bookingid+".png");
 		System.out.println(booking.getUser().getEmail());
 //		try {
 			emailService.sendEmailWithBooking(booking.getUser().getEmail(),  "Order Confirmation", "Thanks for your recent order", diachiqr);
@@ -185,7 +185,7 @@ public class BookingRestController {
 	
 	@Autowired 
 	StatusBookingService statusBookingService;
-	@PutMapping("/kiemtrave/{bookingid}")
+	@GetMapping("/kiemtrave/{bookingid}")
 	public void updatekiemtrave(@PathVariable("bookingid") Integer bookingid) {
 		Booking booking = bookingService.findById(bookingid);
 		if (booking.getStatusbooking().getStatusbookingid() == 5) {
@@ -194,6 +194,7 @@ public class BookingRestController {
 			StatusBooking statusBooking = statusBookingService.findById(5);
 			booking.setStatusbooking(statusBooking);
 			Booking updatedBooking = bookingService.update(booking);
+			System.out.println("Đã xác nhận thành công");
 		}
 		
 //

@@ -13,37 +13,77 @@
 		<div class="pt-3">
 
 			<div class="row">
-				<div class="col-lg-3">
-
-					<div class="accordion" id="accordionExample">
-						<div class="accordion-item">
-							<h2 class="accordion-header">
-								<button class="accordion-button" type="button"
-									data-bs-toggle="collapse" data-bs-target="#collapseOne"
-									aria-expanded="true" aria-controls="collapseOne"
-									th:text="#{shop.label.category}">Category</button>
-							</h2>
-
-							<div id="collapseOne" class="accordion-collapse collapse show"
-								data-bs-parent="#accordionExample">
-								<div class="accordion-body">
-									<ul th:each="c:${cates}" class="list-unstyled"
-										style="font-size: 20px;">
-										<li><a style="color: black;"
-											th:href="@{|/product/shop?cid=${c.categoryid}|}">[[${c.categoryname}]]</a>
-										</li>
-									</ul>
-								</div>
+				<div class="col-md-3">
+				<img style="width:250px;height: 250px " alt="" src="https://cdn.vietnammoi.vn/171464242508312576/2021/7/16/fami-food-16264103265681604039805.jpg">
+				</div>
+				<div class="col-lg-9">
+					<div id="carouselExampleIndicators" class="carousel slide"
+						data-bs-ride="carousel">
+						<div class="carousel-indicators">
+							<button type="button" data-bs-target="#carouselExampleIndicators"
+								data-bs-slide-to="0" class="active" aria-current="true"
+								aria-label="Slide 1"></button>
+							<button type="button" data-bs-target="#carouselExampleIndicators"
+								data-bs-slide-to="1" aria-label="Slide 2"></button>
+							<button type="button" data-bs-target="#carouselExampleIndicators"
+								data-bs-slide-to="2" aria-label="Slide 3"></button>
+						</div>
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<img style="height: 250px"
+									src="https://img.pikbest.com/origin/06/20/51/06PpIkbEsTFfe.jpg!w700wp"
+									class="d-block w-100" alt="...">
+							</div>
+							<div class="carousel-item">
+								<img style="height: 250px"
+									src="https://theme.hstatic.net/200000240163/1000702133/14/slideshow_2.jpg?v=339"
+									class="d-block w-100 " alt="...">
+							</div>
+							<div class="carousel-item">
+								<img style="height: 250px"
+									src="https://theme.hstatic.net/200000240163/1000702133/14/slideshow_3.jpg?v=339"
+									class="d-block w-100" alt="...">
 							</div>
 						</div>
+						<button class="carousel-control-prev" type="button"
+							data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
+					</div>
+				</div>
+				<div class="col-lg-3 py-5">
+					<div>						
+						<ul class="list-group list-group-light">
+							<li class="list-group-item border-0">
+								<h5 style="color: #000000" th:text="#{shop.label.category}"></h5>
+							</li>
+							
+						</ul>
+						<ul th:each="c:${cates}" class="list-group list-group-light"
+							style="font-size: 20px;">
+							<li class="list-group-item border-0"><a
+								style="color: black;"
+								th:href="@{|/product/shop?cid=${c.categoryid}|}">[[${c.categoryname}]]</a>
+							</li>
+						</ul>
+					</div>
+					<hr style="color: black;">
+					<div class="accordion" id="accordionExample">
+
 						<div class="accordion-item">
 							<h2 class="accordion-header">
-								<button class="accordion-button collapsed" type="button"
+								<button class="accordion-button collapsed " type="button"
 									data-bs-toggle="collapse" data-bs-target="#collapseTwo"
 									aria-expanded="false" aria-controls="collapseTwo"
 									th:text="#{shop.label.price}">Price</button>
 							</h2>
-							<div id="collapseTwo" class="accordion-collapse collapse"
+							<div id="collapseTwo" class="accordion-collapse collapse show"
 								data-bs-parent="#accordionExample">
 								<div class="accordion-body" style="font-size: 14px;">
 									<form id="filterForm" method="get">
@@ -108,56 +148,18 @@
 
 				</div>
 				<div class="col-lg-9">
-					<div id="carouselExampleIndicators" class="carousel slide"
-						data-bs-ride="carousel">
-						<div class="carousel-indicators">
-							<button type="button" data-bs-target="#carouselExampleIndicators"
-								data-bs-slide-to="0" class="active" aria-current="true"
-								aria-label="Slide 1"></button>
-							<button type="button" data-bs-target="#carouselExampleIndicators"
-								data-bs-slide-to="1" aria-label="Slide 2"></button>
-							<button type="button" data-bs-target="#carouselExampleIndicators"
-								data-bs-slide-to="2" aria-label="Slide 3"></button>
-						</div>
-						<div class="carousel-inner">
-							<div class="carousel-item active">
-								<img style="height: 400px"
-									src="https://img.pikbest.com/origin/06/20/51/06PpIkbEsTFfe.jpg!w700wp"
-									class="d-block w-100" alt="...">
-							</div>
-							<div class="carousel-item">
-								<img style="height: 400px"
-									src="https://theme.hstatic.net/200000240163/1000702133/14/slideshow_2.jpg?v=339"
-									class="d-block w-100 " alt="...">
-							</div>
-							<div class="carousel-item">
-								<img style="height: 400px"
-									src="https://theme.hstatic.net/200000240163/1000702133/14/slideshow_3.jpg?v=339"
-									class="d-block w-100" alt="...">
-							</div>
-						</div>
-						<button class="carousel-control-prev" type="button"
-							data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Previous</span>
-						</button>
-						<button class="carousel-control-next" type="button"
-							data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-							<span class="carousel-control-next-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Next</span>
-						</button>
-					</div>
+
 					<div class="text-center">
 						<h1 th:text="#{shop.label.title}">List Product</h1>
 					</div>
 					<div class="search-box" style="width: 500px">
-    <div class="input-group">
-        <span class="input-group-text">
-            <i class="bi bi-search"></i> <!-- Sử dụng biểu tượng tìm kiếm từ Bootstrap Icons -->
-        </span>
-        <input type="text" id="searchKeyword" class="form-control" placeholder="Search..." />
-    </div>
-</div>
+						<div class="input-group">
+							<span class="input-group-text"> <i class="bi bi-search"></i>
+								<!-- Sử dụng biểu tượng tìm kiếm từ Bootstrap Icons -->
+							</span> <input type="text" id="searchKeyword" class="form-control"
+								placeholder="Search..." />
+						</div>
+					</div>
 
 					<div class="row text-center py-2" id="Results">
 

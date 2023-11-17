@@ -101,7 +101,7 @@ public class BookingController {
 	        byte[] qrCode = qrCodeService.generateQRCode("http://localhost:8080/rest/bookings/kiemtrave/"+booking.getBookingid(), 500, 500);
 	        
 	        // Lưu mã QR vào máy
-	        String filePath = "D:/FPTPOLYTECHNIC/DUANTOTNGHIEP/DATN/src/main/resources/qrcode/"+content+".png"; // Đặt đường dẫn tùy thuộc vào nơi bạn muốn lưu
+	        String filePath = "../DATN/src/main/resources/qrcode/"+content+".png"; // Đặt đường dẫn tùy thuộc vào nơi bạn muốn lưu
 	        saveQRCodeToFile(qrCode, filePath);
 	        	System.out.println("QR Code saved successfully at: " + filePath);
 	       // return ResponseEntity.ok("QR Code saved successfully at: " + filePath);

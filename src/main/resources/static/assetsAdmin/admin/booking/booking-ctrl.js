@@ -46,7 +46,10 @@ app.controller("booking-ctrl", function($scope, $http) {
 		$http.put(`/rest/bookings/${item.bookingid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.bookingid == item.bookingid);
 			$scope.items[index] = item;
-			$http.get(`/rest/bookings//sendbooking/${item.bookingid}`);
+			if(item.statusbooking.statusbookingid == 2){
+				$http.get(`/rest/bookings/sendbooking/${item.bookingid}`);
+			}
+			
 			// Sử dụng SweetAlert2 cho thông báo thành công
 			Swal.fire({
 				icon: 'success',

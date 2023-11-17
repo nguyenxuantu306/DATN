@@ -12,7 +12,7 @@ function createProductHTML(product) {
 					class="h5 text-decoration-none" >${product.productname}</a>
 				<div class="border-top mt-4 pt-4">
 					<div class="text-center">				
-						<h5 class="m-0">${product.price} đ</h5>
+						 <h5 class="m-0">${formatPrice(product.price)}</h5>
 
 					</div>
 				</div>
@@ -22,6 +22,15 @@ function createProductHTML(product) {
         `;
 	return productHTML;
 }
+
+ function formatPrice(price) {
+    // Thay đổi dấu chấm (.) thành dấu phẩy (,)
+    const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+    return formattedPrice.replace(/\./g, ',');
+    
+  }
+  
+  
 
 // Hàm hiển thị danh sách sản phẩm
 function displayProducts(products) {

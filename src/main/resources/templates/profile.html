@@ -88,8 +88,8 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label th:text="#{profile.label.birthday}">Birthday</label>
-																		<input class="form-control"
-																			th:placeholder="${user.birthday}" value="" />
+																		<input class="form-control" type="text"
+																			th:placeholder="${user.birthday}" th:value="${user.birthday}" th:field="${user.birthday}" />
 																	</div>
 																</div>
 																<div class="col">

@@ -183,6 +183,7 @@ public class SecurityController {
 
 			user.setAddress(userchange.getAddress());
 			user.setImage(userchange.getImage());
+			/* user.setBirthday(userchange.getBirthday()); */
 			user.setFirstname(userchange.getFirstname());
 			user.setLastname(userchange.getLastname());
 			user.setPhonenumber(userchange.getPhonenumber());
@@ -234,7 +235,7 @@ public class SecurityController {
 		// Cập nhật mật khẩu trong cơ sở dữ liệu
 		user.setPassword(passwordE.encode(passchange.getNewpass()));
 		userService.update(user);
-		return "security/changepass";
+		return "redirect:/profile";
 	}
 
 	@GetMapping("/forgot")
