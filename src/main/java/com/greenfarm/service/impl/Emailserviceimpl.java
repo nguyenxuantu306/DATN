@@ -1,5 +1,6 @@
 package com.greenfarm.service.impl;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
 
@@ -63,6 +64,23 @@ public class Emailserviceimpl implements EmailService {
 		mimeMessageHelper.setFrom(email.getFrom());
 		mimeMessageHelper.setText(emailContent, true);
 		emailSender.send(message);
+	}
+
+	@Override
+	public void sendEmailWithBooking(String toAddress, String subject, String message, String attachment)
+			throws MessagingException, FileNotFoundException {
+		// TODO Auto-generated method stub
+		MimeMessage mimeMessage = emailSender.createMimeMessage();
+		MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
+		messageHelper.setTo(toAddress);
+		messageHelper.setSubject(subject);
+		messageHelper.setText(message);
+		
+		
+		FileSystemResource file = new FileSystemResource(new File(attachment));
+		//messageHelper.addAttachment("Purchase Order", file);
+		messageHelper.addInline("Purchase Order", file);
+		emailSender.send(mimeMessage);
 	}
 
 }

@@ -25,7 +25,7 @@ public class UserDTO {
 	@Email(message = "Email không hợp lệ")
 	private String email;
 
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
+	@Pattern(regexp = "^(?=.*[A-Z])(?=.*[0-9]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
 	@NotEmpty(message = "Thiếu password")
 	private String password;
 
@@ -40,19 +40,14 @@ public class UserDTO {
 	@Pattern(regexp = "^\\d{10}$", message = "Số điện thoại phải chứa đúng 10 chữ số")
 	private String phonenumber;
 
-	private String image;
-	//@NotEmpty(message = "Thiếu Address")
+	private String image; // @NotEmpty(message = "Thiếu Address")
 	private String address;
-	//@NotNull(message = "Gender không được để trống")
-	//@AssertTrue(message = "Trường Gender phải là true")
 	private Boolean gender;
-	//@NotNull(message = "Trường Birthday không được để trống")
-	//@Past(message = "Birthday phải ở trong quá khứ")
+
 	private Date birthday;
-	// @NotNull(message = "Trường CreatedDate không được để trống")
-	// @PastOrPresent(message = "CreatedDate phải ở trong quá khứ hoặc hiện tại mới
-	// tạo")
+
 	private Date createddate;
 	private Boolean isdeleted = Boolean.FALSE;
+
 	private List<Comment> comment;
 }

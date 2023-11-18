@@ -22,6 +22,7 @@
 							<option value="2">Đặt tour thành công</option>
 							<option value="3">Tour bị hủy</option>
 							<option value="4">Khách hàng cancel</option>
+							<option value="5">Vé đã được sử dụng</option>
 						</select>
                     </div>
                     <div class="col-md-3 text-right">
@@ -60,7 +61,8 @@
 							        'bg-primary': item.statusbooking.statusbookingid == 1,
 							        'bg-success': item.statusbooking.statusbookingid == 2,
 							        'bg-danger': item.statusbooking.statusbookingid == 3,
-							        'bg-warning': item.statusbooking.statusbookingid == 4
+							        'bg-warning': item.statusbooking.statusbookingid == 4,
+							        'bg-info': item.statusbooking.statusbookingid == 5
    									 }">{{item.statusbooking.name}}</td>
                                 <td>
                                     <a type="button" ng-click="edit(item)" data-toggle="modal" data-target="#exampleModal"> <i class="bi bi-sticky"></i>	

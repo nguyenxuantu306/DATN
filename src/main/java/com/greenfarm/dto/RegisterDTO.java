@@ -19,7 +19,7 @@ public class RegisterDTO {
 	@Email(message = "Email không hợp lệ")
 	private String email;
 	
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
+	@Pattern(regexp = "^(?=.*[A-Z])(?=.*[0-9]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
 	@NotEmpty(message = "Thiếu password")
 	private String password;
 	

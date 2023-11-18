@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
+<html xmlns="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout::dynamic(~{::body})}">
 
 <head>
-	<meta charset="UTF-8" />
-	<title>GreenFarm</title>
+<meta charset="UTF-8" />
+<title>GreenFarm</title>
 </head>
 
 <body>
@@ -16,33 +17,35 @@
 							<b>DỊCH VỤ TOUR</b>
 						</div>
 						<div class="card-body">
-							<input type="hidden" name="tourid" id="tourid" th:field="${booking.tour.tourid}"></input>
+							<input type="hidden" name="tourid" id="tourid"
+								th:field="${booking.tour.tourid}"></input>
 
 							<div class="d-flex">
-								<p class="card-title mt-1" style="font-weight: bold;">Tour yêu cầu </p>
-								<p style="color: red;font-style: italic" class="mt-1 ml-1"> ( Đặt tour gia đình - cá
-									nhân - công ty - trường học )</p>
+								<p class="card-title mt-1" style="font-weight: bold;">Tour
+									yêu cầu</p>
+								<p style="color: red; font-style: italic" class="mt-1 ml-1">
+									( Đặt tour gia đình - cá nhân - công ty - trường học )</p>
 							</div>
 
-							<input type="text" class="form-control" style="border-radius: 5px"
-								placeholder="Tour Tham Quan Vườn Rau" id="tourname" name="tourname"
+							<input type="text" class="form-control"
+								style="border-radius: 5px" placeholder="Tour Tham Quan Vườn Rau"
+								id="tourname" name="tourname"
 								th:field="${booking.tour.tourname}" aria-label="Username"
-								aria-describedby="basic-addon1">
-							<br>
+								aria-describedby="basic-addon1"> <br>
 							<div class="row">
 
 								<div class="col-6">
-									<label for="" style="font-weight: bold;">Khởi hành</label>
-									<input type="text" class="form-control" style="border-radius: 5px"
+									<label for="" style="font-weight: bold;">Khởi hành</label> <input
+										type="text" class="form-control" style="border-radius: 5px"
 										placeholder="Liên hệ" th:field="${booking.tour.departureday}"
 										aria-label="Username" aria-describedby="basic-addon1" disabled>
 								</div>
 								<!--  -->
 								<div class="col-6">
-									<label for="" style="font-weight: bold;">Phương tiện</label>
-									<input type="text" class="form-control" style="border-radius: 5px"
-										placeholder="Đến nơi sẽ đưa rước bằng xe tham quan" aria-label="Username"
-										aria-describedby="basic-addon1" disabled>
+									<label for="" style="font-weight: bold;">Phương tiện</label> <input
+										type="text" class="form-control" style="border-radius: 5px"
+										placeholder="Đến nơi sẽ đưa rước bằng xe tham quan"
+										aria-label="Username" aria-describedby="basic-addon1" disabled>
 								</div>
 							</div>
 						</div>
@@ -58,31 +61,29 @@
 						</div>
 						<div class="card-body">
 
-							<h4 class="card-title mr-1">Mã booking </h4>
-							<p style="color: red;font-style: italic">(Quý khách vui lòng nhớ số booking để tiện cho các
-								giao dịch sau này)</p>
+							<h4 class="card-title mr-1">Mã booking</h4>
+							<p style="color: red; font-style: italic">(Quý khách vui lòng
+								nhớ số booking để tiện cho các giao dịch sau này)</p>
 
 
-							<h4 class="card-title">Tour yêu cầu </h4>
+							<h4 class="card-title">Tour yêu cầu</h4>
 							<div class="row">
 								<!--  -->
 								<div class="row">
 
 									<div class="col-6">
-										<label for="" style="font-weight: bold;">Vé người lớn : </label>
-										<input type="number" min="1" style="border-radius: 5px" class="form-control"
-											id="adultticketnumber" th:field="${booking.Adultticketnumber}"
-											aria-label="Username" aria-describedby="basic-addon1"
-											oninput="calculateTotal()">
-									</div>
+    <label for="" style="font-weight: bold;">Vé người lớn: </label>
+    <input type="number" min="1" style="border-radius: 5px"
+           class="form-control" id="adultticketnumber" th:field="${booking.Adultticketnumber}" 
+           aria-label="Username" aria-describedby="basic-addon1" oninput="calculateTotal()">
+</div>
 
-									<div class="col-6">
-										<label for="" style="font-weight: bold;">Vé trẻ em : </label>
-										<input type="number" min="0" style="border-radius: 5px" class="form-control"
-											id="childticketnumber" th:field="${booking.Childticketnumber}" value="0"
-											aria-label="Username" aria-describedby="basic-addon1"
-											oninput="calculateTotal()">
-									</div>
+<div class="col-6">
+    <label for="" style="font-weight: bold;">Vé trẻ em: </label>
+    <input type="number" min="0" style="border-radius: 5px"
+           class="form-control" id="childticketnumber" th:field="${booking.Childticketnumber}" 
+           aria-label="Username" aria-describedby="basic-addon1" oninput="calculateTotal()">
+</div>
 								</div>
 
 								<!--  -->
@@ -90,26 +91,29 @@
 
 									<div class="col-6 mt-2">
 										<label for="" style="font-weight: bold;">Giá người lớn</label>
-										<input type="number" class="form-control" style="border-radius: 5px"
-											id="adultticketprice" th:value="${booking.tour.pricings.adultprice}"
+										<input type="number" class="form-control"
+											style="border-radius: 5px" id="adultticketprice"
+											th:value="${booking.tour.pricings.adultprice}"
 											aria-describedby="basic-addon1" disabled>
 									</div>
 
 									<div class="col-6 mt-2">
-										<label for="" style="font-weight: bold;">Giá trẻ em</label>
-										<input type="number" class="form-control" style="border-radius: 5px"
-											id="childticketprice" th:value="${booking.tour.pricings.childprice}"
-											aria-label="Username" aria-describedby="basic-addon1" disabled>
+										<label for="" style="font-weight: bold;">Giá trẻ em</label> <input
+											type="number" class="form-control" style="border-radius: 5px"
+											id="childticketprice"
+											th:value="${booking.tour.pricings.childprice}"
+											aria-label="Username" aria-describedby="basic-addon1"
+											disabled>
 									</div>
 								</div>
 								<!--  -->
 								<div class="row">
 									<!--  -->
 									<div class="col-6 mt-2">
-										<label for="" style="font-weight: bold;">Tổng tiền</label>
-										<input type="text" class="form-control" style="border-radius: 5px"
-											id="totalprice" th:field="${booking.Totalprice}" aria-label="Username"
-											aria-describedby="basic-addon1">
+										<label for="" style="font-weight: bold;">Tổng tiền</label> <input
+											type="text" class="form-control" style="border-radius: 5px"
+											id="totalprice" th:field="${booking.Totalprice}"
+											aria-label="Username" aria-describedby="basic-addon1">
 									</div>
 								</div>
 
@@ -119,58 +123,58 @@
 					</div>
 				</div>
 				<!--  -->
-				<div class="col-4 mt-3" style="border: 1px solid;
-    border-radius: 10px;
-    background: #7AB730;
-    height: 390px;">
-					<h4 style="color: white;
-    text-align: center;
-
-    border-radius: 5px 5px 0px 0px;
-    padding: 6px;
-    margin-top: 7px;">Thông Tin Liên Lạc</h4>
+				<div class="col-4 mt-3"
+					style="border: 1px solid; border-radius: 10px; background: #7AB730; height: 390px;">
+					<h4
+						style="color: white; text-align: center; border-radius: 5px 5px 0px 0px; padding: 6px; margin-top: 7px;">Thông
+						Tin Liên Lạc</h4>
 					<input type="hidden" th:field="${booking.user.userid}" />
 					<div class="input-group mb-3">
 
 
-						<input type="text" class="form-control" style="border-radius: 5px" placeholder="Họ tên*"
-							aria-label="Username" th:value="${booking.user.firstname +' ' + booking.user.lastname}"
+						<input type="text" class="form-control" style="border-radius: 5px"
+							placeholder="Họ tên*" aria-label="Username"
+							th:value="${booking.user.firstname +' ' + booking.user.lastname}"
 							aria-describedby="basic-addon1">
 					</div>
 					<!--  -->
 					<div class="input-group mb-3">
 
-						<input type="text" class="form-control" style="border-radius: 5px" placeholder="Điện thoại*"
-							aria-label="Username" th:field="${booking.user.phonenumber}"
+						<input type="text" class="form-control" style="border-radius: 5px"
+							placeholder="Điện thoại*" aria-label="Username"
+							th:field="${booking.user.phonenumber}"
 							aria-describedby="basic-addon1">
 
 					</div>
 					<!--  -->
 					<div class="input-group mb-3">
 
-						<input type="text" class="form-control" style="border-radius: 5px" placeholder="Email*"
-							aria-label="Username" th:field="${booking.user.email}" aria-describedby="basic-addon1">
+						<input type="text" class="form-control" style="border-radius: 5px"
+							placeholder="Email*" aria-label="Username"
+							th:field="${booking.user.email}" aria-describedby="basic-addon1">
 
 					</div>
 					<!--  -->
 					<div class="input-group mb-3">
 
-						<input type="text" class="form-control" style="border-radius: 5px" placeholder="Địa chỉ"
-							aria-label="Username" th:field="${booking.user.address}" aria-describedby="basic-addon1">
+						<input type="text" class="form-control" style="border-radius: 5px"
+							placeholder="Địa chỉ" aria-label="Username"
+							th:field="${booking.user.address}"
+							aria-describedby="basic-addon1">
 
 					</div>
 					<!--  -->
 					<div class="input-group mb-3">
 
-						<input type="hidden" class="form-control" style="border-radius: 5px" placeholder="Ghi chú"
+						<input type="hidden" class="form-control"
+							style="border-radius: 5px" placeholder="Ghi chú"
 							aria-label="Username" aria-describedby="basic-addon1">
 
 					</div>
 					<!--  -->
-					<button type="submit" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; border-radius: 5px;width: 267px;background: white;
-    color: #7AB730;">
-						ĐẶT TOUR
-					</button>
+					<button type="submit" class="btn btn-primary"
+						style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; border-radius: 5px; width: 267px; background: white; color: #7AB730;">
+						ĐẶT TOUR</button>
 
 				</div>
 
@@ -179,26 +183,35 @@
 		</form>
 	</div>
 	<script>
-		// Function to calculate total price
-		function calculateTotal() {
-			// Get the values of adult and child ticket numbers
-			var adultTickets = parseInt(document.getElementById('adultticketnumber').value) || 0;
-			var childTickets = parseInt(document.getElementById('childticketnumber').value) || 0;
+    // Function to calculate total price
+    function calculateTotal() {
+        // Get the values of adult and child ticket numbers
+        var adultTickets = parseInt(document.getElementById('adultticketnumber').value) || 0;
+        var childTickets = parseInt(document.getElementById('childticketnumber').value) || 0;
 
-			adultTickets = Math.max(adultTickets, 1);
-			childTickets = Math.max(childTickets, 0);
+        // Ensure that there's at least 1 adult ticket and 0 child tickets
+        adultTickets = Math.max(adultTickets, 1);
+        childTickets = Math.max(childTickets, 0);
 
-			// Get the prices of adult and child tickets
-			var adultPrice = parseFloat(document.getElementById('adultticketprice').value) || 1;
-			var childPrice = parseFloat(document.getElementById('childticketprice').value) || 0;
+        // Get the prices of adult and child tickets
+        var adultPrice = parseFloat(document.getElementById('adultticketprice').value) || 1;
+        var childPrice = parseFloat(document.getElementById('childticketprice').value) || 0;
 
-			// Calculate the total price
-			var totalPrice = (adultTickets * adultPrice) + (childTickets * childPrice);
+        // Calculate the total price
+        var totalPrice = (adultTickets * adultPrice) + (childTickets * childPrice);
 
-			// Set the value of the total price input field
-			document.getElementById('totalprice').value = totalPrice.toFixed(2);
-		}
-	</script>
+        // Set the value of the total price input field
+        document.getElementById('totalprice').value = totalPrice.toFixed(2);
+    }
+
+    // Set default values when the page is loaded
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('adultticketnumber').value = "1";
+        document.getElementById('childticketnumber').value = "0";
+        calculateTotal(); // Call the function to update the total with default values
+    });
+</script>
+
 </body>
 
 </html>
