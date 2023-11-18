@@ -53,6 +53,6 @@ public class UserDTO {
 	// @PastOrPresent(message = "CreatedDate phải ở trong quá khứ hoặc hiện tại mới
 	// tạo")
 	private Date createddate;
-	
+	private Boolean isdeleted = Boolean.FALSE;
 	private List<Comment> comment;
 }

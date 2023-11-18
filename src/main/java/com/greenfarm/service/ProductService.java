@@ -16,6 +16,9 @@ public interface ProductService {
 
 	// Danh sách sản phẩm
 	List<Product> findAll();
+	
+	List<Product> findAllDeletedProducts();
+
 
 	// Phân trang
 	Page<Product> findAll(Pageable pageable);
@@ -65,4 +68,7 @@ public interface ProductService {
 	
 	List<Product> getProductsByCategory(Category category);
 
+	void save(Product product);
+
+	
 }

@@ -59,6 +59,18 @@ public class ProductRestController {
 		return new ResponseEntity<>(productDTOs, HttpStatus.OK);
 	}
 
+	@GetMapping("/deleted")
+	public ResponseEntity<List<ProductDTO>> getDeletedList() {
+		List<Product> deletedProducts = productService.findAllDeletedProducts();
+
+		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
+		List<ProductDTO> productDTOs = deletedProducts.stream()
+				.map(product -> modelMapper.map(product, ProductDTO.class)).collect(Collectors.toList());
+
+		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
+		return new ResponseEntity<>(productDTOs, HttpStatus.OK);
+	}
+
 	@GetMapping("{productid}")
 	public ResponseEntity<ProductDTO> getOne(@PathVariable("productid") Integer productid) {
 		Product product = productService.findById(productid);
@@ -139,6 +151,24 @@ public class ProductRestController {
 
 		// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(productDTO, HttpStatus.OK);
+	}
+
+	@PutMapping("/{productid}/restore")
+	public ResponseEntity<String> restoreProduct(@PathVariable("productid") Integer productid) {
+		// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu
+		Product product = productService.findById(productid);
+
+		if (product == null) {
+			return new ResponseEntity<>("Sản phẩm không tồn tại", HttpStatus.NOT_FOUND);
+		}
+
+		// Khôi phục trạng thái đã xóa của sản phẩm
+		product.setIsDeleted(false);
+
+		// Lưu sản phẩm đã khôi phục vào cơ sở dữ liệu
+		productService.save(product);
+
+		return new ResponseEntity<>("Khôi phục sản phẩm thành công", HttpStatus.OK);
 	}
 
 	@DeleteMapping("{productid}")

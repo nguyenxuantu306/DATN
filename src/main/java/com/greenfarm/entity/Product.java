@@ -72,4 +72,8 @@ public class Product implements Serializable {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
 	List<Review> Review;
+
+	public void setIsDeleted(boolean isdeleted) {
+	    this.isdeleted = isdeleted;
+	}
 }

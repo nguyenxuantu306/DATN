@@ -4,7 +4,7 @@ app.controller("user-ctrl", function($scope, $http) {
 	$scope.form = {};
 	$scope.field = [];
 	$scope.error = ['err'];
-
+	$scope.deletedItems = [];
 
 
 	$scope.initialize = function() {
@@ -17,19 +17,27 @@ app.controller("user-ctrl", function($scope, $http) {
 			})
 		});
 	}
+
+
+	// Load deleted products
+	$http.get("/rest/users/deleted").then(resp => {
+		$scope.deletedItems = resp.data;
+	});
+
+
 	// validation ngày tạo
-	 $scope.isDateBeforeCreatedate = function() {
-        var selectedDate = new Date($scope.form.createddate);
-        var currentDate = new Date();
-        return selectedDate < currentDate;
-    };
-	
+	$scope.isDateBeforeCreatedate = function() {
+		var selectedDate = new Date($scope.form.createddate);
+		var currentDate = new Date();
+		return selectedDate < currentDate;
+	};
+
 	// validation ngày sinh
-	 $scope.isDateBeforeToday = function() {
-        var selectedDate = new Date($scope.form.birthday);
-        var currentDate = new Date();
-        return selectedDate < currentDate;
-    };
+	$scope.isDateBeforeToday = function() {
+		var selectedDate = new Date($scope.form.birthday);
+		var currentDate = new Date();
+		return selectedDate < currentDate;
+	};
 
 	// Khởi đầu
 	$scope.initialize();
@@ -52,11 +60,11 @@ app.controller("user-ctrl", function($scope, $http) {
 		$scope.form = angular.copy(item);
 		$scope.isEdit = true; // Chuyển về chế độ edit
 	}
-	
+
 	// Hiện thị lên for
-	$scope.editthemsp = function(){	
+	$scope.editthemsp = function() {
 		$scope.isEdit = false; // Chuyển về chế độ tạo mới
-		$scope.form = angular.copy();			
+		$scope.form = angular.copy();
 	}
 
 	// Thêm mới
@@ -103,10 +111,10 @@ app.controller("user-ctrl", function($scope, $http) {
 				text: 'Cập nhật thành công!',
 			});
 			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-				$scope.frmvalidateupdate.$setPristine();
-				$scope.frmvalidateupdate.$setUntouched();
-				$scope.frmvalidateupdate.$submitted = false;
-				$scope.edit(item);
+			$scope.frmvalidateupdate.$setPristine();
+			$scope.frmvalidateupdate.$setUntouched();
+			$scope.frmvalidateupdate.$submitted = false;
+			$scope.edit(item);
 		})
 			.catch(error => {
 				// Sử dụng SweetAlert2 cho thông báo lỗi
@@ -118,6 +126,42 @@ app.controller("user-ctrl", function($scope, $http) {
 				console.log("Error", error);
 			});
 	}
+
+
+
+	$scope.restore = function(userid) {
+		try {
+			axios.put(`/rest/users/${userid}/restore`)
+				.then(response => {
+					// Xử lý phản hồi thành công
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công!',
+						text: 'Khôi phục tài khoản thành công!',
+					});
+					// Load lại trang
+					location.reload();
+				})
+				.catch(error => {
+					// Xử lý lỗi
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi khôi phục tài khoản!',
+					});
+					console.log("Error", error);
+				});
+		} catch (error) {
+			// Xử lý lỗi ngoại lệ
+			Swal.fire({
+				icon: 'error',
+				title: 'Lỗi!',
+				text: 'Lỗi khôi phục tài khoản',
+			});
+			console.log("Exception", error);
+		}
+	};
+
 
 	// Xóa loại sản phẩm 
 	$scope.delete = function(item) {
@@ -131,6 +175,8 @@ app.controller("user-ctrl", function($scope, $http) {
 				title: 'Thành công!',
 				text: 'Xóa thành công!',
 			});
+			// Load lại trang
+			location.reload();
 		})
 			.catch(error => {
 				// Sử dụng SweetAlert2 cho thông báo lỗi
@@ -188,8 +234,8 @@ app.controller("user-ctrl", function($scope, $http) {
 			this.page = this.count - 1;
 		}
 	}
-	
-	
+
+
 	// Trong AngularJS controller hoặc service
 	$scope.exportExcel = function() {
 		$http.get('/print-to-excel', { responseType: 'arraybuffer' })
@@ -210,8 +256,8 @@ app.controller("user-ctrl", function($scope, $http) {
 	};
 
 	// PDF
-		
-		$scope.exportPdf = function() {
+
+	$scope.exportPdf = function() {
 		$http.get('/export-to-pdf', { responseType: 'arraybuffer' })
 			.then(function(response) {
 				var blob = new Blob([response.data], { type: 'application/pdf' });

@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
+import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.InvalidTokenException;
@@ -16,8 +17,10 @@ import com.greenfarm.exception.UserAlreadyExistException;
 public interface UserService {
 
 	List<User> findAll();
+	
+	List<User> findAllDeletedUser();
 
-	User findById(Integer userid) throws UnkownIdentifierException;
+	User findById(Integer userid);
 
 	User create(User user) throws UserAlreadyExistException;
 
@@ -58,5 +61,5 @@ public interface UserService {
 	//Tổng tiền đặt vé của các user
 	List<Report> getBookingTotalPurchaseByUser();
 
-	
+	void save(User user);
 }
