@@ -2,7 +2,6 @@ package com.greenfarm.service.impl;
 
 import java.util.Comparator;
 
-
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -23,7 +22,6 @@ import com.greenfarm.entity.ThongkeTK;
 import com.greenfarm.entity.Top10;
 import com.greenfarm.service.ProductService;
 
-
 @Service
 public class ProductServiceImpl implements ProductService {
 	@Autowired
@@ -38,6 +36,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> findAll() {
 		return dao.findAllByIsdeletedFalse();
+	}
+
+	@Override
+	public List<Product> findAllDeletedProducts() {
+		return dao.findAllByIsdeletedTrue();
 	}
 
 	public Page<Product> findAll(Pageable pageable) {
@@ -147,21 +150,21 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getReportSpTk() {
 		List<Product> productsByQuantityAvailable = dao.getTop10ProductsByQuantityAvailable();
-	    if (productsByQuantityAvailable.size() > 10) {
-	        return productsByQuantityAvailable.subList(0, 10);
-	    } else {
-	        return productsByQuantityAvailable;
-	    }
+		if (productsByQuantityAvailable.size() > 10) {
+			return productsByQuantityAvailable.subList(0, 10);
+		} else {
+			return productsByQuantityAvailable;
+		}
 	}
-	
+
 	@Override
 	public List<Report> getReportspbanchay() {
 		List<Report> productsBygetReportspbanchay = dao.getTop10ProductsBygetReportspbanchay();
-	    if (productsBygetReportspbanchay.size() > 10) {
-	        return productsBygetReportspbanchay.subList(0, 10);
-	    } else {
-	        return productsBygetReportspbanchay;
-	    }
+		if (productsBygetReportspbanchay.size() > 10) {
+			return productsBygetReportspbanchay.subList(0, 10);
+		} else {
+			return productsBygetReportspbanchay;
+		}
 	}
 //	@Transactional
 //    @Override
@@ -178,6 +181,11 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> getProductsByCategory(Category category) {
 		// TODO Auto-generated method stub
 		return dao.getProductsByCategory(category);
+	}
+
+	@Override
+	public void save(Product product) {
+	    dao.save(product);
 	}
 
 }

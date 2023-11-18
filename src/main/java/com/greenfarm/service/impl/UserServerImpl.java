@@ -66,7 +66,12 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public List<User> findAll() {
-		return dao.findAll();
+		return dao.findAllByIsdeletedFalse();
+	}
+	
+	@Override
+	public List<User> findAllDeletedUser() {
+		return dao.findAllByIsdeletedTrue();
 	}
 
 	@Override
@@ -107,7 +112,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public void delete(Integer userid) {
-		dao.deleteById(userid);
+		dao.deleteByIsDeleted(userid);
 	}
 
 	@Override
@@ -353,6 +358,12 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	@Override
 	public List<Report> getBookingTotalPurchaseByUser() {
 		return dao.BookingTotalPurchaseByUser();
+	}
+
+	@Override
+	public void save(User user) {
+		 dao.save(user);
+		
 	}
 
 }

@@ -44,18 +44,23 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 			+ " GROUP BY o.product" + " ORDER BY  sum(o.quantityordered) Desc")
 	List<Report> getTop10ProductsBygetReportspbanchay();
 
+	@Query("SELECT p FROM Product p WHERE p.isdeleted = true")
+	List<Product> findAllDeletedProducts();
+
 	@Query("SELECT p FROM Product p WHERE p.productid = :id")
 	Product findProductById(@Param("id") Integer id);
 
 	default void deleteByIsDeleted(Integer id) {
 		Product product = findProductById(id);
 		if (product != null) {
-			product.setIsdeleted(true);
+			product.setIsDeleted(true);
 			save(product);
 		}
 	}
 
 	List<Product> findAllByIsdeletedFalse();
+
+	List<Product> findAllByIsdeletedTrue();
 
 //	// Phương thức tùy chỉnh để tìm sản phẩm theo productId và cập nhật số lượng
 // 	@Modifying

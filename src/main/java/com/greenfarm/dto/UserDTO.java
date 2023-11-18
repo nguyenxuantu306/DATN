@@ -47,6 +47,7 @@ public class UserDTO {
 	private Date birthday;
 
 	private Date createddate;
+	private Boolean isdeleted = Boolean.FALSE;
 
 	private List<Comment> comment;
 }

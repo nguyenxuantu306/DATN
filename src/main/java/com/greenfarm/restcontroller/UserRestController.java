@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.dto.UserDTO;
+import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.UnkownIdentifierException;
@@ -70,6 +72,19 @@ public class UserRestController {
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
+	
+	@GetMapping("/deleted")
+	public ResponseEntity<List<UserDTO>> getDeletedList() {
+		List<User> deletedUser= userService.findAllDeletedUser();
+
+		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
+		List<UserDTO> UserDTOs = deletedUser.stream()
+				.map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+
+		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
+		return new ResponseEntity<>(UserDTOs, HttpStatus.OK);
+	}
+	
 	@GetMapping("email/{useremail}")
 	public ResponseEntity<UserDTO> getByemail(@PathVariable("useremail") String useremail)
 			throws UnkownIdentifierException {
@@ -119,6 +134,24 @@ public class UserRestController {
 		return new ResponseEntity<>(updatedUserDTO, HttpStatus.OK);
 	}
 
+	
+	@PutMapping("/{userid}/restore")
+	public ResponseEntity<String> restoreProduct(@PathVariable("userid") Integer userid) {
+		// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu
+		User user = userService.findById(userid);
+
+		if (user == null) {
+			return new ResponseEntity<>("Tài khoản không tồn tại", HttpStatus.NOT_FOUND);
+		}
+
+		// Khôi phục trạng thái đã xóa của sản phẩm
+		user.setIsDeleted(false);
+
+		// Lưu sản phẩm đã khôi phục vào cơ sở dữ liệu
+		userService.save(user);
+
+		return new ResponseEntity<>("Khôi phục tài khoản thành công", HttpStatus.OK);
+	}
 	@DeleteMapping("{userid}")
 	public ResponseEntity<Void> delete(@PathVariable("userid") Integer userid) throws UnkownIdentifierException {
 

@@ -80,6 +80,8 @@ public class User implements Serializable {
 	@Temporal(TemporalType.DATE)
 	Date createddate = new Date();
 
+	
+	private Boolean isdeleted = Boolean.FALSE;
 	// Boolean IsActive;
 
 	@JsonIgnore
@@ -122,4 +124,8 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user")
 	List<VoucherUser> voucheruser;
 
+	
+	public void setIsDeleted(boolean isdeleted) {
+	    this.isdeleted = isdeleted;
+	}
 }

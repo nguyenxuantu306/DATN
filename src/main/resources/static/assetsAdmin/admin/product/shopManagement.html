@@ -30,6 +30,11 @@
 
 								<i class="fa fa-file-pdf-o"></i> PDF
 							</button>
+							<button type="button" class="btn btn-success" data-toggle="modal"
+								data-target="#Restore">
+								Khôi phục</i>
+							</button>
+
 
 						</div>
 					</div>
@@ -104,8 +109,8 @@
 							<div class="card">
 								<div class="card-body">
 									<div class="basic-form">
-										<form class="row" name="frmvalidateupdate" ng-submit="submitForm1()"
-											novalidate>
+										<form class="row" name="frmvalidateupdate"
+											ng-submit="submitForm1()" novalidate>
 											<div class="col-md-4">
 												<label for="image"> <img ng-src="{{form.image}}"
 													style="max-width: 100%; height: 300px">
@@ -117,8 +122,8 @@
 													<div class="form-group col-sm-6">
 														<label>Tên sản phẩm: </label> <input name="productname"
 															ng-model="form.productname" ng-minlength="5"
-															ng-maxlength="255" class="form-control input-default" placeholder="VD : Củ cải..."
-															required> <label
+															ng-maxlength="255" class="form-control input-default"
+															placeholder="VD : Củ cải..." required> <label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.productname.$error.required"
 															style="color: red;">Vui lòng nhập tên sản phẩm !</label>
 														<label
@@ -132,8 +137,9 @@
 													<div class="form-group col-sm-6">
 														<label>Giá sản phẩm: </label> <input type="text"
 															ng-model="form.price" name="price" ng-min="0"
-															class="form-control input-currency mr-2" placeholder="VD : 100"
-															ng-keyup="formatCurrency($event)" required> <label
+															class="form-control input-currency mr-2"
+															placeholder="VD : 100" ng-keyup="formatCurrency($event)"
+															required> <label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.price.$error.required"
 															style="color: red;">Vui lòng nhập giá sản phẩm !</label>
 														<label
@@ -156,7 +162,7 @@
 													<div class="form-group col-sm-6">
 														<label>Danh mục sản phẩm: </label> <select
 															ng-model="form.category.categoryid" class="w-100"
-															name="categoryid"  required style="height: 45px;">
+															name="categoryid" required style="height: 45px;">
 															<option ng-repeat="c in cates" ng-value="c.categoryid">
 																{{c.categoryname}}</option>
 														</select> <label
@@ -176,8 +182,8 @@
 														<label>Mô tả: </label>
 														<textarea name="description" ng-model="form.description"
 															ng-minlength="5" ng-maxlength="255"
-															class="form-control input-default" style="height: 120px;" placeholder="VD : Củ cải gồm..."
-															required></textarea>
+															class="form-control input-default" style="height: 120px;"
+															placeholder="VD : Củ cải gồm..." required></textarea>
 														<label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.description.$error.required"
 															style="color: red;">Vui lòng nhập mô tả !</label> <label
@@ -193,14 +199,14 @@
 											<div class="panel-footer text-right">
 												<button type="submit" name="submit"
 													ng-click="frmvalidateupdate.$valid && update()"
-													class="btn btn-success">Cập nhật sản phẩm</button>										
+													class="btn btn-success">Cập nhật sản phẩm</button>
 											</div>
 										</form>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>				
+					</div>
 				</div>
 			</div>
 		</div>
@@ -232,8 +238,8 @@
 													<div class="form-group col-sm-6">
 														<label>Tên sản phẩm: </label> <input name="productname"
 															ng-model="form.productname" ng-minlength="5"
-															ng-maxlength="255" class="form-control input-default" placeholder="VD : Củ cải..."
-															required> <label
+															ng-maxlength="255" class="form-control input-default"
+															placeholder="VD : Củ cải..." required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.productname.$error.required"
 															style="color: red;">Vui lòng nhập tên sản phẩm !</label>
 														<label
@@ -247,8 +253,9 @@
 													<div class="form-group col-sm-6">
 														<label>Giá sản phẩm: </label> <input type="text"
 															ng-model="form.price" name="price" ng-min="0"
-															class="form-control input-currency mr-2" placeholder="VD : 100"
-															ng-keyup="formatCurrency($event)" required> <label
+															class="form-control input-currency mr-2"
+															placeholder="VD : 100" ng-keyup="formatCurrency($event)"
+															required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.price.$error.required"
 															style="color: red;">Vui lòng nhập giá sản phẩm !</label>
 														<label
@@ -271,7 +278,7 @@
 													<div class="form-group col-sm-6">
 														<label>Danh mục sản phẩm: </label> <select
 															ng-model="form.category.categoryid" class="w-100"
-															name="categoryid"  required style="height: 45px;">
+															name="categoryid" required style="height: 45px;">
 															<option ng-repeat="c in cates" ng-value="c.categoryid">
 																{{c.categoryname}}</option>
 														</select> <label
@@ -290,7 +297,8 @@
 													<div class="form-group col-sm-12">
 														<label>Mô tả: </label>
 														<textarea name="description" ng-model="form.description"
-															ng-minlength="5" ng-maxlength="255" placeholder="VD : Củ cải gồm..."
+															ng-minlength="5" ng-maxlength="255"
+															placeholder="VD : Củ cải gồm..."
 															class="form-control input-default" style="height: 120px;"
 															required></textarea>
 														<label
@@ -317,6 +325,47 @@
 									</div>
 								</div>
 							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade" id="Restore" tabindex="-1"
+			aria-labelledby="Restore" aria-hidden="true">
+			<div class="modal-dialog modal-xl custom-modal">
+				<div class="modal-content">
+
+					<div class="modal-body">
+						<div class="table-responsive">
+							<table
+								class="table table-striped table-bordered zero-configuration t">
+								<thead>
+									<tr>
+										<th>STT</th>
+										<th>Hình ảnh</th>
+										<th>Tên sản phẩm</th>
+										<th>Giá</th>
+										<th>Mô tả</th>
+										<th>Số lượng</th>
+										<th>Khôi phục</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="item in deletedItems">
+										<td>{{$index + 1}}</td>
+										<td><img ng-src="{{item.image}}" alt="Product Image"
+											style="width: 80px;"></td>
+										<td>{{item.productname}}</td>
+										<td>{{item.price}}</td>
+										<td>{{item.description}}</td>
+										<td>{{item.quantityavailable}}</td>
+										<td><a ng-click="restore(item.productid)"><i class="bi bi-bootstrap-reboot"></i></a></td>
+									</tr>
+
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>

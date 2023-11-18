@@ -1,9 +1,11 @@
 app.controller("product-ctrl", function($scope, $http) {
 	$scope.items = [];
+	$scope.deletedItems = [];
 	$scope.cates = [];
 	$scope.form = {};
 	$scope.field = [];
 	$scope.error = ['err'];
+	var deletedProductList = [];
 
 	$scope.initialize = function() {
 		// Load products
@@ -14,13 +16,29 @@ app.controller("product-ctrl", function($scope, $http) {
 			})
 		});
 
+		// Load deleted products
+		$http.get("/rest/products/deleted").then(resp => {
+			$scope.deletedItems = resp.data;
+		});
+
 		// Load categories
 		$http.get("/rest/categories").then(resp => {
 			$scope.cates = resp.data;
 
 		});
 
+
+
 	}
+
+	//		$scope.getDeletedList = function() {
+	//			$http.get("/rest/products/deleted").then(function(resp) {
+	//				$scope.deletedItems = resp.data;
+	//			});
+	//		};
+
+
+
 	// Ban đầu, searchTerm rỗng
 	$scope.searchTerm = '';
 
@@ -126,21 +144,62 @@ app.controller("product-ctrl", function($scope, $http) {
 			});
 	}
 
+
+	$scope.restore = function(productid) {
+		try {
+			axios.put(`/rest/products/${productid}/restore`)
+				.then(response => {
+					// Xử lý phản hồi thành công
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công!',
+						text: 'Khôi phục sản phẩm thành công!',
+					});
+					// Load lại trang
+					location.reload();
+				})
+				.catch(error => {
+					// Xử lý lỗi
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi khôi phục sản phẩm',
+					});
+					console.log("Error", error);
+				});
+		} catch (error) {
+			// Xử lý lỗi ngoại lệ
+			Swal.fire({
+				icon: 'error',
+				title: 'Lỗi!',
+				text: 'Lỗi khôi phục sản phẩmmmm',
+			});
+			console.log("Exception", error);
+		}
+	};
+
+
+
+
 	// Xóa sản phẩm 
 	$scope.delete = function(item) {
-		$http.delete(`/rest/products/${item.productid}`).then(resp => {
-			var index = $scope.items.findIndex(p => p.productid == item.productid);
-			$scope.items.splice(index, 1);
-			$scope.reset();
-			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Xóa sản phẩm thành công!',
-			});
-		})
+		$http.delete(`/rest/products/${item.productid}`)
+			.then(resp => {
+				// Xóa sản phẩm khỏi danh sách hiển thị
+				var index = $scope.items.findIndex(p => p.productid == item.productid);
+				$scope.items.splice(index, 1);
+
+				// Hiển thị thông báo thành công
+				Swal.fire({
+					icon: 'success',
+					title: 'Thành công!',
+					text: 'Xóa sản phẩm thành công!',
+				});
+				// Load lại trang
+				//	location.reload();
+			})
 			.catch(error => {
-				// Sử dụng SweetAlert2 cho thông báo lỗi
+				// Hiển thị thông báo lỗi
 				Swal.fire({
 					icon: 'error',
 					title: 'Lỗi!',
@@ -148,7 +207,9 @@ app.controller("product-ctrl", function($scope, $http) {
 				});
 				console.log("Error", error);
 			});
-	}
+	};
+
+
 
 	$scope.pager = {
 		page: 0,
