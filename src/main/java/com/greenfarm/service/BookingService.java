@@ -15,6 +15,7 @@ import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.Top3;
+import com.greenfarm.entity.User;
 
 public interface BookingService {
 
@@ -22,6 +23,8 @@ public interface BookingService {
 	Page<Top3> getTop3Tour(Pageable pageable1);
 
 	List<Booking> findAll();
+	
+	
 
 	List<Booking> getAllBookings(int page, int size);
 
@@ -44,4 +47,6 @@ public interface BookingService {
 	List<Booking> findByEfindByIdAccountmail(String email);
 
 	void saveBooking(Booking booking);
+	
+	
 }

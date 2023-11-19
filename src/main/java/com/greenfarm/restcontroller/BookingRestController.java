@@ -16,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,7 +61,7 @@ import lombok.extern.log4j.Log4j;
 public class BookingRestController {
 	@Autowired
 	private BookingService bookingService;
-	
+
 	@Autowired
 	private TourService tourService;
 
@@ -81,7 +82,7 @@ public class BookingRestController {
 		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(BookingsDTOs, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("{bookingid}")
 	public ResponseEntity<BookingDTO> getOne(@PathVariable("bookingid") Integer bookingid) {
 		Booking booking = bookingService.findById(bookingid);
@@ -106,15 +107,8 @@ public class BookingRestController {
 		}
 	}
 
-//
-//	@PostMapping()
-//	public Booking create(@RequestBody JsonNode bookingData) {
-//		return bookingService.create(bookingData);
-//	}
-
 	@PutMapping("{id}")
-	public ResponseEntity<BookingDTO> update(@PathVariable("id") Integer id,
-			@RequestBody Booking booking) {
+	public ResponseEntity<BookingDTO> update(@PathVariable("id") Integer id, @RequestBody Booking booking) {
 		Booking updatedBooking = bookingService.update(booking);
 
 		if (updatedBooking == null) {
@@ -123,7 +117,9 @@ public class BookingRestController {
 		BookingDTO bookingDTO = modelMapper.map(updatedBooking, BookingDTO.class);
 		return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
 	}
+
 	
+
 	@GetMapping("/search")
 	public ResponseEntity<String> searchBookingsByDate(
 			@RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDateTime,
@@ -152,51 +148,54 @@ public class BookingRestController {
 	public ResponseEntity<List<ReportRevenue>> slbookingstatus() {
 		return new ResponseEntity<>(bookingService.slbookingstatus(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/bookingyear-revenue")
 	public ResponseEntity<List<ReportYear>> getbookingyearRevenue() {
-	      List<ReportYear> yearRevenue = bookingService.getbookingYearRevenue();
-	      return new ResponseEntity<>(yearRevenue, HttpStatus.OK);
+		List<ReportYear> yearRevenue = bookingService.getbookingYearRevenue();
+		return new ResponseEntity<>(yearRevenue, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/findbookingyearrevenue/{year}")
-    public List<FindReportYear> getBookingYearlyRevenue(@PathVariable Integer year) {
-       return bookingService.findBookingYearlyRevenue(year);
-	 }
-	
+	public List<FindReportYear> getBookingYearlyRevenue(@PathVariable Integer year) {
+		return bookingService.findBookingYearlyRevenue(year);
+	}
+
 	private static final Logger LOG = LoggerFactory.getLogger(MailControl.class);
-	
+
 	@GetMapping("/sendbooking/{bookingid}")
-	public void sendbooking(@PathVariable("bookingid") Integer bookingid) throws FileNotFoundException, MessagingException {
+	public void sendbooking(@PathVariable("bookingid") Integer bookingid)
+			throws FileNotFoundException, MessagingException {
 		System.out.println("Gui mail den khach hang");
 		Booking booking = bookingService.findById(bookingid);
-		File attachmentFile = new File("../DATN/src/main/resources/qrcode/don"+bookingid+".png");
-		String diachiqr = "../DATN/src/main/resources/qrcode/don"+bookingid+".png";
-		System.out.println("../DATN/src/main/resources/qrcode/don"+bookingid+".png");
+		File attachmentFile = new File("../DATN/src/main/resources/qrcode/don" + bookingid + ".png");
+		String diachiqr = "../DATN/src/main/resources/qrcode/don" + bookingid + ".png";
+		System.out.println("../DATN/src/main/resources/qrcode/don" + bookingid + ".png");
 		System.out.println(booking.getUser().getEmail());
 //		try {
-			emailService.sendEmailWithBooking(booking.getUser().getEmail(),  "Order Confirmation", "Thanks for your recent order", diachiqr);
+		emailService.sendEmailWithBooking(booking.getUser().getEmail(), "Order Confirmation",
+				"Thanks for your recent order", diachiqr);
 //		} catch (MessagingException | FileNotFoundException mailException) {
 //			// TODO: handle exception
 //			LOG.error("Error while sending out email..{}", mailException.getStackTrace());
 //
 //		}
 	}
-	
-	@Autowired 
+
+	@Autowired
 	StatusBookingService statusBookingService;
+
 	@GetMapping("/kiemtrave/{bookingid}")
 	public void updatekiemtrave(@PathVariable("bookingid") Integer bookingid) {
 		Booking booking = bookingService.findById(bookingid);
 		if (booking.getStatusbooking().getStatusbookingid() == 5) {
 			System.out.println("vé đã được sử dụng");
-		}else {
+		} else {
 			StatusBooking statusBooking = statusBookingService.findById(5);
 			booking.setStatusbooking(statusBooking);
 			Booking updatedBooking = bookingService.update(booking);
 			System.out.println("Đã xác nhận thành công");
 		}
-		
+
 //
 //		if (updatedBooking == null) {
 //			return ResponseEntity.notFound().build();
@@ -204,6 +203,6 @@ public class BookingRestController {
 //		BookingDTO bookingDTO = modelMapper.map(updatedBooking, BookingDTO.class);
 //		return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
 //	}
-		
-}
+
+	}
 }

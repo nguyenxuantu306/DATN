@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.greenfarm.dao.CategoryDAO;
 import com.greenfarm.entity.Category;
@@ -36,8 +37,22 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public void delete(Integer categoryid) {
-		dao.deleteById(categoryid);
+	public Category save(Category category) {
+		return dao.save(category);
 	}
+
+	
+	@Override
+	@Transactional
+	public void deleteCategoryById(Integer categoryid) {
+		dao.deleteCategoryById(categoryid);
+		
+	}
+
+	@Override
+	public List<Category> findAllDeletedCategory() {
+		return dao.findAllByIsdeletedTrue();
+	}
+
 
 }

@@ -33,5 +33,7 @@ public class TourDTO {
     private Pricing pricings;
     private List<TourImageDTO> tourImage;
     private List<CommentDTO> comment;
+    
+    private Boolean isdeleted = Boolean.FALSE;
      
 }

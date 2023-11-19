@@ -136,7 +136,7 @@ public class UserRestController {
 
 	
 	@PutMapping("/{userid}/restore")
-	public ResponseEntity<String> restoreProduct(@PathVariable("userid") Integer userid) {
+	public ResponseEntity<String> restoreUser(@PathVariable("userid") Integer userid) {
 		// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu
 		User user = userService.findById(userid);
 

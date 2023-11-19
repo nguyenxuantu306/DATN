@@ -34,12 +34,14 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.dto.TourDTO;
 import com.greenfarm.dto.TourImageDTO;
+import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.Pricing;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.TourCondition;
 import com.greenfarm.entity.TourImage;
 import com.greenfarm.entity.TourOverview;
+import com.greenfarm.entity.User;
 import com.greenfarm.service.PricingService;
 import com.greenfarm.service.TourConditionService;
 import com.greenfarm.service.TourImageService;
@@ -73,7 +75,6 @@ public class TourRestController {
 
 	@Autowired
 	TourImageService tourImageService;
-	
 
 	@GetMapping()
 	public ResponseEntity<List<TourDTO>> getList() {
@@ -94,14 +95,28 @@ public class TourRestController {
 		return new ResponseEntity<>(tourDTO, HttpStatus.OK);
 	}
 
+	
+	@GetMapping("/deleted")
+	public ResponseEntity<List<TourDTO>> getDeletedList() {
+		List<Tour> deletedUser= tourService.findAllDeletedTour();
+
+		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
+		List<TourDTO> TourDTOs = deletedUser.stream()
+				.map(tour -> modelMapper.map(tour, TourDTO.class)).collect(Collectors.toList());
+
+		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
+		return new ResponseEntity<>(TourDTOs, HttpStatus.OK);
+	}
+	
+	
 	@PostMapping()
 	public ResponseEntity<TourDTO> create(@RequestBody @Valid TourDTO tourDTO, BindingResult result) {
-		
+
 //		if (result.hasErrors()) {
 //	        // Lỗi validation, trả về danh sách lỗi
 //	        return  ResponseEntity.badRequest().body(result.getAllErrors());
 //	    }
-		
+
 		// Map DTO to entity
 		Tour tour = modelMapper.map(tourDTO, Tour.class);
 
@@ -247,47 +262,62 @@ public class TourRestController {
 		List<TourImage> tourImagesToDelete = new ArrayList<>();
 
 		for (TourImageDTO tourImageDTO : tourDTO.getTourImage()) {
-		    Integer tourImageId = tourImageDTO.getTourimageid();;
-		    Optional<TourImage> optionalTourImage = tourImages.stream()
-                    .filter(ti -> ti.getTourimageid() != null && ti.getTourimageid().equals(tourImageId))
-                    .findFirst();
-		    if (optionalTourImage.isPresent()) {
-		        TourImage tourImage = optionalTourImage.get();
-		        tourImage.setImageurl(tourImageDTO.getImageurl());
-		        tourImage.setTour(tour);
-		        tempTourImages.add(tourImage);
-		    } else {
-		        TourImage tourImage = new TourImage();
-		        tourImage.setImageurl(tourImageDTO.getImageurl());
-		        tourImage.setTour(tour);
-		        tourImageService.save(tourImage);
-		        tempTourImages.add(tourImage);
-		    }
+			Integer tourImageId = tourImageDTO.getTourimageid();
+			;
+			Optional<TourImage> optionalTourImage = tourImages.stream()
+					.filter(ti -> ti.getTourimageid() != null && ti.getTourimageid().equals(tourImageId)).findFirst();
+			if (optionalTourImage.isPresent()) {
+				TourImage tourImage = optionalTourImage.get();
+				tourImage.setImageurl(tourImageDTO.getImageurl());
+				tourImage.setTour(tour);
+				tempTourImages.add(tourImage);
+			} else {
+				TourImage tourImage = new TourImage();
+				tourImage.setImageurl(tourImageDTO.getImageurl());
+				tourImage.setTour(tour);
+				tourImageService.save(tourImage);
+				tempTourImages.add(tourImage);
+			}
 		}
 
 		for (TourImage tourImage : tourImages) {
-		    if (!tempTourImages.contains(tourImage)) {
-		        tourImagesToDelete.add(tourImage);
-		    }
+			if (!tempTourImages.contains(tourImage)) {
+				tourImagesToDelete.add(tourImage);
+			}
 		}
 
 		tourImages.removeAll(tourImagesToDelete);
 		tourImages.addAll(tempTourImages);
 
 		for (TourImage tourImage : tourImagesToDelete) {
-		    tourImageService.delete(tourImage);
+			tourImageService.delete(tourImage);
 		}
-		
+
 		tour.setTourImage(tourImages);
 		return tourService.update(tour);
 	}
 
-	@DeleteMapping("{tourid}")
-	public ResponseEntity<Void> delete(@PathVariable("tourid") Integer tourid) {
-		tourService.delete(tourid);
+	@DeleteMapping("/{tourid}")
+	public ResponseEntity<Void> deleteBooking(@PathVariable("tourid") Integer tourid) {
+		tourService.deleteTourById(tourid);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
+	
+	@PutMapping("/{tourid}/restore")
+	public ResponseEntity<String> restoreTour(@PathVariable("tourid") Integer tourid) {
+		// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu
+		Tour tour = tourService.findById(tourid);
 
+		if (tour == null) {
+			return new ResponseEntity<>("Địa điểm không tồn tại", HttpStatus.NOT_FOUND);
+		}
+
+		tour.setIsDeleted(false);
+
+		tourService.save(tour);
+
+		return new ResponseEntity<>("Khôi phục địa điểm thành công", HttpStatus.OK);
+	}
 
 }

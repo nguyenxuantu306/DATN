@@ -9,16 +9,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.greenfarm.dao.CartDAO;
 import com.greenfarm.entity.Cart;
 import com.greenfarm.entity.Top10;
 import com.greenfarm.entity.Top3;
+import com.greenfarm.entity.User;
 import com.greenfarm.service.BookingService;
 import com.greenfarm.service.OrderDetailService;
 import com.greenfarm.service.TourService;
 import com.greenfarm.service.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/")
@@ -56,10 +62,25 @@ public class HomeController {
             return "success";
 	}
 
+//	@RequestMapping("/profile")
+//	public String Profile(Model model) {
+//		return "profile";
+//	}
+	
+	
 	@RequestMapping("/profile")
-	public String Profile(Model model) {
-		return "profile";
+	public String Profile(@Valid @ModelAttribute("userchange") User user, BindingResult bindingResult, Model model) {
+	    if (bindingResult.hasErrors()) {
+	        // Xử lý khi có lỗi validation
+	        return "profile";
+	    }
+	    
+	    // Xử lý khi không có lỗi validation
+	    
+	    return "redirect:/profile"; // Chuyển hướng sau khi xử lý thành công
 	}
+	
+	
 	
 	@RequestMapping("/contact")
 	public String Contact(Model model) {

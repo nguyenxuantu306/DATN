@@ -3,7 +3,6 @@ package com.greenfarm.service;
 import java.util.List;
 
 import com.greenfarm.entity.Category;
-
 public interface CategoryService {
 	// API show loại sản phẩm
 	List<Category> findAll();
@@ -17,7 +16,9 @@ public interface CategoryService {
 	// API cập nhật sản phẩm
 	Category update(Category category);
 
-	// API xóa sản phẩm
-	void delete(Integer categoryid);
+	Category save(Category category);
 
+	void deleteCategoryById(Integer categoryid);
+
+	List<Category> findAllDeletedCategory();
 }

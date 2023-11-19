@@ -30,6 +30,10 @@
 
 								<i class="fa fa-file-pdf-o"></i> PDF
 							</button>
+							<button type="button" class="btn btn-success" data-toggle="modal"
+								data-target="#Restore">
+								Khôi phục</i>
+							</button>
 						</div>
 					</div>
 					<div class="table-responsive">
@@ -122,8 +126,8 @@
 										<div class="form-group col-6">
 											<label>Tên địa điểm</label> <input type="text"
 												name="tourname" ng-model="form.tourname" ng-minlength="5"
-												class="form-control input-default" placeholder="VD : Nông trại vui vẻ"
-												required /> <label
+												class="form-control input-default"
+												placeholder="VD : Nông trại vui vẻ" required /> <label
 												ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.tourname.$error.required"
 												style="color: red;">Vui lòng nhập địa điểm !</label> <label
 												ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.tourname.$error.minlength"
@@ -155,8 +159,9 @@
 													<label>Giá người lớn</label> <input type="number"
 														ng-model="form.pricings.adultprice" name="adultprice"
 														class="form-control input-currency"
-														placeholder="VD : 145000" ng-keyup="formatCurrency($event)"
-														ng-min="0" ng-max="5000000" required />
+														placeholder="VD : 145000"
+														ng-keyup="formatCurrency($event)" ng-min="0"
+														ng-max="5000000" required />
 													<!-- Sử dụng ng-min và ng-max để xác định khoảng giá trị hợp lệ -->
 
 													<label
@@ -227,8 +232,9 @@
 										<div class=" form-group col-md-8">
 											<label>Lịch trình hoạt động</label>
 											<div>
-												<textarea ng-model="form.description" rows="6" cols="74" placeholder="VD : sáng gì đó..."
-													name="description" required></textarea>
+												<textarea ng-model="form.description" rows="6" cols="74"
+													placeholder="VD : sáng gì đó..." name="description"
+													required></textarea>
 												<label
 													ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.description.$error.required"
 													style="color: red;">Lịch trình hoạt động không được
@@ -237,8 +243,9 @@
 
 
 											<div class="">
-												<label for="formFile" class="form-label">Hình ảnh địa điểm
-													</label> <input class="form-control" type="text" name="image" placeholder="VD : link ảnh"
+												<label for="formFile" class="form-label">Hình ảnh
+													địa điểm </label> <input class="form-control" type="text"
+													name="image" placeholder="VD : link ảnh"
 													ng-model="form.image" required /> <label
 													ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.image.$error.required"
 													style="color: red;">Hình ảnh địa điểm không được để
@@ -253,7 +260,8 @@
 														<span class="input-group-text">Điều kiện</span>
 													</div>
 													<textarea class="form-control" rows="5"
-														ng-model="form.tourCondition.conditions" name="conditions" placeholder="VD : chuyên nghiệp suốt tuyến..."
+														ng-model="form.tourCondition.conditions" name="conditions"
+														placeholder="VD : chuyên nghiệp suốt tuyến..."
 														aria-label="With textarea" required></textarea>
 												</div>
 												<label
@@ -270,8 +278,10 @@
 														<span class="input-group-text"
 															id="inputGroup-sizing-default">Tiêu đề</span>
 													</div>
-													<input type="text" ng-model="form.tourOverview.title" placeholder="VD : gia dình GreenFarm
-														name="title" class="form-control" aria-label="Default"
+													<input type="text" ng-model="form.tourOverview.title"
+														placeholder="VD : gia dình GreenFarm
+														name="
+														title" class="form-control" aria-label="Default"
 														aria-describedby="inputGroup-sizing-default" required>
 												</div>
 												<label
@@ -281,7 +291,8 @@
 													<div class="input-group-prepend">
 														<span class="input-group-text">Nội dung</span>
 													</div>
-													<textarea class="form-control" rows="5" name="content" placeholder="VD : gia đình bao gồm..."
+													<textarea class="form-control" rows="5" name="content"
+														placeholder="VD : gia đình bao gồm..."
 														ng-model="form.tourOverview.content"
 														aria-label="With textarea" required></textarea>
 
@@ -311,7 +322,7 @@
 										<div class="panel-footer text-right">
 											<button type="submit" name="submitupdate"
 												ng-click="frmvalidateupdate.$valid && update()"
-												class="btn btn-success">Cập nhật địa điểm</button>									
+												class="btn btn-success">Cập nhật địa điểm</button>
 										</div>
 									</form>
 								</div>
@@ -323,8 +334,8 @@
 			</div>
 		</div>
 	</div>
-	</div>
-	<div class="modal fade" id="exampleModal2" tabindex="-1"
+</div>
+<div class="modal fade" id="exampleModal2" tabindex="-1"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl custom-modal">
 		<div class="modal-content">
@@ -345,8 +356,8 @@
 										<div class="form-group col-6">
 											<label>Tên địa điểm</label> <input type="text"
 												name="tourname" ng-model="form.tourname" ng-minlength="5"
-												class="form-control input-default" placeholder="VD : Nông trại vui vẻ"
-												required /> <label
+												class="form-control input-default"
+												placeholder="VD : Nông trại vui vẻ" required /> <label
 												ng-show="frmvalidateadd.$submitted && frmvalidateadd.tourname.$error.required"
 												style="color: red;">Vui lòng nhập địa điểm !</label> <label
 												ng-show="frmvalidateadd.$submitted && frmvalidateadd.tourname.$error.minlength"
@@ -378,8 +389,9 @@
 													<label>Giá người lớn</label> <input type="number"
 														ng-model="form.pricings.adultprice" name="adultprice"
 														class="form-control input-currency"
-														placeholder="VD : 145000" ng-keyup="formatCurrency($event)"
-														ng-min="0" ng-max="5000000" required />
+														placeholder="VD : 145000"
+														ng-keyup="formatCurrency($event)" ng-min="0"
+														ng-max="5000000" required />
 													<!-- Sử dụng ng-min và ng-max để xác định khoảng giá trị hợp lệ -->
 
 													<label
@@ -450,8 +462,9 @@
 										<div class=" form-group col-md-8">
 											<label>Lịch trình hoạt động</label>
 											<div>
-												<textarea ng-model="form.description" rows="6" cols="74" placeholder="VD : sáng gì đó..."
-													name="description" required></textarea>
+												<textarea ng-model="form.description" rows="6" cols="74"
+													placeholder="VD : sáng gì đó..." name="description"
+													required></textarea>
 												<label
 													ng-show="frmvalidateadd.$submitted && frmvalidateadd.description.$error.required"
 													style="color: red;">Lịch trình hoạt động không được
@@ -460,8 +473,9 @@
 
 
 											<div class="">
-												<label for="formFile" class="form-label">Hình ảnh địa điểm
-													</label> <input class="form-control" type="text" name="image" placeholder="VD : link ảnh"
+												<label for="formFile" class="form-label">Hình ảnh
+													địa điểm </label> <input class="form-control" type="text"
+													name="image" placeholder="VD : link ảnh"
 													ng-model="form.image" required /> <label
 													ng-show="frmvalidateadd.$submitted && frmvalidateadd.image.$error.required"
 													style="color: red;">Hình ảnh địa điểm không được để
@@ -476,7 +490,8 @@
 														<span class="input-group-text">Điều kiện</span>
 													</div>
 													<textarea class="form-control" rows="5"
-														ng-model="form.tourCondition.conditions" name="conditions" placeholder="VD : chuyên nghiệp suốt tuyến..."
+														ng-model="form.tourCondition.conditions" name="conditions"
+														placeholder="VD : chuyên nghiệp suốt tuyến..."
 														aria-label="With textarea" required></textarea>
 												</div>
 												<label
@@ -494,7 +509,8 @@
 															id="inputGroup-sizing-default">Tiêu đề</span>
 													</div>
 													<input type="text" ng-model="form.tourOverview.title"
-														name="title" class="form-control" aria-label="Default" placeholder="VD : gia dình GreenFarm"
+														name="title" class="form-control" aria-label="Default"
+														placeholder="VD : gia dình GreenFarm"
 														aria-describedby="inputGroup-sizing-default" required>
 												</div>
 												<label
@@ -504,7 +520,8 @@
 													<div class="input-group-prepend">
 														<span class="input-group-text">Nội dung</span>
 													</div>
-													<textarea class="form-control" rows="5" name="content" placeholder="VD : gia đình bao gồm..."
+													<textarea class="form-control" rows="5" name="content"
+														placeholder="VD : gia đình bao gồm..."
 														ng-model="form.tourOverview.content"
 														aria-label="With textarea" required></textarea>
 
@@ -549,4 +566,57 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="modal fade" id="Restore" tabindex="-1"
+	aria-labelledby="Restore" aria-hidden="true">
+	<div class="modal-dialog modal-xl custom-modal">
+		<div class="modal-content">
+
+			<div class="modal-body">
+				<div class="table-responsive">
+					<table
+							class="table table-striped table-bordered zero-configuration">
+							<thead>
+								<tr>
+									<th>STT</th>
+									<th>Hình ảnh</th>
+									<th>Tên địa điểm</th>
+									<!--<th>Ngày bắt đầu</th>
+									<th>Ngày kết thúc</th>-->
+									<th>Ngày</th>
+									<th>Giá</th>
+									<th>Số lượng người</th>
+									<th>Điều kiện</th>
+									<th>Tổng quan</th>
+									<th>Khôi phục</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									ng-repeat="item in deletedItems">
+									<th>{{$index + 1}}</th>
+									<td><img ng-src="{{item.image}}" alt="Tour Image"
+										style="width: 80px; height: 80px;"></td>
+									<td>{{item.tourname}}</td>
+									<!--<td>{{item.startdate | date:'dd-MM-yyyy'}}</td>
+									<td>{{item.enddate | date:'dd-MM-yyyy'}}</td>-->
+									<td>{{item.departureday}}</td>
+									<td>{{formatPrice(item.pricings.childprice)}}</td>
+									<td>{{item.availableslots}}</td>
+									<td><span class="text-success"
+										ng-if="item.tourCondition.conditions">Đã có</span> <span
+										ng-if="!item.tourCondition.conditions">Chưa có</span></td>
+									<td><span class="text-success"
+										ng-if="item.tourOverview.content">Đã có</span> <span
+										ng-if="!item.tourOverview.content">Chưa có</span></td>
+									<td><a ng-click="restore(item.tourid)"><i class="bi bi-bootstrap-reboot"></i></a></td>
+									
+								</tr>
+							</tbody>
+						</table>
+				</div>
+			</div>
+		</div>
 	</div>
+</div>

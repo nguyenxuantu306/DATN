@@ -61,6 +61,18 @@ public class CategoriesRestController {
 		return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
 	}
 
+	@GetMapping("/deleted")
+	public ResponseEntity<List<CategoryDTO>> getDeletedList() {
+		List<Category> deletedCategory = categoryService.findAllDeletedCategory();
+
+	
+		List<CategoryDTO> CategoryDTOs = deletedCategory.stream()
+				.map(category -> modelMapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
+
+		
+		return new ResponseEntity<>(CategoryDTOs, HttpStatus.OK);
+	}
+
 	@PostMapping()
 	public ResponseEntity<CategoryDTO> create(@RequestBody Category category) {
 		Category createdCategory = categoryService.create(category);
@@ -103,21 +115,26 @@ public class CategoriesRestController {
 		return ResponseEntity.ok(updatedCategoryDTO);
 	}
 
-	@DeleteMapping("{categoryid}")
-	public ResponseEntity<Void> delete(@PathVariable("categoryid") Integer categoryid) {
+	@PutMapping("/{categoryid}/restore")
+	public ResponseEntity<String> restoreTour(@PathVariable("categoryid") Integer categoryid) {
+		// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu
+		Category category = categoryService.findById(categoryid);
 
-		Category existingCategory = categoryService.findById(categoryid);
-
-		if (existingCategory == null) {
-			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy category
-			return ResponseEntity.notFound().build();
+		if (category == null) {
+			return new ResponseEntity<>("Danh mục không tồn tại", HttpStatus.NOT_FOUND);
 		}
 
-		// Thực hiện xóa trong service
-		categoryService.delete(categoryid);
+		category.setIsDeleted(false);
 
-		// Trả về mã trạng thái 204 No Content để chỉ ra thành công trong việc xóa
-		return ResponseEntity.noContent().build();
+		categoryService.save(category);
+
+		return new ResponseEntity<>("Khôi phục Danh mục thành công", HttpStatus.OK);
 	}
-
+	
+	
+	@DeleteMapping("/{categoryid}")
+	public ResponseEntity<Void> deleteBooking(@PathVariable("categoryid") Integer categoryid) {
+		categoryService.deleteCategoryById(categoryid);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
 }

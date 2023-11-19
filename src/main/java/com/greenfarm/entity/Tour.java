@@ -90,4 +90,9 @@ public class Tour implements Serializable {
 	public String toString() {
 		return "";
 	}
+	
+	private Boolean isdeleted = Boolean.FALSE;
+	public void setIsDeleted(boolean isdeleted) {
+	    this.isdeleted = isdeleted;
+	}
 }

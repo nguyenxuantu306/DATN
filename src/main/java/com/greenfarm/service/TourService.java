@@ -7,10 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.greenfarm.dto.TourDTO;
-import com.greenfarm.entity.Top10;
 import com.greenfarm.entity.Tour;
-import com.greenfarm.entity.TourCondition;
-import com.greenfarm.entity.TourOverview;
 
 public interface TourService {
 
@@ -22,8 +19,6 @@ public interface TourService {
 	Tour create(Tour tour);
 
 	Tour update(Tour tour);
-
-	void delete(Integer tourid);
 
 	List<TourDTO> findToursByAdultPrice(Float minPrice, Float maxPrice);
 
@@ -37,7 +32,12 @@ public interface TourService {
 	}
 
 	Page<TourDTO> findToursByAdultPriceWithPagination(Float minPrice, Float maxPrice, Pageable pageable);
-    Page<TourDTO> findToursByTournameWithPagination(String searchTerm, Pageable pageable);
-    Page<Tour> findAllWithPagination(Pageable pageable);
 
+	Page<TourDTO> findToursByTournameWithPagination(String searchTerm, Pageable pageable);
+
+	Page<Tour> findAllWithPagination(Pageable pageable);
+
+	void deleteTourById(Integer tourid);
+
+	List<Tour> findAllDeletedTour();
 }

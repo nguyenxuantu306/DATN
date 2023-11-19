@@ -32,4 +32,6 @@ public class BookingDTO {
 	private Tour tour;
 	private StatusBooking statusbooking;
 	private PaymentMethod paymentmethod;
+	
+	
 }

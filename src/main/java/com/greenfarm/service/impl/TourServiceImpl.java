@@ -18,6 +18,7 @@ import com.greenfarm.dao.TourConditionDAO;
 import com.greenfarm.dao.TourDAO;
 import com.greenfarm.dao.TourOverviewDAO;
 import com.greenfarm.dto.TourDTO;
+import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Pricing;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.TourImage;
@@ -63,12 +64,6 @@ public class TourServiceImpl implements TourService {
 		return dao.save(tour);
 	}
 
-	@Override
-	public void delete(Integer tourImageId) {
-		Tour tourImage = dao.findById(tourImageId)
-				.orElseThrow(() -> new EntityNotFoundException("Cannot find TourImage with id: " + tourImageId));
-		dao.delete(tourImage);
-	}
 
 	public List<TourDTO> findToursByAdultPrice(Float minPrice, Float maxPrice) {
 		List<Pricing> pricings = pricingdao.findByAdultpriceBetween(minPrice, maxPrice);
@@ -129,5 +124,16 @@ public class TourServiceImpl implements TourService {
 	public Page<Tour> findAllWithPagination(Pageable pageable) {
 		return dao.findAll(pageable);
 	}
+	
+	@Override
+	public List<Tour> findAllDeletedTour() {
+		return dao.findAllByIsdeletedTrue();
+	}
+
+	@Override
+    @Transactional
+    public void deleteTourById(Integer tourid) {
+		dao.deleteTourById(tourid);
+    }
 
 }

@@ -19,7 +19,6 @@ app.controller("user-ctrl", function($scope, $http) {
 	}
 
 
-	// Load deleted products
 	$http.get("/rest/users/deleted").then(resp => {
 		$scope.deletedItems = resp.data;
 	});
