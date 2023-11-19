@@ -2,9 +2,11 @@ package com.greenfarm.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
 import com.greenfarm.entity.Product;
@@ -16,8 +18,10 @@ import com.greenfarm.exception.UserAlreadyExistException;
 
 public interface UserService {
 
-	List<User> findAll();
 	
+	
+	List<User> findAll();
+
 	List<User> findAllDeletedUser();
 
 	User findById(Integer userid);
@@ -39,26 +43,31 @@ public interface UserService {
 
 	boolean checkIfUserExist(final String email);
 
-	
+	void sendRegistrationConfirmationEmail(final User user);
 
-    void sendRegistrationConfirmationEmail(final User user);
-    boolean verifyUser(final String token) throws com.greenfarm.exception.InvalidTokenException;
+	boolean verifyUser(final String token) throws com.greenfarm.exception.InvalidTokenException;
+
     public boolean iscurrentPasswordMatching(User user,String password) ;
 
-    public boolean isPasswordMatching(String password, String confirmPassword);
-    
-    void forgottenPassword(final String userName) throws UnkownIdentifierException;
-    void updatePassword(final String password, final String token) throws InvalidTokenException, UnkownIdentifierException;
-    boolean loginDisabled(final String username);
-    
-    public UserDetails createNewUser(String email) throws UserAlreadyExistException;
-    public void loginFormOAuth2(OAuth2AuthenticationToken oauth2);
-    public void processOAuthPostLogin(String username);
+	public boolean isPasswordMatching(String password, String confirmPassword);
 
-    //Tổng tiền mua hàng của các user
+	void forgottenPassword(final String userName) throws UnkownIdentifierException;
+
+	void updatePassword(final String password, final String token)
+			throws InvalidTokenException, UnkownIdentifierException;
+
+	boolean loginDisabled(final String username);
+
+	public UserDetails createNewUser(String email) throws UserAlreadyExistException;
+
+	public void loginFormOAuth2(OAuth2AuthenticationToken oauth2);
+
+	public void processOAuthPostLogin(String username);
+
+	// Tổng tiền mua hàng của các user
 	List<Report> getTotalPurchaseByUser();
-	
-	//Tổng tiền đặt vé của các user
+
+	// Tổng tiền đặt vé của các user
 	List<Report> getBookingTotalPurchaseByUser();
 
 	void save(User user);

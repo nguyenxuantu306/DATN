@@ -38,11 +38,11 @@ public class HomeController {
 	@Autowired
 	TourService tourService;
 
-	    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-	    @Autowired
-    CartDAO cartDAO;
+	@Autowired
+	CartDAO cartDAO;
 
 	@RequestMapping("")
 	public String Home(Model model) {
@@ -56,42 +56,32 @@ public class HomeController {
 
 		return "user/index";
 	}
-	
+
 	@RequestMapping("/success")
 	public String Success(ModelMap modelMap) {
-            return "success";
+		return "success";
 	}
 
 //	@RequestMapping("/profile")
 //	public String Profile(Model model) {
 //		return "profile";
 //	}
-	
-	
+
 	@RequestMapping("/profile")
-	public String Profile(@Valid @ModelAttribute("userchange") User user, BindingResult bindingResult, Model model) {
-	    if (bindingResult.hasErrors()) {
-	        // Xử lý khi có lỗi validation
-	        return "profile";
-	    }
-	    
-	    // Xử lý khi không có lỗi validation
-	    
-	    return "redirect:/profile"; // Chuyển hướng sau khi xử lý thành công
+	public String Profile(Model model) {
+		return "profile";
 	}
-	
-	
-	
+
 	@RequestMapping("/contact")
 	public String Contact(Model model) {
 		return "contact";
 	}
-	
+
 //	@RequestMapping("/login23")
 //	public String Contact1(Model model) {
 //		return "security/register";
 //	}
-	
+
 	@RequestMapping("/about")
 	public String foodter(Model model) {
 		return "about";
@@ -103,11 +93,11 @@ public class HomeController {
 	}
 
 	public double totalPrice(List<Cart> cartItems) {
-        double total = 0;
-        for (Cart cartItem : cartItems) {
-            total += cartItem.getProduct().getPrice() * cartItem.getQuantity();
-        }
-        return total;
-    }
+		double total = 0;
+		for (Cart cartItem : cartItems) {
+			total += cartItem.getProduct().getPrice() * cartItem.getQuantity();
+		}
+		return total;
+	}
 
 }

@@ -69,8 +69,11 @@ public class RegisterController {
 //			model.addAttribute("registrationForm", userInfo);
 //			return "register";
 //		}
+		
+		
 		return "register";
 	}
+
 
 	@PostMapping
 	public String registerUser(Model model, @ModelAttribute("userinfo") @Valid UserDTO userInfo,

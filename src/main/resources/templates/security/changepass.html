@@ -18,32 +18,43 @@
 					<div class="text-box ">
 						<h2 class="py-4" style="text-align: center;">Đổi mật khẩu</h2>
 
-						<form action="/changepass" th:object="${passchange}" method="post" class="py-3">						
+						<form action="/changepass" th:object="${passchange}" method="post"
+							class="py-3">
 							<div class="mb-4 form-floating">
-								<input name="currentpass" type="text" th:field="*{currentpass}" class="form-control"
-									id="currentpass" placeholder="currentpass" required>
-								<label for="currentpass">Mật khẩu cũ</label>
+								<input name="currentpass" type="password" th:field="*{currentpass}"
+									class="form-control" id="currentpass" placeholder="currentpass"
+									required> <label for="currentpass">Mật khẩu cũ</label>
+									 <i class="text-danger"
+									th:errors="*{currentpass}"></i>
+									<div th:if="${currentPasswordError}" class="text-danger" th:text="${currentPasswordError}"></div>
 							</div>
 							<div class="mb-4 form-floating">
-								<input name="newpass" type="password" th:field="*{newpass}" class="form-control"
-									id="currentpass" placeholder="currentpass" required>
-								<label for="currentpass">Mật khẩu mới</label>
+								<input name="newpass" type="password" th:field="*{newpass}"
+									class="form-control" id="newpass" required> <label
+									for="newpass">Mật khẩu mới</label> <i class="text-danger"
+									th:errors="*{newpass}"></i>
+									
 							</div>
 							<div class="mb-4 form-floating">
-								<input name="confirmpass" type="password" th:field="*{confirmpass}" class="form-control"
-									id="currentpass" placeholder="currentpass" required>
-								<label for="currentpass">Xác nhận mật khẩu mới</label>
+								<input name="confirmpass" type="password"
+									th:field="*{confirmpass}" class="form-control" id="confirmpass"
+									placeholder="" required> <label for="currentpass">Xác
+									nhận mật khẩu mới</label>
+									<div th:if="${newPasswordError}" class="text-danger" th:text="${newPasswordError}"></div>
 							</div>
-							
+
 							<button style="font-size: 20px" type="submit"
 								class="form-control-submit-button">Đổi mật khẩu</button>
-						
-						<p class="p-2">
-							<a class="blue" href="/forgot">Quên mật khẩu </a>
-						</p>								
-						<div class="register">
-							<p style="text-align: center;padding: 30px">Bạn mới biết đến GreenFarm? <a href="/register" class="link-danger">Đăng ký</a></p>
-						</div>
+
+							<p class="p-2">
+								<a class="blue" href="/forgot">Quên mật khẩu </a>
+							</p>
+							<div class="register">
+								<p style="text-align: center; padding: 30px">
+									Bạn mới biết đến GreenFarm? <a href="/register"
+										class="link-danger">Đăng ký</a>
+								</p>
+							</div>
 						</form>
 					</div>
 				</div>

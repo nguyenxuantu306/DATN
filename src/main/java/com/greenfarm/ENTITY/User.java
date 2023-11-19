@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greenfarm.dto.Provider;
 
@@ -27,6 +29,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,7 +47,7 @@ public class User implements Serializable {
 	Integer userid;
 
 	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,100}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
-	@NotEmpty(message = "Thiếu password")
+	@NotEmpty(message = "Vui lòng nhập mật khẩu")
 	String password;
 
 	@Column(unique = true)
@@ -60,27 +63,29 @@ public class User implements Serializable {
 	String lastname;
 
 	
-	@Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại phải là số nguyên dương và không chứa ký tự khác") 
+	@NotBlank(message = "Số điện thoại không được để trống")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
 	String phonenumber;
 
-	//@NotBlank(message = "Ảnh đại diện là bắt buộc")
+	// @NotBlank(message = "Ảnh đại diện là bắt buộc")
 	String image;
 
-	//@NotBlank(message = "Địa chỉ là bắt buộc")
+	@NotBlank(message = "Địa chỉ là bắt buộc")
+	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
 	String address;
 
-	//@NotNull(message = "Giới tính là bắt buộc")
+	@NotNull(message = "Giới tính phải được chọn")
 	Boolean gender;
 
-	//@Past(message = "Ngày sinh phải trước ngày hiện tại")
-	@Temporal(TemporalType.DATE)
-	Date birthday = new Date();
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Past(message = "Ngày sinh phải là một ngày trong quá khứ")
+	private Date birthday;
 
 	@Past(message = "Ngày tạo phải trước ngày hiện tại")
 	@Temporal(TemporalType.DATE)
 	Date createddate = new Date();
 
-	
 	private Boolean isdeleted = Boolean.FALSE;
 	// Boolean IsActive;
 
@@ -124,8 +129,7 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user")
 	List<VoucherUser> voucheruser;
 
-	
 	public void setIsDeleted(boolean isdeleted) {
-	    this.isdeleted = isdeleted;
+		this.isdeleted = isdeleted;
 	}
 }

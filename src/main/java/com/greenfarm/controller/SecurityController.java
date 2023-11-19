@@ -141,6 +141,8 @@ public class SecurityController {
 	public String profile(Model model) {
 		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User userchange =new User();
+		model.addAttribute("userchange",userchange);
 
 		// Kiểm tra nếu người dùng đã xác thực
 		if (authentication.isAuthenticated()) {
@@ -164,7 +166,7 @@ public class SecurityController {
 	}
 
 	@PostMapping("/profile")
-	public String profileupdate(Model model, @ModelAttribute("userchange") @Valid UserDTO userchange,
+	public String profileupdate(Model model, @ModelAttribute("userchange") @Valid User userchange,
 			BindingResult bindingResult) {
 		// if (bindingResult.hasErrors()) {
 		// // Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
@@ -183,7 +185,7 @@ public class SecurityController {
 
 			user.setAddress(userchange.getAddress());
 			user.setImage(userchange.getImage());
-			/* user.setBirthday(userchange.getBirthday()); */
+			user.setBirthday(userchange.getBirthday()); 
 			user.setFirstname(userchange.getFirstname());
 			user.setLastname(userchange.getLastname());
 			user.setPhonenumber(userchange.getPhonenumber());
