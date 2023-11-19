@@ -7,31 +7,26 @@
 					<div class="row py-3">
 						<div class="col-md-6 input-group icons">
 							<div class="input-group-prepend">
-								<span
-									class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
-									id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
+								<span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
+										class="mdi mdi-magnify"></i></span>
 							</div>
 							<input ng-model="searchTerm" type="search" class="form-control"
 								placeholder="Tìm kiếm tên sản phẩm...">
 						</div>
 						<div class="col-md-6 text-right">
-							<button type="button" class="btn btn-success"
-								ng-click="editthemsp()" data-toggle="modal"
+							<button type="button" class="btn btn-success" ng-click="editthemsp()" data-toggle="modal"
 								data-target="#exampleModa2">
 								<i class="fa fa-plus-square"></i> Thêm sản phẩm
 							</button>
-							<button type="button" class="btn btn-success"
-								ng-click="exportExcel()">
+							<button type="button" class="btn btn-success" ng-click="exportExcel()">
 								<i class="fa fa-file-excel-o"></i> Excel
 							</button>
 
-							<button type="button" class="btn btn-success"
-								ng-click="exportPdf()">
+							<button type="button" class="btn btn-success" ng-click="exportPdf()">
 
 								<i class="fa fa-file-pdf-o"></i> PDF
 							</button>
-							<button type="button" class="btn btn-success" data-toggle="modal"
-								data-target="#Restore">
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#Restore">
 								Khôi phục</i>
 							</button>
 
@@ -39,8 +34,7 @@
 						</div>
 					</div>
 					<div class="table-responsive">
-						<table
-							class="table table-striped table-bordered zero-configuration t">
+						<table class="table table-striped table-bordered zero-configuration t">
 							<thead>
 								<tr>
 									<th>STT</th>
@@ -56,18 +50,15 @@
 							<tbody>
 								<tr ng-repeat="item in pager.items | filter:filterProducts">
 									<td>{{$index + 1}}</td>
-									<td><img ng-src="{{item.image}}" alt="Product Image"
-										style="width: 80px;"></td>
+									<td><img ng-src="{{item.image}}" alt="Product Image" style="width: 80px;"></td>
 									<td>{{item.productname}}</td>
 									<td>{{formatPrice(item.price)}}</td>
 									<td style="width: 400px;">{{item.description}}</td>
 									<td>{{item.quantityavailable}}</td>
-									<td><a type="button" ng-click="edit(item)"
-										data-toggle="modal" data-target="#exampleModal"> <i
-											class="bi bi-pencil-square"></i>
-									</a></td>
-									<td><a ng-click="delete(item)"><i
-											class="bi bi-trash3-fill p-2"></i></a></td>
+									<td><a type="button" ng-click="edit(item)" data-toggle="modal"
+											data-target="#exampleModal"> <i class="bi bi-pencil-square"></i>
+										</a></td>
+									<td><a ng-click="delete(item)"><i class="bi bi-trash3-fill p-2"></i></a></td>
 								</tr>
 
 								</tr>
@@ -94,26 +85,23 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="exampleModal" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-xl custom-modal">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h3 class="modal-title " id="exampleModalLabel">Cập nhật sản
 							phẩm</h3>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
 						<div class="col-lg-12">
 							<div class="card">
 								<div class="card-body">
 									<div class="basic-form">
-										<form class="row" name="frmvalidateupdate"
-											ng-submit="submitForm1()" novalidate>
+										<form class="row" name="frmvalidateupdate" ng-submit="submitForm1()" novalidate>
 											<div class="col-md-4">
 												<label for="image"> <img ng-src="{{form.image}}"
-													style="max-width: 100%; height: 300px">
+														style="max-width: 100%; height: 300px">
 												</label>
 
 											</div>
@@ -135,11 +123,10 @@
 															ký tự!</label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Giá sản phẩm: </label> <input type="text"
+														<label>Giá sản phẩm: </label> <input type="number"
 															ng-model="form.price" name="price" ng-min="0"
 															class="form-control input-currency mr-2"
-															placeholder="VD : 100" ng-keyup="formatCurrency($event)"
-															required> <label
+															placeholder="VD : 100" required> <label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.price.$error.required"
 															style="color: red;">Vui lòng nhập giá sản phẩm !</label>
 														<label
@@ -149,8 +136,8 @@
 													</div>
 													<div class="form-group col-sm-6">
 														<label>số lượng: </label> <input type="number"
-															ng-model="form.quantityavailable"
-															name="quantityavailable" ng-min="0" placeholder="VD : 20"
+															ng-model="form.quantityavailable" name="quantityavailable"
+															ng-min="0" placeholder="VD : 20"
 															class="form-control input-default " required> <label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.quantityavailable.$error.required"
 															style="color: red;">Vui lòng nhập số lượng !</label> <label
@@ -171,12 +158,12 @@
 
 													</div>
 													<div class="form-group col-sm-12">
-														<label>Hình ảnh: </label> <input name="image"
-															ng-model="form.image" class="form-control input-default"
-															required> <label
-															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.image.$error.required"
-															style="color: red;">Hình ảnh không được để trống
-															!</label>
+														<div class="form-group col-sm-6" style="display: none;">
+															<div>Image:</div>
+															<input type="file" class="form-control" id="image"
+																onchange="angular.element(this).scope().imageChanged(event)"
+																accept="image/*">
+														</div>
 													</div>
 													<div class="form-group col-sm-12">
 														<label>Mô tả: </label>
@@ -210,15 +197,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="exampleModa2" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="exampleModa2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-xl custom-modal">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h3 class="modal-title " id="exampleModalLabel">Thêm mới sản
 							phẩm</h3>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
 						<div class="col-lg-12">
@@ -226,12 +211,11 @@
 								<div class="card-body">
 									<div class="basic-form">
 										<form class="row" name="frmvalidate" ng-submit="submitForm()"
-											novalidate>
+											enctype="multipart/form-data" novalidate>
 											<div class="col-md-4">
 												<label for="image"> <img ng-src="{{form.image}}"
-													style="max-width: 100%; height: 300px">
+														style="max-width: 100%; height: 300px">
 												</label>
-
 											</div>
 											<div class="col-md-8">
 												<div class="row">
@@ -251,11 +235,10 @@
 															ký tự!</label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Giá sản phẩm: </label> <input type="text"
+														<label>Giá sản phẩm: </label> <input type="number"
 															ng-model="form.price" name="price" ng-min="0"
 															class="form-control input-currency mr-2"
-															placeholder="VD : 100" ng-keyup="formatCurrency($event)"
-															required> <label
+															placeholder="VD : 100" required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.price.$error.required"
 															style="color: red;">Vui lòng nhập giá sản phẩm !</label>
 														<label
@@ -265,8 +248,8 @@
 													</div>
 													<div class="form-group col-sm-6">
 														<label>số lượng: </label> <input type="number"
-															ng-model="form.quantityavailable"
-															name="quantityavailable" ng-min="0" placeholder="VD : 20"
+															ng-model="form.quantityavailable" name="quantityavailable"
+															ng-min="0" placeholder="VD : 20"
 															class="form-control input-default " required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.quantityavailable.$error.required"
 															style="color: red;">Vui lòng nhập số lượng !</label> <label
@@ -287,12 +270,13 @@
 
 													</div>
 													<div class="form-group col-sm-12">
-														<label>Hình ảnh: </label> <input name="image"
-															ng-model="form.image" class="form-control input-default"
-															required> <label
-															ng-show="frmvalidate.$submitted && frmvalidate.image.$error.required"
-															style="color: red;">Hình ảnh không được để trống
-															!</label>
+														<div class="form-group col-sm-6" style="display: none;">
+															<div>Image:</div>
+															<input type="file" class="form-control" id="image"
+																onchange="angular.element(this).scope().imageChanged(event)"
+																accept="image/*">
+														</div>
+
 													</div>
 													<div class="form-group col-sm-12">
 														<label>Mô tả: </label>
@@ -332,15 +316,13 @@
 		</div>
 
 
-		<div class="modal fade" id="Restore" tabindex="-1"
-			aria-labelledby="Restore" aria-hidden="true">
+		<div class="modal fade" id="Restore" tabindex="-1" aria-labelledby="Restore" aria-hidden="true">
 			<div class="modal-dialog modal-xl custom-modal">
 				<div class="modal-content">
 
 					<div class="modal-body">
 						<div class="table-responsive">
-							<table
-								class="table table-striped table-bordered zero-configuration t">
+							<table class="table table-striped table-bordered zero-configuration t">
 								<thead>
 									<tr>
 										<th>STT</th>
@@ -355,13 +337,13 @@
 								<tbody>
 									<tr ng-repeat="item in deletedItems">
 										<td>{{$index + 1}}</td>
-										<td><img ng-src="{{item.image}}" alt="Product Image"
-											style="width: 80px;"></td>
+										<td><img ng-src="{{item.image}}" alt="Product Image" style="width: 80px;"></td>
 										<td>{{item.productname}}</td>
 										<td>{{item.price}}</td>
 										<td>{{item.description}}</td>
 										<td>{{item.quantityavailable}}</td>
-										<td><a ng-click="restore(item.productid)"><i class="bi bi-bootstrap-reboot"></i></a></td>
+										<td><a ng-click="restore(item.productid)"><i
+													class="bi bi-bootstrap-reboot"></i></a></td>
 									</tr>
 
 								</tbody>
