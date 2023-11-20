@@ -31,8 +31,8 @@ import lombok.NoArgsConstructor;
 public class Comment implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull(message = "Commentid không được để trống")
-	@Positive(message = "Commentid không được là số âm")
+//	@NotNull(message = "Commentid không được để trống")
+//	@Positive(message = "Commentid không được là số âm")
 	private Integer commentid;
 	
 	@NotBlank(message = "Commenttext không được phép trống (chỉ chứa khoảng trắng)")
