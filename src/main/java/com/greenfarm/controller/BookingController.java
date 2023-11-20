@@ -83,7 +83,7 @@ public class BookingController {
 
 	@PostMapping("/booking/create")
 	public String createBooking(Model model, @ModelAttribute("booking") BookingDTO bookingDto,
-			BindingResult bindingResult) {
+			BindingResult bindingResult) throws IOException {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("booking",bookingDto);
