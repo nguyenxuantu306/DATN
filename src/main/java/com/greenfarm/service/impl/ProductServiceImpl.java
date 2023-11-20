@@ -43,8 +43,8 @@ public class ProductServiceImpl implements ProductService {
 		return dao.findAllByIsdeletedTrue();
 	}
 
-	public Page<Product> findAll(Pageable pageable) {
-		return dao.findAll(pageable);
+	public Page<Product> findAllByIsdeletedFalse(Pageable pageable) {
+		return dao.findAllByIsdeletedFalse(pageable);
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> findByCategoryId(String cid) {
-		return dao.findByCategoryId(cid);
+		return dao.findByCategoryIdAndIsdeletedFalse(cid);
 	}
 
 	@Override

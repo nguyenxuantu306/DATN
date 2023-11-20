@@ -58,7 +58,7 @@ public class ProductController {
 	        List<Product> list = productService.findByCategoryId(cid.get());
 	        model.addAttribute("items", new PageImpl<>(list, pageable, list.size()));
 	    } else {
-	        Page<Product> productsPage = productService.findAll(pageable);
+	        Page<Product> productsPage = productService.findAllByIsdeletedFalse(pageable);
 	        Page<ProductDTO> productDTOPage = productsPage.map(product -> modelMapper.map(product, ProductDTO.class));
 	        model.addAttribute("items", productDTOPage);
 
