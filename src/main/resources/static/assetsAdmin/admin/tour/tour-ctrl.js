@@ -224,7 +224,7 @@ app.controller("tour-ctrl", function($scope, $http) {
 		}*/
 	$scope.pager = {
 		page: 0,
-		size: 7,
+		size: 5,
 		get items() {
 			var start = this.page * this.size;
 			return $scope.items.slice(start, start + this.size);
