@@ -255,6 +255,10 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 									align: 'start', // Vị trí của chú thích (start, center, end)
 									anchor: 'start', // Vị trí neo của chú thích (start, center, end)
 								},
+								title: {
+								display: true,
+								text: 'Biểu đồ doanh thu theo từng tháng của năm', // Tiêu đề của biểu đồ
+								},
 								scales: {
 									x: {
 										display: true, // Hiển thị trục x
