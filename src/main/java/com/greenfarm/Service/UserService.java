@@ -41,7 +41,7 @@ public interface UserService {
 
 	// yeyye
 
-	boolean checkIfUserExist(final String email);
+	
 
 	void sendRegistrationConfirmationEmail(final User user);
 

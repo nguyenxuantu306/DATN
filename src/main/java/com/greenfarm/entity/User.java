@@ -62,7 +62,7 @@ public class User implements Serializable {
 	@NotBlank(message = "Tên cuối là bắt buộc")
 	String lastname;
 
-	
+	@Column(unique = true)
 	@NotBlank(message = "Số điện thoại không được để trống")
     @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
 	String phonenumber;
@@ -70,16 +70,17 @@ public class User implements Serializable {
 	// @NotBlank(message = "Ảnh đại diện là bắt buộc")
 	String image;
 
-	@NotBlank(message = "Địa chỉ là bắt buộc")
-	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
+//	@NotBlank(message = "Địa chỉ là bắt buộc")
+//	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
 	String address;
 
-	@NotNull(message = "Giới tính phải được chọn")
+//	@NotNull(message = "Giới tính phải được chọn")
 	Boolean gender;
 
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Past(message = "Ngày sinh phải là một ngày trong quá khứ")
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
+//	@Past(message = "Ngày sinh phải là một ngày trong quá khứ")
+	 @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 
 	@Past(message = "Ngày tạo phải trước ngày hiện tại")

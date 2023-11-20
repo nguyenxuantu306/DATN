@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -68,7 +69,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	public List<User> findAll() {
 		return dao.findAllByIsdeletedFalse();
 	}
-	
+
 	@Override
 	public List<User> findAllDeletedUser() {
 		return dao.findAllByIsdeletedTrue();
@@ -88,22 +89,40 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		// return user;
 	}
 
-	@Override
-	public User create(User user) throws UserAlreadyExistException {
-		if (!emailExists(user.getEmail())) {
-			System.out.println("đã có tk");
-			throw new UserAlreadyExistException("đã có tài khoản dùng email này");
-			
-		} else {
-			User userentity = new User();
-			BeanUtils.copyProperties(user, userentity);
-			userentity.setPassword(PE.encode(userentity.getPassword()));
-			dao.save(userentity);
-			sendRegistrationConfirmationEmail(userentity);
-
-			return userentity;
-		}
-		}
+//	
+//	System.out.println("ben trong impl");
+////	try {
+//	Optional<User> account = dao.findByEmail(user.getEmail());
+//		
+//		System.out.println("sau find");
+//		if (account.isPresent()) {
+//			System.out.println("đã có tk");
+//			throw new UserAlreadyExistException("đã có tài khoản dùng email này");
+//		}
+//		//emailExists(user.getEmail())
+//		 else{
+//			 
+////				 User user1 = account.get();
+////					System.out.println(user1.getEmail());
+//			 try {
+//				
+//				 System.out.println("ko to tk");
+//					User userentity = new User();
+//					BeanUtils.copyProperties(user, userentity);
+//					userentity.setPassword(PE.encode(userentity.getPassword()));
+//					System.out.println("luu us");
+//					dao.save(userentity);
+//					System.out.println("luu thanh cong");
+//					sendRegistrationConfirmationEmail(userentity);
+//					System.out.println("gui mail");
+//					return userentity;
+//			} catch (Exception e) {
+//				// TODO: handle exception
+//				e.getStackTrace();
+//			}
+//					
+//			
+//		}
 
 	@Override
 	public User update(User user) {
@@ -172,16 +191,6 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	public User findByEmail(String email) {
 		User user = dao.findByEmail(email).get();
 		return user;
-	}
-
-	@Override
-	public boolean emailExists(String email) {
-		return dao.findByEmail(email) != null;
-	}
-
-	@Override
-	public boolean checkIfUserExist(String email) {
-		return false;
 	}
 
 	@Override
@@ -362,8 +371,54 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public void save(User user) {
-		 dao.save(user);
-		
+		dao.save(user);
+
+	}
+
+	@Override
+	public User create(User user) throws UserAlreadyExistException {
+		// TODO Auto-generated method stub
+		// Kiểm tra xem user đã tồn tại chưa
+		if (emailExists(user.getEmail())) {
+			// Nếu đã tồn tại, ném ngoại lệ
+
+			System.out.println("da co tk");
+			throw new UserAlreadyExistException("Đã có tài khoản sử dụng email này");
+		} else {
+			// Nếu chưa tồn tại, tạo user và trả về
+			User userEntity = new User();
+			BeanUtils.copyProperties(user, userEntity);
+			userEntity.setPassword(PE.encode(userEntity.getPassword()));
+			System.out.println(userEntity.getEmail());
+			System.out.println(userEntity.getFirstname());
+			System.out.println(userEntity.getLastname());
+			System.out.println(userEntity.getPassword());
+			System.out.println(userEntity.getPhonenumber());
+
+			userEntity.setBirthday(null);
+			userEntity.setAddress(null);
+			userEntity.setGender(null);
+			userEntity.setImage(null);
+			System.out.println("Lưu user vào database");
+			try {
+				dao.save(userEntity);
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("ko luu dc");
+				e.printStackTrace();
+			}
+			
+			sendRegistrationConfirmationEmail(userEntity);
+			System.out.println("Gửi email xác nhận đăng ký");
+			return userEntity;
+		}
+	}
+
+	@Override
+	public boolean emailExists(String email) {
+		// TODO Auto-generated method stub
+		Optional<User> account = dao.findByEmail(email);
+		return account.isPresent();
 	}
 
 }

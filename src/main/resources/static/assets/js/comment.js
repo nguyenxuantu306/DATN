@@ -39,6 +39,7 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	$scope.initialize = function() {
 	
 	
+		console.log("tourId: " + $scope.users.email); 
 		console.log("tourId: " + $scope.tour.tourid); 
 		console.log("tourId: " + $scope.loggedInUser); 
 		
