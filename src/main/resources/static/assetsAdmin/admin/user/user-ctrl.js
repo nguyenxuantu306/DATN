@@ -16,12 +16,15 @@ app.controller("user-ctrl", function($scope, $http) {
 				item.birthday = new Date(item.birthday);
 			})
 		});
+
+		$http.get("/rest/users/deleted").then(resp => {
+			$scope.deletedItems = resp.data;
+		});
+
 	}
+	// Khởi đầu
+	$scope.initialize();
 
-
-	$http.get("/rest/users/deleted").then(resp => {
-		$scope.deletedItems = resp.data;
-	});
 
 
 	// validation ngày tạo
@@ -38,8 +41,6 @@ app.controller("user-ctrl", function($scope, $http) {
 		return selectedDate < currentDate;
 	};
 
-	// Khởi đầu
-	$scope.initialize();
 
 	$scope.isEdit = false; // Mặc định không ở chế độ edit
 
@@ -64,7 +65,7 @@ app.controller("user-ctrl", function($scope, $http) {
 	$scope.editthemsp = function() {
 		$scope.isEdit = false; // Chuyển về chế độ tạo mới
 		$scope.form = {
-			image:'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png'
+			image: 'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png'
 		}
 	}
 

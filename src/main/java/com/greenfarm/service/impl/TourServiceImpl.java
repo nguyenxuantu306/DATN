@@ -46,7 +46,7 @@ public class TourServiceImpl implements TourService {
 
 	@Override
 	public List<Tour> findAll() {
-		return dao.findAll();
+		return dao.findAllByIsdeletedFalse();
 	}
 
 	@Override
