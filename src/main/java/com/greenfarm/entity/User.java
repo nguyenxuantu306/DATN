@@ -62,7 +62,7 @@ public class User implements Serializable {
 	@NotBlank(message = "Tên cuối là bắt buộc")
 	String lastname;
 
-	
+	@Column(unique = true)
 	@NotBlank(message = "Số điện thoại không được để trống")
     @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
 	String phonenumber;
@@ -80,6 +80,7 @@ public class User implements Serializable {
 	
 //	@DateTimeFormat(pattern = "yyyy-MM-dd")
 //	@Past(message = "Ngày sinh phải là một ngày trong quá khứ")
+	 @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 
 //	@Past(message = "Ngày tạo phải trước ngày hiện tại")
