@@ -164,22 +164,21 @@ public class BookingRestController {
 
 	@GetMapping("/sendbooking/{bookingid}")
 	public void sendbooking(@PathVariable("bookingid") Integer bookingid)
-			throws FileNotFoundException, MessagingException {
-		System.out.println("Gui mail den khach hang");
-		Booking booking = bookingService.findById(bookingid);
-		File attachmentFile = new File("../DATN/src/main/resources/qrcode/don" + bookingid + ".png");
-		String diachiqr = "../DATN/src/main/resources/qrcode/don" + bookingid + ".png";
-		System.out.println("../DATN/src/main/resources/qrcode/don" + bookingid + ".png");
-		System.out.println(booking.getUser().getEmail());
-//		try {
-		emailService.sendEmailWithBooking(booking.getUser().getEmail(), "Order Confirmation",
-				"Thanks for your recent order", diachiqr);
-//		} catch (MessagingException | FileNotFoundException mailException) {
-//			// TODO: handle exception
-//			LOG.error("Error while sending out email..{}", mailException.getStackTrace());
-//
-//		}
+	        throws MessagingException, FileNotFoundException {
+	    System.out.println("Gui mail den khach hang");
+	    Booking booking = bookingService.findById(bookingid);
+
+	    // Lấy đường dẫn URL của hình ảnh QR code từ cơ sở dữ liệu
+	    String qrCodeUrl = booking.getQrcode();
+	    
+	    System.out.println(qrCodeUrl);
+	    System.out.println(booking.getUser().getEmail());
+
+	    // Gửi email với đường dẫn URL của hình ảnh đính kèm
+	    emailService.sendEmailWithBooking(booking.getUser().getEmail(), "Order Confirmation",
+	            "Thanks for your recent order", qrCodeUrl);
 	}
+
 
 	@Autowired
 	StatusBookingService statusBookingService;
@@ -195,14 +194,5 @@ public class BookingRestController {
 			Booking updatedBooking = bookingService.update(booking);
 			System.out.println("Đã xác nhận thành công");
 		}
-
-//
-//		if (updatedBooking == null) {
-//			return ResponseEntity.notFound().build();
-//		}
-//		BookingDTO bookingDTO = modelMapper.map(updatedBooking, BookingDTO.class);
-//		return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
-//	}
-
 	}
 }

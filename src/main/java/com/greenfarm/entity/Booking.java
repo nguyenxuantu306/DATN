@@ -49,8 +49,7 @@ public class Booking implements Serializable {
     @Min(value = 0, message = "Số lượng vé trẻ em không được nhỏ hơn 0")
 	private Integer Childticketnumber;
 
-	
-	
+	private String qrcode;
 	@ManyToOne
 	@JoinColumn(name = "userid")
 	User user;

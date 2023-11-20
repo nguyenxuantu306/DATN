@@ -224,7 +224,7 @@ app.controller("tour-ctrl", function($scope, $http) {
 		}*/
 	$scope.pager = {
 		page: 0,
-		size: 7,
+		size: 5,
 		get items() {
 			var start = this.page * this.size;
 			return $scope.items.slice(start, start + this.size);
@@ -300,5 +300,24 @@ app.controller("tour-ctrl", function($scope, $http) {
 			.catch(function(error) {
 				console.error('Error exporting PDF:', error);
 			});
+	};
+	
+	$scope.imageChanged = function(event) {
+		var file = event.target.files[0];
+		if (file) {
+			var data = new FormData();
+			data.append('file', file);
+			$http.post('/api/images/upload', data, {
+				transformRequest: angular.identity,
+				headers: { 'Content-Type': undefined },
+				//responseType: 'text'
+			}).then(resp => {
+				console.log('Upload success. Image URL:', resp.data.imageUrl);
+				$scope.form.image = resp.data.imageUrl;
+			}).catch(error => {
+				alert("Lỗi upload hình ảnh");
+				console.log("Error", error);
+			})
+		}
 	};
 });

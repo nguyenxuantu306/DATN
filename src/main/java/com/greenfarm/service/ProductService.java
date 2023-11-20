@@ -21,7 +21,7 @@ public interface ProductService {
 
 
 	// Phân trang
-	Page<Product> findAll(Pageable pageable);
+	Page<Product> findAllByIsdeletedFalse(Pageable pageable);
 
 	// tìm sản phẩm theo id
 	Product findById(Integer productid);

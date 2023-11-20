@@ -18,7 +18,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public List<Category> findAll() {
-		return dao.findAll();
+		return dao.findAllByIsdeletedFalse();
 	}
 
 	@Override

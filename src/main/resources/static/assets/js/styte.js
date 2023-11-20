@@ -105,7 +105,7 @@ function sortProductsByPrice(sortType) {
 	});
 }
 
-// Hàm xử lý sự kiện khi người dùng thay đổi giá trị radio
+/*// Hàm xử lý sự kiện khi người dùng thay đổi giá trị radio
 function handlePriceRangeChange() {
 	var priceRange = $('input[name="priceRange"]:checked').val();
 	$.ajax({
@@ -119,7 +119,7 @@ function handlePriceRangeChange() {
 			console.log(xhr.responseText);
 		},
 	});
-}
+}*/
 
 $(document).ready(function() {
 	// Gắn kết sự kiện khi người dùng nhập từ khóa
@@ -149,8 +149,8 @@ $(document).ready(function() {
 		sortProductsByPrice(sortType);
 	});
 
-	// Gắn kết sự kiện khi người dùng thay đổi giá trị radio
-	$('input[type="radio"]').change(handlePriceRangeChange);
+	/*// Gắn kết sự kiện khi người dùng thay đổi giá trị radio
+	$('input[type="radio"]').change(handlePriceRangeChange);*/
 });
 
 // rating và chức năng cơ bản tour

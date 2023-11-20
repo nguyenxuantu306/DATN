@@ -46,7 +46,7 @@ public class TourServiceImpl implements TourService {
 
 	@Override
 	public List<Tour> findAll() {
-		return dao.findAll();
+		return dao.findAllByIsdeletedFalse();
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class TourServiceImpl implements TourService {
 
 	@Override
 	public Page<TourDTO> findToursByAdultPriceWithPagination(Float minPrice, Float maxPrice, Pageable pageable) {
-	    Page<Tour> tourPage = dao.findByAdultprice(minPrice, maxPrice, pageable);
+	    Page<Tour> tourPage = dao.findByAdultpriceAndIsdeletedFalse(minPrice, maxPrice, pageable);
 
 	    List<TourDTO> tourDTOs = tourPage.getContent().stream()
 	                                   .map(tour -> convertToDTOUsingModelMapper(tour))
@@ -111,7 +111,7 @@ public class TourServiceImpl implements TourService {
 
 	@Override
 	public Page<TourDTO> findToursByTournameWithPagination(String searchTerm, Pageable pageable) {
-	    Page<Tour> tourPage = dao.findByTournameContainingIgnoreCase(searchTerm, pageable);
+	    Page<Tour> tourPage = dao.findByTournameContainingIgnoreCaseAndIsdeletedFalse(searchTerm, pageable);
 
 	    List<TourDTO> tourDTOs = tourPage.getContent().stream()
 	                                   .map(tour -> convertToDTOUsingModelMapper(tour))
@@ -122,7 +122,7 @@ public class TourServiceImpl implements TourService {
 
 	@Override
 	public Page<Tour> findAllWithPagination(Pageable pageable) {
-		return dao.findAll(pageable);
+		return dao.findAllByIsdeletedFalse(pageable);
 	}
 	
 	@Override

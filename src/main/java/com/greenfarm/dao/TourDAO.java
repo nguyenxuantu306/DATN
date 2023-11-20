@@ -15,10 +15,10 @@ import com.greenfarm.entity.Tour;
 
 public interface TourDAO extends JpaRepository<Tour, Integer> {
 
-	@Query("SELECT t FROM Tour t JOIN t.pricings p WHERE p.adultprice BETWEEN :minPrice AND :maxPrice")
-	Page<Tour> findByAdultprice(Float minPrice, Float maxPrice, Pageable pageable);
+	@Query("SELECT t FROM Tour t JOIN t.pricings p WHERE p.adultprice BETWEEN :minPrice AND :maxPrice AND t.isdeleted = false")
+	Page<Tour> findByAdultpriceAndIsdeletedFalse(Float minPrice, Float maxPrice, Pageable pageable);
 
-    Page<Tour> findByTournameContainingIgnoreCase(String searchTerm, Pageable pageable);
+    Page<Tour> findByTournameContainingIgnoreCaseAndIsdeletedFalse(String searchTerm, Pageable pageable);
 	
 	List<Tour> findByTournameContainingIgnoreCase(String searchTerm);
 	
@@ -43,5 +43,7 @@ public interface TourDAO extends JpaRepository<Tour, Integer> {
 	@Modifying
 	@Query("UPDATE Tour b SET b.isdeleted = true WHERE b.tourid = :id")
 	void deleteTourById(@Param("id") Integer id);
+
+	Page<Tour> findAllByIsdeletedFalse(Pageable pageable);
 
 }
