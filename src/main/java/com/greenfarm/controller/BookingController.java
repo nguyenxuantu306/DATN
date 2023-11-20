@@ -101,7 +101,7 @@ public class BookingController {
 
 		bookingService.saveBooking(booking);
 		this.generateAndSaveQRCode(booking, "don" + booking.getBookingid());
-		return "successbooking";
+		return "successboking";
 	}
 
 	public void generateAndSaveQRCode(Booking booking, String content) {
