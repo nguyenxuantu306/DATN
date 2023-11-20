@@ -67,7 +67,7 @@ public class User implements Serializable {
     @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
 	String phonenumber;
 
-	// @NotBlank(message = "Ảnh đại diện là bắt buộc")
+// @NotBlank(message = "Ảnh đại diện là bắt buộc")
 	String image;
 
 //	@NotBlank(message = "Địa chỉ là bắt buộc")
@@ -83,7 +83,7 @@ public class User implements Serializable {
 	 @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 
-	@Past(message = "Ngày tạo phải trước ngày hiện tại")
+//	@Past(message = "Ngày tạo phải trước ngày hiện tại")
 	@Temporal(TemporalType.DATE)
 	Date createddate = new Date();
 

@@ -69,7 +69,8 @@ public class RegisterController {
 //			model.addAttribute("registrationForm", userInfo);
 //			return "register";
 //		}
-		
+//		User userinfo = new User();
+//		model.addAttribute("userinfo", userinfo);
 		
 		return "register";
 	}

@@ -144,8 +144,8 @@ public class SecurityController {
 	public String profile(Model model) {
 		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User userchange =new User();
-		model.addAttribute("userchange",userchange);
+		User userchange = new User();
+		model.addAttribute("userchange", userchange);
 
 		// Kiểm tra nếu người dùng đã xác thực
 		if (authentication.isAuthenticated()) {
@@ -189,9 +189,9 @@ public class SecurityController {
 			user.setAddress(userchange.getAddress());
 			user.setImage(userchange.getImage());
 			System.out.println(userchange.getImage());
-			
+
 			if (isAtLeast16YearsOld(userchange.getBirthday())) {
-				user.setBirthday(userchange.getBirthday()); 
+				user.setBirthday(userchange.getBirthday());
 			}
 			user.setFirstname(userchange.getFirstname());
 			user.setLastname(userchange.getLastname());
@@ -253,7 +253,8 @@ public class SecurityController {
 	}
 
 	@PostMapping("/forgot")
-	public String fogot(Model model, @RequestParam String email) throws UnkownIdentifierException {
+	public String fogot(@ModelAttribute User user, Model model, @RequestParam String email)
+			throws UnkownIdentifierException {
 		try {
 			System.out.println(email);
 			// String userName = email;
@@ -322,19 +323,19 @@ public class SecurityController {
 	}
 
 	public boolean isAtLeast16YearsOld(Date birthday) {
-        if (birthday == null) {
-            // Xử lý trường hợp ngày sinh không được đặt
-            return false;
-        }
+		if (birthday == null) {
+			// Xử lý trường hợp ngày sinh không được đặt
+			return false;
+		}
 
-        // Chuyển đổi từ Date sang LocalDate
-        LocalDate birthdate = new java.sql.Date(birthday.getTime()).toLocalDate();
-        LocalDate currentDate = LocalDate.now();
+		// Chuyển đổi từ Date sang LocalDate
+		LocalDate birthdate = new java.sql.Date(birthday.getTime()).toLocalDate();
+		LocalDate currentDate = LocalDate.now();
 
-        // Tính khoảng cách thời gian giữa ngày sinh và ngày hiện tại
-        Period age = Period.between(birthdate, currentDate);
+		// Tính khoảng cách thời gian giữa ngày sinh và ngày hiện tại
+		Period age = Period.between(birthdate, currentDate);
 
-        // Kiểm tra xem tuổi có lớn hơn hoặc bằng 16 không
-        return age.getYears() >= 16;
-    }
+		// Kiểm tra xem tuổi có lớn hơn hoặc bằng 16 không
+		return age.getYears() >= 16;
+	}
 }

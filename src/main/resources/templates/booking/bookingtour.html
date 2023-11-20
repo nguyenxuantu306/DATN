@@ -9,7 +9,7 @@
 
 <body>
 	<div class="container">
-		<form action="/booking/create" method="post" th:object="${booking}">
+		<form action="/booking/create" method="post"th:action="@{/booking/create}" th:object="${booking}">
 			<div class="row">
 				<div class="col-8" id="radius">
 					<div class="card mt-3" id="radius">
@@ -72,18 +72,20 @@
 								<div class="row">
 
 									<div class="col-6">
-    <label for="" style="font-weight: bold;">Vé người lớn: </label>
-    <input type="number" min="1" style="border-radius: 5px"
-           class="form-control" id="adultticketnumber" th:field="${booking.Adultticketnumber}" 
-           aria-label="Username" aria-describedby="basic-addon1" oninput="calculateTotal()">
-</div>
+										<label for="" style="font-weight: bold;">Vé người lớn:
+										</label> <input type="number" min="1" style="border-radius: 5px"
+											class="form-control" id="adultticketnumber"
+											th:field="${booking.Adultticketnumber}" aria-label="Username"
+											aria-describedby="basic-addon1" oninput="calculateTotal()">
+									</div>
 
-<div class="col-6">
-    <label for="" style="font-weight: bold;">Vé trẻ em: </label>
-    <input type="number" min="0" style="border-radius: 5px"
-           class="form-control" id="childticketnumber" th:field="${booking.Childticketnumber}" 
-           aria-label="Username" aria-describedby="basic-addon1" oninput="calculateTotal()">
-</div>
+									<div class="col-6">
+										<label for="" style="font-weight: bold;">Vé trẻ em: </label> <input
+											type="number" min="0" style="border-radius: 5px"
+											class="form-control" id="childticketnumber"
+											th:field="${booking.Childticketnumber}" aria-label="Username"
+											aria-describedby="basic-addon1" oninput="calculateTotal()">
+									</div>
 								</div>
 
 								<!--  -->
@@ -183,34 +185,39 @@
 		</form>
 	</div>
 	<script>
-    // Function to calculate total price
-    function calculateTotal() {
-        // Get the values of adult and child ticket numbers
-        var adultTickets = parseInt(document.getElementById('adultticketnumber').value) || 0;
-        var childTickets = parseInt(document.getElementById('childticketnumber').value) || 0;
+		// Function to calculate total price
+		function calculateTotal() {
+			// Get the values of adult and child ticket numbers
+			var adultTickets = parseInt(document
+					.getElementById('adultticketnumber').value) || 0;
+			var childTickets = parseInt(document
+					.getElementById('childticketnumber').value) || 0;
 
-        // Ensure that there's at least 1 adult ticket and 0 child tickets
-        adultTickets = Math.max(adultTickets, 1);
-        childTickets = Math.max(childTickets, 0);
+			// Ensure that there's at least 1 adult ticket and 0 child tickets
+			adultTickets = Math.max(adultTickets, 1);
+			childTickets = Math.max(childTickets, 0);
 
-        // Get the prices of adult and child tickets
-        var adultPrice = parseFloat(document.getElementById('adultticketprice').value) || 1;
-        var childPrice = parseFloat(document.getElementById('childticketprice').value) || 0;
+			// Get the prices of adult and child tickets
+			var adultPrice = parseFloat(document
+					.getElementById('adultticketprice').value) || 1;
+			var childPrice = parseFloat(document
+					.getElementById('childticketprice').value) || 0;
 
-        // Calculate the total price
-        var totalPrice = (adultTickets * adultPrice) + (childTickets * childPrice);
+			// Calculate the total price
+			var totalPrice = (adultTickets * adultPrice)
+					+ (childTickets * childPrice);
 
-        // Set the value of the total price input field
-        document.getElementById('totalprice').value = totalPrice.toFixed(2);
-    }
+			// Set the value of the total price input field
+			document.getElementById('totalprice').value = totalPrice.toFixed(2);
+		}
 
-    // Set default values when the page is loaded
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById('adultticketnumber').value = "1";
-        document.getElementById('childticketnumber').value = "0";
-        calculateTotal(); // Call the function to update the total with default values
-    });
-</script>
+		// Set default values when the page is loaded
+		document.addEventListener("DOMContentLoaded", function() {
+			document.getElementById('adultticketnumber').value = "1";
+			document.getElementById('childticketnumber').value = "0";
+			calculateTotal(); // Call the function to update the total with default values
+		});
+	</script>
 
 </body>
 

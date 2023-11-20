@@ -41,6 +41,8 @@ import com.greenfarm.service.UserService;
 import com.mysql.cj.util.StringUtils;
 
 import jakarta.mail.MessagingException;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
 @Service
 public class UserServerImpl implements UserService, UserDetailsService {
@@ -89,40 +91,40 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		// return user;
 	}
 
-//	
-//	System.out.println("ben trong impl");
-////	try {
-//	Optional<User> account = dao.findByEmail(user.getEmail());
-//		
-//		System.out.println("sau find");
-//		if (account.isPresent()) {
-//			System.out.println("đã có tk");
-//			throw new UserAlreadyExistException("đã có tài khoản dùng email này");
-//		}
-//		//emailExists(user.getEmail())
-//		 else{
-//			 
-////				 User user1 = account.get();
-////					System.out.println(user1.getEmail());
-//			 try {
-//				
-//				 System.out.println("ko to tk");
-//					User userentity = new User();
-//					BeanUtils.copyProperties(user, userentity);
-//					userentity.setPassword(PE.encode(userentity.getPassword()));
-//					System.out.println("luu us");
-//					dao.save(userentity);
-//					System.out.println("luu thanh cong");
-//					sendRegistrationConfirmationEmail(userentity);
-//					System.out.println("gui mail");
-//					return userentity;
-//			} catch (Exception e) {
-//				// TODO: handle exception
-//				e.getStackTrace();
-//			}
-//					
-//			
-//		}
+	//
+	// System.out.println("ben trong impl");
+	//// try {
+	// Optional<User> account = dao.findByEmail(user.getEmail());
+	//
+	// System.out.println("sau find");
+	// if (account.isPresent()) {
+	// System.out.println("đã có tk");
+	// throw new UserAlreadyExistException("đã có tài khoản dùng email này");
+	// }
+	// //emailExists(user.getEmail())
+	// else{
+	//
+	//// User user1 = account.get();
+	//// System.out.println(user1.getEmail());
+	// try {
+	//
+	// System.out.println("ko to tk");
+	// User userentity = new User();
+	// BeanUtils.copyProperties(user, userentity);
+	// userentity.setPassword(PE.encode(userentity.getPassword()));
+	// System.out.println("luu us");
+	// dao.save(userentity);
+	// System.out.println("luu thanh cong");
+	// sendRegistrationConfirmationEmail(userentity);
+	// System.out.println("gui mail");
+	// return userentity;
+	// } catch (Exception e) {
+	// // TODO: handle exception
+	// e.getStackTrace();
+	// }
+	//
+	//
+	// }
 
 	@Override
 	public User update(User user) {
@@ -246,10 +248,18 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		return PE.matches(password, currentPassword);
 	}
 
+	// @Override
+	// public void forgottenPassword(String userName) throws
+	// UnkownIdentifierException {
+	// // TODO Auto-generated method stub
+	// User user = dao.findByEmail(userName).get();
+	// sendResetPasswordEmail(user);
+	// }
 	@Override
 	public void forgottenPassword(String userName) throws UnkownIdentifierException {
 		// TODO Auto-generated method stub
-		User user = dao.findByEmail(userName).get();
+		User user = dao.findByEmail(userName).orElseThrow(
+				() -> new UnkownIdentifierException("Không tìm thấy người dùng với địa chỉ email đã nhập."));
 		sendResetPasswordEmail(user);
 	}
 
@@ -407,7 +417,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 				System.out.println("ko luu dc");
 				e.printStackTrace();
 			}
-			
+
 			sendRegistrationConfirmationEmail(userEntity);
 			System.out.println("Gửi email xác nhận đăng ký");
 			return userEntity;
