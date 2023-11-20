@@ -323,4 +323,23 @@ app.controller("product-ctrl", function($scope, $http) {
 		}
 	};*/
 
+	$scope.imageChanged = function(event) {
+		var file = event.target.files[0];
+		if (file) {
+			var data = new FormData();
+			data.append('file', file);
+			$http.post('/api/images/upload', data, {
+				transformRequest: angular.identity,
+				headers: { 'Content-Type': undefined },
+				//responseType: 'text'
+			}).then(resp => {
+				console.log('Upload success. Image URL:', resp.data.imageUrl);
+				$scope.form.image = resp.data.imageUrl;
+			}).catch(error => {
+				alert("Lỗi upload hình ảnh");
+				console.log("Error", error);
+			})
+		}
+	};
+
 });

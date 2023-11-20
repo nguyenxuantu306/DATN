@@ -185,7 +185,7 @@ public class SecurityController {
 
 			user.setAddress(userchange.getAddress());
 			user.setImage(userchange.getImage());
-			user.setBirthday(userchange.getBirthday());
+//			user.setBirthday(userchange.getBirthday()); 
 			user.setFirstname(userchange.getFirstname());
 			user.setLastname(userchange.getLastname());
 			user.setPhonenumber(userchange.getPhonenumber());
