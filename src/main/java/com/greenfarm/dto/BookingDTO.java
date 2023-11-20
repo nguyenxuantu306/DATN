@@ -28,10 +28,9 @@ public class BookingDTO {
 	private Float Totalprice;
 	private Integer Adultticketnumber;
 	private Integer Childticketnumber;
+	private String qrcode;
 	private User user;
 	private Tour tour;
 	private StatusBooking statusbooking;
 	private PaymentMethod paymentmethod;
-	
-	
 }

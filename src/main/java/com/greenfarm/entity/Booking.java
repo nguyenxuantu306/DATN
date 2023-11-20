@@ -43,8 +43,7 @@ public class Booking implements Serializable {
 
 	private Integer Childticketnumber;
 
-	
-	
+	private String qrcode;
 	@ManyToOne
 	@JoinColumn(name = "userid")
 	User user;

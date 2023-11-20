@@ -243,13 +243,9 @@
 
 
 											<div class="">
-												<label for="formFile" class="form-label">Hình ảnh
-													địa điểm </label> <input class="form-control" type="text"
-													name="image" placeholder="VD : link ảnh"
-													ng-model="form.image" required /> <label
-													ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.image.$error.required"
-													style="color: red;">Hình ảnh địa điểm không được để
-													trống!</label>
+												<div>Image:</div>
+															<input type="file" class="form-control" id="image" onchange="angular.element(this).scope().imageChanged(event)"
+																accept="image/*">
 											</div>
 										</div>
 										<div class=" form-group col-md-12">
@@ -279,7 +275,7 @@
 															id="inputGroup-sizing-default">Tiêu đề</span>
 													</div>
 													<input type="text" ng-model="form.tourOverview.title"
-														placeholder="VD : gia dình GreenFarm
+														placeholder="VD : gia dình GreenFarm"
 														name="
 														title" class="form-control" aria-label="Default"
 														aria-describedby="inputGroup-sizing-default" required>
@@ -473,13 +469,10 @@
 
 
 											<div class="">
-												<label for="formFile" class="form-label">Hình ảnh
-													địa điểm </label> <input class="form-control" type="text"
-													name="image" placeholder="VD : link ảnh"
-													ng-model="form.image" required /> <label
-													ng-show="frmvalidateadd.$submitted && frmvalidateadd.image.$error.required"
-													style="color: red;">Hình ảnh địa điểm không được để
-													trống!</label>
+												<div>Image:</div>
+												<input type="file" class="form-control" id="image"
+													onchange="angular.element(this).scope().imageChanged(event)"
+													accept="image/*">
 											</div>
 										</div>
 										<div class=" form-group col-md-12">

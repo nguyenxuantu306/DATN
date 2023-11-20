@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.greenfarm.cloudinary.ImageRestController;
 import com.greenfarm.dto.BookingDTO;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.PaymentMethod;
@@ -48,9 +50,12 @@ public class BookingController {
 
 	@Autowired
 	ModelMapper modelMapper;
-	
+
 	@Autowired
 	private QRCodeService qrCodeService;
+
+	@Autowired
+	ImageRestController imageRestController;
 
 	@RequestMapping("/booking/list")
 	public String list(Model model, HttpServletRequest request) {
@@ -76,46 +81,30 @@ public class BookingController {
 	}
 
 	@PostMapping("/booking/create")
-	public String createBooking(@ModelAttribute("booking") BookingDTO bookingDto) {
+	public String createBooking(@ModelAttribute("booking") BookingDTO bookingDto) throws IOException {
 		Booking booking = modelMapper.map(bookingDto, Booking.class);
-		//Thời gian 
+		// Thời gian
 		booking.setBookingdate(LocalDateTime.now());
-		
-		//Trạng thái
+
+		// Trạng thái
 		StatusBooking statusBooking = statusBookingService.findById(1);
 		booking.setStatusbooking(statusBooking);
-		
-		//Phương thức thanh toán
+
+		// Phương thức thanh toán
 		PaymentMethod paymentMethod = new PaymentMethod();
 		paymentMethod.setPaymentmethodid(1);
 		booking.setPaymentmethod(paymentMethod);
 
 		bookingService.saveBooking(booking);
-		this.generateAndSaveQRCode(booking,"don"+booking.getBookingid());
+		// Generate and save QR code to the qrcode field
+		String qrCodeContent = "http://localhost:8080/rest/bookings/kiemtrave/" + booking.getBookingid();
+		System.out.println(qrCodeContent);
+		System.out.println(booking.getBookingid());
+		String qrCodeUrl = imageRestController.uploadQRCodeToCloud(qrCodeContent);
+		// Save the QR code URL to the booking
+		booking.setQrcode(qrCodeUrl);
+
+		bookingService.saveBooking(booking);
 		return "successboking";
 	}
-	
-	public void generateAndSaveQRCode(Booking booking,String content) {
-	    try {
-	        // Tạo mã QR
-	        byte[] qrCode = qrCodeService.generateQRCode("http://localhost:8080/rest/bookings/kiemtrave/"+booking.getBookingid(), 500, 500);
-	        
-	        // Lưu mã QR vào máy
-	        String filePath = "../DATN/src/main/resources/qrcode/"+content+".png"; // Đặt đường dẫn tùy thuộc vào nơi bạn muốn lưu
-	        saveQRCodeToFile(qrCode, filePath);
-	        	System.out.println("QR Code saved successfully at: " + filePath);
-	       // return ResponseEntity.ok("QR Code saved successfully at: " + filePath);
-	        
-	    } catch (Exception e) {
-	        //return ResponseEntity.badRequest().body("Error generating or saving QR Code");
-	    	System.out.println("Error generating or saving QR Code");
-	    }
-	}
-
-	private void saveQRCodeToFile(byte[] qrCode, String filePath) throws IOException {
-	    try (FileOutputStream fos = new FileOutputStream(new File(filePath))) {
-	        fos.write(qrCode);
-	    }
-	}
-
 }
