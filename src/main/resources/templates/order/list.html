@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout :: dynamic(~{::body})}">
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout :: dynamic(~{::body})}">
 
 <head>
-	<meta charset="utf-8" />
-	<title>Insert title here</title>
+<meta charset="utf-8" />
+<title>Insert title here</title>
 </head>
 
 <body>
@@ -11,18 +12,40 @@
 		<div class="container">
 			<div class="row mt-3">
 				<div class="col-sm-8">
-					<h6 class="fw-bold" th:text="#{orderList.label.purchasedOrder}">
-						Đơn hàng đã mua:</h6>
+<!-- 					<h6 class="fw-bold" th:text="#{orderList.label.purchasedOrder}"> -->
+<!-- 						Đơn hàng đã mua:</h6> -->
+
+
+					<form action="/order/list" method="get"
+						style="width: 450px; display: flex; align-items: center;">
+						<div class="form-group " style="flex: 1;"> <select
+							class="form-control mt-2" id="statusFilter" name="statusFilter">
+								<option value="" selected>Tất cả</option>
+								<option value="Đã hủy">Đã hủy</option>
+								<option value="Chờ xác nhận">Chờ xác nhận</option>
+								<option value="Đang giao">Đang giao</option>
+								<option value="Giao hàng thành công">Giao hàng thành
+									công</option>
+								<!-- Các tùy chọn khác -->
+						</select>
+						</div> 
+							<button class="fas fa-search border-0 ms-3" type="submit"></button>
+						
+					</form>
 					<div th:each="order, state:${sortedOrders}">
+
+
 						<div class="card border border-0 rounded-0 mt-3"
 							style="padding: 20px; width: auto; border-radius: 3px; background-color: #fff; font-size: 14px; flex-direction: column;">
 							<div class="card-header" style="background-color: #fff">
 								<span class="fw-bold" th:text="#{orderList.label.order}">Đơn
 									hàng:</span> #[[${order.orderid}]] <span class="fw-bold"
 									th:text="${order.getOrderDateFormatted()}"></span> <span
-									th:if="${order.statusOrder.name} =='Đã hủy'" class="float-end text-danger fw-bold"
+									th:if="${order.statusOrder.name} =='Đã hủy'"
+									class="float-end text-danger fw-bold"
 									th:text="${order.statusOrder.name}"></span> <span
-									th:if="${order.statusOrder.name} !='Đã hủy'" class="float-end text-success fw-bold"
+									th:if="${order.statusOrder.name} !='Đã hủy'"
+									class="float-end text-success fw-bold"
 									th:text="${order.statusOrder.name}"></span>
 							</div>
 							<input class="order-id voucher-input" id="order-id"
@@ -30,16 +53,19 @@
 								th:value="${order.voucherorder[0]?.voucher?.discount}" />
 
 							<!-- Chi tiết đơn hàng -->
-							<div class="row g-0 mt-1" th:each="orderDetail : ${order.orderDetail}">
+							<div class="row g-0 mt-1"
+								th:each="orderDetail : ${order.orderDetail}">
 								<div class="col-md-2">
-									<img th:src="*{orderDetail.product.image}" class="img-fluid" alt="..." />
+									<img th:src="*{orderDetail.product.image}" class="img-fluid"
+										alt="..." />
 								</div>
 								<div class="col-md-8">
 									<div class="card-body">
-										<span> <span th:text="${orderDetail.product.productname}"></span><br /> <span
-												th:text="'Số lượng: '+${orderDetail.quantityordered}+'kg'"></span><br />
+										<span> <span
+											th:text="${orderDetail.product.productname}"></span><br /> <span
+											th:text="'Số lượng: '+${orderDetail.quantityordered}+'kg'"></span><br />
 											Giá: <span
-												th:text="${#numbers.formatDecimal(orderDetail.product.price, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+											th:text="${#numbers.formatDecimal(orderDetail.product.price, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
 										</span>
 									</div>
 								</div>
@@ -88,24 +114,30 @@
 						</div>
 						<div class="list-group border border-0 rounded-0 my-3">
 							<a class="mb-3" href="/order/list">
-								<button type="button" class="list-group-item list-group-item-action active"
+								<button type="button"
+									class="list-group-item list-group-item-action active"
 									style="border-radius: 4px">
-									<i class="bi bi-card-list"></i> <span th:text="#{profile.label.myOrder}"></span>
+									<i class="bi bi-card-list"></i> <span
+										th:text="#{profile.label.myOrder}"></span>
 								</button>
 							</a> <a class="mb-3" href="/booking/list">
-								<button type="button" class="list-group-item list-group-item-action"
+								<button type="button"
+									class="list-group-item list-group-item-action"
 									style="border-radius: 4px">
-									<i class="bi bi-card-list"></i> <span th:text="#{profile.label.myTicket}"></span>
+									<i class="bi bi-card-list"></i> <span
+										th:text="#{profile.label.myTicket}"></span>
 								</button>
 							</a> <a href="/profile">
-								<button type="button" class="list-group-item list-group-item-action"
+								<button type="button"
+									class="list-group-item list-group-item-action"
 									style="border-radius: 4px">
 									<i class="bi bi-person-lines-fill"></i> <span
 										th:text="#{profile.label.profile}"></span>
 								</button>
 							</a>
 						</div>
-						<a class="btn border border-danger my-3 text-decoration-none text-center text-white fw-bold"
+						<a
+							class="btn border border-danger my-3 text-decoration-none text-center text-white fw-bold"
 							style="width: 100%; background-color: red;" href="/logoff"
 							th:text="#{profile.label.logout}">Đăng xuất</a>
 						<!-- <div class="card mt-3" style="background-color: #fff">

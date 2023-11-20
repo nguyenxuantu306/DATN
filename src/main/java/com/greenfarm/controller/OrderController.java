@@ -36,19 +36,41 @@ public class OrderController {
 	@Autowired
 	ModelMapper modelMapper;
 
-	@RequestMapping("/order/list")
-	public String list(Model model, HttpServletRequest request) {
-		String email = request.getRemoteUser();
-		List<Order> orders = orderService.findByEfindByIdAccountmail(email);
-		//model.addAttribute("orders", orderService.findByEfindByIdAccountmail(email));
-		// Sắp xếp danh sách orders theo ngày mua gần nhất (orderDate giảm dần)
-	    Collections.sort(orders, (o1, o2) -> o2.getOrderDateFormatted().compareTo(o1.getOrderDateFormatted()));
+//	@RequestMapping("/order/list")
+//	public String list(Model model, HttpServletRequest request) {
+//		String email = request.getRemoteUser();
+//		List<Order> orders = orderService.findByEfindByIdAccountmail(email);
+//		// model.addAttribute("orders", orderService.findByEfindByIdAccountmail(email));
+//		// Sắp xếp danh sách orders theo ngày mua gần nhất (orderDate giảm dần)
+//		Collections.sort(orders, (o1, o2) -> o2.getOrderDateFormatted().compareTo(o1.getOrderDateFormatted()));
+//
+//		// Đặt danh sách đã sắp xếp vào model
+//		model.addAttribute("sortedOrders", orders);
+//		return "order/list";
+//	}
 
-	    // Đặt danh sách đã sắp xếp vào model
-	    model.addAttribute("sortedOrders", orders);
+	@RequestMapping("/order/list")
+	public String list(Model model, HttpServletRequest request,
+			@RequestParam(name = "statusFilter", required = false) String statusFilter) {
+		String email = request.getRemoteUser();
+		System.out.println("Status Filter: " + statusFilter);
+		List<Order> orders = orderService.findByEfindByIdAccountmail(email);
+
+// Filter orders based on status
+		if (statusFilter != null && !statusFilter.isEmpty()) {
+			orders = orders.stream().filter(order -> {
+				System.out.println("Order Status: " + order.getStatusOrder().getName());
+				return order.getStatusOrder().getName().equalsIgnoreCase(statusFilter);
+			}).collect(Collectors.toList());
+		}
+
+// Sort the orders by order date in descending order
+		Collections.sort(orders, (o1, o2) -> o2.getOrderDateFormatted().compareTo(o1.getOrderDateFormatted()));
+
+// Set the sorted and filtered orders in the model
+		model.addAttribute("sortedOrders", orders);
 		return "order/list";
 	}
-
 
 	@RequestMapping("/order/detail/{orderid}")
 	public String detail(@PathVariable("orderid") Integer orderid, Model model) {

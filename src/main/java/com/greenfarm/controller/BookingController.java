@@ -1,6 +1,7 @@
 package com.greenfarm.controller;
 
 import java.io.File;
+import java.util.stream.Collectors;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.greenfarm.dto.BookingDTO;
 import com.greenfarm.entity.Booking;
@@ -31,6 +33,7 @@ import com.greenfarm.service.TourService;
 import com.greenfarm.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class BookingController {
@@ -53,10 +56,26 @@ public class BookingController {
 	@Autowired
 	private QRCodeService qrCodeService;
 
+//	@RequestMapping("/booking/list")
+//	public String list(Model model, HttpServletRequest request) {
+//		String email = request.getRemoteUser();
+//		model.addAttribute("bookings", bookingService.findByEfindByIdAccountmail(email));
+//		return "booking/mytiket";
+//	}
+
 	@RequestMapping("/booking/list")
-	public String list(Model model, HttpServletRequest request) {
+	public String list(Model model, HttpServletRequest request,
+			@RequestParam(name = "statusFilter", required = false) String statusFilter) {
 		String email = request.getRemoteUser();
-		model.addAttribute("bookings", bookingService.findByEfindByIdAccountmail(email));
+		List<Booking> bookings = bookingService.findByEfindByIdAccountmail(email);
+
+		// Filter bookings based on status
+		if (statusFilter != null && !statusFilter.isEmpty()) {
+			bookings = bookings.stream().filter(booking -> booking.getStatusbooking().getName().equals(statusFilter))
+					.collect(Collectors.toList());
+		}
+
+		model.addAttribute("bookings", bookings);
 		return "booking/mytiket";
 	}
 
@@ -81,7 +100,7 @@ public class BookingController {
 			BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("booking",bookingDto);
+			model.addAttribute("booking", bookingDto);
 			// Trả về trang form với thông báo lỗi
 			return "bookingform";
 		}

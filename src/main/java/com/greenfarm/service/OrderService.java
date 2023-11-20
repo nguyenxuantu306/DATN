@@ -58,4 +58,5 @@ public interface OrderService {
 	
 	List<FindReportYear> findYearlyRevenue(Integer year);
 	
+	 List<Order> findByUserEmailAndStatusOrderName(String userEmail, String statusName);
 }

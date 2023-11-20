@@ -39,29 +39,25 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	StatusOrderDAO statusOrderDAO;
 
-	
-	
 	@Override
-    public List<Order> findOrdersByDateRange(LocalDateTime startDay, LocalDateTime endDay, int page, int size) {
-        // Tính toán số lượng bản ghi bỏ qua (offset)
-        int offset = page * size;
+	public List<Order> findOrdersByDateRange(LocalDateTime startDay, LocalDateTime endDay, int page, int size) {
+		// Tính toán số lượng bản ghi bỏ qua (offset)
+		int offset = page * size;
 
-        // Gọi phương thức findOrdersByDateRange trong OrderDAO
-        List<Order> orders = dao.findOrdersByDateRange(startDay, endDay);
+		// Gọi phương thức findOrdersByDateRange trong OrderDAO
+		List<Order> orders = dao.findOrdersByDateRange(startDay, endDay);
 
-        // Kiểm tra và cắt danh sách đơn hàng dựa trên trang và kích thước
-        if (offset < orders.size()) {
-            int toIndex = Math.min(offset + size, orders.size());
-            orders = orders.subList(offset, toIndex);
-        } else {
-            orders = Collections.emptyList();
-        }
+		// Kiểm tra và cắt danh sách đơn hàng dựa trên trang và kích thước
+		if (offset < orders.size()) {
+			int toIndex = Math.min(offset + size, orders.size());
+			orders = orders.subList(offset, toIndex);
+		} else {
+			orders = Collections.emptyList();
+		}
 
-        return orders;
-    }
-	
-	
-	
+		return orders;
+	}
+
 	@Override
 	public List<Order> getAllOrders(int page, int size) {
 		int offset = page * size;
@@ -193,18 +189,16 @@ public class OrderServiceImpl implements OrderService {
 		return dao.findYearlyRevenue(year);
 	}
 
-
-
 	@Override
 	public List<Order> findByOrderdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int page,
 			int size) {
 		Pageable pageable = PageRequest.of(page, size);
-        return dao.findByOrderdateBetween(startDateTime, endDateTime, pageable);
+		return dao.findByOrderdateBetween(startDateTime, endDateTime, pageable);
 	}
 
-
-
-
-	
+	@Override
+	public List<Order> findByUserEmailAndStatusOrderName(String userEmail, String statusName) {
+		return dao.findByUserEmailAndStatusOrder_Name(userEmail, statusName);
+	}
 
 }
