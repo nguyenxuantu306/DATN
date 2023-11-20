@@ -42,7 +42,7 @@ public class BookingDTO {
 	@NotNull(message = "Số lượng vé trẻ em không được để trống")
 	@Min(value = 0, message = "Số lượng vé trẻ em không được nhỏ hơn 0")
 	private Integer Childticketnumber;
-	
+	private String qrcode;
 	private User user;
 	
 	private Tour tour;
@@ -50,6 +50,4 @@ public class BookingDTO {
 	private StatusBooking statusbooking;
 	
 	private PaymentMethod paymentmethod;
-	
-	
 }

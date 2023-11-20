@@ -63,7 +63,10 @@ app.controller("user-ctrl", function($scope, $http) {
 	// Hiện thị lên for
 	$scope.editthemsp = function() {
 		$scope.isEdit = false; // Chuyển về chế độ tạo mới
-		$scope.form = angular.copy();
+
+		$scope.form = {
+			image:'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png'
+		}
 	}
 
 	// Thêm mới
@@ -270,6 +273,25 @@ app.controller("user-ctrl", function($scope, $http) {
 			.catch(function(error) {
 				console.error('Error exporting PDF:', error);
 			});
+	};
+
+	$scope.imageChanged = function(event) {
+		var file = event.target.files[0];
+		if (file) {
+			var data = new FormData();
+			data.append('file', file);
+			$http.post('/api/images/upload', data, {
+				transformRequest: angular.identity,
+				headers: { 'Content-Type': undefined },
+				//responseType: 'text'
+			}).then(resp => {
+				console.log('Upload success. Image URL:', resp.data.imageUrl);
+				$scope.form.image = resp.data.imageUrl;
+			}).catch(error => {
+				alert("Lỗi upload hình ảnh");
+				console.log("Error", error);
+			})
+		}
 	};
 });
 

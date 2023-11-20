@@ -2,6 +2,8 @@ package com.greenfarm.service.impl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import com.greenfarm.entity.AbstractEmailContext;
 import com.greenfarm.service.EmailService;
 
+import jakarta.activation.URLDataSource;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
@@ -67,20 +70,26 @@ public class Emailserviceimpl implements EmailService {
 	}
 
 	@Override
-	public void sendEmailWithBooking(String toAddress, String subject, String message, String attachment)
-			throws MessagingException, FileNotFoundException {
-		// TODO Auto-generated method stub
-		MimeMessage mimeMessage = emailSender.createMimeMessage();
-		MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
-		messageHelper.setTo(toAddress);
-		messageHelper.setSubject(subject);
-		messageHelper.setText(message);
-		
-		
-		FileSystemResource file = new FileSystemResource(new File(attachment));
-		//messageHelper.addAttachment("Purchase Order", file);
-		messageHelper.addInline("Purchase Order", file);
-		emailSender.send(mimeMessage);
+	public void sendEmailWithBooking(String toAddress, String subject, String message, String qrCodeUrl)
+	        throws MessagingException{
+	    MimeMessage mimeMessage = emailSender.createMimeMessage();
+	    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
+	    messageHelper.setTo(toAddress);
+	    messageHelper.setSubject(subject);
+	    messageHelper.setText(message);
+
+	    // Truyền đường dẫn URL trực tiếp vào email
+	    try {
+			messageHelper.addInline("Purchase Order", new URLDataSource(new URL(qrCodeUrl)));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	    emailSender.send(mimeMessage);
 	}
 
 }
