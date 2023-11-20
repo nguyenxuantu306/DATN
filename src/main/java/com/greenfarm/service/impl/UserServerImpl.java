@@ -40,6 +40,8 @@ import com.greenfarm.service.UserService;
 import com.mysql.cj.util.StringUtils;
 
 import jakarta.mail.MessagingException;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
 @Service
 public class UserServerImpl implements UserService, UserDetailsService {
@@ -68,7 +70,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	public List<User> findAll() {
 		return dao.findAllByIsdeletedFalse();
 	}
-	
+
 	@Override
 	public List<User> findAllDeletedUser() {
 		return dao.findAllByIsdeletedTrue();
@@ -93,7 +95,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		if (!emailExists(user.getEmail())) {
 			System.out.println("đã có tk");
 			throw new UserAlreadyExistException("đã có tài khoản dùng email này");
-			
+
 		} else {
 			User userentity = new User();
 			BeanUtils.copyProperties(user, userentity);
@@ -103,7 +105,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 			return userentity;
 		}
-		}
+	}
 
 	@Override
 	public User update(User user) {
@@ -237,12 +239,19 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		return PE.matches(password, currentPassword);
 	}
 
+//	@Override
+//	public void forgottenPassword(String userName) throws UnkownIdentifierException {
+//		// TODO Auto-generated method stub
+//		User user = dao.findByEmail(userName).get();
+//		sendResetPasswordEmail(user);
+//	}
 	@Override
 	public void forgottenPassword(String userName) throws UnkownIdentifierException {
-		// TODO Auto-generated method stub
-		User user = dao.findByEmail(userName).get();
-		sendResetPasswordEmail(user);
+	    // TODO Auto-generated method stub
+	    User user = dao.findByEmail(userName).orElseThrow(() -> new UnkownIdentifierException("Không tìm thấy người dùng với địa chỉ email đã nhập."));
+	    sendResetPasswordEmail(user);
 	}
+
 
 	@Override
 	public void updatePassword(String password, String token) throws InvalidTokenException, UnkownIdentifierException {
@@ -362,8 +371,8 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public void save(User user) {
-		 dao.save(user);
-		
+		dao.save(user);
+
 	}
 
 }

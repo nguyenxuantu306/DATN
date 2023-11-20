@@ -40,6 +40,8 @@
 									th:field="*{confirmpass}" class="form-control" id="confirmpass"
 									placeholder="" required> <label for="currentpass">Xác
 									nhận mật khẩu mới</label>
+									<i class="text-danger"
+									th:errors="*{confirmpass}"></i>
 									<div th:if="${newPasswordError}" class="text-danger" th:text="${newPasswordError}"></div>
 							</div>
 

@@ -67,7 +67,7 @@ public class User implements Serializable {
     @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
 	String phonenumber;
 
-	// @NotBlank(message = "Ảnh đại diện là bắt buộc")
+	//@NotBlank(message = "Ảnh đại diện là bắt buộc")
 	String image;
 
 	@NotBlank(message = "Địa chỉ là bắt buộc")
