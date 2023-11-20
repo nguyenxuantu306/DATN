@@ -69,14 +69,15 @@ public class RegisterController {
 //			model.addAttribute("registrationForm", userInfo);
 //			return "register";
 //		}
-		
+//		User userinfo = new User();
+//		model.addAttribute("userinfo", userinfo);
 		
 		return "register";
 	}
 
 
 	@PostMapping
-	public String registerUser(Model model, @ModelAttribute("userinfo") @Valid UserDTO userInfo,
+	public String registerUser(Model model, @ModelAttribute("userinfo") @Valid RegisterDTO userInfo,
 			BindingResult bindingResult) throws UserAlreadyExistException {
 		if (bindingResult.hasErrors()) {
 			// Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
@@ -85,7 +86,7 @@ public class RegisterController {
 			return "register";
 		} else if (!userInfo.getPassword().equals(userInfo.getRepeatpassword())) {
 			// Nếu mật khẩu và xác nhận mật khẩu không khớp, thêm lỗi vào BindingResult.
-			System.out.println("mail");
+			System.out.println("repass");
 			bindingResult.rejectValue("repeatpassword", "error.userDTO", "Mật khẩu và xác nhận mật khẩu không khớp");
 		}
 
@@ -104,11 +105,13 @@ public class RegisterController {
 			user.setImage(null);
 			user.setGender(null);
 			user.setCreateddate(new Date());
-			System.out.println(user.getCreateddate());
+			System.out.println("chay toi impl");
 			userservice.create(user);
 			return "redirect:/login";
 		} catch (Exception e) {
+			e.printStackTrace();
 			bindingResult.rejectValue("email", "error.userDTO", "An account already exists for this email.");
+			System.out.println("mail");
 			model.addAttribute("registrationForm", userInfo);
 			return "register";
 		}

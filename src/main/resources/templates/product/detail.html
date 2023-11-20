@@ -21,7 +21,7 @@
 		<div class="pt-3">
 			<div th:object="${item}" class="row">
 				<nav aria-label="breadcrumb">
-					<ol class="breadcrumb">
+					<ol class="breadcrumb" style="background-color: white;">
 						<li class="breadcrumb-item"><a href="#" th:text="#{shopDetail.label.breadcrumbHome}">Trang
 								chủ</a></li>
 						<li class="breadcrumb-item"><a href="#" th:text="#{shopDetail.label.breadcrumbShop}">Shop</a>
@@ -56,22 +56,22 @@
 							<span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span>
 						</h2>
 						<p th:text="*{description}" class="product-description mb-3"></p>
-						SL: <span th:text="*{quantityavailable}" class="product-description mb-3"></span>
+						Số Lượng : <span th:text="*{quantityavailable}" class="product-description mb-3"></span> sản phẩm có sẵn
+						
 						<div class="cart-button mt-5 mb-5 d-flex">
-
 							<div class="d-flex">
-								<button onclick="decQuantity()">-</button>
-								<input class="w-50 text-center" type="number" id="quantityInput" name="quantity" value="1" min="1"/>
-								<button onclick="incQuantity()">+</button>
+								<button style="border: 1px solid rgba(0,0,0,.09);width: 32px"  onclick="decQuantity()">-</button>
+								<input style="border: 1px solid rgba(0,0,0,.09);" class="w-25 text-center" type="text" id="quantityInput" name="quantity" value="1" min="1"/>
+								<button style="border: 1px solid rgba(0,0,0,.09);width: 32px"  onclick="incQuantity()">+</button>
 							</div>
 							
-						<button class="add-to-cart-button" th:onclick="'addToCart(\'' + ${item.productid} + '\')'" th:text="#{shopDetail.label.addToCart}">
+						<button style="background-color:#7AB730" class="add-to-cart-button" th:onclick="'addToCart(\'' + ${item.productid} + '\')'" th:text="#{shopDetail.label.addToCart}">
 							<i class="fas fa-shopping-cart"></i> Add to Cart
 						</button>
 						</div>
 						<div class="">
 							<h5>
-								<span th:text="#{shopDetail.label.category}">CATEGORIES: </span> <span><a
+								<span th:text="#{shopDetail.label.category}">CATEGORIES : </span> <span><a
 										th:text="*{category.categoryname}" /></span>
 							</h5>
 						</div>
@@ -80,8 +80,8 @@
 			</div>
 		</div>
 		<div id="wapper">
-			<div class=" mb-3 pb-3">
-				<h1 th:text="#{shopDetail.label.relatedProduct}">SẢN PHẨM LIÊN QUAN</h1>
+			<div class="">
+				<h1 class="py-3" th:text="#{shopDetail.label.relatedProduct}">SẢN PHẨM LIÊN QUAN</h1>
 			</div>
 			<div class="row slider" th:object="${item}">
 				<div class="col-md-12 col-sm-12 col-xs-12 slide" th:each="p : *{category.products}">
@@ -225,7 +225,7 @@
 						<div class="modal-dialog modal-dialog-centered">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" th:text="#{shopDetail.label.reviews}">Đánh giá</h5>
+									<h3 class="modal-title" th:text="#{shopDetail.label.reviews}">Đánh giá</h3>
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>

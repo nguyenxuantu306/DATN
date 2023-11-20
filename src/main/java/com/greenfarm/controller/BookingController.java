@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -81,7 +82,15 @@ public class BookingController {
 	}
 
 	@PostMapping("/booking/create")
-	public String createBooking(@ModelAttribute("booking") BookingDTO bookingDto) throws IOException {
+	public String createBooking(Model model, @ModelAttribute("booking") BookingDTO bookingDto,
+			BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("booking",bookingDto);
+			// Trả về trang form với thông báo lỗi
+			return "bookingform";
+		}
+
 		Booking booking = modelMapper.map(bookingDto, Booking.class);
 		// Thời gian
 		booking.setBookingdate(LocalDateTime.now());

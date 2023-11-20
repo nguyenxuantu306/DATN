@@ -14,6 +14,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,8 +41,12 @@ public class Booking implements Serializable {
 
 	private Float Totalprice;
 
+	@NotNull(message = "Số lượng vé người lớn không được để trống")
+    @Min(value = 1, message = "Số lượng vé người lớn phải lớn hơn hoặc bằng 1")
 	private Integer Adultticketnumber;
 
+	@NotNull(message = "Số lượng vé trẻ em không được để trống")
+    @Min(value = 0, message = "Số lượng vé trẻ em không được nhỏ hơn 0")
 	private Integer Childticketnumber;
 
 	private String qrcode;

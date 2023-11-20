@@ -3,14 +3,22 @@ package com.greenfarm.dto;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.greenfarm.entity.Comment;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,34 +27,49 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
-	// @NotEmpty(message = "UserId không được để trống")
+	
+	@Positive(message = "Id tài khoản phải lớn hơn 0")
 	private Integer userid;
-	@NotEmpty(message = "Thiếu Email")
-	@Email(message = "Email không hợp lệ")
+	
+	
+	@NotBlank(message = "Email là bắt buộc")
 	private String email;
 
-	@Pattern(regexp = "^(?=.*[A-Z])(?=.*[0-9]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
-	@NotEmpty(message = "Thiếu password")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,100}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
+	@NotEmpty(message = "Vui lòng nhập mật khẩu")
 	private String password;
 
 	@NotEmpty(message = "Thiếu mật khẩu xác nhận")
 	private String repeatpassword;
 
-	@NotEmpty(message = "Thiếu FirstName")
+	@NotBlank(message = "Tên đầu là bắt buộc")
 	private String firstname;
-	@NotEmpty(message = "Thiếu LastName")
+	
+	@NotBlank(message = "Tên cuối là bắt buộc")
 	private String lastname;
-	@NotEmpty(message = "Số điện thoại không được để trống")
-	@Pattern(regexp = "^\\d{10}$", message = "Số điện thoại phải chứa đúng 10 chữ số")
+	
+	@NotBlank(message = "Số điện thoại không được để trống")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
 	private String phonenumber;
 
-	private String image; // @NotEmpty(message = "Thiếu Address")
+	//@NotBlank(message = "Ảnh đại diện là bắt buộc")
+	private String image; 
+	
+	@NotBlank(message = "Địa chỉ là bắt buộc")
+	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
 	private String address;
+	
+	@NotNull(message = "Giới tính phải được chọn")
 	private Boolean gender;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Past(message = "Ngày sinh phải là một ngày trong quá khứ")
 	private Date birthday;
 
+	@Past(message = "Ngày tạo phải trước ngày hiện tại")
+	@Temporal(TemporalType.DATE)
 	private Date createddate;
+	
 	private Boolean isdeleted = Boolean.FALSE;
 
 	private List<Comment> comment;

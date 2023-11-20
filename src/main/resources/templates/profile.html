@@ -17,6 +17,8 @@
 							<div class="card">
 								<div class="card-body">
 									<div class="e-profile">
+									<form class="form" th:action="@{/profile}"
+													th:object="${userchange}" method="post">
 										<div class="row">
 											<div class="col-12 col-sm-auto mb-3">
 												<div class="mx-auto" style="width: 140px">
@@ -34,13 +36,13 @@
 													<h4 class="pt-sm-2 pb-1 mb-0 text-nowrap"
 														th:text="${user.firstname + ' ' + user.lastname}">
 														Full Name</h4>
-													<p class="mb-0" th:text="${roles}">@User</p>
+													<p class="mb-0" th:text="${roles}"></p>
 													<div class="mt-2">
 														<label for="fileInput" class="btn btn-primary"> <i
 															class="fa fa-fw fa-camera"></i> <span
 															th:text="#{profile.label.changePhoto}">Change
 																Photo</span> <input type="file" id="fileInput"
-															th:value="${user.lastname}" th:field="${user.lastname}"
+															th:value="${user.image}" th:field="${user.image}"
 															name="image" style="display: none" />
 														</label>
 													</div>
@@ -60,8 +62,8 @@
 										</ul>
 										<div class="tab-content pt-3">
 											<div class="tab-pane active">
-												<form class="form" th:action="@{/profile}"
-													th:object="${userchange}" method="post">
+												<!-- <form class="form" th:action="@{/profile}"
+													th:object="${userchange}" method="post"> -->
 													<div class="row">
 														<div class="col">
 															<div class="row">
@@ -114,7 +116,7 @@
 																		<label th:text="#{label.email}">Email</label> <input
 																			class="form-control" type="email" name="email"
 																			th:placeholder="${user.email}" readonly="readonly" />
-																			<i th:errors="*{email}"></i>
+<!-- 																			<i th:errors="*{email}"></i> -->
 																	</div>
 																	
 																</div>
