@@ -412,8 +412,30 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public User createADMIN(@Valid User user) {
-		return dao.save(user);
+	public User createADMIN(@Valid User user) throws UserAlreadyExistException {
+		// Kiểm tra xem user đã tồn tại chưa
+		if (emailExists(user.getEmail())) {
+			// Nếu đã tồn tại, ném ngoại lệ
+			System.out.println("da co tk");
+			throw new UserAlreadyExistException("Đã có tài khoản sử dụng email này");
+		} else {
+			// Nếu chưa tồn tại, tạo user và trả về
+			User userEntity = new User();
+			BeanUtils.copyProperties(user, userEntity);
+			userEntity.setPassword(PE.encode(userEntity.getPassword()));
+			userEntity.setAccountVerified(true);
+			System.out.println("Lưu user vào database");
+			try {
+				dao.save(userEntity);
+			} catch (Exception e) {
+				System.out.println("ko luu dc");
+				e.printStackTrace();
+			}
+
+			sendRegistrationConfirmationEmail(userEntity);
+			System.out.println("Gửi email xác nhận đăng ký");
+			return userEntity;
+		}
 	}
 
 }
