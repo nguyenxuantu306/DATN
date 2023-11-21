@@ -244,8 +244,9 @@
 
 											<div class="">
 												<div>Image:</div>
-															<input type="file" class="form-control" id="image" onchange="angular.element(this).scope().imageChanged(event)"
-																accept="image/*">
+												<input type="file" class="form-control" id="image"
+													onchange="angular.element(this).scope().imageChanged(event)"
+													accept="image/*">
 											</div>
 										</div>
 										<div class=" form-group col-md-12">
@@ -277,7 +278,8 @@
 													<input type="text" ng-model="form.tourOverview.title"
 														placeholder="VD : gia dình GreenFarm"
 														name="
-														title" class="form-control" aria-label="Default"
+														title" class="form-control"
+														aria-label="Default"
 														aria-describedby="inputGroup-sizing-default" required>
 												</div>
 												<label
@@ -567,47 +569,77 @@
 		<div class="modal-content">
 
 			<div class="modal-body">
-				<div class="table-responsive">
+				<div class="table-responsive" ng-if="deletedItems.length > 0">
 					<table
-							class="table table-striped table-bordered zero-configuration">
-							<thead>
-								<tr>
-									<th>STT</th>
-									<th>Hình ảnh</th>
-									<th>Tên địa điểm</th>
-									<!--<th>Ngày bắt đầu</th>
+						class="table table-striped table-bordered zero-configuration">
+						<thead>
+							<tr>
+								<th>STT</th>
+								<th>Hình ảnh</th>
+								<th>Tên địa điểm</th>
+								<!--<th>Ngày bắt đầu</th>
 									<th>Ngày kết thúc</th>-->
-									<th>Ngày</th>
-									<th>Giá</th>
-									<th>Số lượng người</th>
-									<th>Điều kiện</th>
-									<th>Tổng quan</th>
-									<th>Khôi phục</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr
-									ng-repeat="item in deletedItems">
-									<th>{{$index + 1}}</th>
-									<td><img ng-src="{{item.image}}" alt="Tour Image"
-										style="width: 80px; height: 80px;"></td>
-									<td>{{item.tourname}}</td>
-									<!--<td>{{item.startdate | date:'dd-MM-yyyy'}}</td>
+								<th>Ngày</th>
+								<th>Giá</th>
+								<th>Số lượng người</th>
+								<th>Điều kiện</th>
+								<th>Tổng quan</th>
+								<th>Khôi phục</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in deletedItems">
+								<th>{{$index + 1}}</th>
+								<td><img ng-src="{{item.image}}" alt="Tour Image"
+									style="width: 80px; height: 80px;"></td>
+								<td>{{item.tourname}}</td>
+								<!--<td>{{item.startdate | date:'dd-MM-yyyy'}}</td>
 									<td>{{item.enddate | date:'dd-MM-yyyy'}}</td>-->
-									<td>{{item.departureday}}</td>
-									<td>{{formatPrice(item.pricings.childprice)}}</td>
-									<td>{{item.availableslots}}</td>
-									<td><span class="text-success"
-										ng-if="item.tourCondition.conditions">Đã có</span> <span
-										ng-if="!item.tourCondition.conditions">Chưa có</span></td>
-									<td><span class="text-success"
-										ng-if="item.tourOverview.content">Đã có</span> <span
-										ng-if="!item.tourOverview.content">Chưa có</span></td>
-									<td><a ng-click="restore(item.tourid)"><i class="bi bi-bootstrap-reboot"></i></a></td>
-									
-								</tr>
-							</tbody>
-						</table>
+								<td>{{item.departureday}}</td>
+								<td>{{formatPrice(item.pricings.childprice)}}</td>
+								<td>{{item.availableslots}}</td>
+								<td><span class="text-success"
+									ng-if="item.tourCondition.conditions">Đã có</span> <span
+									ng-if="!item.tourCondition.conditions">Chưa có</span></td>
+								<td><span class="text-success"
+									ng-if="item.tourOverview.content">Đã có</span> <span
+									ng-if="!item.tourOverview.content">Chưa có</span></td>
+								<td><a ng-click="restore(item.tourid)"><i
+										class="bi bi-bootstrap-reboot"></i></a></td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div ng-if="deletedItems.length === 0">
+					<div class="login-form-bg h-100">
+						<div class="container h-100">
+							<div class="row justify-content-center h-100">
+								<div class="col-xl-6">
+									<div class="error-content">
+										<div class="card mb-0">
+											<div class="card-body text-center">
+												<a href="#"> <img style="width: 300px; padding: 15px;"
+													src="/assets/images/logo.png" alt=""></a>
+												<h2 class="mt-4">
+													<i class="fa fa-thumbs-down text-danger"></i> Yêu cầu không
+													hợp lệ
+												</h2>
+												<h4>Không có dữ liệu địa điểm nào cần khôi phục !</h4>
+												<form class="mt-5 mb-5">
+
+													<div class="text-center mb-4 mt-4">
+														<a href="/admin" class="btn btn-success">Về trang chủ</a>
+													</div>
+												</form>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

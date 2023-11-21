@@ -154,9 +154,13 @@ app.controller("product-ctrl", function($scope, $http) {
 						icon: 'success',
 						title: 'Thành công!',
 						text: 'Khôi phục sản phẩm thành công!',
-					});
-					// Load lại trang
-					location.reload();
+					}).then((result) => {
+					// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+					if (result.isConfirmed) {
+						// Nếu đã bấm, thực hiện reload trang
+						location.reload();
+					}
+				});
 				})
 				.catch(error => {
 					// Xử lý lỗi
@@ -181,33 +185,50 @@ app.controller("product-ctrl", function($scope, $http) {
 
 
 
-	// Xóa sản phẩm 
 	$scope.delete = function(item) {
-		$http.delete(`/rest/products/${item.productid}`)
-			.then(resp => {
-				// Xóa sản phẩm khỏi danh sách hiển thị
-				var index = $scope.items.findIndex(p => p.productid == item.productid);
-				$scope.items.splice(index, 1);
+    // Hiển thị cửa sổ xác nhận trước khi xóa
+    Swal.fire({
+        title: 'Xác nhận xóa',
+        text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Hủy bỏ'
+    }).then((result) => {
+        // Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
+        if (result.isConfirmed) {
+            // Nếu đã bấm "Đồng ý", thực hiện xóa
+            $http.delete(`/rest/products/${item.productid}`)
+                .then(resp => {
+                    // Xóa sản phẩm khỏi danh sách hiển thị
+                    var index = $scope.items.findIndex(p => p.productid == item.productid);
+                    $scope.items.splice(index, 1);
 
-				// Hiển thị thông báo thành công
-				Swal.fire({
-					icon: 'success',
-					title: 'Thành công!',
-					text: 'Xóa sản phẩm thành công!',
-				});
-				// Load lại trang
-				//	location.reload();
-			})
-			.catch(error => {
-				// Hiển thị thông báo lỗi
-				Swal.fire({
-					icon: 'error',
-					title: 'Lỗi!',
-					text: 'Lỗi xóa sản phẩm',
-				});
-				console.log("Error", error);
-			});
-	};
+                    // Hiển thị thông báo thành công
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: 'Xóa sản phẩm thành công!',
+                    }).then((result) => {
+                    // Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+                    if (result.isConfirmed) {
+                        // Nếu đã bấm, thực hiện reload trang
+                        location.reload();
+                    }
+                });
+                })
+                .catch(error => {
+                    // Hiển thị thông báo lỗi
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Lỗi xóa sản phẩm',
+                    });
+                    console.log("Error", error);
+                });
+        }
+    });
+};
 
 
 

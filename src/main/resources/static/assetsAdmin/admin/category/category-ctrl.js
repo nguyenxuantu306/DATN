@@ -117,9 +117,13 @@ app.controller("category-ctrl", function($scope, $http) {
 						icon: 'success',
 						title: 'Thành công!',
 						text: 'Khôi phục danh mục thành công!',
+					}).then((result) => {
+						// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+						if (result.isConfirmed) {
+							// Nếu đã bấm, thực hiện reload trang
+							location.reload();
+						}
 					});
-					// Load lại trang
-					location.reload();
 				})
 				.catch(error => {
 					// Xử lý lỗi
@@ -141,29 +145,52 @@ app.controller("category-ctrl", function($scope, $http) {
 		}
 	};
 
-	// Xóa loại sản phẩm 
+	
 	$scope.delete = function(item) {
-		$http.delete(`/rest/categories/${item.categoryid}`).then(resp => {
-			var index = $scope.items.findIndex(p => p.categoryid == item.categoryid);
-			$scope.items.splice(index, 1);
-			$scope.reset();
-			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Xóa danh mục thành công!',
-			});
-		})
-			.catch(error => {
-				// Sử dụng SweetAlert2 cho thông báo lỗi
-				Swal.fire({
-					icon: 'error',
-					title: 'Lỗi!',
-					text: 'Lỗi danh mục sản phẩm',
+		// Hiển thị cửa sổ xác nhận trước khi xóa
+		Swal.fire({
+			title: 'Xác nhận xóa',
+			text: 'Bạn có chắc chắn muốn xóa danh mục này?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Đồng ý',
+			cancelButtonText: 'Hủy bỏ'
+		}).then((result) => {
+			// Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
+			if (result.isConfirmed) {
+				// Nếu đã bấm "Đồng ý", thực hiện xóa
+				$http.delete(`/rest/categories/${item.categoryid}`).then(resp => {
+					var index = $scope.items.findIndex(p => p.categoryid == item.categoryid);
+					$scope.items.splice(index, 1);
+					$scope.reset();
+
+					// Sử dụng SweetAlert2 cho thông báo thành công
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công!',
+						text: 'Xóa danh mục thành công!',
+					}).then((result) => {
+						// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+						if (result.isConfirmed) {
+							// Nếu đã bấm, thực hiện reload trang
+							location.reload();
+						}
+					});
+
+				}).catch(error => {
+					// Sử dụng SweetAlert2 cho thông báo lỗi
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi danh mục sản phẩm',
+					});
+					console.log("Error", error);
 				});
-				console.log("Error", error);
-			});
-	}
+			}
+		});
+	};
+
+
 
 
 

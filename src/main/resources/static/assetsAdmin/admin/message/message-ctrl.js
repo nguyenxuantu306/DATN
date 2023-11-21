@@ -31,7 +31,7 @@ app.controller("message-ctrl", function($scope, $http, $window) {
 			Swal.fire({
 				icon: 'success',
 				title: 'Thành công!',
-				text: 'Xóa thông báo thành công!',
+				text: 'Xóa bình luận thành công!',
 			});
 		})
 			.catch(error => {
@@ -39,7 +39,7 @@ app.controller("message-ctrl", function($scope, $http, $window) {
 				Swal.fire({
 					icon: 'error',
 					title: 'Lỗi!',
-					text: 'Lỗi xóa thông báo!',
+					text: 'Lỗi xóa bình luận!',
 				});
 				console.log("Error", error);
 			});

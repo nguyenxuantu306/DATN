@@ -28,10 +28,12 @@
 									th:errors="*{currentpass}"></i>
 									<div th:if="${currentPasswordError}" class="text-danger" th:text="${currentPasswordError}"></div>
 							</div>
+					
 							<div class="mb-4 form-floating">
 								<input name="newpass" type="password" th:field="*{newpass}"
-									class="form-control" id="newpass" required> <label
-									for="newpass">Mật khẩu mới</label> <i class="text-danger"
+									class="form-control" id="newpass" placeholder="newpass"
+									required> <label for="newpass">Mật khẩu mới</label>
+									 <i class="text-danger"
 									th:errors="*{newpass}"></i>
 									
 							</div>

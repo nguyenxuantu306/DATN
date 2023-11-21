@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.CategoryDTO;
+import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Category;
 import com.greenfarm.service.CategoryService;
 import org.modelmapper.ModelMapper;
@@ -92,27 +93,22 @@ public class CategoriesRestController {
 
 	@PutMapping("{categoryid}")
 	public ResponseEntity<CategoryDTO> update(@PathVariable("categoryid") Integer categoryid,
-			@RequestBody Category updatedCategory) {
-		Category existingCategory = categoryService.findById(categoryid);
-
-		if (existingCategory == null) {
-			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy category
-			return ResponseEntity.notFound().build();
-		}
-
-		// Cập nhật thông tin của existingCategory với dữ liệu từ updatedCategory
-		existingCategory.setCategoryname(updatedCategory.getCategoryname());
-		// Các cập nhật khác (nếu có)
+			@RequestBody Category category) {
 
 		// Thực hiện cập nhật trong service
-		Category updatedCategoryResult = categoryService.update(existingCategory);
+		Category updatedCategoryResult = categoryService.update(category);
 
-		// Sử dụng modelMapper để ánh xạ từ updatedCategoryResult sang CategoryDTO
-		ModelMapper modelMapper = new ModelMapper();
-		CategoryDTO updatedCategoryDTO = modelMapper.map(updatedCategoryResult, CategoryDTO.class);
+		if (updatedCategoryResult == null) {
+			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy product để cập nhật
+			return ResponseEntity.notFound().build();
+		}
+		
+		
+		// Sử dụng ModelMapper để ánh xạ từ Product đã cập nhật thành ProductDTO
+		CategoryDTO categoryDTO = modelMapper.map(updatedCategoryResult, CategoryDTO.class);
 
 		// Trả về updatedCategoryDTO bằng ResponseEntity với mã trạng thái 200 OK
-		return ResponseEntity.ok(updatedCategoryDTO);
+		return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
 	}
 
 	@PutMapping("/{categoryid}/restore")
@@ -123,7 +119,6 @@ public class CategoriesRestController {
 		if (category == null) {
 			return new ResponseEntity<>("Danh mục không tồn tại", HttpStatus.NOT_FOUND);
 		}
-
 		category.setIsDeleted(false);
 
 		categoryService.save(category);
