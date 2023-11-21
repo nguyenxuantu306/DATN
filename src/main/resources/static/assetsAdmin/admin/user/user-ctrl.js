@@ -132,37 +132,54 @@ app.controller("user-ctrl", function($scope, $http) {
 
 
 	$scope.restore = function(userid) {
-		try {
-			axios.put(`/rest/users/${userid}/restore`)
-				.then(response => {
-					// Xử lý phản hồi thành công
-					Swal.fire({
-						icon: 'success',
-						title: 'Thành công!',
-						text: 'Khôi phục tài khoản thành công!',
-					});
-					// Load lại trang
-					location.reload();
-				})
-				.catch(error => {
-					// Xử lý lỗi
-					Swal.fire({
-						icon: 'error',
-						title: 'Lỗi!',
-						text: 'Lỗi khôi phục tài khoản!',
-					});
-					console.log("Error", error);
-				});
-		} catch (error) {
-			// Xử lý lỗi ngoại lệ
-			Swal.fire({
-				icon: 'error',
-				title: 'Lỗi!',
-				text: 'Lỗi khôi phục tài khoản',
-			});
-			console.log("Exception", error);
-		}
-	};
+    // Show a confirmation dialog
+    Swal.fire({
+        title: 'Bạn có chắc chắn muốn khôi phục tài khoản?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Hủy bỏ',
+    }).then((result) => {
+        // Check if the user clicked "OK"
+        if (result.isConfirmed) {
+            try {
+                axios.put(`/rest/users/${userid}/restore`)
+                    .then(response => {
+                        // Xử lý phản hồi thành công
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: 'Khôi phục tài khoản thành công!',
+                        }).then((result) => {
+                            // Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+                            if (result.isConfirmed) {
+                                // Nếu đã bấm, thực hiện reload trang
+                                location.reload();
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        // Xử lý lỗi
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: 'Lỗi khôi phục tài khoản!',
+                        });
+                        console.log("Error", error);
+                    });
+            } catch (error) {
+                // Xử lý lỗi ngoại lệ
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Lỗi khôi phục tài khoản',
+                });
+                console.log("Exception", error);
+            }
+        }
+    });
+};
+
 
 
 	// Xóa loại sản phẩm 
