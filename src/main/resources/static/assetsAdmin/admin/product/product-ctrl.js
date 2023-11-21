@@ -76,9 +76,29 @@ app.controller("product-ctrl", function($scope, $http) {
 	// Hiện thị lên form
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
+		var imageUrls = item.productimage.map(function(productImage) {
+			return productImage.imageurl;
+		});
+
+		$scope.showEditImages(imageUrls);
+
 	}
 
-	// Hiện thị lên for
+	//Hiển thị các hình ảnh sản phẩm khác - productImage
+	$scope.showEditImages = function(imageUrls) {
+		var editImagePreviewContainer = document.getElementById('edit-image-preview-container');
+		editImagePreviewContainer.innerHTML = '';
+
+		for (var i = 0; i < imageUrls.length; i++) {
+			var img = document.createElement('img');
+			img.src = imageUrls[i];
+			img.style.maxWidth = '50px';
+			img.style.height = '50px';
+			editImagePreviewContainer.appendChild(img);
+		}
+	};
+
+	//modal thêm sản phẩm
 	$scope.editthemsp = function() {
 		$scope.form = angular.copy();
 		$scope.form = {
@@ -155,12 +175,12 @@ app.controller("product-ctrl", function($scope, $http) {
 						title: 'Thành công!',
 						text: 'Khôi phục sản phẩm thành công!',
 					}).then((result) => {
-					// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
-					if (result.isConfirmed) {
-						// Nếu đã bấm, thực hiện reload trang
-						location.reload();
-					}
-				});
+						// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+						if (result.isConfirmed) {
+							// Nếu đã bấm, thực hiện reload trang
+							location.reload();
+						}
+					});
 				})
 				.catch(error => {
 					// Xử lý lỗi
@@ -186,49 +206,49 @@ app.controller("product-ctrl", function($scope, $http) {
 
 
 	$scope.delete = function(item) {
-    // Hiển thị cửa sổ xác nhận trước khi xóa
-    Swal.fire({
-        title: 'Xác nhận xóa',
-        text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Đồng ý',
-        cancelButtonText: 'Hủy bỏ'
-    }).then((result) => {
-        // Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
-        if (result.isConfirmed) {
-            // Nếu đã bấm "Đồng ý", thực hiện xóa
-            $http.delete(`/rest/products/${item.productid}`)
-                .then(resp => {
-                    // Xóa sản phẩm khỏi danh sách hiển thị
-                    var index = $scope.items.findIndex(p => p.productid == item.productid);
-                    $scope.items.splice(index, 1);
+		// Hiển thị cửa sổ xác nhận trước khi xóa
+		Swal.fire({
+			title: 'Xác nhận xóa',
+			text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Đồng ý',
+			cancelButtonText: 'Hủy bỏ'
+		}).then((result) => {
+			// Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
+			if (result.isConfirmed) {
+				// Nếu đã bấm "Đồng ý", thực hiện xóa
+				$http.delete(`/rest/products/${item.productid}`)
+					.then(resp => {
+						// Xóa sản phẩm khỏi danh sách hiển thị
+						var index = $scope.items.findIndex(p => p.productid == item.productid);
+						$scope.items.splice(index, 1);
 
-                    // Hiển thị thông báo thành công
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Thành công!',
-                        text: 'Xóa sản phẩm thành công!',
-                    }).then((result) => {
-                    // Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
-                    if (result.isConfirmed) {
-                        // Nếu đã bấm, thực hiện reload trang
-                        location.reload();
-                    }
-                });
-                })
-                .catch(error => {
-                    // Hiển thị thông báo lỗi
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Lỗi!',
-                        text: 'Lỗi xóa sản phẩm',
-                    });
-                    console.log("Error", error);
-                });
-        }
-    });
-};
+						// Hiển thị thông báo thành công
+						Swal.fire({
+							icon: 'success',
+							title: 'Thành công!',
+							text: 'Xóa sản phẩm thành công!',
+						}).then((result) => {
+							// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+							if (result.isConfirmed) {
+								// Nếu đã bấm, thực hiện reload trang
+								location.reload();
+							}
+						});
+					})
+					.catch(error => {
+						// Hiển thị thông báo lỗi
+						Swal.fire({
+							icon: 'error',
+							title: 'Lỗi!',
+							text: 'Lỗi xóa sản phẩm',
+						});
+						console.log("Error", error);
+					});
+			}
+		});
+	};
 
 
 
@@ -363,4 +383,40 @@ app.controller("product-ctrl", function($scope, $http) {
 		}
 	};
 
+	$scope.imagesChanged = function(event) {
+		var files = event.target.files;
+		if (files && files.length > 0) {
+			var data = new FormData();
+			var imagePreviewContainer = document.getElementById('image-preview-container');
+			imagePreviewContainer.innerHTML = '';
+
+			for (var i = 0; i < files.length; i++) {
+				data.append('files', files[i]);
+				var file = files[i];
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					var img = document.createElement('img');
+					img.src = e.target.result;
+					img.style.maxWidth = '50px';
+					img.style.height = '50px';
+					imagePreviewContainer.appendChild(img);
+				};
+				reader.readAsDataURL(file);
+			}
+
+			$http.post('/api/images/upload/multipartfile', data, {
+				transformRequest: angular.identity,
+				headers: { 'Content-Type': undefined }
+			}).then(resp => {
+				console.log('Upload success. Image URLs:', resp.data.imageUrls);
+
+				// Assume resp.data.imageUrls is an array of image URLs
+				$scope.form.productimage = resp.data.imageUrls;
+			}).catch(error => {
+				alert("Lỗi upload hình ảnh");
+				console.log("Error", error);
+			});
+		}
+	};
 });

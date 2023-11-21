@@ -1,8 +1,10 @@
 package com.greenfarm.cloudinary;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,25 @@ public class ImageRestController {
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	
+	
+	@PostMapping("/upload/multipartfile")
+	@ResponseBody
+	public ResponseEntity<Map<String, List<String>>> uploadImages(@RequestParam("files") MultipartFile[] files)
+	        throws IOException {
+	    List<String> imageUrls = new ArrayList<>();
+
+	    for (MultipartFile file : files) {
+	        String imageUrl = cloudinaryService.uploadImage(file);
+	        imageUrls.add(imageUrl);
+	    }
+
+	    Map<String, List<String>> response = new HashMap<>();
+	    response.put("imageUrls", imageUrls);
+
+	    return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
 
 	
 	@PostMapping("/uploadQRCode")

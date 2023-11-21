@@ -23,5 +23,5 @@ public class ProductDTO {
     private Integer quantityavailable;
 	private Boolean isdeleted = Boolean.FALSE;
     private Category category;
-    private List<ProductImage> productimage;
+    private List<ProductImageDTO> productimage;
 }
