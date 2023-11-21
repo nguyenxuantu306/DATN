@@ -72,7 +72,7 @@ app.controller("user-ctrl", function($scope, $http) {
 	// Thêm mới
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		$http.post(`/rest/users`, item).then(resp => {
+		$http.post(`/rest/users/admin`, item).then(resp => {
 			resp.data.createddate = new Date(resp.data.createddate);
 			resp.data.birthday = new Date(resp.data.birthday);
 			$scope.items.push(resp.data);

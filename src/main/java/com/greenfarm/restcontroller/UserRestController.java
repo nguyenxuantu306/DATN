@@ -100,9 +100,25 @@ public class UserRestController {
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
+	@PostMapping("/admin")
+	public ResponseEntity<UserDTO> createadmin(@Valid @RequestBody User user) throws UserAlreadyExistException {
+		User createdUser = userService.createADMIN(user);
+
+		if (createdUser == null) {
+			// Nếu không thể tạo User, trả về mã trạng thái 500 Internal Server Error
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+
+		// Sử dụng ModelMapper để ánh xạ từ User sang UserDTO
+		UserDTO userDTO = modelMapper.map(createdUser, UserDTO.class);
+
+		// Trả về UserDTO bằng ResponseEntity với mã trạng thái 201 Created
+		return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
+	}
+	
 	@PostMapping()
 	public ResponseEntity<UserDTO> create(@Valid @RequestBody User user) throws UserAlreadyExistException {
-		User createdUser = userService.createADMIN(user);
+		User createdUser = userService.create(user);
 
 		if (createdUser == null) {
 			// Nếu không thể tạo User, trả về mã trạng thái 500 Internal Server Error
