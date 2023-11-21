@@ -9,21 +9,13 @@ app.controller("tour-ctrl", function($scope, $http) {
 	$scope.deletedItems = [];
 
 	console.log($scope.form.tourImage);
-	//Thêm cái image khác
-	$scope.addImage = function() {
-		$scope.form.tourImage.push({
-			imageurl: ''
-		});
-	};
+
 
 	$scope.formatPrice = function(price) {
 		var priceString = price.toString();
 		priceString = priceString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		return priceString + " đ";
 	}
-
-
-
 
 	$scope.initialize = function() {
 		// Load tours
@@ -45,6 +37,13 @@ app.controller("tour-ctrl", function($scope, $http) {
 	$scope.initialize();
 
 	$scope.idi = {};
+
+	/*//Thêm cái image khác
+	$scope.addImage = function() {
+		$scope.form.tourImage.push({
+			imageurl: ''
+		});
+	};
 	// Hiện thị lên form
 	$scope.edit = function(item) {
 		for (var i = 0; i < item.tourImage.length; i++) {
@@ -52,9 +51,37 @@ app.controller("tour-ctrl", function($scope, $http) {
 		}
 		$scope.form = angular.copy(item);
 		$scope.idi = item.tourid;
-		//		$scope.form.tourImage = angular.copy(item.tourImage);
-		console.log($scope.form);
 	}
+	//Loại bỏ các image
+	$scope.removeImage = function(index) {
+		// Loại bỏ TourImage khỏi form
+		$scope.form.tourImage.splice(index, 1);
+	};
+*/
+	// Hiện thị lên form
+	$scope.edit = function(item) {
+		$scope.form = angular.copy(item);
+		var imageUrls = item.tourImage.map(function(tourImage) {
+			return tourImage.imageurl;
+		});
+
+		$scope.showEditImages(imageUrls);
+
+	}
+
+	//Hiển thị các hình ảnh sản phẩm khác - productImage
+	$scope.showEditImages = function(imageUrls) {
+		var editImagePreviewContainer = document.getElementById('edit-image-preview-container');
+		editImagePreviewContainer.innerHTML = '';
+
+		for (var i = 0; i < imageUrls.length; i++) {
+			var img = document.createElement('img');
+			img.src = imageUrls[i];
+			img.style.maxWidth = '50px';
+			img.style.height = '50px';
+			editImagePreviewContainer.appendChild(img);
+		}
+	};
 
 
 	// Reset form
@@ -103,11 +130,7 @@ app.controller("tour-ctrl", function($scope, $http) {
 		});
 	};
 
-	//Loại bỏ các image
-	$scope.removeImage = function(index) {
-		// Loại bỏ TourImage khỏi form
-		$scope.form.tourImage.splice(index, 1);
-	};
+
 
 	// Cập nhật tour
 	$scope.update = function() {
@@ -201,53 +224,53 @@ app.controller("tour-ctrl", function($scope, $http) {
 
 
 	$scope.delete = function(item) {
-    // Hiển thị cửa sổ xác nhận trước khi xóa
-    Swal.fire({
-        title: 'Xác nhận xóa',
-        text: 'Bạn có chắc chắn muốn xóa tour này?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Đồng ý',
-        cancelButtonText: 'Hủy bỏ'
-    }).then((result) => {
-        // Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
-        if (result.isConfirmed) {
-            // Nếu đã bấm "Đồng ý", thực hiện xóa
-            $http.delete(`/rest/tours/${item.tourid}`).then(resp => {
-                var index = $scope.items.findIndex(p => p.tourid == item.tourid);
-                $scope.items.splice(index, 1);
-                $scope.reset();
+		// Hiển thị cửa sổ xác nhận trước khi xóa
+		Swal.fire({
+			title: 'Xác nhận xóa',
+			text: 'Bạn có chắc chắn muốn xóa tour này?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Đồng ý',
+			cancelButtonText: 'Hủy bỏ'
+		}).then((result) => {
+			// Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
+			if (result.isConfirmed) {
+				// Nếu đã bấm "Đồng ý", thực hiện xóa
+				$http.delete(`/rest/tours/${item.tourid}`).then(resp => {
+					var index = $scope.items.findIndex(p => p.tourid == item.tourid);
+					$scope.items.splice(index, 1);
+					$scope.reset();
 
-                // Hiển thị thông báo thành công
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Thành công!',
-                    text: 'Xóa tour thành công!',
-                }).then((result) => {
+					// Hiển thị thông báo thành công
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công!',
+						text: 'Xóa tour thành công!',
+					}).then((result) => {
 						// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
 						if (result.isConfirmed) {
 							// Nếu đã bấm, thực hiện reload trang
 							location.reload();
 						}
 					});
-            }).catch(error => {
-                // Hiển thị thông báo lỗi
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi!',
-                    text: 'Lỗi xóa tour!',
-                });
-                console.log("Error", error);
-            });
-        }
-    });
-};
+				}).catch(error => {
+					// Hiển thị thông báo lỗi
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi xóa tour!',
+					});
+					console.log("Error", error);
+				});
+			}
+		});
+	};
 
 	function refreshPage() {
 		location.reload();
 	}
 
-	
+
 	$scope.pager = {
 		page: 0,
 		size: 5,
@@ -327,7 +350,7 @@ app.controller("tour-ctrl", function($scope, $http) {
 				console.error('Error exporting PDF:', error);
 			});
 	};
-	
+
 	$scope.imageChanged = function(event) {
 		var file = event.target.files[0];
 		if (file) {
@@ -346,4 +369,43 @@ app.controller("tour-ctrl", function($scope, $http) {
 			})
 		}
 	};
+
+	$scope.imagesChanged = function(event) {
+		var files = event.target.files;
+		if (files && files.length > 0) {
+			var data = new FormData();
+			var imagePreviewContainer = document.getElementById('image-preview-container');
+			imagePreviewContainer.innerHTML = '';
+
+			for (var i = 0; i < files.length; i++) {
+				data.append('files', files[i]);
+				var file = files[i];
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					var img = document.createElement('img');
+					img.src = e.target.result;
+					img.style.maxWidth = '50px';
+					img.style.height = '50px';
+					imagePreviewContainer.appendChild(img);
+				};
+				reader.readAsDataURL(file);
+			}
+
+			$http.post('/api/images/upload/multipartfile', data, {
+				transformRequest: angular.identity,
+				headers: { 'Content-Type': undefined }
+			}).then(resp => {
+				console.log('Upload success. Image URLs:', resp.data.imageUrls);
+
+				// Assume resp.data.imageUrls is an array of image URLs
+				$scope.form.tourImage = resp.data.imageUrls;
+			}).catch(error => {
+				alert("Lỗi upload hình ảnh");
+				console.log("Error", error);
+			});
+		}
+	};
+
+
 });

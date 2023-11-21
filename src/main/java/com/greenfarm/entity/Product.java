@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -66,7 +67,7 @@ public class Product implements Serializable {
 	List<OrderDetail> orderDetails;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	List<ProductImage> productimage;
 	
 	@JsonIgnore

@@ -1,5 +1,6 @@
 package com.greenfarm.restcontroller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,9 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.ProductDTO;
+import com.greenfarm.dto.ProductImageDTO;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
+import com.greenfarm.entity.ProductImage;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.Tour;
 import com.greenfarm.service.ProductService;
 
 @CrossOrigin("*")
@@ -113,17 +117,45 @@ public class ProductRestController {
 //		return null;		
 //	}
 
+//	@PostMapping()
+//	public ResponseEntity<ProductDTO> create(@RequestBody Product product, Model model) {
+//
+//		Product createdProduct = productService.create(product);
+//
+//		// Sử dụng ModelMapper để ánh xạ từ Product đã tạo thành ProductDTO
+//		ProductDTO productDTO = modelMapper.map(createdProduct, ProductDTO.class);
+//
+//		// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
+//		return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
+//	}
+	
 	@PostMapping()
-	public ResponseEntity<ProductDTO> create(@RequestBody Product product, Model model) {
+	public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO productDTO) {
+	    // Create Product object
+		Product product = modelMapper.map(productDTO, Product.class);
 
-		Product createdProduct = productService.create(product);
+	    // Create ProductImage objects and associate them with the product
+	    List<ProductImage> productImages = new ArrayList<>();
+	    if (productDTO.getProductimage() != null) {
+	        for (ProductImageDTO productImageDTO : productDTO.getProductimage()) {
+	            ProductImage productImage = new ProductImage();
+	            productImage.setImageurl(productImageDTO.getImageurl());
+	            productImage.setProduct(product);
+	            productImages.add(productImage);
+	        }
+	    }
 
-		// Sử dụng ModelMapper để ánh xạ từ Product đã tạo thành ProductDTO
-		ProductDTO productDTO = modelMapper.map(createdProduct, ProductDTO.class);
+	    // Set the list of images in the product
+	    product.setProductimage(productImages);
 
-		// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
-		return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
+	    // Save product and associated images
+	    Product createdProduct = productService.create(product);
+
+	    // Map to DTO and return
+	    ProductDTO createdProductDTO = modelMapper.map(createdProduct, ProductDTO.class);
+	    return new ResponseEntity<>(createdProductDTO, HttpStatus.CREATED);
 	}
+
 
 	@PutMapping("{productid}")
 	public ResponseEntity<ProductDTO> update(@PathVariable("productid") Integer productid,
