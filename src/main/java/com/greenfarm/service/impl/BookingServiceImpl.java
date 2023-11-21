@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -87,7 +86,6 @@ public class BookingServiceImpl implements BookingService {
 	
 	@Override
 	public List<Booking> findByEfindByIdAccountmail(String email) {
-		// TODO Auto-generated method stub
 		return dao.findByEfindByIdAccountmail(email);
 	}
 

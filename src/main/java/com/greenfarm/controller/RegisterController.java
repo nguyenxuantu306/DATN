@@ -4,7 +4,6 @@ package com.greenfarm.controller;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greenfarm.dto.RegisterDTO;
-import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.InvalidTokenException;
 import com.greenfarm.exception.UserAlreadyExistException;
@@ -64,7 +62,6 @@ public class RegisterController {
 //			user.setCreateddate(new Date());
 //			userservice.create(user);
 //		} catch (Exception e) {
-//			// TODO: handle exception
 //			bindingResult.rejectValue("email", "error.userDTO", "An account already exists for this email.");
 //			model.addAttribute("registrationForm", userInfo);
 //			return "register";

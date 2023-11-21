@@ -2,7 +2,6 @@ package com.greenfarm.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,10 +20,8 @@ import com.greenfarm.dao.StatusOrderDAO;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
-import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
-import com.greenfarm.entity.RevenueTK;
 import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.service.OrderService;
 
@@ -87,7 +84,6 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<Order> findByEfindByIdAccountmail(String email) {
-		// TODO Auto-generated method stub
 		return dao.findByEfindByIdAccountmail(email);
 	}
 
@@ -164,7 +160,6 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<Order> findAll() {
-		// TODO Auto-generated method stub
 		return dao.findAll();
 	}
 

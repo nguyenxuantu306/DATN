@@ -1,11 +1,6 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
-import java.util.List;
-
-import org.hibernate.annotations.ManyToAny;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

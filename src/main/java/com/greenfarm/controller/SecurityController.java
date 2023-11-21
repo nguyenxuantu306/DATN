@@ -1,13 +1,11 @@
 package com.greenfarm.controller;
 
-import java.security.Principal;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,13 +16,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greenfarm.dao.UserDAO;
-import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.Passworddata;
 import com.greenfarm.entity.ResetPassWordData;
 import com.greenfarm.entity.User;
@@ -260,7 +255,7 @@ public class SecurityController {
 			// String userName = email;
 			userService.forgottenPassword(email);
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 
 		return "redirect:/login";

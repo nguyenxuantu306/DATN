@@ -1,24 +1,20 @@
 package com.greenfarm.controller;
 
 import java.io.ByteArrayOutputStream;
-
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.MediaType;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.Font.FontFamily;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
+
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Order;
@@ -32,12 +28,18 @@ import com.greenfarm.service.OrderService;
 import com.greenfarm.service.ProductService;
 import com.greenfarm.service.TourService;
 import com.greenfarm.service.UserService;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-
-import java.text.DecimalFormat;
 
 @RestController
 public class PdfController {

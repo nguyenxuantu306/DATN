@@ -1,13 +1,9 @@
 package com.greenfarm.dto;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
-import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.StatusBooking;
-import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.User;
 
@@ -17,7 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

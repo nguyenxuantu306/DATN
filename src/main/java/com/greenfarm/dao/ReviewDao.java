@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.greenfarm.entity.Product;
-import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.Review;
 import com.greenfarm.entity.User;

@@ -2,7 +2,6 @@ package com.greenfarm.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -18,13 +17,9 @@ import com.greenfarm.dao.TourConditionDAO;
 import com.greenfarm.dao.TourDAO;
 import com.greenfarm.dao.TourOverviewDAO;
 import com.greenfarm.dto.TourDTO;
-import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Pricing;
 import com.greenfarm.entity.Tour;
-import com.greenfarm.entity.TourImage;
 import com.greenfarm.service.TourService;
-
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class TourServiceImpl implements TourService {

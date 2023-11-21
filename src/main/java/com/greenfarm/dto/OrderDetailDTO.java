@@ -1,7 +1,6 @@
 package com.greenfarm.dto;
 
 import com.greenfarm.entity.Order;
-import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.Product;
 
 import lombok.AllArgsConstructor;

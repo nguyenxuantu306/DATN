@@ -1,15 +1,13 @@
 package com.greenfarm.restcontroller;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.http.HttpStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.CommentDTO;
-import com.greenfarm.dto.CommentDTO;
 import com.greenfarm.entity.Comment;
-import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.Tour;
-import com.greenfarm.entity.Comment;
 import com.greenfarm.service.CommentService;
 import com.greenfarm.service.TourService;
 

@@ -1,7 +1,6 @@
 package com.greenfarm.dao;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -11,10 +10,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
-import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
-import com.greenfarm.entity.RevenueTK;
 
 public interface OrderDAO extends JpaRepository<Order, Integer> {
 

@@ -1,11 +1,9 @@
 package com.greenfarm.controller;
 
-import java.io.File;
-import java.util.stream.Collectors;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +27,11 @@ import com.greenfarm.entity.StatusBooking;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.BookingService;
-import com.greenfarm.service.QRCodeService;
 import com.greenfarm.service.StatusBookingService;
 import com.greenfarm.service.TourService;
 import com.greenfarm.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 public class BookingController {
@@ -54,9 +50,6 @@ public class BookingController {
 
 	@Autowired
 	ModelMapper modelMapper;
-
-	@Autowired
-	private QRCodeService qrCodeService;
 
 	@Autowired
 	ImageRestController imageRestController;

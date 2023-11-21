@@ -1,6 +1,5 @@
 package com.greenfarm.service.impl;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -82,10 +81,8 @@ public class Emailserviceimpl implements EmailService {
 	    try {
 			messageHelper.addInline("Purchase Order", new URLDataSource(new URL(qrCodeUrl)));
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

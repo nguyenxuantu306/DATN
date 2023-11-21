@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.ReviewDao;
 import com.greenfarm.entity.Product;
-import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.Review;
 import com.greenfarm.entity.User;
@@ -33,7 +32,6 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public List<Review> findbyproduct(Product product) {
-		// TODO Auto-generated method stub
 		return dao.findByProduct(product);
 	}
 

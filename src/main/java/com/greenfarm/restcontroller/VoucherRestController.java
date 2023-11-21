@@ -18,11 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.greenfarm.dto.OrderDTO;
-import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.dto.VoucherDTO;
-import com.greenfarm.entity.Order;
-import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Voucher;
 import com.greenfarm.service.VoucherService;
 

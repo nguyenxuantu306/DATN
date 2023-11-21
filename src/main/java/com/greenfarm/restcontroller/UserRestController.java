@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.dto.UserDTO;
-import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.UnkownIdentifierException;

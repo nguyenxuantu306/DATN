@@ -18,25 +18,21 @@ public class CommentServiceImpl implements CommentService{
 	
 	@Override
 	public Comment create(Comment comment) {
-		// TODO Auto-generated method stub
 		return commentDAO.save(comment);
 	}
 
 	@Override
 	public List<Comment> getComments() {
-		// TODO Auto-generated method stub
 		return commentDAO.findAll();
 	}
 
 	@Override
 	public Comment findById(Integer commentid) {
-		// TODO Auto-generated method stub
 		return commentDAO.findById(commentid).get();
 	}
 
 	@Override
 	public Comment update(Comment comment) {
-		// TODO Auto-generated method stub
 		return commentDAO.save(comment);
 	}
 
@@ -47,7 +43,6 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	public List<Comment> commentbytourid(Tour tour) {
-		// TODO Auto-generated method stub
 		return commentDAO.findByTour(tour);
 	}
 

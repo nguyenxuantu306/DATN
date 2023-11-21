@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,14 +16,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.greenfarm.dao.CartDAO;
 import com.greenfarm.dao.OrderDAO;
 import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.PaymentMethodDAO;
-import com.greenfarm.dao.VoucherDAO;
 import com.greenfarm.dao.VoucherOrderDAO;
 import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.entity.Cart;
@@ -40,7 +37,6 @@ import com.greenfarm.service.CartService;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.VoucherService;
 import com.greenfarm.service.VoucherUserService;
-import com.greenfarm.vnpay.VNPayService;
 
 import jakarta.servlet.http.HttpServletRequest;
 

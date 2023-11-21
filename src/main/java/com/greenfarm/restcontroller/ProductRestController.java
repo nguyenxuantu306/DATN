@@ -1,11 +1,7 @@
 package com.greenfarm.restcontroller;
 
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -23,19 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
-import com.greenfarm.entity.ThongkeTK;
-import com.greenfarm.entity.Top10;
 import com.greenfarm.service.ProductService;
-
-import io.minio.MinioClient;
-import io.minio.UploadObjectArgs;
-import io.minio.errors.MinioException;
 
 @CrossOrigin("*")
 @RestController

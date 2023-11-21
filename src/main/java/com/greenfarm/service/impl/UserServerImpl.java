@@ -1,7 +1,5 @@
 package com.greenfarm.service.impl;
 
-import java.util.Arrays;
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -38,19 +36,14 @@ import com.greenfarm.service.EmailService;
 import com.greenfarm.service.Securetokenservice;
 import com.greenfarm.service.UserRoleService;
 import com.greenfarm.service.UserService;
-import com.mysql.cj.util.StringUtils;
 
 import jakarta.mail.MessagingException;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 
 @Service
 public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Autowired
 	UserDAO dao;
-
-	private UserDetails userDetails;
 
 	@Autowired
 	UserRoleService userRoleService;
@@ -119,7 +112,6 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	// System.out.println("gui mail");
 	// return userentity;
 	// } catch (Exception e) {
-	// // TODO: handle exception
 	// e.getStackTrace();
 	// }
 	//
@@ -233,14 +225,12 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public boolean isPasswordMatching(String password, String confirmPassword) {
-		// TODO Auto-generated method stub
 
 		return password.equals(confirmPassword);
 	}
 
 	@Override
 	public boolean iscurrentPasswordMatching(User user, String password) {
-		// TODO Auto-generated method stub
 		// Lấy mật khẩu hiện tại của người dùng
 		String currentPassword = user.getPassword(); // Giả sử rằng mật khẩu đã được mã hóa
 
@@ -251,13 +241,11 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	// @Override
 	// public void forgottenPassword(String userName) throws
 	// UnkownIdentifierException {
-	// // TODO Auto-generated method stub
 	// User user = dao.findByEmail(userName).get();
 	// sendResetPasswordEmail(user);
 	// }
 	@Override
 	public void forgottenPassword(String userName) throws UnkownIdentifierException {
-		// TODO Auto-generated method stub
 		User user = dao.findByEmail(userName).orElseThrow(
 				() -> new UnkownIdentifierException("Không tìm thấy người dùng với địa chỉ email đã nhập."));
 		sendResetPasswordEmail(user);
@@ -265,7 +253,6 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public void updatePassword(String password, String token) throws InvalidTokenException, UnkownIdentifierException {
-		// TODO Auto-generated method stub
 		Securetoken securetoken = securetokenservice.findByToken(token);
 		if (Objects.isNull(securetoken)
 				|| !org.apache.commons.codec.binary.StringUtils.equals(token, securetoken.getToken())
@@ -286,7 +273,6 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public boolean loginDisabled(String username) {
-		// TODO Auto-generated method stub
 		User user = dao.findByEmail(username).get();
 		return false;
 	}
@@ -308,22 +294,18 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public void loginFormOAuth2(OAuth2AuthenticationToken oauth2) {
-		// TODO Auto-generated method stub
 		String email = oauth2.getPrincipal().getAttribute("email");
 		String password = Long.toHexString(System.currentTimeMillis());
-		//
 
 		UserDetails user = org.springframework.security.core.userdetails.User.withUsername(email)
 				.password(PE.encode(password)).roles("2").build();
 		Authentication auth = new UsernamePasswordAuthenticationToken(password, null, user.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
-		//
 
 	}
 
 	@Override
 	public UserDetails createNewUser(String email) throws UserAlreadyExistException {
-		// TODO Auto-generated method stub
 		// Kiểm tra xem người dùng đã tồn tại trong hệ thống chưa
 
 		if (emailExists(email)) {
@@ -387,7 +369,6 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public User create(User user) throws UserAlreadyExistException {
-		// TODO Auto-generated method stub
 		// Kiểm tra xem user đã tồn tại chưa
 		if (emailExists(user.getEmail())) {
 			// Nếu đã tồn tại, ném ngoại lệ
@@ -413,7 +394,6 @@ public class UserServerImpl implements UserService, UserDetailsService {
 			try {
 				dao.save(userEntity);
 			} catch (Exception e) {
-				// TODO: handle exception
 				System.out.println("ko luu dc");
 				e.printStackTrace();
 			}
@@ -426,7 +406,6 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public boolean emailExists(String email) {
-		// TODO Auto-generated method stub
 		Optional<User> account = dao.findByEmail(email);
 		return account.isPresent();
 	}
