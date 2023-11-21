@@ -357,9 +357,9 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		User existUser = dao.findByEmail(username).get();
 		if (existUser == null) {
 			User newUser = new User();
-			newUser.setFirstname("google");
-			newUser.setLastname("google");
-			newUser.setPhonenumber("1234567");
+//			newUser.setFirstname("google");
+//			newUser.setLastname("google");
+//			newUser.setPhonenumber("0000000000");
 			newUser.setEmail(username);
 			newUser.setProvider(Provider.GOOGLE);
 			newUser.setAccountVerified(true);

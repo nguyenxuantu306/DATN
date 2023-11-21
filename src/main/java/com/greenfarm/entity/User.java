@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -99,7 +100,7 @@ public class User implements Serializable {
 	List<Comment> comment;
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	@OneToMany(cascade = jakarta.persistence.CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "user")
 	List<UserRole> userRole;
 
 	@JsonIgnore

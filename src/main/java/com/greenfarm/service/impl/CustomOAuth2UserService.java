@@ -14,10 +14,10 @@ import com.greenfarm.entity.CustomOAuth2User;
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 	
-	
-	public OAuth2User loadUser(OAuth2UserRequest auth2UserRequest) {
-		OAuth2User user =  super.loadUser(auth2UserRequest);
-        return new CustomOAuth2User(user);
-		
+	@Override
+	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+		OAuth2User user =  super.loadUser(userRequest);
+		System.out.println("CustomOAuth2UserService invoked");
+		return new CustomOAuth2User(user);
 	}
 }

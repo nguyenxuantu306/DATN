@@ -34,8 +34,10 @@ public class RegisterController {
 	com.greenfarm.service.UserService userservice;
 
 	@GetMapping
-	public String registerUserq(Model model, @ModelAttribute("userinfo") @Valid RegisterDTO userInfo,
-			BindingResult bindingResult) {
+	public String registerUserq(Model model) {
+		//, @ModelAttribute("userinfo") @Valid RegisterDTO userInfo
+		model.addAttribute("userinfo", new RegisterDTO());
+		
 		/*
 		 * if (bindingResult.hasErrors()) { // Nếu có lỗi từ dữ liệu người dùng, không
 		 * cần kiểm tra tiếp và xử lý lỗi. model.addAttribute("registrationMsg",
@@ -88,33 +90,36 @@ public class RegisterController {
 			// Nếu mật khẩu và xác nhận mật khẩu không khớp, thêm lỗi vào BindingResult.
 			System.out.println("repass");
 			bindingResult.rejectValue("repeatpassword", "error.userDTO", "Mật khẩu và xác nhận mật khẩu không khớp");
+		}else {
+			// Nếu không có lỗi, tiếp tục xử lý đăng ký tài khoản.
+			// đăng ký
+			try {
+				// User user = Usermapper.INSTANCE.fromDto(userInfo);
+				User user = new User();
+				user.setFirstname(userInfo.getFirstname());
+				user.setLastname(userInfo.getLastname());
+				user.setEmail(userInfo.getEmail());
+				user.setPassword(userInfo.getPassword());
+				user.setAddress(null);
+				user.setPhonenumber(userInfo.getPhonenumber());
+				user.setBirthday(null);
+				user.setImage(null);
+				user.setGender(null);
+				user.setCreateddate(new Date());
+				System.out.println("chay toi impl");
+				userservice.create(user);
+				return "redirect:/login";
+			} catch (Exception e) {
+				e.printStackTrace();
+				bindingResult.rejectValue("email", "error.userDTO", "An account already exists for this email.");
+				System.out.println("mail");
+				model.addAttribute("registrationForm", userInfo);
+				return "register";
+			}
 		}
+		return null;
 
-		// Nếu không có lỗi, tiếp tục xử lý đăng ký tài khoản.
-		// đăng ký
-		try {
-			// User user = Usermapper.INSTANCE.fromDto(userInfo);
-			User user = new User();
-			user.setFirstname(userInfo.getFirstname());
-			user.setLastname(userInfo.getLastname());
-			user.setEmail(userInfo.getEmail());
-			user.setPassword(userInfo.getPassword());
-			user.setAddress(null);
-			user.setPhonenumber(userInfo.getPhonenumber());
-			user.setBirthday(null);
-			user.setImage(null);
-			user.setGender(null);
-			user.setCreateddate(new Date());
-			System.out.println("chay toi impl");
-			userservice.create(user);
-			return "redirect:/login";
-		} catch (Exception e) {
-			e.printStackTrace();
-			bindingResult.rejectValue("email", "error.userDTO", "An account already exists for this email.");
-			System.out.println("mail");
-			model.addAttribute("registrationForm", userInfo);
-			return "register";
-		}
+		
 		// Chuyển hướng tới trang thành công
 		// model.addAttribute("registrationMsg",
 		// messageSource.getMessage("user.registration.verification.email.msg", null,
