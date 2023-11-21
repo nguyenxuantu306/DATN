@@ -11,6 +11,8 @@ import com.greenfarm.exception.InvalidTokenException;
 import com.greenfarm.exception.UnkownIdentifierException;
 import com.greenfarm.exception.UserAlreadyExistException;
 
+import jakarta.validation.Valid;
+
 public interface UserService {
 
 	
@@ -66,4 +68,6 @@ public interface UserService {
 	List<Report> getBookingTotalPurchaseByUser();
 
 	void save(User user);
+
+	User createADMIN(@Valid User user);
 }

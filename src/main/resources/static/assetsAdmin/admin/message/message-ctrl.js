@@ -21,29 +21,42 @@ app.controller("message-ctrl", function($scope, $http, $window) {
 	// Khởi đầu
 	$scope.initialize();
 
-	// Xóa sản phẩm 
 	$scope.delete = function(item) {
-		$http.delete(`/rest/comment/${item.commentid}`).then(resp => {
-			var index = $scope.items.findIndex(p => p.commentid == item.commentid);
-			$scope.items.splice(index, 1);
-			//$scope.reset();
-			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Xóa bình luận thành công!',
-			});
-		})
-			.catch(error => {
-				// Sử dụng SweetAlert2 cho thông báo lỗi
-				Swal.fire({
-					icon: 'error',
-					title: 'Lỗi!',
-					text: 'Lỗi xóa bình luận!',
-				});
-				console.log("Error", error);
-			});
-	}
+    // Hiển thị cửa sổ xác nhận trước khi xóa
+    Swal.fire({
+        title: 'Xác nhận xóa',
+        text: 'Bạn có chắc chắn muốn xóa bình luận này?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Hủy bỏ'
+    }).then((result) => {
+        // Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
+        if (result.isConfirmed) {
+            // Nếu đã bấm "Đồng ý", thực hiện xóa
+            $http.delete(`/rest/comment/${item.commentid}`).then(resp => {
+                var index = $scope.items.findIndex(p => p.commentid == item.commentid);
+                $scope.items.splice(index, 1);
+
+                // Hiển thị thông báo thành công
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thành công!',
+                    text: 'Xóa bình luận thành công!',
+                });
+            }).catch(error => {
+                // Hiển thị thông báo lỗi
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Lỗi xóa bình luận!',
+                });
+                console.log("Error", error);
+            });
+        }
+    });
+};
+
 
 	$scope.gotoComment = function(item) {
 		console.log(item.commentid);

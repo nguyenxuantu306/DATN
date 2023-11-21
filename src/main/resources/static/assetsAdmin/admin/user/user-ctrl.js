@@ -167,44 +167,44 @@ app.controller("user-ctrl", function($scope, $http) {
 
 	// Xóa loại sản phẩm 
 	$scope.delete = function(item) {
-		$http.delete(`/rest/users/${item.userid}`).then(resp => {
-			var index = $scope.items.findIndex(p => p.userid == item.userid);
-			$scope.items.splice(index, 1);
-			$scope.reset();
-			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Xóa thành công!',
-			});
-			// Load lại trang
-			location.reload();
-		})
-			.catch(error => {
-				// Sử dụng SweetAlert2 cho thông báo lỗi
-				Swal.fire({
-					icon: 'error',
-					title: 'Lỗi!',
-					text: 'Lỗi user',
-				});
-				console.log("Error", error);
-			});
-	}
+		// Hiển thị cửa sổ xác nhận trước khi xóa
+		Swal.fire({
+			title: 'Xác nhận xóa',
+			text: 'Bạn có chắc chắn muốn xóa người dùng này?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Đồng ý',
+			cancelButtonText: 'Hủy bỏ'
+		}).then((result) => {
+			// Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
+			if (result.isConfirmed) {
+				// Nếu đã bấm "Đồng ý", thực hiện xóa
+				$http.delete(`/rest/users/${item.userid}`).then(resp => {
+					var index = $scope.items.findIndex(p => p.userid == item.userid);
+					$scope.items.splice(index, 1);
+					$scope.reset();
 
-	// Upload hình
-	$scope.imageChanged = function(files) {
-		var data = new FormData();
-		data.append('file', files[0]);
-		$http.post('/rest/upload/images', data, {
-			transformRequest: angular.identity,
-			headers: { 'Content-Type': undefined }
-		}).then(resp => {
-			$scope.form.image = resp.data.name;
-		}).catch(error => {
-			alert("Lỗi upload hình ảnh");
-			console.log("Error", error);
-		})
-	}
+					// Hiển thị thông báo thành công
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công!',
+						text: 'Xóa thành công!',
+					}).then(() => {
+						// Reload trang khi người dùng bấm "OK"
+						location.reload();
+					});
+				}).catch(error => {
+					// Hiển thị thông báo lỗi
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi user',
+					});
+					console.log("Error", error);
+				});
+			}
+		});
+	};
 
 
 	$scope.pager = {

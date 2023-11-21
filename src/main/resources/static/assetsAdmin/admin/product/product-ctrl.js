@@ -146,41 +146,56 @@ app.controller("product-ctrl", function($scope, $http) {
 
 
 	$scope.restore = function(productid) {
-		try {
-			axios.put(`/rest/products/${productid}/restore`)
-				.then(response => {
-					// Xử lý phản hồi thành công
-					Swal.fire({
-						icon: 'success',
-						title: 'Thành công!',
-						text: 'Khôi phục sản phẩm thành công!',
-					}).then((result) => {
-					// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
-					if (result.isConfirmed) {
-						// Nếu đã bấm, thực hiện reload trang
-						location.reload();
-					}
-				});
-				})
-				.catch(error => {
-					// Xử lý lỗi
-					Swal.fire({
-						icon: 'error',
-						title: 'Lỗi!',
-						text: 'Lỗi khôi phục sản phẩm',
-					});
-					console.log("Error", error);
-				});
-		} catch (error) {
-			// Xử lý lỗi ngoại lệ
-			Swal.fire({
-				icon: 'error',
-				title: 'Lỗi!',
-				text: 'Lỗi khôi phục sản phẩmmmm',
-			});
-			console.log("Exception", error);
-		}
-	};
+    // Hiển thị cửa sổ xác nhận trước khi khôi phục
+    Swal.fire({
+        title: 'Xác nhận khôi phục',
+        text: 'Bạn có chắc chắn muốn khôi phục sản phẩm này?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Hủy bỏ'
+    }).then((result) => {
+        // Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
+        if (result.isConfirmed) {
+            // Nếu đã bấm "Đồng ý", thực hiện khôi phục
+            try {
+                axios.put(`/rest/products/${productid}/restore`)
+                    .then(response => {
+                        // Xử lý phản hồi thành công
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: 'Khôi phục sản phẩm thành công!',
+                        }).then((result) => {
+                            // Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+                            if (result.isConfirmed) {
+                                // Nếu đã bấm, thực hiện reload trang
+                                location.reload();
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        // Xử lý lỗi
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: 'Lỗi khôi phục sản phẩm',
+                        });
+                        console.log("Error", error);
+                    });
+            } catch (error) {
+                // Xử lý lỗi ngoại lệ
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Lỗi khôi phục sản phẩm',
+                });
+                console.log("Exception", error);
+            }
+        }
+    });
+};
+
 
 
 

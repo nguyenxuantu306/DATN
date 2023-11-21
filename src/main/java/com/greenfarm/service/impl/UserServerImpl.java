@@ -38,6 +38,7 @@ import com.greenfarm.service.UserRoleService;
 import com.greenfarm.service.UserService;
 
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 
 @Service
 public class UserServerImpl implements UserService, UserDetailsService {
@@ -408,6 +409,11 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	public boolean emailExists(String email) {
 		Optional<User> account = dao.findByEmail(email);
 		return account.isPresent();
+	}
+
+	@Override
+	public User createADMIN(@Valid User user) {
+		return dao.save(user);
 	}
 
 }

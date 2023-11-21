@@ -6,30 +6,37 @@
 				<div class="row py-3">
 					<div class="col-md-6 input-group icons">
 						<div class="input-group-prepend">
-							<span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
-									class="mdi mdi-magnify"></i></span>
+							<span
+								class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
+								id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 						</div>
-						<input type="search" class="form-control" ng-model="searchEmail" placeholder="Tìm kiếm theo email..."
+						<input type="search" class="form-control" ng-model="searchEmail"
+							placeholder="Tìm kiếm theo email..."
 							aria-label="Tìm kiếm email...">
 					</div>
 					<div class="col-md-6 text-right">
-						<button type="button" class="btn btn-success" ng-click="editthemsp()" data-toggle="modal"
+						<button type="button" class="btn btn-success"
+							ng-click="editthemsp()" data-toggle="modal"
 							data-target="#exampleModa2">
 							<i class="fa fa-plus-square"></i> Thêm người dùng
 						</button>
-						<button type="button" class="btn btn-success" ng-click="exportExcel()">
+						<button type="button" class="btn btn-success"
+							ng-click="exportExcel()">
 							<i class="fa fa-file-excel-o"></i> Excel
 						</button>
-						<button type="button" class="btn btn-success" ng-click="exportPdf()">
+						<button type="button" class="btn btn-success"
+							ng-click="exportPdf()">
 							<i class="fa fa-file-pdf-o"></i> PDF
 						</button>
-						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#Restore">
+						<button type="button" class="btn btn-success" data-toggle="modal"
+							data-target="#Restore">
 							Khôi phục</i>
 						</button>
 					</div>
 				</div>
 				<div class="table-responsive">
-					<table class="table table-striped table-bordered zero-configuration">
+					<table
+						class="table table-striped table-bordered zero-configuration">
 						<thead>
 							<tr>
 								<th>STT</th>
@@ -45,20 +52,23 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="item in pager.items | filter: { email: searchEmail }">
+							<tr
+								ng-repeat="item in pager.items | filter: { email: searchEmail }">
 								<td>{{$index + 1}}</td>
-								<th><img ng-src="/assets/images/{{item.image}}" alt="Hình ảnh"
-										style="width: 70px; height: 100px"></th>
+								<th><img ng-src="{{item.image}}" alt="Hình ảnh"
+									style="width: 70px; height: 100px"></th>
 								<td>{{item.firstname}}</td>
 								<td>{{item.email}}</td>
 								<td>{{item.phonenumber}}</td>
 								<td style="width: 250px;">{{item.address}}</td>
 								<td>{{item.gender?'Nam':'Nữ'}}</td>
 								<td>{{item.createddate | date:'dd-MM-yyyy'}}</td>
-								<td><a type="button" ng-click="edit(item)" data-toggle="modal"
-										data-target="#exampleModal"> <i class="bi bi-pencil-square"></i>
-									</a></td>
-								<td><a ng-click="delete(item)"><i class="bi bi-trash3-fill p-2"></i></a></td>
+								<td><a type="button" ng-click="edit(item)"
+									data-toggle="modal" data-target="#exampleModal"> <i
+										class="bi bi-pencil-square"></i>
+								</a></td>
+								<td><a ng-click="delete(item)"><i
+										class="bi bi-trash3-fill p-2"></i></a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -83,24 +93,27 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="exampleModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl custom-modal">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h3 class="modal-title " id="exampleModalLabel">Cập nhật người
 						dùng</h3>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<div class="col-lg-12">
 						<div class="card">
 							<div class="card-body">
 								<div class="basic-form">
-									<form class="row" name="frmvalidateupdate" ng-submit="submitForm1()" novalidate>
+									<form class="row" name="frmvalidateupdate"
+										ng-submit="submitForm1()" novalidate>
 										<div class="row">
 											<div class="col-md-4">
 												<label for="image"> <img ng-src="{{form.image}}"
-														style="max-width: 100%; height: 300px">
+													style="max-width: 100%; height: 300px">
 												</label>
 
 											</div>
@@ -121,16 +134,18 @@
 
 
 													<div class="form-group col-sm-6">
-														<label>Địa chỉ : </label> <input name="address" type="text"
-															ng-model="form.address" placeholder="VD : Công viên..."
+														<label>Địa chỉ : </label> <input name="address"
+															type="text" ng-model="form.address"
+															placeholder="VD : Công viên..."
 															class="form-control input-default" required> <label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.address.$error.required"
 															style="color: red;">Vui lòng nhập địa chỉ !</label> <label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Ngày tạo : </label> <input ng-model="form.createddate"
-															type="date" name="createddate"
-															class="form-control input-default" required> <label
+														<label>Ngày tạo : </label> <input
+															ng-model="form.createddate" type="date"
+															name="createddate" class="form-control input-default"
+															required> <label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.createddate.$error.required"
 															style="color: red;">Vui lòng nhập ngày tạo !</label> <label
 															ng-show="frmvalidateupdate.$submitted && !isDateBeforeCreatedate()"
@@ -154,8 +169,8 @@
 													<div class="form-group col-sm-6">
 														<label>Giới tính : </label>
 														<div class="form-control">
-															<input form-control ng-model="form.gender" ng-value="true"
-																type="radio" name="gender" required>
+															<input form-control ng-model="form.gender"
+																ng-value="true" type="radio" name="gender" required>
 															Nam <input form-control ng-model="form.gender"
 																ng-value="false" type="radio" name="gender" required>
 															Nữ
@@ -165,8 +180,9 @@
 															style="color: red;">Vui lòng chọn giới tính!</label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Tên đầu : </label> <input name="firstname" type="text"
-															ng-model="form.firstname" placeholder="VD : Hưng"
+														<label>Tên đầu : </label> <input name="firstname"
+															type="text" ng-model="form.firstname"
+															placeholder="VD : Hưng"
 															class="form-control input-default" required> <label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.firstname.$error.required"
 															style="color: red;">Vui lòng nhập tên đầu!</label>
@@ -174,8 +190,8 @@
 													<div class="form-group col-sm-6">
 														<label>Tên cuối : </label> <input name="lastname"
 															placeholder="VD : Nguyễn" type="text"
-															ng-model="form.lastname" class="form-control input-default"
-															required> <label
+															ng-model="form.lastname"
+															class="form-control input-default" required> <label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.lastname.$error.required"
 															style="color: red;">Vui lòng nhập tên cuôí!</label>
 													</div>
@@ -205,8 +221,8 @@
 															lai!</label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Hình ảnh : </label>
-														<input type="file" class="form-control" id="image"
+														<label>Hình ảnh : </label> <input type="file"
+															class="form-control" id="image"
 															onchange="angular.element(this).scope().imageChanged(event)"
 															accept="image/*">
 														<!--														<label-->
@@ -233,24 +249,27 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="exampleModa2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="exampleModa2" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl custom-modal">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h3 class="modal-title " id="exampleModalLabel">Thêm người
 						dùng</h3>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<div class="col-lg-12">
 						<div class="card">
 							<div class="card-body">
 								<div class="basic-form">
-									<form class="row" name="frmvalidate" ng-submit="submitForm()" novalidate>
+									<form class="row" name="frmvalidate" ng-submit="submitForm()"
+										novalidate>
 										<div class="row">
 											<div class="col-md-4">
 												<label for="image"> <img ng-src="{{form.image}}"
-														style="max-width: 100%; height: 300px">
+													style="max-width: 100%; height: 300px">
 												</label>
 
 											</div>
@@ -271,16 +290,18 @@
 
 
 													<div class="form-group col-sm-6">
-														<label>Địa chỉ : </label> <input name="address" type="text"
-															ng-model="form.address" placeholder="VD : Công viên..."
+														<label>Địa chỉ : </label> <input name="address"
+															type="text" ng-model="form.address"
+															placeholder="VD : Công viên..."
 															class="form-control input-default" required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.address.$error.required"
 															style="color: red;">Vui lòng nhập địa chỉ !</label> <label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Ngày tạo : </label> <input ng-model="form.createddate"
-															type="date" name="createddate"
-															class="form-control input-default" required> <label
+														<label>Ngày tạo : </label> <input
+															ng-model="form.createddate" type="date"
+															name="createddate" class="form-control input-default"
+															required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.createddate.$error.required"
 															style="color: red;">Vui lòng nhập ngày tạo !</label> <label
 															ng-show="frmvalidate.$submitted && !isDateBeforeCreatedate()"
@@ -304,8 +325,8 @@
 													<div class="form-group col-sm-6">
 														<label>Giới tính : </label>
 														<div class="form-control">
-															<input form-control ng-model="form.gender" ng-value="true"
-																type="radio" name="gender" required>
+															<input form-control ng-model="form.gender"
+																ng-value="true" type="radio" name="gender" required>
 															Nam <input form-control ng-model="form.gender"
 																ng-value="false" type="radio" name="gender" required>
 															Nữ
@@ -315,8 +336,9 @@
 															style="color: red;">Vui lòng chọn giới tính!</label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Tên đầu : </label> <input name="firstname" type="text"
-															ng-model="form.firstname" placeholder="VD : Hưng"
+														<label>Tên đầu : </label> <input name="firstname"
+															type="text" ng-model="form.firstname"
+															placeholder="VD : Hưng"
 															class="form-control input-default" required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.firstname.$error.required"
 															style="color: red;">Vui lòng nhập tên đầu!</label>
@@ -324,8 +346,8 @@
 													<div class="form-group col-sm-6">
 														<label>Tên cuối : </label> <input name="lastname"
 															placeholder="VD : Nguyễn" type="text"
-															ng-model="form.lastname" class="form-control input-default"
-															required> <label
+															ng-model="form.lastname"
+															class="form-control input-default" required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.lastname.$error.required"
 															style="color: red;">Vui lòng nhập tên cuôí!</label>
 													</div>
@@ -355,8 +377,8 @@
 															lai!</label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Hình ảnh : </label>
-														<input type="file" class="form-control" id="image"
+														<label>Hình ảnh : </label> <input type="file"
+															class="form-control" id="image"
 															onchange="angular.element(this).scope().imageChanged(event)"
 															accept="image/*">
 
@@ -381,52 +403,52 @@
 
 							</div>
 						</div>
-				</div>
+					</div>
 
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="modal fade" id="Restore" tabindex="-1" aria-labelledby="Restore" aria-hidden="true">
-		<div class="modal-dialog modal-xl custom-modal">
-			<div class="modal-content">
-				<div class="modal-body">
-					<div class="table-responsive">
-						<table class="table table-striped table-bordered zero-configuration">
-							<thead>
-								<tr>
-									<th>STT</th>
-									<th>Hình ảnh</th>
-									<th>Tên</th>
-									<th>Email</th>
-									<th>Điện thoại</th>
-									<th>Địa chỉ</th>
-									<th>Giới tính</th>
-									<th>Ngày tạo</th>
-									<th>Khôi phục</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="item in deletedItems">
-									<td>{{$index + 1}}</td>
-									<th><img ng-src="/assets/images/{{item.image}}" alt="Hình ảnh"
+		<div class="modal fade" id="Restore" tabindex="-1"
+			aria-labelledby="Restore" aria-hidden="true">
+			<div class="modal-dialog modal-xl custom-modal">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="table-responsive">
+							<table
+								class="table table-striped table-bordered zero-configuration">
+								<thead>
+									<tr>
+										<th>STT</th>
+										<th>Hình ảnh</th>
+										<th>Tên</th>
+										<th>Email</th>
+										<th>Điện thoại</th>
+										<th>Địa chỉ</th>
+										<th>Giới tính</th>
+										<th>Ngày tạo</th>
+										<th>Khôi phục</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="item in deletedItems">
+										<td>{{$index + 1}}</td>
+										<th><img ng-src="{{item.image}}" alt="Hình ảnh"
 											style="width: 70px; height: 100px"></th>
-									<td>{{item.firstname}}</td>
-									<td>{{item.email}}</td>
-									<td>{{item.phonenumber}}</td>
-									<td style="width: 250px;">{{item.address}}</td>
-									<td>{{item.gender?'Nam':'Nữ'}}</td>
-									<td>{{item.createddate | date:'dd-MM-yyyy'}}</td>
-									<td><a ng-click="restore(item.userid)"><i class="bi bi-bootstrap-reboot"></i></a>
-									</td>
-									</i>
-									</a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+										<td>{{item.firstname}}</td>
+										<td>{{item.email}}</td>
+										<td>{{item.phonenumber}}</td>
+										<td style="width: 250px;">{{item.address}}</td>
+										<td>{{item.gender?'Nam':'Nữ'}}</td>
+										<td>{{item.createddate | date:'dd-MM-yyyy'}}</td>
+										<td><a ng-click="restore(item.userid)"><i
+												class="bi bi-bootstrap-reboot"></i></a></td>									
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+	

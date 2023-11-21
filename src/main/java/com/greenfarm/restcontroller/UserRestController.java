@@ -102,7 +102,7 @@ public class UserRestController {
 
 	@PostMapping()
 	public ResponseEntity<UserDTO> create(@Valid @RequestBody User user) throws UserAlreadyExistException {
-		User createdUser = userService.create(user);
+		User createdUser = userService.createADMIN(user);
 
 		if (createdUser == null) {
 			// Nếu không thể tạo User, trả về mã trạng thái 500 Internal Server Error
