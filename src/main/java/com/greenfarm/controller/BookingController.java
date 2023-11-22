@@ -96,6 +96,7 @@ public class BookingController {
 			return "bookingform";
 		}
 
+		
 		Booking booking = modelMapper.map(bookingDto, Booking.class);
 		// Thời gian
 		booking.setBookingdate(LocalDateTime.now());

@@ -18,12 +18,12 @@
 					<div class="text-box ">
 						<h2 class="py-4" style="text-align: center;">Đổi mật khẩu</h2>
 
-						<form action="/changepass" th:object="${passchange}" method="post"
+						<!-- <form action="/changepass" th:object="${passchange}" method="post"
 							class="py-3">
 							<div class="mb-4 form-floating">
 								<input name="currentpass" type="password" th:field="*{currentpass}"
 									class="form-control" id="currentpass" placeholder="currentpass"
-									required> <label for="currentpass">Mật khẩu cũ</label>
+									> <label for="currentpass">Mật khẩu cũ</label>
 									 <i class="text-danger"
 									th:errors="*{currentpass}"></i>
 									<div th:if="${currentPasswordError}" class="text-danger" th:text="${currentPasswordError}"></div>
@@ -32,7 +32,7 @@
 							<div class="mb-4 form-floating">
 								<input name="newpass" type="password" th:field="*{newpass}"
 									class="form-control" id="newpass" placeholder="newpass"
-									required> <label for="newpass">Mật khẩu mới</label>
+									> <label for="newpass">Mật khẩu mới</label>
 									 <i class="text-danger"
 									th:errors="*{newpass}"></i>
 									
@@ -40,7 +40,7 @@
 							<div class="mb-4 form-floating">
 								<input name="confirmpass" type="password"
 									th:field="*{confirmpass}" class="form-control" id="confirmpass"
-									placeholder="" required> <label for="currentpass">Xác
+									placeholder="" > <label for="currentpass">Xác
 									nhận mật khẩu mới</label>
 									<i class="text-danger"
 									th:errors="*{confirmpass}"></i>
@@ -50,7 +50,43 @@
 							<button style="font-size: 20px" type="submit"
 								class="form-control-submit-button">Đổi mật khẩu</button>
 
+						</form> -->
+						<form action="/changepass" th:object="${passchange}" method="post"
+							class="py-3">
+							<div class="mb-4 form-floating">
+								<input name="currentpass" type="password"
+									th:field="*{currentpass}" class="form-control" id="currentpass"
+									placeholder="currentpass"> <label for="currentpass">Mật
+									khẩu cũ</label>
+
+								<div
+									style="font-size: 14px; font-weight: 600px; text-align: left;"
+									class="text-danger" th:errors="*{currentpass}"></div>
+								<div th:if="${currentPasswordError}" class="text-danger"
+									th:text="${currentPasswordError}"></div>
+							</div>
+
+							<div class="mb-4 form-floating">
+								<input name="newpass" type="password" th:field="*{newpass}"
+									class="form-control" id="newpass" placeholder="newpass">
+								<label for="newpass">Mật khẩu mới</label>
+								<div style="font-size: 14px; font-weight: 600px; text-align: left;" class="text-danger" th:errors="*{newpass}"></div>
+							</div>
+
+							<div class="mb-4 form-floating">
+								<input name="confirmpass" type="password"
+									th:field="*{confirmpass}" class="form-control" id="confirmpass"
+									placeholder=""> <label for="currentpass">Xác
+									nhận mật khẩu mới</label>
+								<div style="font-size: 14px; font-weight: 600px; text-align: left;" class="text-danger" th:errors="*{confirmpass}"></div>
+								<div th:if="${newPasswordError}" class="text-danger"
+									th:text="${newPasswordError}"></div>
+							</div>
+
+							<button style="font-size: 20px" type="submit"
+								class="form-control-submit-button">Đổi mật khẩu</button>
 						</form>
+
 					</div>
 				</div>
 			</div>

@@ -9,7 +9,7 @@
 
 <body>
 	<div class="container">
-		<form action="/booking/create" method="post"th:action="@{/booking/create}" th:object="${booking}">
+		<form id="bookingForm" action="/booking/create" method="post"th:action="@{/booking/create}" th:object="${booking}" >
 			<div class="row">
 				<div class="col-8" id="radius">
 					<div class="card mt-3" id="radius">
@@ -174,7 +174,7 @@
 
 					</div>
 					<!--  -->
-					<button type="submit" class="btn btn-primary text-center"
+					<button onclick="confirmBooking()"  type="button" class="btn btn-primary text-center" 
 						style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; border-radius:999px; width: 350px; background: white; color: #7AB730;">
 						ĐẶT TOUR</button>
 
@@ -234,6 +234,26 @@
         adultPriceElement.textContent = formattedAdultPrice;
     });
 </script>
+<script>
+    function confirmBooking() {
+        Swal.fire({
+            title: 'Xác nhận đặt tour?',
+            text: 'Bạn có chắc muốn đặt tour không?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy bỏ'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Bạn chỉ cần submit form khi người dùng chọn "Đồng ý"
+                document.getElementById("bookingForm").submit();
+            }
+        });
+    }
+</script>
+
 </body>
 
 </html>

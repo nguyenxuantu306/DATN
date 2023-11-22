@@ -100,26 +100,41 @@ div[style*="margin: 16px 0;"] {
 											Cảm ơn bạn đã đặt Tour của GreenFarm !</h2>
 									</td>
 								</tr>
-								<tr>
-									<td align="left"
-										style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
-										<p
-											style="font-size: 18px; font-weight: bold; line-height: 24px; color: black; text-align: center;">
-											Thông tin giao dịch</p>
-									</td>
-								</tr>
+
 								<tr th:object="${booking}">
 									<td align="left"
 										style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
 										<p
-											style="font-size: 18px; font-weight: bold; line-height: 24px; color: black;">
-											Thông báo : Trạng thái giao dịch thanh toán thành công !</p>
-											
+											style="font-size: 20px; font-weight: bold; line-height: 24px; color: black;">
+											<i class="fas fa-check-circle" style="color: green;"></i> Đơn
+											hàng đã được đưa vào trạng thái chờ xử lý
+										</p>
+										<p style="font-size: 18px; line-height: 24px; color: black;">
+											<i class="fas fa-check-circle" style="color: green;"></i> Sau
+											3 giờ (trong giờ làm việc từ 8h - 18h thứ 2 đến thứ 7) hoặc
+											sau 12 giờ (ngoài giờ làm việc), nhân viên GREENFARM sẽ liên
+											hệ với Bạn để thực hiện và thanh toán đơn hàng
+										</p>
+
+										<p style="font-size: 18px; line-height: 24px; color: black;">
+											<i class="fas fa-check-circle" style="color: green;"></i> Sau
+											thời gian quy định trên nhân viên GREENFARM chưa liên hệ,
+											phiền Bạn gọi khiếu nại/Góp ý yêu cầu giải quyết
+										</p>
+										<p style="font-size: 18px; line-height: 24px; color: black;">
+											(<span style="color: #0055AA">Hà Nội :</span> 0948788575, <span
+												style="color: #0055AA;">TPHCM :</span> 0948788575)
+										</p>
+
 										<p th:field="${booking.tour.tourname}"></p>
 									</td>
 								</tr>
-								
-							</table> <a href="/" class="btn btn-success"
+
+							</table>
+							<p
+								style="font-size: 18px; line-height: 24px; color: black; text-align: center;">
+								Cám ơn quý khách đã sử dụng dịch vụ của GREENFARM</p> <a href="/"
+							class="btn btn-success"
 							style="display: inline-block; padding: 10px 20px; text-align: center; text-decoration: none; border: 1px solid #007bff; border-radius: 5px; transition: background-color 0.3s ease; width: 500px;">Về
 								Trang Chủ</a>
 						</td>

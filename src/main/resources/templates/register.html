@@ -18,51 +18,51 @@
 					<div class="text-box ">
 						<h2 class="py-4" style="text-align: center;">Đăng Ký</h2>
 
-						<form action="/register" th:object="${userinfo}" method="post"
+						<form action="/register" th:object="${userinfo}" method="post" 
 							th:action="@{/register}" class="py-3">
 
 
 							<div class="mb-4 form-floating">
 								<input name="firstname" type="text" th:field="*{firstname}"
-									class="form-control" placeholder="Tên đầu đasad" required> <label
+									class="form-control" placeholder="Tên đầu đasad"  th:errorClass="is-invalid"> <label
 									for="firstname">Tên đầu</label> 
-									<!-- <i class="text-danger" th:errors="*{firstname}"></i> -->
+									<div th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="text-danger invalid-feedback"></div>
 							</div>
 
 							<div class="mb-4 form-floating">
 								<input name="lastname" type="text" th:field="*{lastname}"
-									class="form-control" placeholder="Tên đầu" required> <label
+									class="form-control" placeholder="Tên đầu"  th:errorClass="is-invalid"> <label
 									for="lastname">Tên cuối</label> 
-									<!-- <i class="text-danger" th:errors="*{lastname}"></i> -->
+									<div th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="text-danger invalid-feedback"></div>
 							</div>
 							<div class="mb-4 form-floating">
-								<input name="email" type="email" th:field="*{email}"
+								<input name="email" type="text" th:field="*{email}"
 									class="form-control" id="floatingInput"
-									placeholder="name@example.com" required> <label
+									placeholder="name@example.com"  th:errorClass="is-invalid"> <label
 									for="Email">Email</label> 
-									<!-- <i class="text-danger" th:errors="*{email}"></i> -->
+									<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger invalid-feedback"></div>
 							</div>
 							<div class="mb-4 form-floating">
 								<input name="phonenumber" type="number"
 									th:field="*{phonenumber}" class="form-control"
-									placeholder="Tên đầu" required> <label
+									placeholder="Tên đầu"  th:errorClass="is-invalid"> <label
 									for="phonenumber">Số điện thoại</label> 
-									<!-- <i class="text-danger" th:errors="*{phonenumber}"></i> -->
+									<div th:if="${#fields.hasErrors('phonenumber')}" th:errors="*{phonenumber}" class="text-danger invalid-feedback"></div>
 							</div>
 							<div class="mb-4 form-floating">
 								<input name="password" type="password" th:field="*{password}"
 									class="form-control" id="floatingPassword"
-									placeholder="Password" required> <label
+									placeholder="Password"  th:errorClass="is-invalid"> <label
 									for="floatingPassword">Mật khẩu</label>
-								<!-- 	<i class="text-danger" th:errors="*{password}"></i> -->
+									<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger invalid-feedback"></div>
 									
 							</div>
 							<div class="mb-4 form-floating">
 								<input name="repeatpassword" type="password"
 									th:field="*{repeatpassword}" class="form-control"
-									id="floatingPassword" placeholder="repeatpassword" required>
+									id="floatingPassword" placeholder="repeatpassword"  th:errorClass="is-invalid">
 								<label for="floatingPassword">Nhập lại mật khẩu</label>
-								<!-- <i class="text-danger" th:errors="*{repeatpassword}"></i> -->
+								<div th:if="${#fields.hasErrors('repeatpassword')}" th:errors="*{repeatpassword}" class="text-danger invalid-feedback"></div>
 							</div>
 
 							<button style="font-size: 20px" type="submit"

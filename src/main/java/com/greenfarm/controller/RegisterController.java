@@ -3,11 +3,15 @@ package com.greenfarm.controller;
 
 import java.util.Date;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +22,7 @@ import com.greenfarm.dto.RegisterDTO;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.InvalidTokenException;
 import com.greenfarm.exception.UserAlreadyExistException;
+import com.greenfarm.service.UserService;
 import com.mysql.cj.util.StringUtils;
 
 import jakarta.validation.Valid;
@@ -29,11 +34,13 @@ public class RegisterController {
 	private static final String REDIRECT_LOGIN = "redirect:/login";
 
 	@Autowired
-	com.greenfarm.service.UserService userservice;
+	UserService userservice;
 
+	
+	
 	@GetMapping
-	public String registerUserq(Model model, @ModelAttribute("userinfo") @Valid RegisterDTO userInfo,
-			BindingResult bindingResult) {
+	public String registerUserq(Model model, @ModelAttribute("userinfo") RegisterDTO userInfo
+			) {
 		/*
 		 * if (bindingResult.hasErrors()) { // Nếu có lỗi từ dữ liệu người dùng, không
 		 * cần kiểm tra tiếp và xử lý lỗi. model.addAttribute("registrationMsg",
@@ -72,10 +79,16 @@ public class RegisterController {
 		return "register";
 	}
 
+	@InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        StringTrimmerEditor  stringTrimmerEditor = new StringTrimmerEditor(true);
+        binder.registerCustomEditor(String.class,stringTrimmerEditor);
+    }
 
 	@PostMapping
 	public String registerUser(Model model, @ModelAttribute("userinfo") @Valid RegisterDTO userInfo,
 			BindingResult bindingResult) throws UserAlreadyExistException {
+		
 		if (bindingResult.hasErrors()) {
 			// Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
 			model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");

@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,18 +14,22 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.greenfarm.dao.UserDAO;
+import com.greenfarm.dto.RegisterDTO;
 import com.greenfarm.entity.Passworddata;
 import com.greenfarm.entity.ResetPassWordData;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.InvalidTokenException;
 import com.greenfarm.exception.UnkownIdentifierException;
+import com.greenfarm.exception.UserAlreadyExistException;
 import com.greenfarm.service.UserService;
 
 import jakarta.validation.Valid;
@@ -50,8 +55,21 @@ public class SecurityController {
 	// }
 	// }
 
-	@RequestMapping("/login")
+	// HÀM VALIDATION
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		binder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}
+
+	@GetMapping("/login")
 	public String login(Model model) {
+		model.addAttribute("message", "Vui lòng đăng nhập!");
+		return "security/login";
+	}
+
+	@PostMapping("/login")
+	public String login1(Model model) {
 		model.addAttribute("message", "Vui lòng đăng nhập!");
 		return "security/login";
 	}
@@ -185,9 +203,9 @@ public class SecurityController {
 			user.setImage(userchange.getImage());
 			System.out.println(userchange.getImage());
 
-			if (isAtLeast16YearsOld(userchange.getBirthday())) {
-				user.setBirthday(userchange.getBirthday());
-			}
+//			if (isAtLeast16YearsOld(userchange.getBirthday())) {
+			user.setBirthday(userchange.getBirthday());
+//			}
 			user.setFirstname(userchange.getFirstname());
 			user.setLastname(userchange.getLastname());
 			user.setPhonenumber(userchange.getPhonenumber());
@@ -227,12 +245,12 @@ public class SecurityController {
 		User user = userService.findByEmail(authentication.getName());
 
 		if (!userService.iscurrentPasswordMatching(user, passchange.getCurrentpass())) {
-			model.addAttribute("currentPasswordError", "Mật khẩu hiện tại không đúng.");
+			model.addAttribute("currentPasswordError", "Mật khẩu hiện tại không đúng");
 			return "security/changepass";
 		}
 
 		if (!userService.isPasswordMatching(passchange.getNewpass(), passchange.getConfirmpass())) {
-			model.addAttribute("newPasswordError", "Mật khẩu mới và xác nhận mật khẩu không khớp.");
+			model.addAttribute("newPasswordError", "Mật khẩu mới và mật khẩu xác nhận không khớp");
 			return "security/changepass";
 		}
 
@@ -248,14 +266,21 @@ public class SecurityController {
 	}
 
 	@PostMapping("/forgot")
-	public String fogot(@ModelAttribute User user, Model model, @RequestParam String email)
-			throws UnkownIdentifierException {
+	public String fogot(@ModelAttribute User user, Model model, @RequestParam String email, BindingResult bindingResult)
+			throws UserAlreadyExistException {
+
+		if (bindingResult.hasErrors()) {
+			// Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
+			model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
+			return "redirect:/login";
+		}
+
 		try {
 			System.out.println(email);
 			// String userName = email;
 			userService.forgottenPassword(email);
 		} catch (Exception e) {
-			
+
 		}
 
 		return "redirect:/login";
@@ -317,20 +342,20 @@ public class SecurityController {
 		model.addAttribute("forgotPassword", data);
 	}
 
-	public boolean isAtLeast16YearsOld(Date birthday) {
-		if (birthday == null) {
-			// Xử lý trường hợp ngày sinh không được đặt
-			return false;
-		}
-
-		// Chuyển đổi từ Date sang LocalDate
-		LocalDate birthdate = new java.sql.Date(birthday.getTime()).toLocalDate();
-		LocalDate currentDate = LocalDate.now();
-
-		// Tính khoảng cách thời gian giữa ngày sinh và ngày hiện tại
-		Period age = Period.between(birthdate, currentDate);
-
-		// Kiểm tra xem tuổi có lớn hơn hoặc bằng 16 không
-		return age.getYears() >= 16;
-	}
+//	public boolean isAtLeast16YearsOld(Date birthday) {
+//		if (birthday == null) {
+//			// Xử lý trường hợp ngày sinh không được đặt
+//			return false;
+//		}
+//
+//		// Chuyển đổi từ Date sang LocalDate
+//		LocalDate birthdate = new java.sql.Date(birthday.getTime()).toLocalDate();
+//		LocalDate currentDate = LocalDate.now();
+//
+//		// Tính khoảng cách thời gian giữa ngày sinh và ngày hiện tại
+//		Period age = Period.between(birthdate, currentDate);
+//
+//		// Kiểm tra xem tuổi có lớn hơn hoặc bằng 16 không
+//		return age.getYears() >= 16;
+//	}
 }
