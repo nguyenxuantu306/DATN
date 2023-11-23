@@ -33,7 +33,7 @@
 								<input name="lastname" type="text" th:field="*{lastname}"
 									class="form-control" placeholder="Tên đầu"  th:errorClass="is-invalid"> <label
 									for="lastname">Tên cuối</label> 
-									<div th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="text-danger invalid-feedback"></div>
+									<div th:errors="*{lastname}" class="text-danger invalid-feedback"></div>
 							</div>
 							<div class="mb-4 form-floating">
 								<input name="email" type="text" th:field="*{email}"

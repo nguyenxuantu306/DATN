@@ -18,12 +18,12 @@
 					<div class="text-box ">
 						<h2 class="py-4" style="text-align: center;">Đăng nhập</h2>
 
-						<form th:action="@{/login}" method="post" class="py-3">
+						<form th:action="@{/login}"  method="post" class="py-3">
 							<div class="mb-4 form-floating">
 								<input name="username" type="email" class="form-control"
-									id="floatingInput" placeholder="name@example.com" required>
+									id="floatingInput" placeholder="name@example.com" required="required">
 								<label for="floatingInput">Email</label>
-
+								
 							</div>
 							<div class="mb-4 form-floating">
 								<input name="password" type="password" class="form-control"

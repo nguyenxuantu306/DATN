@@ -184,12 +184,11 @@ public class SecurityController {
 	@PostMapping("/profile")
 	public String profileupdate(Model model, @ModelAttribute("userchange") @Valid User userchange,
 			BindingResult bindingResult) {
-		// if (bindingResult.hasErrors()) {
-		// // Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
-		// model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm
-		// tra lại.");
-		// return "register";
-		// }
+//		 if (bindingResult.hasErrors()) {
+//		 // Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
+//			 model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
+//			 return "profile";
+//		 }
 		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

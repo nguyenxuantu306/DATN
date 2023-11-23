@@ -1,5 +1,6 @@
 package com.greenfarm.restcontroller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +26,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.greenfarm.dto.OrderDTO;
+import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.ReportRevenue;
@@ -188,4 +190,20 @@ public class OrderRestController {
 	public List<FindReportYear> getYearlyRevenue(@PathVariable Integer year) {
 		return orderService.findYearlyRevenue(year);
 	}
+	
+	
+	@GetMapping("/getCategorySalesByDate")
+    public ResponseEntity<List<CategorySalesByDate>> getCategorySalesByDate(
+        @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        
+        List<CategorySalesByDate> result = orderService.getCategorySalesByDate(date);
+        return ResponseEntity.ok(result);
+    }
+
+//	@GetMapping("/last7days")
+//    public List<CategorySalesByDate> getRevenueLast7Days() {
+//        LocalDateTime currentDate = LocalDateTime.now();
+//        LocalDateTime startDate = currentDate.minusDays(7);
+//        return orderService.getRevenueLast7Days(startDate, currentDate);
+//    }
 }

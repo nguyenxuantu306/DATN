@@ -1,9 +1,11 @@
 package com.greenfarm.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.ReportRevenue;
@@ -56,4 +58,10 @@ public interface OrderService {
 	List<FindReportYear> findYearlyRevenue(Integer year);
 	
 	 List<Order> findByUserEmailAndStatusOrderName(String userEmail, String statusName);
+
+
+	List<CategorySalesByDate> getCategorySalesByDate(LocalDate date);
+
+
+//	List<CategorySalesByDate> getRevenueLast7Days(LocalDateTime startDate, LocalDateTime endDate);
 }

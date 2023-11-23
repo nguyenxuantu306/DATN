@@ -1,5 +1,6 @@
 package com.greenfarm.dao;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -7,7 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.ReportRevenue;
@@ -58,4 +62,32 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 
 	@Query("SELECT o FROM Order o WHERE o.user.email = ?1 AND o.statusOrder.name = ?2")
 	List<Order> findByUserEmailAndStatusOrder_Name(String userEmail, String statusName);
+
+	
+	
+	@Query("SELECT new CategorySalesByDate(pc.categoryname, COUNT(DISTINCT o.Orderid) as quantitySold) " +
+		       "FROM Order o " +
+		       "JOIN o.orderDetail od " +
+		       "JOIN od.product p " +
+		       "JOIN p.category pc " +
+		       "WHERE DATE(o.orderdate) = :date " +
+		       "GROUP BY pc.categoryname " +
+		       "UNION " +
+		       "SELECT new CategorySalesByDate(pc.categoryname, 0 as quantitySold) " +
+		       "FROM Category pc " +
+		       "WHERE pc NOT IN (SELECT DISTINCT p.category FROM Order o JOIN o.orderDetail od JOIN od.product p WHERE DATE(o.orderdate) = :date)")
+		List<CategorySalesByDate> getCategorySalesByDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
+
+
+//	@Query("SELECT NEW CategorySalesByDate(DATE(o.orderdate), SUM(od.totalprice)) " +
+//		       "FROM Order o " +
+//		       "JOIN OrderDetail od ON o.Orderid = od.order.Orderid " +
+//		       "WHERE o.orderdate >= :startDate " +
+//		       "AND o.orderdate < :endDate " +
+//		       "GROUP BY DATE(o.orderdate) " +
+//		       "ORDER BY DATE(o.orderdate) DESC")
+//		List<CategorySalesByDate> RevenueLast7Days(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
+
+
 }

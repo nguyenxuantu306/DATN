@@ -1,5 +1,6 @@
 package com.greenfarm.service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfarm.dao.OrderDAO;
 import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.StatusOrderDAO;
+import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
@@ -195,5 +197,15 @@ public class OrderServiceImpl implements OrderService {
 	public List<Order> findByUserEmailAndStatusOrderName(String userEmail, String statusName) {
 		return dao.findByUserEmailAndStatusOrder_Name(userEmail, statusName);
 	}
+
+	@Override
+	public List<CategorySalesByDate> getCategorySalesByDate(LocalDate date) {
+		return dao. getCategorySalesByDate(date);
+	}
+
+//	@Override
+//    public List<CategorySalesByDate> getRevenueLast7Days(LocalDateTime startDate, LocalDateTime endDate) {
+//        return dao.RevenueLast7Days(startDate, endDate);
+//    }
 
 }
