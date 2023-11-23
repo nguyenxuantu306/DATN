@@ -46,7 +46,6 @@ public class OrderController {
 		System.out.println("Status Filter: " + statusFilter);
 		List<Order> orders = orderService.findByEfindByIdAccountmail(email);
 
-// Filter orders based on status
 		if (statusFilter != null && !statusFilter.isEmpty()) {
 			orders = orders.stream().filter(order -> {
 				System.out.println("Order Status: " + order.getStatusOrder().getName());
@@ -54,10 +53,8 @@ public class OrderController {
 			}).collect(Collectors.toList());
 		}
 
-// Sort the orders by order date in descending order
 		Collections.sort(orders, (o1, o2) -> o2.getOrderDateFormatted().compareTo(o1.getOrderDateFormatted()));
 
-// Set the sorted and filtered orders in the model
 		model.addAttribute("sortedOrders", orders);
 		return "order/list";
 	}
