@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.Report;
+import com.greenfarm.entity.Report7day;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
 
@@ -76,17 +78,22 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 		       "SELECT new CategorySalesByDate(pc.categoryname, 0 as quantitySold) " +
 		       "FROM Category pc " +
 		       "WHERE pc NOT IN (SELECT DISTINCT p.category FROM Order o JOIN o.orderDetail od JOIN od.product p WHERE DATE(o.orderdate) = :date)")
-		List<CategorySalesByDate> getCategorySalesByDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
+		List<CategorySalesByDate> getCategorySalesByDate(@RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date);
 
 
-//	@Query("SELECT NEW CategorySalesByDate(DATE(o.orderdate), SUM(od.totalprice)) " +
-//		       "FROM Order o " +
-//		       "JOIN OrderDetail od ON o.Orderid = od.order.Orderid " +
-//		       "WHERE o.orderdate >= :startDate " +
-//		       "AND o.orderdate < :endDate " +
-//		       "GROUP BY DATE(o.orderdate) " +
-//		       "ORDER BY DATE(o.orderdate) DESC")
-//		List<CategorySalesByDate> RevenueLast7Days(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+	@Query("SELECT NEW com.greenfarm.entity.Report7day(DATE(o.orderdate) AS date, SUM(od.totalprice) AS sum) " +
+	        "FROM Order o " +
+	        "JOIN OrderDetail od ON o.Orderid = od.order.Orderid " +
+	        "WHERE o.orderdate BETWEEN DATEADD(DAY, -7, CURRENT_DATE) AND CURRENT_DATE " +
+	        "GROUP BY DATE(o.orderdate) " +
+	        "ORDER BY DATE(o.orderdate) DESC")
+	List<Report7day> RevenueLast7Days();
+
+
+
+
+
+
 
 
 

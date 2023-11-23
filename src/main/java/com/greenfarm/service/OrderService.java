@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.Report;
+import com.greenfarm.entity.Report7day;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
 
@@ -63,5 +65,5 @@ public interface OrderService {
 	List<CategorySalesByDate> getCategorySalesByDate(LocalDate date);
 
 
-//	List<CategorySalesByDate> getRevenueLast7Days(LocalDateTime startDate, LocalDateTime endDate);
+	List<Report7day> getRevenueLast7Days();
 }

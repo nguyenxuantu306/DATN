@@ -22,6 +22,8 @@ import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
+import com.greenfarm.entity.Report;
+import com.greenfarm.entity.Report7day;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.StatusOrder;
@@ -200,12 +202,12 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<CategorySalesByDate> getCategorySalesByDate(LocalDate date) {
-		return dao. getCategorySalesByDate(date);
+		return dao.getCategorySalesByDate(date);
 	}
 
-//	@Override
-//    public List<CategorySalesByDate> getRevenueLast7Days(LocalDateTime startDate, LocalDateTime endDate) {
-//        return dao.RevenueLast7Days(startDate, endDate);
-//    }
+	@Override
+    public List<Report7day> getRevenueLast7Days() {
+        return dao.RevenueLast7Days();
+    }
 
 }

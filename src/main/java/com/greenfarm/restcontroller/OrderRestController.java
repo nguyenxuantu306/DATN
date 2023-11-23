@@ -29,6 +29,8 @@ import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.Report;
+import com.greenfarm.entity.Report7day;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
 import com.greenfarm.service.OrderService;
@@ -200,10 +202,8 @@ public class OrderRestController {
         return ResponseEntity.ok(result);
     }
 
-//	@GetMapping("/last7days")
-//    public List<CategorySalesByDate> getRevenueLast7Days() {
-//        LocalDateTime currentDate = LocalDateTime.now();
-//        LocalDateTime startDate = currentDate.minusDays(7);
-//        return orderService.getRevenueLast7Days(startDate, currentDate);
-//    }
+	@GetMapping("/last7days")
+    public List<Report7day> getRevenueLast7Days() {
+        return orderService.getRevenueLast7Days();
+    }
 }
