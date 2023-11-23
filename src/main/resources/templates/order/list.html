@@ -15,10 +15,11 @@
 					<!-- 						Đơn hàng đã mua:</h6> -->
 
 
-					<form action="/order/list" method="get" style="width: 450px; display: flex; align-items: center;">
-						<div class="form-group " style="flex: 1;"> <select class="form-control mt-2" id="statusFilter"
-								name="statusFilter">
-								<option value="" selected>Tất cả</option>
+					<form action="/order/list" method="get" style="width: 450px; display: flex; align-items: center;"
+						id="orderForm">
+						<div class="form-group " style="flex: 1;">
+							<select class="form-control mt-2" id="statusFilter" name="statusFilter">
+								<option value="1">Tất cả</option>
 								<option value="Đã hủy">Đã hủy</option>
 								<option value="Chờ xác nhận">Chờ xác nhận</option>
 								<option value="Đang giao">Đang giao</option>
@@ -27,8 +28,6 @@
 								<!-- Các tùy chọn khác -->
 							</select>
 						</div>
-						<button class="fas fa-search border-0 ms-3" type="submit"></button>
-
 					</form>
 					<div th:each="order, state:${sortedOrders}">
 
@@ -50,7 +49,7 @@
 							<!--							</label>-->
 							<label th:if="${order.voucherorder != null and order.voucherorder.size() > 0}">
 								<input class="order-id voucher-input" th:id="'order-id-' + ${order.orderid}"
-									th:value="${order.voucherorder[0]?.voucher?.discount}" />
+									th:value="${order.voucherorder[0]?.voucher?.discount}" style="display: none;" />
 							</label>
 
 
@@ -206,7 +205,16 @@
 				});
 			});
 		</script>
+		<script>
+			// Sử dụng jQuery để theo dõi sự kiện khi người dùng thay đổi giá trị của select
+			$(document).ready(function () {
+				$('#statusFilter').change(function (e) {
+					e.preventDefault();
+					$('#orderForm').submit();
 
+				});
+			});
+		</script>
 	</main>
 </body>
 
