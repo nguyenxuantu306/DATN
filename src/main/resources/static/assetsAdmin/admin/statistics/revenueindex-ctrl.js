@@ -589,7 +589,8 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 		}
 		return colors;
 	}
-
+	
+	// Sử dụng hàm fetchData để lấy dữ liệu và vẽ biểu đồ
 	function updateChartWithDefaultDate() {
 		const defaultDate = new Date().toISOString().slice(0, 10);
 		const dateInput = document.getElementById('dateInput');
@@ -652,31 +653,6 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 			});
 		});
 
-	
-	// Sử dụng hàm fetchData để lấy dữ liệu và vẽ biểu đồ
-	function updateChartWithDefaultDate() {
-		const defaultDate = new Date().toISOString().slice(0, 10);
-		const dateInput = document.getElementById('dateInput');
-		dateInput.value = defaultDate;
-
-		// Gọi sự kiện change để kích hoạt lấy dữ liệu và vẽ biểu đồ
-		const changeEvent = new Event('change');
-		dateInput.dispatchEvent(changeEvent);
-	}
-
-	// Gán sự kiện cho thay đổi ngày
-	document.getElementById('dateInput').addEventListener('change', function() {
-		const selectedDate = this.value;
-
-		fetchData(selectedDate)
-			.then(data => {
-				// Các bước vẽ biểu đồ ở đây...
-			})
-			.catch(error => {
-				// Xử lý lỗi nếu có
-				console.error('Error:', error);
-			});
-	});
 
 	// Gọi hàm để cập nhật biểu đồ với ngày mặc định
 	updateChartWithDefaultDate();
