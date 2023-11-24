@@ -173,6 +173,7 @@ public class BookingRestController {
             // Trả về giao diện Thymeleaf khi vé đã được sử dụng
             ModelAndView mav = new ModelAndView("mytiecketuse");
             // Thêm dữ liệu vào model nếu cần
+            model.addAttribute("bookinguse", booking);
             mav.addObject("message", "Vé đã được sử dụng");
             return mav;
         } else {
@@ -183,6 +184,7 @@ public class BookingRestController {
             // Trả về giao diện Thymeleaf khi xác nhận thành công
             ModelAndView mav = new ModelAndView("mytiecketuse");
             // Thêm dữ liệu vào model nếu cần
+            model.addAttribute("bookinguse", booking);
             mav.addObject("message", "Đã xác nhận thành công");
             return mav;
         }
