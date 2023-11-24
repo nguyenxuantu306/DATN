@@ -16,14 +16,14 @@
 	<div class="booking-details" >
 		<h3>Thông tin đặt vé</h3>
 		<p>
-			<strong>Mã đặt vé :</strong> BK123
+			<strong th:text="${bookinguse.bookingid}">Mã đặt vé :</strong> BK123
 		</p>
 		<p>
-			<strong>Số vé người lớn :</strong> 2
-			<strong>Số vé người trẻ em :</strong> 2
+			<strong th:text="${bookinguse.Adultticketnumber}">Số vé người lớn :</strong> 2
+			<strong th:text="${bookinguse.Childticketnumber}">Số vé người trẻ em :</strong> 2
 		</p>		
 		<p>
-			<strong>Tên tour :</strong> Ngày hội nghệ thuật
+			<strong th:text="${bookinguse.tour.Tourname}">Tên tour :</strong> Ngày hội nghệ thuật
 		</p>
 		<!-- Thêm các thông tin khác tùy thuộc vào yêu cầu của bạn -->
 	</div>
