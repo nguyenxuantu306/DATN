@@ -1,4 +1,4 @@
-package com.greenfarm.paypal;
+package com.greenfarm.config;
 
 import java.util.HashMap;
 import java.util.Map;

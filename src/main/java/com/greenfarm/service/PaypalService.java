@@ -1,4 +1,4 @@
-package com.greenfarm.paypal;
+package com.greenfarm.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.greenfarm.utils.PaypalPaymentIntent;
+import com.greenfarm.utils.PaypalPaymentMethod;
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Payer;
 import com.paypal.api.payments.Payment;

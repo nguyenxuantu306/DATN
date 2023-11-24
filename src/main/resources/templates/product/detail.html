@@ -197,7 +197,8 @@
 								</div>
 								<div class="card-body">
 									<form th:action="@{'/product/detail/' + ${productid}}"
-										th:object="${reviewinsert}" method="post">
+										th:object="${reviewinsert}" method="post"
+										onsubmit="return confirmSubmit()">
 										<fieldset style="font-size: 40px;" class="rating"
 											th:field="*{rating}">
 											<input type="radio" id="star5" name="rating" value="5" /><label
@@ -211,19 +212,18 @@
 												for="star1"></label>
 										</fieldset>
 
-
 										<div class="form-outline">
 											<textarea th:field="*{content}" class="form-control"
 												id="textAreaExample" rows="4"></textarea>
-
 										</div>
+
 										<div class="d-flex justify-content-between mt-3">
 											<button type="submit" class="btn btn-danger"
 												th:text="#{shopDetail.label.sendReviews}">
 												Gửi đánh giá <i id="review-button"
 													class="fas fa-long-arrow-alt-right ms-1"></i>
 											</button>
-											<span class="alert-danger"> </span>
+											<span th:if="${hasReview}" class="alert-danger">Sản phẩm này đã có đánh giá</span>
 										</div>
 									</form>
 
@@ -232,27 +232,6 @@
 						</div>
 					</div>
 
-
-
-					<!-- <div id="modal" class="modal" tabindex="-1">
-						<div class="modal-dialog modal-dialog-centered">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h3 class="modal-title" th:text="#{shopDetail.label.reviews}">Đánh
-										giá</h3>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<div class="modal-body">
-									<p id="modal-message"></p>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-bs-dismiss="modal" th:text="#{shopDetail.label.close}">Đóng</button>
-								</div>
-							</div>
-						</div>
-					</div> -->
 				</div>
 
 			</div>
@@ -269,14 +248,16 @@
 						</div>
 
 						<div class="col-md-6"
-							th:if="${#authorization.expression('isAuthenticated()')}">
-							<button style="float: right;" class="btn btn-danger"
+							th:if="${#authorization.expression('isAuthenticated')}">
+							<button onclick="confirmDeleteReview(event)"
+								style="float: right;" class="btn btn-danger"
 								th:if="${#authorization.expression(review.user.email == #authentication.principal.username)}">
 								<a
 									th:href="@{'/product/detail/' + ${productid} + '/delete/' + ${review.reviewid}}"
 									th:text="#{shopDetail.label.delete}">Xóa</a>
 							</button>
 						</div>
+
 
 						<div class=" d-flex flex-column">
 							<div>
@@ -330,104 +311,6 @@
 		</div>
 	</div>
 
-	<!-- <script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$('form')
-									.submit(
-											function(event) {
-												// Ngăn chặn chuyển hướng trình duyệt khi gửi form
-												event.preventDefault();
-												// Lấy dữ liệu từ form
-												var formData = $(this)
-														.serialize();
-
-												// Gửi yêu cầu Ajax để lưu đánh giá
-												$
-														.ajax({
-															type : 'POST',
-															url : $(this).attr(
-																	'action'),
-															data : formData,
-															success : function(
-																	response) {
-																// Phân tích chuỗi JSON và trích xuất thông báo thành công
-																var responseJSON = JSON
-																		.parse(response);
-																var successMessage = responseJSON.successMessage;
-																var errorMessage = responseJSON.errorMessage;
-																$('.alert')
-																		.hide();
-																if (errorMessage) {
-																	// Hiển thị thông báo lỗi bên dưới form
-																	var errorMessageText = errorMessage
-																			.split('.')[0];
-																	$(
-																			'.alert-danger')
-																			.text(
-																					errorMessageText)
-																			.show();
-																} else {
-																	// Hiển thị thông báo thành công trong modal
-																	$(
-																			'#modal-message')
-																			.text(
-																					successMessage);
-																	$(
-																			'#exampleModal')
-																			.modal(
-																					'hide');
-																	$('#modal')
-																			.modal(
-																					'show');
-																}
-															},
-															error : function(
-																	jqXHR,
-																	textStatus,
-																	errorThrown) {
-																var responseJSON = JSON
-																		.parse(jqXHR.responseText);
-																var errorMessage = responseJSON.errorMessage;
-																if (errorMessage) {
-																	var errorMessageText = errorMessage
-																			.split('.')[0]; // Lấy phần đầu của errorMessage trước dấu chấm
-																	$(
-																			'.alert-danger')
-																			.text(
-																					errorMessageText)
-																			.show();
-																} else {
-																	$(
-																			'.alert-danger')
-																			.text(
-																					textStatus
-																							+ ' : '
-																							+ errorThrown)
-																			.show();
-																}
-															}
-														});
-											});
-							function resetRatingForm() {
-								$('#rating-form input[type="radio"]').prop(
-										'checked', false);
-								$('#rating-form textarea').val('');
-							}
-							$('#ratingModal').on('hidden.bs.modal', function() {
-								resetRatingForm();
-							});
-							$('#exampleModal').on('hidden.bs.modal',
-									function(e) {
-										$(this).remove();
-									});
-							$('#modal').on('hidden.bs.modal', function(event) {
-								// Chuyển hướng sang trang mới
-								location.reload();
-							});
-						});
-	</script> -->
 
 	<script>
 		$(document).ready(function() {
@@ -485,6 +368,52 @@
 		}
 	</script>
 
+	<script th:inline="javascript">
+	function confirmDeleteReview(event) {
+	    event.preventDefault(); // Ngăn chặn sự kiện mặc định của thẻ 'a'
+
+	    Swal.fire({
+	        title: 'Xác nhận xóa đánh giá?',
+	        text: 'Bạn có chắc chắn muốn xóa đánh giá này không?',
+	        icon: 'question',
+	        showCancelButton: true,
+	        confirmButtonColor: '#3085d6',
+	        cancelButtonColor: '#d33',
+	        confirmButtonText: 'Đồng ý',
+	        cancelButtonText: 'Hủy bỏ',
+	    }).then((result) => {
+	        if (result.isConfirmed) {
+	            // Nếu người dùng chọn "Đồng ý", thực hiện chuyển hướng
+	            window.location.href = event.target.getAttribute('href');
+	        }
+	    });
+	}
+
+</script>
+
+	<script>
+    // Hàm kiểm tra xác nhận và thông báo nếu sản phẩm đã có đánh giá
+    function confirmSubmit() {
+       
+        Swal.fire({
+            title: 'Xác nhận gửi đánh giá?',
+            text: 'Bạn có chắc muốn gửi đánh giá này không?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy bỏ'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Nếu người dùng chọn "Đồng ý", tiếp tục với việc submit form
+                document.querySelector('form').submit();
+            }
+        });
+
+        return false; // Ngăn chặn hành động mặc định của form
+    }
+</script>
 </body>
 
 </html>

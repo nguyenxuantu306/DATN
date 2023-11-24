@@ -78,7 +78,7 @@
                                                 </div>
                                                 <div class="modal-body pb-5">
                                                     <div class="row">
-                                                        <div class="col-sm-6">
+                                                        <div class="col-sm-4">
                                                             <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
                                                                 <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Địa chỉ người nhận</div>
                                                                 <div style="padding: 10px;">
@@ -89,12 +89,22 @@
                                                        
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-6">
+                                                        <div class="col-sm-4">
                                                             <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
                                                                 <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Hình thức thanh toán</div>
                                                                 <div style="padding: 10px;">
                                                                 	 <label>- Hình thức thanh toán: {{form.paymentmethod.methodname}}</label> <br> <label>-
 																	Trạng thái thanh toán: {{form.statusbooking.name}}</label>
+                                                                </div>
+                                                               
+                                                            </div>
+                                                        </div>
+                                                         <div class="col-sm-4">
+                                                            <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
+                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px">Mã QRCODE</div>
+                                                                <div class="text-center" >
+                                                                	<img  ng-src="{{item.qrcode}}" alt="Product Image" style="width: 80px;">
+																	
                                                                 </div>
                                                                
                                                             </div>
