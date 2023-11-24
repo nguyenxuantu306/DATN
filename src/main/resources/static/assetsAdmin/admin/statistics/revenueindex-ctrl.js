@@ -367,49 +367,49 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 
 	// Biểu đồ cột thông sltt đơn hàng
 	fetch('/rest/orders/slstatus')
-    .then(response => response.json())
-    .then(data => {
-        const labels = data.map(item => item.group);
-        const values = data.map(item => item.count);
+		.then(response => response.json())
+		.then(data => {
+			const labels = data.map(item => item.group);
+			const values = data.map(item => item.count);
 
-        const backgroundColors = generateRandomColors(data.length);
+			const backgroundColors = generateRandomColors(data.length);
 
-        const chartData = {
-            datasets: [{
-                data: values,
-                backgroundColor: backgroundColors,
-                label: 'Trạng thái của đơn hàng'
-            }],
-            labels: labels
-        };
+			const chartData = {
+				datasets: [{
+					data: values,
+					backgroundColor: backgroundColors,
+					label: 'Trạng thái của đơn hàng'
+				}],
+				labels: labels
+			};
 
-        var ctx = document.getElementById('myChart5').getContext('2d');
-        new Chart(ctx, {
-            data: chartData,
-            type: 'polarArea', // Chuyển sang biểu đồ kim tự tháp
-            options: {
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'right'
-                    }
-                }
-            }
-        });
-    });
+			var ctx = document.getElementById('myChart5').getContext('2d');
+			new Chart(ctx, {
+				data: chartData,
+				type: 'polarArea', // Chuyển sang biểu đồ kim tự tháp
+				options: {
+					plugins: {
+						legend: {
+							display: true,
+							position: 'right'
+						}
+					}
+				}
+			});
+		});
 
-function generateRandomColors(count) {
-    const colors = [];
-    for (let i = 0; i < count; i++) {
-        const randomColor = `rgba(${getRandomInt(0, 255)}, ${getRandomInt(0, 255)}, ${getRandomInt(0, 255)}, 0.6)`;
-        colors.push(randomColor);
-    }
-    return colors;
-}
+	function generateRandomColors(count) {
+		const colors = [];
+		for (let i = 0; i < count; i++) {
+			const randomColor = `rgba(${getRandomInt(0, 255)}, ${getRandomInt(0, 255)}, ${getRandomInt(0, 255)}, 0.6)`;
+			colors.push(randomColor);
+		}
+		return colors;
+	}
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+	function getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
 
 
 	// Biểu đồ cột thông sltt đơn hàng
@@ -522,7 +522,7 @@ function getRandomInt(min, max) {
 			throw error;
 		}
 	}
-	
+
 	// Sử dụng hàm fetchData để lấy dữ liệu và vẽ biểu đồ
 	document.getElementById('dateInput').addEventListener('change', function() {
 		const selectedDate = this.value;
@@ -589,64 +589,102 @@ function getRandomInt(min, max) {
 		}
 		return colors;
 	}
+
+	function updateChartWithDefaultDate() {
+		const defaultDate = new Date().toISOString().slice(0, 10);
+		const dateInput = document.getElementById('dateInput');
+		dateInput.value = defaultDate;
+
+		// Gọi sự kiện change để kích hoạt lấy dữ liệu và vẽ biểu đồ
+		const changeEvent = new Event('change');
+		dateInput.dispatchEvent(changeEvent);
+	}
+
+
 	// Biểu đồ thống kê số loại sản phẩm bán được
-	
 	fetch('/rest/orders/last7days')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
+		.then(response => response.json())
+		.then(data => {
+			console.log(data);
 
-        // Sử dụng moment.js để định dạng ngày
-        const formattedDates = data.map(item => moment(item.date).format('DD-MM-YYYY'));
-        const values = data.map(item => item.sum);
+			// Sử dụng moment.js để định dạng ngày
+			const formattedDates = data.map(item => moment(item.date).format('DD-MM-YYYY'));
+			const values = data.map(item => item.sum);
 
-        // Tạo mảng màu sắc ngẫu nhiên
-        const backgroundColors = generateRandomColors(data.length);
+			// Tạo mảng màu sắc ngẫu nhiên
+			const backgroundColors = generateRandomColors(data.length);
 
-        // Vẽ biểu đồ bằng dữ liệu lấy được và màu sắc tương ứng
-        let myChart = document.getElementById('myChart10').getContext('2d');
+			// Vẽ biểu đồ bằng dữ liệu lấy được và màu sắc tương ứng
+			let myChart = document.getElementById('myChart10').getContext('2d');
 
-        // Cấu hình biểu đồ
-        let massPopChart = new Chart(myChart, {
-            type: 'bar', // Chuyển sang biểu đồ dạng cột (bar)
-            data: {
-                labels: formattedDates,
-                datasets: [{
-                    label: 'Tổng Doanh thu',
-                    data: values,
-                    backgroundColor: backgroundColors, // Sử dụng mảng màu sắc ngẫu nhiên
-                    borderWidth: 1,
-                    borderColor: '#777',
-                    hoverBorderWidth: 3,
-                    hoverBorderColor: '#000'
-                }]
-            },
-            options: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                },
-                layout: {
-                    padding: {
-                        left: 50,
-                        right: 0,
-                        bottom: 0,
-                        top: -10
-                    }
-                },
-                tooltips: {
-                    enabled: true
-                }
-            }
-        });
-    });
+			// Cấu hình biểu đồ
+			let massPopChart = new Chart(myChart, {
+				type: 'bar', // Chuyển sang biểu đồ dạng cột (bar)
+				data: {
+					labels: formattedDates,
+					datasets: [{
+						label: 'Tổng Doanh thu',
+						data: values,
+						backgroundColor: backgroundColors, // Sử dụng mảng màu sắc ngẫu nhiên
+						borderWidth: 1,
+						borderColor: '#777',
+						hoverBorderWidth: 3,
+						hoverBorderColor: '#000'
+					}]
+				},
+				options: {
+					legend: {
+						display: true,
+						position: 'top'
+					},
+					layout: {
+						padding: {
+							left: 50,
+							right: 0,
+							bottom: 0,
+							top: -10
+						}
+					},
+					tooltips: {
+						enabled: true
+					}
+				}
+			});
+		});
 
+	
+	// Sử dụng hàm fetchData để lấy dữ liệu và vẽ biểu đồ
+	function updateChartWithDefaultDate() {
+		const defaultDate = new Date().toISOString().slice(0, 10);
+		const dateInput = document.getElementById('dateInput');
+		dateInput.value = defaultDate;
 
+		// Gọi sự kiện change để kích hoạt lấy dữ liệu và vẽ biểu đồ
+		const changeEvent = new Event('change');
+		dateInput.dispatchEvent(changeEvent);
+	}
+
+	// Gán sự kiện cho thay đổi ngày
+	document.getElementById('dateInput').addEventListener('change', function() {
+		const selectedDate = this.value;
+
+		fetchData(selectedDate)
+			.then(data => {
+				// Các bước vẽ biểu đồ ở đây...
+			})
+			.catch(error => {
+				// Xử lý lỗi nếu có
+				console.error('Error:', error);
+			});
+	});
+
+	// Gọi hàm để cập nhật biểu đồ với ngày mặc định
+	updateChartWithDefaultDate();
 
 
 
 	// Biểu đồ cột thông kê doanh thu 7 ngày trc đó
-	
+
 	$scope.pager = {
 		page: 0,
 		size: 5,
