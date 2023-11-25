@@ -23,14 +23,14 @@ function createProductHTML(product) {
 	return productHTML;
 }
 
- function formatPrice(price) {
-    // Thay đổi dấu chấm (.) thành dấu phẩy (,)
-    const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
-    return formattedPrice.replace(/\./g, ',');
-    
-  }
-  
-  
+function formatPrice(price) {
+	// Thay đổi dấu chấm (.) thành dấu phẩy (,)
+	const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+	return formattedPrice.replace(/\./g, ',');
+
+}
+
+
 
 // Hàm hiển thị danh sách sản phẩm
 function displayProducts(products) {
@@ -105,7 +105,7 @@ function sortProductsByPrice(sortType) {
 	});
 }
 
-/*// Hàm xử lý sự kiện khi người dùng thay đổi giá trị radio
+// Hàm xử lý sự kiện khi người dùng thay đổi giá trị radio
 function handlePriceRangeChange() {
 	var priceRange = $('input[name="priceRange"]:checked').val();
 	$.ajax({
@@ -119,7 +119,7 @@ function handlePriceRangeChange() {
 			console.log(xhr.responseText);
 		},
 	});
-}*/
+}
 
 $(document).ready(function() {
 	// Gắn kết sự kiện khi người dùng nhập từ khóa
@@ -149,8 +149,8 @@ $(document).ready(function() {
 		sortProductsByPrice(sortType);
 	});
 
-	/*// Gắn kết sự kiện khi người dùng thay đổi giá trị radio
-	$('input[type="radio"]').change(handlePriceRangeChange);*/
+	// Gắn kết sự kiện khi người dùng thay đổi giá trị radio
+	$('input[type="radio"]').change(handlePriceRangeChange);
 });
 
 // rating và chức năng cơ bản tour
@@ -183,26 +183,26 @@ $(document).ready(function() {
 // AddToCart
 
 function addToCart(productId) {
-    var quantity = document.getElementById('quantityInput').value;
+	var quantity = document.getElementById('quantityInput').value;
 
-    $.ajax({
-        type: "POST",
-        url: "/cart/add/" + productId,
-        data: {
-            productId: productId,
-            quantity: quantity  // Truyền số lượng vào data để gửi đến Controller
-        },
-        success: function(response) {
+	$.ajax({
+		type: "POST",
+		url: "/cart/add/" + productId,
+		data: {
+			productId: productId,
+			quantity: quantity  // Truyền số lượng vào data để gửi đến Controller
+		},
+		success: function(response) {
 			Swal.fire({
 				icon: 'success',
 				title: 'Thành công!',
 				text: 'Thêm sản phẩm thành công!',
 			});
-        },
-        error: function(error) {
-            window.location.href = "http://localhost:8080/login";
-        },
-    });
+		},
+		error: function(error) {
+			window.location.href = "http://localhost:8080/login";
+		},
+	});
 }
 
 

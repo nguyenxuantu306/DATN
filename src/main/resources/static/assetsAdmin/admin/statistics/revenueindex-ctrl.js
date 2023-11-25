@@ -159,24 +159,23 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 						display: true,
 						text: 'Biểu đồ doanh thu theo năm', // Tiêu đề của biểu đồ
 					},
-					scales: {
-						x: {
-							display: true,
-							title: {
-								display: true,
-								text: 'Năm', // Thay đổi tiêu đề của trục x
-							},
-						},
-						y: {
-							display: true,
-							title: {
-								display: true,
-								text: 'Số lượng',
-							},
-							min: 0,
-							max: Math.max(...ordersRevenue), // Điều chỉnh tùy thuộc vào dữ liệu
-						},
+					tooltips: {
+						callbacks: {
+							label: function(tooltipItem, data) {
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+							}
+						}
 					},
+					scales: {
+						yAxes: [{
+							ticks: {
+								callback: function(value, index, values) {
+									return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+								}
+							}
+						}]
+					}
 				},
 			});
 		});
@@ -215,49 +214,102 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 						display: true,
 						text: 'Biểu đồ doanh thu đặt tour theo năm', // Tiêu đề của biểu đồ
 					},
-					scales: {
-						x: {
-							display: true,
-							title: {
-								display: true,
-								text: 'Năm', // Thay đổi tiêu đề của trục x
-							},
-						},
-						y: {
-							display: true,
-							title: {
-								display: true,
-								text: 'Số lượng',
-							},
-							min: 0,
-							max: Math.max(...bookingsRevenue), // Điều chỉnh tùy thuộc vào dữ liệu
-						},
+					tooltips: {
+						callbacks: {
+							label: function(tooltipItem, data) {
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+							}
+						}
 					},
-				},
+					scales: {
+						yAxes: [{
+							ticks: {
+								callback: function(value, index, values) {
+									return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+								}
+							}
+						}]
+					}
+				}
+
 			});
 		});
 
 	// Biểu đồ miền doanh thu các năm 
 
-	// Biểu đồ miền doanh thu các tháng của năm 
-	// Mặc định, hiển thị biểu đồ cho năm 2023 khi trang được tải
-	createChartFromAPI1(2023);
-	createChartFromAPI2(2023);
+	function getCurrentYear() {
+		return new Date().getFullYear();
+	}
+
+	function createRecentYearsList() {
+		const listItems = document.getElementById('listItems');
+		const ulElement = document.createElement('ul');
+		ulElement.style.fontWeight = 'bold';
+		ulElement.style.listStyle = 'none';
+		ulElement.style.padding = '0';
+		ulElement.style.display = 'flex'; // hoặc 'inline-block'
+
+
+		for (let year = getCurrentYear(); year > getCurrentYear() - 5; year--) {
+
+
+
+			const listItem = document.createElement('li');
+
+			// Thêm icon trước mỗi năm
+			const icon = document.createElement('i');
+			icon.style.color = 'green';
+			icon.className = 'fas fa-calendar';
+			listItem.appendChild(icon);
+
+
+			// Thêm khoảng cách giữa icon và năm
+    		icon.style.marginRight = '10px';
+			
+			const link = document.createElement('a');
+			link.href = '#';
+			link.setAttribute('data-year', year);
+			link.textContent = `Năm: ${year}`;
+			listItem.appendChild(link);
+
+			ulElement.appendChild(listItem);
+		}
+
+		// Áp dụng khoảng trống giữa các năm
+		const listItemsArray = Array.from(ulElement.children);
+		listItemsArray.forEach((item, index) => {
+			if (index < listItemsArray.length - 1) {
+				item.style.marginRight = '50px';
+			}
+		});
+
+		listItems.appendChild(ulElement);
+
+		// Lấy năm hiện tại và gọi hàm để tạo biểu đồ từ API 1 và API 2
+		const currentYearValue = getCurrentYear();
+		createChartFromAPI1(currentYearValue);
+		createChartFromAPI2(currentYearValue);
+	}
 
 	// Lắng nghe sự kiện khi một năm mới được chọn từ danh sách
 	const listItems = document.getElementById('listItems');
 	listItems.addEventListener('click', (event) => {
 		if (event.target.tagName === 'A') {
 			event.preventDefault(); // Ngăn chuyển hướng trang khi nhấp vào liên kết
-			const selectedYear = event.target.getAttribute('data-year'); // Lấy năm từ thuộc tính data-year
+			const selectedYear = event.target.getAttribute('data-year');
 
-			// Gọi hàm để tạo biểu đồ từ API 1
+			// Gọi hàm để tạo biểu đồ từ API 1 và API 2
 			createChartFromAPI1(selectedYear);
-
-			// Gọi hàm để tạo biểu đồ từ API 2
 			createChartFromAPI2(selectedYear);
 		}
 	});
+
+	// Gọi hàm để tạo danh sách năm và biểu đồ khi trang được tải
+	createRecentYearsList();
+
+
+
 
 	// Thêm thư viện numeral.js vào trang web của bạn trước khi sử dụng
 
@@ -677,9 +729,26 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 							top: -10
 						}
 					},
+
 					tooltips: {
-						enabled: true
+						enabled: true,
+						callbacks: {
+							label: function(tooltipItem, data) {
+								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+								return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+							}
+						}
+					},
+					scales: {
+						yAxes: [{
+							ticks: {
+								callback: function(value, index, values) {
+									return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+								}
+							}
+						}]
 					}
+
 				}
 			});
 		});
