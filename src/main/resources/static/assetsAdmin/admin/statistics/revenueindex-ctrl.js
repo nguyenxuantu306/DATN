@@ -259,7 +259,8 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 		}
 	});
 
-	// Hàm tạo biểu đồ dựa trên dữ liệu từ API 1
+	// Thêm thư viện numeral.js vào trang web của bạn trước khi sử dụng
+
 	function createChartFromAPI1(selectedYear) {
 		fetch(`/rest/orders/findyearrevenue/${selectedYear}`)
 			.then(response => response.json())
@@ -269,7 +270,7 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 
 				// Làm mới biểu đồ
 				var ctx = document.getElementById('myChart1').getContext('2d');
-				var myChart = new Chart(ctx, {
+				myChart = new Chart(ctx, {
 					type: 'line',
 					data: {
 						labels: labels,
@@ -284,11 +285,27 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 						],
 					},
 					options: {
-						// Cấu hình tùy chọn cho biểu đồ từ API 1
-						// ...
-					},
+						tooltips: {
+							callbacks: {
+								label: function(tooltipItem, data) {
+									var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+									return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+								}
+							}
+						},
+						scales: {
+							yAxes: [{
+								ticks: {
+									callback: function(value, index, values) {
+										return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+									}
+								}
+							}]
+						}
+					}
 				});
-			});
+			})
+			.catch(error => console.error('Error:', error));
 	}
 
 	// Hàm tạo biểu đồ dựa trên dữ liệu từ API 2
@@ -298,7 +315,6 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 			.then(data => {
 				const labels = data.map(item => 'Tháng ' + item.month);
 				const newCust = data.map(item => item.sum);
-
 				// Làm mới biểu đồ
 				var ctx = document.getElementById('myChart2').getContext('2d');
 				var myChart = new Chart(ctx, {
@@ -316,8 +332,23 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 						],
 					},
 					options: {
-						// Cấu hình tùy chọn cho biểu đồ từ API 2
-						// ...
+						tooltips: {
+							callbacks: {
+								label: function(tooltipItem, data) {
+									var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+									return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+								}
+							}
+						},
+						scales: {
+							yAxes: [{
+								ticks: {
+									callback: function(value, index, values) {
+										return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+									}
+								}
+							}]
+						}
 					},
 				});
 			});
@@ -589,7 +620,7 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 		}
 		return colors;
 	}
-	
+
 	// Sử dụng hàm fetchData để lấy dữ liệu và vẽ biểu đồ
 	function updateChartWithDefaultDate() {
 		const defaultDate = new Date().toISOString().slice(0, 10);
