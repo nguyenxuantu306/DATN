@@ -24,7 +24,7 @@
 					<span class="text-muted">Giỏ hàng của bạn</span> <span
 						class="badge badge-secondary badge-pill">3</span>
 				</h4>
-				<form  th:method="post" th:action="@{/checkout/payment}"
+				<form th:method="post" th:action="@{/checkout/payment}"
 					th:object="${orderDetail}">
 					<ul class="list-group">
 						<div th:each="item : ${cartList}">
@@ -36,7 +36,7 @@
 										x <small class="text-muted" name="quantityBought"
 											th:text="${item.quantity}"></small>
 									</div> <span class="text-muted"
-									th:text="${#numbers.formatDecimal(item.quantity * item.product.price, 0, 'COMMA', 0, 'POINT')}"></span>
+									th:text="${#numbers.formatDecimal(item.quantity * item.product.price, 0, 'COMMA', 0, 'POINT')}+ ' ₫'"></span>
 
 								</li>
 							</div>
@@ -48,14 +48,17 @@
 							</div> <span class="text-success">-$0</span>
 						</li> -->
 						<!-- Hiển thị tổng tiền trong thẻ "Total (USD)" -->
-						<li class="list-group-item d-flex justify-content-between"><span>Total
-								(USD)</span> <strong id="totalPrice"
-							th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')}"></strong>
-						</li>
+						<li class="list-group-item d-flex justify-content-between"><span>Tổng
+								cộng</span> <strong id="totalPrice"> <span
+								style="font-size: smaller; opacity: 0.7;">VNĐ</span> <span
+								th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
+
+						</strong></li>
 						<li class="list-group-item d-flex justify-content-between"><span>Khuyến
 								mãi</span> <strong id="totalPriceValue"></strong></li>
-						<li class="list-group-item d-flex justify-content-between">		
-							Gía sau khi áp dụng : <div id="discountedPriceDisplay"></div>
+						<li class="list-group-item d-flex justify-content-between">
+							Gía sau khi áp dụng :
+							<div id="discountedPriceDisplay"></div>
 						</li>
 					</ul>
 				</form>
@@ -166,7 +169,7 @@
 						<div class="invalid-feedback">Please enter your shipping
 							address.</div>
 					</div>
-					
+
 
 					<!-- <hr class="mb-4" /> -->
 					<!-- <div class="custom-control custom-checkbox">
@@ -216,7 +219,7 @@
 					<input type="hidden" name="voucherid" id="voucherid" th:value="0">
 
 					<div id="paypal-button" style="display: none;">
-						<button onclick="changeFormActionPaypal()" 
+						<button onclick="changeFormActionPaypal()"
 							class="btn btn-primary btn-lg btn-block" type="submit">
 							PLACE ORDER</button>
 					</div>
@@ -395,7 +398,7 @@
         });
     });
 </script>
-	
+
 </body>
 
 </html>

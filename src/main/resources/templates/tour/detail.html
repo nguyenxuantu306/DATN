@@ -46,7 +46,7 @@
 				<h3 th:text="*{Tourname}" class="text-primary text-uppercase"></h3>
 				<h5>
 					Giá tour gốc/khách: <span
-						th:text="*{#numbers.formatDecimal(pricings.Adultprice, 0, 'COMMA', 0, 'POINT') + 'đ'}"
+						th:text="*{#numbers.formatDecimal(pricings.Adultprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}"
 						style="color: #fb752e"></span>
 
 				</h5>
@@ -142,12 +142,12 @@
 								<tr>
 									<th scope="row">1</th>
 									<td
-										th:text="*{#numbers.formatDecimal(pricings.Adultprice, 0, 'COMMA', 0, 'POINT') + 'đ'}">
+										th:text="*{#numbers.formatDecimal(pricings.Adultprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
 									</td>
 									<td
-										th:text="*{#numbers.formatDecimal(pricings.Childprice, 0, 'COMMA', 0, 'POINT') + 'đ'}">
+										th:text="*{#numbers.formatDecimal(pricings.Childprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
 									</td>
-									<td><a href="#" class="btn btn-md btn-primary p-2">Đặt
+									<td><a th:href="@{|/booking/${tourid}|}" class="btn btn-md btn-primary p-2">Đặt
 											ngay</a></td>
 								</tr>
 							</tbody>

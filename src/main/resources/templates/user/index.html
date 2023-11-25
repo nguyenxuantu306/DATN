@@ -46,7 +46,7 @@
 								<div class="d-flex justify-content-between">
 
 									<h5
-										th:text="${#numbers.formatDecimal(tour.tour.pricings.Adultprice,0,'COMMA',0,'POINT')} + 'đ'"
+										th:text="*{#numbers.formatDecimal(tour.tour.pricings.Adultprice,0,'COMMA',0,'POINT')} + ' ₫ '"
 										class="m-0"></h5>
 									<button class="btn btn-primary">
 										<a th:href="@{|/booking/${tour.tour.tourid}|}"
@@ -79,7 +79,7 @@
 							<div class="border-top mt-4 pt-4">
 								<div class="text-center">
 									<h5
-										th:text="${#numbers.formatDecimal(product.product.price,0,'COMMA',0,'POINT')} + 'đ'"
+										th:text="*{#numbers.formatDecimal(product.product.price,0,'COMMA',0,'POINT')} + ' ₫ '"
 										class="m-0"></h5>
 								</div>
 							</div>
@@ -115,9 +115,9 @@
 							</div>
 							<div class="box_info">
 								<h3>Tiêu chuẩn chất lượng</h3>
-								<p class="content">Các vườn nông sản của Suni được ứng dụng
+								<p class="content">Các vườn nông sản của GreenFarm được ứng dụng
 									nuôi trồng theo các tiêu chí an toàn hữu cơ tối thiểu theo
-									chứng nhận của VietGap, GlobalGap &amp; Organic USDA</p>
+									chứng nhận của VietGap, GlobalGap</p>
 							</div>
 						</div>
 						<div class="box-service col-md-4 col-sm-4 col-xs-12">
