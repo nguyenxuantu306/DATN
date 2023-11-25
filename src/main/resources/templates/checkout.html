@@ -21,7 +21,7 @@
 		<div class="row py-5">
 			<div class="col-md-4 order-md-2 mb-4">
 				<h4 class="d-flex justify-content-between align-items-center mb-3">
-					<span class="text-muted">Your cart</span> <span
+					<span class="text-muted">Giỏ hàng của bạn</span> <span
 						class="badge badge-secondary badge-pill">3</span>
 				</h4>
 				<form  th:method="post" th:action="@{/checkout/payment}"
@@ -117,13 +117,13 @@
 			</div>
 
 			<div class="col-md-8 order-md-1">
-				<h4 class="mb-3">Billing address</h4>
+				<h4 class="mb-3">Địa chỉ thanh toán</h4>
 				<form id="myForm" class="needs-validation" novalidate
 					th:object="${Order}" th:method="post"
 					th:action="@{/checkout/payment}">
 					<div class="row">
 						<div class="col-md-6 mb-3">
-							<label for="firstName">First name</label> <input
+							<label for="firstName">Tên đầu</label> <input
 								th:field="${user.firstname}" th:value="${user.firstname}"
 								th:placeholder="${user.firstname}" type="text"
 								class="form-control" id="firstName" placeholder="" value=""
@@ -133,7 +133,7 @@
 
 						</div>
 						<div class="col-md-6 mb-3">
-							<label for="lastName">Last name</label> <input
+							<label for="lastName">Tên cuối</label> <input
 								th:placeholder="${user.lastname}" th:value="${user.lastname}"
 								th:field="${user.lastname}" type="text" class="form-control"
 								id="lastName" placeholder="" value="" required disabled />
@@ -150,7 +150,7 @@
 					</div>
 
 					<div class="mb-3">
-						<label for="address">Phone</label> <input type="tel"
+						<label for="address">Số điện thoại</label> <input type="tel"
 							class="form-control" id="address" th:value="${user.phonenumber}"
 							th:field="${user.phonenumber}"
 							th:placeholder="${user.phonenumber}" required disabled />
@@ -159,13 +159,14 @@
 					</div>
 
 					<div class="mb-3">
-						<label for="address">Address</label> <input
+						<label for="address">Địa chỉ giao hàng</label> <input
 							th:value="${user.address}" th:field="${user.address}"
 							th:placeholder="${user.address}" type="text" class="form-control"
 							id="address" required />
 						<div class="invalid-feedback">Please enter your shipping
 							address.</div>
 					</div>
+					
 
 					<!-- <hr class="mb-4" /> -->
 					<!-- <div class="custom-control custom-checkbox">

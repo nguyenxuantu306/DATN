@@ -106,7 +106,7 @@ function sortProductsByPrice(sortType) {
 }
 
 // Hàm xử lý sự kiện khi người dùng thay đổi giá trị radio
-function handlePriceRangeChange() {
+/*function handlePriceRangeChange() {
 	var priceRange = $('input[name="priceRange"]:checked').val();
 	$.ajax({
 		url: "/rest/products/filter-by-custom-price-range",
@@ -120,6 +120,8 @@ function handlePriceRangeChange() {
 		},
 	});
 }
+*/
+
 
 $(document).ready(function() {
 	// Gắn kết sự kiện khi người dùng nhập từ khóa
@@ -149,9 +151,38 @@ $(document).ready(function() {
 		sortProductsByPrice(sortType);
 	});
 
-	// Gắn kết sự kiện khi người dùng thay đổi giá trị radio
-	$('input[type="radio"]').change(handlePriceRangeChange);
+	/*// Gắn kết sự kiện khi người dùng thay đổi giá trị radio
+	$('input[type="radio"]').change(handlePriceRangeChange);*/
 });
+
+
+
+// Khoảng giá
+function filterProductsByCustomPriceRange(priceRange) {
+    $.ajax({
+        url: "/rest/products/filter-by-custom-price-range",
+        type: "GET",
+        data: { priceRange: priceRange },
+        success: function(response) {
+            displayProducts(response);
+        },
+        error: function(xhr) {
+            console.log(xhr.responseText);
+        },
+    });
+}
+// Hàm xử lý sự kiện khi người dùng thay đổi giá trị radio
+function handlePriceRangeChange() {
+    var priceRange = $('input[name="priceRange"]:checked').val();
+    filterProductsByCustomPriceRange(priceRange);
+}
+$(document).ready(function() {
+    // ... (Các sự kiện và hàm khác ở đây)
+
+    // Gắn kết sự kiện khi người dùng thay đổi giá trị radio
+    $('input[type="radio"]').change(handlePriceRangeChange);
+});
+// khoảng giá
 
 // rating và chức năng cơ bản tour
 $(document).ready(function() {
@@ -168,7 +199,7 @@ $(document).ready(function() {
 // Mini Cart
 
 // JavaScript to handle the mini cart toggle using jQuery
-$(document).ready(function() {
+/*$(document).ready(function() {
 	const cartToggle = $("#cart-toggle");
 	const miniCart = $("#mini-cart");
 
@@ -178,7 +209,7 @@ $(document).ready(function() {
 	cartToggle.click(function() {
 		miniCart.toggle();
 	});
-});
+});*/
 
 // AddToCart
 
