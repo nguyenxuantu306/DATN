@@ -1,6 +1,7 @@
 package com.greenfarm.restcontroller;
 
 import java.io.FileNotFoundException;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,10 +34,14 @@ import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
+import com.greenfarm.entity.Role;
 import com.greenfarm.entity.StatusBooking;
+import com.greenfarm.entity.User;
+import com.greenfarm.entity.UserRole;
 import com.greenfarm.service.BookingService;
 import com.greenfarm.service.EmailService;
 import com.greenfarm.service.StatusBookingService;
+import com.greenfarm.service.UserService;
 
 import jakarta.mail.MessagingException;
 
@@ -52,6 +57,9 @@ public class BookingRestController {
 
 	@Autowired
 	EmailService emailService;
+
+	@Autowired
+	UserService userService;
 
 	@GetMapping()
 	public ResponseEntity<List<BookingDTO>> getList() {
@@ -100,8 +108,6 @@ public class BookingRestController {
 		return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
 	}
 
-	
-
 	@GetMapping("/search")
 	public ResponseEntity<String> searchBookingsByDate(
 			@RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDateTime,
@@ -146,47 +152,80 @@ public class BookingRestController {
 
 	@GetMapping("/sendbooking/{bookingid}")
 	public void sendbooking(@PathVariable("bookingid") Integer bookingid)
-	        throws MessagingException, FileNotFoundException {
-	    System.out.println("Gui mail den khach hang");
-	    Booking booking = bookingService.findById(bookingid);
+			throws MessagingException, FileNotFoundException {
+		System.out.println("Gui mail den khach hang");
+		Booking booking = bookingService.findById(bookingid);
 
-	    // Lấy đường dẫn URL của hình ảnh QR code từ cơ sở dữ liệu
-	    String qrCodeUrl = booking.getQrcode();
-	    
-	    System.out.println(qrCodeUrl);
-	    System.out.println(booking.getUser().getEmail());
+		// Lấy đường dẫn URL của hình ảnh QR code từ cơ sở dữ liệu
+		String qrCodeUrl = booking.getQrcode();
 
-	    // Gửi email với đường dẫn URL của hình ảnh đính kèm
-	    emailService.sendEmailWithBooking(booking.getUser().getEmail(), "Order Confirmation",
-	            "Thanks for your recent order", qrCodeUrl);
+		System.out.println(qrCodeUrl);
+		System.out.println(booking.getUser().getEmail());
+
+		// Gửi email với đường dẫn URL của hình ảnh đính kèm
+		emailService.sendEmailWithBooking(booking.getUser().getEmail(), "Order Confirmation",
+				"Thanks for your recent order", qrCodeUrl);
 	}
-
 
 	@Autowired
 	StatusBookingService statusBookingService;
 
 	@GetMapping("/kiemtrave/{bookingid}")
-    public ModelAndView updatekiemtrave(@PathVariable("bookingid") Integer bookingid, Model model) {
-        Booking booking = bookingService.findById(bookingid);
-        if (booking.getStatusbooking().getStatusbookingid() == 5) {
-            System.out.println("Vé đã được sử dụng");
-            // Trả về giao diện Thymeleaf khi vé đã được sử dụng
-            ModelAndView mav = new ModelAndView("mytiecketuse");
-            // Thêm dữ liệu vào model nếu cần
-            model.addAttribute("bookinguse", booking);
-            mav.addObject("message", "Vé đã được sử dụng");
-            return mav;
-        } else {
-            StatusBooking statusBooking = statusBookingService.findById(5);
-            booking.setStatusbooking(statusBooking);
-            Booking updatedBooking = bookingService.update(booking);
-            System.out.println("Đã xác nhận thành công");
-            // Trả về giao diện Thymeleaf khi xác nhận thành công
-            ModelAndView mav = new ModelAndView("mytiecketuse");
-            // Thêm dữ liệu vào model nếu cần
-            model.addAttribute("bookinguse", booking);
-            mav.addObject("message", "Đã xác nhận thành công");
-            return mav;
-        }
-    }
+	public ModelAndView updatekiemtrave(@PathVariable("bookingid") Integer bookingid, Model model,
+			Principal principal) {
+		String userRole = getUserRole(principal);
+
+		// Kiểm tra quyền nếu là Admin -> chuyển trạng thái
+		if ("Administrator".equals(userRole)) {
+			Booking booking = bookingService.findById(bookingid);
+			if (booking.getStatusbooking().getStatusbookingid() == 5) {
+				System.out.println("Vé đã được sử dụng");
+				// Trả về giao diện Thymeleaf khi vé đã được sử dụng
+				ModelAndView mav = new ModelAndView("mytiecketuse");
+				// Thêm dữ liệu vào model nếu cần
+				model.addAttribute("bookinguse", booking);
+				mav.addObject("message", "Vé đã được sử dụng");
+				return mav;
+			} else {
+				StatusBooking statusBooking = statusBookingService.findById(5);
+				booking.setStatusbooking(statusBooking);
+				Booking updatedBooking = bookingService.update(booking);
+				System.out.println("Đã xác nhận thành công");
+				// Trả về giao diện Thymeleaf khi xác nhận thành công
+				ModelAndView mav = new ModelAndView("mytiecketuse");
+				// Thêm dữ liệu vào model nếu cần
+				model.addAttribute("bookinguse", booking);
+				mav.addObject("message", "Đã xác nhận thành công");
+				return mav;
+			}
+		} else {
+			Booking booking = bookingService.findById(bookingid);
+			ModelAndView mav = new ModelAndView("mytiecketseen");
+			mav.addObject("message", "Bạn không có quyền xác nhận vé.");
+			model.addAttribute("bookinguse", booking);
+			
+			return mav;
+		}
+	}
+
+	//Lấy quyền user
+	private String getUserRole(Principal principal) {
+		User user = userService.findByEmail(principal.getName());
+
+		if (user != null) {
+			List<UserRole> userRoles = user.getUserRole();
+
+			if (userRoles != null && !userRoles.isEmpty()) {
+				// role
+				Role role = userRoles.get(0).getRole();
+
+				if (role != null) {
+					return role.getName();
+				}
+			}
+		}
+
+		return "USER"; 
+	}
+
 }
