@@ -217,7 +217,7 @@
 												id="textAreaExample" rows="4"></textarea>
 										</div>
 
-										<div th:if="${hasUserReviewedProduct == false}" class="d-flex justify-content-between mt-3">
+										<div  class="d-flex justify-content-between mt-3">
 											<button type="submit" class="btn btn-danger"
 												th:text="#{shopDetail.label.sendReviews}">
 												Gửi đánh giá <i id="review-button"
@@ -225,14 +225,14 @@
 											</button>
 											
 										</div>
-										<div th:unless="${hasUserReviewedProduct == true}" class="d-flex justify-content-between mt-3">
+										<!-- <div th:unless="${hasUserReviewedProduct == true}" class="d-flex justify-content-between mt-3">
 											<button type="submit" onclick="confirmSubmit1()" class="btn btn-danger"
 												th:text="#{shopDetail.label.sendReviews}">
 												Gửi đánh giá <i id="review-button"
 													class="fas fa-long-arrow-alt-right ms-1"></i>
 											</button>
 											
-										</div>
+										</div> -->
 									</form>
 
 								</div>
@@ -421,25 +421,7 @@
 
         return false; // Ngăn chặn hành động mặc định của form
     }
-    function confirmSubmit1() {
-        
-        Swal.fire({
-            title: 'Xác nhận gửi đánh giá?',
-            text: 'đánh giá rồi?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Đồng ý',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Nếu người dùng chọn "Đồng ý", tiếp tục với việc submit form
-                document.querySelector('form').submit();
-            }
-        });
 
-        return false; // Ngăn chặn hành động mặc định của form
-    }
 </script>
 </body>
 
