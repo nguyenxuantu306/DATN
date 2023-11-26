@@ -19,7 +19,7 @@ public class Report implements Serializable {
 	@Id
 	Serializable group;
 	Double sum;
-	Long count;
+	Double count;
 	
 	
 	

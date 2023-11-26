@@ -202,9 +202,9 @@ public class SecurityController {
 			user.setImage(userchange.getImage());
 			System.out.println(userchange.getImage());
 
-//			if (isAtLeast16YearsOld(userchange.getBirthday())) {
+			if (isAtLeast16YearsOld(userchange.getBirthday())) {
 			user.setBirthday(userchange.getBirthday());
-//			}
+			}
 			user.setFirstname(userchange.getFirstname());
 			user.setLastname(userchange.getLastname());
 			user.setPhonenumber(userchange.getPhonenumber());
@@ -341,20 +341,20 @@ public class SecurityController {
 		model.addAttribute("forgotPassword", data);
 	}
 
-//	public boolean isAtLeast16YearsOld(Date birthday) {
-//		if (birthday == null) {
-//			// Xử lý trường hợp ngày sinh không được đặt
-//			return false;
-//		}
-//
-//		// Chuyển đổi từ Date sang LocalDate
-//		LocalDate birthdate = new java.sql.Date(birthday.getTime()).toLocalDate();
-//		LocalDate currentDate = LocalDate.now();
-//
-//		// Tính khoảng cách thời gian giữa ngày sinh và ngày hiện tại
-//		Period age = Period.between(birthdate, currentDate);
-//
-//		// Kiểm tra xem tuổi có lớn hơn hoặc bằng 16 không
-//		return age.getYears() >= 16;
-//	}
+	public boolean isAtLeast16YearsOld(Date birthday) {
+		if (birthday == null) {
+			// Xử lý trường hợp ngày sinh không được đặt
+			return false;
+		}
+
+		// Chuyển đổi từ Date sang LocalDate
+		LocalDate birthdate = new java.sql.Date(birthday.getTime()).toLocalDate();
+		LocalDate currentDate = LocalDate.now();
+
+		// Tính khoảng cách thời gian giữa ngày sinh và ngày hiện tại
+		Period age = Period.between(birthdate, currentDate);
+
+		// Kiểm tra xem tuổi có lớn hơn hoặc bằng 16 không
+		return age.getYears() >= 16;
+	}
 }

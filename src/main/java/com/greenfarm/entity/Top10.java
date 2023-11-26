@@ -17,5 +17,5 @@ public class Top10 implements Serializable {
 	@Id
 	Product product;
 
-	long sum;
+	Double sum;
 }

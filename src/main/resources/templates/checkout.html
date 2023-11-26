@@ -335,12 +335,14 @@
 				var discountedPrice = originalTotalPrice
 						* (1 - voucherDiscount);
 
+				// Định dạng giá trị với dấu phân cách hàng nghìn và ký hiệu tiền tệ
+				var formattedDiscountedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(discountedPrice);
 				// Hiển thị giá sau khi áp dụng voucher
 				//discountedPriceDisplay.textContent = discountedPrice;
 
 				if (voucherDiscount > 0) {
 					discountedPriceDisplay.textContent = ''
-							+ discountedPrice;
+							+ formattedDiscountedPrice;
 					discountedPriceDisplay.parentElement.style.display = 'block';
 				} else {
 					discountedPriceDisplay.parentElement.style.display = 'none';

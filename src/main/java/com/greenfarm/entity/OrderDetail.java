@@ -31,7 +31,7 @@ public class OrderDetail implements Serializable {
 	@JoinColumn(name = "productid")
 	private Product product;
 
-	Integer quantityordered;
+	Float quantityordered;
 
 	Float totalprice;
 
