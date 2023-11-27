@@ -27,19 +27,38 @@ app.controller("user-ctrl", function($scope, $http) {
 
 
 
-	// validation ngày tạo
-	$scope.isDateBeforeCreatedate = function() {
-		var selectedDate = new Date($scope.form.createddate);
-		var currentDate = new Date();
-		return selectedDate < currentDate;
-	};
+	$scope.checkDate = function() {
+        $scope.form.isDateBeforeCreatedate = $scope.isDateBeforeCreatedate();
+    };
+
+    $scope.isFutureDate = function() {
+        // Lấy ngày hiện tại
+        var currentDate = new Date();
+
+        // Lấy ngày tạo từ form
+        var createdDate = new Date($scope.form.createddate);
+        
+        // So sánh ngày tạo với ngày hiện tại
+        return createdDate > currentDate;
+            
+    };
 
 	// validation ngày sinh
-	$scope.isDateBeforeToday = function() {
-		var selectedDate = new Date($scope.form.birthday);
-		var currentDate = new Date();
-		return selectedDate < currentDate;
-	};
+	$scope.checkDate1 = function() {
+        $scope.form.isDateBeforeCreatedate1 = $scope.isDateBeforeCreatedate1();
+    };
+
+    $scope.isFutureDate1 = function() {
+        // Lấy ngày hiện tại
+        var currentDate = new Date();
+
+        // Lấy ngày tạo từ form
+        var createdDate = new Date($scope.form.birthday);
+        
+        // So sánh ngày tạo với ngày hiện tại
+        return createdDate > currentDate;
+            
+    };
 
 
 	$scope.isEdit = false; // Mặc định không ở chế độ edit
