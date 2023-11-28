@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.CategoryDTO;
 import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Category;
+import com.greenfarm.entity.Product;
 import com.greenfarm.service.CategoryService;
 import org.modelmapper.ModelMapper;
 
@@ -131,5 +133,23 @@ public class CategoriesRestController {
 	public ResponseEntity<Void> deleteBooking(@PathVariable("categoryid") Integer categoryid) {
 		categoryService.deleteCategoryById(categoryid);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping("/searchkeywordcategory")
+	public ResponseEntity<List<CategoryDTO>> getList(@RequestParam(required = false) String keyword) {
+		List<Category> categorys;
+
+		if (keyword != null && !keyword.isEmpty()) {
+			// Nếu có từ khóa, thực hiện tìm kiếm
+			categorys = categoryService.findByKeyword(keyword);
+		} else {
+			// Nếu không có từ khóa, lấy tất cả người dùng
+			categorys = categoryService.findAll();
+		}
+
+		List<CategoryDTO> categoryDtos = categorys.stream().map(category -> modelMapper.map(category, CategoryDTO.class))
+				.collect(Collectors.toList());
+
+		return ResponseEntity.ok(categoryDtos);
 	}
 }

@@ -11,9 +11,9 @@
 								class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
 								id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 						</div>
-						<input type="search" class="form-control" ng-model="searchEmail"
-							placeholder="Tìm kiếm theo email..."
-							aria-label="Tìm kiếm email...">
+						<input type="search" class="form-control" 
+							 id="search" ng-model="searchText" ng-change="loadData()" placeholder="Nhập từ khóa"
+							>
 					</div>
 					<div class="col-md-6 text-right">
 						<button type="button" class="btn btn-success"
@@ -54,7 +54,7 @@
 						</thead>
 						<tbody>
 							<tr
-								ng-repeat="item in pager.items | filter: { email: searchEmail }">
+								ng-repeat="item in pager.items">
 								<td>{{$index + 1}}</td>
 								<th><img ng-src="{{item.image}}" alt="Hình ảnh"
 									style="width: 70px; height: 100px"></th>

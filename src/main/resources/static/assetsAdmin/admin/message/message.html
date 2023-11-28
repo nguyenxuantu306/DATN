@@ -10,8 +10,8 @@
 								<span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
 										class="mdi mdi-magnify"></i></span>
 							</div>
-							<input ng-model="searchByUser" type="search" class="form-control"
-								placeholder="Tìm kiếm theo email..." aria-label="Tìm kiếm theo nội dung...">
+							<input type="search" class="form-control"
+								id="search" ng-model="searchText" ng-change="loadData()" placeholder="Nhập từ khóa">
 						</div>
 						<div class="col-md-6 text-right">						
 							<button type="button" class="btn btn-success" ng-click="exportExcel()">
@@ -37,7 +37,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in pager.items | filter:searchByUser">
+								<tr ng-repeat="item in pager.items">
 									<th>{{$index + 1}}</th>
 									<th style="width: 250px;" class="d-flex">
 										<img ng-if="item.user.image" ng-src="{{item.user.image}}"

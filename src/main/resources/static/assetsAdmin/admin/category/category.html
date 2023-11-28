@@ -11,9 +11,8 @@
 									class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
 									id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 							</div>
-							<input ng-model="searchCategory" type="search"
-								class="form-control" placeholder="Tìm kiếm tên loại..."
-								aria-label="Tìm kiếm tên loại...">
+							<input type="search" class="form-control"
+								id="search" ng-model="searchText" ng-change="loadData()" placeholder="Nhập từ khóa">
 						</div>
 						<div class="col-md-6 text-right">
 							<button type="button" class="btn btn-success"
@@ -40,7 +39,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in pager.items | filter:searchCategory">
+								<tr ng-repeat="item in pager.items">
 									<th>{{$index + 1}}</th>
 									<th style="width: 150px">{{item.categoryname}}</th>
 									<th style="width: 750px">{{item.descriptions}}</th>

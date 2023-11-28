@@ -12,6 +12,7 @@ import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportSP;
+import com.greenfarm.entity.User;
 
 public interface ProductsDAO extends JpaRepository<Product, Integer> {
 
@@ -21,6 +22,10 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT p FROM Product p WHERE p.price BETWEEN ?1 AND ?2")
 	List<Product> findByPriceBetween(Double minPrice, Double maxPrice);
 
+	// tìm kiếm keywword
+	@Query("SELECT p FROM Product p WHERE LOWER(p.productname) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(p.Description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+	List<Product> findByKeyword(@Param("keyword") String keyword);
+	
 	@Query("SELECT p FROM Product p WHERE p.category.categoryid=?1 AND p.isdeleted = false")
 	List<Product> findByCategoryIdAndIsdeletedFalse(String cid);
 

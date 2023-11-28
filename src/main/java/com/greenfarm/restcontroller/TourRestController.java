@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.greenfarm.dto.CategoryDTO;
 import com.greenfarm.dto.TourDTO;
 import com.greenfarm.dto.TourImageDTO;
+import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Pricing;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.TourCondition;
@@ -301,6 +304,24 @@ public class TourRestController {
 		tourService.save(tour);
 
 		return new ResponseEntity<>("Khôi phục địa điểm thành công", HttpStatus.OK);
+	}
+	
+	@GetMapping("/searchkeywordtour")
+	public ResponseEntity<List<TourDTO>> getList(@RequestParam(required = false) String keyword) {
+		List<Tour> tours;
+
+		if (keyword != null && !keyword.isEmpty()) {
+			// Nếu có từ khóa, thực hiện tìm kiếm
+			tours = tourService.findByKeyword(keyword);
+		} else {
+			// Nếu không có từ khóa, lấy tất cả người dùng
+			tours = tourService.findAll();
+		}
+
+		List<TourDTO> toursDtos = tours.stream().map(tour -> modelMapper.map(tour, TourDTO.class))
+				.collect(Collectors.toList());
+
+		return ResponseEntity.ok(toursDtos);
 	}
 
 }

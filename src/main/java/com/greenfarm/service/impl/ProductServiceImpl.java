@@ -182,4 +182,10 @@ public class ProductServiceImpl implements ProductService {
 	    dao.save(product);
 	}
 
+	@Override
+	public List<Product> findByKeyword(String keyword) {
+		// TODO Auto-generated method stub
+		return dao.findByKeyword(keyword);
+	}
+
 }
