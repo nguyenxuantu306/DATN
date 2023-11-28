@@ -29,6 +29,7 @@ import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportSP;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.BookingService;
@@ -271,7 +272,7 @@ public class ExcelController {
 	
 	@GetMapping("/excel-productstatistics")
 	public ResponseEntity<byte[]> ExcelCategoryStatistics() throws IOException {
-	    List<Report> dataList = getProductStatitics(); // Lấy dữ liệu từ hàm getAll()
+	    List<ReportSP> dataList = getProductStatitics(); // Lấy dữ liệu từ hàm getAll()
 
 	    Workbook workbook = new XSSFWorkbook();
 	    Sheet sheet = workbook.createSheet("Thống kê sản phẩm");
@@ -343,7 +344,7 @@ public class ExcelController {
 	    sheet.setDefaultColumnStyle(4, currencyStyle);
 	    
 	    for (int i = 0; i < dataList.size(); i++) {
-	        Report data = dataList.get(i);
+	    	ReportSP data = dataList.get(i);
 	        Row row = sheet.createRow(rowIdx++);
 	        row.createCell(0).setCellValue(i + 1);
 	        Product product = (Product) data.getGroup();
@@ -709,7 +710,7 @@ public class ExcelController {
 	
 	@GetMapping("/excel-inventorystatistics")
 	public ResponseEntity<byte[]> ExcelInventorystatistics() throws IOException {
-	    List<Report> dataList = Inventorystatistics(); // Lấy dữ liệu từ hàm getAll()
+	    List<ReportSP> dataList = Inventorystatistics(); // Lấy dữ liệu từ hàm getAll()
 
 	    Workbook workbook = new XSSFWorkbook();
 	    Sheet sheet = workbook.createSheet("Thống kê hàng tồn kho");
@@ -767,7 +768,7 @@ public class ExcelController {
 	
 	    
 	    for (int i = 0; i < dataList.size(); i++) {
-	        Report data = dataList.get(i);
+	    	ReportSP data = dataList.get(i);
 	        Row row = sheet.createRow(rowIdx++);
 	        row.createCell(0).setCellValue(i + 1);
 	        Product product = (Product) data.getGroup();
@@ -930,7 +931,7 @@ public class ExcelController {
 		return productService.findAll();
 	}
 	
-	public final List<Report> getProductStatitics() {
+	public final List<ReportSP> getProductStatitics() {
 		return productService.getTk_sp();
 	}
 	public final List<Report> getCategoryStatitics() {
@@ -945,7 +946,7 @@ public class ExcelController {
 		return bookingService.findAll();
 	}
 	
-	public final List<Report> Inventorystatistics() {
+	public final List<ReportSP> Inventorystatistics() {
 		return productService.getTk_sp();
 	}
 	

@@ -14,6 +14,7 @@ import com.greenfarm.dao.ProductsDAO;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportSP;
 import com.greenfarm.service.ProductService;
 
 @Service
@@ -132,7 +133,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Report> getTk_sp() {
+	public List<ReportSP> getTk_sp() {
 		return dao.reportTheoProduct();
 	}
 
@@ -152,8 +153,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Report> getReportspbanchay() {
-		List<Report> productsBygetReportspbanchay = dao.getTop10ProductsBygetReportspbanchay();
+	public List<ReportSP> getReportspbanchay() {
+		List<ReportSP> productsBygetReportspbanchay = dao.getTop10ProductsBygetReportspbanchay();
 		if (productsBygetReportspbanchay.size() > 10) {
 			return productsBygetReportspbanchay.subList(0, 10);
 		} else {

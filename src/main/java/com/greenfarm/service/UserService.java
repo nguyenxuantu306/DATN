@@ -2,6 +2,7 @@ package com.greenfarm.service;
 
 import java.util.List;
 
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
@@ -38,7 +39,7 @@ public interface UserService {
 
 	// yeyye
 
-	
+	List<User> findByKeyword(String keyword);
 
 	void sendRegistrationConfirmationEmail(final User user);
 

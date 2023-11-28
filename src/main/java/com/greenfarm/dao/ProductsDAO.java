@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportSP;
 
 public interface ProductsDAO extends JpaRepository<Product, Integer> {
 
@@ -23,9 +24,9 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT p FROM Product p WHERE p.category.categoryid=?1 AND p.isdeleted = false")
 	List<Product> findByCategoryIdAndIsdeletedFalse(String cid);
 
-	@Query("SELECT new Report(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
+	@Query("SELECT new ReportSP(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
 			+ " GROUP BY o.product" + " ORDER BY  sum(o.totalprice * o.quantityordered)")
-	List<Report> reportTheoProduct();
+	List<ReportSP> reportTheoProduct();
 
 	@Query("SELECT new Report(o.category, sum(o.price), count(o)) " + " FROM Product o " + " GROUP BY o.category"
 			+ " ORDER BY sum(o.price) DESC")
@@ -40,9 +41,9 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT p FROM Product p ORDER BY p.quantityavailable DESC")
 	List<Product> getTop10ProductsByQuantityAvailable();
 
-	@Query("SELECT new Report(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
+	@Query("SELECT new ReportSP(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
 			+ " GROUP BY o.product" + " ORDER BY  sum(o.quantityordered) Desc")
-	List<Report> getTop10ProductsBygetReportspbanchay();
+	List<ReportSP> getTop10ProductsBygetReportspbanchay();
 
 	@Query("SELECT p FROM Product p WHERE p.isdeleted = true")
 	List<Product> findAllDeletedProducts();

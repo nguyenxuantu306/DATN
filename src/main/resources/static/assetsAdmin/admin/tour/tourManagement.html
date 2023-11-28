@@ -128,14 +128,14 @@
 													<label>Lượng người</label> <input type="number"
 														name="availableslots" ng-model="form.availableslots"
 														class="form-control input-default" placeholder="VD : 29"
-														ng-min="0" ng-max="50" required /> <label
+														ng-min="0" ng-max="100" required /> <label
 														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.availableslots.$error.required"
 														style="color: red;">Lượng người không được để
 														trống!</label> <label
 														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.availableslots.$error.min"
 														style="color: red;">Lượng người ít nhất là 0!</label> <label
 														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.availableslots.$error.max"
-														style="color: red;">Lượng người nhiều nhất là 50!</label>
+														style="color: red;">Lượng người nhiều nhất là 100!</label>
 
 												</div>
 											</div>
