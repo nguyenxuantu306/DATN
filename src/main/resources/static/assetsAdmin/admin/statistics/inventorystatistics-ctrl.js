@@ -20,7 +20,7 @@ app.controller("inventorystatistics-ctrl", function($scope, $http) {
 	}
 	$scope.pager = {
 		page: 0,
-		size: 5,
+		size: 10,
 		get itemsThongKeSp() {
 			var start = this.page * this.size;
 			return $scope.itemsThongKeSp.slice(start, start + this.size);
