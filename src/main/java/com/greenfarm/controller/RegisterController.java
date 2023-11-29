@@ -1,6 +1,7 @@
 
 package com.greenfarm.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -207,7 +208,7 @@ public class RegisterController {
 	public String completelogin(Model model, @ModelAttribute("userinfo") RegisteroauthDTO userInfo,Authentication authentication) {
 		try {
 			// User user = Usermapper.INSTANCE.fromDto(userInfo);
-
+			 if (authentication.getPrincipal() instanceof OAuth2User) {
 		    OAuth2User auth2User = (OAuth2User) authentication.getPrincipal();
 			User user = new User();
 			user.setFirstname(userInfo.getFirstname());
@@ -224,29 +225,39 @@ public class RegisterController {
 			//user.setUserRole();
 			user.setCreateddate(new Date());
 			userservice.save(user);
+			//them role
 			Role role = roleService.findByid(2);
+			System.out.println("Role : "+role);
 			UserRole userRole = new UserRole();
 			userRole.setRole(role);
 			userRole.setUser(user);
 			userroleService.create(userRole);
+			List<UserRole> list = new ArrayList<>();
+			list.add(userRole);
+			user.setUserRole(list);
+			userservice.update(user);
+			
+			try {
+				UserDetails userDetails = detailsService.loadUserByUsername(user.getEmail());
+				System.out.println("userdetaile>.........");
+				System.out.println(userDetails);
+				// Tạo một đối tượng Authentication
+				List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
 
-			System.out.println("chay toi impl");
-			System.out.println(user);
-			System.out.println("xong");
-			System.out.println(user.getUserRole());
-//			UserDetails userDetails = detailsService.loadUserByUsername(user.getEmail());
-//			System.out.println("userdetaile>.........");
-//			System.out.println(userDetails);
-//			// Tạo một đối tượng Authentication
-//			List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
-//
-//			Authentication authentication2 = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
-//
-//			// Đặt thông tin xác thực vào SecurityContext
-//			SecurityContext sc = SecurityContextHolder.getContext();
-//			sc.setAuthentication(authentication2);
+				Authentication authentication2 = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
 
+				// Đặt thông tin xác thực vào SecurityContext
+				SecurityContext sc = SecurityContextHolder.getContext();
+				sc.setAuthentication(authentication2);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				return"redirect:/login";
+			}
 			return "redirect:/";
+			 }else {
+				 return "redirect:/login";
+			 }
 		} catch (Exception e) {
 			e.printStackTrace();
 //			bindingResult.rejectValue("email", "error.userDTO", "An account already exists for this email.");
