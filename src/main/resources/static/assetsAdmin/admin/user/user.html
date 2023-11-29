@@ -61,7 +61,9 @@
 								<td>{{item.firstname}}</td>
 								<td>{{item.email}}</td>
 								<td>{{item.phonenumber}}</td>
-								<td style="width: 250px;">{{item.address}}</td>
+								<td
+									ng-repeat="address in item.address | filter: { active: false }">
+									{{address.street}}, {{address.district}}, {{address.city}}</td>
 								<td>{{item.gender?'Nam':'Nữ'}}</td>
 								<td>{{item.createddate | date:'dd-MM-yyyy'}}</td>
 								<td><a type="button" ng-click="edit(item)"

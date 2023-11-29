@@ -1,27 +1,55 @@
 app.controller("user-ctrl", function($scope, $http) {
 	$scope.items = [];
+	$scope.address = [];
 	$scope.cates = [];
 	$scope.form = {};
 	$scope.field = [];
 	$scope.error = ['err'];
 	$scope.deletedItems = [];
 
-
+	//
+	//	$scope.initialize = function() {
+	//		// Load products
+	//		$http.get("/rest/users").then(resp => {
+	//			console.log("Server Response:", resp.data);
+	//			$scope.items = resp.data;
+	//			$scope.items.forEach(item => {
+	//				console.log("Address:", item.address);
+	//				
+	//				item.createddate = new Date(item.createddate);
+	//				item.birthday = new Date(item.birthday);
+	//
+	//			})
+	//		});
+	//
+	//		$http.get("/rest/users/deleted").then(resp => {
+	//			$scope.deletedItems = resp.data;
+	//		});
+	//
+	//	}
 	$scope.initialize = function() {
-		// Load products
+		// Load users
 		$http.get("/rest/users").then(resp => {
+			console.log("Server Response:", resp.data);
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
+				console.log("Addresses:", item.address);
+				// Convert date strings to Date objects
 				item.createddate = new Date(item.createddate);
 				item.birthday = new Date(item.birthday);
-			})
+
+				// Filter addresses where active is false
+				item.address = item.address.filter(address => !address.active);
+			});
 		});
 
+		// Load deleted users
 		$http.get("/rest/users/deleted").then(resp => {
 			$scope.deletedItems = resp.data;
 		});
+	};
 
-	}
+
 	// Khởi đầu
 	$scope.initialize();
 

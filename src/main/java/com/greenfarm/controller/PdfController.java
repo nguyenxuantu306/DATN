@@ -7,6 +7,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.greenfarm.entity.Address;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Order;
@@ -112,7 +114,16 @@ public class PdfController {
 			table.addCell(createCell(data.getFirstname(), false, unicodeFonts));
 			table.addCell(createCell(data.getEmail(), false, unicodeFonts));
 			table.addCell(createCell(data.getPhonenumber(), false, unicodeFonts));
-			table.addCell(createCell(data.getAddress(), false, unicodeFonts));
+			// Lấy danh sách địa chỉ có active = false
+			List<Address> inactiveAddresses = data.getAddress().stream().filter(address -> !address.getActive())
+					.collect(Collectors.toList());
+
+			// Tạo một chuỗi chứa thông tin địa chỉ có active = false
+			String addressInfo = inactiveAddresses.stream()
+					.map(address -> address.getStreet() + ", " + address.getDistrict() + ", " + address.getCity())
+					.collect(Collectors.joining("; "));
+			// Thêm thông tin địa chỉ vào cột thứ 4
+			table.addCell(createCell(addressInfo, false, unicodeFonts)); 
 			table.addCell(createCell(data.getGender() != null && data.getGender() ? "Nam" : "Nữ", false, unicodeFonts));
 			table.addCell(createCell(createDateString, false, unicodeFonts));
 

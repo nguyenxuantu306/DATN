@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.greenfarm.dto.AddressDTO;
 import com.greenfarm.dto.UserDTO;
+import com.greenfarm.entity.Address;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.UnkownIdentifierException;
@@ -41,16 +43,32 @@ public class UserRestController {
 	@Autowired
 	ModelMapper modelMapper;
 
-	@GetMapping()
+//	@GetMapping()
+//	public ResponseEntity<List<UserDTO>> getList() {
+//		List<User> users = userService.findAll();
+//
+//		// Sử dụng modelMapper để ánh xạ danh sách User sang danh sách UserDTO
+//		ModelMapper modelMapper = new ModelMapper();
+//		List<UserDTO> userDtos = users.stream().map(user -> modelMapper.map(user, UserDTO.class))
+//				.collect(Collectors.toList());
+//
+//		return ResponseEntity.ok(userDtos); // ResponseEntity.ok() tương đương HttpStatus.OK
+//	}
+	@GetMapping
 	public ResponseEntity<List<UserDTO>> getList() {
 		List<User> users = userService.findAll();
 
 		// Sử dụng modelMapper để ánh xạ danh sách User sang danh sách UserDTO
 		ModelMapper modelMapper = new ModelMapper();
-		List<UserDTO> userDtos = users.stream().map(user -> modelMapper.map(user, UserDTO.class))
-				.collect(Collectors.toList());
+		List<UserDTO> userDtos = users.stream().map(user -> {
+			UserDTO userDto = modelMapper.map(user, UserDTO.class);
+			// Lọc danh sách địa chỉ có active là FALSE
+			userDto.setAddress(
+					userDto.getAddress().stream().filter(address -> !address.getActive()).collect(Collectors.toList()));
+			return userDto;
+		}).collect(Collectors.toList());
 
-		return ResponseEntity.ok(userDtos); // ResponseEntity.ok() tương đương HttpStatus.OK
+		return ResponseEntity.ok(userDtos);
 	}
 
 	@GetMapping("{userid}")
