@@ -2,7 +2,6 @@ package com.greenfarm.service;
 
 import java.util.List;
 
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
@@ -16,8 +15,6 @@ import jakarta.validation.Valid;
 
 public interface UserService {
 
-	
-	
 	List<User> findAll();
 
 	List<User> findAllDeletedUser();
@@ -45,7 +42,7 @@ public interface UserService {
 
 	boolean verifyUser(final String token) throws com.greenfarm.exception.InvalidTokenException;
 
-    public boolean iscurrentPasswordMatching(User user,String password) ;
+	public boolean iscurrentPasswordMatching(User user, String password);
 
 	public boolean isPasswordMatching(String password, String confirmPassword);
 
@@ -70,5 +67,7 @@ public interface UserService {
 
 	void save(User user);
 
-	User createADMIN(@Valid User user)throws UserAlreadyExistException;
+	User createADMIN(@Valid User user) throws UserAlreadyExistException;
+
+	User save(User user);
 }
