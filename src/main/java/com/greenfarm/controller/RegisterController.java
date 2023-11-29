@@ -1,10 +1,24 @@
 
 package com.greenfarm.controller;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,11 +29,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.greenfarm.dto.Provider;
 import com.greenfarm.dto.RegisterDTO;
+import com.greenfarm.dto.RegisteroauthDTO;
 import com.greenfarm.dto.UserDTO;
+import com.greenfarm.entity.Role;
 import com.greenfarm.entity.User;
+import com.greenfarm.entity.UserRole;
 import com.greenfarm.exception.InvalidTokenException;
 import com.greenfarm.exception.UserAlreadyExistException;
+import com.greenfarm.service.RoleService;
+import com.greenfarm.service.UserRoleService;
 import com.mysql.cj.util.StringUtils;
 
 import jakarta.validation.Valid;
@@ -32,7 +52,18 @@ public class RegisterController {
 
 	@Autowired
 	com.greenfarm.service.UserService userservice;
+	
+	@Autowired
+	UserRoleService userroleService;
 
+	@Autowired
+	RoleService roleService;
+	
+	@Autowired
+	UserDetailsService detailsService;
+	
+	@Autowired
+	AuthenticationManagerBuilder builder;
 	@GetMapping
 	public String registerUserq(Model model) {
 		//, @ModelAttribute("userinfo") @Valid RegisterDTO userInfo
@@ -135,6 +166,96 @@ public class RegisterController {
 	// // Hiển thị trang đăng ký thành công
 	// return "success";
 	// }
+	
+	@GetMapping("/completelogin")
+	public String complete(Model model,Authentication authentication) {
+		try {
+			// Lấy giá trị từ RedirectAttributes
+
+		    OAuth2User auth2User = (OAuth2User) authentication.getPrincipal();
+		    System.out.println(auth2User);
+		    // Sử dụng giá trị trong model hoặc thực hiện các thao tác khác
+		   
+		    // Rest of your code
+			if (authentication.isAuthenticated()) {
+				RegisteroauthDTO dto = new RegisteroauthDTO();
+				//OAuth2User auth2User = (OAuth2User) authentication.getPrincipal();
+				System.out.println(auth2User);
+				dto.setFirstname(auth2User.getAttribute("given_name"));
+				dto.setLastname(auth2User.getAttribute("family_name"));
+				dto.setEmail(auth2User.getAttribute("email"));
+				dto.setPassword(auth2User.getAttribute("nonce"));
+				dto.setImage(auth2User.getAttribute("picture"));
+				dto.setPhonenumber(null);
+				model.addAttribute("userinfo", dto);
+				return "registeroauth";
+			}else {
+				return "registeroauth";
+			}
+				
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return "registeroauth";
+		}
+		
+		
+	}
+	
+	
+	@PostMapping("/completelogin")
+	public String completelogin(Model model, @ModelAttribute("userinfo") RegisteroauthDTO userInfo,Authentication authentication) {
+		try {
+			// User user = Usermapper.INSTANCE.fromDto(userInfo);
+
+		    OAuth2User auth2User = (OAuth2User) authentication.getPrincipal();
+			User user = new User();
+			user.setFirstname(userInfo.getFirstname());
+			user.setLastname(userInfo.getLastname());
+			user.setEmail(userInfo.getEmail());
+		
+			user.setPhonenumber(userInfo.getPhonenumber());
+			
+			user.setPassword(auth2User.getAttribute("nonce"));
+			user.setImage(userInfo.getImage());
+			user.setProvider(Provider.GOOGLE);
+			user.setAccountVerified(true);
+			
+			//user.setUserRole();
+			user.setCreateddate(new Date());
+			userservice.save(user);
+			Role role = roleService.findByid(2);
+			UserRole userRole = new UserRole();
+			userRole.setRole(role);
+			userRole.setUser(user);
+			userroleService.create(userRole);
+
+			System.out.println("chay toi impl");
+			System.out.println(user);
+			System.out.println("xong");
+			System.out.println(user.getUserRole());
+//			UserDetails userDetails = detailsService.loadUserByUsername(user.getEmail());
+//			System.out.println("userdetaile>.........");
+//			System.out.println(userDetails);
+//			// Tạo một đối tượng Authentication
+//			List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+//
+//			Authentication authentication2 = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
+//
+//			// Đặt thông tin xác thực vào SecurityContext
+//			SecurityContext sc = SecurityContextHolder.getContext();
+//			sc.setAuthentication(authentication2);
+
+			return "redirect:/";
+		} catch (Exception e) {
+			e.printStackTrace();
+//			bindingResult.rejectValue("email", "error.userDTO", "An account already exists for this email.");
+			System.out.println("lôi");
+			model.addAttribute("registrationForm", userInfo);
+			return "registeroauth";
+		}
+		
+	}
 
 	@GetMapping("/verify")
 	public String verifyCustomer(@RequestParam(required = false) String token, final Model model,
@@ -163,5 +284,13 @@ public class RegisterController {
 		System.out.println("thanh cong");
 		return REDIRECT_LOGIN;
 	}
+	
+	
+	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+		Collection<? extends GrantedAuthority> mapRoles = roles.stream()
+				.map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+		return mapRoles;
+	}
+	
 
 }

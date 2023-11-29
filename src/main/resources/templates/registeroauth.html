@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout::dynamic(~{::body})}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+</head>
+<body>
+
+	<!-- Basic -->
+	<div class="ex-form-1 ">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-xl-6 offset-xl-3">
+					<div class="text-box ">
+						<h2 class="py-4" style="text-align: center;">Hoàn tất đăng nhập</h2>
+
+						<form action="/register/completelogin" th:object="${userinfo}" method="post"
+							th:action="@{/register/completelogin}" class="py-3">
+
+
+							<div class="mb-4 form-floating">
+								<input name="firstname" type="text" th:field="*{firstname}"
+									class="form-control" placeholder="Tên đầu" required> <label
+									for="firstname">Tên đầu</label> 
+									<i class="text-danger" th:errors="*{firstname}"></i>
+							</div>
+
+							<div class="mb-4 form-floating">
+								<input name="lastname" type="text" th:field="*{lastname}"
+									class="form-control" placeholder="Tên đầu" required> <label
+									for="lastname">Tên cuối</label> 
+									<i class="text-danger" th:errors="*{lastname}"></i>
+							</div>
+							<div class="mb-4 form-floating">
+								<input name="email" type="email" th:field="*{email}"
+									class="form-control" id="floatingInput"
+									placeholder="name@example.com" required> <label
+									for="Email">Email</label> 
+									<i class="text-danger" th:errors="*{email}"></i>
+							</div>
+							<div class="mb-4 form-floating">
+								<input name="phonenumber" type="number"
+									th:field="*{phonenumber}" class="form-control"
+									placeholder="Tên đầu" required> <label
+									for="phonenumber">Số điện thoại</label> 
+									<i class="text-danger" th:errors="*{phonenumber}"></i>
+							</div>
+							<hr>
+							<div style="display: none" class="mb-4 form-floating">
+								<input name="image" type="url"
+								
+									th:field="*{image}" class="form-control"
+									placeholder="Tên đầu" required> <label
+									for="phonenumber">Ảnh</label> 
+									<i class="text-danger" th:errors="*{image}"></i>
+							</div>
+							
+
+							<button style="font-size: 20px" type="submit"
+								class="form-control-submit-button">Tạo tài khoản</button>
+
+
+
+							<p style="text-align: center; padding: 10px">
+								Bằng việc đăng kí, bạn đã đồng ý với GreenFarm về <br> <a
+									style="text-align: center;" href="/register"
+									class="link-danger">Điều khoản dịch vụ & Chính sách bảo mật</a>
+							</p>
+
+
+							<div class="register">
+								<p style="text-align: center; padding: 10px">
+									Bạn mới biết đến GreenFarm? <a href="/login"
+										class="link-danger">Đăng nhập</a>
+								</p>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

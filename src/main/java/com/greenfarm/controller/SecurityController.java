@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -144,8 +145,6 @@ public class SecurityController {
 	public String profile(Model model) {
 		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User userchange = new User();
-		model.addAttribute("userchange", userchange);
 
 		// Kiểm tra nếu người dùng đã xác thực
 		if (authentication.isAuthenticated()) {
@@ -155,6 +154,7 @@ public class SecurityController {
 			model.addAttribute("user", user);
 			// Lấy các quyền (roles) của người dùng
 			String roles = authentication.getAuthorities().toString();
+			
 			model.addAttribute("roles", roles);
 			// Trả về thông tin tài khoản trong phản hồi
 			System.out.println("Xin chào, " + username + "! Bạn có các quyền: " + roles);
@@ -179,7 +179,7 @@ public class SecurityController {
 		// }
 		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+		System.out.println(authentication);
 		// Kiểm tra nếu người dùng đã xác thực
 		if (authentication.isAuthenticated()) {
 			// Lấy tên người dùng

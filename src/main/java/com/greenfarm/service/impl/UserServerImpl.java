@@ -191,8 +191,14 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public User findByEmail(String email) {
-		User user = dao.findByEmail(email).get();
-		return user;
+		Optional<User> user = dao.findByEmail(email);
+		if (user.isPresent()) {
+			return user.get();
+		}else {
+			
+			return null;
+		}
+	
 	}
 
 	@Override
@@ -311,7 +317,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		// TODO Auto-generated method stub
 		String email = oauth2.getPrincipal().getAttribute("email");
 		String password = Long.toHexString(System.currentTimeMillis());
-		//
+		
 
 		UserDetails user = org.springframework.security.core.userdetails.User.withUsername(email)
 				.password(PE.encode(password)).roles("2").build();
@@ -347,15 +353,18 @@ public class UserServerImpl implements UserService, UserDetailsService {
 			dao.save(newUser);
 
 			// Trả về UserDetails của tài khoản mới
+			return null;
 
 		}
-		return null;
+		
 	}
 
 	@Override
 	public void processOAuthPostLogin(String username) {
-		User existUser = dao.findByEmail(username).get();
-		if (existUser == null) {
+		System.out.println("start check account");
+		Optional<User> existUser = dao.findByEmail(username);
+		System.out.println("it exxit");
+		if (existUser.isEmpty()) {
 			User newUser = new User();
 //			newUser.setFirstname("google");
 //			newUser.setLastname("google");
@@ -364,7 +373,9 @@ public class UserServerImpl implements UserService, UserDetailsService {
 			newUser.setProvider(Provider.GOOGLE);
 			newUser.setAccountVerified(true);
 			newUser.setCreateddate(new Date());
+			System.out.println("cretea a account");
 			dao.save(newUser);
+			System.out.println("done");
 		}
 
 	}
@@ -380,8 +391,8 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public void save(User user) {
-		dao.save(user);
+	public User save(User user) {
+		return dao.save(user);
 
 	}
 
