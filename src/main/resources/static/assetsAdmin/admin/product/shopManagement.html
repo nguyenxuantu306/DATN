@@ -11,8 +11,8 @@
 									class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
 									id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 							</div>
-							<input ng-model="searchTerm" type="search" class="form-control"
-								placeholder="Tìm kiếm tên sản phẩm...">
+							<input type="search" class="form-control"
+								id="search" ng-model="searchText" ng-change="loadData()" placeholder="Nhập từ khóa">
 						</div>
 						<div class="col-md-6 text-right">
 							<button type="button" class="btn btn-success"
@@ -54,7 +54,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in pager.items | filter:filterProducts">
+								<tr ng-repeat="item in pager.items">
 									<td>{{$index + 1}}</td>
 									<td><img ng-src="{{item.image}}" alt="Product Image"
 										style="width: 80px;"></td>
@@ -122,7 +122,7 @@
 													<div class="form-group col-sm-6">
 														<label>Tên sản phẩm: </label> <input name="productname"
 															ng-model="form.productname" ng-minlength="5"
-															ng-maxlength="255" class="form-control input-default"
+															ng-maxlength="1000" class="form-control input-default"
 															placeholder="VD : Củ cải..." required> <label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.productname.$error.required"
 															style="color: red;">Vui lòng nhập tên sản phẩm !</label>
@@ -131,7 +131,7 @@
 															style="color: red;">Tên sản phẩm phải có ít nhất
 															5 ký tự!</label><label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.productname.$error.maxlength"
-															style="color: red;">Tên sản phẩm chỉ tối đa 255
+															style="color: red;">Tên sản phẩm chỉ tối đa 1000
 															ký tự!</label>
 													</div>
 													<div class="form-group col-sm-6">
@@ -152,10 +152,7 @@
 															name="quantityavailable" ng-min="0" placeholder="VD : 20"
 															class="form-control input-default " required> <label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.quantityavailable.$error.required"
-															style="color: red;">Vui lòng nhập số lượng !</label> <label
-															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.quantityavailable.$error.min"
-															style="color: red;">Số lượng không được nhỏ hơn
-															0!</label>
+															style="color: red;">Vui lòng nhập số lượng !</label>
 													</div>
 
 													<div class="form-group col-sm-6">
@@ -173,7 +170,7 @@
 													<div class="form-group col-sm-12">
 														<label>Mô tả: </label>
 														<textarea name="description" ng-model="form.description"
-															ng-minlength="5" ng-maxlength="255"
+															ng-minlength="5" ng-maxlength="1000"
 															class="form-control input-default" style="height: 120px;"
 															placeholder="VD : Củ cải gồm..." required></textarea>
 														<label
@@ -183,7 +180,7 @@
 															style="color: red;">Mô tả phải có ít nhất 5 ký
 															tự!</label> <label
 															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.description.$error.maxlength"
-															style="color: red;">Mô tả chỉ tối đa 255 ký tự!</label>
+															style="color: red;">Mô tả chỉ tối đa 1000 ký tự!</label>
 													</div>
 													<div class="form-group col-sm-12">
 														<div class="form-group ">
@@ -244,7 +241,7 @@
 													<div class="form-group col-sm-6">
 														<label>Tên sản phẩm: </label> <input name="productname"
 															ng-model="form.productname" ng-minlength="5"
-															ng-maxlength="255" class="form-control input-default"
+															ng-maxlength="1000" class="form-control input-default"
 															placeholder="VD : Củ cải..." required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.productname.$error.required"
 															style="color: red;">Vui lòng nhập tên sản phẩm !</label>
@@ -253,7 +250,7 @@
 															style="color: red;">Tên sản phẩm phải có ít nhất
 															5 ký tự!</label><label
 															ng-show="frmvalidate.$submitted && frmvalidate.productname.$error.maxlength"
-															style="color: red;">Tên sản phẩm chỉ tối đa 255
+															style="color: red;">Tên sản phẩm chỉ tối đa 1000
 															ký tự!</label>
 													</div>
 													<div class="form-group col-sm-6">
@@ -271,13 +268,10 @@
 													<div class="form-group col-sm-6">
 														<label>số lượng: </label> <input type="number"
 															ng-model="form.quantityavailable"
-															name="quantityavailable" ng-min="0" placeholder="VD : 20"
+															name="quantityavailable" placeholder="VD : 20"
 															class="form-control input-default " required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.quantityavailable.$error.required"
-															style="color: red;">Vui lòng nhập số lượng !</label> <label
-															ng-show="frmvalidate.$submitted && frmvalidate.quantityavailable.$error.min"
-															style="color: red;">Số lượng không được nhỏ hơn
-															0!</label>
+															style="color: red;">Vui lòng nhập số lượng !</label>
 													</div>
 
 													<div class="form-group col-sm-6">

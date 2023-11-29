@@ -31,6 +31,7 @@ import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportSP;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.BookingService;
@@ -339,6 +340,7 @@ public class ExcelController {
 		CellStyle currencyStyle = workbook.createCellStyle();
 		DataFormat dataFormat = workbook.createDataFormat();
 		currencyStyle.setDataFormat(dataFormat.getFormat("#,##0.00 [$VNĐ]"));
+	    // Áp dụng kiểu định dạng giá tiền cho cột "product.getPrice() * data.getCount()" (cột 4)
 
 		// Áp dụng kiểu định dạng giá tiền cho cột "getPrice()" (cột 2)
 		sheet.setDefaultColumnStyle(2, currencyStyle);

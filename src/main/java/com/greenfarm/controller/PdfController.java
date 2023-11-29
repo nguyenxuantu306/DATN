@@ -23,6 +23,7 @@ import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportSP;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.BookingService;
@@ -231,7 +232,7 @@ public class PdfController {
 
 	@GetMapping("/pdf-productstatistics")
 	public ResponseEntity<byte[]> PDFProductStatistics() throws IOException, DocumentException {
-		List<Report> dataList = getProductStatitics(); // Hàm này tạo dữ liệu mẫu
+		List<ReportSP> dataList = getProductStatitics(); // Hàm này tạo dữ liệu mẫu
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		Document document = new Document();
@@ -278,7 +279,7 @@ public class PdfController {
 
 		// Thiết lập dữ liệu cho từng hàng
 		for (int i = 0; i < dataList.size(); i++) {
-			Report data = dataList.get(i);
+			ReportSP data = dataList.get(i);
 			Product product = (Product) data.getGroup();
 
 			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
@@ -298,7 +299,7 @@ public class PdfController {
 		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
 
-	public final List<Report> getProductStatitics() {
+	public final List<ReportSP> getProductStatitics() {
 		return productService.getTk_sp();
 	}
 
@@ -516,7 +517,7 @@ public class PdfController {
 
 	@GetMapping("/pdf-inventorystatistics")
 	public ResponseEntity<byte[]> PDFInventorystatistics() throws IOException, DocumentException {
-		List<Report> dataList = Inventorystatistics(); // Hàm này tạo dữ liệu mẫu
+		List<ReportSP> dataList = Inventorystatistics(); // Hàm này tạo dữ liệu mẫu
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		Document document = new Document();
@@ -556,7 +557,7 @@ public class PdfController {
 
 		// Thiết lập dữ liệu cho từng hàng
 		for (int i = 0; i < dataList.size(); i++) {
-			Report data = dataList.get(i);
+			ReportSP data = dataList.get(i);
 			Product product = (Product) data.getGroup();
 
 			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
@@ -666,7 +667,7 @@ public class PdfController {
 		return bookingService.findAll();
 	}
 
-	public final List<Report> Inventorystatistics() {
+	public final List<ReportSP> Inventorystatistics() {
 		return productService.getTk_sp();
 	}
 

@@ -55,19 +55,39 @@ app.controller("user-ctrl", function($scope, $http) {
 
 
 
-	// validation ngày tạo
-	$scope.isDateBeforeCreatedate = function() {
-		var selectedDate = new Date($scope.form.createddate);
-		var currentDate = new Date();
-		return selectedDate < currentDate;
+	$scope.isDateInFuture = function() {
+		if ($scope.form.createddate) {
+			var selectedDate = new Date($scope.form.createddate);
+			var today = new Date();
+			return selectedDate > today;
+		}
+		return false;
 	};
 
-	// validation ngày sinh
-	$scope.isDateBeforeToday = function() {
-		var selectedDate = new Date($scope.form.birthday);
-		var currentDate = new Date();
-		return selectedDate < currentDate;
+	$scope.today = new Date(); // Để lấy ngày hiện tại và truyền vào max
+
+
+
+	$scope.isFutureDate1 = function() {
+		if ($scope.form.birthday) {
+			var selectedDate = new Date($scope.form.birthday);
+			var today = new Date();
+			return selectedDate > today;
+		}
+		return false;
 	};
+
+	$scope.checkDate1 = function() {
+		if ($scope.isFutureDate1()) {
+			// Hiển thị cảnh báo khi người dùng chọn ngày sinh trong tương lai
+			$scope.futureDateWarning1 = true;
+		} else {
+			// Ẩn cảnh báo khi ngày hợp lệ
+			$scope.futureDateWarning1 = false;
+		}
+	};
+
+	$scope.today = new Date(); // Để lấy ngày hiện tại và truyền vào max
 
 
 	$scope.isEdit = false; // Mặc định không ở chế độ edit
@@ -76,7 +96,7 @@ app.controller("user-ctrl", function($scope, $http) {
 		$scope.form = {
 			createddate: new Date(),
 			birthday: new Date(),
-			image: 'cloud-upload.jpg',
+			image: 'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',
 			gender: true,
 			password: '' // Trường password sẽ được đặt về rỗng khi tạo mới
 		};
@@ -256,34 +276,58 @@ app.controller("user-ctrl", function($scope, $http) {
 
 
 	$scope.pager = {
-		page: 0,
-		size: 5,
-		get items() {
-			var start = this.page * this.size;
-			return $scope.items.slice(start, start + this.size);
-		},
-		get count() {
-			return Math.ceil(1.0 * $scope.items.length / this.size);
-		},
-		first() {
-			this.page = 0;
-		},
-		prev() {
-			this.page--;
-			if (this.page < 0) {
-				this.last();
-			}
-		},
-		next() {
-			this.page++;
-			if (this.page > this.count) {
-				this.first();
-			}
-		},
-		last() {
-			this.page = this.count - 1;
-		}
-	}
+    page: 0,
+    size: 10,
+    get items() {
+        var start = this.page * this.size;
+        return $scope.items ? $scope.items.slice(start, start + this.size) : [];
+    },
+    get count() {
+        return Math.ceil(1.0 * ($scope.items ? $scope.items.length : 0) / this.size);
+    },
+    first() {
+        this.page = 0;
+    },
+    prev() {
+        this.page--;
+        if (this.page < 0) {
+            this.last();
+        }
+    },
+    next() {
+        this.page++;
+        if (this.page >= this.count) {
+            this.first();
+        }
+    },
+    last() {
+        this.page = this.count - 1;
+    }
+};
+
+	
+	
+	$scope.loadData = function () {
+    var apiUrl = '/rest/users/searchkeyworduser';
+
+    // Kiểm tra xem có từ khóa tìm kiếm không
+    if ($scope.searchText) {
+        apiUrl += '?keyword=' + $scope.searchText;
+    }
+
+    $http.get(apiUrl)
+        .then(function (response) {
+            // Cập nhật dữ liệu trong scope
+            $scope.items = response.data; // Cập nhật items để phản ánh dữ liệu mới
+            $scope.pager.page = 0; // Đặt lại trang về 0 khi có dữ liệu mới
+        })
+        .catch(function (error) {
+            console.error('Lỗi khi tải dữ liệu:', error);
+        });
+};
+
+
+   
 
 
 	// Trong AngularJS controller hoặc service

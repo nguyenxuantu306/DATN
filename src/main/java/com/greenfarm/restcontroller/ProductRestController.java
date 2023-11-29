@@ -23,11 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.dto.ProductImageDTO;
+import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.ProductImage;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportSP;
 import com.greenfarm.entity.Tour;
+import com.greenfarm.entity.User;
 import com.greenfarm.service.ProductService;
 
 @CrossOrigin("*")
@@ -251,14 +254,30 @@ public class ProductRestController {
 
 		return ResponseEntity.ok(productDTOList);
 	}
+	
+	@GetMapping("/searchkeywordproduct")
+	public ResponseEntity<List<ProductDTO>> getList(@RequestParam(required = false) String keyword) {
+		List<Product> products;
 
-//	@GetMapping("/thongke/sp")
-//	public ResponseEntity<List<Report>> getTK_SP() {
-//		return new ResponseEntity<>(productService.getTk_sp(), HttpStatus.OK);
-//	}
+		if (keyword != null && !keyword.isEmpty()) {
+			// Nếu có từ khóa, thực hiện tìm kiếm
+			products = productService.findByKeyword(keyword);
+		} else {
+			// Nếu không có từ khóa, lấy tất cả người dùng
+			products = productService.findAll();
+		}
+
+		List<ProductDTO> productDtos = products.stream().map(product -> modelMapper.map(product, ProductDTO.class))
+				.collect(Collectors.toList());
+
+		return ResponseEntity.ok(productDtos);
+	}
+
+
+
 
 	@GetMapping("/thongke/sp")
-	public ResponseEntity<List<Report>> getTK_SP() {
+	public ResponseEntity<List<ReportSP>> getTK_SP() {
 		return new ResponseEntity<>(productService.getTk_sp(), HttpStatus.OK);
 	}
 
@@ -273,7 +292,7 @@ public class ProductRestController {
 	}
 
 	@GetMapping("/thongke/top10spbanchay")
-	public List<Report> getProductspbanchay() {
+	public List<ReportSP> getProductspbanchay() {
 		return productService.getReportspbanchay();
 	}
 

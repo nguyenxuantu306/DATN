@@ -1,6 +1,7 @@
 package com.greenfarm.restcontroller;
 
 import java.util.List;
+
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -206,6 +207,24 @@ public class UserRestController {
 			return userService.getAdministrators();
 		}
 		return userService.findAll();
+	}
+
+	@GetMapping("/searchkeyworduser")
+	public ResponseEntity<List<UserDTO>> getList(@RequestParam(required = false) String keyword) {
+		List<User> users;
+
+		if (keyword != null && !keyword.isEmpty()) {
+			// Nếu có từ khóa, thực hiện tìm kiếm
+			users = userService.findByKeyword(keyword);
+		} else {
+			// Nếu không có từ khóa, lấy tất cả người dùng
+			users = userService.findAll();
+		}
+
+		List<UserDTO> userDtos = users.stream().map(user -> modelMapper.map(user, UserDTO.class))
+				.collect(Collectors.toList());
+
+		return ResponseEntity.ok(userDtos);
 	}
 
 	// Tổng tiền mua hàng của các user

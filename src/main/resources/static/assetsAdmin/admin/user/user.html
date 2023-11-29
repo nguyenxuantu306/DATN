@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
 	<div class="col-12">
 		<div class="card">
@@ -10,9 +11,9 @@
 								class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
 								id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 						</div>
-						<input type="search" class="form-control" ng-model="searchEmail"
-							placeholder="Tìm kiếm theo email..."
-							aria-label="Tìm kiếm email...">
+						<input type="search" class="form-control" 
+							 id="search" ng-model="searchText" ng-change="loadData()" placeholder="Nhập từ khóa"
+							>
 					</div>
 					<div class="col-md-6 text-right">
 						<button type="button" class="btn btn-success"
@@ -53,7 +54,7 @@
 						</thead>
 						<tbody>
 							<tr
-								ng-repeat="item in pager.items | filter: { email: searchEmail }">
+								ng-repeat="item in pager.items">
 								<td>{{$index + 1}}</td>
 								<th><img ng-src="{{item.image}}" alt="Hình ảnh"
 									style="width: 70px; height: 100px"></th>
@@ -114,7 +115,7 @@
 										ng-submit="submitForm1()" novalidate>
 										<div class="row">
 											<div class="col-md-4">
-												<label for="image"> <img ng-src="{{form.image}}"
+												<label for="image"> <img ng-src="{{form.image}}" 
 													style="max-width: 100%; height: 300px">
 												</label>
 
@@ -144,13 +145,13 @@
 															style="color: red;">Vui lòng nhập địa chỉ !</label> <label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Ngày tạo : </label> <input
+														<label>Ngày tạo:</label> <input
 															ng-model="form.createddate" type="date"
 															name="createddate" class="form-control input-default"
-															required> <label
-															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.createddate.$error.required"
-															style="color: red;">Vui lòng nhập ngày tạo !</label> <label
-															ng-show="frmvalidateupdate.$submitted && !isDateBeforeCreatedate()"
+															required max="{{today | date:'yyyy-MM-dd'}}" /> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.createddate.$error.required"
+															style="color: red;">Vui lòng nhập ngày tạo!</label> <label
+															ng-show="frmvalidate.$submitted && isDateInFuture()"
 															style="color: red;">Ngày tạo không thể ở tương
 															lai!</label>
 													</div>
@@ -212,13 +213,14 @@
 
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Ngày sinh: </label> <input ng-model="form.birthday"
-															type="date" id="birthday" name="birthday"
+														<label>Ngày sinh:</label> <input ng-model="form.birthday"
+															type="date" name="birthday"
 															class="form-control input-default" required
-															max="{{getCurrentDate() | date:'yyyy-MM-dd'}}"> <label
-															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.birthday.$error.required"
+															ng-change="checkDate1()"
+															max="{{today | date:'yyyy-MM-dd'}}" /> <label
+															ng-show="frmvalidate.$submitted && frmvalidate.birthday.$error.required"
 															style="color: red;">Vui lòng chọn ngày sinh!</label> <label
-															ng-show="frmvalidateupdate.$submitted && !isDateBeforeToday()"
+															ng-show="frmvalidate.$submitted && isFutureDate1()"
 															style="color: red;">Ngày sinh không thể ở tương
 															lai!</label>
 													</div>
@@ -282,12 +284,12 @@
 															type="password" ng-model="form.password"
 															ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,100}$/"
 															class="form-control input-default" ng-readonly="isEdit"
-															required> <label
+															placeholder="VD : 123456Aa..." required> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.password.$error.required"
 															style="color: red;">Vui lòng nhập mật khẩu !</label> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.password.$error.pattern"
 															style="color: red;">Mật khẩu phải có từ 8 đến 16
-															ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.</label>
+															ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số!</label>
 													</div>
 
 
@@ -300,16 +302,18 @@
 															style="color: red;">Vui lòng nhập địa chỉ !</label> <label>
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Ngày tạo : </label> <input
+														<label>Ngày tạo:</label> <input
 															ng-model="form.createddate" type="date"
 															name="createddate" class="form-control input-default"
-															required> <label
+															required max="{{today | date:'yyyy-MM-dd'}}" /> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.createddate.$error.required"
-															style="color: red;">Vui lòng nhập ngày tạo !</label> <label
-															ng-show="frmvalidate.$submitted && !isDateBeforeCreatedate()"
+															style="color: red;">Vui lòng nhập ngày tạo!</label> <label
+															ng-show="frmvalidate.$submitted && isDateInFuture()"
 															style="color: red;">Ngày tạo không thể ở tương
 															lai!</label>
 													</div>
+
+
 													<div class="form-group col-sm-6">
 														<label>Email: </label> <input name="email" type="text"
 															ng-model="form.email" class="form-control input-default"
@@ -321,7 +325,6 @@
 															ng-show="frmvalidate.$submitted && frmvalidate.email.$error.pattern"
 															style="color: red;">Email không hợp lệ. Vui lòng
 															nhập đúng định dạng email.</label>
-
 													</div>
 
 													<div class="form-group col-sm-6">
@@ -368,16 +371,18 @@
 
 													</div>
 													<div class="form-group col-sm-6">
-														<label>Ngày sinh: </label> <input ng-model="form.birthday"
-															type="date" id="birthday" name="birthday"
+														<label>Ngày sinh:</label> <input ng-model="form.birthday"
+															type="date" name="birthday"
 															class="form-control input-default" required
-															max="{{getCurrentDate() | date:'yyyy-MM-dd'}}"> <label
+															ng-change="checkDate1()"
+															max="{{today | date:'yyyy-MM-dd'}}" /> <label
 															ng-show="frmvalidate.$submitted && frmvalidate.birthday.$error.required"
 															style="color: red;">Vui lòng chọn ngày sinh!</label> <label
-															ng-show="frmvalidate.$submitted && !isDateBeforeToday()"
+															ng-show="frmvalidate.$submitted && isFutureDate1()"
 															style="color: red;">Ngày sinh không thể ở tương
 															lai!</label>
 													</div>
+
 													<div class="form-group col-sm-6">
 														<label>Hình ảnh : </label> <input type="file"
 															class="form-control" id="image"

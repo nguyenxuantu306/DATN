@@ -2,57 +2,114 @@
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(main)">
 
 <head>
-	<meta charset="UTF-8" />
-	<title>Admin GreenFarm</title>
-	<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.svg">
-	<!-- Pignose Calender -->
-	<link href="/assetsAdmin/plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet" />
-	<!-- Chartist -->
-	<link rel="stylesheet" href="/assetsAdmin/plugins/chartist/css/chartist.min.css" />
+<meta charset="UTF-8" />
+<title>Admin GreenFarm</title>
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/assets/images/favicon.svg">
+<!-- Pignose Calender -->
+<link
+	href="/assetsAdmin/plugins/pg-calendar/css/pignose.calendar.min.css"
+	rel="stylesheet" />
+<!-- Chartist -->
+<link rel="stylesheet"
+	href="/assetsAdmin/plugins/chartist/css/chartist.min.css" />
 
-	<link rel="stylesheet" href="/assetsAdmin/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css" />
-	<!-- Custom Stylesheet -->
-	<link href="/assetsAdmin/css/style.css" rel="stylesheet" />
-	<link href="/assetsAdmin/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-	<!-- Pignose Calender -->
-	<link href="/assetsAdmin/plugins/summernote/dist/summernote.css" rel="stylesheet">
-	<link href="/assetsAdmin/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
-		rel="stylesheet">
-	<!-- Page plugins css -->
-	<link href="/assetsAdmin/plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
-	<!-- Color picker plugins css -->
-	<link href="/assetsAdmin/plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet">
-	<!-- Date picker plugins css -->
-	<link href="/assetsAdmin/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
-	<!-- Daterange picker plugins css -->
-	<link href="/assetsAdmin/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
-	<link href="/assetsAdmin/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-	<link href="/assetsAdmin/plugins/summernote/dist/summernote.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="/assetsAdmin/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css" />
+<!-- Custom Stylesheet -->
+<link href="/assetsAdmin/css/style.css" rel="stylesheet" />
+<link
+	href="/assetsAdmin/plugins/tables/css/datatable/dataTables.bootstrap4.min.css"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<!-- Pignose Calender -->
+<link href="/assetsAdmin/plugins/summernote/dist/summernote.css"
+	rel="stylesheet">
+<link
+	href="/assetsAdmin/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
+	rel="stylesheet">
+<!-- Page plugins css -->
+<link
+	href="/assetsAdmin/plugins/clockpicker/dist/jquery-clockpicker.min.css"
+	rel="stylesheet">
+<!-- Color picker plugins css -->
+<link
+	href="/assetsAdmin/plugins/jquery-asColorPicker-master/css/asColorPicker.css"
+	rel="stylesheet">
+<!-- Date picker plugins css -->
+<link
+	href="/assetsAdmin/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css"
+	rel="stylesheet">
+<!-- Daterange picker plugins css -->
+<link
+	href="/assetsAdmin/plugins/timepicker/bootstrap-timepicker.min.css"
+	rel="stylesheet">
+<link
+	href="/assetsAdmin/plugins/bootstrap-daterangepicker/daterangepicker.css"
+	rel="stylesheet">
+<link href="/assetsAdmin/plugins/summernote/dist/summernote.css"
+	rel="stylesheet">
 
-	<!-- Gọi angularjs ánh xạ -->
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+<!-- Gọi angularjs ánh xạ -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
-	
-	<!-- thống báo  -->
-	<!-- SweetAlert2 CSS -->
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+<style>
+.marquee-container {
+        white-space: nowrap;
+        overflow: hidden;
+        animation: marquee 5s linear infinite; /* Điều chỉnh thời gian và hiệu ứng tùy chọn */
+        
+    }
+
+    @keyframes marquee {
+        0%   { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+
+
+/* Màu chữ mờ và độ mờ của placeholder */
+.form-control.input-default::placeholder {
+	color: #999;
+	opacity: 0.7;
+}
+
+/* Làm mờ chữ khi input được focus */
+.form-control.input-default:focus::placeholder {
+	color: transparent;
+	opacity: 1;
+}
+textarea::placeholder {
+        color: #999; /* Màu chữ làm mờ */
+        opacity: 0.7;
+       
+    }
+</style>
+
+<!-- thống báo  -->
+<!-- SweetAlert2 CSS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 
 <body ng-app="admin-app">
 	<div id="preloader">
 		<div class="loader">
 			<svg class="circular" viewBox="25 25 50 50">
-				<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+				<circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10" />
 			</svg>
 		</div>
 	</div>
-	<div id="main-wrapper" >
+	<div id="main-wrapper">
 		<div class="nav-header">
 			<div class="bg-success">
-				<a href="#"> <img style="width: 190px;padding: 15px;" src="/assets/images/logo.png" alt="">
+				<a href="#"> <img style="width: 190px; padding: 15px;"
+					src="/assets/images/logo.png" alt="">
 				</a>
 			</div>
 		</div>
@@ -115,26 +172,27 @@
 						</li> -->
 
 						<li class="icons dropdown">
-							<div class="user-img c-pointer position-relative" data-toggle="dropdown">
+							<div class="user-img c-pointer position-relative"
+								data-toggle="dropdown">
 								<span class="activity active"></span> <img
 									src="https://www.svgrepo.com/show/384674/account-avatar-profile-user-11.svg"
 									height="40" width="40" alt="">
 							</div>
-							<div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
+							<div
+								class="drop-down dropdown-profile animated fadeIn dropdown-menu">
 								<div class="dropdown-content-body">
 									<ul>
 										<li><a href="app-profile.html"><i class="icon-user"></i>
 												<span>Profile</span></a></li>
-										<li><a href="javascript:void()"> <i class="icon-envelope-open"></i>
-												<span>Inbox</span>
+										<li><a href="javascript:void()"> <i
+												class="icon-envelope-open"></i> <span>Inbox</span>
 												<div class="badge gradient-3 badge-pill gradient-1">3</div>
-											</a></li>
+										</a></li>
 
 										<hr class="my-2">
 										<li><a href="page-lock.html"><i class="icon-lock"></i>
 												<span>Lock Screen</span></a></li>
-										<li><a href="/login"><i class="icon-key"></i>
-												<span>Logout</span></a></li>
+										<li><a href="/login"><i class="icon-key"></i> <span>Logout</span></a></li>
 									</ul>
 								</div>
 							</div>
@@ -152,46 +210,46 @@
 						<li><a class="has-arrow" href="#" aria-expanded="false">
 								<i class="fa fa-home menu-icon"></i><span class="nav-text">Trang
 									Chủ</span>
-							</a></li>
+						</a></li>
 						<hr>
-						<li><a class="has-arrow" href="javascript:void()" aria-expanded="false"> <i
-									class="fa fa-user menu-icon"></i> <span class="nav-text">Người dùng & Phân quyền
-								</span>
-							</a>
+						<li><a class="has-arrow" href="javascript:void()"
+							aria-expanded="false"> <i class="fa fa-user menu-icon"></i> <span
+								class="nav-text">Người dùng & Phân quyền </span>
+						</a>
 							<ul aria-expanded="false">
 								<li><a href="#!user">Quản lý người dùng</a></li>
 								<li><a href="#!authorize">Quản lý phân quyền</a></li>
-							</ul>
-						</li>
+							</ul></li>
 						<hr>
-						<li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-									class="fas fa-tag menu-icon"></i> <span class="nav-text">Sản phẩm</span> </a>
+						<li><a class="has-arrow" href="javascript:void()"
+							aria-expanded="false"><i class="fas fa-tag menu-icon"></i> <span
+								class="nav-text">Sản phẩm</span> </a>
 							<ul aria-expanded="false">
 								<li><a href="#!product">Quản lý sản phẩm</a></li>
 								<li><a href="#!tour">Quản lý địa điểm</a></li>
 								<li><a href="#!category">Quản lý danh mục</a></li>
-							</ul>
-						</li>
+							</ul></li>
 						<hr>
-						<li><a class="has-arrow" href="javascript:void()" aria-expanded="false"> <i
-									class="fas fa-comment menu-icon"></i> <span class="nav-text">Tin nhắn</span>
-							</a>
+						<li><a class="has-arrow" href="javascript:void()"
+							aria-expanded="false"> <i class="fas fa-comment menu-icon"></i>
+								<span class="nav-text">Tin nhắn</span>
+						</a>
 							<ul aria-expanded="false">
 								<li><a href="#!message">Quản lý bình luận</a></li>
-							</ul>
-						</li>
+							</ul></li>
 						<hr>
-						<li><a class="has-arrow" href="javascript:void()" aria-expanded="false"> <i
-									class="fas fa-shopping-cart menu-icon"></i> <span class="nav-text">Đặt hàng</span>
-							</a>
+						<li><a class="has-arrow" href="javascript:void()"
+							aria-expanded="false"> <i
+								class="fas fa-shopping-cart menu-icon"></i> <span
+								class="nav-text">Đặt hàng</span>
+						</a>
 							<ul aria-expanded="false">
 								<li><a href="#!order">Quản lý đơn hàng</a></li>
 								<li><a href="#!bookingtour">Quản lý đặt tour</a></li>
-							</ul>
-						</li>
+							</ul></li>
 						<hr>
-						<li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-									class="fas fa-chart-bar menu-icon"></i>
+						<li><a class="has-arrow" href="javascript:void()"
+							aria-expanded="false"><i class="fas fa-chart-bar menu-icon"></i>
 
 
 
@@ -200,8 +258,7 @@
 								<li><a href="#!productS">Thống kê sản phẩm</a></li>
 								<li><a href="#!tyte">Thống kê loại sản phẩm</a></li>
 								<li><a href="#!inventory">Thống kê hàng tồn kho</a></li>
-							</ul>
-						</li>
+							</ul></li>
 						<hr>
 					</ul>
 				</div>
@@ -217,7 +274,8 @@
 
 	</div>
 	<!-- Back to Top -->
-	<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+	<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
+		class="fa fa-angle-double-up"></i></a>
 	</div>
 
 	<!-- SPA : QUAN LÝ ĐIỂU KHIỂN JS-->
@@ -246,7 +304,8 @@
 	<!-- Chartjs -->
 	<script src="/assetsAdmin/plugins/chart.js/Chart.bundle.min.js"></script>
 	<!-- Circle progress -->
-	<script src="/assetsAdmin/plugins/circle-progress/circle-progress.min.js"></script>
+	<script
+		src="/assetsAdmin/plugins/circle-progress/circle-progress.min.js"></script>
 	<!-- Datamap -->
 	<script src="/assetsAdmin/plugins/d3v3/index.js"></script>
 	<script src="/assetsAdmin/plugins/topojson/topojson.min.js"></script>
@@ -256,11 +315,13 @@
 	<script src="/assetsAdmin/plugins/morris/morris.min.js"></script>
 	<!-- Pignose Calender -->
 	<script src="/assetsAdmin/plugins/moment/moment.min.js"></script>
-	<script src="/assetsAdmin/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+	<script
+		src="/assetsAdmin/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
 	<!-- ChartistJS -->
 	<script src="/assetsAdmin/plugins/chartist/js/chartist.min.js"></script>
 
-	<script src="/assetsAdmin/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+	<script
+		src="/assetsAdmin/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
 
 	<script src="/assetsAdmin/js/dashboard/dashboard-1.js"></script>
 
@@ -269,17 +330,23 @@
 	<script src="/assetsAdmin/plugins/flot/js/jquery.flot.resize.js"></script>
 	<script src="/assetsAdmin/plugins/flot/js/jquery.flot.spline.js"></script>
 
-	<script src="/assetsAdmin/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+	<script
+		src="/assetsAdmin/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
 
 	<script src="/assetsAdmin/plugins/tables/js/jquery.dataTables.min.js"></script>
-	<script src="/assetsAdmin/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
-	<script src="/assetsAdmin/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+	<script
+		src="/assetsAdmin/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+	<script
+		src="/assetsAdmin/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
 
 	<!-- Date Picker Plugin JavaScript -->
-	<script src="/assetsAdmin/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+	<script
+		src="/assetsAdmin/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 	<!-- Date range Plugin JavaScript -->
-	<script src="/assetsAdmin/plugins/timepicker/bootstrap-timepicker.min.js"></script>
-	<script src="/assetsAdmin/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<script
+		src="/assetsAdmin/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+	<script
+		src="/assetsAdmin/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 	<script src="/assetsAdmin/plugins/summernote/dist/summernote.min.js"></script>
 	<script src="/assetsAdmin/plugins/summernote/js/summernote.min.js"></script>
 	<script src="/assetsAdmin/plugins/summernote/dist/summernote-init.js"></script>
@@ -287,11 +354,15 @@
 	<script
 		src="/assetsAdmin/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 	<!-- Clock Plugin JavaScript -->
-	<script src="/assetsAdmin/plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
+	<script
+		src="/assetsAdmin/plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
 	<!-- Color Picker Plugin JavaScript -->
-	<script src="/assetsAdmin/plugins/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
-	<script src="/assetsAdmin/plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
-	<script src="/assetsAdmin/plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
+	<script
+		src="/assetsAdmin/plugins/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
+	<script
+		src="/assetsAdmin/plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
+	<script
+		src="/assetsAdmin/plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
 	<script src="/assetsAdmin/js/plugins-init/form-pickers-init.js"></script>
 
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

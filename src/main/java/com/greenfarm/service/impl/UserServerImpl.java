@@ -1,6 +1,7 @@
 package com.greenfarm.service.impl;
 
 import java.util.Collection;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -437,5 +438,11 @@ public class UserServerImpl implements UserService, UserDetailsService {
 			return userEntity;
 		}
 	}
+
+	@Override
+    public List<User> findByKeyword(String keyword) {
+        // Triển khai tìm kiếm theo từ khóa trong repository
+        return dao.findByKeyword(keyword);
+    }
 
 }

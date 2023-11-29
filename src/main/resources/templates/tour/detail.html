@@ -135,6 +135,7 @@
 									<th scope="col">STT</th>
 									<th scope="col">Giá người lớn</th>
 									<th scope="col">Giá trẻ em</th>
+									<th scope="col">Số chỗ còn nhận</th>
 									<th scope="col">Hành động</th>
 								</tr>
 							</thead>
@@ -146,6 +147,9 @@
 									</td>
 									<td
 										th:text="*{#numbers.formatDecimal(pricings.Childprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
+									</td>
+									<td
+										th:text="*{Availableslots}">
 									</td>
 									<td><a th:href="@{|/booking/${tourid}|}" class="btn btn-md btn-primary p-2">Đặt
 											ngay</a></td>

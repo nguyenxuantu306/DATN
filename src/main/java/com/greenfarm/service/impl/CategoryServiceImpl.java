@@ -54,5 +54,10 @@ public class CategoryServiceImpl implements CategoryService {
 		return dao.findAllByIsdeletedTrue();
 	}
 
+	@Override
+	public List<Category> findByKeyword(String keyword) {
+		return dao.findByKeyword(keyword);
+	}
+
 
 }

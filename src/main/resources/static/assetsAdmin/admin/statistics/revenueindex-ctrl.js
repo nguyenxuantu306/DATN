@@ -763,7 +763,7 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 
 	$scope.pager = {
 		page: 0,
-		size: 5,
+		size: 10,
 		get itemsThongKetotaluser() {
 			var start = this.page * this.size;
 			return $scope.itemsThongKetotaluser.slice(start, start + this.size);
