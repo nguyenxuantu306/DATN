@@ -276,7 +276,7 @@ public class ExcelController {
 
 	@GetMapping("/excel-productstatistics")
 	public ResponseEntity<byte[]> ExcelCategoryStatistics() throws IOException {
-		List<Report> dataList = getProductStatitics(); // Lấy dữ liệu từ hàm getAll()
+		List<ReportSP> dataList = getProductStatitics(); // Lấy dữ liệu từ hàm getAll()
 
 		Workbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet("Thống kê sản phẩm");
@@ -350,7 +350,7 @@ public class ExcelController {
 		sheet.setDefaultColumnStyle(4, currencyStyle);
 
 		for (int i = 0; i < dataList.size(); i++) {
-			Report data = dataList.get(i);
+			ReportSP data = dataList.get(i);
 			Row row = sheet.createRow(rowIdx++);
 			row.createCell(0).setCellValue(i + 1);
 			Product product = (Product) data.getGroup();
@@ -696,7 +696,7 @@ public class ExcelController {
 
 	@GetMapping("/excel-inventorystatistics")
 	public ResponseEntity<byte[]> ExcelInventorystatistics() throws IOException {
-		List<Report> dataList = Inventorystatistics(); // Lấy dữ liệu từ hàm getAll()
+		List<ReportSP> dataList = Inventorystatistics(); // Lấy dữ liệu từ hàm getAll()
 
 		Workbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet("Thống kê hàng tồn kho");
@@ -752,7 +752,7 @@ public class ExcelController {
 		int rowIdx = 2;
 
 		for (int i = 0; i < dataList.size(); i++) {
-			Report data = dataList.get(i);
+			ReportSP data = dataList.get(i);
 			Row row = sheet.createRow(rowIdx++);
 			row.createCell(0).setCellValue(i + 1);
 			Product product = (Product) data.getGroup();
@@ -911,9 +911,7 @@ public class ExcelController {
 		return productService.findAll();
 	}
 
-	public final List<Report> getProductStatitics() {
-		return productService.getTk_sp();
-	}
+	
 
 	public final List<Report> getCategoryStatitics() {
 		return productService.getTk_loai();
@@ -927,12 +925,16 @@ public class ExcelController {
 		return bookingService.findAll();
 	}
 
-	public final List<Report> Inventorystatistics() {
-		return productService.getTk_sp();
-	}
 
 	public final List<Tour> getAllTour() {
 		return tourService.findAll();
 	}
-
+	
+	public final List<ReportSP> Inventorystatistics() {
+		return productService.getTk_sp();
+	}
+	public final List<ReportSP> getProductStatitics() {
+		return productService.getTk_sp();
+	}
+	
 }
