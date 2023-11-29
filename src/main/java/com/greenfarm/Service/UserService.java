@@ -65,7 +65,7 @@ public interface UserService {
 	// Tổng tiền đặt vé của các user
 	List<Report> getBookingTotalPurchaseByUser();
 
-	void save(User user);
+	//void save(User user);
 
 	User createADMIN(@Valid User user) throws UserAlreadyExistException;
 

@@ -48,6 +48,7 @@ import com.greenfarm.dto.Provider;
 import com.greenfarm.entity.CustomOAuth2User;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.UserService;
+import com.greenfarm.service.impl.CustomOAuth2UserService;
 
 @Configuration
 @EnableWebSecurity
