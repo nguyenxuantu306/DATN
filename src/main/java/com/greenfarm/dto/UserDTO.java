@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.greenfarm.entity.Address;
 import com.greenfarm.entity.Comment;
+import com.greenfarm.entity.User;
 
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -27,7 +29,6 @@ public class UserDTO {
 	
 	@Positive(message = "Id tài khoản phải lớn hơn 0")
 	private Integer userid;
-	
 	
 	@NotBlank(message = "Email là bắt buộc")
 	private String email;
@@ -52,9 +53,9 @@ public class UserDTO {
 	//@NotBlank(message = "Ảnh đại diện là bắt buộc")
 	private String image; 
 	
-	@NotBlank(message = "Địa chỉ là bắt buộc")
-	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
-	private String address;
+//	@NotBlank(message = "Địa chỉ là bắt buộc")
+//	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
+//	private String address;
 	
 	@NotNull(message = "Giới tính phải được chọn")
 	private Boolean gender;
@@ -70,4 +71,7 @@ public class UserDTO {
 	private Boolean isdeleted = Boolean.FALSE;
 
 	private List<Comment> comment;
+	
+	private List<Address> address;
+	
 }

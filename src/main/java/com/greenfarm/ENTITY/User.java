@@ -69,7 +69,7 @@ public class User implements Serializable {
 
 //	@NotBlank(message = "Địa chỉ là bắt buộc")
 //	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
-	String address;
+	
 
 //	@NotNull(message = "Giới tính phải được chọn")
 	Boolean gender;
@@ -87,6 +87,10 @@ public class User implements Serializable {
 	private Boolean isdeleted = Boolean.FALSE;
 	// Boolean IsActive;
 
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	List<Address> address;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Booking> booking;
@@ -130,4 +134,14 @@ public class User implements Serializable {
 	public void setIsDeleted(boolean isdeleted) {
 		this.isdeleted = isdeleted;
 	}
+	
+	
+
+    public List<Address> getAddress() {
+        return address;
+    }
+
+    public void setAddress(List<Address> address) {
+        this.address = address;
+    }
 }

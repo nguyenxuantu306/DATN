@@ -1,27 +1,55 @@
 app.controller("user-ctrl", function($scope, $http) {
 	$scope.items = [];
+	$scope.address = [];
 	$scope.cates = [];
 	$scope.form = {};
 	$scope.field = [];
 	$scope.error = ['err'];
 	$scope.deletedItems = [];
 
-
+	//
+	//	$scope.initialize = function() {
+	//		// Load products
+	//		$http.get("/rest/users").then(resp => {
+	//			console.log("Server Response:", resp.data);
+	//			$scope.items = resp.data;
+	//			$scope.items.forEach(item => {
+	//				console.log("Address:", item.address);
+	//				
+	//				item.createddate = new Date(item.createddate);
+	//				item.birthday = new Date(item.birthday);
+	//
+	//			})
+	//		});
+	//
+	//		$http.get("/rest/users/deleted").then(resp => {
+	//			$scope.deletedItems = resp.data;
+	//		});
+	//
+	//	}
 	$scope.initialize = function() {
-		// Load products
+		// Load users
 		$http.get("/rest/users").then(resp => {
+			console.log("Server Response:", resp.data);
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
+				console.log("Addresses:", item.address);
+				// Convert date strings to Date objects
 				item.createddate = new Date(item.createddate);
 				item.birthday = new Date(item.birthday);
-			})
+
+				// Filter addresses where active is false
+				item.address = item.address.filter(address => !address.active);
+			});
 		});
 
+		// Load deleted users
 		$http.get("/rest/users/deleted").then(resp => {
 			$scope.deletedItems = resp.data;
 		});
+	};
 
-	}
+
 	// Khởi đầu
 	$scope.initialize();
 
@@ -68,8 +96,8 @@ app.controller("user-ctrl", function($scope, $http) {
 			image: 'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png'
 		}
 		$scope.frmvalidate.$setPristine();
-			$scope.frmvalidate.$setUntouched();
-			$scope.frmvalidate.$submitted = false;
+		$scope.frmvalidate.$setUntouched();
+		$scope.frmvalidate.$submitted = false;
 	}
 
 	// Thêm mới
@@ -135,53 +163,53 @@ app.controller("user-ctrl", function($scope, $http) {
 
 
 	$scope.restore = function(userid) {
-    // Show a confirmation dialog
-    Swal.fire({
-        title: 'Bạn có chắc chắn muốn khôi phục tài khoản?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Đồng ý',
-        cancelButtonText: 'Hủy bỏ',
-    }).then((result) => {
-        // Check if the user clicked "OK"
-        if (result.isConfirmed) {
-            try {
-                axios.put(`/rest/users/${userid}/restore`)
-                    .then(response => {
-                        // Xử lý phản hồi thành công
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Thành công!',
-                            text: 'Khôi phục tài khoản thành công!',
-                        }).then((result) => {
-                            // Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
-                            if (result.isConfirmed) {
-                                // Nếu đã bấm, thực hiện reload trang
-                                location.reload();
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        // Xử lý lỗi
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Lỗi!',
-                            text: 'Lỗi khôi phục tài khoản!',
-                        });
-                        console.log("Error", error);
-                    });
-            } catch (error) {
-                // Xử lý lỗi ngoại lệ
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi!',
-                    text: 'Lỗi khôi phục tài khoản',
-                });
-                console.log("Exception", error);
-            }
-        }
-    });
-};
+		// Show a confirmation dialog
+		Swal.fire({
+			title: 'Bạn có chắc chắn muốn khôi phục tài khoản?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Đồng ý',
+			cancelButtonText: 'Hủy bỏ',
+		}).then((result) => {
+			// Check if the user clicked "OK"
+			if (result.isConfirmed) {
+				try {
+					axios.put(`/rest/users/${userid}/restore`)
+						.then(response => {
+							// Xử lý phản hồi thành công
+							Swal.fire({
+								icon: 'success',
+								title: 'Thành công!',
+								text: 'Khôi phục tài khoản thành công!',
+							}).then((result) => {
+								// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+								if (result.isConfirmed) {
+									// Nếu đã bấm, thực hiện reload trang
+									location.reload();
+								}
+							});
+						})
+						.catch(error => {
+							// Xử lý lỗi
+							Swal.fire({
+								icon: 'error',
+								title: 'Lỗi!',
+								text: 'Lỗi khôi phục tài khoản!',
+							});
+							console.log("Error", error);
+						});
+				} catch (error) {
+					// Xử lý lỗi ngoại lệ
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi khôi phục tài khoản',
+					});
+					console.log("Exception", error);
+				}
+			}
+		});
+	};
 
 
 
