@@ -78,12 +78,21 @@
 									onclick="incQuantity()">+</button>
 							</div>
 
-							<button style="background-color: #7AB730"
-								class="add-to-cart-button"
+							<button th:if="${item.quantityavailable > 0}"
+								style="background-color: #7AB730" class="add-to-cart-button"
 								th:onclick="'addToCart(\'' + ${item.productid} + '\')'"
 								th:text="#{shopDetail.label.addToCart}">
 								<i class="fas fa-shopping-cart"></i> Add to Cart
 							</button>
+							<button th:if="${item.quantityavailable <= 0}"
+								style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;" class="add-to-cart-button">
+								<i class="fas fa-exclamation-circle"></i> Sản phẩm đã hết hàng
+							</button>
+							
+							<!-- <a th:if="${item.quantityavailable <= 0}"
+								style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
+								href="#"> <i class="fas fa-exclamation-circle"></i> Liên hệ
+							</a> -->
 						</div>
 						<div class="">
 							<h5>
@@ -217,15 +226,15 @@
 												id="textAreaExample" rows="4"></textarea>
 										</div>
 
-										<div  class="d-flex justify-content-between mt-3">
+										<div class="d-flex justify-content-between mt-3">
 											<button type="submit" class="btn btn-danger"
 												th:text="#{shopDetail.label.sendReviews}">
 												Gửi đánh giá <i id="review-button"
 													class="fas fa-long-arrow-alt-right ms-1"></i>
 											</button>
-											
+
 										</div>
-										
+
 									</form>
 
 								</div>
