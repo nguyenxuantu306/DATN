@@ -19,10 +19,8 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 	Optional<User> findByEmail(String email);
 	
 	// tìm kiếm keywword
-	@Query("SELECT u FROM User u WHERE LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.firstname) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.lastname) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.phonenumber) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.address) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+	@Query("SELECT u FROM User u WHERE LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.firstname) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.lastname) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.phonenumber) LIKE LOWER(CONCAT('%', :keyword, '%'))")
 	List<User> findByKeyword(@Param("keyword") String keyword);
-
-
 	
 	@Query("SELECT NEW Report(u, SUM(CASE WHEN so.name = 'Giao hàng thành công' THEN od.totalprice ELSE 0 END), COUNT(o)) "
 			+ "FROM User u " + "LEFT JOIN u.order o " + "LEFT JOIN o.orderDetail od " + "LEFT JOIN o.statusOrder so "
