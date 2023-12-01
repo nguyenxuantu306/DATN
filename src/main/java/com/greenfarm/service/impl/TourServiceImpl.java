@@ -131,4 +131,9 @@ public class TourServiceImpl implements TourService {
 		dao.deleteTourById(tourid);
     }
 
+	@Override
+	public List<Tour> findByKeyword(String keyword) {	
+		return dao.findByKeyword(keyword);
+	}
+
 }

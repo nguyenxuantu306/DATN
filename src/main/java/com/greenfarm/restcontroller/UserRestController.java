@@ -1,6 +1,7 @@
 package com.greenfarm.restcontroller;
 
 import java.util.List;
+
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.greenfarm.dto.AddressDTO;
 import com.greenfarm.dto.UserDTO;
+import com.greenfarm.entity.Address;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.UnkownIdentifierException;
@@ -40,16 +43,32 @@ public class UserRestController {
 	@Autowired
 	ModelMapper modelMapper;
 
-	@GetMapping()
+//	@GetMapping()
+//	public ResponseEntity<List<UserDTO>> getList() {
+//		List<User> users = userService.findAll();
+//
+//		// Sử dụng modelMapper để ánh xạ danh sách User sang danh sách UserDTO
+//		ModelMapper modelMapper = new ModelMapper();
+//		List<UserDTO> userDtos = users.stream().map(user -> modelMapper.map(user, UserDTO.class))
+//				.collect(Collectors.toList());
+//
+//		return ResponseEntity.ok(userDtos); // ResponseEntity.ok() tương đương HttpStatus.OK
+//	}
+	@GetMapping
 	public ResponseEntity<List<UserDTO>> getList() {
 		List<User> users = userService.findAll();
 
 		// Sử dụng modelMapper để ánh xạ danh sách User sang danh sách UserDTO
 		ModelMapper modelMapper = new ModelMapper();
-		List<UserDTO> userDtos = users.stream().map(user -> modelMapper.map(user, UserDTO.class))
-				.collect(Collectors.toList());
+		List<UserDTO> userDtos = users.stream().map(user -> {
+			UserDTO userDto = modelMapper.map(user, UserDTO.class);
+			// Lọc danh sách địa chỉ có active là FALSE
+			userDto.setAddress(
+					userDto.getAddress().stream().filter(address -> !address.getActive()).collect(Collectors.toList()));
+			return userDto;
+		}).collect(Collectors.toList());
 
-		return ResponseEntity.ok(userDtos); // ResponseEntity.ok() tương đương HttpStatus.OK
+		return ResponseEntity.ok(userDtos);
 	}
 
 	@GetMapping("{userid}")
@@ -70,19 +89,18 @@ public class UserRestController {
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
-	
 	@GetMapping("/deleted")
 	public ResponseEntity<List<UserDTO>> getDeletedList() {
-		List<User> deletedUser= userService.findAllDeletedUser();
+		List<User> deletedUser = userService.findAllDeletedUser();
 
 		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
-		List<UserDTO> UserDTOs = deletedUser.stream()
-				.map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+		List<UserDTO> UserDTOs = deletedUser.stream().map(user -> modelMapper.map(user, UserDTO.class))
+				.collect(Collectors.toList());
 
 		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(UserDTOs, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("email/{useremail}")
 	public ResponseEntity<UserDTO> getByemail(@PathVariable("useremail") String useremail)
 			throws UnkownIdentifierException {
@@ -115,7 +133,7 @@ public class UserRestController {
 		// Trả về UserDTO bằng ResponseEntity với mã trạng thái 201 Created
 		return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
 	}
-	
+
 	@PostMapping()
 	public ResponseEntity<UserDTO> create(@Valid @RequestBody User user) throws UserAlreadyExistException {
 		User createdUser = userService.create(user);
@@ -143,12 +161,11 @@ public class UserRestController {
 		}
 
 		UserDTO updatedUserDTO = modelMapper.map(updatedUser, UserDTO.class);
-		
+
 		// Trả về updatedUserDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(updatedUserDTO, HttpStatus.OK);
 	}
 
-	
 	@PutMapping("/{userid}/restore")
 	public ResponseEntity<String> restoreUser(@PathVariable("userid") Integer userid) {
 		// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu
@@ -166,6 +183,7 @@ public class UserRestController {
 
 		return new ResponseEntity<>("Khôi phục tài khoản thành công", HttpStatus.OK);
 	}
+
 	@DeleteMapping("{userid}")
 	public ResponseEntity<Void> delete(@PathVariable("userid") Integer userid) throws UnkownIdentifierException {
 
@@ -191,18 +209,36 @@ public class UserRestController {
 		return userService.findAll();
 	}
 
+	@GetMapping("/searchkeyworduser")
+	public ResponseEntity<List<UserDTO>> getList(@RequestParam(required = false) String keyword) {
+		List<User> users;
+
+		if (keyword != null && !keyword.isEmpty()) {
+			// Nếu có từ khóa, thực hiện tìm kiếm
+			users = userService.findByKeyword(keyword);
+		} else {
+			// Nếu không có từ khóa, lấy tất cả người dùng
+			users = userService.findAll();
+		}
+
+		List<UserDTO> userDtos = users.stream().map(user -> modelMapper.map(user, UserDTO.class))
+				.collect(Collectors.toList());
+
+		return ResponseEntity.ok(userDtos);
+	}
+
 	// Tổng tiền mua hàng của các user
 	@GetMapping("/total-purchase")
-    public ResponseEntity<List<Report>> getTotalPurchaseByUser() {
-        List<Report> totalPurchaseList = userService.getTotalPurchaseByUser();
-        return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
-    }
-	
-	//Tổng tiền đặt vé của các user
-		@GetMapping("/bookingtotal-purchase")
-	    public ResponseEntity<List<Report>> getBookingTotalPurchaseByUser() {
-	        List<Report> totalPurchaseList = userService.getBookingTotalPurchaseByUser();
-	        return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
-	    }
+	public ResponseEntity<List<Report>> getTotalPurchaseByUser() {
+		List<Report> totalPurchaseList = userService.getTotalPurchaseByUser();
+		return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
+	}
+
+	// Tổng tiền đặt vé của các user
+	@GetMapping("/bookingtotal-purchase")
+	public ResponseEntity<List<Report>> getBookingTotalPurchaseByUser() {
+		List<Report> totalPurchaseList = userService.getBookingTotalPurchaseByUser();
+		return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
+	}
 
 }

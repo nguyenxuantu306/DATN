@@ -89,12 +89,4 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 	        "ORDER BY DATE(o.orderdate) DESC")
 	List<Report7day> RevenueLast7Days();
 
-
-
-
-
-
-
-
-
 }

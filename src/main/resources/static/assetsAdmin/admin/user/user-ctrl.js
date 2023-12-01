@@ -1,64 +1,93 @@
 app.controller("user-ctrl", function($scope, $http) {
 	$scope.items = [];
+	$scope.address = [];
 	$scope.cates = [];
 	$scope.form = {};
 	$scope.field = [];
 	$scope.error = ['err'];
 	$scope.deletedItems = [];
 
-
+	//
+	//	$scope.initialize = function() {
+	//		// Load products
+	//		$http.get("/rest/users").then(resp => {
+	//			console.log("Server Response:", resp.data);
+	//			$scope.items = resp.data;
+	//			$scope.items.forEach(item => {
+	//				console.log("Address:", item.address);
+	//				
+	//				item.createddate = new Date(item.createddate);
+	//				item.birthday = new Date(item.birthday);
+	//
+	//			})
+	//		});
+	//
+	//		$http.get("/rest/users/deleted").then(resp => {
+	//			$scope.deletedItems = resp.data;
+	//		});
+	//
+	//	}
 	$scope.initialize = function() {
-		// Load products
+		// Load users
 		$http.get("/rest/users").then(resp => {
+			console.log("Server Response:", resp.data);
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
+				console.log("Addresses:", item.address);
+				// Convert date strings to Date objects
 				item.createddate = new Date(item.createddate);
 				item.birthday = new Date(item.birthday);
-			})
+
+				// Filter addresses where active is false
+				item.address = item.address.filter(address => !address.active);
+			});
 		});
 
+		// Load deleted users
 		$http.get("/rest/users/deleted").then(resp => {
 			$scope.deletedItems = resp.data;
 		});
+	};
 
-	}
+
 	// Khởi đầu
 	$scope.initialize();
 
 
 
-	$scope.checkDate = function() {
-        $scope.form.isDateBeforeCreatedate = $scope.isDateBeforeCreatedate();
-    };
+	$scope.isDateInFuture = function() {
+		if ($scope.form.createddate) {
+			var selectedDate = new Date($scope.form.createddate);
+			var today = new Date();
+			return selectedDate > today;
+		}
+		return false;
+	};
 
-    $scope.isFutureDate = function() {
-        // Lấy ngày hiện tại
-        var currentDate = new Date();
+	$scope.today = new Date(); // Để lấy ngày hiện tại và truyền vào max
 
-        // Lấy ngày tạo từ form
-        var createdDate = new Date($scope.form.createddate);
-        
-        // So sánh ngày tạo với ngày hiện tại
-        return createdDate > currentDate;
-            
-    };
 
-	// validation ngày sinh
+
+	$scope.isFutureDate1 = function() {
+		if ($scope.form.birthday) {
+			var selectedDate = new Date($scope.form.birthday);
+			var today = new Date();
+			return selectedDate > today;
+		}
+		return false;
+	};
+
 	$scope.checkDate1 = function() {
-        $scope.form.isDateBeforeCreatedate1 = $scope.isDateBeforeCreatedate1();
-    };
+		if ($scope.isFutureDate1()) {
+			// Hiển thị cảnh báo khi người dùng chọn ngày sinh trong tương lai
+			$scope.futureDateWarning1 = true;
+		} else {
+			// Ẩn cảnh báo khi ngày hợp lệ
+			$scope.futureDateWarning1 = false;
+		}
+	};
 
-    $scope.isFutureDate1 = function() {
-        // Lấy ngày hiện tại
-        var currentDate = new Date();
-
-        // Lấy ngày tạo từ form
-        var createdDate = new Date($scope.form.birthday);
-        
-        // So sánh ngày tạo với ngày hiện tại
-        return createdDate > currentDate;
-            
-    };
+	$scope.today = new Date(); // Để lấy ngày hiện tại và truyền vào max
 
 
 	$scope.isEdit = false; // Mặc định không ở chế độ edit
@@ -67,7 +96,7 @@ app.controller("user-ctrl", function($scope, $http) {
 		$scope.form = {
 			createddate: new Date(),
 			birthday: new Date(),
-			image: 'cloud-upload.jpg',
+			image: 'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png',
 			gender: true,
 			password: '' // Trường password sẽ được đặt về rỗng khi tạo mới
 		};
@@ -87,8 +116,8 @@ app.controller("user-ctrl", function($scope, $http) {
 			image: 'https://cdn.pixabay.com/photo/2017/01/18/17/39/cloud-computing-1990405_1280.png'
 		}
 		$scope.frmvalidate.$setPristine();
-			$scope.frmvalidate.$setUntouched();
-			$scope.frmvalidate.$submitted = false;
+		$scope.frmvalidate.$setUntouched();
+		$scope.frmvalidate.$submitted = false;
 	}
 
 	// Thêm mới
@@ -154,53 +183,53 @@ app.controller("user-ctrl", function($scope, $http) {
 
 
 	$scope.restore = function(userid) {
-    // Show a confirmation dialog
-    Swal.fire({
-        title: 'Bạn có chắc chắn muốn khôi phục tài khoản?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Đồng ý',
-        cancelButtonText: 'Hủy bỏ',
-    }).then((result) => {
-        // Check if the user clicked "OK"
-        if (result.isConfirmed) {
-            try {
-                axios.put(`/rest/users/${userid}/restore`)
-                    .then(response => {
-                        // Xử lý phản hồi thành công
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Thành công!',
-                            text: 'Khôi phục tài khoản thành công!',
-                        }).then((result) => {
-                            // Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
-                            if (result.isConfirmed) {
-                                // Nếu đã bấm, thực hiện reload trang
-                                location.reload();
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        // Xử lý lỗi
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Lỗi!',
-                            text: 'Lỗi khôi phục tài khoản!',
-                        });
-                        console.log("Error", error);
-                    });
-            } catch (error) {
-                // Xử lý lỗi ngoại lệ
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi!',
-                    text: 'Lỗi khôi phục tài khoản',
-                });
-                console.log("Exception", error);
-            }
-        }
-    });
-};
+		// Show a confirmation dialog
+		Swal.fire({
+			title: 'Bạn có chắc chắn muốn khôi phục tài khoản?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Đồng ý',
+			cancelButtonText: 'Hủy bỏ',
+		}).then((result) => {
+			// Check if the user clicked "OK"
+			if (result.isConfirmed) {
+				try {
+					axios.put(`/rest/users/${userid}/restore`)
+						.then(response => {
+							// Xử lý phản hồi thành công
+							Swal.fire({
+								icon: 'success',
+								title: 'Thành công!',
+								text: 'Khôi phục tài khoản thành công!',
+							}).then((result) => {
+								// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+								if (result.isConfirmed) {
+									// Nếu đã bấm, thực hiện reload trang
+									location.reload();
+								}
+							});
+						})
+						.catch(error => {
+							// Xử lý lỗi
+							Swal.fire({
+								icon: 'error',
+								title: 'Lỗi!',
+								text: 'Lỗi khôi phục tài khoản!',
+							});
+							console.log("Error", error);
+						});
+				} catch (error) {
+					// Xử lý lỗi ngoại lệ
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi khôi phục tài khoản',
+					});
+					console.log("Exception", error);
+				}
+			}
+		});
+	};
 
 
 
@@ -247,34 +276,58 @@ app.controller("user-ctrl", function($scope, $http) {
 
 
 	$scope.pager = {
-		page: 0,
-		size: 5,
-		get items() {
-			var start = this.page * this.size;
-			return $scope.items.slice(start, start + this.size);
-		},
-		get count() {
-			return Math.ceil(1.0 * $scope.items.length / this.size);
-		},
-		first() {
-			this.page = 0;
-		},
-		prev() {
-			this.page--;
-			if (this.page < 0) {
-				this.last();
-			}
-		},
-		next() {
-			this.page++;
-			if (this.page > this.count) {
-				this.first();
-			}
-		},
-		last() {
-			this.page = this.count - 1;
-		}
-	}
+    page: 0,
+    size: 10,
+    get items() {
+        var start = this.page * this.size;
+        return $scope.items ? $scope.items.slice(start, start + this.size) : [];
+    },
+    get count() {
+        return Math.ceil(1.0 * ($scope.items ? $scope.items.length : 0) / this.size);
+    },
+    first() {
+        this.page = 0;
+    },
+    prev() {
+        this.page--;
+        if (this.page < 0) {
+            this.last();
+        }
+    },
+    next() {
+        this.page++;
+        if (this.page >= this.count) {
+            this.first();
+        }
+    },
+    last() {
+        this.page = this.count - 1;
+    }
+};
+
+	
+	
+	$scope.loadData = function () {
+    var apiUrl = '/rest/users/searchkeyworduser';
+
+    // Kiểm tra xem có từ khóa tìm kiếm không
+    if ($scope.searchText) {
+        apiUrl += '?keyword=' + $scope.searchText;
+    }
+
+    $http.get(apiUrl)
+        .then(function (response) {
+            // Cập nhật dữ liệu trong scope
+            $scope.items = response.data; // Cập nhật items để phản ánh dữ liệu mới
+            $scope.pager.page = 0; // Đặt lại trang về 0 khi có dữ liệu mới
+        })
+        .catch(function (error) {
+            console.error('Lỗi khi tải dữ liệu:', error);
+        });
+};
+
+
+   
 
 
 	// Trong AngularJS controller hoặc service

@@ -14,11 +14,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Report implements Serializable {
+public class ReportSP implements Serializable {
 	private static final long serialVersionUID = -5885342208000278840L;
 	@Id
 	Serializable group;
 	Double sum;
-	Long count;
+	Double count;
 	
 }
