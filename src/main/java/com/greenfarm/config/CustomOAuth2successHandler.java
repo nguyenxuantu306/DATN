@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -44,11 +45,15 @@ public class CustomOAuth2successHandler implements AuthenticationSuccessHandler 
 			Authentication authentication) throws IOException, ServletException {
 		
 		OAuth2User login = (OAuth2User) authentication.getPrincipal();
-		
+		System.out.println(login);
 		System.out.println("CustomOAuth2UserService invoked");
+		OAuth2AuthenticationToken oauth2 = (OAuth2AuthenticationToken) authentication.getPrincipal();
+		System.out.println("day la xem facebook co gi"+oauth2);
 		// Lấy thông tin từ oauth2User
 	    String email = login.getAttribute("email");
 	    System.out.println(email);
+	    String provider = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
+	       
 	    // Kiểm tra xem người dùng đã tồn tại trong cơ sở dữ liệu chưa
 	 //   User user2 = userService.findByEmailAndProvider(email, Provider.GOOGLE); // Thay Provider.GOOGLE bằng giá trị tương ứng
 	    try {
@@ -102,11 +107,17 @@ public class CustomOAuth2successHandler implements AuthenticationSuccessHandler 
 					} catch (Exception e) {
 						// TODO: handle exception
 						e.printStackTrace();
+						authentication.setAuthenticated(false);
+
+			            // Xóa thông tin đăng nhập
+			            SecurityContextHolder.getContext().setAuthentication(null);
+			       
 						response.sendRedirect("/login");
 					}
 		    		
 					
 				}else {
+					System.out.println(login);
 					System.out.println(" chua co taikhoan");
 					
 					// Thêm thông tin cần chuyển đi vào RedirectAttributes
@@ -118,6 +129,11 @@ public class CustomOAuth2successHandler implements AuthenticationSuccessHandler 
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			authentication.setAuthenticated(false);
+
+            // Xóa thông tin đăng nhập
+            SecurityContextHolder.getContext().setAuthentication(null);
+       
 		}	
 	    
 	   

@@ -29,6 +29,8 @@ public interface UserService {
 
 	// Security
 	User findByEmail(String email);
+	
+	User findByPhonenumber(String Phonenumber);
 
 	public List<User> getAdministrators();
 

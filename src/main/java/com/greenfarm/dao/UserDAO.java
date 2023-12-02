@@ -18,6 +18,9 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 
 	Optional<User> findByEmail(String email);
 	
+	Optional<User> findByPhonenumber(String phonenumber);
+	
+	
 	// tìm kiếm keywword
 	@Query("SELECT u FROM User u WHERE LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.firstname) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.lastname) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.phonenumber) LIKE LOWER(CONCAT('%', :keyword, '%'))")
 	List<User> findByKeyword(@Param("keyword") String keyword);

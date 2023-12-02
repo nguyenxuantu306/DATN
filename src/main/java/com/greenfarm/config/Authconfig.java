@@ -64,7 +64,7 @@ public class Authconfig {
 	private CustomAuthSucessHandler authSucessHandler;
 	
 	@Autowired
-	CustomOAuth2successHandler auth2successHandler;
+	CustomLoginOAuth2successHandler customLoginOAuth2successHandler;
 
 	
 	@Value("${spring.security.oauth2.client.registration.client-id}")
@@ -124,98 +124,24 @@ public class Authconfig {
 		.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logoff")).permitAll())
 		.oauth2Login(oauth2Login ->
         oauth2Login
-        	.loginPage("/login")
-            .userInfoEndpoint()
-                    .userService(oauthUserService)
-                    .and()
-                    .successHandler(auth2successHandler)
+        	.loginPage("/auth/login/form")
+        	.successHandler(customLoginOAuth2successHandler)
+        	//.defaultSuccessUrl("/oauth2/login/success",true)
+        	.failureUrl("/auth/login/error")
+        	.authorizationEndpoint().baseUri("/oauth2/authorization")
+//            .userInfoEndpoint()
+//                    .userService(oauthUserService)
+//                    .and()
+//                    .successHandler(auth2successHandler)
                   //  .failureHandler((request, response, exception) -> );
                     
             
     );
-//		.oauth2Login()
-//		.loginPage("/login")
-//		
-//		.userInfoEndpoint()
-//		.userService(oauthUserService)
-//		.and()
-//		.successHandler(
-//				new AuthenticationSuccessHandler() {
-//					
-//					@Override
-//					public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-//							Authentication authentication) throws IOException, ServletException {
-//						// TODO Auto-generated method stub
-//					
-//						    // Nếu bạn muốn lấy ra đối tượng User (nếu đã chuyển đổi)
-//						    Object principal = authentication.getPrincipal();
-//						    System.out.println("lấy auth");
-//						    System.out.println("thogn tin"+principal.toString());
-//						    System.out.println(principal instanceof CustomOAuth2User?true:false);
-//						    if (principal instanceof CustomOAuth2User) {
-//						    	System.out.println("trong if");
-//						       // CustomOAuth2User customOAuth2User = (CustomOAuth2User) principal;
-//						    	CustomOAuth2User oauth2User = (CustomOAuth2User) principal;
-//						    	String email = oauth2User.getAttribute("email");
-//						    	System.out.println(email);
-//						    	userService.processOAuthPostLogin(email);
-//						    	System.out.println("laod");
-//						    	
-//						    	System.out.println("load ok");
-//						    	response.sendRedirect("/");
-//						    //	String userEmail = customOAuth2User.getEmail();
-//						      // System.out.println("us email:"+userEmail);
-//						        
-//						        // Thực hiện các xử lý khác với đối tượng CustomOAuth2User
-//						    }
-//						}
-//						
-//					}
-//				
-//)
-//		
-//		;
 		
 		return http.build();
 	}
 	
 
-//	@Autowired
-//	private DefaultOAuth2UserService oauthUserService;
-	
-//	@Configuration
-//	public class OAuth2LoginConfig {
-//
-//		@Bean
-//		public ClientRegistrationRepository clientRegistrationRepository() {
-//			return new InMemoryClientRegistrationRepository(this.googleClientRegistration());
-//		}
-
-//		private ClientRegistration googleClientRegistration() {
-//			return ClientRegistration.withRegistrationId("google")
-//				.clientId("google-client-id")
-//				.clientSecret("google-client-secret")
-//				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-//				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-//				.redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
-//				.scope("openid", "profile", "email", "address", "phone")
-//				.authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
-//				.tokenUri("https://www.googleapis.com/oauth2/v4/token")
-//				.userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
-//				.userNameAttributeName(IdTokenClaimNames.SUB)
-//				.jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
-//				.clientName("Google")
-//				.build();
-//		}
-//	}
-//	
-
-
-//	@Bean
-//	public OAuth2AuthorizedClientService authorizedClientService(
-//			ClientRegistrationRepository clientRegistrationRepository) {
-//		return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository);
-//	}
 	
 	@Bean
 	public OAuth2AuthorizedClientService authorizedClientService(

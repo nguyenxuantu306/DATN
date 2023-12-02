@@ -27,6 +27,8 @@
 									class="form-control" placeholder="Tên đầu" required> <label
 									for="firstname">Tên đầu</label> 
 									<i class="text-danger" th:errors="*{firstname}"></i>
+									<div th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="text-danger invalid-feedback"></div>
+							
 							</div>
 
 							<div class="mb-4 form-floating">
@@ -34,6 +36,8 @@
 									class="form-control" placeholder="Tên đầu" required> <label
 									for="lastname">Tên cuối</label> 
 									<i class="text-danger" th:errors="*{lastname}"></i>
+										<div th:errors="*{lastname}" class="text-danger invalid-feedback"></div>
+					
 							</div>
 							<div class="mb-4 form-floating">
 								<input name="email" type="email" th:field="*{email}"
@@ -41,6 +45,8 @@
 									placeholder="name@example.com" required> <label
 									for="Email">Email</label> 
 									<i class="text-danger" th:errors="*{email}"></i>
+									<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger invalid-feedback"></div>
+							
 							</div>
 							<div class="mb-4 form-floating">
 								<input name="phonenumber" type="number"
@@ -48,16 +54,10 @@
 									placeholder="Tên đầu" required> <label
 									for="phonenumber">Số điện thoại</label> 
 									<i class="text-danger" th:errors="*{phonenumber}"></i>
+											<div th:if="${#fields.hasErrors('phonenumber')}" th:errors="*{phonenumber}" class="text-danger invalid-feedback"></div>
+							
 							</div>
-							<hr>
-							<div style="display: none" class="mb-4 form-floating">
-								<input name="image" type="url"
-								
-									th:field="*{image}" class="form-control"
-									placeholder="Tên đầu" required> <label
-									for="phonenumber">Ảnh</label> 
-									<i class="text-danger" th:errors="*{image}"></i>
-							</div>
+							
 							
 
 							<button style="font-size: 20px" type="submit"

@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -133,7 +134,12 @@ public class RegisterController {
 			// Nếu mật khẩu và xác nhận mật khẩu không khớp, thêm lỗi vào BindingResult.
 			System.out.println("repass");
 			bindingResult.rejectValue("repeatpassword", "error.userDTO", "Mật khẩu và xác nhận mật khẩu không khớp");
-		} else {
+		} else if (userservice.findByPhonenumber(userInfo.getPhonenumber()) != null) {
+			System.out.println("phonenumber");
+			bindingResult.rejectValue("phonenumber", "error.userDTO", "so dien thoai da ton tai");
+		}
+		
+		else {
 			// Nếu không có lỗi, tiếp tục xử lý đăng ký tài khoản.
 			// đăng ký
 			try {
@@ -190,11 +196,11 @@ public class RegisterController {
 				RegisteroauthDTO dto = new RegisteroauthDTO();
 				// OAuth2User auth2User = (OAuth2User) authentication.getPrincipal();
 				System.out.println(auth2User);
-				dto.setFirstname(auth2User.getAttribute("given_name"));
+				dto.setFirstname(auth2User.getAttribute("name"));
 				dto.setLastname(auth2User.getAttribute("family_name"));
 				dto.setEmail(auth2User.getAttribute("email"));
-				dto.setPassword(auth2User.getAttribute("nonce"));
-				dto.setImage(auth2User.getAttribute("picture"));
+				//dto.setPassword(auth2User.getAttribute("nonce"));
+				
 				dto.setPhonenumber(null);
 				model.addAttribute("userinfo", dto);
 				return "registeroauth";
@@ -209,10 +215,32 @@ public class RegisterController {
 		}
 
 	}
-
+//@ModelAttribute("userinfo") @Valid RegisterDTO userInfo,
+	
 	@PostMapping("/completelogin")
-	public String completelogin(Model model, @ModelAttribute("userinfo") RegisteroauthDTO userInfo,
+	public String completelogin(Model model, @ModelAttribute("userinfo") @Valid RegisteroauthDTO userInfo,BindingResult bindingResult,
 			Authentication authentication) {
+		if (bindingResult.hasErrors()) {
+			// Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
+			model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
+			
+			return "registeroauth";
+		}else if (userservice.findByEmail(userInfo.getEmail()) != null) {
+			
+			bindingResult.rejectValue("email", "error.userDTO", "Đã có tài khoản sử dụng email này");
+			return "registeroauth";
+		}
+		
+		else if (userservice.findByPhonenumber(userInfo.getPhonenumber()) != null) {
+			System.out.println("phonenumber");
+			bindingResult.rejectValue("phonenumber", "error.userDTO", "so dien thoai da ton tai");
+			return "registeroauth";
+		}
+		else {
+			
+		
+		 String provider = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
+	      
 		try {
 			// User user = Usermapper.INSTANCE.fromDto(userInfo);
 			if (authentication.getPrincipal() instanceof OAuth2User) {
@@ -221,12 +249,21 @@ public class RegisterController {
 				user.setFirstname(userInfo.getFirstname());
 				user.setLastname(userInfo.getLastname());
 				user.setEmail(userInfo.getEmail());
-
 				user.setPhonenumber(userInfo.getPhonenumber());
 
-				user.setPassword(auth2User.getAttribute("nonce"));
-				user.setImage(userInfo.getImage());
-				user.setProvider(Provider.GOOGLE);
+				
+				
+				 
+				if (provider.equals("google")) {
+					user.setPassword(auth2User.getAttribute("nonce"));
+					user.setProvider(Provider.GOOGLE);
+				}
+			 else if (provider.equals("facebook")) {
+				 user.setPassword("123456aS");
+				 user.setProvider(Provider.FACEBOOK);
+				}
+				
+				
 				user.setAccountVerified(true);
 
 				// user.setUserRole();
@@ -273,6 +310,7 @@ public class RegisterController {
 			System.out.println("lôi");
 			model.addAttribute("registrationForm", userInfo);
 			return "registeroauth";
+		}
 		}
 
 	}

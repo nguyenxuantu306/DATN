@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.greenfarm.config.CustomOAuth2successHandler;
 import com.greenfarm.dao.UserDAO;
 import com.greenfarm.dto.RegisterDTO;
 import com.greenfarm.entity.Passworddata;
@@ -33,11 +34,16 @@ import com.greenfarm.exception.UnkownIdentifierException;
 import com.greenfarm.exception.UserAlreadyExistException;
 import com.greenfarm.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller
 public class SecurityController {
 
+	@Autowired
+	CustomOAuth2successHandler auth2successHandler;
+	
 	@Autowired
 	PasswordEncoder passwordE;
 
@@ -133,10 +139,10 @@ public class SecurityController {
 	//
 
 	//
-	@RequestMapping("/oauth2/login/form")
-	public String fbform() {
-		return "security/login";
-	}
+//	@RequestMapping("/oauth2/login/form")
+//	public String fbform1() {
+//		return "security/login";
+//	}
 
 	@RequestMapping("/oauth2/login/error")
 	public String fber() {
@@ -144,11 +150,26 @@ public class SecurityController {
 	}
 
 	@RequestMapping("/oauth2/login/success")
-	public String fbsuccess(OAuth2AuthenticationToken oauth2) {
-		userService.loginFormOAuth2(oauth2);
-		return "redirect:/";
+	public String fbsuccess(OAuth2AuthenticationToken oauth2,Authentication authentication) {
+		System.out.println("day la thong tin oauth2 "+oauth2);
+		
+	    if (authentication != null) {
+	        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+	        String provider = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
+	        // provider là tên đăng ký của nhà cung cấp OAuth2 (ví dụ: "google", "facebook")
+	        return "Logged in via " + provider ;
+	    } else {
+	        return "Not logged in or unknown authentication provider";
+	    }
+//	userService.loginFormOAuth2(oauth2);
+	//	return "redirect:/";
 	}
-
+//login/oauth2/authorization/facebook
+	@RequestMapping("/oauth2/authorization/facebook")
+	public String fbform() {
+		return "security/login";
+	}
+	
 	@RequestMapping("/login/oauth2/code/google")
 	public String ggform() {
 		return "security/login";

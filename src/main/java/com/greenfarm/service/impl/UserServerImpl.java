@@ -456,4 +456,16 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		return dao.findByKeyword(keyword);
 	}
 
+	@Override
+	public User findByPhonenumber(String Phonenumber) {
+		// TODO Auto-generated method stub
+		Optional<User> user = dao.findByPhonenumber(Phonenumber);
+		if (user.isPresent()) {
+			return user.get();
+		} else {
+
+			return null;
+		}
+	}
+
 }

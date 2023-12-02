@@ -28,6 +28,6 @@ public class RegisteroauthDTO {
 	@Pattern(regexp = "^\\d{10}$", message = "Số điện thoại phải chứa đúng 10 chữ số")
 	private String phonenumber;
 	
-	private String image;
+	
 	private Date createddate;
 }
