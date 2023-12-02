@@ -79,7 +79,7 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	}
 	
 	$scope.editrecm = function(item) {
-		$scope.form.recommenttext = angular.copy(item);	
+		$scope.form.recommenttext = angular.copy(item.recommenttext);	
 	}
 	
 	$scope.reset = function() {
@@ -184,7 +184,7 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 		$http.delete(`/rest/comment/${item.commentid}`).then(resp => {
 			var index = $scope.items.findIndex(p => p.commentid == item.commentid);
 			$scope.items.splice(index, 1);
-			//$scope.reset();
+			$scope.reset();
 			// Sử dụng SweetAlert2 cho thông báo thành công
 			Swal.fire({
 				icon: 'success',
@@ -268,12 +268,13 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 	};
 
 // Cập nhật comment tour
-	$scope.updaterecm = function() {
+	$scope.updaterecm = function(item) {
 		var item = angular.copy($scope.form);
+		console.log("item.recommentid:"+item.recommentid );
 		if (item.recommentid == null) {
-			return $scope.create();
-		} else if (item.commentid != null) {
-			$http.put(`/rest/comment/${item.recommentid}`, item).then(resp => {
+			return $scope.createrecomment();
+		} else if (item.recommentid != null) {
+			$http.put(`/rest/recomment/${item.recommentid}`, item).then(resp => {
 				var index = $scope.items.findIndex(recm => recm.recommentid == item.recommentid);
 				$scope.items[index] = item;
 				$scope.reset();
@@ -302,7 +303,7 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 		$http.delete(`/rest/recomment/${item.recommentid}`).then(resp => {
 			var index = $scope.items.findIndex(recm => recm.recommentid == item.recommentid);
 			$scope.items.splice(index, 1);
-			//$scope.reset();
+			$scope.reset();
 			// Sử dụng SweetAlert2 cho thông báo thành công
 			Swal.fire({
 				icon: 'success',
