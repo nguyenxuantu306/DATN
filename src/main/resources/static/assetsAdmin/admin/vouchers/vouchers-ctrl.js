@@ -16,53 +16,132 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 				item.expirationdate = new Date(item.expirationdate)
 			})
 		});
+		
+		$http.get("/rest/vouchers/user").then(resp => {
+			$scope.items2 = resp.data;
+		});
 	}
 
 	// Khởi đầu
 	$scope.initialize();
 
-	$scope.delete = function(item) {
-    // Hiển thị cửa sổ xác nhận trước khi xóa
-    Swal.fire({
-        title: 'Xác nhận xóa',
-        text: 'Bạn có chắc chắn muốn xóa bình luận này?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Đồng ý',
-        cancelButtonText: 'Hủy bỏ'
-    }).then((result) => {
-        // Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
-        if (result.isConfirmed) {
-            // Nếu đã bấm "Đồng ý", thực hiện xóa
-            $http.delete(`/rest/comment/${item.commentid}`).then(resp => {
-                var index = $scope.items.findIndex(p => p.commentid == item.commentid);
-                $scope.items.splice(index, 1);
 
-                // Hiển thị thông báo thành công
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Thành công!',
-                    text: 'Xóa bình luận thành công!',
-                });
-            }).catch(error => {
-                // Hiển thị thông báo lỗi
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi!',
-                    text: 'Lỗi xóa bình luận!',
-                });
-                console.log("Error", error);
-            });
-        }
-    });
-};
-
-
-	$scope.gotoComment = function(item) {
-		console.log(item.commentid);
-		var url = '/tour/detail/' + item.tour.tourid + '#comment-' + item.commentid;
-		$window.open(url, '_blank');
+	// Xóa form
+	$scope.reset = function() {
+		/*$scope.error = ['err'];*/
+		$scope.form = {
+			publication_date: new Date(),
+			image: 'cloud-upload.jpg',
+			available: true
+		};
+		$('#id').attr('readonly', false);
 	}
+
+	// Hiện thị lên form
+	$scope.edit = function(item) {
+		$scope.form = angular.copy(item);
+	}
+
+	// Thêm loại sản phẩm mới
+	$scope.create = function() {
+		var item = angular.copy($scope.form);
+		$http.post(`/rest/vouchers`, item).then(resp => {
+			resp.data.expirationdate = new Date(resp.data.expirationdate)
+			$scope.items.push(resp.data);
+			$scope.reset();
+			// Sử dụng SweetAlert2 cho thông báo thành công
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Thêm mã giảm giá thành công!',
+			});
+			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+			$scope.frmvalidate.$setPristine();
+			$scope.frmvalidate.$setUntouched();
+			$scope.frmvalidate.$submitted = false;
+		}).catch(error => {
+			// Sử dụng SweetAlert2 cho thông báo lỗi
+			Swal.fire({
+				icon: 'error',
+				title: 'Lỗi!',
+				text: 'Lỗi thêm mã giảm giá sản phẩm',
+			});
+			console.log("Error", error);
+		});
+	}
+	
+	// cập loại nhật sản phẩm
+	$scope.update = function() {
+		var item = angular.copy($scope.form);
+		$http.put(`/rest/vouchers/${item.voucherid}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.voucherid == item.voucherid);
+			$scope.items[index] = item;
+			// Sử dụng SweetAlert2 cho thông báo thành công
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Cập nhật mã thành công!',
+			});
+			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+			$scope.frmvalidateupdate.$setPristine();
+			$scope.frmvalidateupdate.$setUntouched();
+			$scope.frmvalidateupdate.$submitted = false;
+			$scope.edit(item);
+		})
+			.catch(error => {
+				// Sử dụng SweetAlert2 cho thông báo lỗi
+				Swal.fire({
+					icon: 'error',
+					title: 'Lỗi!',
+					text: 'Lỗi Cập nhật mã',
+				});
+				console.log("Error", error);
+			});
+	}
+
+	$scope.delete = function(item) {
+		// Hiển thị cửa sổ xác nhận trước khi xóa
+		Swal.fire({
+			title: 'Xác nhận xóa',
+			text: 'Bạn có chắc chắn muốn xóa danh mục này?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Đồng ý',
+			cancelButtonText: 'Hủy bỏ'
+		}).then((result) => {
+			// Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
+			if (result.isConfirmed) {
+				// Nếu đã bấm "Đồng ý", thực hiện xóa
+				$http.delete(`/rest/vouchers/${item.voucherid}`).then(resp => {
+					var index = $scope.items.findIndex(p => p.voucherid == item.voucherid);
+					$scope.items.splice(index, 1);
+					$scope.reset();
+
+					// Sử dụng SweetAlert2 cho thông báo thành công
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công!',
+						text: 'Xóa mã thành công!',
+					}).then((result) => {
+						// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+						if (result.isConfirmed) {
+							// Nếu đã bấm, thực hiện reload trang
+							location.reload();
+						}
+					});
+
+				}).catch(error => {
+					// Sử dụng SweetAlert2 cho thông báo lỗi
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi mã giảm giá',
+					});
+					console.log("Error", error);
+				});
+			}
+		});
+	};
 	
 	// tìm kiếm
 	$scope.loadData = function() {
@@ -93,6 +172,35 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 		},
 		get count() {
 			return Math.ceil(1.0 * ($scope.items ? $scope.items.length : 0) / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+	};
+	$scope.pager1 = {
+		page: 0,
+		size: 10,
+		get items2() {
+			var start = this.page * this.size;
+			return $scope.items2 ? $scope.items2.slice(start, start + this.size) : [];
+		},
+		get count() {
+			return Math.ceil(1.0 * ($scope.items2 ? $scope.items2.length : 0) / this.size);
 		},
 		first() {
 			this.page = 0;
