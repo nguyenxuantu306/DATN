@@ -82,7 +82,7 @@
             class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5"
           >
             <a href="/" class="navbar-brand">
-              <img src="/assets/images/logo.png" style="width: 200px">
+              <img src="/assets/images/logo.png" style="width: 150px">
             </a>
             <button
               type="button"
@@ -129,9 +129,14 @@
                 >
                 <a
                   class="nav-item nav-link data-toggle"
+                  href="booking/bookingtour"
+                  >ĐẶT TOUR</a
+                >
+                 <a
+                  class="nav-item nav-link data-toggle"
                   href="/cart"
                   th:text="#{header.label.cart}"
-                  >Cart</a
+                  >Cart</a 
                 >
                 <div sec:authorize="isAnonymous()">
                   <a
@@ -143,11 +148,11 @@
                 </div>
                 <div sec:authorize="isAuthenticated()">
                   <a th:href="@{/profile}" class="rounded-circle">
-                    <img
+                   <!--  <img
                       src="https://i.pinimg.com/1200x/89/90/48/899048ab0cc455154006fdb9676964b3.jpg"
                       style="padding: 15px; width: 85px"
                       alt="Avatar"
-                    />
+                    /> -->Profile
                   </a>
                 </div>
               </div>
