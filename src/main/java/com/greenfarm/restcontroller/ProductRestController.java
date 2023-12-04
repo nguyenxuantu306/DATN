@@ -20,17 +20,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.dto.ProductImageDTO;
-import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.ProductImage;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportSP;
-import com.greenfarm.entity.Tour;
-import com.greenfarm.entity.User;
 import com.greenfarm.service.ProductService;
 import com.greenfarm.utils.Log;
 
@@ -44,6 +40,7 @@ public class ProductRestController {
 	@Autowired
 	ModelMapper modelMapper;
 
+	// Lấy ra toàn bộ danh sách sản phẩm
 	@GetMapping()
 	public ResponseEntity<List<ProductDTO>> getList() {
 		try {
@@ -65,6 +62,7 @@ public class ProductRestController {
 		}
 	}
 
+	// Lấy ra danh sách đã xóa
 	@GetMapping("/deleted")
 	public ResponseEntity<List<ProductDTO>> getDeletedList() {
 		try {
@@ -100,33 +98,39 @@ public class ProductRestController {
 		return new ResponseEntity<>(productDTO, HttpStatus.OK);
 	}
 
+	// Thêm sản phẩm
 	@PostMapping()
 	public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO productDTO) {
-		// Create Product object
-		Product product = modelMapper.map(productDTO, Product.class);
+		try {
+			Log.info("Nhận yêu cầu tạo sản phẩm mới");
+			
+			Product product = modelMapper.map(productDTO, Product.class);
 
-		// Create ProductImage objects and associate them with the product
-		List<ProductImage> productImages = new ArrayList<>();
-		if (productDTO.getProductimage() != null) {
-			for (ProductImageDTO productImageDTO : productDTO.getProductimage()) {
-				ProductImage productImage = new ProductImage();
-				productImage.setImageurl(productImageDTO.getImageurl());
-				productImage.setProduct(product);
-				productImages.add(productImage);
+			// Tạo đối tượng ProductImage và liên kết chúng với sản phẩm
+			List<ProductImage> productImages = new ArrayList<>();
+			if (productDTO.getProductimage() != null) {
+				for (ProductImageDTO productImageDTO : productDTO.getProductimage()) {
+					ProductImage productImage = new ProductImage();
+					productImage.setImageurl(productImageDTO.getImageurl());
+					productImage.setProduct(product);
+					productImages.add(productImage);
+				}
 			}
+			product.setProductimage(productImages);
+
+			Product createdProduct = productService.create(product);
+
+			ProductDTO createdProductDTO = modelMapper.map(createdProduct, ProductDTO.class);
+
+			Log.info("Sản phẩm mới với ID {} đã được tạo thành công", createdProductDTO.getProductid());
+			return new ResponseEntity<>(createdProductDTO, HttpStatus.CREATED);
+		} catch (Exception e) {
+			Log.error("Đã xảy ra lỗi khi tạo sản phẩm", e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		// Set the list of images in the product
-		product.setProductimage(productImages);
-
-		// Save product and associated images
-		Product createdProduct = productService.create(product);
-
-		// Map to DTO and return
-		ProductDTO createdProductDTO = modelMapper.map(createdProduct, ProductDTO.class);
-		return new ResponseEntity<>(createdProductDTO, HttpStatus.CREATED);
 	}
 
+	// Cập nhật sản phẩm
 	@PutMapping("{productid}")
 	public ResponseEntity<ProductDTO> update(@PathVariable("productid") Integer productid,
 			@RequestBody Product product) {
@@ -154,22 +158,32 @@ public class ProductRestController {
 		}
 	}
 
+	// Khôi phục sản phẩm
 	@PutMapping("/{productid}/restore")
 	public ResponseEntity<String> restoreProduct(@PathVariable("productid") Integer productid) {
-		// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu
-		Product product = productService.findById(productid);
+		try {
+			Log.info("Nhận yêu cầu khôi phục sản phẩm với ID: {}", productid);
 
-		if (product == null) {
-			return new ResponseEntity<>("Sản phẩm không tồn tại", HttpStatus.NOT_FOUND);
+			// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu
+			Product product = productService.findById(productid);
+
+			if (product == null) {
+				Log.warn("Không tìm thấy sản phẩm có ID {}. Không thể khôi phục.", productid);
+				return new ResponseEntity<>("Sản phẩm không tồn tại", HttpStatus.NOT_FOUND);
+			}
+
+			// Khôi phục trạng thái đã xóa của sản phẩm
+			product.setIsDeleted(false);
+
+			// Lưu sản phẩm đã khôi phục vào cơ sở dữ liệu
+			productService.save(product);
+
+			Log.info("Sản phẩm có ID {} đã được khôi phục thành công", productid);
+			return new ResponseEntity<>("Khôi phục sản phẩm thành công", HttpStatus.OK);
+		} catch (Exception e) {
+			Log.error("Đã xảy ra lỗi khi khôi phục sản phẩm có ID: {}", productid, e);
+			return new ResponseEntity<>("Lỗi trong quá trình xử lý", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		// Khôi phục trạng thái đã xóa của sản phẩm
-		product.setIsDeleted(false);
-
-		// Lưu sản phẩm đã khôi phục vào cơ sở dữ liệu
-		productService.save(product);
-
-		return new ResponseEntity<>("Khôi phục sản phẩm thành công", HttpStatus.OK);
 	}
 
 	@DeleteMapping("{productid}")
@@ -241,7 +255,7 @@ public class ProductRestController {
 
 		return ResponseEntity.ok(productDTOList);
 	}
-	
+
 	@GetMapping("/searchkeywordproduct")
 	public ResponseEntity<List<ProductDTO>> getList(@RequestParam(required = false) String keyword) {
 		List<Product> products;
@@ -259,9 +273,6 @@ public class ProductRestController {
 
 		return ResponseEntity.ok(productDtos);
 	}
-
-
-
 
 	@GetMapping("/thongke/sp")
 	public ResponseEntity<List<ReportSP>> getTK_SP() {
