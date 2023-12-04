@@ -111,7 +111,10 @@ public class Authconfig {
 		http.authorizeRequests(authorize -> authorize
 				.requestMatchers("/profile", "/booking/*","/checkout", "/cart").authenticated()
 				.requestMatchers("/assetsAdmin/", "/admin")
-				.hasRole("Administrator").anyRequest().permitAll());
+				.hasRole("Administrator")
+				.requestMatchers("/assets/*").permitAll()
+				.anyRequest().permitAll())
+		 ;
 
 		http.formLogin(form -> form.loginPage("/login")
 				.successHandler(authSucessHandler)

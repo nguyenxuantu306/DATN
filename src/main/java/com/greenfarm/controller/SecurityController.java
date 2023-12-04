@@ -1,8 +1,12 @@
 package com.greenfarm.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +26,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.google.api.client.util.Value;
+import com.greenfarm.cloudinary.CloudinaryService;
 import com.greenfarm.config.CustomOAuth2successHandler;
 import com.greenfarm.dao.UserDAO;
 import com.greenfarm.dto.RegisterDTO;
@@ -34,6 +41,7 @@ import com.greenfarm.exception.UnkownIdentifierException;
 import com.greenfarm.exception.UserAlreadyExistException;
 import com.greenfarm.service.UserService;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -43,7 +51,7 @@ public class SecurityController {
 
 	@Autowired
 	CustomOAuth2successHandler auth2successHandler;
-	
+
 	@Autowired
 	PasswordEncoder passwordE;
 
@@ -52,6 +60,9 @@ public class SecurityController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private CloudinaryService cloudinaryService;
 
 	// @ModelAttribute
 	// public void commonUser(Principal p,Model model) {
@@ -150,26 +161,27 @@ public class SecurityController {
 	}
 
 	@RequestMapping("/oauth2/login/success")
-	public String fbsuccess(OAuth2AuthenticationToken oauth2,Authentication authentication) {
-		System.out.println("day la thong tin oauth2 "+oauth2);
-		
-	    if (authentication != null) {
-	        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-	        String provider = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
-	        // provider là tên đăng ký của nhà cung cấp OAuth2 (ví dụ: "google", "facebook")
-	        return "Logged in via " + provider ;
-	    } else {
-	        return "Not logged in or unknown authentication provider";
-	    }
+	public String fbsuccess(OAuth2AuthenticationToken oauth2, Authentication authentication) {
+		System.out.println("day la thong tin oauth2 " + oauth2);
+
+		if (authentication != null) {
+			OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+			String provider = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
+			// provider là tên đăng ký của nhà cung cấp OAuth2 (ví dụ: "google", "facebook")
+			return "Logged in via " + provider;
+		} else {
+			return "Not logged in or unknown authentication provider";
+		}
 //	userService.loginFormOAuth2(oauth2);
-	//	return "redirect:/";
+		// return "redirect:/";
 	}
+
 //login/oauth2/authorization/facebook
 	@RequestMapping("/oauth2/authorization/facebook")
 	public String fbform() {
 		return "security/login";
 	}
-	
+
 	@RequestMapping("/login/oauth2/code/google")
 	public String ggform() {
 		return "security/login";
@@ -188,7 +200,7 @@ public class SecurityController {
 			model.addAttribute("user", user);
 			// Lấy các quyền (roles) của người dùng
 			String roles = authentication.getAuthorities().toString();
-			
+
 			model.addAttribute("roles", roles);
 			// Trả về thông tin tài khoản trong phản hồi
 			System.out.println("Xin chào, " + username + "! Bạn có các quyền: " + roles);
@@ -202,14 +214,21 @@ public class SecurityController {
 		// return "redirect:/login";
 	}
 
+	@Autowired
+	ServletContext app;
+//	@Value("${upload.dir}")
+//    private String uploadDir;  // Đường dẫn đến thư mục lưu trữ file, được cấu hình trong application.properties
+
+	
 	@PostMapping("/profile")
 	public String profileupdate(Model model, @ModelAttribute("userchange") @Valid User userchange,
-			BindingResult bindingResult) {
+			BindingResult bindingResult, @RequestParam("attach") MultipartFile attach) throws IOException {
 //		 if (bindingResult.hasErrors()) {
 //		 // Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
 //			 model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
 //			 return "profile";
 //		 }
+
 		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		System.out.println(authentication);
@@ -218,18 +237,55 @@ public class SecurityController {
 			// Lấy tên người dùng
 			String username = authentication.getName();
 			User user = userService.findByEmail(username);
+			System.out.println("*******");
+			System.out.println(user.getPassword());
 
-			user.setAddress(userchange.getAddress());
-			user.setImage(userchange.getImage());
-			System.out.println(userchange.getImage());
+			// up image to cloud
+
+			// user.setImage(new String(file.getBytes())); // Chuyển đổi dữ liệu của file
+			// thành String và lưu vào entity
+			if (!attach.isEmpty()) {
+	            try {
+	                // Tạo thư mục lưu trữ nếu chưa tồn tại
+	                File directory = new File("D:\\FPTPOLYTECHNIC\\DUANTOTNGHIEP\\DATN\\src\\main\\resources\\static\\assets\\images");
+	                if (!directory.exists()) {
+	                    directory.mkdirs();
+	                }
+
+	                // Lưu file vào thư mục lưu trữ
+	                String filename = attach.getOriginalFilename();
+	                File file = new File(directory, filename);
+	                attach.transferTo(file);
+	                System.out.println("name"+attach.getOriginalFilename());
+					System.out.println("type"+attach.getContentType());
+					System.out.println("size"+attach.getSize());
+					System.out.println("111111111111111111");
+					/// chay den day lla noloi do no cu tim trong o dia C
+					String imageUrl = cloudinaryService.uploadImage(attach);
+					
+					System.out.println("2222222222222222222222");
+					System.out.println(imageUrl);
+					user.setImage(imageUrl);
+					System.out.println(userchange.getImage());
+	                // Các bước xử lý khác...
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	                // Xử lý lỗi khi lưu file
+	            }
+	        }
+				else if(attach.isEmpty()){
+				user.setImage(user.getImage());
+			}
 
 			if (isAtLeast16YearsOld(userchange.getBirthday())) {
-			user.setBirthday(userchange.getBirthday());
+				user.setBirthday(userchange.getBirthday());
+				System.out.println(user.getBirthday());
 			}
 			user.setFirstname(userchange.getFirstname());
 			user.setLastname(userchange.getLastname());
 			user.setPhonenumber(userchange.getPhonenumber());
 			user.setGender(userchange.getGender());
+
 			try {
 				userService.update(user);
 			} catch (Exception e) {

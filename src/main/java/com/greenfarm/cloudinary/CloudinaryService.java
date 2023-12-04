@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 
 @Service
@@ -20,10 +21,30 @@ public class CloudinaryService {
 				"api_secret", "5hJIdaqX6YtyNAPgO5A706zlEks"));
 	}
 
+	
+	
 	public String uploadImage(MultipartFile file) throws IOException {
+		
 		Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
 		return (String) uploadResult.get("secure_url");
 	}
+	
+	
+	
+	public String uploadFile(MultipartFile file) throws IOException {
+	    // Tạo tùy chọn xử lý ảnh nếu cần
+	    Transformation transformation = new Transformation();
+
+	    // Upload file lên Cloudinary
+	    Map uploadResult = cloudinary.uploader().upload(file.getInputStream(), ObjectUtils.asMap(
+	            "transformation", transformation
+	    ));
+
+	    // Trả về URL của ảnh đã được tải lên
+	    return (String) uploadResult.get("url");
+	}
+
+
 
 	public String uploadQRCode(String base64QRCode) throws IOException {
 		// Decode base64 string to bytes

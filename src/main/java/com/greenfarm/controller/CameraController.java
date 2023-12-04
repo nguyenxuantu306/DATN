@@ -72,7 +72,7 @@ public class CameraController {
     	List<Webcam> webcams = Webcam.getWebcams();
 System.out.println(webcams);
     	// Chọn camera đầu tiên trong danh sách
-    	Webcam selectedWebcam = webcams.get(2);
+    	Webcam selectedWebcam = webcams.get(0);
     	System.out.println(selectedWebcam);
     	
     	// Đóng camera hiện tại
