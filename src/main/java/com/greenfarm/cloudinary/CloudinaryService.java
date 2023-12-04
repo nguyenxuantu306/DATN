@@ -3,6 +3,7 @@ package com.greenfarm.cloudinary;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,18 +32,14 @@ public class CloudinaryService {
 	
 	
 	
-	public String uploadFile(MultipartFile file) throws IOException {
-	    // Tạo tùy chọn xử lý ảnh nếu cần
-	    Transformation transformation = new Transformation();
 
-	    // Upload file lên Cloudinary
-	    Map uploadResult = cloudinary.uploader().upload(file.getInputStream(), ObjectUtils.asMap(
-	            "transformation", transformation
-	    ));
-
-	    // Trả về URL của ảnh đã được tải lên
-	    return (String) uploadResult.get("url");
-	}
+    public String uploadFile(MultipartFile multipartFile) throws IOException {
+        return cloudinary.uploader()
+                .upload(multipartFile.getBytes(),
+                        Map.of("public_id", UUID.randomUUID().toString()))
+                .get("url")
+                .toString();
+    }
 
 
 

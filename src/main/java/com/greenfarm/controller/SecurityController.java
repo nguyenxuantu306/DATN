@@ -246,22 +246,13 @@ public class SecurityController {
 			// thành String và lưu vào entity
 			if (!attach.isEmpty()) {
 	            try {
-	                // Tạo thư mục lưu trữ nếu chưa tồn tại
-	                File directory = new File("D:\\FPTPOLYTECHNIC\\DUANTOTNGHIEP\\DATN\\src\\main\\resources\\static\\assets\\images");
-	                if (!directory.exists()) {
-	                    directory.mkdirs();
-	                }
-
-	                // Lưu file vào thư mục lưu trữ
-	                String filename = attach.getOriginalFilename();
-	                File file = new File(directory, filename);
-	                attach.transferTo(file);
+	              
 	                System.out.println("name"+attach.getOriginalFilename());
 					System.out.println("type"+attach.getContentType());
 					System.out.println("size"+attach.getSize());
 					System.out.println("111111111111111111");
 					/// chay den day lla noloi do no cu tim trong o dia C
-					String imageUrl = cloudinaryService.uploadImage(attach);
+					String imageUrl = cloudinaryService.uploadFile(attach);
 					
 					System.out.println("2222222222222222222222");
 					System.out.println(imageUrl);
