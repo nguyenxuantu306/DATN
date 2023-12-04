@@ -24,13 +24,13 @@ import lombok.NoArgsConstructor;
 public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Integer AddressID;
-	
+	private Integer AddressID;
+
 	private String Street;
 	private String District;
 	private String City;
 	private Boolean Active = Boolean.FALSE;
 	@ManyToOne
-	@JoinColumn(name = "userid")
-	User user;
+    @JoinColumn(name = "userid") 
+    private User user;
 }

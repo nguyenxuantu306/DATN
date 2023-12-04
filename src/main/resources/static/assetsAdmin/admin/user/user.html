@@ -62,7 +62,7 @@
 								<td>{{item.email}}</td>
 								<td>{{item.phonenumber}}</td>
 								<td
-									ng-repeat="address in item.address | filter: { active: false }">
+									ng-repeat="address in item.address | filter: { active: true }">
 									{{address.street}}, {{address.district}}, {{address.city}}</td>
 								<td>{{item.gender?'Nam':'Nữ'}}</td>
 								<td>{{item.createddate | date:'dd-MM-yyyy'}}</td>

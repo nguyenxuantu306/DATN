@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout::dynamic(~{::body})}">
+
+<head>
+<meta charset="UTF-8" />
+<title>GreenFarm</title>
+
+</head>
+
+<body>
+	<div class="container"ng-controller="address-ctrl">
+<!-- 		<div th:each="address : ${addresses}" -->
+<!-- 			class="card border border-0 rounded-0 mt-3" -->
+<!-- 			style="padding: 20px; width: auto; border-radius: 3px; background-color: #fff; font-size: 14px; flex-direction: column;"> -->
+<!-- 			<div class="card-header" style="background-color: #fff"> -->
+<!-- 				<span class="form-check"> <input class="form-check-input" -->
+<!-- 					type="radio" name="flexRadioDefault" id="flexRadioDefault1"> -->
+<!-- 					<span class="fw-bold">[[${address.user.firstname}]] | -->
+<!-- 						[[${address.user.phonenumber}]]</span> <span class="fw-bold float-end"> -->
+<!-- 						<button type="button" -->
+<!-- 							class="text-danger border-0 bg-white fw-bold" data-toggle="modal" -->
+<!-- 							data-target="#myModal">Sửa</button> -->
+<!-- 				</span> -->
+<!-- 				</span> -->
+<!-- 			</div> -->
+<!-- 			<div class="ms-4"> -->
+<!-- 				<span>[[${address.Street}]],[[${address.District}]],[[${address.City}]] -->
+<!-- 				</span> -->
+<!-- 			</div> -->
+
+<!-- 		</div> -->
+		<hr>
+		<div class="add_address text-danger text-center">
+			<i class="bi bi-plus-circle"></i> Thêm mới địa chỉ
+		</div>
+
+
+
+		<!-- The Modal -->
+		<div class="modal fade" id="myModal">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content">
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Địa chỉ mới</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body">
+						<span>Liên hệ</span> <label>Họ và Tên</label>
+
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
