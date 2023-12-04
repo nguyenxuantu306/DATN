@@ -122,7 +122,7 @@ public class CheckoutController {
 				Order orderItem = new Order();
 				orderItem.setUser(user);
 				orderItem.setOrderdate(now);
-//				orderItem.setAddress(orderDTO.getAddress());
+				//orderItem.setAddress(orderDTO.getAddress());
 				orderItem.setStatusOrder(statusOrder);
 				orderItem.setPaymentmethod(paymentMethodObj);
 				orderItem.setVoucherorder(orderDTO.getVoucherorder());

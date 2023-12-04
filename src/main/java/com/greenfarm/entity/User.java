@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greenfarm.dto.Provider;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -48,7 +49,7 @@ public class User implements Serializable {
 	@NotEmpty(message = "Vui lòng nhập mật khẩu")
 	String password;
 
-	@Column(unique = true)
+	@Column(name = "Email", unique = true)
 	@Pattern(regexp = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", message = "Email phải đúng định dạng.")
 	@NotBlank(message = "Email là bắt buộc")
 	@Email(message = "Email không hợp lệ!")
@@ -89,7 +90,7 @@ public class User implements Serializable {
 	// Boolean IsActive;
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	@OneToMany( mappedBy = "user")
 	List<Address> address;
 	
 	@JsonIgnore
@@ -136,8 +137,6 @@ public class User implements Serializable {
 		this.isdeleted = isdeleted;
 	}
 	
-	
-
     public List<Address> getAddress() {
         return address;
     }

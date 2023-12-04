@@ -284,6 +284,7 @@ app.controller("order-ctrl", function($scope, $http) {
 					$scope.items = resp.data;
 
 
+					//$scope.exportExcel();
 
 					$scope.items.forEach(function(item) {
 						var formattedOrderDate = moment(item.orderdate, "YYYY-MM-DDTHH:mm:ss").toDate();
@@ -334,7 +335,13 @@ app.controller("order-ctrl", function($scope, $http) {
 
 	// Trong AngularJS controller hoặc service
 	$scope.exportExcel = function() {
-		$http.get('/excel-order', { responseType: 'arraybuffer' })
+		$http.get('/excel-order', {
+			params: {
+				startDateTime: $scope.startDateTime,
+				endDateTime: $scope.endDateTime
+			},
+			responseType: 'arraybuffer'
+		})
 			.then(function(response) {
 				var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 				var link = document.createElement('a');
