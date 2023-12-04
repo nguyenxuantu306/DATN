@@ -630,7 +630,7 @@ public class PdfController {
 			table.addCell(createCell(data.getTourname(), false, unicodeFonts));
 			table.addCell(createCell(data.getDepartureday(), false, unicodeFonts));
 			table.addCell(createCell(decimalFormat.format(data.getPricings().getAdultprice()), false, unicodeFonts));
-			table.addCell(createCell(String.valueOf(data.getAvailableslots()), false, unicodeFonts));
+//			table.addCell(createCell(String.valueOf(data.getAvailableslots()), false, unicodeFonts));
 
 			// Kiểm tra và hiển thị "đã có" nếu điều kiện được đáp ứng
 			String tourConditions = data.getTourCondition().getConditions();

@@ -43,24 +43,25 @@ app.controller("booking-ctrl", function($scope, $http) {
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
 
-		var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
-		// Kiểm tra và trừ số lượng sản phẩm trong giỏ hàng
-		if (item.statusBooking.statusbookingid == '2') {
-			angular.forEach($scope.form.Booking, function(Booking) {
-				var tour = Booking.tour;
-				var  Availableslots = Booking.tour. Availableslots;
+	/*	var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
+		// Kiểm tra và trừ số lượng vé
+		console.log("Giá trị statusbookingid:", item.statusbooking.statusbookingid);
 
+		if (item.statusbooking.statusbookingid === 2) {
+				var Availableslots = tour.Availableslots;
 				// Kiểm tra số lượng sản phẩm trong kho
-				if (Availableslots < (Booking.Adultticketnumber + Booking.Childticketnumber)) {
-					// Thông báo lỗi
+				console.log(Adultticketnumber + Childticketnumber)
+				if (Availableslots < (Adultticketnumber + Childticketnumber)) {
+					// Thông báo lỗi				
 					alert("Số lượng slot '" + tour.tourname + "' không đủ slot của tour.");
 					hasInsufficientQuantity = true; // Đặt biến này thành true nếu sản phẩm không đủ số lượng
 					return false; //Thoát khỏi vòng lặp ngay lập tức
 				}
+				
 				// Trừ số lượng sản phẩm khỏi kho
-				Booking.tour.Availableslots -= (Booking.Adultticketnumber + Booking.Childticketnumber);
+				tour.Availableslots -= (Adultticketnumber + Childticketnumber);
 
-				$http.put(`/rest/tours/${Booking.tour.tourid}`, Booking.tour)
+				$http.put(`/rest/tours/${tour.tourid}`,tour)
 					.then(function(response) {
 						console.log("Update success", response);
 					})
@@ -68,11 +69,11 @@ app.controller("booking-ctrl", function($scope, $http) {
 						// Xử lý lỗi
 						console.log("Error updating product: ", error);
 					});
-			});
+			
 		}
 		if (hasInsufficientQuantity) { // Nếu sản phẩm không đủ số lượng, không cập nhật trạng thái đơn hàng
 			return;
-		}
+		}*/
 
 
 		$http.put(`/rest/bookings/${item.bookingid}`, item).then(resp => {

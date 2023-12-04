@@ -859,7 +859,7 @@ public class ExcelController {
 			formattedSumCell.setCellValue(data.getPricings().getAdultprice());
 			formattedSumCell.setCellStyle(currencyStyle);
 
-			row.createCell(4).setCellValue(data.getAvailableslots());
+//			row.createCell(4).setCellValue(data.getAvailableslots());
 
 			// Kiểm tra và hiển thị "đã có" nếu điều kiện được đáp ứng
 			String tourConditions = data.getTourCondition().getConditions();
