@@ -53,7 +53,7 @@ public class Product implements Serializable {
 
 	@NotNull(message = "Số lượng rau là bắt buộc")
 	@Positive(message = "Số lượng phải lớn hơn 0 ")
-	private Integer quantityavailable;
+	private Double quantityavailable;
 
 	
 	private Boolean isdeleted = Boolean.FALSE;

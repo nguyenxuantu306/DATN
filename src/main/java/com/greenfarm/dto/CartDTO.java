@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CartDTO {
     private Integer cartID;
-    private Integer quantity;
+    private Float quantity;
      
     Product product;
     User user;

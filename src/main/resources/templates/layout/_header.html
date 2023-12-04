@@ -15,24 +15,25 @@
 			Khách tham quan mua rau tại vườn - Ship nội thành Tuy Hoà, Ship trên
 			10kg ở Sài Gòn, Quy Nhơn, Nha Trang, Đà Nẵng,.... </marquee> -->
       <div class="container-fluid bg-light pt-3d-none ">
-        <div class="container">
+        <div class="">
           <div class="row">
-            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+            <div class="col-lg-6 col-9 text-left text-lg-left mb-2 mb-lg-0">
               <div class="d-inline-flex align-items-center">
                 <p><i class="fa fa-envelope mr-2"></i>greenfarm@gmail.com</p>
                 <p class="text-body px-3">|</p>
                 <p><i class="fa fa-phone-alt mr-2"></i>+012 345 6789</p>
               </div>
             </div>
-            <div class="col-lg-6 text-center text-lg-right">
+            <div class="col-lg-6 col-3 text-right text-lg-right">
               <div class="d-inline-flex align-items-center">
-               <!--  <span class="text-primary"></span>
+              <!--  <span class="text-primary"></span>
                 <a class="text-primary px-3" href="#" id="cart-toggle"
                   ><i class="fa fa-shopping-cart"></i></a
                 > -->
-                <a class="text-primary px-3" href="?language=vi_VN"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/vn.png">
-                </a>
-                <a class="text-primary pl-3" href="?language=en"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/us.png"> </a>
+                <a class="text-primary px-3 d-none d-lg-inline-block" href="?language=vi_VN"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/vn.png"></a>
+                <a class="text-primary px-3 d-inline-block d-lg-none" href="?language=vi_VN"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/64x64/vn.png"></a>
+                <a class="text-primary pl-3 d-none d-lg-inline-block" href="?language=en"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/us.png"></a>
+                <a class="text-primary pl-3 d-inline-block d-lg-none" href="?language=en"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/64x64/us.png"></a>
               </div>
             </div>
           </div>
@@ -81,25 +82,88 @@
           <nav
             class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5"
           >
-            <a href="/" class="navbar-brand">
-              <img src="/assets/images/logo.png" style="width: 150px">
+            <a href="/" class="logo d-none d-lg-inline-block">
+              <img src="/assets/images/logo.png" style="width: 200px">
+            </a>
+            <a href="/" class="logo d-inline-block d-lg-none">
+              <img src="/assets/images/logo.png" style="width: 300px">
             </a>
             <button
               type="button"
               class="navbar-toggler"
-              data-toggle="collapse"
-              data-target="#navbarCollapse"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarCollapse"
             >
               <span class="navbar-toggler-icon"></span>
             </button>
             <div
-              class="collapse navbar-collapse justify-content-between "
+              class="collapse navbar-collapse text-center"
+              id="navbarCollapse"
+            >
+              <div class="navbar-nav font-weight-bold d-inline-block d-lg-none fs-3">
+                <a
+                  href="/"
+                  class="nav-item nav-link display-4"
+                  th:text="#{header.label.home}"
+                  >Home</a
+                >
+                <a
+                  href="/product/shop"
+                  class="nav-item nav-link display-4"
+                  th:text="#{header.label.shop}"
+                  >Shop</a
+                >
+                <a
+                  href="/tour"
+                  class="nav-item nav-link display-4"
+                  th:text="#{header.label.tour}"
+                  >Tour</a
+                >
+                <a
+                  href="/about"
+                  class="nav-item nav-link display-4"
+                  th:text="#{header.label.about}"
+                  >About</a
+                >
+                <a
+                  href="/contact"
+                  class="nav-item nav-link display-4"
+                  th:text="#{header.label.contact}"
+                  >Contact</a
+                >
+                <a
+                  class="nav-item nav-link data-toggle display-4"
+                  href="/cart"
+                  th:text="#{header.label.cart}"
+                  >Cart</a
+                >
+                <div sec:authorize="isAnonymous()">
+                  <a
+                    class="nav-item nav-link data-toggle display-4"
+                    th:href="@{/login}"
+                    th:text="#{label.login}"
+                    >Login</a
+                  >
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                  <a th:href="@{/profile}" class="rounded-circle">
+                    <img
+                      src="https://i.pinimg.com/1200x/89/90/48/899048ab0cc455154006fdb9676964b3.jpg"
+                      style="padding: 15px; width: 85px"
+                      alt="Avatar"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div
+              class="collapse navbar-collapse justify-content-between d-none d-lg-inline-block"
               id="navbarCollapse"
             >
               <div class="navbar-nav ml-auto font-weight-bold">
                 <a
                   href="/"
-                  class="nav-item nav-link"
+                  class="nav-item nav-link "
                   th:text="#{header.label.home}"
                   >Home</a
                 >

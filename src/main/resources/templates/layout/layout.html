@@ -120,17 +120,14 @@
 
 <body ng-app="user-app">
 	<div th:fragment="navbar" class="header_area">
-
 		<div class="pos_page">
-
 			<div>
 				<div class="pos_page_inner">
-					<nav class="container" th:insert="~{/layout/_header.html::header}"></nav>
+					<nav class="container-fluid" th:insert="~{/layout/_header.html::header}"></nav>
 					<main th:replace="${view}"></main>
 				</div>
 			</div>
 		</div>
-
 		<div th:insert="~{/layout/_footer.html::footer}"></div>
 	</div>
 
