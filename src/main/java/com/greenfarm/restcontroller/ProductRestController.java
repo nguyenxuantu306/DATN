@@ -20,18 +20,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.dto.ProductImageDTO;
-import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.ProductImage;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportSP;
-import com.greenfarm.entity.Tour;
-import com.greenfarm.entity.User;
 import com.greenfarm.service.ProductService;
+import com.greenfarm.utils.Log;
 
 @CrossOrigin("*")
 @RestController
@@ -43,28 +40,46 @@ public class ProductRestController {
 	@Autowired
 	ModelMapper modelMapper;
 
+	// Lấy ra toàn bộ danh sách sản phẩm
 	@GetMapping()
 	public ResponseEntity<List<ProductDTO>> getList() {
-		List<Product> products = productService.findAll();
+		try {
+			Log.info("Đã nhận được yêu cầu lấy danh sách sản phẩm.");
 
-		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
-		List<ProductDTO> productDTOs = products.stream().map(product -> modelMapper.map(product, ProductDTO.class))
-				.collect(Collectors.toList());
+			List<Product> products = productService.findAll();
 
-		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
-		return new ResponseEntity<>(productDTOs, HttpStatus.OK);
+			// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
+			List<ProductDTO> productDTOs = products.stream().map(product -> modelMapper.map(product, ProductDTO.class))
+					.collect(Collectors.toList());
+
+			// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
+			Log.info("Trả về danh sách sản phẩm {}.", productDTOs.size());
+			return new ResponseEntity<>(productDTOs, HttpStatus.OK);
+		} catch (Exception e) {
+			Log.error("Đã xảy ra lỗi khi lấy danh sách sản phẩm.", e);
+			// Trả về ResponseEntity với mã trạng thái 500 INTERNAL SERVER ERROR nếu có lỗi
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
+	// Lấy ra danh sách đã xóa
 	@GetMapping("/deleted")
 	public ResponseEntity<List<ProductDTO>> getDeletedList() {
-		List<Product> deletedProducts = productService.findAllDeletedProducts();
+		try {
+			Log.info("Đã nhận được yêu cầu cho danh sách getDeletedList");
+			List<Product> deletedProducts = productService.findAllDeletedProducts();
 
-		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
-		List<ProductDTO> productDTOs = deletedProducts.stream()
-				.map(product -> modelMapper.map(product, ProductDTO.class)).collect(Collectors.toList());
+			// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
+			List<ProductDTO> productDTOs = deletedProducts.stream()
+					.map(product -> modelMapper.map(product, ProductDTO.class)).collect(Collectors.toList());
 
-		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
-		return new ResponseEntity<>(productDTOs, HttpStatus.OK);
+			// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
+			return new ResponseEntity<>(productDTOs, HttpStatus.OK);
+		} catch (Exception e) {
+			Log.error("Đã xảy ra lỗi trong getDeletedList", e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
 
 	@GetMapping("{productid}")
@@ -83,132 +98,118 @@ public class ProductRestController {
 		return new ResponseEntity<>(productDTO, HttpStatus.OK);
 	}
 
-//	@PostMapping()
-//	public ResponseEntity<ProductDTO> create(@RequestBody Product product, @RequestParam("file") MultipartFile file,
-//			Model model) {
-//		try {
-//			MinioClient minioClient = MinioClient.builder()
-//					.endpoint("http://192.168.1.41:9090")
-//					.credentials("minioadmin", "minioadmin")
-//					.build();
-//
-//			String bucketName = "image-shop";
-//
-//			String imageName = UUID.randomUUID().toString() + file.getOriginalFilename();
-//
-//			minioClient.uploadObject(
-//					UploadObjectArgs.builder()
-//							.bucket(bucketName)
-//							.object(imageName)
-//							.build());
-//
-//			String image = "http://192.168.1.41:9090/" + bucketName + "/" + imageName;
-//
-//			product.setImage(image);
-//			Product createdProduct = productService.create(product);
-//
-//			// Sử dụng ModelMapper để ánh xạ từ Product đã tạo thành ProductDTO
-//			ProductDTO productDTO = modelMapper.map(createdProduct, ProductDTO.class);
-//
-//			// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
-//			return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
-//		} catch (MinioException | InvalidKeyException | NoSuchAlgorithmException | IOException e) {
-//			// Xử lý ngoại lệ
-//			model.addAttribute("error", e.getMessage());
-//
-//		}
-//		return null;		
-//	}
-
-//	@PostMapping()
-//	public ResponseEntity<ProductDTO> create(@RequestBody Product product, Model model) {
-//
-//		Product createdProduct = productService.create(product);
-//
-//		// Sử dụng ModelMapper để ánh xạ từ Product đã tạo thành ProductDTO
-//		ProductDTO productDTO = modelMapper.map(createdProduct, ProductDTO.class);
-//
-//		// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
-//		return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
-//	}
-	
+	// Thêm sản phẩm
 	@PostMapping()
 	public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO productDTO) {
-	    // Create Product object
-		Product product = modelMapper.map(productDTO, Product.class);
+		try {
+			Log.info("Nhận yêu cầu tạo sản phẩm mới");
+			
+			Product product = modelMapper.map(productDTO, Product.class);
 
-	    // Create ProductImage objects and associate them with the product
-	    List<ProductImage> productImages = new ArrayList<>();
-	    if (productDTO.getProductimage() != null) {
-	        for (ProductImageDTO productImageDTO : productDTO.getProductimage()) {
-	            ProductImage productImage = new ProductImage();
-	            productImage.setImageurl(productImageDTO.getImageurl());
-	            productImage.setProduct(product);
-	            productImages.add(productImage);
-	        }
-	    }
+			// Tạo đối tượng ProductImage và liên kết chúng với sản phẩm
+			List<ProductImage> productImages = new ArrayList<>();
+			if (productDTO.getProductimage() != null) {
+				for (ProductImageDTO productImageDTO : productDTO.getProductimage()) {
+					ProductImage productImage = new ProductImage();
+					productImage.setImageurl(productImageDTO.getImageurl());
+					productImage.setProduct(product);
+					productImages.add(productImage);
+				}
+			}
+			product.setProductimage(productImages);
 
-	    // Set the list of images in the product
-	    product.setProductimage(productImages);
+			Product createdProduct = productService.create(product);
 
-	    // Save product and associated images
-	    Product createdProduct = productService.create(product);
+			ProductDTO createdProductDTO = modelMapper.map(createdProduct, ProductDTO.class);
 
-	    // Map to DTO and return
-	    ProductDTO createdProductDTO = modelMapper.map(createdProduct, ProductDTO.class);
-	    return new ResponseEntity<>(createdProductDTO, HttpStatus.CREATED);
+			Log.info("Sản phẩm mới với ID {} đã được tạo thành công", createdProductDTO.getProductid());
+			return new ResponseEntity<>(createdProductDTO, HttpStatus.CREATED);
+		} catch (Exception e) {
+			Log.error("Đã xảy ra lỗi khi tạo sản phẩm", e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
-
+	// Cập nhật sản phẩm
 	@PutMapping("{productid}")
 	public ResponseEntity<ProductDTO> update(@PathVariable("productid") Integer productid,
 			@RequestBody Product product) {
-		Product updatedProduct = productService.update(product);
+		try {
+			Log.info("Nhận yêu cầu cập nhật sản phẩm với ID: {}", productid);
 
-		if (updatedProduct == null) {
-			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy product để cập nhật
-			return ResponseEntity.notFound().build();
+			Product updatedProduct = productService.update(product);
+
+			if (updatedProduct == null) {
+				// Trả về mã trạng thái 404 Not Found nếu không tìm thấy sản phẩm để cập nhật
+				Log.warn("Không tìm thấy sản phẩm với ID {}. Không thể cập nhật.", productid);
+				return ResponseEntity.notFound().build();
+			}
+
+			// Sử dụng ModelMapper để ánh xạ từ sản phẩm đã cập nhật thành ProductDTO
+			ProductDTO productDTO = modelMapper.map(updatedProduct, ProductDTO.class);
+
+			// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
+			Log.info("Sản phẩm với ID {} đã được cập nhật thành công.", productid);
+			return new ResponseEntity<>(productDTO, HttpStatus.OK);
+		} catch (Exception e) {
+			Log.error("Đã xảy ra lỗi khi cập nhật sản phẩm với ID: {}", productid, e);
+			// Trả về ResponseEntity với mã trạng thái 500 INTERNAL SERVER ERROR nếu có lỗi
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-
-		// Sử dụng ModelMapper để ánh xạ từ Product đã cập nhật thành ProductDTO
-		ProductDTO productDTO = modelMapper.map(updatedProduct, ProductDTO.class);
-
-		// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
-		return new ResponseEntity<>(productDTO, HttpStatus.OK);
 	}
 
+	// Khôi phục sản phẩm
 	@PutMapping("/{productid}/restore")
 	public ResponseEntity<String> restoreProduct(@PathVariable("productid") Integer productid) {
-		// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu
-		Product product = productService.findById(productid);
+		try {
+			Log.info("Nhận yêu cầu khôi phục sản phẩm với ID: {}", productid);
 
-		if (product == null) {
-			return new ResponseEntity<>("Sản phẩm không tồn tại", HttpStatus.NOT_FOUND);
+			// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu
+			Product product = productService.findById(productid);
+
+			if (product == null) {
+				Log.warn("Không tìm thấy sản phẩm có ID {}. Không thể khôi phục.", productid);
+				return new ResponseEntity<>("Sản phẩm không tồn tại", HttpStatus.NOT_FOUND);
+			}
+
+			// Khôi phục trạng thái đã xóa của sản phẩm
+			product.setIsDeleted(false);
+
+			// Lưu sản phẩm đã khôi phục vào cơ sở dữ liệu
+			productService.save(product);
+
+			Log.info("Sản phẩm có ID {} đã được khôi phục thành công", productid);
+			return new ResponseEntity<>("Khôi phục sản phẩm thành công", HttpStatus.OK);
+		} catch (Exception e) {
+			Log.error("Đã xảy ra lỗi khi khôi phục sản phẩm có ID: {}", productid, e);
+			return new ResponseEntity<>("Lỗi trong quá trình xử lý", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		// Khôi phục trạng thái đã xóa của sản phẩm
-		product.setIsDeleted(false);
-
-		// Lưu sản phẩm đã khôi phục vào cơ sở dữ liệu
-		productService.save(product);
-
-		return new ResponseEntity<>("Khôi phục sản phẩm thành công", HttpStatus.OK);
 	}
 
 	@DeleteMapping("{productid}")
 	public ResponseEntity<Void> delete(@PathVariable("productid") Integer productid) {
-		Product existingProduct = productService.findById(productid);
+		try {
+			Log.info("Đã nhận được yêu cầu xóa sản phẩm với ID: {}", productid);
 
-		if (existingProduct == null) {
-			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy product để xóa
-			return ResponseEntity.notFound().build();
+			Product existingProduct = productService.findById(productid);
+
+			if (existingProduct == null) {
+				// Trả về mã trạng thái 404 Not Found nếu không tìm thấy product để xóa
+				Log.warn("Không tìm thấy sản phẩm có ID {}. Không thể xóa.", productid);
+				return ResponseEntity.notFound().build();
+			}
+
+			// Thực hiện xóa trong service
+			productService.delete(productid);
+
+			// Trả về mã trạng thái 204 No Content để chỉ ra thành công trong việc xóa
+			Log.info("Sản phẩm có ID {} đã được xóa thành công", productid);
+			return ResponseEntity.noContent().build();
+		} catch (Exception e) {
+			Log.error("Đã xảy ra lỗi khi xóa sản phẩm có ID: {}", productid, e);
+			// Trả về ResponseEntity với mã trạng thái 500 INTERNAL SERVER ERROR nếu có lỗi
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-
-		// Thực hiện xóa trong service
-		productService.delete(productid);
-
-		// Trả về mã trạng thái 204 No Content để chỉ ra thành công trong việc xóa
-		return ResponseEntity.noContent().build();
 	}
 
 	// Search Name
@@ -254,7 +255,7 @@ public class ProductRestController {
 
 		return ResponseEntity.ok(productDTOList);
 	}
-	
+
 	@GetMapping("/searchkeywordproduct")
 	public ResponseEntity<List<ProductDTO>> getList(@RequestParam(required = false) String keyword) {
 		List<Product> products;
@@ -272,9 +273,6 @@ public class ProductRestController {
 
 		return ResponseEntity.ok(productDtos);
 	}
-
-
-
 
 	@GetMapping("/thongke/sp")
 	public ResponseEntity<List<ReportSP>> getTK_SP() {
