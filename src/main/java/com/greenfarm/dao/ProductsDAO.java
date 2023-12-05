@@ -11,8 +11,6 @@ import org.springframework.data.repository.query.Param;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
-import com.greenfarm.entity.ReportSP;
-import com.greenfarm.entity.User;
 
 public interface ProductsDAO extends JpaRepository<Product, Integer> {
 
@@ -22,16 +20,12 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT p FROM Product p WHERE p.price BETWEEN ?1 AND ?2")
 	List<Product> findByPriceBetween(Double minPrice, Double maxPrice);
 
-	// tìm kiếm keywword
-	@Query("SELECT p FROM Product p WHERE LOWER(p.productname) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(p.Description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-	List<Product> findByKeyword(@Param("keyword") String keyword);
-	
 	@Query("SELECT p FROM Product p WHERE p.category.categoryid=?1 AND p.isdeleted = false")
 	List<Product> findByCategoryIdAndIsdeletedFalse(String cid);
 
-	@Query("SELECT new ReportSP(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
+	@Query("SELECT new Report(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
 			+ " GROUP BY o.product" + " ORDER BY  sum(o.totalprice * o.quantityordered)")
-	List<ReportSP> reportTheoProduct();
+	List<Report> reportTheoProduct();
 
 	@Query("SELECT new Report(o.category, sum(o.price), count(o)) " + " FROM Product o " + " GROUP BY o.category"
 			+ " ORDER BY sum(o.price) DESC")
@@ -46,9 +40,9 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT p FROM Product p ORDER BY p.quantityavailable DESC")
 	List<Product> getTop10ProductsByQuantityAvailable();
 
-	@Query("SELECT new ReportSP(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
+	@Query("SELECT new Report(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
 			+ " GROUP BY o.product" + " ORDER BY  sum(o.quantityordered) Desc")
-	List<ReportSP> getTop10ProductsBygetReportspbanchay();
+	List<Report> getTop10ProductsBygetReportspbanchay();
 
 	@Query("SELECT p FROM Product p WHERE p.isdeleted = true")
 	List<Product> findAllDeletedProducts();

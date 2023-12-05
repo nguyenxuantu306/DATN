@@ -1,7 +1,6 @@
 package com.greenfarm.service.impl;
 
 import java.util.Collection;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -185,14 +184,8 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public User findByEmail(String email) {
-		Optional<User> user = dao.findByEmail(email);
-		if (user.isPresent()) {
-			return user.get();
-		} else {
-
-			return null;
-		}
-
+		User user = dao.findByEmail(email).get();
+		return user;
 	}
 
 	@Override
@@ -337,29 +330,24 @@ public class UserServerImpl implements UserService, UserDetailsService {
 			dao.save(newUser);
 
 			// Trả về UserDetails của tài khoản mới
-			return null;
 
 		}
-
+		return null;
 	}
 
 	@Override
 	public void processOAuthPostLogin(String username) {
-		System.out.println("start check account");
-		Optional<User> existUser = dao.findByEmail(username);
-		System.out.println("it exxit");
-		if (existUser.isEmpty()) {
+		User existUser = dao.findByEmail(username).get();
+		if (existUser == null) {
 			User newUser = new User();
-			// newUser.setFirstname("google");
-			// newUser.setLastname("google");
-			// newUser.setPhonenumber("0000000000");
+			newUser.setFirstname("google");
+			newUser.setLastname("google");
+			newUser.setPhonenumber("1234567");
 			newUser.setEmail(username);
 			newUser.setProvider(Provider.GOOGLE);
 			newUser.setAccountVerified(true);
 			newUser.setCreateddate(new Date());
-			System.out.println("cretea a account");
 			dao.save(newUser);
-			System.out.println("done");
 		}
 
 	}
@@ -375,8 +363,8 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public User save(User user) {
-		return dao.save(user);
+	public void save(User user) {
+		dao.save(user);
 
 	}
 
@@ -447,24 +435,6 @@ public class UserServerImpl implements UserService, UserDetailsService {
 			sendRegistrationConfirmationEmail(userEntity);
 			System.out.println("Gửi email xác nhận đăng ký");
 			return userEntity;
-		}
-	}
-
-	@Override
-	public List<User> findByKeyword(String keyword) {
-		// Triển khai tìm kiếm theo từ khóa trong repository
-		return dao.findByKeyword(keyword);
-	}
-
-	@Override
-	public User findByPhonenumber(String Phonenumber) {
-		// TODO Auto-generated method stub
-		Optional<User> user = dao.findByPhonenumber(Phonenumber);
-		if (user.isPresent()) {
-			return user.get();
-		} else {
-
-			return null;
 		}
 	}
 

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.greenfarm.dao.VoucherUserDAO;
 import com.greenfarm.entity.User;
-import com.greenfarm.entity.Voucher;
 import com.greenfarm.entity.VoucherUser;
 import com.greenfarm.service.VoucherUserService;
 
@@ -18,10 +17,5 @@ public class VoucherUserServiceImpl implements VoucherUserService{
 	@Override
 	public List<VoucherUser> findByUser(User user) {
 		return dao.findByUser(user);
-	}
-	
-	@Override
-	public List<VoucherUser> findAll() {
-		return dao.findAll();
 	}
 }

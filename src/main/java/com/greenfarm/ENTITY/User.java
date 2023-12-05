@@ -5,13 +5,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greenfarm.dto.Provider;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -49,7 +47,7 @@ public class User implements Serializable {
 	@NotEmpty(message = "Vui lòng nhập mật khẩu")
 	String password;
 
-	@Column(name = "Email", unique = true)
+	@Column(unique = true)
 	@Pattern(regexp = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", message = "Email phải đúng định dạng.")
 	@NotBlank(message = "Email là bắt buộc")
 	@Email(message = "Email không hợp lệ!")
@@ -71,7 +69,7 @@ public class User implements Serializable {
 
 //	@NotBlank(message = "Địa chỉ là bắt buộc")
 //	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
-	
+	String address;
 
 //	@NotNull(message = "Giới tính phải được chọn")
 	Boolean gender;
@@ -90,10 +88,6 @@ public class User implements Serializable {
 	// Boolean IsActive;
 
 	@JsonIgnore
-	@OneToMany( mappedBy = "user")
-	List<Address> address;
-	
-	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Booking> booking;
 
@@ -102,7 +96,7 @@ public class User implements Serializable {
 	List<Comment> comment;
 
 	@JsonIgnore
-	@OneToMany(cascade = jakarta.persistence.CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	List<UserRole> userRole;
 
 	@JsonIgnore
@@ -136,12 +130,4 @@ public class User implements Serializable {
 	public void setIsDeleted(boolean isdeleted) {
 		this.isdeleted = isdeleted;
 	}
-	
-    public List<Address> getAddress() {
-        return address;
-    }
-
-    public void setAddress(List<Address> address) {
-        this.address = address;
-    }
 }

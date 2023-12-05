@@ -6,9 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -50,36 +47,6 @@ public class HomeController {
 		return "user/index";
 	}
 
-	@RequestMapping("/checkLoginStatus")
-	public String checkLoginStatus(Authentication authentication) {
-	    if (authentication != null && authentication.isAuthenticated()) {
-	        // Đã đăng nhập
-	        return "User is logged in";
-	    } else {
-	        // Chưa đăng nhập
-	        return  "User is not logged in";
-	    }
-	}
-
-	
-	@RequestMapping("/userInfo")
-	public String getUserInfo(Authentication authentication) {
-	    if (authentication != null && authentication.isAuthenticated()) {
-	        // Lấy thông tin người dùng từ đối tượng Authentication
-//	        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-//	        
-//	        // Lấy thông tin cụ thể từ OAuth2User
-//	        String email = oAuth2User.getAttribute("email");
-	        // Thực hiện các xử lý khác với thông tin người dùng
-	        
-	        return "User is logged in. Email: " + authentication.getPrincipal();
-	    } else {
-	        return "User is not logged in";
-	    }
-	}
-
-
-	
 	@RequestMapping("/success")
 	public String Success(ModelMap modelMap) {
 		return "success";
@@ -90,9 +57,9 @@ public class HomeController {
 //		return "profile";
 //	}
 
-	@RequestMapping("/profileoauth")
+	@RequestMapping("/profile")
 	public String Profile(Model model) {
-		return "profileoauth2";
+		return "profile";
 	}
 
 	@RequestMapping("/contact")

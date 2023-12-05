@@ -7,7 +7,6 @@ import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,14 +15,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.greenfarm.entity.Address;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
-import com.greenfarm.entity.ReportSP;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.BookingService;
@@ -114,16 +111,7 @@ public class PdfController {
 			table.addCell(createCell(data.getFirstname(), false, unicodeFonts));
 			table.addCell(createCell(data.getEmail(), false, unicodeFonts));
 			table.addCell(createCell(data.getPhonenumber(), false, unicodeFonts));
-			// Lấy danh sách địa chỉ có active = false
-			List<Address> inactiveAddresses = data.getAddress().stream().filter(address -> !address.getActive())
-					.collect(Collectors.toList());
-
-			// Tạo một chuỗi chứa thông tin địa chỉ có active = false
-			String addressInfo = inactiveAddresses.stream()
-					.map(address -> address.getStreet() + ", " + address.getDistrict() + ", " + address.getCity())
-					.collect(Collectors.joining("; "));
-			// Thêm thông tin địa chỉ vào cột thứ 4
-			table.addCell(createCell(addressInfo, false, unicodeFonts)); 
+			table.addCell(createCell(data.getAddress(), false, unicodeFonts));
 			table.addCell(createCell(data.getGender() != null && data.getGender() ? "Nam" : "Nữ", false, unicodeFonts));
 			table.addCell(createCell(createDateString, false, unicodeFonts));
 
@@ -232,7 +220,7 @@ public class PdfController {
 
 	@GetMapping("/pdf-productstatistics")
 	public ResponseEntity<byte[]> PDFProductStatistics() throws IOException, DocumentException {
-		List<ReportSP> dataList = getProductStatitics(); // Hàm này tạo dữ liệu mẫu
+		List<Report> dataList = getProductStatitics(); // Hàm này tạo dữ liệu mẫu
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		Document document = new Document();
@@ -279,7 +267,7 @@ public class PdfController {
 
 		// Thiết lập dữ liệu cho từng hàng
 		for (int i = 0; i < dataList.size(); i++) {
-			ReportSP data = dataList.get(i);
+			Report data = dataList.get(i);
 			Product product = (Product) data.getGroup();
 
 			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
@@ -299,7 +287,7 @@ public class PdfController {
 		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
 
-	public final List<ReportSP> getProductStatitics() {
+	public final List<Report> getProductStatitics() {
 		return productService.getTk_sp();
 	}
 
@@ -517,7 +505,7 @@ public class PdfController {
 
 	@GetMapping("/pdf-inventorystatistics")
 	public ResponseEntity<byte[]> PDFInventorystatistics() throws IOException, DocumentException {
-		List<ReportSP> dataList = Inventorystatistics(); // Hàm này tạo dữ liệu mẫu
+		List<Report> dataList = Inventorystatistics(); // Hàm này tạo dữ liệu mẫu
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		Document document = new Document();
@@ -557,7 +545,7 @@ public class PdfController {
 
 		// Thiết lập dữ liệu cho từng hàng
 		for (int i = 0; i < dataList.size(); i++) {
-			ReportSP data = dataList.get(i);
+			Report data = dataList.get(i);
 			Product product = (Product) data.getGroup();
 
 			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
@@ -667,7 +655,7 @@ public class PdfController {
 		return bookingService.findAll();
 	}
 
-	public final List<ReportSP> Inventorystatistics() {
+	public final List<Report> Inventorystatistics() {
 		return productService.getTk_sp();
 	}
 

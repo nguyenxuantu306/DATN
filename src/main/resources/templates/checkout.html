@@ -153,38 +153,35 @@
 					</div>
 
 					<div class="mb-3">
-						<label for="">Số điện thoại</label> <input type="tel"
-							class="form-control" id="" th:value="${user.phonenumber}"
+						<label for="address">Số điện thoại</label> <input type="tel"
+							class="form-control" id="address" th:value="${user.phonenumber}"
 							th:field="${user.phonenumber}"
 							th:placeholder="${user.phonenumber}" required disabled />
-						<div class="invalid-feedback">Please enter your shipping .</div>
+						<div class="invalid-feedback">Please enter your shipping
+							address.</div>
 					</div>
 
 					<div class="mb-3">
-						<div class="card">
-							<a class="card-body" href="/address">
-								<span class="card-title">Địa chỉ nhận hàng.</span>
-								<span th:each="address : ${user.address}">
-									<p th:if="${address.active}"
-										th:text="${address.street + ', ' + address.district + ', ' + address.city}"></p>
-								</span>
-							</a>
-						</div>
+						<label for="address">Địa chỉ giao hàng</label> <input
+							th:value="${user.address}" th:field="${user.address}"
+							th:placeholder="${user.address}" type="text" class="form-control"
+							id="address" required />
+						<div class="invalid-feedback">Please enter your shipping
+							address.</div>
 					</div>
 
 
 					<!-- <hr class="mb-4" /> -->
-					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input"
-							id="same-address" /> <label class="custom-control-label"
-							for="same-address">Shipping address is the same as my
+					<!-- <div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="same-address" /> <label
+							class="custom-control-label" for="same-address">Shipping address is the same as my
 							billing address</label>
 					</div>
 					<div class="custom-control custom-checkbox">
 						<input type="checkbox" class="custom-control-input" id="save-info" />
 						<label class="custom-control-label" for="save-info">Save
 							this information for next time</label>
-					</div>
+					</div> -->
 					<hr class="mb-4" />
 
 
@@ -338,14 +335,12 @@
 				var discountedPrice = originalTotalPrice
 						* (1 - voucherDiscount);
 
-				// Định dạng giá trị với dấu phân cách hàng nghìn và ký hiệu tiền tệ
-				var formattedDiscountedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(discountedPrice);
 				// Hiển thị giá sau khi áp dụng voucher
 				//discountedPriceDisplay.textContent = discountedPrice;
 
 				if (voucherDiscount > 0) {
 					discountedPriceDisplay.textContent = ''
-							+ formattedDiscountedPrice;
+							+ discountedPrice;
 					discountedPriceDisplay.parentElement.style.display = 'block';
 				} else {
 					discountedPriceDisplay.parentElement.style.display = 'none';

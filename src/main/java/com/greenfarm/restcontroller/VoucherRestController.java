@@ -19,11 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.VoucherDTO;
-import com.greenfarm.dto.VoucherUserDTO;
 import com.greenfarm.entity.Voucher;
-import com.greenfarm.entity.VoucherUser;
 import com.greenfarm.service.VoucherService;
-import com.greenfarm.service.VoucherUserService;
 
 @CrossOrigin("*")
 @RestController
@@ -35,9 +32,6 @@ public class VoucherRestController {
 	@Autowired
 	VoucherService voucherService;
 	
-	@Autowired
-	VoucherUserService voucheruserservice;
-	
 	@GetMapping()
 	public ResponseEntity<List<VoucherDTO>> getList() {
 		List<Voucher> vouchers = voucherService.findAll();
@@ -46,13 +40,6 @@ public class VoucherRestController {
 		return new ResponseEntity<>(voucherDTOs, HttpStatus.OK);
 	}
 	
-	@GetMapping("user")
-	public ResponseEntity<List<VoucherUserDTO>> getListuser() {
-		List<VoucherUser> voucherusers = voucheruserservice.findAll();
-		List<VoucherUserDTO> voucheruserDTOs = voucherusers.stream().map(voucheruser -> modelMapper.map(voucheruser, VoucherUserDTO.class))
-				.collect(Collectors.toList());
-		return new ResponseEntity<>(voucheruserDTOs, HttpStatus.OK);
-	}
 	@GetMapping("{voucherid}")
 	public ResponseEntity<VoucherDTO> getOne(@PathVariable("voucherid") Integer voucherid) {
 		Voucher voucher = voucherService.findById(voucherid);
@@ -72,7 +59,7 @@ public class VoucherRestController {
 	}
 	
 	@PutMapping("{voucherid}")
-	public ResponseEntity<VoucherDTO> update(@PathVariable("voucherid") Integer voucherid, @RequestBody Voucher voucher) {
+	public ResponseEntity<VoucherDTO> update(@PathVariable("id") Integer voucherid, @RequestBody Voucher voucher) {
 		Voucher updatedVoucher = voucherService.update(voucher);
 
 		if (updatedVoucher == null) {

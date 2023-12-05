@@ -52,14 +52,8 @@
 				</h5>
 			</div>
 			<div class="d-grid gap-2 d-md-block">
-				<div th:if="*{availableslots > 0}"
-					style="display: flex; justify-content: space-between; align-items: center;">
+				<div style="display: flex; justify-content: space-between; align-items: center;">
 					<a th:href="@{|/booking/${tourid}|}" class="btn btn-lg btn-primary p-2">Đặt ngay</a>
-				</div>
-				<div th:if="*{availableslots <= 0}"
-					style="display: flex; justify-content: space-between; align-items: center;">
-					<a style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
-						class="btn btn-lg btn-primary p-2">Tour đã hết chỗ</a>
 				</div>
 			</div>
 
@@ -141,29 +135,20 @@
 									<th scope="col">STT</th>
 									<th scope="col">Giá người lớn</th>
 									<th scope="col">Giá trẻ em</th>
-									<th scope="col">Số chỗ còn nhận</th>
 									<th scope="col">Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<th style="padding-top: 20px" scope="row">1</th>
-									<td style="padding-top: 20px"
+									<th scope="row">1</th>
+									<td
 										th:text="*{#numbers.formatDecimal(pricings.Adultprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
 									</td>
-									<td style="padding-top: 20px"
+									<td
 										th:text="*{#numbers.formatDecimal(pricings.Childprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
 									</td>
-									<td style="padding-top: 20px" th:text="*{Availableslots}"></td>
-									<td>
-										<!-- Thay đổi nút thành "Tour đã hết chỗ" nếu hết chỗ --> <a
-											th:if="*{availableslots > 0}" th:href="@{|/booking/${tourid}|}"
-											class="btn btn-md btn-primary p-2">Đặt ngay</a> <span
-											style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
-											th:if="*{availableslots <= 0}" class="btn btn-md btn-primary p-2">Tour
-											đã hết chỗ</span>
-									</td>
-
+									<td><a th:href="@{|/booking/${tourid}|}" class="btn btn-md btn-primary p-2">Đặt
+											ngay</a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -237,52 +222,23 @@
 						<div>
 							<div class="d-flex justify-content-between mb-2">
 								<div class="d-flex flex-row align-items-center">
-									<img src="{{p.user.image}}" alt="avatar" width="25" height="25" />
+									<img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp" alt="avatar"
+										width="25" height="25" />
 									<p class="small mb-0 ms-2 mx-2">{{p.user.firstname}}</p>
-									<p class="text-muted small mb-0">{{ formatTimeAgo(p.commentdate) }}</p>
+									<p class="text-muted small mb-0">{{p.commentdate}}</p>
 								</div>
 
 
 							</div>
 							<p>{{p.commenttext}}</p>
+
 							<div class="d-flex flex-row align-items-center"
 								th:if="${#authorization.expression('isAuthenticated()')}" ng-model="p.user.email">
-								<!-- recomment button  -->
-								<div class="dropdown me-2">
-									<button class="btn btn-secondary dropdown-toggle" type="button"
-										id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-										<i class="far fa-comment-dots me-2"></i> Comment
-									</button>
-									<div class="dropdown-menu" style="min-width: 500px"
-										aria-labelledby="dropdownMenuButton1">
+								<a href="#!" class="d-flex align-items-center me-3"> <i
+										class="far fa-comment-dots me-2"></i>
+									<p class="mb-0">Comment</p>
 
-										<div th:if="${#authorization.expression('isAuthenticated()')}"
-											style="background-color: #f8f9fa;">
-											<div class="d-flex flex-start mw-100 dropdown-item">
-
-												<img class="rounded-circle shadow-1-strong me-3" src="{{users.image}}"
-													alt="avatar" width="40" height="40" />
-
-												<div class="form-outline w-100 ">
-													<textarea class="form-control" id="textAreaExample" rows="4"
-														ng-model="form.recommenttext" placeholder="ReComment"
-														style="background: #fff;"></textarea>
-
-												</div>
-											</div>
-											<div class="float-end mt-2 pt-1">
-												<button type="button" class="btn btn-primary btn-sm"
-													ng-click="createrecomment(p)">Post recomment</button>
-												<button type="button" class="btn btn-outline-primary btn-sm"
-													ng-click="resetrecm()">Cancel</button>
-											</div>
-										</div>
-									</div>
-
-
-								</div>
-
-
+								</a>
 								<div class="list-inline" ng-if="isUserLoggedIn(p.user.email)">
 									<a href="#!" class="d-inline-flex align-items-center  me-3  list-inline-item">
 										<i class="far fa-comment-dots me-2"></i>
@@ -298,27 +254,31 @@
 						<!-- //recomment -->
 						<div class="row" ng-repeat="recm in p.recomment">
 
-							<div class="col-2 "></div>
-							<div class="col-10   my-2">
+							<div class="col-2"></div>
+							<div class="col-10">
 								<div class="d-flex justify-content-between mb-2">
 									<div class="d-flex flex-row align-items-center">
-										<img src="{{recm.user.image}}" alt="avatar" width="25" height="25" />
+										<img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp"
+											alt="avatar" width="25" height="25" />
 										<p class="small mb-0 ms-2 mx-2">{{recm.user.firstname}}</p>
-										<p class="text-muted small mb-0">{{ formatTimeAgo(recm.recommentdate) }}</p>
+										<p class="text-muted small mb-0">{{recm.recommentdate}}</p>
 									</div>
+
+
 								</div>
 								<p>{{recm.recommenttext}}</p>
+
 								<div class="d-flex flex-row align-items-center"
 									th:if="${#authorization.expression('isAuthenticated()')}" ng-model="p.user.email">
 
 									<div class="list-inline" ng-if="isUserLoggedIn(recm.user.email)">
 										<a href="#!" class="d-inline-flex align-items-center  me-3  list-inline-item">
 											<i class="far fa-comment-dots me-2"></i>
-											<p class="mb-0" ng-click="deleterecm(recm)">Xóa</p>
+											<p class="mb-0" ng-click="delete(p)">Xóa</p>
 										</a> <a href="#!"
 											class="d-inline-flex align-items-center  me-3 list-inline-item">
 											<i class="far fa-comment-dots me-2"></i>
-											<p class="mb-0" ng-click="editrecm(recm)">Sửa</p>
+											<p class="mb-0" ng-click="edit(p)">Sửa</p>
 										</a>
 
 									</div>
@@ -353,7 +313,8 @@
 					style="background-color: #f8f9fa;">
 					<div class="d-flex flex-start w-100">
 
-						<img class="rounded-circle shadow-1-strong me-3" src="{{users.image}}" alt="avatar" width="40"
+						<img class="rounded-circle shadow-1-strong me-3"
+							src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
 							height="40" />
 
 						<div class="form-outline w-100">

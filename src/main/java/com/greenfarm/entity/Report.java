@@ -21,4 +21,6 @@ public class Report implements Serializable {
 	Double sum;
 	Long count;
 	
+	
+	
 }

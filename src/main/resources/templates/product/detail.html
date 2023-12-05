@@ -78,21 +78,12 @@
 									onclick="incQuantity()">+</button>
 							</div>
 
-							<button th:if="${item.quantityavailable > 0}"
-								style="background-color: #7AB730" class="add-to-cart-button"
+							<button style="background-color: #7AB730"
+								class="add-to-cart-button"
 								th:onclick="'addToCart(\'' + ${item.productid} + '\')'"
 								th:text="#{shopDetail.label.addToCart}">
 								<i class="fas fa-shopping-cart"></i> Add to Cart
 							</button>
-							<button th:if="${item.quantityavailable <= 0}"
-								style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;" class="add-to-cart-button">
-								<i class="fas fa-exclamation-circle"></i> Sản phẩm đã hết hàng
-							</button>
-							
-							<!-- <a th:if="${item.quantityavailable <= 0}"
-								style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
-								href="#"> <i class="fas fa-exclamation-circle"></i> Liên hệ
-							</a> -->
 						</div>
 						<div class="">
 							<h5>
@@ -232,9 +223,8 @@
 												Gửi đánh giá <i id="review-button"
 													class="fas fa-long-arrow-alt-right ms-1"></i>
 											</button>
-
+											<span th:if="${hasReview}" class="alert-danger">Sản phẩm này đã có đánh giá</span>
 										</div>
-
 									</form>
 
 								</div>
@@ -423,7 +413,6 @@
 
         return false; // Ngăn chặn hành động mặc định của form
     }
-
 </script>
 </body>
 

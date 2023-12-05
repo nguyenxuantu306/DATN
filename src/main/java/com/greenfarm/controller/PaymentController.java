@@ -132,7 +132,7 @@ public class PaymentController {
 						Order orderItem = new Order();
 						orderItem.setUser(user);
 						orderItem.setOrderdate(now);
-//						orderItem.setAddress(user.getAddress());
+						orderItem.setAddress(user.getAddress());
 						orderItem.setStatusOrder(statusOrder);
 						orderItem.setPaymentmethod(paymentMethodObj);
 						orderDAO.save(orderItem);

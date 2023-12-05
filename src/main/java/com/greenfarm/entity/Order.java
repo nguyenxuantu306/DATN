@@ -41,9 +41,7 @@ public class Order implements Serializable {
 		return orderdate.format(formatter);
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "AddressID")
-	Address address;
+	private String Address;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")

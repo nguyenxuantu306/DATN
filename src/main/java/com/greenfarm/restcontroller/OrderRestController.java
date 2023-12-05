@@ -1,20 +1,15 @@
 package com.greenfarm.restcontroller;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +29,6 @@ import com.greenfarm.dto.OrderDTO;
 import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
-import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Report7day;
 import com.greenfarm.entity.ReportRevenue;
@@ -131,122 +125,6 @@ public class OrderRestController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-//	@GetMapping("/search")
-//	public ResponseEntity<byte[]> searchOrdersByDate(
-//			@RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDateTime,
-//			@RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDateTime,
-//			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
-//
-//		List<Order> orders = orderService.findByOrderdateBetween(startDateTime, endDateTime, page, size);
-//
-//		List<OrderDTO> orderDTOs = orders.stream().map(order -> modelMapper.map(order, OrderDTO.class))
-//				.collect(Collectors.toList());
-//
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		objectMapper.registerModule(new JavaTimeModule());
-//		Workbook workbook = new XSSFWorkbook();
-//		Sheet sheet = workbook.createSheet("Danh sách đơn hàng");
-//
-//		// Đặt tiêu đề cho tài liệu Excel
-//		String title = "Danh sách đơn hàng";
-//		Row titleRow = sheet.createRow(0);
-//		Cell titleCell = titleRow.createCell(2);
-//		titleCell.setCellValue(title);
-//
-//		// Thiết lập font và kiểu chữ cho tiêu đề
-//		Font titleFont = workbook.createFont();
-//		titleFont.setBold(true);
-//		titleFont.setFontHeightInPoints((short) 16);
-//		titleFont.setColor(IndexedColors.BLUE.getIndex());
-//
-//		CellStyle titleCellStyle = workbook.createCellStyle();
-//		titleCellStyle.setFont(titleFont);
-//		titleCellStyle.setAlignment(HorizontalAlignment.CENTER);
-//		titleCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-//
-//		// Áp dụng định dạng cho ô tiêu đề
-//		titleCell.setCellStyle(titleCellStyle);
-//
-//		// Tạo hàng tiêu đề và đặt giá trị cho các ô
-//		Row headerRow = sheet.createRow(1);
-//		headerRow.createCell(0).setCellValue("STT");
-//		headerRow.createCell(1).setCellValue("Người mua");
-//		headerRow.createCell(2).setCellValue("Ngày tạo");
-//		headerRow.createCell(3).setCellValue("Tổng");
-//		headerRow.createCell(4).setCellValue("Trạng thái");
-//
-//		// Thiết lập font, kiểu chữ và màu sắc cho hàng tiêu đề
-//		Font headerFont = workbook.createFont();
-//		headerFont.setBold(true);
-//		headerFont.setFontHeightInPoints((short) 12);
-//		headerFont.setColor(IndexedColors.WHITE.getIndex());
-//
-//		CellStyle headerCellStyle = workbook.createCellStyle();
-//		headerCellStyle.setFont(headerFont);
-//		headerCellStyle.setFillForegroundColor(IndexedColors.BLUE.getIndex());
-//		headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-//		headerCellStyle.setAlignment(HorizontalAlignment.CENTER);
-//
-//		// Áp dụng định dạng cho hàng tiêu đề
-//		for (Cell cell : headerRow) {
-//			cell.setCellStyle(headerCellStyle);
-//		}
-//
-//		// Định dạng dữ liệu và tạo các hàng dữ liệu
-//		CellStyle dataCellStyle = workbook.createCellStyle();
-//		dataCellStyle.setDataFormat(workbook.createDataFormat().getFormat("dd/MM/yyyy"));
-//
-//		int rowIdx = 2;
-//
-//		// Định dạng giá tiền
-//		CellStyle currencyStyle = workbook.createCellStyle();
-//		DataFormat dataFormat = workbook.createDataFormat();
-//		currencyStyle.setDataFormat(dataFormat.getFormat("#,##0.00 [$VNĐ]"));
-//
-////	    // Căn giữa nội dung hàng trong ô
-////	    currencyStyle.setAlignment(HorizontalAlignment.CENTER);
-////	    currencyStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-//
-//		// Căn giữa nội dung hàng trong ô theo chiều ngang từ trái qua phải
-//		currencyStyle.setAlignment(HorizontalAlignment.LEFT);
-//
-//		for (int i = 0; i < orders.size(); i++) {
-//			Order data = orders.get(i);
-//			Row row = sheet.createRow(rowIdx++);
-//			row.createCell(0).setCellValue(i + 1);
-//			row.createCell(1).setCellValue(data.getUser().getFirstname());
-//			row.createCell(2).setCellValue(data.getOrderDateFormatted());
-//			List<OrderDetail> orderDetails = data.getOrderDetail();
-//			float totalPrice = 0.0f;
-//			for (OrderDetail orderDetail : orderDetails) {
-//				totalPrice += orderDetail.getTotalPrice();
-//			}
-//			// row.createCell(3).setCellValue(totalPrice);
-//
-//			Cell formattedTotalPriceCell = row.createCell(3);
-//			formattedTotalPriceCell.setCellValue(totalPrice);
-//			formattedTotalPriceCell.setCellStyle(currencyStyle);
-//
-//			row.createCell(4).setCellValue(data.getStatusOrder().getName());
-//
-//		}
-//
-//		// Prepare Excel file for download
-//		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//		try {
-//			workbook.write(outputStream);
-//			workbook.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//		}
-//
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-//		headers.setContentDispositionFormData("attachment", "search_results.xlsx");
-//
-//		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
-//	}
 
 	@PostMapping()
 	public Order create(@RequestBody JsonNode orderData) {
@@ -314,17 +192,18 @@ public class OrderRestController {
 	public List<FindReportYear> getYearlyRevenue(@PathVariable Integer year) {
 		return orderService.findYearlyRevenue(year);
 	}
-
+	
+	
 	@GetMapping("/getCategorySalesByDate")
-	public ResponseEntity<List<CategorySalesByDate>> getCategorySalesByDate(
-			@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-
-		List<CategorySalesByDate> result = orderService.getCategorySalesByDate(date);
-		return ResponseEntity.ok(result);
-	}
+    public ResponseEntity<List<CategorySalesByDate>> getCategorySalesByDate(
+        @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        
+        List<CategorySalesByDate> result = orderService.getCategorySalesByDate(date);
+        return ResponseEntity.ok(result);
+    }
 
 	@GetMapping("/last7days")
-	public List<Report7day> getRevenueLast7Days() {
-		return orderService.getRevenueLast7Days();
-	}
+    public List<Report7day> getRevenueLast7Days() {
+        return orderService.getRevenueLast7Days();
+    }
 }
