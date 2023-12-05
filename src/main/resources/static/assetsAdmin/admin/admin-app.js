@@ -53,7 +53,7 @@ app.config(function($routeProvider) {
 		.when("/dashboard", {
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
 		})
-		
+
 		.otherwise({
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
 			controller: "revenueindex-ctrl"
