@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.greenfarm.dto.AddressDTO;
+import com.greenfarm.dto.CategoryDTO;
 import com.greenfarm.entity.Address;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.AddressService;
@@ -48,6 +52,8 @@ public class AddressController {
 		return "address";
 	}
 
+	
+
 	@PostMapping("/updateAddressStatus/{addressId}")
 	@ResponseBody
 	public String updateAddressStatus(@PathVariable("addressId") Integer addressId, HttpServletRequest request) {
@@ -56,23 +62,49 @@ public class AddressController {
 		return "Success";
 	}
 
-	@GetMapping("/getAddress/{addressId}")
-	@ResponseBody
-	public Map<String, Object> getAddress(@PathVariable("addressId") Integer addressId) {
-		Map<String, Object> response = new HashMap<>();
+	
+	@GetMapping("/address/{addressId}")
+	public ResponseEntity<Address> getAddress(@PathVariable Integer addressId) {
+		Address address = addressService.findById(addressId);
+		if (address != null) {
+			return new ResponseEntity<>(address, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
+	@PutMapping("/address/{addressId}")
+	public ResponseEntity<AddressDTO> updateAddress(@PathVariable Integer addressId,
+			@RequestBody Address updatedAddress) {
 
-		try {
-			Address address = addressService.findById(addressId);
-			User user = userService.findById(address.getUser().getUserid());
+		Address updateAddress = addressService.update(updatedAddress);
 
-			response.put("address", address);
-			response.put("user", user);
-			response.put("success", true);
-		} catch (Exception e) {
-			response.put("success", false);
-			response.put("message", "Error getting address information: " + e.getMessage());
+		if (updateAddress == null) {
+			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy product để cập nhật
+			return ResponseEntity.notFound().build();
 		}
 
-		return response;
+		AddressDTO addressDTO = modelMapper.map(updateAddress, AddressDTO.class);
+
+		return new ResponseEntity<>(addressDTO, HttpStatus.OK);
+
+//		Address address = addressService.findById(addressId);
+//		if (address != null) {
+//			// Cập nhật các trường của địa chỉ
+//			address.setStreet(updatedAddress.getStreet());
+//			address.setDistrict(updatedAddress.getDistrict());
+//			address.setCity(updatedAddress.getCity());
+//			address.setActive(updatedAddress.getActive());
+//
+//			// Lưu cập nhật địa chỉ
+//			addressService.update(address);
+//
+//			return new Response	Entity<>(address, HttpStatus.OK);
+//		} else {
+//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//		}
 	}
+
 }
+

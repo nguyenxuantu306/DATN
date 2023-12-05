@@ -19,10 +19,10 @@
 					th:attr="onclick='updateAddressStatus(\'' + ${address.addressID} + '\')'">
 					<span class="fw-bold">[[${address.user.firstname}]] |
 						[[${address.user.phonenumber}]]</span> <span class="fw-bold float-end">
-						<button type="button"
-							class="text-danger border-0 bg-white fw-bold"
-							data-bs-toggle="modal" data-bs-target="#myModal"
-							data-address-id="${address.AddressID}">Cập nhật</button>
+						<a type="button" 
+						class="btn btn-primary text-danger border-0 bg-white fw-bold"
+						data-bs-toggle="modal" data-bs-target="#myModal"
+						data-address-id="{{address.addressID}}">Cập nhật</a>
 				</span>
 				</span>
 			</div>
@@ -56,20 +56,19 @@
 					<div class="modal-body">
 
 						<form>
-							<!-- 2 column grid layout with text inputs for the first and last names -->
 							<div class="row ">
 								<div class="col">
 									<div data-mdb-input-init class="form-outline">
 										<label class="form-check-label" for="form2Example33">
 											Họ: </label> <input type="text" id="lastname" class="form-control"
-											value="[[user.lastname]]" />
+											value="{{address.user.lastname}}" />
 									</div>
 								</div>
 								<div class="col">
 									<div data-mdb-input-init class="form-outline">
 										<label class="form-check-label" for="form2Example33">
 											Tên: </label> <input type="text" id="firstname" class="form-control"
-											value="[[user.firstname]]" />
+											value="{{address.user.firstname}}" />
 
 									</div>
 								</div>
@@ -78,7 +77,7 @@
 									<div data-mdb-input-init class="form-outline">
 										<label class="form-check-label"> Số ĐT: </label> <input
 											type="text" id="phonenumber" class="form-control"
-											value="[[address.phonenumber]]" />
+											value="{{address.user.phonenumber}}" />
 
 									</div>
 								</div>
@@ -88,7 +87,7 @@
 									<div data-mdb-input-init class="form-outline">
 										<label class="form-check-label" for="form2Example33">
 											Đường: </label> <input type="text" class="form-control" id="Street"
-											value="[[address.Street]]" />
+											value="{{address.Street}}" />
 
 									</div>
 								</div>
@@ -96,7 +95,7 @@
 									<div data-mdb-input-init class="form-outline">
 										<label class="form-check-label" for="form2Example33">
 											Quận: </label> <input type="text" class="form-control" id="District"
-											value="[[address.District]]" />
+											value="{{address.District}}" />
 
 									</div>
 								</div>
@@ -105,16 +104,18 @@
 									<div data-mdb-input-init class="form-outline">
 										<label class="form-check-label"> Tỉnh/Thành phố: </label> <input
 											type="text" class="form-control" id="City"
-											value="[[address.City]]" />
+											value="{{address.City}}" />
 
 									</div>
 								</div>
 							</div>
+
+
+
 							<div class="float-end mt-3">
 								<button type="button" class="btn btn-primary"
 									data-bs-dismiss="modal">Trở lại</button>
-								<button type="button" class="btn btn-success"
-									data-bs-dismiss="modal">Lưu</button>
+								<button type="button" class="btn btn-success">Lưu</button>
 							</div>
 						</form>
 					</div>
@@ -153,57 +154,95 @@
 			}
 		}
 	</script>
-	<script type="text/javascript">
-		// Gửi yêu cầu Ajax để lấy thông tin địa chỉ và người dùng
-		function getAddress(addressId) {
-			// Tạo đối tượng XMLHttpRequest
-			var xhr = new XMLHttpRequest();
-			8936079124236
-			// Định nghĩa hàm xử lý khi yêu cầu thành công
-			xhr.onload = function() {
-				if (xhr.status === 200) {
-					// Chuyển đổi dữ liệu trả về thành đối tượng JSON
-					var response = JSON.parse(xhr.responseText);
 
-					if (response.success) {
-						// Hiển thị thông tin địa chỉ và người dùng trong modal
-						var address = response.address;
-						var user = response.user;
+	<script>
+		function showAddressDetails(addressId) {
+			// Lấy thẻ input và gán giá trị cho trường addressId
+			document.getElementById("addressId").value = parseInt(addressId);
+			console.log(addressId);
 
-						document.getElementById("firstname").value = user.firstname;
-						document.getElementById("lastname").value = user.lastname;
-						document.getElementById("phonenumber").value = user.phonenumber;
+			// Make an AJAX request to fetch the address details
+			$
+					.ajax({
+						url : '/address/' + addressId,
+						type : 'GET',
+						success : function(response) {
+							// Update the modal form fields with the address details
+							$('#addressId').val(response.addressId);
+							$('#street').val(response.street);
+							$('#district').val(response.district);
+							$('#city').val(response.city);
+							$('#active').val(response.active);
 
-						document.getElementById("Street").value = address.Street;
-						document.getElementById("District").value = address.District;
-						document.getElementById("City").value = address.City;
-					} else {
-						// Xử lý khi có lỗi
-						console.error("Error getting address information:",
-								response.message);
-					}
-				} else {
-					// Xử lý khi có lỗi
-					console.error("Error getting address information. Status:",
-							xhr.status);
-				}
-			};
+							// Open the modal
+							$('#myModal').modal('show');
+						},
+						error : function(xhr, status, error) {
+							// Handle the error
+							console.log(error);
 
-			// Định nghĩa hàm xử lý khi có lỗi
-			xhr.onerror = function() {
-				console
-						.error("Error getting address information. Network error.");
-			};
+							// Display an error message to the user
+							var errorMessage = 'An error occurred while fetching the address details.';
 
-			// Gửi yêu cầu GET đến URL "/getAddress/{addressId}"
-			xhr.open("GET", "/getAddress/" + addressId);
-			xhr.send();
+							// Update the modal form fields with an error message or clear the fields
+							$('#addressId').val('');
+							$('#street').val('');
+							$('#district').val('');
+							$('#city').val('');
+							$('#active').val('');
+
+							// Display the error message to the user
+							$('#myModal .modal-body').html(
+									'<p>' + errorMessage + '</p>');
+
+							// Open the modal
+							$('#myModal').modal('show');
+						}
+					});
 		}
-
-		// Gọi hàm getAddress với địa chỉ ID cần lấy thông tin
-		var addressId = 123; // Thay thế bằng địa chỉ ID thực tế
-		getAddress(addressId);
 	</script>
+
+	<script>
+		function updateAddress() {
+			// Lấy chi tiết địa chỉ từ các trường của form modal
+			var addressId = $('#addressId').val();
+			var street = $('#street').val();
+			var district = $('#district').val();
+			var city = $('#city').val();
+			var active = $('#active').val();
+
+			// Tạo một đối tượng với các chi tiết địa chỉ cập nhật
+			var updatedAddress = {
+				addressId : addressId,
+				street : street,
+				district : district,
+				city : city,
+				active : active
+			};
+
+			// Gửi yêu cầu AJAX để cập nhật địa chỉ
+			$.ajax({
+				url : '/address/' + addressId,
+				type : 'PUT',
+				contentType : 'application/json',
+				data : JSON.stringify(updatedAddress),
+				success : function(response) {
+					// Xử lý phản hồi thành công
+					console.log(response);
+					// Đóng modal
+					$('#myModal').modal('hide');
+					// Tải lại danh sách địa chỉ hoặc cập nhật phần tử địa chỉ cụ thể
+					// với các chi tiết đã cập nhật
+				},
+				error : function(xhr, status, error) {
+					// Xử lý lỗi
+					console.log(error);
+				}
+			});
+		}
+	</script>
+
+
 </body>
 
 </html>
