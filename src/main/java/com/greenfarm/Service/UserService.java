@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
-import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportSP;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.InvalidTokenException;
 import com.greenfarm.exception.UnkownIdentifierException;
@@ -62,10 +62,10 @@ public interface UserService {
 	public void processOAuthPostLogin(String username);
 
 	// Tổng tiền mua hàng của các user
-	List<Report> getTotalPurchaseByUser();
+	List<ReportSP> getTotalPurchaseByUser();
 
 	// Tổng tiền đặt vé của các user
-	List<Report> getBookingTotalPurchaseByUser();
+	List<ReportSP> getBookingTotalPurchaseByUser();
 
 	void save(User user);
 

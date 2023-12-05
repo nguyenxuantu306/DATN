@@ -29,7 +29,7 @@ import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Product;
-import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportSP;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.BookingService;
@@ -264,7 +264,7 @@ public class ExcelController {
 
 	@GetMapping("/excel-productstatistics")
 	public ResponseEntity<byte[]> ExcelCategoryStatistics() throws IOException {
-		List<Report> dataList = getProductStatistics(); // Lấy dữ liệu từ hàm getAll()
+		List<ReportSP> dataList = getProductStatistics(); // Lấy dữ liệu từ hàm getAll()
 
 		Workbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet("Thống kê sản phẩm");
@@ -355,7 +355,7 @@ public class ExcelController {
 
 	@GetMapping("/excel-categorystatistics")
 	public ResponseEntity<byte[]> ExcelProductStatistics() throws IOException {
-		List<Report> dataList = getCategoryStatitics(); // Lấy dữ liệu từ hàm getAll()
+		List<ReportSP> dataList = getCategoryStatitics(); // Lấy dữ liệu từ hàm getAll()
 
 		Workbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet("Thống kê loại sản phẩm");
@@ -418,7 +418,7 @@ public class ExcelController {
 		sheet.setDefaultColumnStyle(3, currencyStyle);
 
 		for (int i = 0; i < dataList.size(); i++) {
-			Report data = dataList.get(i);
+			ReportSP data = dataList.get(i);
 			Row row = sheet.createRow(rowIdx++);
 			row.createCell(0).setCellValue(i + 1);
 			Category category = (Category) data.getGroup();
@@ -879,7 +879,7 @@ public class ExcelController {
 		return productService.findAll();
 	}
 
-	public final List<Report> getCategoryStatitics() {
+	public final List<ReportSP> getCategoryStatitics() {
 		return productService.getTk_loai();
 	}
 

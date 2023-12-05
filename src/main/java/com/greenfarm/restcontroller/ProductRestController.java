@@ -26,7 +26,7 @@ import com.greenfarm.dto.ProductImageDTO;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.ProductImage;
-import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportSP;
 import com.greenfarm.service.ProductService;
 
 @CrossOrigin("*")
@@ -257,12 +257,12 @@ public class ProductRestController {
 //	}
 
 	@GetMapping("/thongke/sp")
-	public ResponseEntity<List<Report>> getTK_SP() {
+	public ResponseEntity<List<ReportSP>> getTK_SP() {
 		return new ResponseEntity<>(productService.getTk_sp(), HttpStatus.OK);
 	}
 
 	@GetMapping("/thongke/loai")
-	public ResponseEntity<List<Report>> getTK_Loai() {
+	public ResponseEntity<List<ReportSP>> getTK_Loai() {
 		return new ResponseEntity<>(productService.getTk_loai(), HttpStatus.OK);
 	}
 
@@ -272,7 +272,7 @@ public class ProductRestController {
 	}
 
 	@GetMapping("/thongke/top10spbanchay")
-	public List<Report> getProductspbanchay() {
+	public List<ReportSP> getProductspbanchay() {
 		return productService.getReportspbanchay();
 	}
 

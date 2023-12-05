@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.UserDTO;
-import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportSP;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.UnkownIdentifierException;
 import com.greenfarm.exception.UserAlreadyExistException;
@@ -193,15 +193,15 @@ public class UserRestController {
 
 	// Tổng tiền mua hàng của các user
 	@GetMapping("/total-purchase")
-    public ResponseEntity<List<Report>> getTotalPurchaseByUser() {
-        List<Report> totalPurchaseList = userService.getTotalPurchaseByUser();
+    public ResponseEntity<List<ReportSP>> getTotalPurchaseByUser() {
+        List<ReportSP> totalPurchaseList = userService.getTotalPurchaseByUser();
         return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
     }
 	
 	//Tổng tiền đặt vé của các user
 		@GetMapping("/bookingtotal-purchase")
-	    public ResponseEntity<List<Report>> getBookingTotalPurchaseByUser() {
-	        List<Report> totalPurchaseList = userService.getBookingTotalPurchaseByUser();
+	    public ResponseEntity<List<ReportSP>> getBookingTotalPurchaseByUser() {
+	        List<ReportSP> totalPurchaseList = userService.getBookingTotalPurchaseByUser();
 	        return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
 	    }
 

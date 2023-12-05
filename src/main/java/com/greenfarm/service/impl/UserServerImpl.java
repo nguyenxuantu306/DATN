@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 import com.greenfarm.dao.Securetokendao;
 import com.greenfarm.dao.UserDAO;
 import com.greenfarm.dto.Provider;
-import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportSP;
 import com.greenfarm.entity.Role;
 import com.greenfarm.entity.Securetoken;
 import com.greenfarm.entity.User;
@@ -352,12 +352,12 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public List<Report> getTotalPurchaseByUser() {
+	public List<ReportSP> getTotalPurchaseByUser() {
 		return dao.totalPurchaseByUser();
 	}
 
 	@Override
-	public List<Report> getBookingTotalPurchaseByUser() {
+	public List<ReportSP> getBookingTotalPurchaseByUser() {
 		return dao.BookingTotalPurchaseByUser();
 	}
 
