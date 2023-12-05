@@ -8,7 +8,7 @@
 </head>
 
 <body>
-	<div class="">
+	<div class="container">
 		<!-- Header Start -->
 		<div class=" page-header">
 			<div class="container">
@@ -18,7 +18,7 @@
 			</div>
 		</div>
 		<div class="pb-3">
-			<div class="text-center  my-3 pb-3">
+			<div class="text-center my-3 pb-3">
 				<h6 class="text-primary text-uppercase" style="letter-spacing: 5px"
 					th:text="#{index.label.destination}">Destination</h6>
 				<h1 th:text="#{index.label.outstanding}">The most outstanding
@@ -26,7 +26,7 @@
 			</div>
 			<div class="row">
 				<div th:each="tour : ${topTour.content}"
-					class="col-md-6 col-xl-3 col-lg-4 col-12 mb-4 pl-xl-3">
+					class="col-lg-4 col-md-6 mb-4">
 					<div class="package-item bg-white mb-2">
 						<a th:href="@{|/tour/detail/${tour.tour.tourid}|}"><img
 							style="height: 300px; width: 100%" class="img-fluid "
@@ -67,7 +67,7 @@
 			</div>
 			<div class="row text-center">
 				<div th:each="product : ${topList.content}"
-					class="col-md-6 col-xl-3 col-lg-4 col-12 mb-4">
+					class="col-lg-3 col-md-6 mb-4">
 					<div class="package-item bg-white mb-2">
 						<a th:href="@{|/product/detail/${product.product.productid}|}"><img
 							style="height: 250px" class="img-fluid "

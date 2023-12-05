@@ -651,7 +651,6 @@ pre code {
 	.container,
 	.container-sm {
 		max-width: 540px;
-		font-size: 14px;
 	}
 }
 
@@ -864,7 +863,6 @@ pre code {
 .col-9 {
 	flex: 0 0 75%;
 	max-width: 75%;
-	font-size: 30px;
 }
 
 .col-10 {
@@ -1481,7 +1479,6 @@ pre code {
 	.col-lg-6 {
 		flex: 0 0 50%;
 		max-width: 50%;
-		font-size: 16px;
 	}
 
 	.col-lg-7 {
@@ -4478,6 +4475,7 @@ input[type="button"].btn-block {
 .navbar-nav {
 	display: flex;
 	flex-direction: column;
+	padding-left: 0;
 	margin-bottom: 0;
 	list-style: none;
 }
@@ -4506,7 +4504,7 @@ input[type="button"].btn-block {
 
 .navbar-toggler {
 	padding: 0.25rem 0.75rem;
-	font-size: 3.25rem;
+	font-size: 1.25rem;
 	line-height: 1;
 	background-color: transparent;
 	border: 1px solid transparent;

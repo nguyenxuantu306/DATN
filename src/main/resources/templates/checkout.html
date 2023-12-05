@@ -36,7 +36,7 @@
 										x <small class="text-muted" name="quantityBought"
 											th:text="${item.quantity}"></small>
 									</div> <span class="text-muted"
-									th:text="${#numbers.formatDecimal(item.quantity * item.product.price, 0, 'COMMA', 0, 'POINT')}+ ' (VND)'"></span>
+									th:text="${#numbers.formatDecimal(item.quantity * item.product.price, 0, 'COMMA', 0, 'POINT')}+ ' ₫'"></span>
 
 								</li>
 							</div>
@@ -51,14 +51,14 @@
 						<li class="list-group-item d-flex justify-content-between"><span>Tổng
 								cộng</span> <strong id="totalPrice"> <span
 								style="font-size: smaller; opacity: 0.7;">VNĐ</span> <span
-								th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + ' (VND)'"></span>
+								th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
 
 						</strong></li>
 						<li class="list-group-item d-flex justify-content-between"><span>Khuyến
 								mãi</span> <strong id="totalPriceValue"></strong></li>
 						<li class="list-group-item d-flex justify-content-between">
 							Gía sau khi áp dụng :
-							<div id="discountedPriceDisplay"></div><span>(VND)</span>
+							<div id="discountedPriceDisplay"></div>
 						</li>
 					</ul>
 				</form>
