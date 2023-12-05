@@ -21,7 +21,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.entity.Booking;
@@ -134,7 +133,7 @@ public class ExcelController {
 			row.createCell(1).setCellValue(data.getFirstname());
 			row.createCell(2).setCellValue(data.getEmail());
 			row.createCell(3).setCellValue(data.getPhonenumber());
-			row.createCell(4).setCellValue(data.getAddress());
+			// row.createCell(4).setCellValue(data.getAddress());
 
 			// Set gender as "Male" or "Female"
 			Cell genderCell = row.createCell(5);
@@ -333,12 +332,28 @@ public class ExcelController {
 		// Áp dụng kiểu định dạng giá tiền cho cột "getPrice()" (cột 2)
 		sheet.setDefaultColumnStyle(2, currencyStyle);
 
-		// Định dạng giá tiền
-		CellStyle currencyStyle = workbook.createCellStyle();
-		DataFormat dataFormat = workbook.createDataFormat();
-		currencyStyle.setDataFormat(dataFormat.getFormat("#,##0.00 [$VNĐ]"));
 		// Áp dụng kiểu định dạng giá tiền cho cột "product.getPrice() *
 		// data.getCount()" (cột 4)
+		sheet.setDefaultColumnStyle(4, currencyStyle);
+
+		for (int i = 0; i < dataList.size(); i++) {
+			Report data = dataList.get(i);
+			Row row = sheet.createRow(rowIdx++);
+			row.createCell(0).setCellValue(i + 1);
+			Product product = (Product) data.getGroup();
+			row.createCell(1).setCellValue(product.getProductname());
+			// row.createCell(2).setCellValue(product.getPrice());
+
+			// Định dạng giá tiền cho "getPrice()"
+			Cell priceCell = row.createCell(2);
+			priceCell.setCellValue(product.getPrice());
+			priceCell.setCellStyle(currencyStyle);
+
+			row.createCell(3).setCellValue(data.getCount());
+			Cell totalPriceCell = row.createCell(4);
+			totalPriceCell.setCellValue(product.getPrice() * data.getCount());
+			totalPriceCell.setCellStyle(currencyStyle);
+		}
 
 		// Tự động thay đổi độ rộng các cột
 		sheet.autoSizeColumn(2);
@@ -460,7 +475,7 @@ public class ExcelController {
 		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
 
-	@RequestMapping("/excel-order")
+	@GetMapping("/excel-order")
 	public ResponseEntity<byte[]> order() throws IOException {
 		List<Order> dataList = getAllOrder(); // Lấy dữ liệu từ hàm getAll()
 
@@ -563,7 +578,7 @@ public class ExcelController {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		headers.setContentDispositionFormData("attachment", "order.xlsx");
+		headers.setContentDispositionFormData("attachment", "category_statistics.xlsx");
 
 		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
@@ -663,26 +678,12 @@ public class ExcelController {
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 		headers.setContentDispositionFormData("attachment", "category_statistics.xlsx");
 
-		// Tự động điều chỉnh cỡ các cột
-		for (int i = 0; i < 5; i++) {
-			sheet.autoSizeColumn(i);
-		}
-
-		// Gửi file Excel như là phản hồi HTTP
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		workbook.write(outputStream);
-		workbook.close();
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		headers.setContentDispositionFormData("attachment", "category_statistics.xlsx");
-
 		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
 
 	@GetMapping("/excel-inventorystatistics")
 	public ResponseEntity<byte[]> ExcelInventorystatistics() throws IOException {
-		List<ReportSP> dataList = Inventorystatistics(); // Lấy dữ liệu từ hàm getAll()
+		List<Report> dataList = Inventorystatistics(); // Lấy dữ liệu từ hàm getAll()
 
 		Workbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet("Thống kê hàng tồn kho");
@@ -738,7 +739,7 @@ public class ExcelController {
 		int rowIdx = 2;
 
 		for (int i = 0; i < dataList.size(); i++) {
-			ReportSP data = dataList.get(i);
+			Report data = dataList.get(i);
 			Row row = sheet.createRow(rowIdx++);
 			row.createCell(0).setCellValue(i + 1);
 			Product product = (Product) data.getGroup();
@@ -837,7 +838,7 @@ public class ExcelController {
 			formattedSumCell.setCellValue(data.getPricings().getAdultprice());
 			formattedSumCell.setCellStyle(currencyStyle);
 
-			// row.createCell(4).setCellValue(data.getAvailableslots());
+			row.createCell(4).setCellValue(data.getAvailableslots());
 
 			// Kiểm tra và hiển thị "đã có" nếu điều kiện được đáp ứng
 			String tourConditions = data.getTourCondition().getConditions();
@@ -897,6 +898,10 @@ public class ExcelController {
 		return productService.findAll();
 	}
 
+	public final List<Report> getProductStatitics() {
+		return productService.getTk_sp();
+	}
+
 	public final List<Report> getCategoryStatitics() {
 		return productService.getTk_loai();
 	}
@@ -909,16 +914,12 @@ public class ExcelController {
 		return bookingService.findAll();
 	}
 
+	public final List<Report> Inventorystatistics() {
+		return productService.getTk_sp();
+	}
+
 	public final List<Tour> getAllTour() {
 		return tourService.findAll();
-	}
-
-	public final List<ReportSP> Inventorystatistics() {
-		return productService.getTk_sp();
-	}
-
-	public final List<ReportSP> getProductStatitics() {
-		return productService.getTk_sp();
 	}
 
 }
