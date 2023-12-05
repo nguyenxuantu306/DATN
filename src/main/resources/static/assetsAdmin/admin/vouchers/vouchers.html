@@ -95,7 +95,7 @@
 						</div>
 						<div class="col-md-6 text-right">
 							<button type="button" class="btn btn-success"
-								ng-click="editthemsp()" data-toggle="modal"
+								data-toggle="modal"
 								data-target="#exampleModal3">
 								<i class="fa fa-plus-square"></i> Cấp mã
 							</button>
@@ -121,7 +121,6 @@
 									<th style="width: 150px;"><img ng-src="{{item2.user.image}}" alt="Product Image"
 										style="width: 70px;height:70px"></th>
 									<th style="width: 250px;">{{item2.user.email}}</th>
-									<th style="width: 250px;">{{item2.voucherid}}</th>
 									<th style="width: 250px;">{{item2.voucher.code}}</th>
 									<th class="text-primary" style="width: 250px;">{{item2.voucher.expirationdate |
 											date:'dd-MM-yyyy HH:mm a'}}</th>
@@ -129,7 +128,7 @@
 										data-target="#exampleModal4"> <i
 											class="bi bi-pencil-square"></i>
 									</a></td>
-									<td><a ng-click="delete(item)"><i
+									<td><a ng-click="deleteuser(item2)"><i
 											class="bi bi-trash3-fill p-2"></i></a></td>
 								</tr>
 							</tbody>
@@ -296,7 +295,7 @@
 									ng-submit="submitForm1()" novalidate>
 									<div class="form-group col-sm-6">
 										<label>UserID:</label> <input name="userid" style="height: 55px"
-											type="text" ng-model="form.userid"
+											type="text" ng-model="form2.user.userid"
 											class="form-control input-default" placeholder="VD : code"
 											required /> <label
 											ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.userid.$error.required"
@@ -304,7 +303,7 @@
 									</div>
 									<div class="form-group col-sm-6">
 										<label>VoucherID:</label> <input name="voucherid"
-											style="height: 55px" type="number" ng-model="form.voucherid"
+											style="height: 55px" type="number" ng-model="form2.voucher.voucherid"
 											class="form-control input-default" placeholder="VD : 1"
 											required /> <label
 											ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.voucherid.$error.required"
@@ -345,7 +344,7 @@
 									novalidate>
 									<div class="form-group col-sm-6">
 										<label>UserID:</label><input name="userid" style="height: 55px"
-											type="number" ng-model="form2.userid"
+											type="number" ng-model="form2.user.userid"
 											class="form-control input-default" placeholder="VD : user1"
 											required /> <label
 											ng-show="frmvalidate.$submitted && frmvalidate.userid.$error.required"
@@ -353,7 +352,7 @@
 									</div>
 									<div class="form-group col-sm-6">
 										<label>VouchersID:</label> <input name="voucherid"
-											style="height: 55px" type="number" ng-model="form2.voucherid"
+											style="height: 55px" type="number" ng-model="form2.voucher.voucherid"
 											class="form-control input-default" placeholder="VD : vocher1"
 											required /> <label
 											ng-show="frmvalidate.$submitted && frmvalidate.voucherid.$error.required"

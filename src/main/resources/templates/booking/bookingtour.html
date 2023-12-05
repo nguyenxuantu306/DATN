@@ -141,20 +141,21 @@
 								<div class="col-6 mt-2">
 									<label for="" style="font-weight: bold;">Ngày đặt Tour</label>
 									<div class="input-group mb-3">
-										<!-- <div class="form-outline datepicker">
+										<div class="form-outline datepicker">
 											<select class="form-control"
-												style="border-radius: 5px; background-color: white;"
-												id="childticketprice" aria-label="Username"
-												aria-describedby="basic-addon1" readonly>
+												style="border-radius: 5px; background-color: white;"											
+												readonly name="tourdate" id="tourdate">
 
-												Sử dụng vòng lặp để lấy ra 5 hàng
-												<option
-													th:each="date, iterStat : ${booking.tour.tourDate.tourdates}"
-													th:if="${iterStat.index < 5}" th:value="${date}"
-													th:text="${date}"></option>
+												<!-- Thêm option mặc định -->
+												<option value="" selected disabled>Chọn ngày đi</option>
+
+												<!-- Sử dụng vòng lặp để tạo các option với thông tin số lượng chỗ -->
+												<option th:each="date: ${booking.tour.tourDate}" 
+													th:value="${date.tourdates}"><span
+														th:text="${date.tourdates}"></span>
+												</option>
 											</select>
-										</div> -->
-
+										</div>
 
 									</div>
 

@@ -49,9 +49,9 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 	}
 
 	// Thêm loại sản phẩm mới
-	$scope.create = function() {
-		var item = angular.copy($scope.form);
-		$http.post(`/rest/vouchers`, item).then(resp => {
+	$scope.createuser = function() {
+		var item2 = angular.copy($scope.form2);
+		$http.post(`/rest/vouchers/user`, item2).then(resp => {
 			resp.data.expirationdate = new Date(resp.data.expirationdate)
 			$scope.items.push(resp.data);
 			$scope.reset();
@@ -180,7 +180,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 	}
 	
 	// cập loại nhật sản phẩm
-	$scope.update = function() {
+	$scope.updateuser = function() {
 		var item2 = angular.copy($scope.form2);
 		$http.put(`/rest/vouchers/user/${item2.voucheruserid}`, item2).then(resp => {
 			var index = $scope.items2.findIndex(p => p.voucheruserid == item2.voucheruserid);
@@ -191,6 +191,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 				title: 'Thành công!',
 				text: 'Cập nhật mã thành công!',
 			});
+			location.reload();
 			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
 			$scope.frmvalidateupdate.$setPristine();
 			$scope.frmvalidateupdate.$setUntouched();
@@ -208,7 +209,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 			});
 	}
 
-	$scope.delete = function(item) {
+	$scope.deleteuser = function(item2) {
 		// Hiển thị cửa sổ xác nhận trước khi xóa
 		Swal.fire({
 			title: 'Xác nhận xóa',

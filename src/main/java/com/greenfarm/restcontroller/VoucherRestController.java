@@ -90,7 +90,7 @@ public class VoucherRestController {
 		return new ResponseEntity<>(voucherDTO, HttpStatus.OK);
 	}
 	
-	@PutMapping("user/{voucherid}")
+	@PutMapping("user/{voucheruserid}")
 	public ResponseEntity<VoucherUserDTO> updateuser(@PathVariable("voucheruserid") Integer voucheruserid, @RequestBody VoucherUser voucheruser) {
 		VoucherUser updatedVoucheruser = voucheruserservice.update(voucheruser);
 
@@ -112,7 +112,7 @@ public class VoucherRestController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@DeleteMapping("user/{voucherid}")
+	@DeleteMapping("user/{voucheruserid}")
 	public ResponseEntity<Void> deleteuser(@PathVariable("voucheruserid") Integer voucheruserid) {
 		VoucherUser existingVoucheruser = voucheruserservice.findById(voucheruserid);
 
