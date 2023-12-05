@@ -1,0 +1,270 @@
+[INFO ] 04-12-2023 00:18:44 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 17.0.5 with PID 16336 (D:\Ky6\DATN\target\classes started by votha in D:\Ky6\DATN)
+[DEBUG] 04-12-2023 00:18:44 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 04-12-2023 00:18:44 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 04-12-2023 00:18:44 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 04-12-2023 00:18:45 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 95 ms. Found 28 JPA repository interfaces.
+[INFO ] 04-12-2023 00:18:45 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 04-12-2023 00:18:45 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:18:45 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 04-12-2023 00:18:45 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 04-12-2023 00:18:45 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 04-12-2023 00:18:45 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 923 ms
+[INFO ] 04-12-2023 00:18:45 [restartedMain] HikariDataSource - HikariPool-3 - Starting...
+[INFO ] 04-12-2023 00:18:45 [restartedMain] HikariPool - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@60fd41ce
+[INFO ] 04-12-2023 00:18:45 [restartedMain] HikariDataSource - HikariPool-3 - Start completed.
+[INFO ] 04-12-2023 00:18:45 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 04-12-2023 00:18:45 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:18:45 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 04-12-2023 00:18:45 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:18:45 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 04-12-2023 00:18:45 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 04-12-2023 00:18:46 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 04-12-2023 00:18:47 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 04-12-2023 00:18:47 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@143ea3aa, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7d18ebd9, org.springframework.security.web.context.SecurityContextHolderFilter@2b688743, org.springframework.security.web.header.HeaderWriterFilter@12b95ec1, org.springframework.security.web.authentication.logout.LogoutFilter@3975c767, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@60db6e2d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@38096dac, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@edf182e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2bbdcfff, org.springframework.security.web.access.ExceptionTranslationFilter@16340a81, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5bf1a04d]
+[INFO ] 04-12-2023 00:18:47 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 04-12-2023 00:18:47 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:18:47 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 04-12-2023 00:18:47 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 3.039 seconds (process running for 143.194)
+[INFO ] 04-12-2023 00:18:47 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 04-12-2023 00:23:25 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[INFO ] 04-12-2023 00:23:25 [Thread-11] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:25 [Thread-11] StandardService - Stopping service [Tomcat]
+[INFO ] 04-12-2023 00:23:25 [Thread-11] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:25 [Thread-11] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:25 [Thread-11] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 04-12-2023 00:23:25 [Thread-11] HikariDataSource - HikariPool-3 - Shutdown initiated...
+[INFO ] 04-12-2023 00:23:25 [Thread-11] HikariDataSource - HikariPool-3 - Shutdown completed.
+[INFO ] 04-12-2023 00:23:26 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 17.0.5 with PID 16336 (D:\Ky6\DATN\target\classes started by votha in D:\Ky6\DATN)
+[DEBUG] 04-12-2023 00:23:26 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 04-12-2023 00:23:26 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 04-12-2023 00:23:28 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 04-12-2023 00:23:29 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1107 ms. Found 28 JPA repository interfaces.
+[INFO ] 04-12-2023 00:23:31 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 04-12-2023 00:23:31 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:31 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 04-12-2023 00:23:31 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 04-12-2023 00:23:31 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 04-12-2023 00:23:31 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5220 ms
+[INFO ] 04-12-2023 00:23:34 [restartedMain] HikariDataSource - HikariPool-4 - Starting...
+[INFO ] 04-12-2023 00:23:35 [restartedMain] HikariPool - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@263074fb
+[INFO ] 04-12-2023 00:23:35 [restartedMain] HikariDataSource - HikariPool-4 - Start completed.
+[INFO ] 04-12-2023 00:23:35 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 04-12-2023 00:23:35 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:23:35 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 04-12-2023 00:23:35 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:23:37 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 04-12-2023 00:23:37 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 04-12-2023 00:23:38 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 04-12-2023 00:23:39 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 04-12-2023 00:23:39 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3a8b96c7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@70c27ed1, org.springframework.security.web.context.SecurityContextHolderFilter@78d3e36a, org.springframework.security.web.header.HeaderWriterFilter@1057e581, org.springframework.security.web.authentication.logout.LogoutFilter@1b190a48, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5c2dc0ab, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@78e9d854, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@53e2e217, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@37481d60, org.springframework.security.web.access.ExceptionTranslationFilter@594e5ddb, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@288de809]
+[INFO ] 04-12-2023 00:23:39 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 04-12-2023 00:23:39 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:39 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 04-12-2023 00:23:39 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 13.82 seconds (process running for 435.5)
+[INFO ] 04-12-2023 00:23:39 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 04-12-2023 00:23:43 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[INFO ] 04-12-2023 00:23:43 [Thread-15] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:43 [Thread-15] StandardService - Stopping service [Tomcat]
+[INFO ] 04-12-2023 00:23:43 [Thread-15] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:43 [Thread-15] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:43 [Thread-15] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 04-12-2023 00:23:43 [Thread-15] HikariDataSource - HikariPool-4 - Shutdown initiated...
+[INFO ] 04-12-2023 00:23:43 [Thread-15] HikariDataSource - HikariPool-4 - Shutdown completed.
+[INFO ] 04-12-2023 00:23:43 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 17.0.5 with PID 16336 (D:\Ky6\DATN\target\classes started by votha in D:\Ky6\DATN)
+[DEBUG] 04-12-2023 00:23:43 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 04-12-2023 00:23:43 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 04-12-2023 00:23:44 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 04-12-2023 00:23:44 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 126 ms. Found 28 JPA repository interfaces.
+[INFO ] 04-12-2023 00:23:44 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 04-12-2023 00:23:44 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:44 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 04-12-2023 00:23:44 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 04-12-2023 00:23:44 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 04-12-2023 00:23:44 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1103 ms
+[INFO ] 04-12-2023 00:23:44 [restartedMain] HikariDataSource - HikariPool-5 - Starting...
+[INFO ] 04-12-2023 00:23:44 [restartedMain] HikariPool - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2e42f28e
+[INFO ] 04-12-2023 00:23:44 [restartedMain] HikariDataSource - HikariPool-5 - Start completed.
+[INFO ] 04-12-2023 00:23:44 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 04-12-2023 00:23:44 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:23:44 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 04-12-2023 00:23:44 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:23:45 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 04-12-2023 00:23:45 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 04-12-2023 00:23:46 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 04-12-2023 00:23:47 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 04-12-2023 00:23:47 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@16a50a18, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@afe983c, org.springframework.security.web.context.SecurityContextHolderFilter@3a15c479, org.springframework.security.web.header.HeaderWriterFilter@60315354, org.springframework.security.web.authentication.logout.LogoutFilter@4c2e1de5, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@17aeb628, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3b10184f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@32cd627f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@a50d8d1, org.springframework.security.web.access.ExceptionTranslationFilter@76dff17b, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2414974d]
+[INFO ] 04-12-2023 00:23:47 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 04-12-2023 00:23:47 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:47 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 04-12-2023 00:23:47 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 4.067 seconds (process running for 443.293)
+[INFO ] 04-12-2023 00:23:47 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 04-12-2023 00:23:53 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[INFO ] 04-12-2023 00:23:53 [Thread-19] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:53 [Thread-19] StandardService - Stopping service [Tomcat]
+[INFO ] 04-12-2023 00:23:53 [Thread-19] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:53 [Thread-19] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:53 [Thread-19] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 04-12-2023 00:23:53 [Thread-19] HikariDataSource - HikariPool-5 - Shutdown initiated...
+[INFO ] 04-12-2023 00:23:53 [Thread-19] HikariDataSource - HikariPool-5 - Shutdown completed.
+[INFO ] 04-12-2023 00:23:53 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 17.0.5 with PID 16336 (D:\Ky6\DATN\target\classes started by votha in D:\Ky6\DATN)
+[DEBUG] 04-12-2023 00:23:53 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 04-12-2023 00:23:53 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 04-12-2023 00:23:55 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 04-12-2023 00:23:56 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 198 ms. Found 28 JPA repository interfaces.
+[INFO ] 04-12-2023 00:23:56 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 04-12-2023 00:23:56 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:56 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 04-12-2023 00:23:56 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 04-12-2023 00:23:56 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 04-12-2023 00:23:56 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3226 ms
+[INFO ] 04-12-2023 00:23:56 [restartedMain] HikariDataSource - HikariPool-6 - Starting...
+[INFO ] 04-12-2023 00:23:56 [restartedMain] HikariPool - HikariPool-6 - Added connection com.mysql.cj.jdbc.ConnectionImpl@72147ac3
+[INFO ] 04-12-2023 00:23:56 [restartedMain] HikariDataSource - HikariPool-6 - Start completed.
+[INFO ] 04-12-2023 00:23:56 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 04-12-2023 00:23:56 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:23:56 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 04-12-2023 00:23:57 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:23:57 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 04-12-2023 00:23:57 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 04-12-2023 00:23:58 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 04-12-2023 00:23:58 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 04-12-2023 00:23:58 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1cfd52fc, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@45eab6c7, org.springframework.security.web.context.SecurityContextHolderFilter@27819e2f, org.springframework.security.web.header.HeaderWriterFilter@1ba0cd3a, org.springframework.security.web.authentication.logout.LogoutFilter@1269ef65, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@30befb4f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@29a0f53a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2466ae31, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6cb06ef0, org.springframework.security.web.access.ExceptionTranslationFilter@3f6655ba, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5aae6ba9]
+[INFO ] 04-12-2023 00:23:59 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 04-12-2023 00:23:59 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:23:59 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 04-12-2023 00:23:59 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 5.889 seconds (process running for 455.078)
+[INFO ] 04-12-2023 00:23:59 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 04-12-2023 00:24:09 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[INFO ] 04-12-2023 00:24:09 [Thread-23] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:24:09 [Thread-23] StandardService - Stopping service [Tomcat]
+[INFO ] 04-12-2023 00:24:09 [Thread-23] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:24:09 [Thread-23] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:24:09 [Thread-23] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 04-12-2023 00:24:09 [Thread-23] HikariDataSource - HikariPool-6 - Shutdown initiated...
+[INFO ] 04-12-2023 00:24:09 [Thread-23] HikariDataSource - HikariPool-6 - Shutdown completed.
+[INFO ] 04-12-2023 00:24:09 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 17.0.5 with PID 16336 (D:\Ky6\DATN\target\classes started by votha in D:\Ky6\DATN)
+[DEBUG] 04-12-2023 00:24:09 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 04-12-2023 00:24:09 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 04-12-2023 00:24:10 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 04-12-2023 00:24:10 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 215 ms. Found 28 JPA repository interfaces.
+[INFO ] 04-12-2023 00:24:11 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 04-12-2023 00:24:11 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:24:11 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 04-12-2023 00:24:11 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 04-12-2023 00:24:11 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 04-12-2023 00:24:11 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2039 ms
+[INFO ] 04-12-2023 00:24:11 [restartedMain] HikariDataSource - HikariPool-7 - Starting...
+[INFO ] 04-12-2023 00:24:11 [restartedMain] HikariPool - HikariPool-7 - Added connection com.mysql.cj.jdbc.ConnectionImpl@76baba12
+[INFO ] 04-12-2023 00:24:11 [restartedMain] HikariDataSource - HikariPool-7 - Start completed.
+[INFO ] 04-12-2023 00:24:11 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 04-12-2023 00:24:11 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:24:11 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 04-12-2023 00:24:11 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:24:13 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 04-12-2023 00:24:13 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 04-12-2023 00:24:15 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 04-12-2023 00:24:15 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 04-12-2023 00:24:15 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@789d912a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@391b3247, org.springframework.security.web.context.SecurityContextHolderFilter@107140bc, org.springframework.security.web.header.HeaderWriterFilter@a297131, org.springframework.security.web.authentication.logout.LogoutFilter@44678a33, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@d6e9d53, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@850a77b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1fe80fdb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2c25c38c, org.springframework.security.web.access.ExceptionTranslationFilter@601ee62c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@268665a5]
+[INFO ] 04-12-2023 00:24:16 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 04-12-2023 00:24:16 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:24:16 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 04-12-2023 00:24:16 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 7.738 seconds (process running for 472.781)
+[INFO ] 04-12-2023 00:24:16 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 04-12-2023 00:25:46 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[INFO ] 04-12-2023 00:25:46 [Thread-27] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:25:46 [Thread-27] StandardService - Stopping service [Tomcat]
+[INFO ] 04-12-2023 00:25:46 [Thread-27] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:25:46 [Thread-27] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:25:46 [Thread-27] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 04-12-2023 00:25:46 [Thread-27] HikariDataSource - HikariPool-7 - Shutdown initiated...
+[INFO ] 04-12-2023 00:25:46 [Thread-27] HikariDataSource - HikariPool-7 - Shutdown completed.
+[INFO ] 04-12-2023 00:25:46 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 17.0.5 with PID 16336 (D:\Ky6\DATN\target\classes started by votha in D:\Ky6\DATN)
+[DEBUG] 04-12-2023 00:25:46 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 04-12-2023 00:25:46 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 04-12-2023 00:25:48 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 04-12-2023 00:25:48 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 201 ms. Found 28 JPA repository interfaces.
+[INFO ] 04-12-2023 00:25:49 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 04-12-2023 00:25:49 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:25:49 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 04-12-2023 00:25:49 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 04-12-2023 00:25:49 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 04-12-2023 00:25:49 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2495 ms
+[INFO ] 04-12-2023 00:25:49 [restartedMain] HikariDataSource - HikariPool-8 - Starting...
+[INFO ] 04-12-2023 00:25:49 [restartedMain] HikariPool - HikariPool-8 - Added connection com.mysql.cj.jdbc.ConnectionImpl@78d558b5
+[INFO ] 04-12-2023 00:25:49 [restartedMain] HikariDataSource - HikariPool-8 - Start completed.
+[INFO ] 04-12-2023 00:25:49 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 04-12-2023 00:25:49 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:25:49 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 04-12-2023 00:25:49 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:25:50 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 04-12-2023 00:25:50 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 04-12-2023 00:25:53 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 04-12-2023 00:25:54 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 04-12-2023 00:25:54 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@43fac355, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@30230a72, org.springframework.security.web.context.SecurityContextHolderFilter@2383b025, org.springframework.security.web.header.HeaderWriterFilter@9972691, org.springframework.security.web.authentication.logout.LogoutFilter@7d7074a0, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7d77bc24, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7c6aa424, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@735fe530, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@f722d0e, org.springframework.security.web.access.ExceptionTranslationFilter@67dd1ced, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4576727]
+[INFO ] 04-12-2023 00:25:54 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 04-12-2023 00:25:54 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:25:54 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 04-12-2023 00:25:54 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 7.789 seconds (process running for 570.393)
+[INFO ] 04-12-2023 00:25:54 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 04-12-2023 00:26:13 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[INFO ] 04-12-2023 00:26:13 [Thread-31] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:26:13 [Thread-31] StandardService - Stopping service [Tomcat]
+[INFO ] 04-12-2023 00:26:13 [Thread-31] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:26:13 [Thread-31] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:26:13 [Thread-31] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 04-12-2023 00:26:13 [Thread-31] HikariDataSource - HikariPool-8 - Shutdown initiated...
+[INFO ] 04-12-2023 00:26:13 [Thread-31] HikariDataSource - HikariPool-8 - Shutdown completed.
+[INFO ] 04-12-2023 00:26:13 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 17.0.5 with PID 16336 (D:\Ky6\DATN\target\classes started by votha in D:\Ky6\DATN)
+[DEBUG] 04-12-2023 00:26:13 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 04-12-2023 00:26:13 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 04-12-2023 00:26:14 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 04-12-2023 00:26:15 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 318 ms. Found 28 JPA repository interfaces.
+[INFO ] 04-12-2023 00:26:15 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 04-12-2023 00:26:15 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:26:15 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 04-12-2023 00:26:15 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 04-12-2023 00:26:15 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 04-12-2023 00:26:15 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2024 ms
+[INFO ] 04-12-2023 00:26:15 [restartedMain] HikariDataSource - HikariPool-9 - Starting...
+[INFO ] 04-12-2023 00:26:15 [restartedMain] HikariPool - HikariPool-9 - Added connection com.mysql.cj.jdbc.ConnectionImpl@40cdfa97
+[INFO ] 04-12-2023 00:26:15 [restartedMain] HikariDataSource - HikariPool-9 - Start completed.
+[INFO ] 04-12-2023 00:26:15 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 04-12-2023 00:26:16 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:26:16 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 04-12-2023 00:26:16 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 04-12-2023 00:26:17 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 04-12-2023 00:26:17 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 04-12-2023 00:26:20 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 04-12-2023 00:26:20 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 04-12-2023 00:26:20 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1e19041d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1ff7c91b, org.springframework.security.web.context.SecurityContextHolderFilter@65b76000, org.springframework.security.web.header.HeaderWriterFilter@463bc575, org.springframework.security.web.authentication.logout.LogoutFilter@66ba93ba, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@67c0923d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2dc875a3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@205b3ac3, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7a2b580, org.springframework.security.web.access.ExceptionTranslationFilter@5cfa3c8d, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@441b9ac7]
+[INFO ] 04-12-2023 00:26:20 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 04-12-2023 00:26:20 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 04-12-2023 00:26:20 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 04-12-2023 00:26:20 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 7.274 seconds (process running for 596.751)
+[INFO ] 04-12-2023 00:26:20 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 04-12-2023 00:26:47 [http-nio-8080-exec-2] [/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[INFO ] 04-12-2023 00:26:47 [http-nio-8080-exec-2] DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+[INFO ] 04-12-2023 00:26:47 [http-nio-8080-exec-2] DispatcherServlet - Completed initialization in 4 ms
+[INFO ] 04-12-2023 00:26:50 [http-nio-8080-exec-8] Log - Đã nhận được yêu cầu lấy danh sách sản phẩm.
+[INFO ] 04-12-2023 00:26:50 [http-nio-8080-exec-5] Log - Đã nhận được yêu cầu cho danh sách getDeletedList
+[INFO ] 04-12-2023 00:26:50 [http-nio-8080-exec-8] Log - Trả về danh sách sản phẩm 26.
+[INFO ] 04-12-2023 00:26:56 [http-nio-8080-exec-9] Log - Đã nhận được yêu cầu xóa sản phẩm với ID: 5
+[INFO ] 04-12-2023 00:26:56 [http-nio-8080-exec-9] Log - Sản phẩm có ID 5 đã được xóa thành công
+[INFO ] 04-12-2023 00:26:58 [http-nio-8080-exec-6] Log - Đã nhận được yêu cầu lấy danh sách sản phẩm.
+[INFO ] 04-12-2023 00:26:58 [http-nio-8080-exec-10] Log - Đã nhận được yêu cầu cho danh sách getDeletedList
+[INFO ] 04-12-2023 00:26:58 [http-nio-8080-exec-6] Log - Trả về danh sách sản phẩm 25.
+[INFO ] 04-12-2023 00:27:07 [http-nio-8080-exec-3] Log - Nhận yêu cầu khôi phục sản phẩm với ID: 1
+[INFO ] 04-12-2023 00:27:07 [http-nio-8080-exec-3] Log - Sản phẩm có ID 1 đã được khôi phục thành công
+[INFO ] 04-12-2023 00:27:08 [http-nio-8080-exec-2] Log - Đã nhận được yêu cầu lấy danh sách sản phẩm.
+[INFO ] 04-12-2023 00:27:08 [http-nio-8080-exec-1] Log - Đã nhận được yêu cầu cho danh sách getDeletedList
+[INFO ] 04-12-2023 00:27:08 [http-nio-8080-exec-2] Log - Trả về danh sách sản phẩm 26.
+[INFO ] 04-12-2023 00:27:36 [http-nio-8080-exec-6] Log - Nhận yêu cầu tạo sản phẩm mới
+[INFO ] 04-12-2023 00:27:36 [http-nio-8080-exec-6] Log - Sản phẩm mới với ID 31 đã được tạo thành công
+[INFO ] 04-12-2023 00:27:40 [http-nio-8080-exec-2] Log - Đã nhận được yêu cầu lấy danh sách sản phẩm.
+[INFO ] 04-12-2023 00:27:40 [http-nio-8080-exec-8] Log - Đã nhận được yêu cầu cho danh sách getDeletedList
+[INFO ] 04-12-2023 00:27:40 [http-nio-8080-exec-2] Log - Trả về danh sách sản phẩm 27.
+[INFO ] 04-12-2023 00:27:55 [http-nio-8080-exec-4] Log - Đã nhận được yêu cầu xóa sản phẩm với ID: 1
+[INFO ] 04-12-2023 00:27:55 [http-nio-8080-exec-4] Log - Sản phẩm có ID 1 đã được xóa thành công
+[INFO ] 04-12-2023 00:27:57 [http-nio-8080-exec-9] Log - Đã nhận được yêu cầu lấy danh sách sản phẩm.
+[INFO ] 04-12-2023 00:27:57 [http-nio-8080-exec-5] Log - Đã nhận được yêu cầu cho danh sách getDeletedList
+[INFO ] 04-12-2023 00:27:57 [http-nio-8080-exec-9] Log - Trả về danh sách sản phẩm 26.
