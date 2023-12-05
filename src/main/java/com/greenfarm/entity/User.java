@@ -69,7 +69,7 @@ public class User implements Serializable {
 
 //	@NotBlank(message = "Địa chỉ là bắt buộc")
 //	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
-	String Address;
+	String address;
 
 //	@NotNull(message = "Giới tính phải được chọn")
 	Boolean gender;

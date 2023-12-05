@@ -111,7 +111,7 @@ public class PdfController {
 			table.addCell(createCell(data.getFirstname(), false, unicodeFonts));
 			table.addCell(createCell(data.getEmail(), false, unicodeFonts));
 			table.addCell(createCell(data.getPhonenumber(), false, unicodeFonts));
-			// table.addCell(createCell(data.getAddress(), false, unicodeFonts));
+			table.addCell(createCell(data.getAddress(), false, unicodeFonts));
 			table.addCell(createCell(data.getGender() != null && data.getGender() ? "Nam" : "Nữ", false, unicodeFonts));
 			table.addCell(createCell(createDateString, false, unicodeFonts));
 
@@ -127,9 +127,9 @@ public class PdfController {
 		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
 
-	// private PdfPCell createCell(String content) {
-	// return createCell(content, false, null);
-	// }
+	private PdfPCell createCell(String content) {
+		return createCell(content, false, null);
+	}
 
 	private PdfPCell createCell(String content, boolean isHeader, Font font) {
 		if (font == null) {
@@ -618,8 +618,7 @@ public class PdfController {
 			table.addCell(createCell(data.getTourname(), false, unicodeFonts));
 			table.addCell(createCell(data.getDepartureday(), false, unicodeFonts));
 			table.addCell(createCell(decimalFormat.format(data.getPricings().getAdultprice()), false, unicodeFonts));
-			// table.addCell(createCell(String.valueOf(data.getAvailableslots()), false,
-			// unicodeFonts));
+//			table.addCell(createCell(String.valueOf(data.getAvailableslots()), false, unicodeFonts));
 
 			// Kiểm tra và hiển thị "đã có" nếu điều kiện được đáp ứng
 			String tourConditions = data.getTourCondition().getConditions();

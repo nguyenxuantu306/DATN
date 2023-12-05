@@ -1,5 +1,8 @@
 package com.greenfarm.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,9 +46,6 @@ import com.greenfarm.utils.Utils;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PaymentController {
@@ -132,7 +132,7 @@ public class PaymentController {
 						Order orderItem = new Order();
 						orderItem.setUser(user);
 						orderItem.setOrderdate(now);
-						// orderItem.setAddress(user.getAddress());
+						orderItem.setAddress(user.getAddress());
 						orderItem.setStatusOrder(statusOrder);
 						orderItem.setPaymentmethod(paymentMethodObj);
 						orderDAO.save(orderItem);

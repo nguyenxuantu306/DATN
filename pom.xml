@@ -177,11 +177,6 @@
 			<artifactId>cloudinary-http44</artifactId>
 			<version>1.35.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.github.sarxos</groupId>
-			<artifactId>webcam-capture</artifactId>
-			<version>0.3.12</version>
-		  </dependency>
 	</dependencies>
 
 	<build>
@@ -202,7 +197,7 @@
 							<artifactId>mapstruct-processor</artifactId>
 							<version>1.5.5.Final</version>
 						</path>
-						other annotation processors
+						 other annotation processors 
 					</annotationProcessorPaths>-->
 				</configuration>
 			</plugin>
