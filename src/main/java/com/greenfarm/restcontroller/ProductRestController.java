@@ -27,7 +27,6 @@ import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.ProductImage;
 import com.greenfarm.entity.Report;
-import com.greenfarm.entity.Tour;
 import com.greenfarm.service.ProductService;
 
 @CrossOrigin("*")

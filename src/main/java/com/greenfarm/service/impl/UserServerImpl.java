@@ -274,7 +274,6 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public boolean loginDisabled(String username) {
-		User user = dao.findByEmail(username).get();
 		return false;
 	}
 

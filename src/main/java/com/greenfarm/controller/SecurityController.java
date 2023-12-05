@@ -1,9 +1,5 @@
 package com.greenfarm.controller;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Date;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -23,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.greenfarm.dao.UserDAO;
-import com.greenfarm.dto.RegisterDTO;
 import com.greenfarm.entity.Passworddata;
 import com.greenfarm.entity.ResetPassWordData;
 import com.greenfarm.entity.User;
