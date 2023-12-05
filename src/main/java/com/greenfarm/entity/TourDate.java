@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -34,7 +35,7 @@ public class TourDate implements Serializable {
 	@NotBlank(message = "Availableslots không được phép trống")
 	private Integer Availableslots;
 	
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "tourid")
 	private Tour tour;
 }

@@ -3,6 +3,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 	$scope.cates = [];
 	$scope.items2 = [];
 	$scope.form = {};
+	$scope.form2 = {};
 	$scope.products = [];
 	$scope.selectedItem = null;
 	$scope.totalPrice = 0;
@@ -41,10 +42,11 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
 	}
-	/*// Hiện thị lên form
+	
+	// Hiện thị lên form
 	$scope.edit2 = function(item2) {
-		$scope.form = angular.copy(item2);
-	}*/
+		$scope.form2 = angular.copy(item2);
+	}
 
 	// Thêm loại sản phẩm mới
 	$scope.create = function() {
