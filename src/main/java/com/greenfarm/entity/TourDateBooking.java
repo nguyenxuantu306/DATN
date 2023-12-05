@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -24,21 +25,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Tourdate")
-public class TourDate implements Serializable {
+@Table(name = "Tourdatebooking")
+public class TourDateBooking implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Positive(message = "tourdateid không được là số âm")
-	private Integer tourdateid;
+	private Integer tourdatebookingid;
 	
-	@NotBlank(message = "tourdates không được phép trống")
-	@Temporal(TemporalType.DATE)
-	private Date tourdates;
-	
-	@NotBlank(message = "Availableslots không được phép trống")
-	private Integer Availableslots;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "tourid")
-	private Tour tour;
+	@JoinColumn(name = "TourdateID")
+	private TourDate tourdateid;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "BookingID")
+	private Booking bookingid;
 }
