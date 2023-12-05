@@ -70,5 +70,27 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 
+	@Override
+	public Address updateById(Integer id, Address address) {
+	    // Kiểm tra xem address có tồn tại không
+	    Address existingAddress = addressDAO.findById(id).orElse(null);
+
+	    if (existingAddress != null) {
+	        // Thực hiện cập nhật các trường của existingAddress dựa trên address mới
+	        existingAddress.setStreet(address.getStreet());
+	        existingAddress.setDistrict(address.getDistrict());
+	        existingAddress.setCity(address.getCity());
+	        // Cập nhật thông tin user nếu cần
+	        existingAddress.setUser(address.getUser());
+
+	        // Lưu lại vào cơ sở dữ liệu
+	        return addressDAO.save(existingAddress);
+	    }
+
+	    return null;
+	}
+
+
+
 	
 }
