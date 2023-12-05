@@ -52,9 +52,17 @@
 				</h5>
 			</div>
 			<div class="d-grid gap-2 d-md-block">
-				<div style="display: flex; justify-content: space-between; align-items: center;">
-					<a th:href="@{|/booking/${tourid}|}" class="btn btn-lg btn-primary p-2">Đặt ngay</a>
+				<div 
+					style="display: flex; justify-content: space-between; align-items: center;">
+					<a th:href="@{|/booking/${tourid}|}"
+						class="btn btn-lg btn-primary p-2">Đặt ngay</a>
 				</div>
+				<!-- <div th:if="*{availableslots <= 0}"
+					style="display: flex; justify-content: space-between; align-items: center;">
+					<a
+						style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
+						class="btn btn-lg btn-primary p-2">Tour đã hết chỗ</a>
+				</div> -->
 			</div>
 
 
@@ -147,8 +155,18 @@
 									<td
 										th:text="*{#numbers.formatDecimal(pricings.Childprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
 									</td>
-									<td><a th:href="@{|/booking/${tourid}|}" class="btn btn-md btn-primary p-2">Đặt
-											ngay</a></td>
+									<!-- <td style="padding-top: 20px" th:text="*{Availableslots}"></td> -->
+									<td>
+										<!-- Thay đổi nút thành "Tour đã hết chỗ" nếu hết chỗ --> <a
+										
+										th:href="@{|/booking/${tourid}|}"
+										class="btn btn-md btn-primary p-2">Đặt ngay</a> 
+										
+										<!-- <span style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
+										th:if="*{availableslots <= 0}" class="btn btn-md btn-primary p-2">Tour
+											đã hết chỗ</span> -->
+									</td>
+
 								</tr>
 							</tbody>
 						</table>

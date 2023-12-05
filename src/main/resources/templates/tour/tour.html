@@ -88,8 +88,12 @@
 					<div class="row">
 						<div th:each="p:${tourDTOs}" class="col-lg-4 col-md-6 mb-4">
 							<div class="package-item bg-white mb-2">
-								<a th:href="@{|/tour/detail/${p.tourid}|}"> <img style="height: 350px; width: 100%"
-										class="img-fluid" th:src="@{|${p.image}|}" alt="" />
+								<a th:href="@{|/tour/detail/${p.tourid}|}"> <img
+									style="height: 350px; width: 100%" class="img-fluid"
+									th:src="@{|${p.image}|}" alt="" />
+									<!-- <span
+									th:if="${p.Availableslots <=0}" class="out-of-stock-label1">Hết
+										chỗ</span> -->
 								</a>
 								<div class="p-4">
 									<div class="d-flex justify-content-between mb-3">
@@ -104,7 +108,17 @@
 										<div class="d-flex justify-content-between">
 											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"
 												class="m-0 p-1"></h5>
-											<button class="btn btn-primary"><a th:href="@{|/booking/${p.tourid}|}" th:text="#{label.booking}">Đặt tour</a></button>
+											<button 
+												class="btn btn-primary">
+												<a th:href="@{|/booking/${p.tourid}|}"
+													th:text="#{label.booking}">Đặt tour</a>
+											</button>
+											<!-- <button style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"  th:if="${p.availableslots <= 0}"
+												class="btn btn-primary"> 
+												<span class="text-white">Tour
+												đã hết chỗ</span>
+											</button> -->
+												
 										</div>
 									</div>
 								</div>
@@ -141,8 +155,12 @@
 					<div class="row">
 						<div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
 							<div class="package-item bg-white mb-2">
-								<a th:href="@{|/tour/detail/${p.tourid}|}"> <img style="height: 350px; width: 100%"
-										class="img-fluid" th:src="@{|${p.image}|}" alt="" />
+								<a th:href="@{|/tour/detail/${p.tourid}|}"> <img
+									style="height: 350px; width: 100%" class="img-fluid"
+									th:src="@{|${p.image}|}" alt="" /> 
+									<!-- <span
+									th:if="${p.Availableslots <=0}" class="out-of-stock-label1">Hết
+										chỗ</span> -->
 								</a>
 								<div class="p-4">
 									<div class="d-flex justify-content-between mb-3">
@@ -156,7 +174,17 @@
 										<div class="d-flex justify-content-between">
 											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"
 												class="m-0 p-1"></h5>
-											<button class="btn btn-primary"><a th:href="@{|/booking/${p.tourid}|}" th:text="#{label.booking}">Đặt tour</a></button>
+											<button 
+												class="btn btn-primary">
+												<a th:href="@{|/booking/${p.tourid}|}"
+													th:text="#{label.booking}">Đặt tour</a>
+											</button>
+											<!-- <button style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"  th:if="${p.availableslots <= 0}"
+												class="btn btn-primary">
+												<span class="text-white">Tour
+												đã hết chỗ</span>
+											</button> -->
+										
 										</div>
 									</div>
 								</div>

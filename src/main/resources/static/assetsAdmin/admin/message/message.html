@@ -39,7 +39,7 @@
 							<tbody>
 								<tr ng-repeat="item in pager.items | filter:searchByUser">
 									<th>{{$index + 1}}</th>
-									<th style="width: 250px;" class="d-flex">
+									<th style="width: 200px;" class="d-flex">
 										<img ng-if="item.user.image" ng-src="{{item.user.image}}"
 											alt="Hình ảnh người dùng" style="width: 50px; height: 50px;" />
 										<img ng-if="!item.user.image"

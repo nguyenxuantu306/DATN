@@ -47,7 +47,7 @@ public class User implements Serializable {
 	@NotEmpty(message = "Vui lòng nhập mật khẩu")
 	String password;
 
-	@Column(unique = true)
+	@Column(name = "Email", unique = true)
 	@Pattern(regexp = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", message = "Email phải đúng định dạng.")
 	@NotBlank(message = "Email là bắt buộc")
 	@Email(message = "Email không hợp lệ!")
@@ -77,7 +77,7 @@ public class User implements Serializable {
 	
 //	@DateTimeFormat(pattern = "yyyy-MM-dd")
 //	@Past(message = "Ngày sinh phải là một ngày trong quá khứ")
-	 @DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 
 //	@Past(message = "Ngày tạo phải trước ngày hiện tại")
@@ -87,6 +87,10 @@ public class User implements Serializable {
 	private Boolean isdeleted = Boolean.FALSE;
 	// Boolean IsActive;
 
+	@JsonIgnore
+	@OneToMany( mappedBy = "user")
+	List<Address> address;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Booking> booking;
@@ -130,4 +134,12 @@ public class User implements Serializable {
 	public void setIsDeleted(boolean isdeleted) {
 		this.isdeleted = isdeleted;
 	}
+	
+    public List<Address> getAddress() {
+        return address;
+    }
+
+    public void setAddress(List<Address> address) {
+        this.address = address;
+    }
 }

@@ -3,6 +3,7 @@ package com.greenfarm.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.greenfarm.entity.Address;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.StatusOrder;
@@ -21,8 +22,8 @@ public class OrderDTO {
 	private Integer Orderid;
 	private LocalDateTime orderdate;
 
-	private String address;
-
+	//private String address;
+	private List<Address> address;
 	List<OrderDetail> orderDetail;
 	User user;
 	StatusOrder statusOrder;

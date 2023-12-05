@@ -21,8 +21,7 @@
 		<div class="row py-5">
 			<div class="col-md-4 order-md-2 mb-4">
 				<h4 class="d-flex justify-content-between align-items-center mb-3">
-					<span class="text-muted">Giỏ hàng của bạn</span> <span
-						class="badge badge-secondary badge-pill">3</span>
+					<span class="text-muted">Giỏ hàng của bạn</span>
 				</h4>
 				<form th:method="post" th:action="@{/checkout/payment}"
 					th:object="${orderDetail}">
@@ -153,35 +152,38 @@
 					</div>
 
 					<div class="mb-3">
-						<label for="address">Số điện thoại</label> <input type="tel"
-							class="form-control" id="address" th:value="${user.phonenumber}"
+						<label for="">Số điện thoại</label> <input type="tel"
+							class="form-control" id="" th:value="${user.phonenumber}"
 							th:field="${user.phonenumber}"
 							th:placeholder="${user.phonenumber}" required disabled />
-						<div class="invalid-feedback">Please enter your shipping
-							address.</div>
+						<div class="invalid-feedback">Please enter your shipping .</div>
 					</div>
 
 					<div class="mb-3">
-						<label for="address">Địa chỉ giao hàng</label> <input
-							th:value="${user.address}" th:field="${user.address}"
-							th:placeholder="${user.address}" type="text" class="form-control"
-							id="address" required />
-						<div class="invalid-feedback">Please enter your shipping
-							address.</div>
+						<div class="card">
+							<a class="card-body" href="/address">
+								<span class="card-title">Địa chỉ nhận hàng.</span>
+								<span th:each="address : ${user.address}">
+									<p th:if="${address.active}"
+										th:text="${address.street + ', ' + address.district + ', ' + address.city}"></p>
+								</span>
+							</a>
+						</div>
 					</div>
 
 
 					<!-- <hr class="mb-4" /> -->
-					<!-- <div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input" id="same-address" /> <label
-							class="custom-control-label" for="same-address">Shipping address is the same as my
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input"
+							id="same-address" /> <label class="custom-control-label"
+							for="same-address">Shipping address is the same as my
 							billing address</label>
 					</div>
 					<div class="custom-control custom-checkbox">
 						<input type="checkbox" class="custom-control-input" id="save-info" />
 						<label class="custom-control-label" for="save-info">Save
 							this information for next time</label>
-					</div> -->
+					</div>
 					<hr class="mb-4" />
 
 
