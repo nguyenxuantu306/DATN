@@ -37,7 +37,6 @@ import com.greenfarm.service.CategoryService;
 import com.greenfarm.service.OrderDetailService;
 import com.greenfarm.service.OrderService;
 import com.greenfarm.service.ProductService;
-//import com.greenfarm.service.ReCommentService;
 import com.greenfarm.service.TourService;
 import com.greenfarm.service.UserService;
 
@@ -265,7 +264,7 @@ public class ExcelController {
 
 	@GetMapping("/excel-productstatistics")
 	public ResponseEntity<byte[]> ExcelCategoryStatistics() throws IOException {
-		List<Report> dataList = getProductStatitics(); // Lấy dữ liệu từ hàm getAll()
+		List<Report> dataList = getProductStatistics(); // Lấy dữ liệu từ hàm getAll()
 
 		Workbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet("Thống kê sản phẩm");
@@ -332,13 +331,6 @@ public class ExcelController {
 
 		// Áp dụng kiểu định dạng giá tiền cho cột "getPrice()" (cột 2)
 		sheet.setDefaultColumnStyle(2, currencyStyle);
-
-		// Định dạng giá tiền
-		CellStyle currencyStyle = workbook.createCellStyle();
-		DataFormat dataFormat = workbook.createDataFormat();
-		currencyStyle.setDataFormat(dataFormat.getFormat("#,##0.00 [$VNĐ]"));
-		// Áp dụng kiểu định dạng giá tiền cho cột "product.getPrice() *
-		// data.getCount()" (cột 4)
 
 		// Tự động thay đổi độ rộng các cột
 		sheet.autoSizeColumn(2);
@@ -667,16 +659,6 @@ public class ExcelController {
 		for (int i = 0; i < 5; i++) {
 			sheet.autoSizeColumn(i);
 		}
-
-		// Gửi file Excel như là phản hồi HTTP
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		workbook.write(outputStream);
-		workbook.close();
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		headers.setContentDispositionFormData("attachment", "category_statistics.xlsx");
-
 		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
 
@@ -917,7 +899,7 @@ public class ExcelController {
 		return productService.getTk_sp();
 	}
 
-	public final List<ReportSP> getProductStatitics() {
+	public final List<ReportSP> getProductStatistics() {
 		return productService.getTk_sp();
 	}
 

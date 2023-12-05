@@ -1,14 +1,11 @@
 package com.greenfarm.controller;
 
 import java.awt.image.BufferedImage;
-
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,24 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.sarxos.webcam.Webcam;
-import com.google.zxing.Binarizer;
 import com.google.zxing.BinaryBitmap;
-import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
-import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
-import com.google.zxing.common.BitArray;
-import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
-import com.greenfarm.service.impl.WebcamService;
 
 @RestController
 @RequestMapping("/api/camera")
 @CrossOrigin(origins = "http://localhost:8080/")
 public class CameraController {
-    @Autowired
-    private WebcamService webcamService;
 
 //    @GetMapping("/capture")
 //    public ResponseEntity<byte[]> capture() {

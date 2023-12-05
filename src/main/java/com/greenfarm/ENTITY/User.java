@@ -69,7 +69,7 @@ public class User implements Serializable {
 
 //	@NotBlank(message = "Địa chỉ là bắt buộc")
 //	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
-	String address;
+	String Address;
 
 //	@NotNull(message = "Giới tính phải được chọn")
 	Boolean gender;
@@ -134,12 +134,4 @@ public class User implements Serializable {
 	public void setIsDeleted(boolean isdeleted) {
 		this.isdeleted = isdeleted;
 	}
-	
-    public List<Address> getAddress() {
-        return address;
-    }
-
-    public void setAddress(List<Address> address) {
-        this.address = address;
-    }
 }
