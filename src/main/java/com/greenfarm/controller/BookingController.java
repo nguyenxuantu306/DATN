@@ -1,7 +1,10 @@
 package com.greenfarm.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,9 +28,13 @@ import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.StatusBooking;
 import com.greenfarm.entity.Tour;
+import com.greenfarm.entity.TourDate;
+import com.greenfarm.entity.TourDateBooking;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.BookingService;
 import com.greenfarm.service.StatusBookingService;
+import com.greenfarm.service.TourDateBookingService;
+import com.greenfarm.service.TourDateService;
 import com.greenfarm.service.TourService;
 import com.greenfarm.service.UserService;
 
@@ -47,6 +54,12 @@ public class BookingController {
 
 	@Autowired
 	TourService tourService;
+	
+	@Autowired
+	TourDateService tourdateService;
+	
+	@Autowired
+	TourDateBookingService tourdatebookingService;
 
 	@Autowired
 	ModelMapper modelMapper;
@@ -88,7 +101,8 @@ public class BookingController {
 
 	@PostMapping("/booking/create")
 	public String createBooking(Model model, @ModelAttribute("booking") BookingDTO bookingDto,
-			BindingResult bindingResult) throws IOException {
+			@RequestParam("tourdate") String tourdate,
+			BindingResult bindingResult) throws IOException, ParseException {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("booking", bookingDto);
@@ -100,6 +114,8 @@ public class BookingController {
 		Booking booking = modelMapper.map(bookingDto, Booking.class);
 		// Thời gian
 		booking.setBookingdate(LocalDateTime.now());
+		
+		
 
 		// Trạng thái
 		StatusBooking statusBooking = statusBookingService.findById(1);
@@ -111,6 +127,16 @@ public class BookingController {
 		booking.setPaymentmethod(paymentMethod);
 
 		bookingService.saveBooking(booking);
+		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(tourdate);
+		
+		TourDate tourdate1 = tourdateService.findByTourAndTourdates(booking.getTour(), date1);
+		
+		TourDateBooking tourdatebooking = new TourDateBooking();
+		tourdatebooking.setBookingid(booking);
+		tourdatebooking.setTourdateid(tourdate1);
+		tourdatebookingService.create(tourdatebooking);
+		
+		
 		// Generate and save QR code to the qrcode field
 		String qrCodeContent = "http://localhost:8080/rest/bookings/kiemtrave/" + booking.getBookingid();
 		System.out.println(qrCodeContent);

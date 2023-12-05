@@ -3,6 +3,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 	$scope.cates = [];
 	$scope.items2 = [];
 	$scope.form = {};
+	$scope.form2 = {};
 	$scope.products = [];
 	$scope.selectedItem = null;
 	$scope.totalPrice = 0;
@@ -41,11 +42,16 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
 	}
+	
+	// Hiện thị lên form
+	$scope.edit2 = function(item2) {
+		$scope.form2 = angular.copy(item2);
+	}
 
 	// Thêm loại sản phẩm mới
-	$scope.create = function() {
-		var item = angular.copy($scope.form);
-		$http.post(`/rest/vouchers`, item).then(resp => {
+	$scope.createuser = function() {
+		var item2 = angular.copy($scope.form2);
+		$http.post(`/rest/vouchers/user`, item2).then(resp => {
 			resp.data.expirationdate = new Date(resp.data.expirationdate)
 			$scope.items.push(resp.data);
 			$scope.reset();
@@ -103,7 +109,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 		// Hiển thị cửa sổ xác nhận trước khi xóa
 		Swal.fire({
 			title: 'Xác nhận xóa',
-			text: 'Bạn có chắc chắn muốn xóa danh mục này?',
+			text: 'Bạn có chắc chắn muốn xóa mã giảm giá này?',
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonText: 'Đồng ý',
@@ -114,6 +120,110 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 				// Nếu đã bấm "Đồng ý", thực hiện xóa
 				$http.delete(`/rest/vouchers/${item.voucherid}`).then(resp => {
 					var index = $scope.items.findIndex(p => p.voucherid == item.voucherid);
+					$scope.items.splice(index, 1);
+					$scope.reset();
+
+					// Sử dụng SweetAlert2 cho thông báo thành công
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công!',
+						text: 'Xóa mã thành công!',
+					}).then((result) => {
+						// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+						if (result.isConfirmed) {
+							// Nếu đã bấm, thực hiện reload trang
+							location.reload();
+						}
+					});
+
+				}).catch(error => {
+					// Sử dụng SweetAlert2 cho thông báo lỗi
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi mã giảm giá',
+					});
+					console.log("Error", error);
+				});
+			}
+		});
+	};
+	
+	
+	// Voucherusser
+	// Cấp mã
+	$scope.createuser = function() {
+		var item2 = angular.copy($scope.form2);
+		$http.post(`/rest/vouchers/user`, item2).then(resp => {
+			resp.data.expirationdate = new Date(resp.data.expirationdate)
+			$scope.items2.push(resp.data);
+			$scope.reset();
+			// Sử dụng SweetAlert2 cho thông báo thành công
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Cấp mã giảm giá thành công!',
+			});
+			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+			$scope.frmvalidate.$setPristine();
+			$scope.frmvalidate.$setUntouched();
+			$scope.frmvalidate.$submitted = false;
+		}).catch(error => {
+			// Sử dụng SweetAlert2 cho thông báo lỗi
+			Swal.fire({
+				icon: 'error',
+				title: 'Lỗi!',
+				text: 'Lỗi cấp mã giảm giá',
+			});
+			console.log("Error", error);
+		});
+	}
+	
+	// cập loại nhật sản phẩm
+	$scope.updateuser = function() {
+		var item2 = angular.copy($scope.form2);
+		$http.put(`/rest/vouchers/user/${item2.voucheruserid}`, item2).then(resp => {
+			var index = $scope.items2.findIndex(p => p.voucheruserid == item2.voucheruserid);
+			$scope.items2[index] = item2;
+			// Sử dụng SweetAlert2 cho thông báo thành công
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Cập nhật mã thành công!',
+			});
+			location.reload();
+			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+			$scope.frmvalidateupdate.$setPristine();
+			$scope.frmvalidateupdate.$setUntouched();
+			$scope.frmvalidateupdate.$submitted = false;
+			$scope.edit2(item2);
+		})
+			.catch(error => {
+				// Sử dụng SweetAlert2 cho thông báo lỗi
+				Swal.fire({
+					icon: 'error',
+					title: 'Lỗi!',
+					text: 'Lỗi Cập nhật mã',
+				});
+				console.log("Error", error);
+			});
+	}
+
+	$scope.deleteuser = function(item2) {
+		// Hiển thị cửa sổ xác nhận trước khi xóa
+		Swal.fire({
+			title: 'Xác nhận xóa',
+			text: 'Bạn có chắc chắn muốn xóa danh mục này?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Đồng ý',
+			cancelButtonText: 'Hủy bỏ'
+		}).then((result) => {
+			// Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
+			if (result.isConfirmed) {
+				// Nếu đã bấm "Đồng ý", thực hiện xóa
+				$http.delete(`/rest/vouchers/user/${item2.voucheruserid}`).then(resp => {
+					var index = $scope.items2.findIndex(p => p.voucheruserid == item2.voucheruserid);
 					$scope.items.splice(index, 1);
 					$scope.reset();
 
