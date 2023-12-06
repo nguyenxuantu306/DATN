@@ -15,16 +15,15 @@
 				<span class="form-check"> <input class="form-check-input" type="radio" name="flexRadioDefault"
 						id="flexRadioDefault1"
 						th:attr="onclick='updateAddressStatus(\'' + ${address.addressID} + '\')'">
-					<span class="fw-bold">[[${address.user.firstname}]] |
-						[[${address.user.phonenumber}]]</span> <span class="fw-bold float-end">
+					<span class="fw-bold">[[${address.Fullname}]] |
+						[[${address.Phonenumber}]]</span> <span class="fw-bold float-end">
 						<button type="button" class="update-button text-danger border-0 bg-white fw-bold"
 							data-bs-toggle="modal" data-bs-target="#myModal" th:data-address-id="${address.addressID}"
-							th:data-address-street="${address.Street}" th:data-address-district="${address.District}"
-							th:data-address-city="${address.City}" th:data-user-firstname="${address.user.firstname}"
-							th:data-user-id="${address.user.userid}"
-							th:data-user-phonenumber="${address.user.phonenumber}">
-							Cập nhật
-						</button>
+							th:data-address-street="${address.Street}" th:data-address-ward="${address.Ward}"
+							th:data-address-district="${address.District}" th:data-address-city="${address.City}"
+							th:data-address-phonenumber="${address.Phonenumber}"
+							th:data-address-fullname="${address.Fullname}" th:data-user-id="${address.user.userid}">Cập
+							nhật</button>
 
 					</span>
 				</span>
@@ -38,7 +37,9 @@
 		</div>
 		<hr>
 		<div class="add_address text-danger text-center">
-			<i class="bi bi-plus-circle"></i> Thêm mới địa chỉ
+			<button class="bi bi-plus-circle border-0 text-danger" data-bs-toggle="modal"
+				data-bs-target="#myModal2">Thêm mới
+				địa chỉ</button>
 		</div>
 
 		<!-- The Modal -->
@@ -55,19 +56,140 @@
 					<!-- Modal body -->
 					<div class="modal-body">
 						<div class="modal-body">
-							<!-- Thêm các trường input cho dữ liệu -->
-							<input type="text" id="addressId">
-							<input type="text" id="userid">
-							<input type="text" id="street" class="form-control">
-							<input type="text" id="district" class="form-control">
-							<input type="text" id="city" class="form-control">
-							<input type="text" id="firstname" class="form-control">
-							<input type="text" id="phonenumber" class="form-control">
+
+							<div class="row">
+								<div class="col">
+									<div data-mdb-input-init class="form-outline">
+										<label class="form-check-label fw-bold" for="form2Example33">
+											Đường: </label> <input type="text" id="street" class="form-control">
+
+									</div>
+								</div>
+								<div class="col">
+									<div data-mdb-input-init class="form-outline">
+										<label class="form-check-label fw-bold" for="form2Example33">
+											Phường: </label> <input type="text" id="ward" class="form-control">
+
+									</div>
+								</div>
+
+								<div class="col">
+									<div data-mdb-input-init class="form-outline">
+										<label class="form-check-label fw-bold"> Quận: </label> <input type="text"
+											id="district" class="form-control">
+
+									</div>
+								</div>
+							</div>
+							<div class="row mt-4">
+								<input type="hidden" id="addressId"> <input type="hidden" id="userid">
+								<div class="col">
+									<div data-mdb-input-init class="form-outline">
+										<label class="form-check-label fw-bold" for="form2Example33">
+											Thành phố: </label> <input type="text" id="city" class="form-control">
+									</div>
+								</div>
+								<div class="col">
+									<div data-mdb-input-init class="form-outline">
+										<label class="form-check-label fw-bold" for="form2Example33">Họ
+											tên: </label> <input type="text" id="fullname" class="form-control">
+									</div>
+								</div>
+
+								<div class="col">
+									<div data-mdb-input-init class="form-outline">
+										<label class="form-check-label fw-bold"> Số ĐT: </label> <input type="text"
+											id="phonenumber" class="form-control">
+									</div>
+								</div>
+
+							</div>
+
+
 						</div>
 
 						<!-- Modal footer -->
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" id="updateAddress">Cập nhật</button>
+							<button type="button" class="btn btn-primary" id="updateAddress">Cập
+								nhật</button>
+
+
+							<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Thêm mới địa chỉ</h4>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div class="modal-body">
+							<div class="row">
+								<div class="col">
+									<div data-mdb-input-init class="form-outline">
+										<label class="form-check-label fw-bold" for="form2Example33">
+											Đường: </label> <input type="text" id="street2" class="form-control">
+
+									</div>
+								</div>
+								<div class="col">
+									<div data-mdb-input-init class="form-outline">
+										<label class="form-check-label fw-bold" for="form2Example33">
+											Phường: </label> <input type="text" id="ward2" class="form-control">
+
+									</div>
+								</div>
+
+								<div class="col">
+									<div data-mdb-input-init class="form-outline">
+										<label class="form-check-label fw-bold"> Quận: </label> <input type="text"
+											id="district2" class="form-control">
+
+									</div>
+								</div>
+							</div>
+							<div class="row mt-4">
+								<input type="hidden" id="addressId"> <input type="hidden" id="userid">
+								<div class="col">
+									<div data-mdb-input-init class="form-outline">
+										<label class="form-check-label fw-bold" for="form2Example33">
+											Thành phố: </label> <input type="text" id="city2" class="form-control">
+									</div>
+								</div>
+								<div class="col">
+									<div data-mdb-input-init class="form-outline">
+										<label class="form-check-label fw-bold" for="form2Example33">
+											Họ tên: </label><input type="text" id="fullname2" class="form-control">
+
+									</div>
+								</div>
+
+								<div class="col">
+									<div data-mdb-input-init class="form-outline">
+										<label class="form-check-label fw-bold"> Số ĐT: </label> <input type="text"
+											id="phonenumber2" class="form-control">
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" id="createAddress">Lưu</button>
+
 
 							<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
 						</div>
@@ -108,19 +230,23 @@
 				var addressId = parseInt($(this).data('address-id'));
 				var userid = parseInt($(this).data('user-id'));
 				var street = $(this).data('address-street');
+				var ward = ($(this).data('address-ward'));
 				var district = $(this).data('address-district');
 				var city = $(this).data('address-city');
-				var firstname = $(this).data('user-firstname');
-				var phonenumber = $(this).data('user-phonenumber');
+				var fullname = $(this).data('address-fullname');
+				var phonenumber = $(this).data('address-phonenumber');
 
+				console.log(fullname);
 				// Đẩy dữ liệu lên modal
 				$('#myModal #addressId').val(parseInt(addressId));
 				$('#myModal #userid').val(parseInt(userid));
 				$('#myModal #street').val(street);
+				$('#myModal #ward').val(ward);
 				$('#myModal #district').val(district);
 				$('#myModal #city').val(city);
-				$('#myModal #firstname').val(firstname);
+				$('#myModal #fullname').val(fullname);
 				$('#myModal #phonenumber').val(phonenumber);
+
 			});
 		});
 	</script>
@@ -129,23 +255,34 @@
 			$('#updateAddress').on('click', function () {
 				var addressId = $('#addressId').val();
 				var street = $('#street').val();
+				var ward = $('#ward').val();
 				var district = $('#district').val();
 				var city = $('#city').val();
 				var userid = parseInt($('#userid').val());
+				var phonenumber = $('#phonenumber').val();
+				var fullname = $('#fullname').val();
 
-				var updateData = {
+
+				console.log(fullname);
+				var updateData1 = {
 					street: street,
+					ward: ward,
 					district: district,
 					city: city,
-					user: { userid: userid }
+					phonenumber: phonenumber,
+					fullname: fullname,
+					user: {
+						userid: userid
+					}
 				};
+				console.log(updateData1);
 
 				// Gửi yêu cầu cập nhật đến server
 				$.ajax({
 					type: 'PUT',
 					url: '/rest/addresses/update/' + addressId,
 					contentType: 'application/json',
-					data: JSON.stringify(updateData),
+					data: JSON.stringify(updateData1),
 					success: function (response) {
 						// Xử lý phản hồi thành công
 						console.log(response);
@@ -154,6 +291,48 @@
 					},
 					error: function (error) {
 						// Xử lý lỗi
+						console.error(error);
+					}
+				});
+			});
+		});
+	</script>
+
+
+	<script th:inline="javascript">
+		$(document).ready(function () {
+			$('#createAddress').on('click', function () {
+				var street = $('#street2').val();
+				var district = $('#district2').val();
+				var city = $('#city2').val();
+				var ward = $('#ward2').val();
+				var phonenumber = $('#phonenumber2').val();
+				var fullname = $('#fullname2').val();
+
+				var createData = {
+					street: street,
+					district: district,
+					city: city,
+					ward: ward,
+					phonenumber: phonenumber,
+					fullname: fullname,
+
+				};
+
+				// Send create request to the server
+				$.ajax({
+					type: 'POST', // Assuming you are using POST for creating
+					url: '/rest/addresses/create', // Adjust the URL as needed
+					contentType: 'application/json',
+					data: JSON.stringify(createData),
+					success: function (response) {
+						// Handle successful response
+						console.log(response);
+						// Optionally, you can reset the form after successful creation
+						$('#myModal2').modal('hide');
+					},
+					error: function (error) {
+						// Handle errors
 						console.error(error);
 					}
 				});

@@ -70,8 +70,9 @@
 							<div class="row">
 
 								<div class="col-6">
-									<label for="" style="font-weight: bold;">Vé người lớn:</label>
-									<select class="custom-select custom-input custom-place mr-2"
+									<label class="mb-2" for="" style="font-weight: bold;">Vé
+										người lớn</label> <select
+										class="custom-select custom-input custom-place mr-2"
 										id="adultticketnumber" name="adultticketnumber"
 										th:field="${booking.Adultticketnumber}"
 										onchange="calculateTotal()" required="">
@@ -82,7 +83,8 @@
 
 
 								<div class="col-6">
-									<label for="" style="font-weight: bold;">Vé trẻ em:</label> <select
+									<label class="mb-2" for="" style="font-weight: bold;">Vé
+										trẻ em</label> <select
 										class="custom-select custom-input custom-place mr-2"
 										id="childticketnumber" name="childticketnumber"
 										th:field="${booking.Childticketnumber}"
@@ -99,9 +101,10 @@
 							<div class="row">
 
 								<div class="col-6 mt-2 ">
-									<label for="" style="font-weight: bold;">Giá người lớn</label>
+									<label class="mb-2" for="" style="font-weight: bold;">Giá
+										người lớn</label>
 									<div class="input-group mb-3">
-										<input type="number" class="form-control "
+										<input type="number" class="form-control"
 											style="border-radius: 5px; background-color: white;"
 											id="adultticketprice"
 											th:value="${booking.tour.pricings.adultprice}"
@@ -111,7 +114,8 @@
 								</div>
 
 								<div class="col-6 mt-2">
-									<label for="" style="font-weight: bold;">Giá trẻ em</label>
+									<label class="mb-2" for="" style="font-weight: bold;">Giá
+										trẻ em</label>
 									<div class="input-group mb-3">
 										<input type="number" class="form-control"
 											style="border-radius: 5px; background-color: white;"
@@ -127,7 +131,8 @@
 							<div class="row">
 								<!--  -->
 								<div class="col-6 mt-2">
-									<label for="" style="font-weight: bold;">Tổng tiền</label>
+									<label class="mb-2" for="" style="font-weight: bold;">Tổng
+										tiền</label>
 									<div class="input-group mb-3">
 										<input type="text" class="form-control"
 											style="border-radius: 5px; background-color: white;"
@@ -138,28 +143,35 @@
 									</div>
 
 								</div>
-								<div class="col-6 mt-2">
-									<label for="" style="font-weight: bold;">Ngày đặt Tour</label>
+								<div class="col-6 mt-2 ">
+									<label class="mb-2" for="" style="font-weight: bold;">Ngày
+										đặt Tour</label>
 									<div class="input-group mb-3">
 										<div class="form-outline datepicker">
 											<select class="form-control"
-												style="border-radius: 5px; background-color: white;"											
+												style="border-radius: 5px; background-color: white;"
 												readonly name="tourdate" id="tourdate">
 
 												<!-- Thêm option mặc định -->
-												<option value="" selected disabled>Chọn ngày đi</option>
+												<option style="text-align: center;" value="" selected
+													disabled>Vui lòng chọn ngày đi</option>
 
 												<!-- Sử dụng vòng lặp để tạo các option với thông tin số lượng chỗ -->
-												<option th:each="date: ${booking.tour.tourDate}" 
+												<option th:each="date: ${booking.tour.tourDate}"
 													th:value="${date.tourdates}"><span
-														th:text="${date.tourdates}"></span>
+														th:text="${date.tourdates}"></span> <span
+														class="separator">»</span> số lượng chỗ còn trống <span
+														th:text="${date.Availableslots}"></span>
 												</option>
+
 											</select>
+
 										</div>
 
 									</div>
 
 								</div>
+
 							</div>
 
 
@@ -244,7 +256,7 @@
 					+ (childTickets * childPrice);
 
 			// Set the value of the total price input field
-			document.getElementById('totalprice').value = totalPrice.toFixed(2);
+			document.getElementById('totalprice').value = totalPrice.toFixed(3);
 		}
 
 		// Set default values when the page is loaded
@@ -255,22 +267,6 @@
 		});
 	</script>
 
-	<!-- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var adultPriceElement = document.getElementById("formattedAdultPrice");
-        var adultPriceValue = parseFloat(adultPriceElement.textContent);
-
-        // Định dạng giá trị số thành chuỗi với dấu phẩy
-        var formattedAdultPrice = adultPriceValue.toLocaleString('en-VN', {
-            style: 'currency',
-            currency: 'VND' // Thay đổi thành đơn vị tiền tệ mong muốn
-        });
-
-        // Gán giá trị đã định dạng vào th:text
-        adultPriceElement.textContent = formattedAdultPrice;
-    });
-    
-</script> -->
 	<script>
     function confirmBooking() {
         Swal.fire({
@@ -290,6 +286,20 @@
         });
     }
 </script>
+	<!-- <script>
+	document.addEventListener('DOMContentLoaded', function () {
+	    // Format adult ticket price
+	    var adultPriceInput = document.getElementById('adultticketprice');
+	    var formattedAdultPrice = new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 0 }).format(parseFloat(adultPriceInput.value));
+	    adultPriceInput.value = formattedAdultPrice;
+
+	    // Format child ticket price
+	    var childPriceInput = document.getElementById('childticketprice');
+	    var formattedChildPrice = new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 0 }).format(parseFloat(childPriceInput.value));
+	    childPriceInput.value = formattedChildPrice;
+	});
+
+</script> -->
 
 </body>
 

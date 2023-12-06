@@ -25,4 +25,6 @@ public interface TourDateService {
 	void deleteTourDateById(Integer tourdateid);
 	
 	TourDate findByTourAndTourdates(Tour tour, Date tourdates);
+
+	List<TourDate> findAll();
 }

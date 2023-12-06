@@ -43,7 +43,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
 
-		var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
+		/*var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
 		// Kiểm tra và trừ số lượng vé
 
 		if (item.statusbooking.statusbookingid === 2) {
@@ -72,7 +72,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 		}
 		if (hasInsufficientQuantity) { // Nếu sản phẩm không đủ số lượng, không cập nhật trạng thái đơn hàng
 			return;
-		}
+		}*/
 
 
 		$http.put(`/rest/bookings/${item.bookingid}`, item).then(resp => {

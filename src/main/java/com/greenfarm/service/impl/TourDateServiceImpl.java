@@ -24,6 +24,12 @@ public class TourDateServiceImpl implements TourDateService {
 	TourDateDAO dao;
 	
 	@Override
+	public List<TourDate> findAll() {
+		return dao.findAll();
+	}
+
+	
+	@Override
 	public TourDate create(TourDate tourdate) {
 		return dao.save(tourdate);
 	}
