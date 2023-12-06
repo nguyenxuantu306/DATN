@@ -1,6 +1,7 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
+
 import java.util.Date;
 
 import jakarta.persistence.CascadeType;
@@ -12,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -29,7 +31,7 @@ public class TourDate implements Serializable {
 	@Positive(message = "tourdateid không được là số âm")
 	private Integer tourdateid;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(jakarta.persistence.TemporalType.DATE)
 	private Date tourdates;
 	
 	private Integer Availableslots;

@@ -80,6 +80,8 @@ public class AddressServiceImpl implements AddressService {
 	        existingAddress.setStreet(address.getStreet());
 	        existingAddress.setDistrict(address.getDistrict());
 	        existingAddress.setCity(address.getCity());
+	        existingAddress.setPhonenumber(address.getPhonenumber());
+	        existingAddress.setFullname(address.getFullname());
 	        // Cập nhật thông tin user nếu cần
 	        existingAddress.setUser(address.getUser());
 
