@@ -1,10 +1,13 @@
 package com.greenfarm.restcontroller;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -108,21 +111,38 @@ public class TourDateRestController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
-//	@GetMapping("/searchkeywordcategory")
-//	public ResponseEntity<List<TourDateDTO>> getList(@RequestParam(required = false) String keyword) {
-//		List<TourDate> categorys;
-//
-//		if (keyword != null && !keyword.isEmpty()) {
-//			// Nếu có từ khóa, thực hiện tìm kiếm
-//			categorys = toudateService.findByKeyword(keyword);
-//		} else {
-//			// Nếu không có từ khóa, lấy tất cả người dùng
-//			categorys = toudateService.findAll();
-//		}
-//
-//		List<TourDateDTO> categoryDtos = categorys.stream().map(category -> modelMapper.map(category, TourDateDTO.class))
-//				.collect(Collectors.toList());
-//
-//		return ResponseEntity.ok(categoryDtos);
-//	}
+	@GetMapping("/searchkeywordtourdate")
+	public ResponseEntity<List<TourDateDTO>> getList(@RequestParam(required = false) Integer keyword) {
+	    List<TourDate> tourdates = (keyword != null) ?
+	            toudateService.findByKeyword(keyword) :
+	            toudateService.findAll();
+
+	    List<TourDateDTO> tourdateDtos = tourdates.stream()
+	            .map(tourdate -> modelMapper.map(tourdate, TourDateDTO.class))
+	            .collect(Collectors.toList());
+
+	    return ResponseEntity.ok(tourdateDtos);
+	}
+	
+	@GetMapping("/filtertourdate")
+	public ResponseEntity<List<TourDateDTO>> getList(
+	        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date) {
+	    List<TourDate> tourdates;
+
+	    if (date != null) {
+	        // Nếu chỉ có ngày, thực hiện tìm kiếm theo ngày
+	        tourdates = toudateService.findByDate(date);
+	    } else {
+	        // Nếu không có ngày, lấy tất cả
+	        tourdates = toudateService.findAll();
+	    }
+
+	    List<TourDateDTO> tourdateDtos = tourdates.stream()
+	            .map(tourdate -> modelMapper.map(tourdate, TourDateDTO.class))
+	            .collect(Collectors.toList());
+
+	    return ResponseEntity.ok(tourdateDtos);
+	}
+
+
 }

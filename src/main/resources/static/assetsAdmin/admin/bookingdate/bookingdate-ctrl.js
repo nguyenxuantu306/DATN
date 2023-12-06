@@ -44,7 +44,7 @@ app.controller("bookingdate-ctrl", function($scope, $http) {
 
 
 
-	$scope.selectedStatus = "1";
+	$scope.selectedStatus = "0";
 
 	$scope.filterBookings = function() {
 		// Lặp qua tất cả các hàng của bảng đơn hàng

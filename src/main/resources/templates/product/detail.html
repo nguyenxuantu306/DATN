@@ -395,12 +395,15 @@
 					icon: 'warning',
 					confirmButtonColor: '#3085d6',
 					confirmButtonText: 'OK'
-				});
+				}).then(() => {
+		            // Reload the form after clicking OK
+		            location.reload();
+		        });
 			} else {
 				// If the user hasn't reviewed, show the confirmation modal
 				Swal.fire({
 					title: 'Xác nhận gửi đánh giá?',
-					text: 'Bạn có chắc muốn gửi đánh giá này không?',
+					text: 'Bạn có chắc muốn gửi đánh giá?',
 					icon: 'question',
 					showCancelButton: true,
 					confirmButtonColor: '#3085d6',
@@ -411,7 +414,7 @@
 					if (result.isConfirmed) {
 						// If the user confirms, show a success modal and submit the form
 						Swal.fire({
-							title: 'Đánh giá đã gửi thành công!',
+							title: 'Đánh giá đã lưu thành công!',
 							text: 'Cảm ơn bạn đã đánh giá sản phẩm.',
 							icon: 'success',
 							showCancelButton: false,

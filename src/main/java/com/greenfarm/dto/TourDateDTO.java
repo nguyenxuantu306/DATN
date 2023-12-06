@@ -1,5 +1,6 @@
 package com.greenfarm.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class TourDateDTO {
 
 	private Integer tourdateid;
-	private Date tourdates;
+	private LocalDate tourdates;
 	private Integer availableslots;
 	private Tour tour;
 }
