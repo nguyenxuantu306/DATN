@@ -28,6 +28,9 @@ app.config(function($routeProvider) {
 		}).when("/bookingtour", {
 			templateUrl: "/assetsAdmin/admin/booking/booking.html",
 			controller: "booking-ctrl"
+		}).when("/tourdate", {
+			templateUrl: "/assetsAdmin/admin/tourdate/tourdate.html",
+			controller: "tourdate-ctrl"
 		}).when("/bookingdate", {
 			templateUrl: "/assetsAdmin/admin/bookingdate/bookingdate.html",
 			controller: "bookingdate-ctrl"

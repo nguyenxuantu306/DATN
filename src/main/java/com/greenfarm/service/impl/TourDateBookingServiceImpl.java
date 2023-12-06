@@ -14,6 +14,11 @@ public class TourDateBookingServiceImpl implements TourDateBookingService {
 	TourDateBookingDAO dao;
 	
 	@Override
+	public List<TourDateBooking> findAll() {
+		return dao.findAll();
+	}
+	
+	@Override
 	public TourDateBooking create(TourDateBooking tourdatebooking) {
 		return dao.save(tourdatebooking);
 	}
@@ -37,4 +42,6 @@ public class TourDateBookingServiceImpl implements TourDateBookingService {
 	public TourDateBooking findById(Integer tourdatebookingid) {
 		return dao.findById(tourdatebookingid).get();
 	}
+
+
 }

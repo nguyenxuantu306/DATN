@@ -13,4 +13,6 @@ public interface TourDateBookingService {
 	TourDateBooking update(TourDateBooking tourdatebooking);
 
 	void deleteTourDateBookingById(Integer tourdatebookingid);
+
+	List<TourDateBooking> findAll();
 }

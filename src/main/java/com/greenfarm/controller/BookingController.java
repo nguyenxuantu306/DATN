@@ -132,8 +132,8 @@ public class BookingController {
 		TourDate tourdate1 = tourdateService.findByTourAndTourdates(booking.getTour(), date1);
 		
 		TourDateBooking tourdatebooking = new TourDateBooking();
-		tourdatebooking.setBookingid(booking);
-		tourdatebooking.setTourdateid(tourdate1);
+		tourdatebooking.setBooking(booking);
+		tourdatebooking.setTourdate(tourdate1);
 		tourdatebookingService.create(tourdatebooking);
 		
 		
