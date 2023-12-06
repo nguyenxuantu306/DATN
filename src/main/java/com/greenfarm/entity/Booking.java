@@ -54,9 +54,9 @@ public class Booking implements Serializable {
 	private Integer Childticketnumber;
 
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "booking")
-	private List<TourDate> tourDate;
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "booking")
+//	private List<TourDate> tourDate;
 	
 	private String qrcode;
 	@ManyToOne
