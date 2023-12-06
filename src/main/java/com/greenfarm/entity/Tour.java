@@ -67,6 +67,10 @@ public class Tour implements Serializable {
 	@JsonIgnore
 	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
 	private TourCondition tourCondition;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
+	private List<TourDate> tourDate;
 
 	@JsonIgnore
 	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)

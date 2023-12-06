@@ -95,8 +95,8 @@
 						</div>
 						<div class="col-md-6 text-right">
 							<button type="button" class="btn btn-success"
-								ng-click="editthemsp()" data-toggle="modal"
-								data-target="#exampleModa2">
+								data-toggle="modal"
+								data-target="#exampleModal3">
 								<i class="fa fa-plus-square"></i> Cấp mã
 							</button>
 						</div>
@@ -116,7 +116,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr style="text-align: center;" ng-repeat="item2 in items2">
+								<tr style="text-align: center;" ng-repeat="item2 in pager1.items2">
 									<th style="width: 30px">{{$index + 1}}</th>
 									<th style="width: 150px;"><img ng-src="{{item2.user.image}}" alt="Product Image"
 										style="width: 70px;height:70px"></th>
@@ -124,11 +124,11 @@
 									<th style="width: 250px;">{{item2.voucher.code}}</th>
 									<th class="text-primary" style="width: 250px;">{{item2.voucher.expirationdate |
 											date:'dd-MM-yyyy HH:mm a'}}</th>
-									<td><a ng-click="edit(item)" data-toggle="modal"
-										data-target="#exampleModal"> <i
+									<td><a ng-click="edit2(item2)" data-toggle="modal"
+										data-target="#exampleModal4"> <i
 											class="bi bi-pencil-square"></i>
 									</a></td>
-									<td><a ng-click="delete(item)"><i
+									<td><a ng-click="deleteuser(item2)"><i
 											class="bi bi-trash3-fill p-2"></i></a></td>
 								</tr>
 							</tbody>
@@ -136,18 +136,18 @@
 					</div>
 					<div class="panel-footer text-right">
 						<span class="col-md-6"
-							style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
-							+ 1}} / {{pager.count}} </span>
-						<button ng-click="pager.first()" class="btn btn-success">
+							style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager1.page
+							+ 1}} / {{pager1.count}} </span>
+						<button ng-click="pager1.first()" class="btn btn-success">
 							<i class="fas fa-angle-double-left"></i>
 						</button>
-						<button ng-click="pager.prev()" class="btn btn-success">
+						<button ng-click="pager1.prev()" class="btn btn-success">
 							<i class="fas fa-angle-left"></i>
 						</button>
-						<button ng-click="pager.next()" class="btn btn-success">
+						<button ng-click="pager1.next()" class="btn btn-success">
 							<i class="fas fa-angle-right"></i>
 						</button>
-						<button ng-click="pager.last()" class="btn btn-success">
+						<button ng-click="pager1.last()" class="btn btn-success">
 							<i class="fas fa-angle-double-right"></i>
 						</button>
 					</div>
@@ -259,6 +259,109 @@
 									<div class="panel-footer text-right">
 										<button type="submit" name="submit"
 											ng-click="frmvalidate.$valid && create()"
+											class="btn btn-success">Thêm</button>
+										<button type="reset" class="btn btn-success">
+											<b class="glyphicon glyphicon-refresh"></b> Làm mới
+										</button>
+									</div>
+								</form>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<!-- Voucheruser -->
+<div class="modal fade" id="exampleModal4" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl custom-modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title " id="exampleModalLabel">Cập nhật cấp mã</h3>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="col-lg-12">
+					<div class="card info">
+						<div class="card-body">
+							<div class="basic-form">
+								<form class="row" name="frmvalidateupdate"
+									ng-submit="submitForm1()" novalidate>
+									<div class="form-group col-sm-6">
+										<label>UserID:</label> <input name="userid" style="height: 55px"
+											type="text" ng-model="form2.user.userid"
+											class="form-control input-default" placeholder="VD : code"
+											required /> <label
+											ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.userid.$error.required"
+											style="color: red;">Vui lòng nhập userid !</label>
+									</div>
+									<div class="form-group col-sm-6">
+										<label>VoucherID:</label> <input name="voucherid"
+											style="height: 55px" type="number" ng-model="form2.voucher.voucherid"
+											class="form-control input-default" placeholder="VD : 1"
+											required /> <label
+											ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.voucherid.$error.required"
+											style="color: red;">Vui lòng nhập voucherid !</label>
+									</div>
+							
+									<div class="panel-footer text-right">
+										<button type="submit" name="submit"
+											ng-click="frmvalidateupdate.$valid && updateuser()"
+											class="btn btn-success">Cập nhật</button>
+
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="exampleModal3" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl custom-modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title " id="exampleModalLabel">Cấp mã cho người dùng</h3>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="col-lg-12">
+					<div class="card info">
+						<div class="card-body">
+							<div class="basic-form">
+								<form class="row" name="frmvalidate" ng-submit="submitForm()"
+									novalidate>
+									<div class="form-group col-sm-6">
+										<label>UserID:</label><input name="userid" style="height: 55px"
+											type="number" ng-model="form2.user.userid"
+											class="form-control input-default" placeholder="VD : user1"
+											required /> <label
+											ng-show="frmvalidate.$submitted && frmvalidate.userid.$error.required"
+											style="color: red;">Vui lòng nhập id người dùng !</label>
+									</div>
+									<div class="form-group col-sm-6">
+										<label>VouchersID:</label> <input name="voucherid"
+											style="height: 55px" type="number" ng-model="form2.voucher.voucherid"
+											class="form-control input-default" placeholder="VD : vocher1"
+											required /> <label
+											ng-show="frmvalidate.$submitted && frmvalidate.voucherid.$error.required"
+											style="color: red;">Vui lòng nhập id voucher !</label>
+									</div>
+									
+									<div class="panel-footer text-right">
+										<button type="submit" name="submit"
+											ng-click="frmvalidate.$valid && createuser()"
 											class="btn btn-success">Thêm</button>
 										<button type="reset" class="btn btn-success">
 											<b class="glyphicon glyphicon-refresh"></b> Làm mới

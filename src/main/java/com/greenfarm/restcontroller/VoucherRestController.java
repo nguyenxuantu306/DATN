@@ -58,6 +58,14 @@ public class VoucherRestController {
 		return new ResponseEntity<>(voucherDTO, HttpStatus.CREATED);
 	}
 	
+	@PostMapping("user")
+	public ResponseEntity<VoucherUserDTO> createuser(@RequestBody VoucherUser voucheruser, Model model) {
+
+		VoucherUser createdVoucheruser = voucheruserservice.create(voucheruser);
+		VoucherUserDTO voucherUserDTO = modelMapper.map(createdVoucheruser, VoucherUserDTO.class);
+		return new ResponseEntity<>(voucherUserDTO, HttpStatus.CREATED);
+	}
+	
 	@PutMapping("{voucherid}")
 	public ResponseEntity<VoucherDTO> update(@PathVariable("id") Integer voucherid, @RequestBody Voucher voucher) {
 		Voucher updatedVoucher = voucherService.update(voucher);
@@ -67,6 +75,17 @@ public class VoucherRestController {
 		}
 		VoucherDTO voucherDTO = modelMapper.map(updatedVoucher, VoucherDTO.class);
 		return new ResponseEntity<>(voucherDTO, HttpStatus.OK);
+	}
+	
+	@PutMapping("user/{voucheruserid}")
+	public ResponseEntity<VoucherUserDTO> updateuser(@PathVariable("voucheruserid") Integer voucheruserid, @RequestBody VoucherUser voucheruser) {
+		VoucherUser updatedVoucheruser = voucheruserservice.update(voucheruser);
+
+		if (updatedVoucheruser == null) {
+			return ResponseEntity.notFound().build();
+		}
+		VoucherUserDTO voucheruserDTO = modelMapper.map(updatedVoucheruser, VoucherUserDTO.class);
+		return new ResponseEntity<>(voucheruserDTO, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("{voucherid}")
@@ -80,6 +99,15 @@ public class VoucherRestController {
 		return ResponseEntity.noContent().build();
 	}
 
-	
+	@DeleteMapping("user/{voucheruserid}")
+	public ResponseEntity<Void> deleteuser(@PathVariable("voucheruserid") Integer voucheruserid) {
+		VoucherUser existingVoucheruser = voucheruserservice.findById(voucheruserid);
+
+		if (existingVoucheruser == null) {
+			return ResponseEntity.notFound().build();
+		}
+		voucheruserservice.delete(voucheruserid);
+		return ResponseEntity.noContent().build();
+	}
 	
 }

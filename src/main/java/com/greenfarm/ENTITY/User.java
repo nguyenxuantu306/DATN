@@ -29,9 +29,12 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,7 +44,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Positive(message = "Id tài khoản phải lớn hơn 0")
-	Integer userid;
+	private Integer userid;
 
 	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,100}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
 	@NotEmpty(message = "Vui lòng nhập mật khẩu")

@@ -9,11 +9,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dao.AddressDAO;
+import com.greenfarm.dto.AddressDTO;
+import com.greenfarm.dto.BookingDTO;
+import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Address;
+import com.greenfarm.entity.Booking;
+import com.greenfarm.entity.Product;
 import com.greenfarm.service.AddressService;
 
 @CrossOrigin("*")
@@ -23,11 +32,10 @@ public class AddressRestController {
 
 	@Autowired
 	AddressService addressService;
-	
+
 	@Autowired
 	ModelMapper modelMapper;
-	
-	
+
 	@GetMapping()
 	public ResponseEntity<List<AddressDAO>> getList() {
 		List<Address> addresses = addressService.findAll();
@@ -38,6 +46,29 @@ public class AddressRestController {
 
 		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(addressDTOs, HttpStatus.OK);
+	}
+
+	@PutMapping("/update/{id}")
+	public ResponseEntity<AddressDTO> update(@PathVariable Integer id, @RequestBody Address address) {
+		Address updatedAddress = addressService.updateById(id, address);
+
+		if (updatedAddress == null) {
+			return ResponseEntity.notFound().build();
+		}
+
+		AddressDTO addressDTO = modelMapper.map(updatedAddress, AddressDTO.class);
+		return new ResponseEntity<>(addressDTO, HttpStatus.OK);
+	}
+
+	@PostMapping("/create")
+	public ResponseEntity<AddressDTO> create(@RequestBody Address address) {
+		Address updatedAddress = addressService.create(address);
+
+		if (updatedAddress == null) {
+			return ResponseEntity.notFound().build();
+		}
+		AddressDTO addressDTO = modelMapper.map(updatedAddress, AddressDTO.class);
+		return new ResponseEntity<>(addressDTO, HttpStatus.OK);
 	}
 
 }

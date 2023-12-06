@@ -1,4 +1,4 @@
-app.controller("booking-ctrl", function($scope, $http) {
+app.controller("bookingdate-ctrl", function($scope, $http) {
 	/*alert("Quản lý order")*/
 	$scope.items = [];
 	$scope.cates = [];
@@ -43,11 +43,12 @@ app.controller("booking-ctrl", function($scope, $http) {
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
 
-		var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
+	/*	var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
 		// Kiểm tra và trừ số lượng vé
+		console.log("Giá trị statusbookingid:", item.statusbooking.statusbookingid);
 
 		if (item.statusbooking.statusbookingid === 2) {
-				var Availableslots = tour.TourDate.Availableslots;
+				var Availableslots = tour.Availableslots;
 				// Kiểm tra số lượng sản phẩm trong kho
 				console.log(Adultticketnumber + Childticketnumber)
 				if (Availableslots < (Adultticketnumber + Childticketnumber)) {
@@ -58,7 +59,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 				}
 				
 				// Trừ số lượng sản phẩm khỏi kho
-				tour.TourDate.Availableslots -= (Adultticketnumber + Childticketnumber);
+				tour.Availableslots -= (Adultticketnumber + Childticketnumber);
 
 				$http.put(`/rest/tours/${tour.tourid}`,tour)
 					.then(function(response) {
@@ -72,7 +73,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 		}
 		if (hasInsufficientQuantity) { // Nếu sản phẩm không đủ số lượng, không cập nhật trạng thái đơn hàng
 			return;
-		}
+		}*/
 
 
 		$http.put(`/rest/bookings/${item.bookingid}`, item).then(resp => {
