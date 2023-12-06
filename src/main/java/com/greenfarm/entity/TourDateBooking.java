@@ -32,11 +32,11 @@ public class TourDateBooking implements Serializable {
 	private Integer tourdatebookingid;
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "TourdateID")
-	private TourDate tourdateid;
+	private TourDate tourdate;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "BookingID")
-	private Booking bookingid;
+	private Booking booking;
 }

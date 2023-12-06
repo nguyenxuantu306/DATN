@@ -10,16 +10,10 @@ app.controller("bookingdate-ctrl", function($scope, $http) {
 
 	$scope.initialize = function() {
 		// Load products
-		$http.get("/rest/bookings").then(resp => {
+		$http.get("/rest/tourdatebookings").then(resp => {
 			$scope.items = resp.data;
-			$scope.items.forEach(item => {
-				item.bookingdate = new Date(item.bookingdate)
-			})
 		});
-		// Load statusBooking
-		$http.get("/rest/statusbooking").then(resp => {
-			$scope.cates = resp.data;
-		});
+		
 
 	}
 
