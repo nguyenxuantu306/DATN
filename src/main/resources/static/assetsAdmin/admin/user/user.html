@@ -44,7 +44,7 @@
 								<th>Hình ảnh</th>
 								<th>Tên</th>
 								<th>Email</th>
-								<th>Điện thoại</th>
+								<!-- <th>Điện thoại</th> -->
 								<th>Địa chỉ</th>
 								<th>Giới tính</th>
 								<th>Ngày tạo</th>
@@ -60,14 +60,11 @@
 									style="width: 70px; height: 100px"></th>
 								<td>{{item.firstname}}</td>
 								<td>{{item.email}}</td>
-								<td>{{item.phonenumber}}</td>
-<<<<<<< HEAD
+								<!-- <td>{{item.phonenumber}}</td> -->
 								<td
 									ng-repeat="address in item.address | filter: { active: true }">
-=======
 								<td style="width: 350px"
 									ng-repeat="address in item.address | filter: { active: false }">
->>>>>>> 158adf15bd54f79470d1c6164b1c3940c892834e
 									{{address.street}}, {{address.district}}, {{address.city}}</td>
 								<td>{{item.gender?'Nam':'Nữ'}}</td>
 								<td>{{item.createddate | date:'dd-MM-yyyy'}}</td>

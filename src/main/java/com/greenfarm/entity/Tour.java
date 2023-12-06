@@ -50,9 +50,9 @@ public class Tour implements Serializable {
 	@NotBlank(message = "Location không được để trống")
 	private String location;
 
-	@NotNull(message = "Availableslots không được để trống")
-	@Column(name = "Availableslots")
-	private Integer Availableslots;
+//	@NotNull(message = "Availableslots không được để trống")
+//	@Column(name = "Availableslots")
+//	private Integer Availableslots;
 
 	@ManyToOne
 	@JoinColumn(name = "userid")
@@ -69,6 +69,10 @@ public class Tour implements Serializable {
 	@JsonIgnore
 	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
 	private TourCondition tourCondition;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
+	private List<TourDate> tourDate;
 
 	@JsonIgnore
 	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)

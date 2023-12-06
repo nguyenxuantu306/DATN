@@ -25,6 +25,8 @@ public interface AddressService {
 	
 	
 	void setActiveStatus(String email,Integer addressId);
+
+	Address updateById(Integer id, Address address);
 	
 
 }
