@@ -26,6 +26,7 @@ import com.greenfarm.dto.ProductImageDTO;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.ProductImage;
+import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportSP;
 import com.greenfarm.service.ProductService;
 
@@ -272,7 +273,7 @@ public class ProductRestController {
 	}
 
 	@GetMapping("/thongke/top10spbanchay")
-	public List<ReportSP> getProductspbanchay() {
+	public List<Report> getProductspbanchay() {
 		return productService.getReportspbanchay();
 	}
 

@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
+import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportSP;
 
 public interface ProductsDAO extends JpaRepository<Product, Integer> {
@@ -29,8 +30,8 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT new ReportSP(o.category, sum(o.price), count(o)) FROM Product o GROUP BY o.category ORDER BY sum(o.price) DESC")
 	List<ReportSP> getInventoryByCategory();
 
-	@Query("SELECT new ReportSP(o.product, sum(o.totalprice * o.quantityordered), sum(o.quantityordered)) FROM OrderDetail o GROUP BY o.product ORDER BY sum(o.quantityordered) DESC")
-	List<ReportSP> getTop10ProductsBygetReportspbanchay();
+	@Query("SELECT new Report(o.product, sum(o.totalprice * o.quantityordered), sum(o.quantityordered)) FROM OrderDetail o GROUP BY o.product ORDER BY sum(o.quantityordered) DESC")
+	List<Report> getTop10ProductsBygetReportspbanchay();
 
 	@Query("SELECT p FROM Product p WHERE p.category = :category")
 	List<Product> getProductsByCategory(@Param("category") Category category);

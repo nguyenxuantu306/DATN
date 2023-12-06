@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
+import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportSP;
 
 public interface ProductService {
@@ -57,7 +58,7 @@ public interface ProductService {
 	List<Product> getReportSpTk();
 
 
-	List<ReportSP> getReportspbanchay();
+	List<Report> getReportspbanchay();
 	
 //	void purchaseProduct(Integer productId, Integer quantityBought);
 	
