@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.VoucherDTO;
+import com.greenfarm.dto.VoucherUserDTO;
 import com.greenfarm.entity.Voucher;
+import com.greenfarm.entity.VoucherUser;
 import com.greenfarm.service.VoucherService;
+import com.greenfarm.service.VoucherUserService;
 
 @CrossOrigin("*")
 @RestController
@@ -31,6 +34,9 @@ public class VoucherRestController {
 	
 	@Autowired
 	VoucherService voucherService;
+
+	@Autowired
+	VoucherUserService voucherUserService;
 	
 	@GetMapping()
 	public ResponseEntity<List<VoucherDTO>> getList() {
@@ -61,7 +67,7 @@ public class VoucherRestController {
 	@PostMapping("user")
 	public ResponseEntity<VoucherUserDTO> createuser(@RequestBody VoucherUser voucheruser, Model model) {
 
-		VoucherUser createdVoucheruser = voucheruserservice.create(voucheruser);
+		VoucherUser createdVoucheruser = voucherUserService.create(voucheruser);
 		VoucherUserDTO voucherUserDTO = modelMapper.map(createdVoucheruser, VoucherUserDTO.class);
 		return new ResponseEntity<>(voucherUserDTO, HttpStatus.CREATED);
 	}
@@ -79,7 +85,7 @@ public class VoucherRestController {
 	
 	@PutMapping("user/{voucheruserid}")
 	public ResponseEntity<VoucherUserDTO> updateuser(@PathVariable("voucheruserid") Integer voucheruserid, @RequestBody VoucherUser voucheruser) {
-		VoucherUser updatedVoucheruser = voucheruserservice.update(voucheruser);
+		VoucherUser updatedVoucheruser = voucherUserService.update(voucheruser);
 
 		if (updatedVoucheruser == null) {
 			return ResponseEntity.notFound().build();
@@ -101,12 +107,12 @@ public class VoucherRestController {
 
 	@DeleteMapping("user/{voucheruserid}")
 	public ResponseEntity<Void> deleteuser(@PathVariable("voucheruserid") Integer voucheruserid) {
-		VoucherUser existingVoucheruser = voucheruserservice.findById(voucheruserid);
+		VoucherUser existingVoucheruser = voucherUserService.findById(voucheruserid);
 
 		if (existingVoucheruser == null) {
 			return ResponseEntity.notFound().build();
 		}
-		voucheruserservice.delete(voucheruserid);
+		voucherUserService.delete(voucheruserid);
 		return ResponseEntity.noContent().build();
 	}
 	
