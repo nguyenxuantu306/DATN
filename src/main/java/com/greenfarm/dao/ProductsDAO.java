@@ -23,13 +23,14 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT p FROM Product p WHERE p.category.categoryid=?1 AND p.isdeleted = false")
 	List<Product> findByCategoryIdAndIsdeletedFalse(String cid);
 
-	@Query("SELECT new Report(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
-			+ " GROUP BY o.product" + " ORDER BY  sum(o.totalprice * o.quantityordered)")
+	@Query("SELECT new ReportSP(o.product, sum(o.totalprice * o.quantityordered), sum(o.quantityordered)) FROM OrderDetail o GROUP BY o.product ORDER BY sum(o.totalprice * o.quantityordered)")
 	List<ReportSP> reportTheoProduct();
 
-	@Query("SELECT new Report(o.category, sum(o.price), count(o)) " + " FROM Product o " + " GROUP BY o.category"
-			+ " ORDER BY sum(o.price) DESC")
+	@Query("SELECT new ReportSP(o.category, sum(o.price), count(o)) FROM Product o GROUP BY o.category ORDER BY sum(o.price) DESC")
 	List<ReportSP> getInventoryByCategory();
+
+	@Query("SELECT new ReportSP(o.product, sum(o.totalprice * o.quantityordered), sum(o.quantityordered)) FROM OrderDetail o GROUP BY o.product ORDER BY sum(o.quantityordered) DESC")
+	List<ReportSP> getTop10ProductsBygetReportspbanchay();
 
 	@Query("SELECT p FROM Product p WHERE p.category = :category")
 	List<Product> getProductsByCategory(@Param("category") Category category);
@@ -39,10 +40,6 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 
 	@Query("SELECT p FROM Product p ORDER BY p.quantityavailable DESC")
 	List<Product> getTop10ProductsByQuantityAvailable();
-
-	@Query("SELECT new Report(o.product, sum(o.totalprice * o.quantityordered),sum(o.quantityordered))FROM OrderDetail o "
-			+ " GROUP BY o.product" + " ORDER BY  sum(o.quantityordered) Desc")
-	List<ReportSP> getTop10ProductsBygetReportspbanchay();
 
 	@Query("SELECT p FROM Product p WHERE p.isdeleted = true")
 	List<Product> findAllDeletedProducts();
@@ -64,10 +61,12 @@ public interface ProductsDAO extends JpaRepository<Product, Integer> {
 
 	Page<Product> findAllByIsdeletedFalse(Pageable pageable);
 
-//	// Phương thức tùy chỉnh để tìm sản phẩm theo productId và cập nhật số lượng
-// 	@Modifying
-//    @Transactional
-//    @Query("UPDATE Product p SET p.quantityavailable = p.quantityavailable - :quantityBought WHERE p.productid = :productId")
-//    void updateProductQuantity(@Param("productId") Integer productId, @Param("quantityBought") Integer quantityBought);
+	// // Phương thức tùy chỉnh để tìm sản phẩm theo productId và cập nhật số lượng
+	// @Modifying
+	// @Transactional
+	// @Query("UPDATE Product p SET p.quantityavailable = p.quantityavailable -
+	// :quantityBought WHERE p.productid = :productId")
+	// void updateProductQuantity(@Param("productId") Integer productId,
+	// @Param("quantityBought") Integer quantityBought);
 
 }
