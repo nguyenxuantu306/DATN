@@ -14,10 +14,13 @@ public class AddressDTO {
 	private Integer AddressID;
 	
 	private String Street;
+	private String Ward;
 	private String District;
 	private String City;
-	
-	private User user;
+	private String Phonenumber;
+	private String Fullname;
 	private Boolean Active = Boolean.FALSE;
+	private User user;
+	
 	
 }
