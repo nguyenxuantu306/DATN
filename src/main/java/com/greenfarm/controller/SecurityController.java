@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
@@ -23,9 +25,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.api.client.util.Value;
@@ -33,12 +37,14 @@ import com.greenfarm.cloudinary.CloudinaryService;
 import com.greenfarm.config.CustomOAuth2successHandler;
 import com.greenfarm.dao.UserDAO;
 import com.greenfarm.dto.RegisterDTO;
+import com.greenfarm.entity.Address;
 import com.greenfarm.entity.Passworddata;
 import com.greenfarm.entity.ResetPassWordData;
 import com.greenfarm.entity.User;
 import com.greenfarm.exception.InvalidTokenException;
 import com.greenfarm.exception.UnkownIdentifierException;
 import com.greenfarm.exception.UserAlreadyExistException;
+import com.greenfarm.service.AddressService;
 import com.greenfarm.service.UserService;
 
 import jakarta.servlet.ServletContext;
@@ -57,6 +63,9 @@ public class SecurityController {
 
 	@Autowired
 	UserDAO acdao;
+	
+	@Autowired
+	AddressService addressService;
 
 	@Autowired
 	private UserService userService;
@@ -214,10 +223,6 @@ public class SecurityController {
 		// return "redirect:/login";
 	}
 
-	@Autowired
-	ServletContext app;
-//	@Value("${upload.dir}")
-//    private String uploadDir;  // Đường dẫn đến thư mục lưu trữ file, được cấu hình trong application.properties
 
 	
 	@PostMapping("/profile")
@@ -292,6 +297,43 @@ public class SecurityController {
 
 		}
 		return "profile";
+	}
+	
+	private static final Logger logger = LoggerFactory.getLogger(AddressController.class);
+
+	@RequestMapping("/quanlydiachi")
+	public String quanlidiachilist(Model model, HttpServletRequest request) {
+		String email = request.getRemoteUser();
+		model.addAttribute("addresses", addressService.findByEfindByIdAccountmail(email));
+		return "address";
+	}
+
+	@PostMapping("/capnhatdiachi/{addressId}")
+	@ResponseBody
+	public String updateAddressStatus(@PathVariable("addressId") Integer addressId, HttpServletRequest request) {
+		String email = request.getRemoteUser();
+		addressService.setActiveStatus(email, addressId);
+		return "Success";
+	}
+
+	@GetMapping("/laydiachi/{addressId}")
+	@ResponseBody
+	public Map<String, Object> getAddress(@PathVariable("addressId") Integer addressId) {
+		Map<String, Object> response = new HashMap<>();
+
+		try {
+			Address address = addressService.findById(addressId);
+			User user = userService.findById(address.getUser().getUserid());
+
+			response.put("address", address);
+			response.put("user", user);
+			response.put("success", true);
+		} catch (Exception e) {
+			response.put("success", false);
+			response.put("message", "Error getting address information: " + e.getMessage());
+		}
+
+		return response;
 	}
 
 	@GetMapping("/changepass")

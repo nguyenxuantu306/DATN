@@ -9,9 +9,14 @@ import org.springframework.data.repository.query.Param;
 import com.greenfarm.entity.Comment;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Tour;
+import com.greenfarm.entity.User;
+import java.util.Date;
+
 
 public interface CommentDAO extends JpaRepository<Comment, Integer> {
 
+	List<Comment> findByUserAndCommentdate(User user, Date commentdate);
+	
 	List<Comment> findByTour(Tour tour);
 
 	List<Comment> findAllByOrderByCommentdateDesc();
@@ -19,4 +24,6 @@ public interface CommentDAO extends JpaRepository<Comment, Integer> {
 	// tìm kiếm keywword
 	@Query("SELECT co FROM Comment co WHERE LOWER(co.commenttext) LIKE LOWER(CONCAT('%', :keyword, '%'))")
 	List<Comment> findByKeyword(@Param("keyword") String keyword);
+	
+	
 }

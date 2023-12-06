@@ -50,6 +50,10 @@ app.config(function($routeProvider) {
 			templateUrl: "/assetsAdmin/admin/statistics/_inventorystatistics.html",
 			controller: "inventorystatistics-ctrl"
 		})
+		.when("/ticket", {
+			templateUrl: "/assetsAdmin/admin/soatve/ticket.html",
+			controller: "ticket-ctrl"
+		})
 		.when("/dashboard", {
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
 		})

@@ -1,0 +1,77 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<h2 class="card">Soát Vé</h2>
+					<div class="row py-3">
+						<div class="col-5 border ">
+							<h1>Camera Selection</h1>
+
+							Dropdown để chọn camera
+							<label for="cameraSelect">Select Camera:</label> <select
+								id="cameraSelect" ng-click="selectCamera()" >
+							</select>
+							
+							<button ng-click="captureAndSend()">Capture and Send</button>
+							
+							<hr>
+								<div class="bg-primary" style="max-width: 640; max-height: 480">
+								Hiển thị video từ camera được chọn
+							<video id="camera-view" style="max-width: 100%" autoplay></video>
+					
+								</div>
+								</div>
+								
+								show thong tin ve
+						<div class="col-5 bg-success">
+						<p>cách moi</p>
+						
+						</div>
+					</div>
+
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+ 
+ <!-- 
+  <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card">QR Code Scanner</h2>
+                        <div class="row py-3">
+                            <div class="col-5 border ">
+                                <h1>Camera Selection</h1>
+                                Dropdown để chọn camera
+                                <label for="cameraSelect">Select Camera:</label>
+                                <select id="cameraSelect" ng-model="selectedCamera"
+                                    ng-options="camera.deviceId as camera.label for camera in cameras">
+                                </select>
+                                <button ng-click="captureQRCode()">Start Scanning</button>
+                                <hr>
+                                <div class="bg-primary" style="max-width: 640; max-height: 480">
+                                    Hiển thị video từ camera được chọn
+                                    <video id="camera-view" style="max-width: 100%" autoplay></video>
+                                </div>
+                            </div>
+                            show thong tin ve
+                            <div class="col-5 bg-success">
+                                Hiển thị giá trị mã QR
+                                <div>
+                                    <p>QR Code Value: {{ qrCodeValue }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->

@@ -90,10 +90,6 @@ public class HomeController {
 //		return "profile";
 //	}
 
-	@RequestMapping("/profileoauth")
-	public String Profile(Model model) {
-		return "profileoauth2";
-	}
 
 	@RequestMapping("/contact")
 	public String Contact(Model model) {

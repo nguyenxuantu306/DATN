@@ -84,28 +84,37 @@
 								</div>
 							</div>
 							<div class="row mt-5">
+								<div>
+									<select id="city">
+										<option value="" selected>Chọn tỉnh thành</option>
+									</select> <select id="district">
+										<option value="" selected>Chọn quận huyện</option>
+									</select> <select id="ward">
+										<option value="" selected>Chọn phường xã</option>
+									</select>
+								</div>
 								<div class="col">
 									<div data-mdb-input-init class="form-outline">
 										<label class="form-check-label" for="form2Example33">
-											Đường: </label> <input type="text" class="form-control" id="Street"
-											value="[[address.Street]]" />
+											Đường: </label> <a type="text" class="form-control" id="Street"
+											value="[[address.Street]]"></a>
 
 									</div>
 								</div>
 								<div class="col">
 									<div data-mdb-input-init class="form-outline">
 										<label class="form-check-label" for="form2Example33">
-											Quận: </label> <input type="text" class="form-control" id="District"
-											value="[[address.District]]" />
+											Quận: </label> <a type="text" class="form-control" id="District"
+											value="[[address.District]]"></a>
 
 									</div>
 								</div>
 
 								<div class="col">
 									<div data-mdb-input-init class="form-outline">
-										<label class="form-check-label"> Tỉnh/Thành phố: </label> <input
+										<label class="form-check-label"> Tỉnh/Thành phố: </label> <a
 											type="text" class="form-control" id="City"
-											value="[[address.City]]" />
+											value="[[address.City]]"></a>
 
 									</div>
 								</div>
@@ -129,6 +138,112 @@
 			</div>
 		</div>
 	</div>
+
+
+
+
+
+
+	<div>
+
+
+
+		<p id="a"></p>
+
+
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+			referrerpolicy="no-referrer"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+		<script>
+    const host = "https://provinces.open-api.vn/api/";
+var callAPI = (api) => {
+    return axios.get(api)
+        .then((response) => {
+            renderData(response.data, "city");
+        });
+}
+callAPI('https://provinces.open-api.vn/api/?depth=1');
+var callApiDistrict = (api) => {
+    return axios.get(api)
+        .then((response) => {
+            renderData(response.data.districts, "district");
+        });
+}
+var callApiWard = (api) => {
+    return axios.get(api)
+        .then((response) => {
+            renderData(response.data.wards, "ward");
+        });
+}
+
+var renderData = (array, select) => {
+    let row = ' <option disable value="">Chọn</option>';
+    array.forEach(element => {
+        row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
+    });
+    document.querySelector("#" + select).innerHTML = row
+}
+
+$("#city").change(() => {
+    callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
+    printResultCity();
+});
+$("#district").change(() => {
+    callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
+    printResultDistrict();
+});
+$("#ward").change(() => {
+    printResultStreet();
+})
+
+
+
+var printResultCity = () => {
+    if ($("#district").find(':selected').data('id') != "" && $("#city").find(':selected').data('id') != "" &&
+        $("#ward").find(':selected').data('id') != "") {
+        let City = $("#city option:selected").text();
+        $("#City").text(City)
+    }
+
+}
+
+var printResultDistrict = () => {
+    if ($("#district").find(':selected').data('id') != "" && $("#city").find(':selected').data('id') != "" &&
+        $("#ward").find(':selected').data('id') != "") {
+        let District = $("#district option:selected").text() ;
+        $("#District").text(District)
+    }
+
+}
+
+var printResultStreet = () => {
+    if ($("#district").find(':selected').data('id') != "" && $("#city").find(':selected').data('id') != "" &&
+        $("#ward").find(':selected').data('id') != "") {
+        let Street = $("#ward option:selected").text();
+        $("#Street").text(Street)
+    }
+
+}
+
+
+
+var printResult = () => {
+    if ($("#district").find(':selected').data('id') != "" && $("#city").find(':selected').data('id') != "" &&
+        $("#ward").find(':selected').data('id') != "") {
+        let a = $("#city option:selected").text() +
+            " | " + $("#district option:selected").text() + " | " +
+            $("#ward option:selected").text();
+        $("#a").text(a)
+    }
+
+}
+	</script>
+	</div>
+
+
+
 	<script th:inline="javascript">
 		function updateAddressStatus(addressId) {
 			try {
