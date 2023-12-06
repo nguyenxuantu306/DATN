@@ -142,7 +142,7 @@ public class BookingRestController {
 		List<ReportYear> yearRevenue = bookingService.getbookingYearRevenue();
 		return new ResponseEntity<>(yearRevenue, HttpStatus.OK);
 	}
-
+	
 	@GetMapping("/findbookingyearrevenue/{year}")
 	public List<FindReportYear> getBookingYearlyRevenue(@PathVariable Integer year) {
 		return bookingService.findBookingYearlyRevenue(year);

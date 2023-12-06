@@ -1,8 +1,19 @@
 app.controller("ticket-ctrl", function($scope, $http, $window) {
     $scope.selectedCameraId = null;
+$scope.items = [];
+$scope.bookings = [];
+
 
     $scope.initialize = function() {
+		$http.get("/soatve/kiemtrave").then(resp => {
+			$scope.bookings = resp.data;
+			console.log(resp.data.bookingid);
+		});
+		
+
+		
         // Lấy danh sách camera từ WebRTC API
+        
         navigator.mediaDevices.enumerateDevices()
             .then(function(devices) {
                 const cameraSelect = document.getElementById('cameraSelect');
@@ -20,6 +31,8 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
                 console.error('Error enumerating devices:', error);
             });
     }
+
+
 
     $scope.selectCamera = function(){
         const selectedCameraId = document.getElementById('cameraSelect').value;
@@ -54,15 +67,27 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
 
         const imageData = canvas.toDataURL('image/png');
         console.log("day la du lieu gui di"+imageData);
-        $http.post('/capture', { imageData: JSON.stringify(imageData) })
-            .then(function(response) {
+        $http.post('/capture', { imageData: imageData})
+            .then(resp => {
+				console.log("cmthành công " ); 
+				console.log(resp.data);
+				$scope.items.push(resp.data);
+				
+			}).catch(error => {
+			// Sử dụng SweetAlert2 cho thông báo lỗi
+			
+			console.log("cmt lỗi " ); 
+			console.log("Error", error);
+		});
+				
+				/*function(response) {
 				console.log("vua pust xong");
                 // Xử lý kết quả từ REST API (nếu cần)
                 console.log('Capture successful:', response.data);
             })
             .catch(function(error) {
                 console.error('Error capturing and sending image:', error);
-            });
+            });*/
     }
 
     // Khởi đầu

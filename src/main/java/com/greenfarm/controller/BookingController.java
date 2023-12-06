@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -138,7 +139,7 @@ public class BookingController {
 		
 		
 		// Generate and save QR code to the qrcode field
-		String qrCodeContent = "http://localhost:8080/rest/bookings/kiemtrave/" + booking.getBookingid();
+		String qrCodeContent = ""+booking.getBookingid();
 		System.out.println(qrCodeContent);
 		System.out.println(booking.getBookingid());
 		String qrCodeUrl = imageRestController.uploadQRCodeToCloud(qrCodeContent);
@@ -148,4 +149,6 @@ public class BookingController {
 		bookingService.saveBooking(booking);
 		return "successboking";
 	}
+	
+
 }
