@@ -29,7 +29,7 @@ app.controller("bookingdate-ctrl", function($scope, $http) {
 	}
 	//Tính tổng
 	$scope.calculateTotal = function(item) {
-		return (item.adultticketnumber * item.tour.pricings.adultprice) + (item.childticketnumber * item.tour.pricings.childprice);
+		return (item.booking.adultticketnumber * item.booking.tour.pricings.adultprice) + (item.booking.childticketnumber * item.booking.tour.pricings.childprice);
 	}
 
 
