@@ -61,17 +61,21 @@
 							<span
 								th:text="*{#numbers.formatDecimal(price,0,'COMMA',0,'POINT')} + ' ₫ '"></span>
 						</h2>
-						<p th:text="*{description}" class="product-description mb-3"></p>
-						Số Lượng : <span th:text="*{quantityavailable}"
-							class="product-description mb-3"></span> sản phẩm có sẵn
-
-						<div class="cart-button mt-5 mb-5 d-flex">
+						<div>
+							<p th:text="*{description}" class="product-description mb-3"></p>
+							<span>Số Lượng : <span th:text="*{quantityavailable}"
+							class="product-description mb-3"></span> Kilogam có sẵn</span>
+						</div>
+						<div class="mt-5">
+							<span>Đơn Vị : KG (Tối thiểu 0.5 KG)</span>
+						</div>
+						<div class="cart-button mb-5 d-flex">
 							<div class="d-flex">
 								<button
 									style="border: 1px solid rgba(0, 0, 0, .09); width: 32px"
 									onclick="decQuantity()">-</button>
 								<input style="border: 1px solid rgba(0, 0, 0, .09);"
-									class="w-25 text-center" type="text" id="quantityInput"
+									class="w-25 text-center" type="number" id="quantityInput"
 									name="quantity" value="1" min="1" />
 								<button
 									style="border: 1px solid rgba(0, 0, 0, .09); width: 32px"

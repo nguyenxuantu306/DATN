@@ -33,7 +33,7 @@
 									<div>
 										<h6 class="my-0" th:text="${item.product.productname}"></h6>
 										x <small class="text-muted" name="quantityBought"
-											th:text="${item.quantity}"></small>
+											th:text="${item.quantity}"></small><small>(Kg)</small>
 									</div> <span class="text-muted"
 									th:text="${#numbers.formatDecimal(item.quantity * item.product.price, 0, 'COMMA', 0, 'POINT')}+ ' ₫'"></span>
 
@@ -49,7 +49,7 @@
 						<!-- Hiển thị tổng tiền trong thẻ "Total (USD)" -->
 						<li class="list-group-item d-flex justify-content-between"><span>Tổng
 								cộng</span> <strong id="totalPrice"> <span
-								style="font-size: smaller; opacity: 0.7;">VNĐ</span> <span
+								style="font-size: smaller; opacity: 0.7;"></span> <span
 								th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
 
 						</strong></li>
@@ -114,7 +114,6 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 
@@ -150,7 +149,6 @@
 						<div class="invalid-feedback">Please enter a valid email
 							address for shipping updates.</div>
 					</div>
-
 					<div class="mb-3">
 						<label for="">Số điện thoại</label> <input type="tel"
 							class="form-control" id="" th:value="${user.phonenumber}"
@@ -158,20 +156,17 @@
 							th:placeholder="${user.phonenumber}" required disabled />
 						<div class="invalid-feedback">Please enter your shipping .</div>
 					</div>
-
 					<div class="mb-3">
 						<div class="card">
 							<a class="card-body" href="/address">
 								<span class="card-title">Địa chỉ nhận hàng.</span>
-								<span th:each="address : ${user.address}">
+								<span th:each="address : ${address.user}">
 									<p th:if="${address.active}"
-										th:text="${address.street + ', ' + address.district + ', ' + address.city}"></p>
+										th:text="${address.street + ', ' + address.ward  + ', ' + address.district + ', ' + address.city}"></p>
 								</span>
 							</a>
 						</div>
 					</div>
-
-
 					<!-- <hr class="mb-4" /> -->
 					<div class="custom-control custom-checkbox">
 						<input type="checkbox" class="custom-control-input"

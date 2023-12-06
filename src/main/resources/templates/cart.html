@@ -65,7 +65,7 @@
                                   class="text-center"
                                   th:text="#{cart.label.quantity}"
                                 >
-                                  Số lượng
+                                  Số lượng(KG)
                                 </th>
                                 <th
                                   class="text-center"
@@ -98,7 +98,7 @@
                                   class="text-center"
                                   th:text="${cart.product.productname}"
                                 ></td>
-                                <td class="text-center" style="padding-top: 40px;"> 
+                                <td class="text-center" style="padding-top: 40px;">
                                   <button style="border: 1px solid rgba(0,0,0,.09);width: 32px"
                                     href="javascript:void(0)"
                                     onclick="decreaseQuantity(this)"
@@ -106,7 +106,7 @@
                                     -
                                   </button>
                                   <input
-                                    type="text" style="border: 1px solid rgba(0,0,0,.09);"
+                                    type="number" style="border: 1px solid rgba(0,0,0,.09);" min="0.5"
                                     class="cart-quantity text-center w-25"
                                     th:value="${cart.quantity}"
                                     th:data-productid="${cart.product.productid}"
@@ -123,8 +123,8 @@
 
                                 <td style="padding-top: 40px" class="text-center" th:text="${#numbers.formatDecimal(cart.product.price * cart.quantity, 0, 'COMMA', 0, 'POINT')}+ ' ₫'"></td>
 
-                                <td style="padding-top: 40px" class="text-center">                             
-                                    <i style="color: #7AB730;" th:attr="onclick='removeCart(\'' + ${cart.product.productid} + '\')'" class="bi bi-trash3-fill"></i>                                 
+                                <td style="padding-top: 40px" class="text-center">
+                                    <i style="color: #7AB730;" th:attr="onclick='removeCart(\'' + ${cart.product.productid} + '\')'" class="bi bi-trash3-fill"></i>
                                 </td>
                               </tr>
                             </tbody>

@@ -22,10 +22,13 @@ public class Address {
 	private Integer AddressID;
 
 	private String Street;
+	private String Ward;
 	private String District;
 	private String City;
+	private String Phonenumber;
+	private String Fullname;
 	private Boolean Active = Boolean.FALSE;
 	@ManyToOne
-    @JoinColumn(name = "userid") 
+    @JoinColumn(name = "userid")
     private User user;
 }

@@ -69,10 +69,6 @@ public class User implements Serializable {
 // @NotBlank(message = "Ảnh đại diện là bắt buộc")
 	String image;
 
-//	@NotBlank(message = "Địa chỉ là bắt buộc")
-//	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
-	String Address;
-
 //	@NotNull(message = "Giới tính phải được chọn")
 	Boolean gender;
 

@@ -21,14 +21,18 @@
 						<form th:action="@{/login}"  method="post" class="py-3">
 							<div class="mb-4 form-floating">
 								<input name="username" type="email" class="form-control"
-									id="floatingInput" placeholder="name@example.com" required="required">
+									id="floatingInput" placeholder="name@example.com" required>
 								<label for="floatingInput">Email</label>
 								
 							</div>
 							<div class="mb-4 form-floating">
 								<input name="password" type="password" class="form-control"
-									id="floatingPassword" placeholder="Password" required>
-								<label for="floatingPassword">Mật khẩu</label>
+									id="password" placeholder="Password" required
+									pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
+									title="Vui lòng tối thiểu 8 ký tự bao gồm ít nhất 1 ký tự viết hoa, 1 ký tự viết thường và 1 số."
+									>
+								<label for="password">Mật khẩu</label>
+								<i id="passwordToggleIcon" class="fas fa-eye-slash" onclick="togglePasswordVisibility()" style="cursor: pointer;"></i>
 							</div>
 							<div class="mb-4 form-check">
 								<input type="checkbox" name="remember" class="form-check-input"
@@ -76,5 +80,6 @@
 		</div>
 	</div>
 
+	<script src="./assets/js/formValidate.js"></script>
 </body>
 </html>
