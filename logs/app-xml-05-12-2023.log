@@ -20236,3 +20236,12 @@ java.text.ParseException: Unparseable date: "2023-12-02"
 [INFO ] 05-12-2023 23:51:33 [http-nio-8080-exec-1] [/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 [INFO ] 05-12-2023 23:51:33 [http-nio-8080-exec-1] DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 [INFO ] 05-12-2023 23:51:33 [http-nio-8080-exec-1] DispatcherServlet - Completed initialization in 3 ms
+[INFO ] 06-12-2023 00:29:51 [RMI TCP Connection(248)-127.0.0.1] SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+[INFO ] 06-12-2023 00:29:51 [RMI TCP Connection(248)-127.0.0.1] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 06-12-2023 00:29:51 [RMI TCP Connection(248)-127.0.0.1] StandardService - Stopping service [Tomcat]
+[INFO ] 06-12-2023 00:29:51 [RMI TCP Connection(248)-127.0.0.1] [/] - Destroying Spring FrameworkServlet 'dispatcherServlet'
+[INFO ] 06-12-2023 00:29:51 [RMI TCP Connection(248)-127.0.0.1] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 06-12-2023 00:29:51 [RMI TCP Connection(248)-127.0.0.1] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 06-12-2023 00:29:51 [RMI TCP Connection(248)-127.0.0.1] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 06-12-2023 00:29:51 [RMI TCP Connection(248)-127.0.0.1] HikariDataSource - HikariPool-99 - Shutdown initiated...
+[INFO ] 06-12-2023 00:29:51 [RMI TCP Connection(248)-127.0.0.1] HikariDataSource - HikariPool-99 - Shutdown completed.

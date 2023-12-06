@@ -34,9 +34,9 @@ public class TourDateBooking implements Serializable {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "TourdateID")
-	private TourDate tourdateid;
+	private TourDate tourdate;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "BookingID")
-	private Booking bookingid;
+	private Booking booking;
 }
