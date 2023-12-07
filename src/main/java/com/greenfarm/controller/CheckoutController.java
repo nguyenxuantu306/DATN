@@ -24,6 +24,7 @@ import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.PaymentMethodDAO;
 import com.greenfarm.dao.VoucherOrderDAO;
 import com.greenfarm.dto.OrderDTO;
+import com.greenfarm.entity.Address;
 import com.greenfarm.entity.Cart;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
@@ -33,6 +34,7 @@ import com.greenfarm.entity.User;
 import com.greenfarm.entity.Voucher;
 import com.greenfarm.entity.VoucherOrder;
 import com.greenfarm.entity.VoucherUser;
+import com.greenfarm.service.AddressService;
 import com.greenfarm.service.CartService;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.VoucherService;
@@ -70,6 +72,9 @@ public class CheckoutController {
 
 	@Autowired
 	VoucherOrderDAO voucherOrderDAO;
+	
+	@Autowired
+	AddressService addressService;
 
 	@GetMapping("/checkout")
 	public String Checkout(ModelMap modelMap, HttpServletRequest request, Model model) {
@@ -107,6 +112,7 @@ public class CheckoutController {
 	@PostMapping("/checkout/payment")
 	public String Payment(Model model, @ModelAttribute("Order") OrderDTO orderDTO,
 			@RequestParam(name = "voucherid", required = false) String[] voucherIds,
+			 @RequestParam(name = "addressId") Integer addressId,
 			HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
@@ -117,12 +123,13 @@ public class CheckoutController {
 			StatusOrder statusOrder = new StatusOrder();
 			statusOrder.setStatusorderid(1);
 			PaymentMethod paymentMethodObj = paymentMethodDAO.findById(1).get();
-
+	        Address address = addressService.findByAddressid(addressId);
+			
 			if (user != null) {
 				Order orderItem = new Order();
 				orderItem.setUser(user);
 				orderItem.setOrderdate(now);
-				//orderItem.setAddress(orderDTO.getAddress());
+		        orderItem.setAddress(address);
 				orderItem.setStatusOrder(statusOrder);
 				orderItem.setPaymentmethod(paymentMethodObj);
 				orderItem.setVoucherorder(orderDTO.getVoucherorder());

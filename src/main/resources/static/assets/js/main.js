@@ -1,4 +1,4 @@
-(function ($) {
+/*(function ($) {
     "use strict";
     
     // Dropdown on mouse hover
@@ -67,3 +67,4 @@
     });
     
 })(jQuery);
+*/
