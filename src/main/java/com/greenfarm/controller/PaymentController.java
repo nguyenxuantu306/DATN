@@ -27,6 +27,7 @@ import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.PaymentMethodDAO;
 import com.greenfarm.dao.VoucherOrderDAO;
 import com.greenfarm.dto.OrderDTO;
+import com.greenfarm.entity.Address;
 import com.greenfarm.entity.Cart;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
@@ -35,6 +36,7 @@ import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.entity.User;
 import com.greenfarm.entity.Voucher;
 import com.greenfarm.entity.VoucherOrder;
+import com.greenfarm.service.AddressService;
 import com.greenfarm.service.CartService;
 import com.greenfarm.service.PaypalService;
 import com.greenfarm.service.UserService;
@@ -75,6 +77,9 @@ public class PaymentController {
 
 	@Autowired
 	VoucherOrderDAO voucherOrderDAO;
+	
+	@Autowired
+	AddressService addressService;
 
 	public static final String URL_PAYPAL_SUCCESS = "success";
 	public static final String URL_PAYPAL_CANCEL = "pay/cancel";
@@ -86,7 +91,8 @@ public class PaymentController {
 
 	@PostMapping("/submitOrderPaypal")
 	public String pay(HttpServletRequest request, @RequestParam("hiddenTotalPrice") double totalPrice,
-			@RequestParam(name = "voucherid", required = false) String[] voucherIds) {
+			@RequestParam(name = "voucherid", required = false) String[] voucherIds,
+			@RequestParam(name = "addressId") Integer addressId) {
 		String cancelUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
 		String successUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_SUCCESS;
 
@@ -96,6 +102,7 @@ public class PaymentController {
 					PaypalPaymentIntent.sale, "payment description", cancelUrl, successUrl);
 			HttpSession session = request.getSession();
 			session.setAttribute("voucherid", voucherIds);
+			session.setAttribute("addressId", addressId);
 			for (Links links : payment.getLinks())
 				if (links.getRel().equals("approval_url"))
 					return "redirect:" + links.getHref();
@@ -128,11 +135,16 @@ public class PaymentController {
 					StatusOrder statusOrder = new StatusOrder();
 					statusOrder.setStatusorderid(1);
 					PaymentMethod paymentMethodObj = paymentMethodDAO.findById(3).get();
+					
+					HttpSession session = request.getSession();
+					Integer addressId = (Integer) session.getAttribute("addressId");
+					Address address = addressService.findByAddressid(addressId);
+					
 					if (user != null) {
 						Order orderItem = new Order();
 						orderItem.setUser(user);
 						orderItem.setOrderdate(now);
-//						orderItem.setAddress(user.getAddress());
+						orderItem.setAddress(address);
 						orderItem.setStatusOrder(statusOrder);
 						orderItem.setPaymentmethod(paymentMethodObj);
 						orderDAO.save(orderItem);
@@ -153,7 +165,6 @@ public class PaymentController {
 
 						float discountedTotal = 0;
 						List<VoucherOrder> voucherLists = new ArrayList<>();
-						HttpSession session = request.getSession();
 						String[] voucherIds = (String[]) session.getAttribute("voucherid");
 
 						if (voucherIds != null && voucherIds.length > 0 && !Arrays.asList(voucherIds).contains("0")) {
@@ -171,7 +182,7 @@ public class PaymentController {
 								discountedTotal = total - (total * voucher.getDiscount());
 							}
 						} else {
-							System.out.println("heheehdeoco");
+							System.out.println("Không có mã giảm giá!");
 						}
 
 						voucherOrderDAO.saveAll(voucherLists);

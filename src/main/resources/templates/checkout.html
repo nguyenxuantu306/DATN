@@ -148,7 +148,7 @@
 					</div>
 
 					<div class="mb-3">
-						<div th:each="address : ${user.address}" class="mt-2">
+						<div th:each="address : ${user.address}" th:if="${address.active}" class="mt-2">
 
 							<!-- 								<div> -->
 							<!-- 									<label class="form-label" th:if="${address.active}">Địa -->
@@ -157,13 +157,7 @@
 							<!-- 										class="form-control" /></a> -->
 							<!-- 								</div> -->
 							<div class="row">
-								<div class="col">
-									<label class="form-label" th:if="${address.active}">ID</label> <input type="text"
-										readonly th:if="${address.active}" class="form-control"
-										th:value="${address.AddressID}" />
-									<input type="hidden" th:name="addressId" th:value="${address.AddressID}" />
-
-								</div>
+								<input type="hidden" th:name="addressId" th:value="${address.AddressID}" />
 								<div class="col">
 									<label class="form-label" th:if="${address.active}">Họ
 										và tên:</label> <input type="text" readonly th:if="${address.active}"
