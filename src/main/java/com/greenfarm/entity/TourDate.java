@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,8 +34,8 @@ public class TourDate implements Serializable {
 	@Positive(message = "tourdateid không được là số âm")
 	private Integer tourdateid;
 	
-	@Column(columnDefinition = "DATE")
-	private LocalDate tourdates;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date tourdates;
 	
 	private Integer Availableslots;
 	

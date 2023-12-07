@@ -1,5 +1,7 @@
 package com.greenfarm.service.impl;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,6 +54,21 @@ public class TourDateBookingServiceImpl implements TourDateBookingService {
 	public TourDateBooking findById(Integer tourdatebookingid) {
 		return dao.findById(tourdatebookingid).get();
 	}
+
+	@Override
+	public List<TourDateBooking> findByKeyword(String keyword) {
+		return dao.findByKeyword(keyword);
+	}
+
+	@Override
+	public List<TourDateBooking> findByDepartureDay(String departureday) {
+		return dao.findByDepartureDay(departureday);
+	}
+
+//	@Override
+//	public List<TourDateBooking> findByDate(Date date) {
+//		return dao.findByTourdates(date);
+//	}
 
 
 }

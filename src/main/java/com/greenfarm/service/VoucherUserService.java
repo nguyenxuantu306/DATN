@@ -12,6 +12,8 @@ public interface VoucherUserService {
 
 	List<VoucherUser> findAll();
 	
+	List<VoucherUser> findByKeyword(String keyword);
+	
 	VoucherUser findById(Integer voucheruserId);
 
 	VoucherUser create(VoucherUser voucheruser);

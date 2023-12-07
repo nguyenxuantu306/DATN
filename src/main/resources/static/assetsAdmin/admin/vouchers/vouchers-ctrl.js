@@ -255,7 +255,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 	
 	// tìm kiếm
 	$scope.loadData = function() {
-		var apiUrl = '/rest/comment/searchkeywordcomment';
+		var apiUrl = '/rest/vouchers/searchkeywordvoucher';
 
 		// Kiểm tra xem có từ khóa tìm kiếm không
 		if ($scope.searchText) {
@@ -272,10 +272,30 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 				console.error('Lỗi khi tải dữ liệu:', error);
 			});
 	};
+	
+	// tìm kiếm
+	$scope.loadData1 = function() {
+		var apiUrl = '/rest/vouchers/user/searchkeywordvoucheruser';
+
+		// Kiểm tra xem có từ khóa tìm kiếm không
+		if ($scope.searchText) {
+			apiUrl += '?keyword=' + $scope.searchText;
+		}
+
+		$http.get(apiUrl)
+			.then(function(response) {
+				// Cập nhật dữ liệu trong scope
+				$scope.items2 = response.data; // Cập nhật items để phản ánh dữ liệu mới
+				$scope.pager1.page = 0; // Đặt lại trang về 0 khi có dữ liệu mới
+			})
+			.catch(function(error) {
+				console.error('Lỗi khi tải dữ liệu:', error);
+			});
+	};
 
 	$scope.pager = {
 		page: 0,
-		size: 10,
+		size: 5,
 		get items() {
 			var start = this.page * this.size;
 			return $scope.items ? $scope.items.slice(start, start + this.size) : [];

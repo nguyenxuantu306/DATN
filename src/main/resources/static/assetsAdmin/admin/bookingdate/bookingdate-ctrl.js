@@ -64,44 +64,114 @@ app.controller("bookingdate-ctrl", function($scope, $http) {
 		}
 	};
 
+	// tìm kiếm
+	$scope.loadData = function() {
+		var apiUrl = '/rest/tourdatebookings/searchkeywordtourdatebooking';
+
+		// Kiểm tra xem có từ khóa tìm kiếm không
+		if ($scope.searchText) {
+			apiUrl += '?keyword=' + $scope.searchText;
+		}
+
+		$http.get(apiUrl)
+			.then(function(response) {
+				// Cập nhật dữ liệu trong scope
+				$scope.items = response.data; // Cập nhật items để phản ánh dữ liệu mới
+				$scope.pager.page = 0; // Đặt lại trang về 0 khi có dữ liệu mới
+			})
+			.catch(function(error) {
+				console.error('Lỗi khi tải dữ liệu:', error);
+			});
+	};
+
+
+	$scope.loadData1 = function() {
+		var apiUrl = '/rest/tourdatebookings/searchbydepartureday';
+
+		// Kiểm tra xem có selectedDepartureDay không
+		if ($scope.selectedDepartureDay) {
+			apiUrl += apiUrl.includes('?') ? '&' : '?';
+			apiUrl += 'departureDay=' + $scope.selectedDepartureDay;
+		}
+
+		$http.get(apiUrl)
+			.then(function(response) {
+				// Cập nhật dữ liệu trong scope
+				$scope.items = response.data; // Cập nhật items để phản ánh dữ liệu mới
+				$scope.pager.page = 0; // Đặt lại trang về 0 khi có dữ liệu mới
+			})
+			.catch(function(error) {
+				console.error('Lỗi khi tải dữ liệu:', error);
+			});
+	};
+
+	/*	$scope.loadData = function() {
+		var apiUrl = '/rest/tourdates/filtertourdate';
+	
+		// Lấy giá trị ngày từ input
+		var selectedDate = $scope.selectedDate;
+	
+		// Kiểm tra xem có ngày được chọn không
+		if (selectedDate) {
+			// Format ngày thành chuỗi YYYY-MM-DD để truyền vào URL
+			var formattedDate = selectedDate.toISOString().split('T')[0];
+	
+			// Thêm thông tin ngày vào URL
+			apiUrl += ($scope.searchText ? '&' : '?') + 'date=' + formattedDate;
+		} else {
+			// Nếu không có ngày được chọn, loại bỏ thông tin ngày từ URL
+			apiUrl = apiUrl.replace(/&?date=[^&], '');
+		}
+	
+		$http.get(apiUrl)
+			.then(function(response) {
+				// Cập nhật dữ liệu trong scope
+				$scope.items = response.data; // Cập nhật items để phản ánh dữ liệu mới
+				$scope.pager.page = 0; // Đặt lại trang về 0 khi có dữ liệu mới
+			})
+			.catch(function(error) {
+				console.error('Lỗi khi tải dữ liệu:', error);
+			});
+	};*/
+
 
 	$scope.pager = {
-    page: 0,
-    size: 10,
-    get items() {
-        // Sắp xếp mảng $scope.items theo ngày đặt tour giảm dần (từ mới nhất đến cũ nhất)
-        var sortedItems = $scope.items.slice().sort(function(a, b) {
-            var dateA = new Date(a.tourdate.tourdates);
-            var dateB = new Date(b.tourdate.tourdates);
-            return dateB - dateA;
-        });
+		page: 0,
+		size: 10,
+		get items() {
+			// Sắp xếp mảng $scope.items theo ngày đặt tour giảm dần (từ mới nhất đến cũ nhất)
+			var sortedItems = $scope.items.slice().sort(function(a, b) {
+				var dateA = new Date(a.tourdate.tourdates);
+				var dateB = new Date(b.tourdate.tourdates);
+				return dateB - dateA;
+			});
 
-        var start = this.page * this.size;
-        var paginatedItems = sortedItems.slice(start, start + this.size);
-        return paginatedItems;
-    },
-    get count() {
-        return Math.ceil(1.0 * $scope.items.length / this.size);
-    },
-    first() {
-        this.page = 0;
-    },
-    prev() {
-        this.page--;
-        if (this.page < 0) {
-            this.last();
-        }
-    },
-    next() {
-        this.page++;
-        if (this.page >= this.count) {
-            this.first();
-        }
-    },
-    last() {
-        this.page = this.count - 1;
-    }
-};
+			var start = this.page * this.size;
+			var paginatedItems = sortedItems.slice(start, start + this.size);
+			return paginatedItems;
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.items.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+	};
 
 
 

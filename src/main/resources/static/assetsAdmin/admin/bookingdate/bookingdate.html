@@ -20,15 +20,16 @@
 						</div>
 					</div>
 					<div class="col-md-2  input-group icons">
-						<select style="width: 300px" class="select bg-success"
-							ng-model="selectedStatus">
-							<option value="0">Ngày Chủ nhật</option>
-							<option value="1">Ngày Thứ bảy</option>
-							<option value="2">Ngày 14</option>
-							<option value="3">Ngày 15</option>
-							<option value="4">Ngày 20</option>
+						<!-- Sử dụng select thay vì input và thêm ng-change -->
+						<select class="form-control" ng-model="selectedDepartureDay"
+							ng-change="loadData1()">
+							<option value="">Tất cả</option>
+							<option value="Chủ nhật">Ngày Chủ nhật</option>
+							<option value="Thứ bảy">Ngày Thứ bảy</option>
+							<option value="Ngày 14">Ngày 14</option>
+							<option value="Ngày 15">Ngày 15</option>
+							<option value="Ngày 20">Ngày 20</option>
 						</select>
-
 					</div>
 					<div class="col-md-4 text-right">
 						<button style="height: 45px;" type="button"
@@ -68,7 +69,7 @@
 						</thead>
 						<tbody>
 							<tr class="text-center"
-								ng-repeat="item in items | orderBy:sortKey:sortType">
+								ng-repeat="item in pager.items | orderBy:sortKey:sortType">
 								<th scope="row">{{$index + 1}}</th>
 								<td style="width: 250px">{{item.booking.tour.tourname}}</td>
 								<td style="width: 100px; color: blue; font-weight: bold;">{{item.tourdate.tourdates
@@ -124,9 +125,12 @@
 																		<div class="card-body">
 																			<h4 class="card-title">{{form.booking.user.firstname}}
 																				{{form.booking.user.lastname}}</h4>
-																			<h5 class="card-text">Email: {{form.booking.user.email}}</h5>
-																			<h5 class="card-text">Điện thoại: {{form.booking.user.phonenumber}}</h5>
-																			<h5 class="card-text">Ngày sinh: {{form.booking.user.birthday | date:'dd/MM/yyyy'}}</h5>
+																			<h5 class="card-text">Email:
+																				{{form.booking.user.email}}</h5>
+																			<h5 class="card-text">Điện thoại:
+																				{{form.booking.user.phonenumber}}</h5>
+																			<h5 class="card-text">Ngày sinh:
+																				{{form.booking.user.birthday | date:'dd/MM/yyyy'}}</h5>
 
 																		</div>
 																	</div>
@@ -189,7 +193,23 @@
 							</tr>
 						</tbody>
 					</table>
-
+					<div class="panel-footer text-right">
+						<span class="col-md-6"
+							style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
+							+ 1}} / {{pager.count}} </span>
+						<button ng-click="pager.first()" class="btn btn-success">
+							<i class="fas fa-angle-double-left"></i>
+						</button>
+						<button ng-click="pager.prev()" class="btn btn-success">
+							<i class="fas fa-angle-left"></i>
+						</button>
+						<button ng-click="pager.next()" class="btn btn-success">
+							<i class="fas fa-angle-right"></i>
+						</button>
+						<button ng-click="pager.last()" class="btn btn-success">
+							<i class="fas fa-angle-double-right"></i>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>

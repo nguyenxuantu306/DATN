@@ -2,6 +2,7 @@ package com.greenfarm.service;
 
 import java.util.List;
 
+import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Voucher;
 
 public interface VoucherService {
@@ -16,6 +17,7 @@ public interface VoucherService {
 
 	void delete(Integer voucherid);
 
+	List<Voucher> findByKeyword(String keyword);
 
 	Voucher findByVoucherid(long parseLong);
 
