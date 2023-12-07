@@ -93,6 +93,13 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 
+	@Override
+	public Address findByAddressid(Integer addressId) {
+		// TODO Auto-generated method stub
+		return addressDAO.findById(addressId).get();
+	}
+
+
 
 	
 }
