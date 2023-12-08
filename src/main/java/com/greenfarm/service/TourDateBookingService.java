@@ -23,7 +23,7 @@ public interface TourDateBookingService {
 	
 	TourDateBooking findById(Integer tourdatebookingid);
 	
-//	List<TourDateBooking> findByDate(Date date);
+	List<TourDateBooking> findByDate(Date date);
 	
 	// API cập nhật sản phẩm
 	TourDateBooking update(TourDateBooking tourdatebooking);

@@ -65,10 +65,10 @@ public class TourDateBookingServiceImpl implements TourDateBookingService {
 		return dao.findByDepartureDay(departureday);
 	}
 
-//	@Override
-//	public List<TourDateBooking> findByDate(Date date) {
-//		return dao.findByTourdates(date);
-//	}
+	@Override
+	public List<TourDateBooking> findByDate(Date date) {
+		return dao.findByTourdates(date);
+	}
 
 
 }

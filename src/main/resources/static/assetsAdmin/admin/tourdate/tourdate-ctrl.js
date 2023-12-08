@@ -191,8 +191,8 @@ app.controller("tourdate-ctrl", function($scope, $http) {
 
     // Kiểm tra xem có ngày được chọn không
     if (selectedDate) {
-        // Format ngày thành chuỗi YYYY-MM-DD để truyền vào URL
-        var formattedDate = selectedDate.toISOString().split('T')[0];
+        // Format ngày thành chuỗi YYYY-MM-DD để truyền vào URL với múi giờ Việt Nam
+        var formattedDate = moment(selectedDate).format('YYYY-MM-DD');
 
         // Thêm thông tin ngày vào URL
         apiUrl += ($scope.searchText ? '&' : '?') + 'date=' + formattedDate;
@@ -211,6 +211,8 @@ app.controller("tourdate-ctrl", function($scope, $http) {
             console.error('Lỗi khi tải dữ liệu:', error);
         });
 };
+
+
 
 
 	// Thêm nút xóa dữ liệu

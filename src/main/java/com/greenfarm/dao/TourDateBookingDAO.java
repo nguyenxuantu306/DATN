@@ -22,12 +22,14 @@ public interface TourDateBookingDAO extends JpaRepository<TourDateBooking, Integ
 	List<TourDateBooking> findByKeyword(@Param("keyword") String keyword);
 
 	
-	@Query("SELECT tdb FROM TourDateBooking tdb JOIN tdb.booking b JOIN b.tour t WHERE t.departureday = :departureday")
-	List<TourDateBooking> findByDepartureDay(@Param("departureday") String departureday);
+	@Query("SELECT p FROM TourDateBooking p WHERE p.booking.tour.departureday = :departureday")
+//	@Query("SELECT p FROM TourDateBooking p WHERE LOWER(p.tourdate.tour.departureday) LIKE LOWER(CONCAT('%', :departureday, '%'))")
+		List<TourDateBooking> findByDepartureDay(@Param("departureday") String departureday);
 
 
-//	@Query("SELECT p FROM TourDateBooking p WHERE DATE(p.tourdates) = :date")
-//	List<TourDateBooking> findByTourdates(@Param("date") Date date);
+
+	@Query("SELECT p FROM TourDateBooking p WHERE DATE(p.tourdate.tourdates) = :date")
+	List<TourDateBooking> findByTourdates(@Param("date") Date date);
 
 
 }

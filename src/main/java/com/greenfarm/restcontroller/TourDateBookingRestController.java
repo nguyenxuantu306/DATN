@@ -131,7 +131,7 @@ public class TourDateBookingRestController {
 		return ResponseEntity.ok(tourdatebookingDtos);
 	}
 	
-	@GetMapping("/searchbydepartureday")
+	@GetMapping("/findByDepartureDay")
     public ResponseEntity<List<TourDateBookingDTO>> getListdepartureday(@RequestParam(required = false) String departureday) {
         List<TourDateBooking> tourdatebookings;
 
@@ -150,24 +150,24 @@ public class TourDateBookingRestController {
         return ResponseEntity.ok(tourdatebookingDtos);
     }
 	
-//	@GetMapping("/filtertourdate")
-//	public ResponseEntity<List<TourDateBookingDTO>> getList(
-//	        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
-//	    List<TourDateBooking> tourdatebookings;
-//
-//	    if (date != null) {
-//	        // Nếu chỉ có ngày, thực hiện tìm kiếm theo ngày
-//	    	tourdatebookings = toudatebookingService.findByDate(date);
-//	    } else {
-//	        // Nếu không có ngày, lấy tất cả
-//	    	tourdatebookings = toudatebookingService.findAll();
-//	    }
-//
-//	    List<TourDateBookingDTO> tourdatebookingDtos = tourdatebookings.stream()
-//	            .map(tourdatebooking -> modelMapper.map(tourdatebooking, TourDateBookingDTO.class))
-//	            .collect(Collectors.toList());
-//
-//	    return ResponseEntity.ok(tourdatebookingDtos);
-//	}
+	@GetMapping("/filtertourdate")
+	public ResponseEntity<List<TourDateBookingDTO>> getList(
+	        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
+	    List<TourDateBooking> tourdatebookings;
+
+	    if (date != null) {
+	        // Nếu chỉ có ngày, thực hiện tìm kiếm theo ngày
+	    	tourdatebookings = toudatebookingService.findByDate(date);
+	    } else {
+	        // Nếu không có ngày, lấy tất cả
+	    	tourdatebookings = toudatebookingService.findAll();
+	    }
+
+	    List<TourDateBookingDTO> tourdatebookingDtos = tourdatebookings.stream()
+	            .map(tourdatebooking -> modelMapper.map(tourdatebooking, TourDateBookingDTO.class))
+	            .collect(Collectors.toList());
+
+	    return ResponseEntity.ok(tourdatebookingDtos);
+	}
 
 }

@@ -84,9 +84,47 @@ app.controller("bookingdate-ctrl", function($scope, $http) {
 			});
 	};
 
-
 	$scope.loadData1 = function() {
-		var apiUrl = '/rest/tourdatebookings/searchbydepartureday';
+		var apiUrl = '/rest/tourdatebookings/filtertourdate';
+
+		// Lấy giá trị ngày từ input
+		var selectedDate = $scope.selectedDate;
+
+		// Kiểm tra xem có ngày được chọn không
+		if (selectedDate) {
+			// Format ngày thành chuỗi YYYY-MM-DD để truyền vào URL với múi giờ Việt Nam
+			var formattedDate = moment(selectedDate).format('YYYY-MM-DD');
+
+			// Thêm thông tin ngày vào URL
+			apiUrl += ($scope.searchText ? '&' : '?') + 'date=' + formattedDate;
+		} else {
+			// Nếu không có ngày được chọn, loại bỏ thông tin ngày từ URL
+			apiUrl = apiUrl.replace(/&?date=[^&]*/, '');
+		}
+
+		$http.get(apiUrl)
+			.then(function(response) {
+				// Cập nhật dữ liệu trong scope
+				$scope.items = response.data; // Cập nhật items để phản ánh dữ liệu mới
+				$scope.pager.page = 0; // Đặt lại trang về 0 khi có dữ liệu mới
+			})
+			.catch(function(error) {
+				console.error('Lỗi khi tải dữ liệu:', error);
+			});
+	};
+
+	// Thêm nút xóa dữ liệu
+	$scope.clearData = function() {
+		$scope.items = []; // Xóa dữ liệu
+		$scope.searchText = ''; // Xóa từ khóa tìm kiếm
+		$scope.selectedDate = null; // Xóa giá trị ngày
+		$scope.loadData(); // Gọi lại hàm loadData để tải dữ liệu mới
+	};
+
+
+
+	$scope.loadData2 = function() {
+		var apiUrl = '/rest/tourdatebookings/findByDepartureDay';
 
 		// Kiểm tra xem có selectedDepartureDay không
 		if ($scope.selectedDepartureDay) {
@@ -104,35 +142,6 @@ app.controller("bookingdate-ctrl", function($scope, $http) {
 				console.error('Lỗi khi tải dữ liệu:', error);
 			});
 	};
-
-	/*	$scope.loadData = function() {
-		var apiUrl = '/rest/tourdates/filtertourdate';
-	
-		// Lấy giá trị ngày từ input
-		var selectedDate = $scope.selectedDate;
-	
-		// Kiểm tra xem có ngày được chọn không
-		if (selectedDate) {
-			// Format ngày thành chuỗi YYYY-MM-DD để truyền vào URL
-			var formattedDate = selectedDate.toISOString().split('T')[0];
-	
-			// Thêm thông tin ngày vào URL
-			apiUrl += ($scope.searchText ? '&' : '?') + 'date=' + formattedDate;
-		} else {
-			// Nếu không có ngày được chọn, loại bỏ thông tin ngày từ URL
-			apiUrl = apiUrl.replace(/&?date=[^&], '');
-		}
-	
-		$http.get(apiUrl)
-			.then(function(response) {
-				// Cập nhật dữ liệu trong scope
-				$scope.items = response.data; // Cập nhật items để phản ánh dữ liệu mới
-				$scope.pager.page = 0; // Đặt lại trang về 0 khi có dữ liệu mới
-			})
-			.catch(function(error) {
-				console.error('Lỗi khi tải dữ liệu:', error);
-			});
-	};*/
 
 
 	$scope.pager = {

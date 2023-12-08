@@ -15,14 +15,16 @@
 							placeholder="Nhập từ khóa">
 					</div>
 					<div class="col-md-3 input-group icons">
-						<div>
-							<input type="date" style="height: 45px; width: 200px">
-						</div>
-					</div>
-					<div class="col-md-2  input-group icons">
-						<!-- Sử dụng select thay vì input và thêm ng-change -->
-						<select class="form-control" ng-model="selectedDepartureDay"
+						<input type="date" class="form-control" ng-model="selectedDate"
 							ng-change="loadData1()">
+
+						<button style="margin-left: 10px;" class="btn btn-success"
+							ng-click="clearData()">Xóa dữ liệu</button>
+					</div>
+					<div class="col-md-2  input-group icons ">
+						<!-- Sử dụng select thay vì input và thêm ng-change -->
+						<select class="form-control bg-success" ng-model="selectedDepartureDay"
+							ng-change="loadData2()">
 							<option value="">Tất cả</option>
 							<option value="Chủ nhật">Ngày Chủ nhật</option>
 							<option value="Thứ bảy">Ngày Thứ bảy</option>
