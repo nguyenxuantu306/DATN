@@ -23,7 +23,7 @@ public interface TourDateService {
 	
 	
 	    
-	List<TourDate> findByDate(LocalDate date);
+	List<TourDate> findByDate(Date date);
 
 	// API cập nhật sản phẩm
 	TourDate update(TourDate tourdate);

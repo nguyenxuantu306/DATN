@@ -31,7 +31,7 @@ public class TourDateServiceImpl implements TourDateService {
 	}
 
     @Override
-    public List<TourDate> findByDate(LocalDate date) {
+    public List<TourDate> findByDate(Date date) {
         return dao.findByTourdates(date);
     }
 	
