@@ -64,17 +64,20 @@
 								<div class="row">
 									<div class="col-md-10 input-group">
 										<input type="text" class="form-control mr-3"
-											placeholder="Tìm kiếm tên..." name="search" id="searchInput">
-										<div class="input-group-append ">
+											placeholder="Tìm kiếm tên..." name="search" id="searchInput"
+											oninput="performSearch()">
+										<!-- <div class="input-group-append">
 											<button class="btn btn-primary" type="submit"
 												th:text="#{tour.label.search}">Tìm kiếm</button>
-										</div>
+										</div> -->
 									</div>
+
 									<div class="col-xs-24 col-sm-8 col-md-2">
 										<select id="priceFilter" name="price_spread"
 											class="form-control">
 											<option value="" th:text="#{tour.label.priceRange}">---
 												Khoảng giá ---</option>
+											<option value="100000-11000000">Tất cả giá</option>
 											<option value="100000-200000">100 - 200 VNĐ</option>
 											<option value="200000-300000">200 - 300 VNĐ</option>
 											<option value="300000-400000">300 - 400 VNĐ</option>
@@ -95,8 +98,7 @@
 							<div class="package-item bg-white mb-2">
 								<a th:href="@{|/tour/detail/${p.tourid}|}"> <img
 									style="height: 350px; width: 100%" class="img-fluid"
-									th:src="@{|${p.image}|}" alt="" />
-									<!-- <span
+									th:src="@{|${p.image}|}" alt="" /> <!-- <span
 									th:if="${p.Availableslots <=0}" class="out-of-stock-label1">Hết
 										chỗ</span> -->
 								</a>
@@ -115,8 +117,7 @@
 											<h5
 												th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"
 												class="m-0 p-1"></h5>
-											<button 
-												class="btn btn-primary">
+											<button class="btn btn-primary">
 												<a th:href="@{|/booking/${p.tourid}|}"
 													th:text="#{label.booking}">Đặt tour</a>
 											</button>
@@ -125,7 +126,7 @@
 												<span class="text-white">Tour
 												đã hết chỗ</span>
 											</button> -->
-												
+
 										</div>
 									</div>
 								</div>
@@ -171,8 +172,7 @@
 							<div class="package-item bg-white mb-2">
 								<a th:href="@{|/tour/detail/${p.tourid}|}"> <img
 									style="height: 350px; width: 100%" class="img-fluid"
-									th:src="@{|${p.image}|}" alt="" /> 
-									<!-- <span
+									th:src="@{|${p.image}|}" alt="" /> <!-- <span
 									th:if="${p.Availableslots <=0}" class="out-of-stock-label1">Hết
 										chỗ</span> -->
 								</a>
@@ -191,8 +191,7 @@
 											<h5
 												th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"
 												class="m-0 p-1"></h5>
-											<button 
-												class="btn btn-primary">
+											<button class="btn btn-primary">
 												<a th:href="@{|/booking/${p.tourid}|}"
 													th:text="#{label.booking}">Đặt tour</a>
 											</button>
@@ -201,7 +200,7 @@
 												<span class="text-white">Tour
 												đã hết chỗ</span>
 											</button> -->
-										
+
 										</div>
 									</div>
 								</div>
@@ -253,6 +252,17 @@
 				window.location.href = "/tour?price_spread=" + selectedValue;
 			});
 		});
+	</script>
+	<script>
+		function performSearch() {
+			// Lấy giá trị từ trường input
+			var searchValue = document.getElementById("searchInput").value;
+
+			// Thực hiện các bước tìm kiếm hoặc xử lý dữ liệu theo ý muốn
+			// Ví dụ: Gọi hàm tìm kiếm AJAX hoặc thực hiện tác vụ tương ứng
+
+			console.log("Đang tìm kiếm: " + searchValue);
+		}
 	</script>
 </body>
 
