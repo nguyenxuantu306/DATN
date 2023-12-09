@@ -42,6 +42,7 @@
 								<th scope="col">STT</th>
 								<th scope="col">Người mua</th>
 								<th scope="col">Thời gian tạo</th>
+								<th scope="col">Địa chỉ</th>
 								<th scope="col">Tổng</th>
 								<th scope="col">Trạng thái</th>
 								<th scope="col">Xem</th>
@@ -54,6 +55,7 @@
 								<th scope="row">{{$index + 1}}</th>
 								<td>{{item.user.email}}</td>
 								<td>{{item.orderdate | date:'dd-MM-yyyy HH:mm a'}}</td>
+								<td>{{item.address.fullname}}</td>
 								<td>{{formatPrice(calculateTotal(item))}}</td>
 								<td style="color: white; width: 300px;" ng-class="{
 							        'bg-primary': item.statusOrder.statusorderid == 1,
@@ -81,18 +83,32 @@
 													<div class="row">
 														<div class="col-sm-6">
 															<div class="form-group"
-																style="border: 1px solid #000;border-radius: 5px;height:130px">
+																style="border: 1px solid #000;border-radius: 5px;height:auto">
 																<div
 																	style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">
 																	Địa chỉ người nhận</div>
 																<div style="padding: 10px;">
-<!-- 																	<label>- Địa chỉ : -->
-<!-- 																		{{form.user.address}}</label><br /> -->
-<!-- 																	<labl>- -->
-																		Email người dùng : {{form.user.email}}</label>
-																		<br /> <label style="padding-top: 10px">-
-																			Số điện thoại :
-																			{{form.user.phonenumber}}</label>
+																	<input type="hidden" th:value="{{form.address}}">
+																	<label>- Họ tên người nhận: <span>
+																			{{form.address.fullname}}
+																		</span></label>
+																	<label>
+																		- Địa chỉ:
+																		<span ng-if="form.address.street">
+																			{{form.address.street}}</span>
+																		<span ng-if="form.address.ward">,
+																			{{form.address.ward}}</span>
+																		<span
+																			ng-if="form.address.district">,{{form.address.district}}</span>
+																		<span ng-if="form.address.city">,
+																			{{form.address.city}}</span>
+
+																	</label><br />
+																	<label>
+																		- Email người dùng: {{form.user.email}}</label>
+																	<br /> <label>-
+																		Số điện thoại:
+																		{{form.address.phonenumber}}</label>
 																</div>
 															</div>
 														</div>
@@ -103,10 +119,10 @@
 																	style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">
 																	Hình thức thanh toán</div>
 																<div style="padding: 10px;">
-																	<label>- Hình thức thanh toán :
+																	<label>- Hình thức thanh toán:
 																		{{form.paymentmethod.methodname}}</label> <br>
 																	<label>-
-																		Trạng thái thanh toán :
+																		Trạng thái thanh toán:
 																		{{form.statusOrder.name}}</label>
 																</div>
 															</div>
@@ -146,7 +162,8 @@
 																Tổng cộng:
 																<strong>{{formatPrice(calculateTotal(form))}}</strong>
 															</h4>
-															<h4 ng:if="form.voucherorder != null && form.voucherorder.length > 0" style="padding-left: 100px" class="total fs-4">
+															<h4 ng:if="form.voucherorder != null && form.voucherorder.length > 0"
+																style="padding-left: 100px" class="total fs-4">
 																Giá khuyến mãi:
 																<strong>{{formatPrice(calculateTotalVoucher(form))}}</strong>
 															</h4>
