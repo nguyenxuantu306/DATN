@@ -55,7 +55,17 @@
 								<th scope="row">{{$index + 1}}</th>
 								<td>{{item.user.email}}</td>
 								<td>{{item.orderdate | date:'dd-MM-yyyy HH:mm a'}}</td>
-								<td>{{item.address.fullname}}</td>
+								<td><label>
+										
+										<span>
+											{{item.address.street}}</span>
+										<span>,
+											{{item.address.ward}}</span>
+										<span>,{{form.address.district}}</span>
+										<span>,
+											{{item.address.city}}</span>
+
+									</label></td>
 								<td>{{formatPrice(calculateTotal(item))}}</td>
 								<td style="color: white; width: 300px;" ng-class="{
 							        'bg-primary': item.statusOrder.statusorderid == 1,
