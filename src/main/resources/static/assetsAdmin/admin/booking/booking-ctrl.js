@@ -53,7 +53,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 				console.log(item.adultticketnumber + item.childticketnumber)
 				if (Availableslots < (item.adultticketnumber + item.childticketnumber)) {
 					// Thông báo lỗi				
-					alert("Số lượng slot '" + tour.tourname + "' không đủ slot của tour.");
+					alert("Số lượng slot '" + item.tourDateBooking.tourdate.tour.tourname + "' không đủ slot của tour.");
 					hasInsufficientQuantity = true; // Đặt biến này thành true nếu sản phẩm không đủ số lượng
 					return false; //Thoát khỏi vòng lặp ngay lập tức
 				}
