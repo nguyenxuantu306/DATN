@@ -56,6 +56,7 @@
                                 <td>{{item.bookingdate | date:'dd-MM-yyyy HH:mm a'}}</td>                        
                                 <td>{{item.adultticketnumber + item.childticketnumber}}</td>
                                 <td>{{item.totalprice | number :0 }} đ</td>
+                                <td>{{item.tourDateBooking}}</td>
                               <!--  <td>{{item.paymentmethod.methodname}}</td>-->
                                 <td style="color: white; width: 300px;" ng-class="{
 							        'bg-primary': item.statusbooking.statusbookingid == 1,

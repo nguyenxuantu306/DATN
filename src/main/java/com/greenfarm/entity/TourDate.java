@@ -38,7 +38,7 @@ public class TourDate implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date tourdates;
 	
-	private Integer Availableslots;
+	private Integer availableslots;
 	
 	@ManyToOne
 	@JoinColumn(name = "tourid")

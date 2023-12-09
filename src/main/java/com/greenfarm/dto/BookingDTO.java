@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.StatusBooking;
 import com.greenfarm.entity.Tour;
+import com.greenfarm.entity.TourDateBooking;
 import com.greenfarm.entity.User;
 
 import jakarta.persistence.GeneratedValue;
@@ -45,4 +46,6 @@ public class BookingDTO {
 	private StatusBooking statusbooking;
 	
 	private PaymentMethod paymentmethod;
+	
+	TourDateBooking tourDateBooking;
 }
