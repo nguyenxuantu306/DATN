@@ -106,13 +106,13 @@ public class Authconfig {
 	@SuppressWarnings("deprecation")
 	@Bean
 	public SecurityFilterChain fillterchain(HttpSecurity http) throws Exception {
-		http.csrf().disable().cors().disable();
+//		http.csrf().disable().cors().disable();
 
 		http.authorizeRequests(authorize -> authorize
 				.requestMatchers("/profile", "/booking/*","/checkout", "/cart").authenticated()
 				.requestMatchers("/assetsAdmin/", "/admin")
 				.hasRole("Administrator")
-				.requestMatchers("/assets/*").permitAll()
+				.requestMatchers("/assets/*","*/firebase-messaging-sw.js").permitAll()
 				.anyRequest().permitAll())
 		 ;
 

@@ -20,6 +20,11 @@ public class PushNotificationController {
         this.pushNotificationService = pushNotificationService;
     }
     
+    public void gettt() {
+    	
+    	
+    }
+    
     @PostMapping("/notification/token")
     public ResponseEntity sendTokenNotification(@RequestBody PushNotificationRequest request) {
         pushNotificationService.sendPushNotificationToToken(request);

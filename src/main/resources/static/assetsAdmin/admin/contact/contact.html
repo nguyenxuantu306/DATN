@@ -1,0 +1,87 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<h2 class="card">Danh sách bình luận </h2>
+					<div class="row py-3">
+						<div class="col-md-6 input-group icons">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
+										class="mdi mdi-magnify"></i></span>
+							</div>
+							<input type="search" class="form-control"
+								id="search" ng-model="searchText" ng-change="loadData()" placeholder="Nhập từ khóa">
+						</div>
+<!-- 						<div class="col-md-6 text-right">						
+							<button type="button" class="btn btn-success" ng-click="exportExcel()">
+								<i class="fa fa-file-excel-o"></i> Excel
+							</button>
+
+							<button type="button" class="btn btn-success" ng-click="exportPdf()">
+
+								<i class="fa fa-file-pdf-o"></i> PDF
+							</button>
+						</div> -->
+					</div>
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered zero-configuration">
+							<thead>
+								<tr>
+									<th>STT</th>
+									<th>Tác giả</th>
+									<th>Bình luận</th>
+									<th>Tour</th>
+									<th>Xem</th>
+									<th>Xóa</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in pager.items">
+									<th>{{$index + 1}}</th>
+									<th style="width: 200px;" class="d-flex">
+										<img ng-if="item.user.image" ng-src="{{item.user.image}}"
+											alt="Hình ảnh người dùng" style="width: 50px; height: 50px;" />
+										<img ng-if="!item.user.image"
+											src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+											alt="Hình ảnh người dùng" style="width: 50px; height: 50px;" />
+										<div class="ml-2">
+											<span>{{item.user.firstname}} </span> <br />
+											<span>{{item.user.email}}</span>
+										</div>
+
+									</th>
+									<th style="width: auto"> 
+										<span class="text-primary" style="font-size: 13px;">
+										{{item.commentdate | date:'dd-MM-yyyy HH:mm a'}}</span> <br/>
+										{{item.commenttext}}</th>
+									<th style="width: 200px;">{{item.tour.tourname}}</th>
+									<td> <a ng-click="gotoComment(item)">
+											<i class="bi bi-eye"></i>
+										</a></td>
+									<td><a ng-click="delete(item)"><i class="bi bi-trash3-fill p-2"></i></a></td>
+							</tbody>
+						</table>
+					</div>
+					<div class="panel-footer text-right">
+						<span class="col-md-6"
+							style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
+							+ 1}} / {{pager.count}} </span>
+						<button ng-click="pager.first()" class="btn btn-success">
+							<i class="fas fa-angle-double-left"></i>
+						</button>
+						<button ng-click="pager.prev()" class="btn btn-success">
+							<i class="fas fa-angle-left"></i>
+						</button>
+						<button ng-click="pager.next()" class="btn btn-success">
+							<i class="fas fa-angle-right"></i>
+						</button>
+						<button ng-click="pager.last()" class="btn btn-success">
+							<i class="fas fa-angle-double-right"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

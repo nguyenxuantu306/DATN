@@ -73,44 +73,8 @@ public class RegisterController {
 
 	@GetMapping
 	public String registerUserq(Model model) {
-		// , @ModelAttribute("userinfo") @Valid RegisterDTO userInfo
+
 		model.addAttribute("userinfo", new RegisterDTO());
-
-		/*
-		 * if (bindingResult.hasErrors()) { // Nếu có lỗi từ dữ liệu người dùng, không
-		 * cần kiểm tra tiếp và xử lý lỗi. model.addAttribute("registrationMsg",
-		 * "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
-		 * System.out.println("lỗi này"); return "register"; } else if
-		 * (!userInfo.getPassword().equals(userInfo.getRepeatpassword())) { // Nếu mật
-		 * khẩu và xác nhận mật khẩu không khớp, thêm lỗi vào BindingResult.
-		 * bindingResult.rejectValue("repeatpassword", "error.userDTO",
-		 * "Mật khẩu và xác nhận mật khẩu không khớp"); }
-		 */
-
-		// Nếu không có lỗi, tiếp tục xử lý đăng ký tài khoản.
-		// đăng ký
-		// try {
-		// // User user = Usermapper.INSTANCE.fromDto(userInfo);
-		// User user = new User();
-		// user.setFirstname(userInfo.getFirstname());
-		// user.setLastname(userInfo.getLastname());
-		// user.setEmail(userInfo.getEmail());
-		// user.setPassword(userInfo.getPassword());
-		// // user.setAddress(userInfo.getAddress());
-		// user.setPhonenumber(userInfo.getPhonenumber());
-		// // user.setBirthday(userInfo.getBirthday());
-		// // user.setImage(userInfo.getImage());
-		// // user.setGender(userInfo.getGender());
-		// user.setCreateddate(new Date());
-		// userservice.create(user);
-		// } catch (Exception e) {
-		// bindingResult.rejectValue("email", "error.userDTO", "An account already
-		// exists for this email.");
-		// model.addAttribute("registrationForm", userInfo);
-		// return "register";
-		// }
-		// User userinfo = new User();
-		// model.addAttribute("userinfo", userinfo);
 
 		return "register";
 	}
@@ -138,7 +102,7 @@ public class RegisterController {
 			System.out.println("phonenumber");
 			bindingResult.rejectValue("phonenumber", "error.userDTO", "so dien thoai da ton tai");
 		}
-		
+
 		else {
 			// Nếu không có lỗi, tiếp tục xử lý đăng ký tài khoản.
 			// đăng ký
@@ -199,8 +163,8 @@ public class RegisterController {
 				dto.setFirstname(auth2User.getAttribute("name"));
 				dto.setLastname(auth2User.getAttribute("family_name"));
 				dto.setEmail(auth2User.getAttribute("email"));
-				//dto.setPassword(auth2User.getAttribute("nonce"));
-				
+				// dto.setPassword(auth2User.getAttribute("nonce"));
+
 				dto.setPhonenumber(null);
 				model.addAttribute("userinfo", dto);
 				return "registeroauth";
@@ -216,101 +180,94 @@ public class RegisterController {
 
 	}
 //@ModelAttribute("userinfo") @Valid RegisterDTO userInfo,
-	
+
 	@PostMapping("/completelogin")
-	public String completelogin(Model model, @ModelAttribute("userinfo") @Valid RegisteroauthDTO userInfo,BindingResult bindingResult,
-			Authentication authentication) {
+	public String completelogin(Model model, @ModelAttribute("userinfo") @Valid RegisteroauthDTO userInfo,
+			BindingResult bindingResult, Authentication authentication) {
 		if (bindingResult.hasErrors()) {
 			// Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
 			model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
-			
+
 			return "registeroauth";
-		}else if (userservice.findByEmail(userInfo.getEmail()) != null) {
-			
+		} else if (userservice.findByEmail(userInfo.getEmail()) != null) {
+
 			bindingResult.rejectValue("email", "error.userDTO", "Đã có tài khoản sử dụng email này");
 			return "registeroauth";
 		}
-		
+
 		else if (userservice.findByPhonenumber(userInfo.getPhonenumber()) != null) {
 			System.out.println("phonenumber");
 			bindingResult.rejectValue("phonenumber", "error.userDTO", "so dien thoai da ton tai");
 			return "registeroauth";
-		}
-		else {
-			
-		
-		 String provider = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
-	      
-		try {
-			// User user = Usermapper.INSTANCE.fromDto(userInfo);
-			if (authentication.getPrincipal() instanceof OAuth2User) {
-				OAuth2User auth2User = (OAuth2User) authentication.getPrincipal();
-				User user = new User();
-				user.setFirstname(userInfo.getFirstname());
-				user.setLastname(userInfo.getLastname());
-				user.setEmail(userInfo.getEmail());
-				user.setPhonenumber(userInfo.getPhonenumber());
+		} else {
 
-				
-				
-				 
-				if (provider.equals("google")) {
-					user.setPassword(auth2User.getAttribute("nonce"));
-					user.setProvider(Provider.GOOGLE);
-				}
-			 else if (provider.equals("facebook")) {
-				 user.setPassword("123456aS");
-				 user.setProvider(Provider.FACEBOOK);
-				}
-				
-				
-				user.setAccountVerified(true);
+			String provider = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
 
-				// user.setUserRole();
-				user.setCreateddate(new Date());
-				userservice.save(user);
-				// them role
-				Role role = roleService.findByid(2);
-				System.out.println("Role : " + role);
-				UserRole userRole = new UserRole();
-				userRole.setRole(role);
-				userRole.setUser(user);
-				userroleService.create(userRole);
-				List<UserRole> list = new ArrayList<>();
-				list.add(userRole);
-				user.setUserRole(list);
-				userservice.update(user);
+			try {
+				// User user = Usermapper.INSTANCE.fromDto(userInfo);
+				if (authentication.getPrincipal() instanceof OAuth2User) {
+					OAuth2User auth2User = (OAuth2User) authentication.getPrincipal();
+					User user = new User();
+					user.setFirstname(userInfo.getFirstname());
+					user.setLastname(userInfo.getLastname());
+					user.setEmail(userInfo.getEmail());
+					user.setPhonenumber(userInfo.getPhonenumber());
 
-				try {
-					UserDetails userDetails = detailsService.loadUserByUsername(user.getEmail());
-					System.out.println("userdetaile>.........");
-					System.out.println(userDetails);
-					// Tạo một đối tượng Authentication
-					List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+					if (provider.equals("google")) {
+						user.setPassword(auth2User.getAttribute("nonce"));
+						user.setProvider(Provider.GOOGLE);
+					} else if (provider.equals("facebook")) {
+						user.setPassword("123456aS");
+						user.setProvider(Provider.FACEBOOK);
+					}
 
-					Authentication authentication2 = new UsernamePasswordAuthenticationToken(userDetails, null,
-							authorities);
+					user.setAccountVerified(true);
 
-					// Đặt thông tin xác thực vào SecurityContext
-					SecurityContext sc = SecurityContextHolder.getContext();
-					sc.setAuthentication(authentication2);
-				} catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
+					// user.setUserRole();
+					user.setCreateddate(new Date());
+					userservice.save(user);
+					// them role
+					Role role = roleService.findByid(2);
+					System.out.println("Role : " + role);
+					UserRole userRole = new UserRole();
+					userRole.setRole(role);
+					userRole.setUser(user);
+					userroleService.create(userRole);
+					List<UserRole> list = new ArrayList<>();
+					list.add(userRole);
+					user.setUserRole(list);
+					userservice.update(user);
+
+					try {
+						UserDetails userDetails = detailsService.loadUserByUsername(user.getEmail());
+						System.out.println("userdetaile>.........");
+						System.out.println(userDetails);
+						// Tạo một đối tượng Authentication
+						List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+
+						Authentication authentication2 = new UsernamePasswordAuthenticationToken(userDetails, null,
+								authorities);
+
+						// Đặt thông tin xác thực vào SecurityContext
+						SecurityContext sc = SecurityContextHolder.getContext();
+						sc.setAuthentication(authentication2);
+					} catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
+						return "redirect:/login";
+					}
+					return "redirect:/";
+				} else {
 					return "redirect:/login";
 				}
-				return "redirect:/";
-			} else {
-				return "redirect:/login";
+			} catch (Exception e) {
+				e.printStackTrace();
+				// bindingResult.rejectValue("email", "error.userDTO", "An account already
+				// exists for this email.");
+				System.out.println("lôi");
+				model.addAttribute("registrationForm", userInfo);
+				return "registeroauth";
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			// bindingResult.rejectValue("email", "error.userDTO", "An account already
-			// exists for this email.");
-			System.out.println("lôi");
-			model.addAttribute("registrationForm", userInfo);
-			return "registeroauth";
-		}
 		}
 
 	}

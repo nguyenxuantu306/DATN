@@ -4,6 +4,11 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>GreenFarm</title>
+<!-- Include the Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-messaging-compat.js"></script>
+
+
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.svg">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -129,6 +134,24 @@
 
 	<!-- Template Javascript -->
 	<script src="/assets/js/main.js"></script>
+	<script type="module" src="/assets/js/index.js"></script>
+	
+	
+	<!-- Đường dẫn đến firebase-messaging-sw.js trong thư mục tài nguyên -->
+	
+<script  src="/assets/js/firebase-messaging-sw.js"></script>
+<script type="text/javascript">
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/assets/js/firebase-messaging-sw.js')
+      .then((registration) => {
+        console.log('Service Worker registration successful:', registration);
+      })
+      .catch((error) => {
+        console.error('Service Worker registration failed:', error);
+      });
+  }
+</script>
+
 	<script src="/assets/js/comment.js"></script>
 	<script type="text/javascript" src="/assets/js/styte.js"></script>
 	<script type="text/javascript" src="/assets/js/shopping-cart-app.js"></script>
