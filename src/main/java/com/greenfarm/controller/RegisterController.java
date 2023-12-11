@@ -129,6 +129,16 @@ public class RegisterController {
 				user.setCreateddate(new Date());
 				System.out.println("chay toi impl");
 				userService.create(user);
+				Role role = roleService.findByid(2);
+				System.out.println("Role : " + role);
+				UserRole userRole = new UserRole();
+				userRole.setRole(role);
+				userRole.setUser(user);
+				userroleService.create(userRole);
+				List<UserRole> list = new ArrayList<>();
+				list.add(userRole);
+				user.setUserRole(list);
+				userService.update(user);
 				return "redirect:/login";
 			} catch (Exception e) {
 				e.printStackTrace();
