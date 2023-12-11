@@ -21,6 +21,9 @@ public class TourDateBookingServiceImpl implements TourDateBookingService {
 	@Autowired
 	TourDateBookingDAO dao;
 	
+	@Autowired
+	TourDate tourDateDao;
+	
 	@Override
 	public List<TourDateBooking> findAll() {
 		return dao.findAll();

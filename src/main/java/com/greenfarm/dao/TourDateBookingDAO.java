@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.greenfarm.entity.TourDate;
 import com.greenfarm.entity.TourDateBooking;
 
 public interface TourDateBookingDAO extends JpaRepository<TourDateBooking, Integer> {
@@ -25,11 +26,6 @@ public interface TourDateBookingDAO extends JpaRepository<TourDateBooking, Integ
 	@Query("SELECT p FROM TourDateBooking p WHERE DATE(p.tourdate.tourdates) = :date")
 	List<TourDateBooking> findByTourdates(@Param("date") Date date);
 
-
 	List<TourDateBooking> findByTourdate(TourDate tourdate);
-
-
-	List<TourDateBooking> findBytourdate(TourDate tourdate);
-
 
 }
