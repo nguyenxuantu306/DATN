@@ -3,10 +3,7 @@ package com.greenfarm.controller;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -27,7 +24,6 @@ import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.PaymentMethodDAO;
 import com.greenfarm.dao.VoucherOrderDAO;
 import com.greenfarm.dto.OrderDTO;
-import com.greenfarm.entity.AbstractEmailContext;
 import com.greenfarm.entity.Address;
 import com.greenfarm.entity.Cart;
 import com.greenfarm.entity.Order;
@@ -44,7 +40,6 @@ import com.greenfarm.service.EmailService;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.VoucherService;
 import com.greenfarm.service.VoucherUserService;
-import com.greenfarm.service.impl.AccountVerificationEmailContext;
 import com.greenfarm.service.impl.OrderEmailContext;
 
 import jakarta.mail.MessagingException;

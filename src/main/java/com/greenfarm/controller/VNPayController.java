@@ -133,7 +133,7 @@ public class VNPayController {
 				orderItem.setPaymentmethod(paymentMethodObj);
 				orderDAO.save(orderItem);
 
-				List<Cart> cartItems = cartDAO.findByUser(user); 
+				List<Cart> cartItems = cartDAO.findByUser(user);
 				List<OrderDetail> orderDetailList = new ArrayList<>();
 				
 				float total = 0;
