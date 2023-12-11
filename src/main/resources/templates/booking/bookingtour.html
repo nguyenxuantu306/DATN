@@ -147,16 +147,12 @@
 
 												<!-- Sử dụng vòng lặp để tạo các option với thông tin số lượng chỗ -->
 												<option th:each="date: ${booking.tour.tourdate}"
-													th:if="${date.tourdates >= #dates.createNow()}"
-													th:value="${date.tourdates}">
-													<span th:text="${date.tourdates}"></span>
-													<span class="separator">»</span>
-													số lượng chỗ còn trống
-													<span th:text="${date.availableslots}"></span>
+													th:unless="${date.tourdates.before(#dates.createNow())}"
+													th:value="${date.tourdates}"><span
+														th:text="${#dates.format(date.tourdates, 'dd-MM-yyyy')}"></span><span
+														class="separator">»</span> số lượng chỗ còn trống <span
+														th:text="${date.availableslots}"></span>
 												</option>
-
-
-
 											</select>
 
 										</div>
@@ -257,24 +253,75 @@
 	</script>
 
 	<script>
-		function confirmBooking() {
-			Swal.fire({
-				title: 'Xác nhận đặt tour?',
-				text: 'Bạn có chắc muốn đặt tour không?',
-				icon: 'question',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				confirmButtonText: 'Đồng ý',
-				cancelButtonText: 'Hủy bỏ'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					// Bạn chỉ cần submit form khi người dùng chọn "Đồng ý"
-					document.getElementById("bookingForm").submit();
-				}
-			});
-		}
-	</script>
+    function confirmBooking() {
+        Swal.fire({
+            title: 'Xác nhận đặt tour?',
+            text: 'Bạn có chắc muốn đặt tour không?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy bỏ'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Bạn chỉ cần submit form khi người dùng chọn "Đồng ý"
+                document.getElementById("bookingForm").submit();
+            }
+        });
+    }
+    
+    function confirmBooking() {
+        // Kiểm tra xem ngày đã được chọn hay chưa
+        var selectedDate = document.getElementById('tourdate').value;
+        
+        if (!selectedDate) {
+            // Nếu ngày chưa được chọn, hiển thị thông báo Swal.fire
+            Swal.fire({
+                icon: 'warning',
+                title: 'Có lỗi rồi bạn ơi!',
+                text: 'Vui lòng chọn ngày trước khi đặt tour'
+            });
+        } else {
+            // Nếu ngày đã được chọn, thực hiện submit form
+            document.getElementById('bookingForm').submit();
+        }
+        
+        
+        
+    }
+    function confirmBooking() {
+        // Hàm confirmBooking() hiện tại của bạn
+
+        // Kiểm tra thêm số lượng chỗ còn trống
+        var selectedAdultTickets = parseInt($('#adultticketnumber').val());
+        var selectedChildTickets = parseInt($('#childticketnumber').val());
+        var availableSlots = parseInt($('#tourdate option:selected').text().match(/\d+/)[0]);
+
+        if ((selectedAdultTickets + selectedChildTickets) > availableSlots) {
+           Swal.fire({
+              icon: 'error',
+              title: 'Số lượng vé vượt quá số chỗ còn trống!',
+              text: 'Vui lòng chọn lại số lượng vé.',
+           });
+           return false; // Ngăn chặn gửi biểu mẫu
+        }
+
+        // Tiếp tục gửi biểu mẫu nếu kiểm tra thành công
+        $('#bookingForm').submit();
+     }
+
+     // Gắn các hàm vào sự kiện onchange của các ô chọn số vé
+     $('#adultticketnumber, #childticketnumber').on('change', function() {
+        calculateTotal();
+     });
+
+     // Gắn hàm vào sự kiện click của nút "ĐẶT TOUR"
+     $('#confirmBookingButton').on('click', function() {
+        confirmBooking();
+     });
+     
+</script>
 	<!-- <script>
 	document.addEventListener('DOMContentLoaded', function () {
 	    // Format adult ticket price

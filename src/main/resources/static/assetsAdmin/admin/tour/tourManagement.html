@@ -10,8 +10,8 @@
 								<span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
 										class="mdi mdi-magnify"></i></span>
 							</div>
-							<input type="search" class="form-control"
-								id="search" ng-model="searchText" ng-change="loadData()" placeholder="Nhập từ khóa">
+							<input ng-model="searchTourName" type="search" class="form-control"
+								placeholder="Tìm kiếm tên tour...">
 						</div>
 						<div class="col-md-6 text-right">
 							<button type="button" class="btn btn-success" ng-click="editthemsp()" data-toggle="modal"
@@ -50,7 +50,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in pager.items">
+								<tr ng-repeat="item in pager.items | filter: { tourname: searchTourName }">
 									<th>{{$index + 1}}</th>
 									<td><img ng-src="{{item.image}}" alt="Tour Image"
 											style="width: 80px; height: 80px;"></td>
@@ -128,14 +128,14 @@
 													<label>Lượng người</label> <input type="number"
 														name="availableslots" ng-model="form.availableslots"
 														class="form-control input-default" placeholder="VD : 29"
-														ng-min="0" ng-max="100" required /> <label
+														ng-min="0" ng-max="50" required /> <label
 														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.availableslots.$error.required"
 														style="color: red;">Lượng người không được để
 														trống!</label> <label
 														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.availableslots.$error.min"
 														style="color: red;">Lượng người ít nhất là 0!</label> <label
 														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.availableslots.$error.max"
-														style="color: red;">Lượng người nhiều nhất là 100!</label>
+														style="color: red;">Lượng người nhiều nhất là 50!</label>
 
 												</div>
 											</div>

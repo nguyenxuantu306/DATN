@@ -36,16 +36,22 @@ import com.greenfarm.entity.VoucherOrder;
 import com.greenfarm.entity.VoucherUser;
 import com.greenfarm.service.AddressService;
 import com.greenfarm.service.CartService;
+import com.greenfarm.service.EmailService;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.VoucherService;
 import com.greenfarm.service.VoucherUserService;
+import com.greenfarm.service.impl.OrderEmailContext;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:8080")
 public class CheckoutController {
 
+	@Autowired
+	EmailService emailService;
+	
 	@Autowired
 	private UserService userService;
 
@@ -113,7 +119,7 @@ public class CheckoutController {
 	public String Payment(Model model, @ModelAttribute("Order") OrderDTO orderDTO,
 			@RequestParam(name = "voucherid", required = false) String[] voucherIds,
 			 @RequestParam(name = "addressId") Integer addressId,
-			HttpServletRequest request) {
+			HttpServletRequest request) throws MessagingException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -182,9 +188,22 @@ public class CheckoutController {
 				model.addAttribute("orderConfirmation", orderItem);
 				model.addAttribute("cartConfirmation", cartItems);
 				cartService.delete(cartItems);
+				OrderEmailContext abstractEmailContext = new OrderEmailContext();
+				abstractEmailContext.init(orderItem.getUser());
+				
+//				 Map<String, Object> myContext = new HashMap<>();
+//				 for (abad ac : orderDetailList) {
+//					 myContext.put(orderitem.getprof.getname,quang);
+//				}
+				 
+				 
+//				abstractEmailContext.setContext(myContext);
+//				emailService.sendMail(abstractEmailContext);			
 			}
-
+			
+			 
 			return "success";
+			
 		} else
 
 		{

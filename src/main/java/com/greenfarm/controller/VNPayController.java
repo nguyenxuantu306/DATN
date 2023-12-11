@@ -105,10 +105,10 @@ public class VNPayController {
 			return "cancel";
 		}
 		
-		String orderInfo = request.getParameter("vnp_OrderInfo");
-		String paymentTime = request.getParameter("vnp_PayDate");
-		String transactionId = request.getParameter("vnp_TransactionNo");
-		String totalPrice = request.getParameter("vnp_Amount");
+		// String orderInfo = request.getParameter("vnp_OrderInfo");
+		// String paymentTime = request.getParameter("vnp_PayDate");
+		// String transactionId = request.getParameter("vnp_TransactionNo");
+		// String totalPrice = request.getParameter("vnp_Amount");
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
@@ -133,7 +133,7 @@ public class VNPayController {
 				orderItem.setPaymentmethod(paymentMethodObj);
 				orderDAO.save(orderItem);
 
-				List<Cart> cartItems = cartDAO.findByUser(user); 
+				List<Cart> cartItems = cartDAO.findByUser(user);
 				List<OrderDetail> orderDetailList = new ArrayList<>();
 				
 				float total = 0;
