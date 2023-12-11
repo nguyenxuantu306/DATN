@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class TourDateDTO {
 
 	private Integer tourdateid;
-	private LocalDate tourdates;
+	private Date tourdates;
 	private Integer availableslots;
 	private Tour tour;
 }

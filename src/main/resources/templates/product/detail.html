@@ -56,35 +56,32 @@
 								style="color: #999; text-decoration: line-through"></span>-->
 							<span th:text="*{#numbers.formatDecimal(price,0,'COMMA',0,'POINT')} + ' ₫ '"></span>
 						</h2>
-						<p th:text="*{description}" class="product-description mb-3"></p>
-						Số Lượng : <span th:text="*{quantityavailable}" class="product-description mb-3"></span> sản
-						phẩm có sẵn
-
-						<div class="cart-button mt-5 mb-5 d-flex">
+						<div>
+							<p th:text="*{description}" class="product-description mb-3"></p>
+							<span>Số Lượng : <span th:text="*{quantityavailable}"
+							class="product-description mb-3"></span> Kilogam có sẵn</span>
+						</div>
+						<div class="mt-5">
+							<span>Đơn Vị : KG (Tối thiểu 0.5 KG)</span>
+						</div>
+						<div class="cart-button mb-5 d-flex">
 							<div class="d-flex">
 								<button style="border: 1px solid rgba(0, 0, 0, .09); width: 32px"
 									onclick="decQuantity()">-</button>
-								<input style="border: 1px solid rgba(0, 0, 0, .09);" class="w-25 text-center"
-									type="text" id="quantityInput" name="quantity" value="1" min="1" />
-								<button style="border: 1px solid rgba(0, 0, 0, .09); width: 32px"
+								<input style="border: 1px solid rgba(0, 0, 0, .09);"
+									class="w-25 text-center" type="number" id="quantityInput"
+									name="quantity" value="1" min="1" />
+								<button
+									style="border: 1px solid rgba(0, 0, 0, .09); width: 32px"
 									onclick="incQuantity()">+</button>
 							</div>
 
-							<button th:if="${item.quantityavailable > 0}" style="background-color: #7AB730"
-								class="add-to-cart-button" th:onclick="'addToCart(\'' + ${item.productid} + '\')'"
+							<button style="background-color: #7AB730"
+								class="add-to-cart-button"
+								th:onclick="'addToCart(\'' + ${item.productid} + '\')'"
 								th:text="#{shopDetail.label.addToCart}">
 								<i class="fas fa-shopping-cart"></i> Add to Cart
 							</button>
-							<button th:if="${item.quantityavailable <= 0}"
-								style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
-								class="add-to-cart-button">
-								<i class="fas fa-exclamation-circle"></i> Sản phẩm đã hết hàng
-							</button>
-
-							<!-- <a th:if="${item.quantityavailable <= 0}"
-								style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
-								href="#"> <i class="fas fa-exclamation-circle"></i> Liên hệ
-							</a> -->
 						</div>
 						<div class="">
 							<h5>
@@ -131,7 +128,7 @@
 				<div class="card">
 					<div class="row justify-content-left d-flex">
 
-						<div class="col-md-5">
+						<!-- <div class="col-md-5">
 							<h1 class="pt-4">Tỷ lệ đánh giá</h1>
 							<div class="rating-bar0 justify-content-center">
 								<table class="text-left mx-auto">
@@ -182,9 +179,9 @@
 									</tr>
 								</table>
 							</div>
-						</div>
-						<div class="col-md-7">
-							<div class="card">
+						</div> -->
+						<div class="col-md-12">
+							<div class="card" >
 								<div class="modal-header">
 									<h1 class="modal-title fs-6 text-center" id="exampleModalLabel"
 										th:text="#{shopDetail.label.thanhks}">GreenFarm xin được
@@ -215,9 +212,8 @@
 												Gửi đánh giá <i id="review-button"
 													class="fas fa-long-arrow-alt-right ms-1"></i>
 											</button>
-
+											<span th:if="${hasReview}" class="alert-danger">Sản phẩm này đã có đánh giá</span>
 										</div>
-
 									</form>
 								</div>
 							</div>

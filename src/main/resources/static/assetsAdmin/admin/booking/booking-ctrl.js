@@ -43,24 +43,25 @@ app.controller("booking-ctrl", function($scope, $http) {
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
 
-		/*var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
+		var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
 		// Kiểm tra và trừ số lượng vé
 
-		if (item.statusbooking.statusbookingid === 2) {
-				var Availableslots = tour.TourDate.Availableslots;
+		if (item.statusbooking.statusbookingid == '2') {
+				var Availableslots = item.tourDateBooking.tourdate.availableslots;
 				// Kiểm tra số lượng sản phẩm trong kho
-				console.log(Adultticketnumber + Childticketnumber)
-				if (Availableslots < (Adultticketnumber + Childticketnumber)) {
+				console.log(Availableslots)
+				console.log(item.adultticketnumber + item.childticketnumber)
+				if (Availableslots < (item.adultticketnumber + item.childticketnumber)) {
 					// Thông báo lỗi				
-					alert("Số lượng slot '" + tour.tourname + "' không đủ slot của tour.");
+					alert("Số lượng slot '" + item.tourDateBooking.tourdate.tour.tourname + "' không đủ slot của tour.");
 					hasInsufficientQuantity = true; // Đặt biến này thành true nếu sản phẩm không đủ số lượng
 					return false; //Thoát khỏi vòng lặp ngay lập tức
 				}
 				
-				// Trừ số lượng sản phẩm khỏi kho
-				tour.TourDate.Availableslots -= (Adultticketnumber + Childticketnumber);
-
-				$http.put(`/rest/tours/${tour.tourid}`,tour)
+				// Trừ số lượng người tham gia
+				item.tourDateBooking.tourdate.availableslots -= (item.adultticketnumber + item.childticketnumber);
+				console.log(item.tourDateBooking.tourdate.availableslots);
+				$http.put(`/rest/tourdates/${item.tourDateBooking.tourdate.tourdateid}`,item.tourDateBooking.tourdate)
 					.then(function(response) {
 						console.log("Update success", response);
 					})
@@ -72,7 +73,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 		}
 		if (hasInsufficientQuantity) { // Nếu sản phẩm không đủ số lượng, không cập nhật trạng thái đơn hàng
 			return;
-		}*/
+		}
 
 
 		$http.put(`/rest/bookings/${item.bookingid}`, item).then(resp => {
@@ -155,7 +156,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 
 	$scope.pager = {
 		page: 0,
-		size: 40,
+		size: 100,
 		get items() {
 			var start = this.page * this.size;
 			return $scope.items.slice(start, start + this.size);

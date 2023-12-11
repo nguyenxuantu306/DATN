@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Pricing;
+import com.greenfarm.entity.TourDate;
 import com.greenfarm.entity.User;
 
 import lombok.AllArgsConstructor;
@@ -31,6 +32,7 @@ public class TourDTO {
     private Pricing pricings;
     private List<TourImageDTO> tourImage;
     private List<CommentDTO> comment;
+    private List<TourDateDTO> tourdate;
     
     private Boolean isdeleted = Boolean.FALSE;
      

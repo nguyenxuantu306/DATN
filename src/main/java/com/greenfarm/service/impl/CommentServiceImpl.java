@@ -49,16 +49,6 @@ public class CommentServiceImpl implements CommentService{
 	@Override
 	public List<Comment> getCommentsOrderByDateDesc() {
 	     return commentDAO.findAllByOrderByCommentdateDesc();
-	}
-
-	@Override
-	public List<Comment> findAll() {
-		return commentDAO.findAll();
-	}
-
-	@Override
-	public List<Comment> findByKeyword(String keyword) {
-		return commentDAO.findByKeyword(keyword);
 	} 
 
 }

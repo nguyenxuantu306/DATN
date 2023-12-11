@@ -44,4 +44,12 @@ public class VoucherUserServiceImpl implements VoucherUserService {
 	public void delete(Integer voucheruserid) {
 		dao.deleteById(voucheruserid);
 	}
+
+	@Override
+	public List<VoucherUser> findByKeyword(String keyword) {
+		return dao.findByKeyword(keyword);
+	}
+
+
+	
 }

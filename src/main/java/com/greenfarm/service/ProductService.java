@@ -9,7 +9,6 @@ import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportSP;
-import com.greenfarm.entity.User;
 
 public interface ProductService {
 
@@ -17,8 +16,7 @@ public interface ProductService {
 	List<Product> findAll();
 	
 	List<Product> findAllDeletedProducts();
-	
-	List<Product> findByKeyword(String keyword);
+
 
 	// Phân trang
 	Page<Product> findAllByIsdeletedFalse(Pageable pageable);
@@ -54,13 +52,13 @@ public interface ProductService {
 	List<ReportSP> getTk_sp();
 
 	// Thống kê lại sp
-	List<Report> getTk_loai();
+	List<ReportSP> getTk_loai();
 
 	// Thống kê sản phẩm tồn kho
 	List<Product> getReportSpTk();
 
 
-	List<ReportSP> getReportspbanchay();
+	List<Report> getReportspbanchay();
 	
 //	void purchaseProduct(Integer productId, Integer quantityBought);
 	

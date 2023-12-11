@@ -15,20 +15,23 @@
 							placeholder="Nhập từ khóa">
 					</div>
 					<div class="col-md-3 input-group icons">
-						<div>
-							<input type="date" style="height: 45px; width: 200px">
-						</div>
-					</div>
-					<div class="col-md-2  input-group icons">
-						<select style="width: 300px" class="select bg-success"
-							ng-model="selectedStatus">
-							<option value="0">Ngày Chủ nhật</option>
-							<option value="1">Ngày Thứ bảy</option>
-							<option value="2">Ngày 14</option>
-							<option value="3">Ngày 15</option>
-							<option value="4">Ngày 20</option>
-						</select>
+						<input type="date" class="form-control" ng-model="selectedDate"
+							ng-change="loadData1()">
 
+						<button style="margin-left: 10px;" class="btn btn-success"
+							ng-click="clearData()">Xóa dữ liệu</button>
+					</div>
+					<div class="col-md-2  input-group icons ">
+						<!-- Sử dụng select thay vì input và thêm ng-change -->
+						<select class="form-control bg-success" ng-model="selectedDepartureDay"
+							ng-change="loadData2()">
+							<option value="">Tất cả</option>
+							<option value="Chủ nhật">Ngày Chủ nhật</option>
+							<option value="Thứ bảy">Ngày Thứ bảy</option>
+							<option value="Ngày 14">Ngày 14</option>
+							<option value="Ngày 15">Ngày 15</option>
+							<option value="Ngày 20">Ngày 20</option>
+						</select>
 					</div>
 					<div class="col-md-4 text-right">
 						<button style="height: 45px;" type="button"
@@ -68,19 +71,19 @@
 						</thead>
 						<tbody>
 							<tr class="text-center"
-								ng-repeat="item in items | orderBy:sortKey:sortType">
+								ng-repeat="item in pager.items | orderBy:sortKey:sortType">
 								<th scope="row">{{$index + 1}}</th>
 								<td style="width: 250px">{{item.booking.tour.tourname}}</td>
 								<td style="width: 100px; color: blue; font-weight: bold;">{{item.tourdate.tourdates
 									| date:'dd-MM-yyyy'}}</td>
 								<td>{{item.booking.totalprice | number :0 }} đ</td>
-								<td style="width: 130px; font-weight: bold;"
+								<td style="width: 160px; font-weight: bold;"
 									ng-style="{
-								    'color': item.booking.tour.departureday === 'Chủ nhật' ? 'blue' :
-								             item.booking.tour.departureday === 'Thứ bảy' ? 'orange' :
-								             item.booking.tour.departureday === 'Ngày 14' ? 'green' :
-								             item.booking.tour.departureday === 'Ngày 15' ? 'red' :
-								             item.booking.tour.departureday === 'Ngày 20' ? 'black' : ''
+								    'color': item.booking.tour.departureday === 'Chủ nhật hàng tuần' ? 'Brown' :
+								             item.booking.tour.departureday === 'Thứ bảy hàng tuần' ? 'orange' :
+								             item.booking.tour.departureday === 'Ngày 14 hàng tháng' ? 'green' :
+								             item.booking.tour.departureday === 'Ngày 15 hàng tháng' ? 'red' :
+								             item.booking.tour.departureday === 'Ngày 20 hàng tháng' ? 'Purple' : ''
 									}">{{item.booking.tour.departureday}}</td>
 								<td style="width: 150px">{{item.tourdate.availableslots}}</td>
 								<td><a type="button" ng-click="edit(item)"
@@ -116,7 +119,7 @@
 															<div class="card mb-3" style="max-width: 540px;">
 																<div class="row g-0">
 																	<div class="col-md-4">
-																		<img ng-src="{{form.booking.user.image}}"
+																		<img style="width: 200px;height: 200px" ng-src="{{form.booking.user.image}}"
 																			alt="Trendy Pants and Shoes"
 																			class="img-fluid rounded-start" />
 																	</div>
@@ -124,9 +127,12 @@
 																		<div class="card-body">
 																			<h4 class="card-title">{{form.booking.user.firstname}}
 																				{{form.booking.user.lastname}}</h4>
-																			<h5 class="card-text">Email: {{form.booking.user.email}}</h5>
-																			<h5 class="card-text">Điện thoại: {{form.booking.user.phonenumber}}</h5>
-																			<h5 class="card-text">Ngày sinh: {{form.booking.user.birthday | date:'dd/MM/yyyy'}}</h5>
+																			<h5 class="card-text">Email:
+																				{{form.booking.user.email}}</h5>
+																			<h5 class="card-text">Điện thoại:
+																				{{form.booking.user.phonenumber}}</h5>
+																			<h5 class="card-text">Ngày sinh:
+																				{{form.booking.user.birthday | date:'dd/MM/yyyy'}}</h5>
 
 																		</div>
 																	</div>
@@ -189,7 +195,23 @@
 							</tr>
 						</tbody>
 					</table>
-
+					<div class="panel-footer text-right">
+						<span class="col-md-6"
+							style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
+							+ 1}} / {{pager.count}} </span>
+						<button ng-click="pager.first()" class="btn btn-success">
+							<i class="fas fa-angle-double-left"></i>
+						</button>
+						<button ng-click="pager.prev()" class="btn btn-success">
+							<i class="fas fa-angle-left"></i>
+						</button>
+						<button ng-click="pager.next()" class="btn btn-success">
+							<i class="fas fa-angle-right"></i>
+						</button>
+						<button ng-click="pager.last()" class="btn btn-success">
+							<i class="fas fa-angle-double-right"></i>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>

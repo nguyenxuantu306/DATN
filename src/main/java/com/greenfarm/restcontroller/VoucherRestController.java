@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.VoucherDTO;
@@ -34,9 +35,9 @@ public class VoucherRestController {
 	
 	@Autowired
 	VoucherService voucherService;
-	
+
 	@Autowired
-	VoucherUserService voucheruserservice;
+	VoucherUserService voucherUserService;
 	
 	@GetMapping()
 	public ResponseEntity<List<VoucherDTO>> getList() {
@@ -46,13 +47,6 @@ public class VoucherRestController {
 		return new ResponseEntity<>(voucherDTOs, HttpStatus.OK);
 	}
 	
-	@GetMapping("user")
-	public ResponseEntity<List<VoucherUserDTO>> getListuser() {
-		List<VoucherUser> voucherusers = voucheruserservice.findAll();
-		List<VoucherUserDTO> voucheruserDTOs = voucherusers.stream().map(voucheruser -> modelMapper.map(voucheruser, VoucherUserDTO.class))
-				.collect(Collectors.toList());
-		return new ResponseEntity<>(voucheruserDTOs, HttpStatus.OK);
-	}
 	@GetMapping("{voucherid}")
 	public ResponseEntity<VoucherDTO> getOne(@PathVariable("voucherid") Integer voucherid) {
 		Voucher voucher = voucherService.findById(voucherid);
@@ -74,13 +68,13 @@ public class VoucherRestController {
 	@PostMapping("user")
 	public ResponseEntity<VoucherUserDTO> createuser(@RequestBody VoucherUser voucheruser, Model model) {
 
-		VoucherUser createdVoucheruser = voucheruserservice.create(voucheruser);
+		VoucherUser createdVoucheruser = voucherUserService.create(voucheruser);
 		VoucherUserDTO voucherUserDTO = modelMapper.map(createdVoucheruser, VoucherUserDTO.class);
 		return new ResponseEntity<>(voucherUserDTO, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("{voucherid}")
-	public ResponseEntity<VoucherDTO> update(@PathVariable("voucherid") Integer voucherid, @RequestBody Voucher voucher) {
+	public ResponseEntity<VoucherDTO> update(@PathVariable("id") Integer voucherid, @RequestBody Voucher voucher) {
 		Voucher updatedVoucher = voucherService.update(voucher);
 
 		if (updatedVoucher == null) {
@@ -92,7 +86,7 @@ public class VoucherRestController {
 	
 	@PutMapping("user/{voucheruserid}")
 	public ResponseEntity<VoucherUserDTO> updateuser(@PathVariable("voucheruserid") Integer voucheruserid, @RequestBody VoucherUser voucheruser) {
-		VoucherUser updatedVoucheruser = voucheruserservice.update(voucheruser);
+		VoucherUser updatedVoucheruser = voucherUserService.update(voucheruser);
 
 		if (updatedVoucheruser == null) {
 			return ResponseEntity.notFound().build();
@@ -114,13 +108,50 @@ public class VoucherRestController {
 
 	@DeleteMapping("user/{voucheruserid}")
 	public ResponseEntity<Void> deleteuser(@PathVariable("voucheruserid") Integer voucheruserid) {
-		VoucherUser existingVoucheruser = voucheruserservice.findById(voucheruserid);
+		VoucherUser existingVoucheruser = voucherUserService.findById(voucheruserid);
 
 		if (existingVoucheruser == null) {
 			return ResponseEntity.notFound().build();
 		}
-		voucheruserservice.delete(voucheruserid);
+		voucherUserService.delete(voucheruserid);
 		return ResponseEntity.noContent().build();
 	}
 	
+	
+	@GetMapping("searchkeywordvoucher")
+	public ResponseEntity<List<VoucherDTO>> getList(@RequestParam(required = false) String keyword) {
+		List<Voucher> vouchers;
+
+		if (keyword != null && !keyword.isEmpty()) {
+			// Nếu có từ khóa, thực hiện tìm kiếm
+			vouchers = voucherService.findByKeyword(keyword);
+		} else {
+			// Nếu không có từ khóa, lấy tất cả người dùng
+			vouchers = voucherService.findAll();
+		}
+
+		List<VoucherDTO> voucherDtos = vouchers.stream().map(voucher -> modelMapper.map(voucher, VoucherDTO.class))
+				.collect(Collectors.toList());
+
+		return ResponseEntity.ok(voucherDtos);
+	}
+	
+	
+	@GetMapping("user/searchkeywordvoucheruser")
+	public ResponseEntity<List<VoucherUserDTO>> getListuser(@RequestParam(required = false) String keyword) {
+		List<VoucherUser> voucherusers;
+
+		if (keyword != null && !keyword.isEmpty()) {
+			// Nếu có từ khóa, thực hiện tìm kiếm
+			voucherusers = voucherUserService.findByKeyword(keyword);
+		} else {
+			// Nếu không có từ khóa, lấy tất cả người dùng
+			voucherusers = voucherUserService.findAll();
+		}
+
+		List<VoucherUserDTO> voucherDtos = voucherusers.stream().map(voucheruser -> modelMapper.map(voucheruser, VoucherUserDTO.class))
+				.collect(Collectors.toList());
+
+		return ResponseEntity.ok(voucherDtos);
+	}
 }

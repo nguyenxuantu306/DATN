@@ -21,9 +21,7 @@ public class OrderDTO {
 
 	private Integer Orderid;
 	private LocalDateTime orderdate;
-
-	//private String address;
-	private List<Address> address;
+	private Address address;
 	List<OrderDetail> orderDetail;
 	User user;
 	StatusOrder statusOrder;

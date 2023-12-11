@@ -6,7 +6,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +16,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -71,8 +69,8 @@ public class Tour implements Serializable {
 	private TourCondition tourCondition;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "tour", orphanRemoval = true)
-	private List<TourDate> tourDate;
+	@OneToMany(mappedBy = "tour")
+	private List<TourDate> tourdate;
 
 	@JsonIgnore
 	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)

@@ -1,10 +1,8 @@
 package com.greenfarm.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.greenfarm.entity.Address;
-import com.greenfarm.entity.Order;
 
 public interface AddressService {
 	List<Address> findAll();
@@ -27,6 +25,8 @@ public interface AddressService {
 	void setActiveStatus(String email,Integer addressId);
 
 	Address updateById(Integer id, Address address);
+
+	Address findByAddressid(Integer addressId);
 	
 
 }

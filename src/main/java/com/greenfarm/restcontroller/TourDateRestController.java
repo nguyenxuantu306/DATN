@@ -126,7 +126,7 @@ public class TourDateRestController {
 	
 	@GetMapping("/filtertourdate")
 	public ResponseEntity<List<TourDateDTO>> getList(
-	        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date) {
+	        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
 	    List<TourDate> tourdates;
 
 	    if (date != null) {
