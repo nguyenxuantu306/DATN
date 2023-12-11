@@ -19,10 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.greenfarm.dto.CategoryDTO;
 import com.greenfarm.dto.VoucherDTO;
 import com.greenfarm.dto.VoucherUserDTO;
-import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Voucher;
 import com.greenfarm.entity.VoucherUser;
 import com.greenfarm.service.VoucherService;
@@ -145,10 +143,10 @@ public class VoucherRestController {
 
 		if (keyword != null && !keyword.isEmpty()) {
 			// Nếu có từ khóa, thực hiện tìm kiếm
-			voucherusers = voucheruserservice.findByKeyword(keyword);
+			voucherusers = voucherUserService.findByKeyword(keyword);
 		} else {
 			// Nếu không có từ khóa, lấy tất cả người dùng
-			voucherusers = voucheruserservice.findAll();
+			voucherusers = voucherUserService.findAll();
 		}
 
 		List<VoucherUserDTO> voucherDtos = voucherusers.stream().map(voucheruser -> modelMapper.map(voucheruser, VoucherUserDTO.class))
