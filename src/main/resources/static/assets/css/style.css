@@ -11483,6 +11483,21 @@ h1 {
 	position: relative;
 }
 
+
+.package-item>a .out-of-stock-label1 {
+	position: absolute;
+	top: 10;
+	right: 0;
+	background-color: rgb(0, 0, 0);
+	color: #ffffff;
+	padding: 5px 10px;
+	padding: 5px;
+	border: 1px solid #000;
+	font-size: 15px;
+	border-radius: 5px 0 0 5px;
+	
+}
+
 .package-item>a .out-of-stock-label {
 	position: absolute;
 	top: 0;
@@ -11556,3 +11571,4 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
 	-moz-appearance: textfield;
+}
