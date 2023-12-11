@@ -59,17 +59,27 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
 <style>
 .marquee-container {
-        white-space: nowrap;
-        overflow: hidden;
-        animation: marquee 5s linear infinite; /* Điều chỉnh thời gian và hiệu ứng tùy chọn */
-        
-    }
+	white-space: nowrap;
+	overflow: hidden;
+	animation: marquee 5s linear infinite;
+	/* Điều chỉnh thời gian và hiệu ứng tùy chọn */
+}
 
-    @keyframes marquee {
-        0%   { transform: translateX(100%); }
-        100% { transform: translateX(-100%); }
-    }
+@
+keyframes marquee { 0% {
+	transform: translateX(100%);
+}
 
+100
+%
+{
+transform
+:
+translateX(
+-100%
+);
+}
+}
 
 /* Màu chữ mờ và độ mờ của placeholder */
 .form-control.input-default::placeholder {
@@ -82,11 +92,11 @@
 	color: transparent;
 	opacity: 1;
 }
+
 textarea::placeholder {
-        color: #999; /* Màu chữ làm mờ */
-        opacity: 0.7;
-       
-    }
+	color: #999; /* Màu chữ làm mờ */
+	opacity: 0.7;
+}
 </style>
 
 <!-- thống báo  -->
@@ -174,14 +184,14 @@ textarea::placeholder {
 						<li class="icons dropdown">
 							<div class="user-img c-pointer position-relative"
 								data-toggle="dropdown">
-								<span class="activity active"></span> <img
-									src="https://www.svgrepo.com/show/384674/account-avatar-profile-user-11.svg"
+								<span class="activity active"></span> <img id="image" src=""
 									height="40" width="40" alt="">
 							</div>
 							<div
 								class="drop-down dropdown-profile animated fadeIn dropdown-menu">
 								<div class="dropdown-content-body">
 									<ul>
+
 										<li><a href="app-profile.html"><i class="icon-user"></i>
 												<span>Profile</span></a></li>
 										<li><a href="javascript:void()"> <i
@@ -239,9 +249,8 @@ textarea::placeholder {
 							</ul></li>
 						<hr>
 						<li><a class="has-arrow" href="javascript:void()"
-							aria-expanded="false"><i class="fas fa-tags menu-icon"></i>
-								<span class="nav-text">Mã giảm giá</span>
-						</a>
+							aria-expanded="false"><i class="fas fa-tags menu-icon"></i> <span
+								class="nav-text">Mã giảm giá</span> </a>
 							<ul aria-expanded="false">
 								<li><a href="#!vouchers">Quản lý mã giảm giá</a></li>
 							</ul></li>
@@ -253,16 +262,15 @@ textarea::placeholder {
 						</a>
 							<ul aria-expanded="false">
 								<li><a href="#!order">Quản lý đơn hàng</a></li>
-								<li><a href="#!bookingtour">Quản lý đặt tour</a></li>				
+								<li><a href="#!bookingtour">Quản lý đặt tour</a></li>
 							</ul></li>
 						<hr>
 						<li><a class="has-arrow" href="javascript:void()"
-							aria-expanded="false"> <i
-								class="far fa-clock menu-icon"></i> <span
-								class="nav-text">Thời gian Tour</span>
+							aria-expanded="false"> <i class="far fa-clock menu-icon"></i>
+								<span class="nav-text">Thời gian Tour</span>
 						</a>
-							<ul aria-expanded="false">	
-								<li><a href="#!tourdate">Quản lý thời gian</a></li>							
+							<ul aria-expanded="false">
+								<li><a href="#!tourdate">Quản lý thời gian</a></li>
 								<li><a href="#!bookingdate">Quản lý thời gian đặt Tour</a></li>
 							</ul></li>
 						<hr>
@@ -403,6 +411,33 @@ textarea::placeholder {
 			});
 		})();
 	</script> -->
+
+	<script>
+		$(document).ready(function() {
+			// Gửi yêu cầu đến API để lấy thông tin người dùng
+			$.ajax({
+				url : '/rest/users/currentlylogged', // Đường dẫn API của bạn
+				method : 'GET',
+				success : function(data) {
+					// Xử lý dữ liệu trả về từ API
+					displayUserInfo(data);
+				},
+				error : function() {
+					// Xử lý lỗi khi gửi yêu cầu đến API
+					alert('Failed to fetch user information.');
+				}
+			});
+			
+			// Hàm để hiển thị thông tin người dùng lên giao diện
+	        function displayUserInfo(user) {
+	            // Cập nhật đường dẫn hình ảnh trong thẻ img có id là "image"
+	            $('#image').attr('src', user.image);
+	        }
+		});
+	</script>
+
+
+
 </body>
 
 </html>

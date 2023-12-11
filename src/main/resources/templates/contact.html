@@ -5,54 +5,66 @@
 
 <head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact</title>
 </head>
 
 <body>
 	<div class="container">
 
 		<div class="row">
+
 			<div class="col-6 py-5">
-				<h4 style="color: #339900;">THÔNG TIN LIÊN HỆ</h4>
-				<div class="input-group mb-3">
-					<span class="input-group-text" id="basic-addon1"><i
-						class="bi bi-person-square"></i></span> <input type="text"
-						class="form-control" placeholder="" aria-label="Username"
-						aria-describedby="basic-addon1">
-				</div>
-				<!--  -->
-				<div class="input-group mb-3">
-					<span class="input-group-text" id="basic-addon1"><i
-						class="bi bi-envelope-at-fill"></i></span> <input type="text"
-						class="form-control" placeholder="" aria-label="Username"
-						aria-describedby="basic-addon1">
+				<form action="/contact" th:action="@{/contact}" method="post"
+					th:object="${contact}">
+					<h4 style="color: #339900;">THÔNG TIN LIÊN HỆ</h4>
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="basic-addon1"><i
+							class="bi bi-person-square"></i></span> <input name="fullname"
+							type="text" th:field="*{fullname}" class="form-control"
+							aria-describedby="basic-addon1">
+						<div th:if="${#fields.hasErrors('fullname')}"
+							th:errors="*{fullname}" class="text-danger invalid-feedback"></div>
+					</div>
 
-				</div>
-				<!--  -->
-				<div class="input-group mb-3">
-					<span class="input-group-text" id="basic-addon1"><i
-						class="bi bi-telephone-fill"></i></span> <input type="text"
-						class="form-control" placeholder="" aria-label="Username"
-						aria-describedby="basic-addon1">
-
-				</div>
-				<!--  -->
-				<div class="input-group mb-6">
-					<span class="input-group-text" id="basic-addon1"><i
-						class="bi bi-pencil-square"></i></span>
-					<textarea class="form-control" placeholder=""
-						id="floatingTextarea2" style="height: 100px"></textarea>
-
-
-				</div>
-				<br>
-				<button type="button" class="btn btn-primary">Gửi tín nhắn</button>
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="basic-addon1"><i
+							class="bi bi-envelope-at-fill"></i></span> <input type="text"
+							class="form-control" name="email" th:field="*{email}"
+							aria-describedby="basic-addon1">
+						<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+							class="text-danger invalid-feedback"></div>
+					</div>
+					<!--  -->
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="basic-addon1"><i
+							class="bi bi-telephone-fill"></i></span> <input type="text"
+							class="form-control" name="phonenumber" th:field="*{phonenumber}"
+							aria-describedby="basic-addon1">
+						<div th:if="${#fields.hasErrors('phonenumber')}"
+							th:errors="*{phonenumber}" class="text-danger invalid-feedback"></div>
+					</div>
+					<!--  -->
+					<div class="input-group mb-6">
+						<span class="input-group-text" id="basic-addon1"><i
+							class="bi bi-pencil-square"></i></span>
+						<textarea class="form-control" name="content"
+							th:field="*{content}" style="height: 100px"></textarea>
+						<div th:if="${#fields.hasErrors('content')}"
+							th:errors="*{content}" class="text-danger invalid-feedback"></div>
+					</div>
+					<br>
+					<button type="submit" class="btn btn-primary">Gửi tín nhắn</button>
+				</form>
 			</div>
+
 			<!--  -->
 			<div class="col-6 py-5">
 				<h4 style="color: #339900;">GREENFARM</h4>
-				<div class="contact__address" >
+				<div class="contact__address">
 					<ul style="list-style: none;">
-						<li >
+						<li>
 							<h6>
 								<i class="fa fa-map-marker"></i> Address
 							</h6>

@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -239,6 +240,22 @@ public class UserRestController {
 	public ResponseEntity<List<Report>> getBookingTotalPurchaseByUser() {
 		List<Report> totalPurchaseList = userService.getBookingTotalPurchaseByUser();
 		return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
+	}
+	
+	@GetMapping("/currentlylogged")
+	public ResponseEntity<User> getusercurrentlylogged(Authentication authentication){
+		if (authentication.isAuthenticated()) {
+			try {
+				User user = userService.findByEmail(authentication.getName());
+				return new ResponseEntity<>(user,HttpStatus.OK); 
+			} catch (Exception e) {
+				// TODO: handle exception
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			}
+			
+		}else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
 }
