@@ -29,7 +29,7 @@ public class Voucher implements Serializable{
 	private String code;
 	private Float discount;
 	private Date expirationdate = new Date();
-	
+	private Boolean isdeleted = Boolean.FALSE;
 	@JsonIgnore
 	@OneToMany(mappedBy = "voucher")
 	List<VoucherUser> voucheruser;
@@ -37,4 +37,8 @@ public class Voucher implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "voucher")
 	List<VoucherOrder> voucherorder;
+	
+	public void setIsDeleted(boolean isdeleted) {
+	    this.isdeleted = isdeleted;
+	}
 }

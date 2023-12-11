@@ -3,6 +3,8 @@ package com.greenfarm.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.VoucherDAO;
@@ -16,9 +18,9 @@ public class VoucherServiceImple implements VoucherService {
 
 	@Override
 	public List<Voucher> findAll() {
-		return dao.findAll();
+		return dao.findAllByIsdeletedFalse();
 	}
-
+	
 	@Override
 	public Voucher findById(Integer voucherid) {
 		return dao.findById(voucherid).get();
@@ -36,15 +38,35 @@ public class VoucherServiceImple implements VoucherService {
 
 	@Override
 	public void delete(Integer voucherid) {
-		dao.deleteById(voucherid);
+		dao.deleteByIsDeleted(voucherid);
 	}
 
 
+	@Override
+	public void save(Voucher voucher) {
+		dao.save(voucher);
+		
+	}
+	
+	@Override
+	public Voucher findByVoucherId(long parseLong) {
+		return dao.findByVoucherid(parseLong);
+	}
+
+	@Override
+	public List<Voucher> findAllDeletedVouchers() {
+		return dao.findAllByIsdeletedTrue();
+	}
+
+	@Override
+	public Page<Voucher> findAllByIsdeletedFalse(Pageable pageable) {
+		return dao.findAllByIsdeletedFalse(pageable);
+	}
 
 	@Override
 	public Voucher findByVoucherid(long parseLong) {
 		return dao.findByVoucherid(parseLong);
 	}
 
-
+	
 }

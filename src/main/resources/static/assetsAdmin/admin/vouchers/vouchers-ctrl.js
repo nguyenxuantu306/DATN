@@ -7,6 +7,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 	$scope.products = [];
 	$scope.selectedItem = null;
 	$scope.totalPrice = 0;
+	$scope.deletedItems = [];
 
 
 	$scope.initialize = function() {
@@ -17,9 +18,14 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 				item.expirationdate = new Date(item.expirationdate)
 			})
 		});
-		
+
 		$http.get("/rest/vouchers/user").then(resp => {
 			$scope.items2 = resp.data;
+		});
+
+		// Load deleted vouchers
+		$http.get("/rest/vouchers/deleted").then(resp => {
+			$scope.deletedItems = resp.data;
 		});
 	}
 
@@ -42,7 +48,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
 	}
-	
+
 	// Hiện thị lên form
 	$scope.edit2 = function(item2) {
 		$scope.form2 = angular.copy(item2);
@@ -75,7 +81,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 			console.log("Error", error);
 		});
 	}
-	
+
 	// cập loại nhật sản phẩm
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
@@ -104,6 +110,59 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 				console.log("Error", error);
 			});
 	}
+
+
+	$scope.restore = function(voucherid) {
+		// Hiển thị cửa sổ xác nhận trước khi khôi phục
+		Swal.fire({
+			title: 'Xác nhận khôi phục',
+			text: 'Bạn có chắc chắn muốn khôi phục voucher này?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Đồng ý',
+			cancelButtonText: 'Hủy bỏ'
+		}).then((result) => {
+			// Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
+			if (result.isConfirmed) {
+				// Nếu đã bấm "Đồng ý", thực hiện khôi phục
+				try {
+					axios.put(`/rest/vouchers/${voucherid}/restore`)
+						.then(response => {
+							 console.log("API Response:", response.data);
+							// Xử lý phản hồi thành công
+							Swal.fire({
+								icon: 'success',
+								title: 'Thành công!',
+								text: 'Khôi phục voucher thành công!',
+							}).then((result) => {
+								// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+								if (result.isConfirmed) {
+									// Nếu đã bấm, thực hiện reload trang
+									location.reload();
+								}
+							});
+						})
+						.catch(error => {
+							// Xử lý lỗi
+							Swal.fire({
+								icon: 'error',
+								title: 'Lỗi!',
+								text: 'Lỗi khôi phục voucher!',
+							});
+							console.log("Error", error);
+						});
+				} catch (error) {
+					// Xử lý lỗi ngoại lệ
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi khôi phục voucher',
+					});
+					console.log("Exception", error);
+				}
+			}
+		});
+	};
 
 	$scope.delete = function(item) {
 		// Hiển thị cửa sổ xác nhận trước khi xóa
@@ -148,8 +207,8 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 			}
 		});
 	};
-	
-	
+
+
 	// Voucherusser
 	// Cấp mã
 	$scope.createuser = function() {
@@ -178,7 +237,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 			console.log("Error", error);
 		});
 	}
-	
+
 	// cập loại nhật sản phẩm
 	$scope.updateuser = function() {
 		var item2 = angular.copy($scope.form2);
@@ -252,7 +311,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 			}
 		});
 	};
-	
+
 	// tìm kiếm
 	$scope.loadData = function() {
 		var apiUrl = '/rest/comment/searchkeywordcomment';

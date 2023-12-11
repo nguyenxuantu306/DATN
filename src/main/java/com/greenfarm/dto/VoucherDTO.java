@@ -20,7 +20,8 @@ public class VoucherDTO {
 	private String code;
 	private Float discount;
 	private Date expirationdate = new Date();
-
+	private Boolean isdeleted = Boolean.FALSE;
+	
 	private List<VoucherUser> voucheruser;
 	private List<VoucherOrder> voucherorder;
 }
