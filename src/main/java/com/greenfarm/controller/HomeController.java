@@ -58,10 +58,7 @@ public class HomeController {
 //	}
 
 
-	@RequestMapping("/contact")
-	public String Contact(Model model) {
-		return "contact";
-	}
+	
 
 //	@RequestMapping("/login23")
 //	public String Contact1(Model model) {

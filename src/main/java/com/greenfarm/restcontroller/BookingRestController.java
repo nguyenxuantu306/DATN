@@ -99,6 +99,7 @@ public class BookingRestController {
 
 	@PutMapping("{id}")
 	public ResponseEntity<BookingDTO> update(@PathVariable("id") Integer id, @RequestBody Booking booking) {
+		
 		Booking updatedBooking = bookingService.update(booking);
 
 		if (updatedBooking == null) {

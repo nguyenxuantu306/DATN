@@ -21,13 +21,12 @@ public class Authconfig {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
-
 	@Autowired
 	private CustomAuthSucessHandler authSucessHandler;
 
 	@Autowired
 	private CustomFailHandle customFailHandle;
-	
+
 	@Value("${spring.security.oauth2.client.registration.client-id}")
 	private String clientId;
 
@@ -44,10 +43,10 @@ public class Authconfig {
 	@SuppressWarnings("deprecation")
 	@Bean
 	public SecurityFilterChain fillterchain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable());
+		http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable());
 
 		http.authorizeRequests(authorize -> authorize
-				.requestMatchers("/profile", "/booking/*","/checkout", "/cart").authenticated()
+				.requestMatchers("/profile", "/booking/*", "/checkout", "/cart").authenticated()
 				.requestMatchers("/assetsAdmin/", "/admin")
 				.hasRole("Administrator").anyRequest().permitAll());
 
@@ -65,5 +64,5 @@ public class Authconfig {
 
 		return http.build();
 	}
-	
+
 }

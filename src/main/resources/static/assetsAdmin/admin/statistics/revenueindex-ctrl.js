@@ -1,5 +1,6 @@
 app.controller('revenueindex-ctrl', function($scope, $http) {
 	$scope.form = {};
+	
 	$scope.itemsThongKeSTstatus = [];
 	$scope.itemsThongKebookingstatus = [];
 	$scope.itemsThongKestats = [];
@@ -19,6 +20,7 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 	}
 
 	$scope.initialize = function() {
+		
 
 		$http.get('/rest/orders/slstatus').then(response => {
 			$scope.itemsThongKeSTstatus = response.data;

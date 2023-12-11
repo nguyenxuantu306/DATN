@@ -1,5 +1,6 @@
 app = angular.module("admin-app", ["ngRoute"]);
 
+
 app.config(function($routeProvider) {
 	$routeProvider
 		.when("/product", {
@@ -56,9 +57,9 @@ app.config(function($routeProvider) {
 			templateUrl: "/assetsAdmin/admin/soatve/ticket.html",
 			controller: "ticket-ctrl"
 		})
-		.when("/dashboard", {
+		/*.when("/dashboard", {
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
-		})
+		})*/
 
 		.otherwise({
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
