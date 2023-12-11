@@ -7,31 +7,32 @@
                     <div class="col-md-7 input-group icons">
                         <div>
                             <!-- 						datetime-local -->
-                            <input type="datetime-local" id="startDateTime" ng-model="startDateTime" style="height: 45px;"> <span style="margin: 0 15px;">Đến</span> 
+                            <input type="datetime-local" id="startDateTime" ng-model="startDateTime"
+                                style="height: 45px;"> <span style="margin: 0 15px;">Đến</span>
                             <input type="datetime-local" id="endDateTime" ng-model="endDateTime" style="height: 45px;">
 
                             <button class="btn btn-success" ng-click="filterOrders()">Lọc</button>
 
                             <button class="btn btn-success" ng-click="resetFilter()">Xóa
-								bộ lọc</button>
+                                bộ lọc</button>
                         </div>
                     </div>
                     <div class="col-md-2  input-group icons ">
                         <select class="select bg-success " ng-model="selectedStatus">
-							<option value="1">Chờ xác nhận</option>
-							<option value="2">Đặt tour thành công</option>
-							<option value="3">Tour bị hủy</option>
-							<option value="4">Khách hàng cancel</option>
-							<option value="5">Vé đã được sử dụng</option>
-						</select>
+                            <option value="1">Chờ xác nhận</option>
+                            <option value="2">Đặt tour thành công</option>
+                            <option value="3">Tour bị hủy</option>
+                            <option value="4">Khách hàng cancel</option>
+                            <option value="5">Vé đã được sử dụng</option>
+                        </select>
                     </div>
                     <div class="col-md-3 text-right">
-                        <button type="button" class="btn btn-success"ng-click="exportExcel()">
-							<i class="fa fa-file-excel-o"></i> Excel
-						</button>
-                        <button type="button" class="btn btn-success"ng-click="exportPdf()">
-							<i class="fa fa-file-pdf-o"></i> PDF
-						</button>
+                        <button type="button" class="btn btn-success" ng-click="exportExcel()">
+                            <i class="fa fa-file-excel-o"></i> Excel
+                        </button>
+                        <button type="button" class="btn btn-success" ng-click="exportPdf()">
+                            <i class="fa fa-file-pdf-o"></i> PDF
+                        </button>
                     </div>
                 </div>
                 <div id="orderList"></div>
@@ -44,13 +45,14 @@
                                 <th scope="col">Thời gian tạo</th>
                                 <th scope="col">Số lượng người</th>
                                 <th scope="col">Tổng</th>
-                              <!--  <th scope="col">Hình thức thanh toán</th>-->
+                                <!--  <th scope="col">Hình thức thanh toán</th>-->
                                 <th scope="col">Trạng thái</th>
                                 <th scope="col">Xem</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="text-center" ng-repeat="item in items | orderBy:'-bookingdate'" ng-if="item.statusbooking.statusbookingid == selectedStatus || selectedStatus == '0'">
+                            <tr class="text-center" ng-repeat="item in items | orderBy:'-bookingdate'"
+                                ng-if="item.statusbooking.statusbookingid == selectedStatus || selectedStatus == '0'">
                                 <th scope="row">{{$index + 1}}</th>
                                 <td>{{item.user.email}}</td>
                                 <td>{{item.bookingdate | date:'dd-MM-yyyy HH:mm a'}}</td>                        
@@ -66,48 +68,61 @@
 							        'bg-secondary': item.statusbooking.statusbookingid == 5
    									 }">{{item.statusbooking.name}}</td>
                                 <td>
-                                    <a type="button" ng-click="edit(item)" data-toggle="modal" data-target="#exampleModal"> <i class="bi bi-sticky"></i>	
+                                    <a type="button" ng-click="edit(item)" data-toggle="modal"
+                                        data-target="#exampleModal"> <i class="bi bi-sticky"></i>
                                     </a>
-                                    <div style="text-align: left;" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div style="text-align: left;" class="modal fade" id="exampleModal" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-xl custom-modal3">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                        Chi tiết đặt vé : {{form.bookingdate | date: 'dd-MM-yyyy'}} - #{{form.bookingid}} - {{form.user.email}}</h1>                                              
-
-
+                                                        Chi tiết đặt vé : {{form.bookingdate | date: 'dd-MM-yyyy'}} -
+                                                        #{{form.bookingid}} - {{form.user.email}}</h1>
                                                 </div>
                                                 <div class="modal-body pb-5">
                                                     <div class="row">
                                                         <div class="col-sm-4">
-                                                            <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
-                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Địa chỉ người nhận</div>
+                                                            <div class="form-group"
+                                                                style="border: 1px solid #000;border-radius: 5px;height:130px">
+                                                                <div
+                                                                    style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">
+                                                                    Địa chỉ người nhận</div>
                                                                 <div style="padding: 10px;">
-                                                                	 <!-- <label>- Ngày đặt tour: {{form.tour.tourdate.tourdates}}</label> --><br/>  <labl>-
-																	Email người dùng: {{form.user.email}}</label> <br/> <label style="padding-top: 10px" >-
+                                                                	<!-- <label>- Ngày đặt tour: {{form.tour.tourdate.tourdates}}</label> --><br/>
+																	Email người dùng: {{form.user.email}}</label> <br/> <label style="padding-top: 10px" >
 																	Số điện thoại: {{form.user.phonenumber}}</label>
                                                                 </div>
-                                                       
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
-                                                            <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
-                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Hình thức thanh toán</div>
+                                                            <div class="form-group"
+                                                                style="border: 1px solid #000;border-radius: 5px;height:130px">
+                                                                <div
+                                                                    style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">
+                                                                    Hình thức thanh toán</div>
                                                                 <div style="padding: 10px;">
-                                                                	 <label>- Hình thức thanh toán: {{form.paymentmethod.methodname}}</label> <br> <label>-
-																	Trạng thái thanh toán: {{form.statusbooking.name}}</label>
+                                                                    <label>- Hình thức thanh toán:
+                                                                        {{form.paymentmethod.methodname}}</label> <br>
+                                                                    <label>-
+                                                                        Trạng thái thanh toán:
+                                                                        {{form.statusbooking.name}}</label>
                                                                 </div>
-                                                               
+
                                                             </div>
                                                         </div>
-                                                         <div class="col-sm-4">
-                                                            <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
-                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px">Mã QRCODE</div>
-                                                                <div class="text-center" >
-                                                                	<img  ng-src="{{item.qrcode}}" alt="Product Image" style="width: 80px;">
-																	
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group"
+                                                                style="border: 1px solid #000;border-radius: 5px;height:130px">
+                                                                <div
+                                                                    style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px">
+                                                                    Mã QRCODE</div>
+                                                                <div class="text-center">
+                                                                    <img ng-src="{{item.qrcode}}" alt="Product Image"
+                                                                        style="width: 80px;">
+
                                                                 </div>
-                                                               
+
                                                             </div>
                                                         </div>
 
@@ -132,14 +147,18 @@
                                                                     <th scope="row">{{$index + 1}}</th>
                                                                     <td><img ng-src="{{form.tour.image}}" alt="Tour Image" style="width: 80px;"></td>
                                                                     <td style="width: 150px">{{form.tour.tourname}}</td>
-                                                                    <td style="width: 200px">Giá người lớn: {{form.tour.pricings.adultprice}} <br /> Giá trẻ em: {{item.tour.pricings.childprice}}
+                                                                    <td style="width: 200px">Giá người lớn:
+                                                                        {{form.tour.pricings.adultprice}} <br /> Giá trẻ
+                                                                        em: {{item.tour.pricings.childprice}}
                                                                     </td>
-                                 
+
                                                                     <td>{{form.adultticketnumber}}</td>
                                                                     <td>{{form.childticketnumber}}</td>
-                                                                    <td>{{formatPrice(form.adultticketnumber * form.tour.pricings.adultprice)}}
+                                                                    <td>{{formatPrice(form.adultticketnumber *
+                                                                        form.tour.pricings.adultprice)}}
                                                                     </td>
-                                                                    <td>{{formatPrice(form.childticketnumber * form.tour.pricings.childprice)}}
+                                                                    <td>{{formatPrice(form.childticketnumber *
+                                                                        form.tour.pricings.childprice)}}
                                                                     </td>
                                                                     <td>{{formatPrice(form.totalprice)}}</td>
                                                                 </tr>
@@ -149,17 +168,22 @@
                                                         <div class="modal-order text-right">
                                                             <hr>
                                                             <h4 style="padding-left: 100px" class="total fs-4">
-                                                                Tổng cộng: <strong>{{formatPrice(calculateTotal(form))}}</strong>
+                                                                Tổng cộng:
+                                                                <strong>{{formatPrice(calculateTotal(form))}}</strong>
                                                             </h4>
 
                                                             <hr>
                                                             <label style="font-size: 20px; color: black;">Cập
-																nhật trạng thái : </label> <select class="form-select w-auto select" ng-model="form.statusbooking.statusbookingid" style="background-color: #f7f7f7; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+                                                                nhật trạng thái : </label> <select
+                                                                class="form-select w-auto select"
+                                                                ng-model="form.statusbooking.statusbookingid"
+                                                                style="background-color: #f7f7f7; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
 
-																<option ng-repeat="c in cates"
-																	ng-value="c.statusbookingid">{{c.name}}</option>
-															</select>
-                                                            <div style="background-color: #007BFF; color: #fff;" ng-click="update()" class="btn">Save</div>
+                                                                <option ng-repeat="c in cates"
+                                                                    ng-value="c.statusbookingid">{{c.name}}</option>
+                                                            </select>
+                                                            <div style="background-color: #007BFF; color: #fff;"
+                                                                ng-click="update()" class="btn">Save</div>
                                                         </div>
                                                     </div>
                                                 </div>

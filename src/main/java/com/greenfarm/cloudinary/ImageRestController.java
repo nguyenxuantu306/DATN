@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.greenfarm.service.BookingService;
 import com.greenfarm.service.QRCodeService;
 
 @RestController
@@ -27,9 +26,6 @@ public class ImageRestController {
 
 	@Autowired
 	private CloudinaryService cloudinaryService;
-	
-	@Autowired
-	private BookingService bookingService;
 	
 	@Autowired
 	private QRCodeService qrCodeService;

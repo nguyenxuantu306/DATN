@@ -63,7 +63,8 @@
 				</div>
 				<!-- <div th:if="*{availableslots <= 0}"
 					style="display: flex; justify-content: space-between; align-items: center;">
-					<a style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
+					<a
+						style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
 						class="btn btn-lg btn-primary p-2">Tour đã hết chỗ</a>
 				</div> -->
 			</div>
@@ -155,11 +156,11 @@
 							</thead>
 							<tbody>
 								<tr>
-									<th style="padding-top: 20px" scope="row">1</th>
-									<td style="padding-top: 20px"
+									<th scope="row">1</th>
+									<td
 										th:text="*{#numbers.formatDecimal(pricings.Adultprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
 									</td>
-									<td style="padding-top: 20px"
+									<td
 										th:text="*{#numbers.formatDecimal(pricings.Childprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
 									</td>
 									<!-- <td style="padding-top: 20px" th:text="*{Availableslots}"></td> -->
@@ -254,15 +255,16 @@
 						<div>
 							<div class="d-flex justify-content-between mb-2">
 								<div class="d-flex flex-row align-items-center">
-									<img src="{{p.user.image}}" alt="avatar" width="25" height="25" />
+									<img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp" alt="avatar"
+										width="25" height="25" />
 									<p class="small mb-0 ms-2 mx-2">{{p.user.firstname}}</p>
-									<p class="text-muted small mb-0">{{
-										formatTimeAgo(p.commentdate) }}</p>
+									<p class="text-muted small mb-0">{{p.commentdate}}</p>
 								</div>
 
 
 							</div>
 							<p>{{p.commenttext}}</p>
+
 							<div class="d-flex flex-row align-items-center"
 								th:if="${#authorization.expression('isAuthenticated()')}"
 								ng-model="p.user.email">
@@ -303,6 +305,7 @@
 								</div>
 
 
+								</a>
 								<div class="list-inline" ng-if="isUserLoggedIn(p.user.email)">
 									<a href="#!"
 										class="d-inline-flex align-items-center  me-3  list-inline-item">
@@ -320,8 +323,8 @@
 						<!-- //recomment -->
 						<div class="row" ng-repeat="recm in p.recomment">
 
-							<div class="col-2 "></div>
-							<div class="col-10   my-2">
+							<div class="col-2"></div>
+							<div class="col-10">
 								<div class="d-flex justify-content-between mb-2">
 									<div class="d-flex flex-row align-items-center">
 										<img src="{{recm.user.image}}" alt="avatar" width="25"
@@ -330,8 +333,11 @@
 										<p class="text-muted small mb-0">{{
 											formatTimeAgo(recm.recommentdate) }}</p>
 									</div>
+
+
 								</div>
 								<p>{{recm.recommenttext}}</p>
+
 								<div class="d-flex flex-row align-items-center"
 									th:if="${#authorization.expression('isAuthenticated()')}"
 									ng-model="p.user.email">
@@ -341,11 +347,11 @@
 										<a href="#!"
 											class="d-inline-flex align-items-center  me-3  list-inline-item">
 											<i class="far fa-comment-dots me-2"></i>
-											<p class="mb-0" ng-click="deleterecm(recm)">Xóa</p>
+											<p class="mb-0" ng-click="delete(p)">Xóa</p>
 										</a> <a href="#!"
 											class="d-inline-flex align-items-center  me-3 list-inline-item">
 											<i class="far fa-comment-dots me-2"></i>
-											<p class="mb-0" ng-click="editrecm(recm)">Sửa</p>
+											<p class="mb-0" ng-click="edit(p)">Sửa</p>
 										</a>
 
 									</div>

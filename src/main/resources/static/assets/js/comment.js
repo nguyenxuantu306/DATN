@@ -78,20 +78,11 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 		$scope.form = angular.copy(item);	
 	}
 	
-	$scope.editrecm = function(item) {
-		$scope.form.recommenttext = angular.copy(item.recommenttext);	
-	}
-	
 	$scope.reset = function() {
 		$scope.error = ['err'];
 		$scope.form = {
 			
 			};
-	};
-	
-		
-	$scope.resetrecm = function() {
-		$scope.form.recommenttext = null;
 	};
 
 	// Hiện thị lên for
@@ -131,26 +122,26 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 			$scope.reset();
 			
 			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
+			/*Swal.fire({
 				icon: 'success',
 				title: 'Thành công!',
-				text: 'Thêm comment thành công!',
-			});
+				text: 'Thêm tour thành công!',
+			});*/
 			console.log("cmthành công " ); 
 		}).catch(error => {
 			// Sử dụng SweetAlert2 cho thông báo lỗi
-			Swal.fire({
+			/*Swal.fire({
 				icon: 'error',
 				title: 'Lỗi!',
-				text: 'Lỗi thêm mới comment!',
-			});
+				text: 'Lỗi thêm mới tour!',
+			});*/
 			console.log("cmt lỗi " ); 
 			console.log("Error", error);
 		});
 	};
 
 
-	// Cập nhật comment tour
+	// Cập nhật tour
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
 		if (item.commentid == null) {
@@ -164,7 +155,7 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 				Swal.fire({
 					icon: 'success',
 					title: 'Thành công!',
-					text: 'Cập nhật comment thành công!',
+					text: 'Cập nhật tour thành công!',
 				});
 			}).catch(error => {
 				// Sử dụng SweetAlert2 cho thông báo lỗi
@@ -176,7 +167,7 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 				console.log("Error", error);
 			});
 		} else {
-			alert("comment  không tồn tại");
+			alert("Tour id không tồn tại");
 		}
 	}
 
@@ -184,12 +175,12 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 		$http.delete(`/rest/comment/${item.commentid}`).then(resp => {
 			var index = $scope.items.findIndex(p => p.commentid == item.commentid);
 			$scope.items.splice(index, 1);
-			$scope.reset();
+			//$scope.reset();
 			// Sử dụng SweetAlert2 cho thông báo thành công
 			Swal.fire({
 				icon: 'success',
 				title: 'Thành công!',
-				text: 'Xóa comment thành công!',
+				text: 'Xóa tour thành công!',
 			});
 
 		})
@@ -198,130 +189,12 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 				Swal.fire({
 					icon: 'error',
 					title: 'Lỗi!',
-					text: 'Lỗi xóa comment!',
+					text: 'Lỗi xóa tour!',
 				});
 				console.log("Error", error);
 			});
 	}
-	
-	
-	// Thêm recomment  mới
-	$scope.createrecomment = function(item) {
-		
-		/*console.log("cmt user " +$scope.loggedInUser); 
-		console.log("cmt user check" +$scope.users.userid); */ 
-		console.log("coi le day la comment :"+item);
-		console.log("********* "); 
-		$scope.form.tour = $scope.tour;
-		console.log("cmtid tua dya nhe " + $scope.tour); 
-		$scope.form.user = $scope.users ;
-		
-		$scope.form.comment = item;
-		
-		
-		$scope.form.recommenttext = $scope.form.recommenttext;
-		console.log("cmt " +$scope.form.recommenttext); 
-		$scope.form.commentdate = new Date();
 
-		var item = {};
-		 item = angular.copy($scope.form);
-			
-			console.log("cmt tour id " +$scope.tour.tourid); 
-			item.user = $scope.users ;
-		$http.post(`/rest/recomment`, $scope.form).then(resp => {
-			
-			resp.data.recommentdate = new Date(resp.data.recommentdate);
-			 
-			 
-			/*$scope.items.push(resp.data);*/
-			
-			$scope.items.forEach(function(item) {
-  // Kiểm tra xem mảng con recomment có tồn tại không
-  if (item.recomment) {
-    // Thêm dữ liệu mới vào mảng recomment
-    item.recomment.push(resp.data);
-  } else {
-    // Nếu mảng recomment chưa tồn tại, bạn có thể tạo nó
-    item.recomment = [resp.data];
-  }
-});
-			console.log("du lieu"+$scope.items);
-			$scope.resetrecm();
-			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Thêm comment thành công!',
-			});
-			console.log("cmthành công " ); 
-		}).catch(error => {
-			// Sử dụng SweetAlert2 cho thông báo lỗi
-			Swal.fire({
-				icon: 'error',
-				title: 'Lỗi!',
-				text: 'Lỗi thêm mới comment!',
-			});
-			console.log("comment lỗi " ); 
-			console.log("day la data"+$scope.items);
-			console.log("Error", error);
-		});
-	};
-
-// Cập nhật comment tour
-	$scope.updaterecm = function(item) {
-		var item = angular.copy($scope.form);
-		console.log("item.recommentid:"+item.recommentid );
-		if (item.recommentid == null) {
-			return $scope.createrecomment();
-		} else if (item.recommentid != null) {
-			$http.put(`/rest/recomment/${item.recommentid}`, item).then(resp => {
-				var index = $scope.items.findIndex(recm => recm.recommentid == item.recommentid);
-				$scope.items[index] = item;
-				$scope.reset();
-				// Sử dụng SweetAlert2 cho thông báo thành công
-				Swal.fire({
-					icon: 'success',
-					title: 'Thành công!',
-					text: 'Cập nhật recomment thành công!',
-				});
-			}).catch(error => {
-				// Sử dụng SweetAlert2 cho thông báo lỗi
-				Swal.fire({
-					icon: 'error',
-					title: 'Lỗi!',
-					text: 'Lỗi cập nhật recomment!',
-				});
-				console.log("Error", error);
-			});
-		} else {
-			alert("recomment không tồn tại");
-		}
-	}
-
-
-	$scope.deleterecm = function(item) {
-		$http.delete(`/rest/recomment/${item.recommentid}`).then(resp => {
-			var index = $scope.items.findIndex(recm => recm.recommentid == item.recommentid);
-			$scope.items.splice(index, 1);
-			$scope.reset();
-			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Xóa comment thành công!',
-			});
-
-		})
-			.catch(error => {
-				// Sử dụng SweetAlert2 cho thông báo lỗi
-				Swal.fire({
-					icon: 'error',
-					title: 'Lỗi!',
-					text: 'Lỗi xóa comment!',
-				});
-				console.log("Error", error);
-			});
-	}
 	/*	// Upload hình	
 		$scope.imageChanged = function(files) {
 			var data = new FormData();
@@ -336,33 +209,6 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 				console.log("Error", error);
 			})
 		}*/
-		
-    // Hàm tính toán khoảng thời gian
-    $scope.formatTimeAgo = function (date) {
-        const now = new Date();
-        const diffInSeconds = Math.floor((now - date) / 1000);
-
-        const intervals = {
-            year: 31536000,
-            month: 2592000,
-            week: 604800,
-            day: 86400,
-            hour: 3600,
-            minute: 60,
-            second: 1
-        };
-
-        for (const [unit, secondsInUnit] of Object.entries(intervals)) {
-            const interval = Math.floor(diffInSeconds / secondsInUnit);
-            if (interval >= 1) {
-                return interval + ' ' + (interval === 1 ? unit : unit + 's') + ' ago';
-            }
-        }
-
-        return 'Vừa xong';
-    };
-
-		
 	$scope.pager = {
 		page: 0,
 		size: 7,

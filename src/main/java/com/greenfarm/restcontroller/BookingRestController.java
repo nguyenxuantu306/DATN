@@ -189,7 +189,6 @@ public class BookingRestController {
 			} else {
 				StatusBooking statusBooking = statusBookingService.findById(5);
 				booking.setStatusbooking(statusBooking);
-				Booking updatedBooking = bookingService.update(booking);
 				System.out.println("Đã xác nhận thành công");
 				// Trả về giao diện Thymeleaf khi xác nhận thành công
 				ModelAndView mav = new ModelAndView("mytiecketuse");

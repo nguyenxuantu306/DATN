@@ -53,7 +53,7 @@
 							<tr class="text-center" ng-repeat="item in pager.items| orderBy:'-orderdate'"
 								ng-if="selectedStatus == item.statusOrder.statusorderid || selectedStatus == '0'">
 								<th scope="row">{{$index + 1}}</th>
-								<td>{{item.user.email}}</td>
+								<td>{{item.user.firstname}}</td>
 								<td>{{item.orderdate | date:'dd-MM-yyyy HH:mm a'}}</td>
 								<td><label>
 										
