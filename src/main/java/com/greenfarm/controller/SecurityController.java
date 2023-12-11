@@ -236,40 +236,40 @@ public class SecurityController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AddressController.class);
 
-	@RequestMapping("/quanlydiachi")
-	public String quanlidiachilist(Model model, HttpServletRequest request) {
-		String email = request.getRemoteUser();
-		model.addAttribute("addresses", addressService.findByEfindByIdAccountmail(email));
-		return "address";
-	}
+//	@RequestMapping("/quanlydiachi")
+//	public String quanlidiachilist(Model model, HttpServletRequest request) {
+//		String email = request.getRemoteUser();
+//		model.addAttribute("addresses", addressService.findByEfindByIdAccountmail(email));
+//		return "address";
+//	}
 
-	@PostMapping("/capnhatdiachi/{addressId}")
-	@ResponseBody
-	public String updateAddressStatus(@PathVariable("addressId") Integer addressId, HttpServletRequest request) {
-		String email = request.getRemoteUser();
-		addressService.setActiveStatus(email, addressId);
-		return "Success";
-	}
-
-	@GetMapping("/laydiachi/{addressId}")
-	@ResponseBody
-	public Map<String, Object> getAddress(@PathVariable("addressId") Integer addressId) {
-		Map<String, Object> response = new HashMap<>();
-
-		try {
-			Address address = addressService.findById(addressId);
-			User user = userService.findById(address.getUser().getUserid());
-
-			response.put("address", address);
-			response.put("user", user);
-			response.put("success", true);
-		} catch (Exception e) {
-			response.put("success", false);
-			response.put("message", "Error getting address information: " + e.getMessage());
-		}
-
-		return response;
-	}
+//	@PostMapping("/capnhatdiachi/{addressId}")
+//	@ResponseBody
+//	public String updateAddressStatus(@PathVariable("addressId") Integer addressId, HttpServletRequest request) {
+//		String email = request.getRemoteUser();
+//		addressService.setActiveStatus(email, addressId);
+//		return "Success";
+//	}
+//
+//	@GetMapping("/laydiachi/{addressId}")
+//	@ResponseBody
+//	public Map<String, Object> getAddress(@PathVariable("addressId") Integer addressId) {
+//		Map<String, Object> response = new HashMap<>();
+//
+//		try {
+//			Address address = addressService.findById(addressId);
+//			User user = userService.findById(address.getUser().getUserid());
+//
+//			response.put("address", address);
+//			response.put("user", user);
+//			response.put("success", true);
+//		} catch (Exception e) {
+//			response.put("success", false);
+//			response.put("message", "Error getting address information: " + e.getMessage());
+//		}
+//
+//		return response;
+//	}
 
 	@GetMapping("/changepass")
 	public String changepass(Model model) {
