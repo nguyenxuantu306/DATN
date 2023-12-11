@@ -21,7 +21,7 @@ public interface VoucherService {
 
 	void delete(Integer voucherid);
 
-	List<Voucher> findByKeyword(String keyword);
+	
 
 	void save(Voucher voucher);
 

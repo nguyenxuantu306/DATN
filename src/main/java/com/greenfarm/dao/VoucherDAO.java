@@ -41,4 +41,5 @@ public interface VoucherDAO extends JpaRepository<Voucher, Integer> {
 	List<Voucher> findAllByIsdeletedTrue();
 
 	Page<Voucher> findAllByIsdeletedFalse(Pageable pageable);
+	
 }

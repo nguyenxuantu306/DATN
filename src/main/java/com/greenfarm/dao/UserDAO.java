@@ -44,4 +44,9 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 	List<User> findAllByIsdeletedFalse();
 
 	List<User> findAllByIsdeletedTrue();
+	
+	@Query("SELECT u FROM User u WHERE u.firstname LIKE %:keyword% OR u.lastname LIKE %:keyword%")
+	List<User> findByKeyword(String keyword);
+	
+	List<User> findByPhonenumber(String phonenumber);
 }

@@ -101,7 +101,7 @@ public class VoucherRestController {
 	@PostMapping("user")
 	public ResponseEntity<VoucherUserDTO> createuser(@RequestBody VoucherUser voucheruser, Model model) {
 
-		VoucherUser createdVoucheruser = voucherUserService.create(voucheruser);
+		VoucherUser createdVoucheruser = voucheruserservice.create(voucheruser);
 		VoucherUserDTO voucherUserDTO = modelMapper.map(createdVoucheruser, VoucherUserDTO.class);
 		return new ResponseEntity<>(voucherUserDTO, HttpStatus.CREATED);
 	}
@@ -177,33 +177,33 @@ public class VoucherRestController {
 
 	@DeleteMapping("user/{voucheruserid}")
 	public ResponseEntity<Void> deleteuser(@PathVariable("voucheruserid") Integer voucheruserid) {
-		VoucherUser existingVoucheruser = voucherUserService.findById(voucheruserid);
+		VoucherUser existingVoucheruser = voucheruserservice.findById(voucheruserid);
 
 		if (existingVoucheruser == null) {
 			return ResponseEntity.notFound().build();
 		}
-		voucherUserService.delete(voucheruserid);
+		voucheruserservice.delete(voucheruserid);
 		return ResponseEntity.noContent().build();
 	}
 	
 	
-	@GetMapping("searchkeywordvoucher")
-	public ResponseEntity<List<VoucherDTO>> getList(@RequestParam(required = false) String keyword) {
-		List<Voucher> vouchers;
-
-		if (keyword != null && !keyword.isEmpty()) {
-			// Nếu có từ khóa, thực hiện tìm kiếm
-			vouchers = voucherService.findByKeyword(keyword);
-		} else {
-			// Nếu không có từ khóa, lấy tất cả người dùng
-			vouchers = voucherService.findAll();
-		}
-
-		List<VoucherDTO> voucherDtos = vouchers.stream().map(voucher -> modelMapper.map(voucher, VoucherDTO.class))
-				.collect(Collectors.toList());
-
-		return ResponseEntity.ok(voucherDtos);
-	}
+//	@GetMapping("searchkeywordvoucher")
+//	public ResponseEntity<List<VoucherDTO>> getList(@RequestParam(required = false) String keyword) {
+//		List<Voucher> vouchers;
+//
+//		if (keyword != null && !keyword.isEmpty()) {
+//			// Nếu có từ khóa, thực hiện tìm kiếm
+//			vouchers = voucherService.findByKeyword(keyword);
+//		} else {
+//			// Nếu không có từ khóa, lấy tất cả người dùng
+//			vouchers = voucherService.findAll();
+//		}
+//
+//		List<VoucherDTO> voucherDtos = vouchers.stream().map(voucher -> modelMapper.map(voucher, VoucherDTO.class))
+//				.collect(Collectors.toList());
+//
+//		return ResponseEntity.ok(voucherDtos);
+//	}
 	
 	
 	@GetMapping("user/searchkeywordvoucheruser")
@@ -212,10 +212,10 @@ public class VoucherRestController {
 
 		if (keyword != null && !keyword.isEmpty()) {
 			// Nếu có từ khóa, thực hiện tìm kiếm
-			voucherusers = voucherUserService.findByKeyword(keyword);
+			voucherusers = voucheruserservice.findByKeyword(keyword);
 		} else {
 			// Nếu không có từ khóa, lấy tất cả người dùng
-			voucherusers = voucherUserService.findAll();
+			voucherusers = voucheruserservice.findAll();
 		}
 
 		List<VoucherUserDTO> voucherDtos = voucherusers.stream().map(voucheruser -> modelMapper.map(voucheruser, VoucherUserDTO.class))

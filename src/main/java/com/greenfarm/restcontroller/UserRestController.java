@@ -208,34 +208,33 @@ public class UserRestController {
 
 	// Tổng tiền mua hàng của các user
 	@GetMapping("/total-purchase")
-	public ResponseEntity<List<Report>> getTotalPurchaseByUser() {
-		List<Report> totalPurchaseList = userService.getTotalPurchaseByUser();
-		return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
-	}
-
-	// Tổng tiền đặt vé của các user
-	@GetMapping("/bookingtotal-purchase")
-	public ResponseEntity<List<Report>> getBookingTotalPurchaseByUser() {
-		List<Report> totalPurchaseList = userService.getBookingTotalPurchaseByUser();
-		return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
-	}
-
-	@GetMapping("/currentlylogged")
-	public ResponseEntity<User> getusercurrentlylogged(Authentication authentication) {
-		if (authentication.isAuthenticated()) {
-			try {
-				User user = userService.findByEmail(authentication.getName());
-				return new ResponseEntity<>(user, HttpStatus.OK);
-			} catch (Exception e) {
-				// TODO: handle exception
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-			}
-
-		} else {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
-
+//	public ResponseEntity<List<Report>> getTotalPurchaseByUser() {
+//		List<Report> totalPurchaseList = userService.getTotalPurchaseByUser();
+//		return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
+//	}
+//
+//	// Tổng tiền đặt vé của các user
+//	@GetMapping("/bookingtotal-purchase")
+//	public ResponseEntity<List<Report>> getBookingTotalPurchaseByUser() {
+//		List<Report> totalPurchaseList = userService.getBookingTotalPurchaseByUser();
+//		return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
+//	}
+//
+//	@GetMapping("/currentlylogged")
+//	public ResponseEntity<User> getusercurrentlylogged(Authentication authentication) {
+//		if (authentication.isAuthenticated()) {
+//			try {
+//				User user = userService.findByEmail(authentication.getName());
+//				return new ResponseEntity<>(user, HttpStatus.OK);
+//			} catch (Exception e) {
+//				// TODO: handle exception
+//				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//			}
+//
+//		} else {
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//		}
+//	}
 	public ResponseEntity<List<ReportSP>> getTotalPurchaseByUser() {
 		List<ReportSP> totalPurchaseList = userService.getTotalPurchaseByUser();
 		return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);

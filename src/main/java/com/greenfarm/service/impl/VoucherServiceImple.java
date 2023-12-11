@@ -67,9 +67,5 @@ public class VoucherServiceImple implements VoucherService {
 		return dao.findByVoucherid(parseLong);
 	}
 
-	@Override
-	public List<Voucher> findByKeyword(String keyword) {
-		return dao.findByKeyword(keyword);
-	}
 
 }

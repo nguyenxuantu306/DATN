@@ -437,4 +437,16 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		}
 	}
 
+	@Override
+	public List<User> findByKeyword(String keyword) {
+		// TODO Auto-generated method stub
+		return dao.findByKeyword(keyword);
+	}
+
+	@Override
+	public User findByPhonenumber(String Phonenumber) {
+		// TODO Auto-generated method stub
+		return dao.findByPhonenumber(Phonenumber).get(0);
+	}
+
 }
