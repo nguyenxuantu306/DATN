@@ -54,14 +54,14 @@
 									<th>{{item.tour.tourname}}</th>
 									<td style="width: 200px; font-weight: bold;"
 										ng-style="{
-								    'color': item.tour.departureday === 'Chủ nhật' ? 'blue' :
-								             item.tour.departureday === 'Thứ bảy' ? 'orange' :
-								             item.tour.departureday === 'Ngày 14' ? 'green' :
-								             item.tour.departureday === 'Ngày 15' ? 'red' :
-								             item.tour.departureday === 'Ngày 20' ? 'black' : ''
+								    'color': item.tour.departureday === 'Chủ nhật hàng tuần' ? 'Brown' :
+								             item.tour.departureday === 'Thứ bảy hàng tuần' ? 'orange' :
+								             item.tour.departureday === 'Ngày 14 hàng tháng' ? 'green' :
+								             item.tour.departureday === 'Ngày 15 hàng tháng' ? 'red' :
+								             item.tour.departureday === 'Ngày 20 hàng tháng' ? 'Purple' : ''
 									}">{{item.tour.departureday}}</td>
 
-									<th style="width: 200px;">{{item.tourdates |
+									<th style="width: 200px;color:blue;">{{item.tourdates |
 										date:'dd/MM/yyyy'}}</th>
 									<th>{{item.availableslots}}</th>
 									<td><a type="button" ng-click="edit(item)"

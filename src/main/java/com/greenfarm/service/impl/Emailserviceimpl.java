@@ -76,7 +76,6 @@ public class Emailserviceimpl implements EmailService {
 	    messageHelper.setTo(toAddress);
 	    messageHelper.setSubject(subject);
 	    messageHelper.setText(message);
-
 	    // Truyền đường dẫn URL trực tiếp vào email
 	    try {
 			messageHelper.addInline("Purchase Order", new URLDataSource(new URL(qrCodeUrl)));
@@ -87,6 +86,24 @@ public class Emailserviceimpl implements EmailService {
 		}
 
 	    emailSender.send(mimeMessage);
+	}
+
+	@Override
+	public void sendMail(OrderEmailContext email) throws MessagingException {
+		// TODO Auto-generated method stub
+		MimeMessage message = emailSender.createMimeMessage();
+		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message,
+				MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
+		org.thymeleaf.context.Context context = new org.thymeleaf.context.Context();
+		context.setVariables(email.getContext());
+		String emailContent = templateEngine.process(email.getTemplateLocation(), context);
+		System.out.println(context);
+		System.out.println(email.getContext());
+		mimeMessageHelper.setTo(email.getTo());
+		mimeMessageHelper.setSubject(email.getSubject());
+		mimeMessageHelper.setFrom(email.getFrom());
+		mimeMessageHelper.setText(emailContent, true);
+		emailSender.send(message);
 	}
 
 }
