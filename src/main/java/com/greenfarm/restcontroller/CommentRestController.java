@@ -16,12 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.greenfarm.dto.CategoryDTO;
 import com.greenfarm.dto.CommentDTO;
-import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Comment;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.service.CommentService;
@@ -136,22 +133,4 @@ public class CommentRestController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	
-	@GetMapping("/searchkeywordcomment")
-	public ResponseEntity<List<CommentDTO>> getList(@RequestParam(required = false) String keyword) {
-		List<Comment> comments;
-
-		if (keyword != null && !keyword.isEmpty()) {
-			// Nếu có từ khóa, thực hiện tìm kiếm
-			comments = commentService.findByKeyword(keyword);
-		} else {
-			// Nếu không có từ khóa, lấy tất cả người dùng
-			comments = commentService.findAll();
-		}
-
-		List<CommentDTO> commentServiceDtos = comments.stream().map(comment -> modelMapper.map(comment, CommentDTO.class))
-				.collect(Collectors.toList());
-
-		return ResponseEntity.ok(commentServiceDtos);
-	}
 }

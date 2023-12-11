@@ -3,7 +3,6 @@ package com.greenfarm.dto;
 import java.util.List;
 
 import com.greenfarm.entity.Category;
-import com.greenfarm.entity.ProductImage;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
