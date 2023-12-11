@@ -15,8 +15,6 @@ import jakarta.validation.Valid;
 
 public interface UserService {
 
-	
-	
 	List<User> findAll();
 
 	List<User> findAllDeletedUser();
@@ -38,13 +36,11 @@ public interface UserService {
 
 	// yeyye
 
-	
-
 	void sendRegistrationConfirmationEmail(final User user);
 
 	boolean verifyUser(final String token) throws com.greenfarm.exception.InvalidTokenException;
 
-    public boolean iscurrentPasswordMatching(User user,String password) ;
+	public boolean iscurrentPasswordMatching(User user, String password);
 
 	public boolean isPasswordMatching(String password, String confirmPassword);
 
@@ -69,5 +65,5 @@ public interface UserService {
 
 	void save(User user);
 
-	User createADMIN(@Valid User user)throws UserAlreadyExistException;
+	User createADMIN(@Valid User user) throws UserAlreadyExistException;
 }

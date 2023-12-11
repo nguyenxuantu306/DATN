@@ -1,7 +1,6 @@
 const form = document.getElementById('form');
 const password1El = document.getElementById('newpass');
 const password2El = document.getElementById('confirmpass');
-const messageContainer = document.querySelector('.message-container');
 const message = document.getElementById('message');
 
 let passwordsMatch = false;
@@ -13,14 +12,12 @@ function validateForm() {
     passwordsMatch = true;
     password1El.style.borderColor = 'green';
     password2El.style.borderColor = 'green';
-    message.textContent = 'Passwords match.';
+    message.textContent = 'Mật khẩu đã khớp';
     message.style.color = 'green';
-    messageContainer.style.borderColor = 'green';
   } else {
     passwordsMatch = false;
-    message.textContent = 'Make sure passwords match.';
+    message.textContent = 'Mật khẩu không khớp.';
     message.style.color = 'red';
-    messageContainer.style.borderColor = 'red';
     password1El.style.borderColor = 'red';
     password2El.style.borderColor = 'red';
   }
@@ -55,17 +52,17 @@ function storeFormData() {
 // Event Listeners
 form.addEventListener('submit', processFormData);
 
-function togglePasswordVisibility() {
-    var passwordField = document.getElementById('password'); // Lấy trường input password
-    var passwordIcon = document.getElementById('passwordToggleIcon'); // Lấy icon để thay đổi trạng thái (hiển thị/ẩn)
+function togglePasswordVisibility(fieldId) {
+  var passwordField = document.getElementById(fieldId); // Lấy trường input password
+  var passwordIcon = document.getElementById(fieldId + 'ToggleIcon'); // Lấy icon để thay đổi trạng thái (hiển thị/ẩn)
 
-    if (passwordField.type === 'password') {
-        passwordField.type = 'text'; // Nếu đang là password, chuyển sang kiểu text để hiển thị mật khẩu
-        passwordIcon.classList.remove('fa-eye-slash');
-        passwordIcon.classList.add('fa-eye');
-    } else {
-        passwordField.type = 'password'; // Nếu đang là text, chuyển lại sang kiểu password để ẩn mật khẩu
-        passwordIcon.classList.remove('fa-eye');
-        passwordIcon.classList.add('fa-eye-slash');
-    }
+  if (passwordField.type === 'password') {
+      passwordField.type = 'text'; // Nếu đang là password, chuyển sang kiểu text để hiển thị mật khẩu
+      passwordIcon.classList.remove('fa-eye-slash');
+      passwordIcon.classList.add('fa-eye');
+  } else {
+      passwordField.type = 'password'; // Nếu đang là text, chuyển lại sang kiểu password để ẩn mật khẩu
+      passwordIcon.classList.remove('fa-eye');
+      passwordIcon.classList.add('fa-eye-slash');
+  }
 }

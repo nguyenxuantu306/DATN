@@ -3,6 +3,7 @@ package com.greenfarm.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.greenfarm.entity.Address;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Order;
@@ -125,7 +127,7 @@ public class ExcelController {
 
 		int rowIdx = 2;
 
-		for (int i = 0; i < dataList.size(); i++) {
+for (int i = 0; i < dataList.size(); i++) {
 			User data = dataList.get(i);
 
 			Row row = sheet.createRow(rowIdx++);
@@ -133,8 +135,18 @@ public class ExcelController {
 			row.createCell(1).setCellValue(data.getFirstname());
 			row.createCell(2).setCellValue(data.getEmail());
 			row.createCell(3).setCellValue(data.getPhonenumber());
-			row.createCell(4).setCellValue(data.getAddress());
+//	        row.createCell(4).setCellValue(data.getAddress());
+			// Lấy danh sách địa chỉ có active = false
+			List<Address> inactiveAddresses = data.getAddress().stream().filter(address -> !address.getActive())
+					.collect(Collectors.toList());
 
+			// Tạo một chuỗi chứa thông tin địa chỉ có active = false
+			String addressInfo = inactiveAddresses.stream()
+					.map(address -> address.getStreet() + ", " + address.getDistrict() + ", " + address.getCity())
+					.collect(Collectors.joining("; "));
+
+			// Đặt thông tin địa chỉ vào cột thứ 4
+			row.createCell(4).setCellValue(addressInfo);
 			// Set gender as "Male" or "Female"
 			Cell genderCell = row.createCell(5);
 			String gender = data.getGender() ? "Nam" : "Nữ";

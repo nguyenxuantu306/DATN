@@ -20,20 +20,20 @@
     $(window).resize(toggleNavbarMethod);
   });
 
-  // Hiển thị nút back-to-top khi cuộn trang
-  $(window).scroll(function () {
-    if ($(this).scrollTop() > 25) {
-      $(".back-to-top").fadeIn("slow");
-    } else {
-      $(".back-to-top").fadeOut("slow");
-    }
-  });
+  // // Hiển thị nút back-to-top khi cuộn trang
+  // $(window).scroll(function () {
+  //   if ($(this).scrollTop() > 25) {
+  //     $(".back-to-top").fadeIn("slow");
+  //   } else {
+  //     $(".back-to-top").fadeOut("slow");
+  //   }
+  // });
 
-  // Sử dụng event delegation để gắn kết sự kiện 'click' với nút back-to-top
-  $(document).on("click", ".back-to-top", function () {
-    $("html, body").animate({ scrollTop: 0 }, 1500, "easeInOutExpo");
-    return false;
-  });
+  // // Sử dụng event delegation để gắn kết sự kiện 'click' với nút back-to-top
+  // $(document).on("click", ".back-to-top", function () {
+  //   $("html, body").animate({ scrollTop: 0 }, 1500, "easeInOutExpo");
+  //   return false;
+  // });
 
   // Date and time picker
   $(".date").datetimepicker({

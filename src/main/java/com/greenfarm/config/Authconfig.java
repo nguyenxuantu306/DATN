@@ -13,20 +13,20 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.google.api.client.util.Value;
-import com.greenfarm.service.UserService;
 
 @Configuration
 @EnableWebSecurity
 public class Authconfig {
-	@Autowired
-	UserDetailsService userDetailsService;
 
 	@Autowired
-	UserService userService;
+	private UserDetailsService userDetailsService;
 
 
 	@Autowired
 	private CustomAuthSucessHandler authSucessHandler;
+
+	@Autowired
+	private CustomFailHandle customFailHandle;
 	
 	@Value("${spring.security.oauth2.client.registration.client-id}")
 	private String clientId;
@@ -44,7 +44,7 @@ public class Authconfig {
 	@SuppressWarnings("deprecation")
 	@Bean
 	public SecurityFilterChain fillterchain(HttpSecurity http) throws Exception {
-		http.csrf().disable().cors().disable();
+        http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable());
 
 		http.authorizeRequests(authorize -> authorize
 				.requestMatchers("/profile", "/booking/*","/checkout", "/cart").authenticated()
@@ -53,6 +53,7 @@ public class Authconfig {
 
 		http.formLogin(form -> form.loginPage("/login")
 				.successHandler(authSucessHandler)
+				.failureHandler(customFailHandle)
 		/* .loginProcessingUrl("/") */
 
 		).logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logoff")).permitAll());
