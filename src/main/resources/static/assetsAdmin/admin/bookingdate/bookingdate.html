@@ -77,13 +77,13 @@
 								<td style="width: 100px; color: blue; font-weight: bold;">{{item.tourdate.tourdates
 									| date:'dd-MM-yyyy'}}</td>
 								<td>{{item.booking.totalprice | number :0 }} đ</td>
-								<td style="width: 130px; font-weight: bold;"
+								<td style="width: 160px; font-weight: bold;"
 									ng-style="{
-								    'color': item.booking.tour.departureday === 'Chủ nhật' ? 'blue' :
-								             item.booking.tour.departureday === 'Thứ bảy' ? 'orange' :
-								             item.booking.tour.departureday === 'Ngày 14' ? 'green' :
-								             item.booking.tour.departureday === 'Ngày 15' ? 'red' :
-								             item.booking.tour.departureday === 'Ngày 20' ? 'black' : ''
+								    'color': item.booking.tour.departureday === 'Chủ nhật hàng tuần' ? 'Brown' :
+								             item.booking.tour.departureday === 'Thứ bảy hàng tuần' ? 'orange' :
+								             item.booking.tour.departureday === 'Ngày 14 hàng tháng' ? 'green' :
+								             item.booking.tour.departureday === 'Ngày 15 hàng tháng' ? 'red' :
+								             item.booking.tour.departureday === 'Ngày 20 hàng tháng' ? 'Purple' : ''
 									}">{{item.booking.tour.departureday}}</td>
 								<td style="width: 150px">{{item.tourdate.availableslots}}</td>
 								<td><a type="button" ng-click="edit(item)"
@@ -119,7 +119,7 @@
 															<div class="card mb-3" style="max-width: 540px;">
 																<div class="row g-0">
 																	<div class="col-md-4">
-																		<img ng-src="{{form.booking.user.image}}"
+																		<img style="width: 200px;height: 200px" ng-src="{{form.booking.user.image}}"
 																			alt="Trendy Pants and Shoes"
 																			class="img-fluid rounded-start" />
 																	</div>
