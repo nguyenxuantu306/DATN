@@ -1,6 +1,5 @@
 package com.greenfarm.service.impl;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -8,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.TourDateBookingDAO;
-import com.greenfarm.dto.TourDTO;
-import com.greenfarm.entity.Category;
-import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.TourDate;
 import com.greenfarm.entity.TourDateBooking;
 import com.greenfarm.service.TourDateBookingService;
@@ -20,9 +16,6 @@ public class TourDateBookingServiceImpl implements TourDateBookingService {
 
 	@Autowired
 	TourDateBookingDAO dao;
-	
-	@Autowired
-	TourDate tourDateDao;
 	
 	@Override
 	public List<TourDateBooking> findAll() {
@@ -46,8 +39,6 @@ public class TourDateBookingServiceImpl implements TourDateBookingService {
 			dao.deleteById(tourdatebookingid);
 		
 	}
-
-
 
 	@Override
 	public TourDateBooking findById(Integer tourdatebookingid) {
