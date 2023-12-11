@@ -43,7 +43,7 @@ public class User implements Serializable {
 	@Positive(message = "Id tài khoản phải lớn hơn 0")
 	private Integer userid;
 
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,100}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\\W]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ hoa 1 chữ thường 1 số và 1 ký tự đặc biệt.")
 	@NotEmpty(message = "Vui lòng nhập mật khẩu")
 	String password;
 

@@ -19,11 +19,11 @@ public class RegisterDTO {
 	@Pattern(regexp = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", message = "Email phải đúng định dạng.")
 	private String email;
 	
-	@Pattern(regexp = "^(?=.*[A-Z])(?=.*[0-9]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\\W]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ hoa 1 chữ thường 1 số và 1 ký tự đặc biệt.")
 	@NotEmpty(message = "Mật khẩu không được để trống")
 	private String password;
 	
-	@Pattern(regexp = "^(?=.*[A-Z])(?=.*[0-9]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\\W]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ hoa 1 chữ thường 1 số và 1 ký tự đặc biệt.")
 	@NotEmpty(message = "Mật khẩu xác nhận không được để trống")
 	private String repeatpassword;
 	

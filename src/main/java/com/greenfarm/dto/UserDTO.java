@@ -32,17 +32,18 @@ public class UserDTO {
 	@NotBlank(message = "Email là bắt buộc")
 	private String email;
 
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,100}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\\W]).{8,100}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ hoa 1 chữ thường 1 số và 1 ký tự đặc biệt.")
 	@NotEmpty(message = "Vui lòng nhập mật khẩu")
 	private String password;
 
-	@NotEmpty(message = "Thiếu mật khẩu xác nhận")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\\W]).{8,100}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ hoa 1 chữ thường 1 số và 1 ký tự đặc biệt.")
+	@NotEmpty(message = "Mật khẩu xác nhận không được để trống")
 	private String repeatpassword;
 
-	@NotBlank(message = "Tên đầu là bắt buộc")
+	@NotBlank(message = "Họ và tên đệm không được để trống")
 	private String firstname;
 	
-	@NotBlank(message = "Tên cuối là bắt buộc")
+	@NotBlank(message = "Tên không được để trống")
 	private String lastname;
 	
 	@NotBlank(message = "Số điện thoại không được để trống")
@@ -52,11 +53,11 @@ public class UserDTO {
 	//@NotBlank(message = "Ảnh đại diện là bắt buộc")
 	private String image; 
 	
-	@NotBlank(message = "Địa chỉ là bắt buộc")
+	@NotBlank(message = "Địa chỉ không được để trống")
 	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
 	private String address;
 	
-	@NotNull(message = "Giới tính phải được chọn")
+	@NotNull(message = "Giới tính không được để trông")
 	private Boolean gender;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
