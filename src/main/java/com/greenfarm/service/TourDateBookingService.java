@@ -3,6 +3,7 @@ package com.greenfarm.service;
 import java.util.Date;
 import java.util.List;
 
+import com.greenfarm.entity.TourDate;
 import com.greenfarm.entity.TourDateBooking;
 
 public interface TourDateBookingService {
@@ -24,4 +25,8 @@ public interface TourDateBookingService {
 	List<TourDateBooking> findAll();
 
 	List<TourDateBooking> findByDepartureDay(String departureday);
+
+	int getBookedSlotsForTourDate(TourDate tourDate);
+
+	List<TourDateBooking> getBookingsForTourDate(TourDate tourdate);
 }
