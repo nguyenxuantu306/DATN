@@ -32,4 +32,10 @@ public interface TourDateBookingDAO extends JpaRepository<TourDateBooking, Integ
 	List<TourDateBooking> findByTourdates(@Param("date") Date date);
 
 
+	List<TourDateBooking> findByTourdate(TourDate tourdate);
+
+
+	List<TourDateBooking> findBytourdate(TourDate tourdate);
+
+
 }

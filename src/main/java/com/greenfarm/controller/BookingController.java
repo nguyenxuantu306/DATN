@@ -55,10 +55,10 @@ public class BookingController {
 
 	@Autowired
 	TourService tourService;
-	
+
 	@Autowired
 	TourDateService tourdateService;
-	
+
 	@Autowired
 	TourDateBookingService tourdatebookingService;
 
@@ -102,53 +102,83 @@ public class BookingController {
 
 	@PostMapping("/booking/create")
 	public String createBooking(Model model, @ModelAttribute("booking") BookingDTO bookingDto,
-			@RequestParam("tourdate") String tourdate,
-			BindingResult bindingResult) throws IOException, ParseException {
+			@RequestParam("tourdate") String tourdate, BindingResult bindingResult) throws IOException, ParseException {
+		Booking booking = modelMapper.map(bookingDto, Booking.class);
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("booking", bookingDto);
 			// Trả về trang form với thông báo lỗi
 			return "bookingform";
 		}
-
 		
-		Booking booking = modelMapper.map(bookingDto, Booking.class);
-		// Thời gian
-		booking.setBookingdate(LocalDateTime.now());
-		
-		
-
-		// Trạng thái
-		StatusBooking statusBooking = statusBookingService.findById(1);
-		booking.setStatusbooking(statusBooking);
-
-		// Phương thức thanh toán
-		PaymentMethod paymentMethod = new PaymentMethod();
-		paymentMethod.setPaymentmethodid(1);
-		booking.setPaymentmethod(paymentMethod);
-
-		bookingService.saveBooking(booking);
 		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(tourdate);
-		
 		TourDate tourdate1 = tourdateService.findByTourAndTourdates(booking.getTour(), date1);
 		
-		TourDateBooking tourdatebooking = new TourDateBooking();
-		tourdatebooking.setBooking(booking);
-		tourdatebooking.setTourdate(tourdate1);
-		tourdatebookingService.create(tourdatebooking);
+		// Kiểm tra số lượng slot khả dụng
+		int availableSlots = getAvailableSlots(tourdate1);
+		System.out.println(availableSlots);
+		int requestedSlots = booking.getAdultticketnumber() + booking.getChildticketnumber();
+		System.out.println(requestedSlots);
 		
-		
-		// Generate and save QR code to the qrcode field
-		String qrCodeContent = ""+booking.getBookingid();
-		System.out.println(qrCodeContent);
-		System.out.println(booking.getBookingid());
-		String qrCodeUrl = imageRestController.uploadQRCodeToCloud(qrCodeContent);
-		// Save the QR code URL to the booking
-		booking.setQrcode(qrCodeUrl);
+		if (availableSlots < requestedSlots) {
+			// Số lượng slot không đủ, trả về trang form với thông báo lỗi
+			model.addAttribute("booking", bookingDto);
+			model.addAttribute("error", "Số lượng slot không đủ cho đặt hàng này.");
+			System.out.println("ko đủ số lượng");
+			return "redirect:/booking/" + booking.getTour().getTourid();
+		} else {
+			
 
-		bookingService.saveBooking(booking);
-		return "successboking";
+			// Thời gian
+			booking.setBookingdate(LocalDateTime.now());
+
+			// Trạng thái
+			StatusBooking statusBooking = statusBookingService.findById(1);
+			booking.setStatusbooking(statusBooking);
+
+			// Phương thức thanh toán
+			PaymentMethod paymentMethod = new PaymentMethod();
+			paymentMethod.setPaymentmethodid(1);
+			booking.setPaymentmethod(paymentMethod);
+
+			bookingService.saveBooking(booking);
+
+			TourDateBooking tourdatebooking = new TourDateBooking();
+			tourdatebooking.setBooking(booking);
+			tourdatebooking.setTourdate(tourdate1);
+			tourdatebookingService.create(tourdatebooking);
+
+			// Generate and save QR code to the qrcode field
+			String qrCodeContent = "" + booking.getBookingid();
+			System.out.println(qrCodeContent);
+			System.out.println(booking.getBookingid());
+			String qrCodeUrl = imageRestController.uploadQRCodeToCloud(qrCodeContent);
+			// Save the QR code URL to the booking
+			booking.setQrcode(qrCodeUrl);
+
+			bookingService.saveBooking(booking);
+			return "successboking";
+		}
 	}
-	
+
+	public int getAvailableSlots(TourDate tourDate) {
+		// Giả sử trong TourDate có một trường là availableSlots để biểu diễn số lượng
+		// slot khả dụng
+		int availableSlots = tourDate.getAvailableslots();
+
+		// Lấy danh sách TourDateBooking cho tourdate cụ thể
+		List<TourDateBooking> tourDateBookings = tourdatebookingService.getBookingsForTourDate(tourDate);
+
+		// Tính tổng số lượng slot đã đặt
+		int bookedSlots = tourDateBookings.stream().mapToInt(
+				booking -> booking.getBooking().getAdultticketnumber() + booking.getBooking().getChildticketnumber())
+				.sum();
+
+		// Tính số lượng slot khả dụng
+		int remainingSlots = availableSlots - bookedSlots;
+
+		// Đảm bảo số lượng slot không dưới 0
+		return Math.max(remainingSlots, 0);
+	}
 
 }

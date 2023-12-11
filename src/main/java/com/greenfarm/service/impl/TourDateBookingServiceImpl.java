@@ -14,6 +14,7 @@ import com.greenfarm.dao.TourDateBookingDAO;
 import com.greenfarm.dto.TourDTO;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Tour;
+import com.greenfarm.entity.TourDate;
 import com.greenfarm.entity.TourDateBooking;
 import com.greenfarm.service.TourConditionService;
 import com.greenfarm.service.TourDateBookingService;
@@ -68,6 +69,17 @@ public class TourDateBookingServiceImpl implements TourDateBookingService {
 	@Override
 	public List<TourDateBooking> findByDate(Date date) {
 		return dao.findByTourdates(date);
+	}
+
+	@Override
+	public int getBookedSlotsForTourDate(TourDate tourDate) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<TourDateBooking> getBookingsForTourDate(TourDate tourdate) {
+		return dao.findByTourdate(tourdate);
 	}
 
 
