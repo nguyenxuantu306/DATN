@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.greenfarm.dto.TourDTO;
+import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Tour;
 
 public interface TourService {
@@ -15,6 +16,8 @@ public interface TourService {
 
 	Tour findById(Integer tourid);
 
+	List<Tour> findByKeyword(String keyword);
+	
 	// Thêm tour
 	Tour create(Tour tour);
 

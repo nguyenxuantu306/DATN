@@ -22,6 +22,10 @@ app.config(function($routeProvider) {
 			templateUrl: "/assetsAdmin/admin/message/message.html",
 			controller: "message-ctrl"
 		})
+		.when("/vouchers", {
+			templateUrl: "/assetsAdmin/admin/vouchers/vouchers.html",
+			controller: "vouchers-ctrl"
+		})
 		.when("/order", {
 			templateUrl: "/assetsAdmin/admin/order/order.html",
 			controller: "order-ctrl"

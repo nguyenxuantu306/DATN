@@ -39,6 +39,7 @@ public class Securetokenserviceimpl implements Securetokenservice {
 		secureToken.setToken(tokenValue);
 		secureToken.setExpireAt(LocalDateTime.now().plusSeconds(43200));
 
+		long timestampValue = System.currentTimeMillis();
 		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 
 		secureToken.setTimeStamp(currentTimestamp);

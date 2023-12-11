@@ -1,101 +1,51 @@
 <!DOCTYPE html>
-<html
-  xmlns="http://www.thymeleaf.org"
-  th:replace="~{/layout/layout::dynamic(~{::body})}"
->
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-  </head>
-  <body>
-    <!-- Basic -->
-    <div class="ex-form-1">
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-6 offset-xl-3">
-            <div class="text-box">
-              <h2 class="py-4" style="text-align: center">Đặt lại mật khẩu</h2>
+<html xmlns="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout::dynamic(~{::body})}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
 
-              <form
-                action="/resetpass"
-                th:object="${data}"
-                method="post"
-                class="py-3"
-              >
-                <div class="mb-4 form-floating">
-                  <input
-                    name="newpass"
-                    type="password"
-                    th:field="*{newpass}"
-                    class="form-control"
-                    id="newpass"
-                    placeholder="newpass"
-                    required
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
-                    title="Vui lòng tối thiểu 8 ký tự bao gồm ít nhất 1 ký tự viết hoa, 1 ký tự viết thường và 1 số."
-                  />
-                  <label for="newpass">Mật khẩu mới</label>
-                </div>
+</head>
+<body>
 
-                <div class="mb-4 form-floating">
-                  <input
-                    name="confirmpass"
-                    type="password"
-                    th:field="*{confirmpass}"
-                    class="form-control"
-                    id="confirmpass"
-                    placeholder="confirmpass"
-                    required
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
-                    title="Vui lòng tối thiểu 8 ký tự bao gồm ít nhất 1 ký tự viết hoa, 1 ký tự viết thường và 1 số."
-                  />
-                  <label for="confirmpass">Xác nhận mật khẩu </label>
-                </div>
-                <input
-                  type="hidden"
-                  for="token"
-                  name="token"
-                  th:field="*{token}"
-                  th:value="${param.token}"
-                />
-                <button
-                  style="font-size: 20px"
-                  type="submit"
-                  class="form-control-submit-button"
-                >
-                  Đặt mặt khẩu mới
-                </button>
+	<!-- Basic -->
+	<div class="ex-form-1 ">
+		<div class="container">
+			<div class="row">
 
-                <div class="register">
-                  <p style="text-align: center; padding: 30px">
-                    Trở vế trang hồ sơ ?
-                    <a href="/profile" class="link-danger">hồ sơ cá nhân</a>
-                  </p>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+				<div class="col-xl-6 offset-xl-3">
+					<div class="text-box ">
+						<h2 class="py-4" style="text-align: center;">Đặt lại mật khẩu</h2>
 
-    <script>
-      const password1El = document.getElementById("newpass");
-      const password2El = document.getElementById("confirmpass");
-      let passwordsMatch = false;
+						<form action="/resetpass" th:object="${data}" method="post" class="py-3">
+							
+							<div class="mb-4 form-floating">
+								<input name="newpass" type="password" th:field="*{newpass}" class="form-control"
+									id="newpass" placeholder="newpass" required>
+								<label for="newpass">Mật khẩu mới</label>
+							</div>
+							
+							<div class="mb-4 form-floating">
+								<input name="confirmpass" type="password" th:field="*{confirmpass}" class="form-control"
+									id="confirmpass" placeholder="confirmpass" required>
+								<label for="confirmpass">Xác nhận mật khẩu </label>
+							</div>
+							<input type="hidden" for="token" name="token" th:field="*{token}"
+						th:value="${param.token}">
+							<button style="font-size: 20px" type="submit"
+								class="form-control-submit-button">Đặt mặt khẩu mới</button>
+						
+						
+							<div class="register">
+							<p style="text-align: center;padding: 30px">Trở vế trang hồ sơ ? <a href="/profile" class="link-danger">hồ sơ cá nhân</a></p>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-      // Check to see if passwords match
-      if (password1El.value === password2El.value) {
-        passwordsMatch = true;
-        password1El.style.borderColor = "green";
-        password2El.style.borderColor = "green";
-      } else {
-        passwordsMatch = false;
-        password1El.style.borderColor = "red";
-        password2El.style.borderColor = "red";
-        return;
-      }
-    </script>
-  </body>
+</body>
 </html>

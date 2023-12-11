@@ -1,27 +1,29 @@
-// Hàm tạo mã HTML cho một sản phẩm
 function createProductHTML(product) {
-	var productHTML = `
-              <div 
-		class="col-lg-4 col-md-6 mb-4 text-center">
-		<div class="package-item bg-white mb-2">
-			<a href="/product/detail/${product.productid}"><img
-				style="height: 250px" class="img-fluid"
-				src="${product.image}" alt=""></a>
-			<div class="p-4">
-				<a 
-					class="h5 text-decoration-none" >${product.productname}</a>
-				<div class="border-top mt-4 pt-4">
-					<div class="text-center">				
-						 <h5 class="m-0">${formatPrice(product.price)}</h5>
+	// Kiểm tra số lượng sản phẩm
+	var outOfStockLabel = (product.quantityavailable < 5) ? '<span style="position: absolute;top: 1;right: 0;background-color: rgb(0, 0, 0);color: #ffffff;padding: 5px;border: 1px solid #000;border-radius: 5px 0 0 5px; " class="out - of - stock - label">Hết hàng</span>' : '';
 
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-        `;
+	var productHTML = `
+        <div class="col-lg-4 col-md-6 mb-4 text-center">
+            <div class="package-item bg-white mb-2">
+                <a  href="/product/detail/${product.productid}">
+                    <img style="height: 250px" class="img-fluid" src="${product.image}" alt="">
+                    ${outOfStockLabel}
+                </a>
+                <div class="p-4">
+                    <a class="h5 text-decoration-none">${product.productname}</a>
+                    <div class="border-top mt-4 pt-4">
+                        <div class="text-center">                
+                            <h5 class="m-0">${formatPrice(product.price)}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
 	return productHTML;
 }
+
 
 function formatPrice(price) {
 	// Thay đổi dấu chấm (.) thành dấu phẩy (,)
@@ -157,32 +159,6 @@ $(document).ready(function() {
 
 
 
-// Khoảng giá
-function filterProductsByCustomPriceRange(priceRange) {
-    $.ajax({
-        url: "/rest/products/filter-by-custom-price-range",
-        type: "GET",
-        data: { priceRange: priceRange },
-        success: function(response) {
-            displayProducts(response);
-        },
-        error: function(xhr) {
-            console.log(xhr.responseText);
-        },
-    });
-}
-// Hàm xử lý sự kiện khi người dùng thay đổi giá trị radio
-function handlePriceRangeChange() {
-    var priceRange = $('input[name="priceRange"]:checked').val();
-    filterProductsByCustomPriceRange(priceRange);
-}
-$(document).ready(function() {
-    // ... (Các sự kiện và hàm khác ở đây)
-
-    // Gắn kết sự kiện khi người dùng thay đổi giá trị radio
-    $('input[type="radio"]').change(handlePriceRangeChange);
-});
-// khoảng giá
 
 // rating và chức năng cơ bản tour
 $(document).ready(function() {
@@ -215,16 +191,6 @@ $(document).ready(function() {
 
 function addToCart(productId) {
 	var quantity = document.getElementById('quantityInput').value;
-
-	// Kiểm tra nếu quantity không phải là số hoặc nhỏ hơn 0.5
-	if (isNaN(quantity) || parseFloat(quantity) < 0.5) {
-		Swal.fire({
-			icon: 'error',
-			title: 'Lỗi!',
-			text: 'Số lượng phải lớn hơn hoặc bằng 0.5Kg',
-		});
-		return; // Ngừng thực hiện hàm nếu số lượng không hợp lệ
-	}
 
 	$.ajax({
 		type: "POST",
@@ -319,23 +285,16 @@ var quantityInputs = document.querySelectorAll('.cart-quantity');
 // Lặp qua từng trường số lượng và thêm bộ lắng nghe sự kiện cho mỗi trường
 quantityInputs.forEach(function(quantityInput) {
 	quantityInput.addEventListener("keyup", function(event) {
+		// Kiểm tra nếu phím Enter đã được nhấn (event.key === "Enter")
 		if (event.key === "Enter") {
 			var productId = quantityInput.getAttribute('data-productid');
-			var newQuantity = parseFloat(quantityInput.value);
-
-			if (!isNaN(newQuantity) && newQuantity >= 0.5) {
+			var newQuantity = parseInt(quantityInput.value);
+			if (!isNaN(newQuantity) && newQuantity >= 1) {
 				updateQuantity(productId, newQuantity);
-			} else {
-				Swal.fire({
-					icon: 'error',
-					title: 'Lỗi!',
-					text: 'Số lượng phải lớn hơn hoặc bằng 0.5Kg',
-				});
 			}
 		}
 	});
 });
-
 
 //select cod & paypal
 

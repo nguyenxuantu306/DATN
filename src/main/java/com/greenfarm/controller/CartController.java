@@ -73,7 +73,7 @@ public class CartController {
 				return "redirect:/product/shop";
 			}
 		}
-		return "login";
+		return "redirect:/login";
 	}
 
 	@RequestMapping("/update/{productId}")

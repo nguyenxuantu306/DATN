@@ -1,6 +1,7 @@
 package com.greenfarm.service.impl;
 
 import java.util.Collection;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +25,7 @@ import org.springframework.stereotype.Service;
 import com.greenfarm.dao.Securetokendao;
 import com.greenfarm.dao.UserDAO;
 import com.greenfarm.dto.Provider;
-import com.greenfarm.entity.ReportSP;
+import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Role;
 import com.greenfarm.entity.Securetoken;
 import com.greenfarm.entity.User;
@@ -184,8 +185,14 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public User findByEmail(String email) {
-		User user = dao.findByEmail(email).get();
-		return user;
+		Optional<User> user = dao.findByEmail(email);
+		if (user.isPresent()) {
+			return user.get();
+		} else {
+
+			return null;
+		}
+
 	}
 
 	@Override
@@ -274,6 +281,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public boolean loginDisabled(String username) {
+		User user = dao.findByEmail(username).get();
 		return false;
 	}
 
@@ -329,41 +337,46 @@ public class UserServerImpl implements UserService, UserDetailsService {
 			dao.save(newUser);
 
 			// Trả về UserDetails của tài khoản mới
+			return null;
 
 		}
-		return null;
+
 	}
 
 	@Override
 	public void processOAuthPostLogin(String username) {
-		User existUser = dao.findByEmail(username).get();
-		if (existUser == null) {
+		System.out.println("start check account");
+		Optional<User> existUser = dao.findByEmail(username);
+		System.out.println("it exxit");
+		if (existUser.isEmpty()) {
 			User newUser = new User();
-			newUser.setFirstname("google");
-			newUser.setLastname("google");
-			newUser.setPhonenumber("1234567");
+			// newUser.setFirstname("google");
+			// newUser.setLastname("google");
+			// newUser.setPhonenumber("0000000000");
 			newUser.setEmail(username);
 			newUser.setProvider(Provider.GOOGLE);
 			newUser.setAccountVerified(true);
 			newUser.setCreateddate(new Date());
+			System.out.println("cretea a account");
 			dao.save(newUser);
+			System.out.println("done");
 		}
 
 	}
 
 	@Override
-	public List<ReportSP> getTotalPurchaseByUser() {
+	public List<Report> getTotalPurchaseByUser() {
 		return dao.totalPurchaseByUser();
 	}
 
 	@Override
-	public List<ReportSP> getBookingTotalPurchaseByUser() {
+	public List<Report> getBookingTotalPurchaseByUser() {
 		return dao.BookingTotalPurchaseByUser();
 	}
 
 	@Override
-	public void save(User user) {
-		dao.save(user);
+	public User save(User user) {
+		return dao.save(user);
 
 	}
 
@@ -434,6 +447,24 @@ public class UserServerImpl implements UserService, UserDetailsService {
 			sendRegistrationConfirmationEmail(userEntity);
 			System.out.println("Gửi email xác nhận đăng ký");
 			return userEntity;
+		}
+	}
+
+	@Override
+	public List<User> findByKeyword(String keyword) {
+		// Triển khai tìm kiếm theo từ khóa trong repository
+		return dao.findByKeyword(keyword);
+	}
+
+	@Override
+	public User findByPhonenumber(String Phonenumber) {
+		// TODO Auto-generated method stub
+		Optional<User> user = dao.findByPhonenumber(Phonenumber);
+		if (user.isPresent()) {
+			return user.get();
+		} else {
+
+			return null;
 		}
 	}
 

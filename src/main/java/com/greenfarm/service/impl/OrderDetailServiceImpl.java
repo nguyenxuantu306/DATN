@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.entity.OrderDetail;
-import com.greenfarm.entity.ReportSP;
+import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Top10;
 import com.greenfarm.service.OrderDetailService;
 
@@ -24,7 +24,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	}
 
 	@Override
-	public List<ReportSP> tongdoanhthu() {
+	public List<Report> tongdoanhthu() {
 		return dao.reportTheoLuotMuaHang();
 	}
 

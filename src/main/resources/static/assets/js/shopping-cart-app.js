@@ -2,6 +2,11 @@ const app = angular.module("shopping-cart-app", []);
 
 
 app.controller("shopping-cart-ctrl", function($scope, $http) {
+
+
+
+
+
 	$scope.selectedStatus = "1";
 
 	$scope.filterOrders = function() {

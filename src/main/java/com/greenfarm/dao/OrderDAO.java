@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
+import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Report7day;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
@@ -87,13 +88,5 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 	        "GROUP BY DATE(o.orderdate) " +
 	        "ORDER BY DATE(o.orderdate) DESC")
 	List<Report7day> RevenueLast7Days();
-
-
-
-
-
-
-
-
 
 }

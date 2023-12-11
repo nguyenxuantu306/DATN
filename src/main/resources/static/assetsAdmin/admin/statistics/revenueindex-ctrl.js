@@ -628,7 +628,7 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 					data: {
 						labels: labels,
 						datasets: [{
-							label: 'Số lượng còn trong kho',
+							label: 'Số lượng sản phẩm bán theo danh mục',
 							data: values,
 							backgroundColor: backgroundColors, // Sử dụng mảng màu sắc ngẫu nhiên
 							borderWidth: 1,
@@ -707,7 +707,7 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 				data: {
 					labels: formattedDates,
 					datasets: [{
-						label: 'Tổng Doanh thu',
+						label: 'Tổng Doanh thu 7 ngày trước',
 						data: values,
 						backgroundColor: backgroundColors, // Sử dụng mảng màu sắc ngẫu nhiên
 						borderWidth: 1,
@@ -763,7 +763,7 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 
 	$scope.pager = {
 		page: 0,
-		size: 5,
+		size: 10,
 		get itemsThongKetotaluser() {
 			var start = this.page * this.size;
 			return $scope.itemsThongKetotaluser.slice(start, start + this.size);

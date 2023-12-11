@@ -37,9 +37,9 @@ public class VoucherRestController {
 	
 	@Autowired
 	VoucherService voucherService;
-
+	
 	@Autowired
-	VoucherUserService voucherUserService;
+	VoucherUserService voucheruserservice;
 	
 	@GetMapping()
 	public ResponseEntity<List<VoucherDTO>> getList() {
@@ -49,6 +49,13 @@ public class VoucherRestController {
 		return new ResponseEntity<>(voucherDTOs, HttpStatus.OK);
 	}
 	
+	@GetMapping("user")
+	public ResponseEntity<List<VoucherUserDTO>> getListuser() {
+		List<VoucherUser> voucherusers = voucheruserservice.findAll();
+		List<VoucherUserDTO> voucheruserDTOs = voucherusers.stream().map(voucheruser -> modelMapper.map(voucheruser, VoucherUserDTO.class))
+				.collect(Collectors.toList());
+		return new ResponseEntity<>(voucheruserDTOs, HttpStatus.OK);
+	}
 	@GetMapping("{voucherid}")
 	public ResponseEntity<VoucherDTO> getOne(@PathVariable("voucherid") Integer voucherid) {
 		Voucher voucher = voucherService.findById(voucherid);
@@ -70,13 +77,13 @@ public class VoucherRestController {
 	@PostMapping("user")
 	public ResponseEntity<VoucherUserDTO> createuser(@RequestBody VoucherUser voucheruser, Model model) {
 
-		VoucherUser createdVoucheruser = voucherUserService.create(voucheruser);
+		VoucherUser createdVoucheruser = voucheruserservice.create(voucheruser);
 		VoucherUserDTO voucherUserDTO = modelMapper.map(createdVoucheruser, VoucherUserDTO.class);
 		return new ResponseEntity<>(voucherUserDTO, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("{voucherid}")
-	public ResponseEntity<VoucherDTO> update(@PathVariable("id") Integer voucherid, @RequestBody Voucher voucher) {
+	public ResponseEntity<VoucherDTO> update(@PathVariable("voucherid") Integer voucherid, @RequestBody Voucher voucher) {
 		Voucher updatedVoucher = voucherService.update(voucher);
 
 		if (updatedVoucher == null) {
@@ -88,7 +95,7 @@ public class VoucherRestController {
 	
 	@PutMapping("user/{voucheruserid}")
 	public ResponseEntity<VoucherUserDTO> updateuser(@PathVariable("voucheruserid") Integer voucheruserid, @RequestBody VoucherUser voucheruser) {
-		VoucherUser updatedVoucheruser = voucherUserService.update(voucheruser);
+		VoucherUser updatedVoucheruser = voucheruserservice.update(voucheruser);
 
 		if (updatedVoucheruser == null) {
 			return ResponseEntity.notFound().build();
@@ -110,12 +117,12 @@ public class VoucherRestController {
 
 	@DeleteMapping("user/{voucheruserid}")
 	public ResponseEntity<Void> deleteuser(@PathVariable("voucheruserid") Integer voucheruserid) {
-		VoucherUser existingVoucheruser = voucherUserService.findById(voucheruserid);
+		VoucherUser existingVoucheruser = voucheruserservice.findById(voucheruserid);
 
 		if (existingVoucheruser == null) {
 			return ResponseEntity.notFound().build();
 		}
-		voucherUserService.delete(voucheruserid);
+		voucheruserservice.delete(voucheruserid);
 		return ResponseEntity.noContent().build();
 	}
 	

@@ -7,31 +7,31 @@
                     <div class="col-md-7 input-group icons">
                         <div>
                             <!-- 						datetime-local -->
-                            <input type="datetime-local" id="startDateTime" ng-model="startDateTime" style="height: 45px;"> <span style="margin: 0 15px;">Đến</span>
+                            <input type="datetime-local" id="startDateTime" ng-model="startDateTime" style="height: 45px;"> <span style="margin: 0 15px;">Đến</span> 
                             <input type="datetime-local" id="endDateTime" ng-model="endDateTime" style="height: 45px;">
 
                             <button class="btn btn-success" ng-click="filterOrders()">Lọc</button>
 
                             <button class="btn btn-success" ng-click="resetFilter()">Xóa
-                                bộ lọc</button>
+								bộ lọc</button>
                         </div>
                     </div>
                     <div class="col-md-2  input-group icons ">
                         <select class="select bg-success " ng-model="selectedStatus">
-                            <option value="1">Chờ xác nhận</option>
-                            <option value="2">Đặt tour thành công</option>
-                            <option value="3">Tour bị hủy</option>
-                            <option value="4">Khách hàng cancel</option>
-                            <option value="5">Vé đã được sử dụng</option>
-                        </select>
+							<option value="1">Chờ xác nhận</option>
+							<option value="2">Đặt tour thành công</option>
+							<option value="3">Tour bị hủy</option>
+							<option value="4">Khách hàng cancel</option>
+							<option value="5">Vé đã được sử dụng</option>
+						</select>
                     </div>
                     <div class="col-md-3 text-right">
-                        <button type="button" class="btn btn-success" ng-click="exportExcel()">
-                            <i class="fa fa-file-excel-o"></i> Excel
-                        </button>
-                        <button type="button" class="btn btn-success" ng-click="exportPdf()">
-                            <i class="fa fa-file-pdf-o"></i> PDF
-                        </button>
+                        <button type="button" class="btn btn-success"ng-click="exportExcel()">
+							<i class="fa fa-file-excel-o"></i> Excel
+						</button>
+                        <button type="button" class="btn btn-success"ng-click="exportPdf()">
+							<i class="fa fa-file-pdf-o"></i> PDF
+						</button>
                     </div>
                 </div>
                 <div id="orderList"></div>
@@ -44,155 +44,135 @@
                                 <th scope="col">Thời gian tạo</th>
                                 <th scope="col">Số lượng người</th>
                                 <th scope="col">Tổng</th>
-                                <<<<<<< HEAD <!-- <th scope="col">Hình thức thanh toán</th>--> =======
-                                    <!--  <th scope="col">Hình thức thanh toán</th>-->
-                                    >>>>>>> origin/reponsive
-                                    <th scope="col">Trạng thái</th>
-                                    <th scope="col">Xem</th>
+                              	<!--  <th scope="col">Hình thức thanh toán</th>-->
+                                <th scope="col">Trạng thái</th>
+                                <th scope="col">Xem</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="text-center" ng-repeat="item in items | orderBy:'-bookingdate'" ng-if="item.statusbooking.statusbookingid == selectedStatus || selectedStatus == '0'">
                                 <th scope="row">{{$index + 1}}</th>
                                 <td>{{item.user.email}}</td>
-                                <td>{{item.bookingdate | date:'dd-MM-yyyy HH:mm a'}}</td>
+                                <td>{{item.bookingdate | date:'dd-MM-yyyy HH:mm a'}}</td>                        
                                 <td>{{item.adultticketnumber + item.childticketnumber}}</td>
                                 <td>{{item.totalprice | number :0 }} đ</td>
-                                <<<<<<< HEAD <!-- <td>{{item.tourDateBooking}}</td> -->
-                                    <!--  <td>{{item.paymentmethod.methodname}}</td>-->
-                                    =======
-                                    <!--  <td>{{item.paymentmethod.methodname}}</td>-->
-                                    >>>>>>> origin/reponsive
-                                    <td style="color: white; width: 300px;" ng-class="{
+                                <!-- <td>{{item.tourDateBooking}}</td> -->
+                              <!--  <td>{{item.paymentmethod.methodname}}</td>-->
+                                <td style="color: white; width: 300px;" ng-class="{
 							        'bg-primary': item.statusbooking.statusbookingid == 1,
 							        'bg-success': item.statusbooking.statusbookingid == 2,
 							        'bg-danger': item.statusbooking.statusbookingid == 3,
 							        'bg-warning': item.statusbooking.statusbookingid == 4,
 							        'bg-secondary': item.statusbooking.statusbookingid == 5
    									 }">{{item.statusbooking.name}}</td>
-                                    <td>
-                                        <a type="button" ng-click="edit(item)" data-toggle="modal" data-target="#exampleModal"> <i class="bi bi-sticky"></i>
-                                        </a>
-                                        <div style="text-align: left;" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-xl custom-modal3">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                            Chi tiết đặt vé : {{form.bookingdate | date: 'dd-MM-yyyy'}} - #{{form.bookingid}} - {{form.user.email}}</h1>
-                                                    </div>
-                                                    <div class="modal-body pb-5">
-                                                        <div class="row">
-                                                            <div class="col-sm-4">
-                                                                <<<<<<< HEAD <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
-                                                                    <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Thông tin người đặt</div>
-                                                                    <div style="padding: 10px;">
-                                                                        <label>- Email người dùng: {{form.user.email}}</label><br/>
-                                                                        <labl>- Số điện thoại: {{form.user.phonenumber}}</label> <br/> <label style="padding-top: 10px">-
-																	Ngày sinh: {{form.user.birthday | date:'dd-MM-yyyy'}}</label> =======
-                                                                            <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
-                                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">
-                                                                                    Địa chỉ người nhận</div>
-                                                                                <div style="padding: 10px;">
-                                                                                    <!-- <label>- Ngày đặt tour: {{form.tour.tourdate.tourdates}}</label> --><br/> Email người dùng: {{form.user.email}}</label> <br/> <label style="padding-top: 10px">
-																	Số điện thoại: {{form.user.phonenumber}}</label> >>>>>>> origin/reponsive
-                                                                                </div>
-                                                                            </div>
-                                                                    </div>
-                                                                    <div class="col-sm-4">
-                                                                        <<<<<<< HEAD <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
-                                                                            <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Thời gian diễn ra (ngày đặt tour)</div>
-                                                                            <div style="padding: 10px;">
-                                                                                <label>- Ngày khởi hành: {{form.tour.departureday}}</label> <br> <label>-
-																	Ngày đặt Tour: {{form.tourDateBooking.tourdate.tourdates}}</label> =======
-                                                                                <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
-                                                                                    <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">
-                                                                                        Hình thức thanh toán</div>
-                                                                                    <div style="padding: 10px;">
-                                                                                        <label>- Hình thức thanh toán:
-                                                                        {{form.paymentmethod.methodname}}</label> <br>
-                                                                                        <label>-
-                                                                        Trạng thái thanh toán:
-                                                                        {{form.statusbooking.name}}</label> >>>>>>> origin/reponsive
-                                                                                    </div>
+                                <td>
+                                    <a type="button" ng-click="edit(item)" data-toggle="modal" data-target="#exampleModal"> <i class="bi bi-sticky"></i>	
+                                    </a>
+                                    <div style="text-align: left;" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl custom-modal3">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                        Chi tiết đặt vé : {{form.bookingdate | date: 'dd-MM-yyyy'}} - #{{form.bookingid}} - {{form.user.email}}</h1>                                              
 
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-4">
-                                                                                <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
-                                                                                    <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px">
-                                                                                        Mã QRCODE</div>
-                                                                                    <div class="text-center">
-                                                                                        <img ng-src="{{item.qrcode}}" alt="Product Image" style="width: 80px;">
 
-                                                                                    </div>
-
-                                                                                </div>
-                                                                            </div>
-
-                                                                    </div>
-                                                                    <div class="table-responsive">
-                                                                        <table class="table header-border">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th scope="col">STT</th>
-                                                                                    <th scope="col">Hỉnh ảnh</th>
-                                                                                    <th scope="col">Tên tour</th>
-                                                                                    <th scope="col">Dữ liệu tour</th>
-                                                                                    <th scope="col">Số người lớn</th>
-                                                                                    <th scope="col">Số trẻ em</th>
-                                                                                    <th scope="col">Tổng tiền người lớn</th>
-                                                                                    <th scope="col">Tổng tiền trẻ em</th>
-                                                                                    <th scope="col">Tạm tính</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <th scope="row">{{$index + 1}}</th>
-                                                                                    <td><img ng-src="{{form.tour.image}}" alt="Tour Image" style="width: 80px;"></td>
-                                                                                    <td style="width: 150px">{{form.tour.tourname}}</td>
-                                                                                    <td style="width: 200px">Giá người lớn: {{form.tour.pricings.adultprice}} <br /> Giá trẻ em: {{item.tour.pricings.childprice}}
-                                                                                    </td>
-
-                                                                                    <td>{{form.adultticketnumber}}</td>
-                                                                                    <td>{{form.childticketnumber}}</td>
-                                                                                    <td>{{formatPrice(form.adultticketnumber * form.tour.pricings.adultprice)}}
-                                                                                    </td>
-                                                                                    <td>{{formatPrice(form.childticketnumber * form.tour.pricings.childprice)}}
-                                                                                    </td>
-                                                                                    <td>{{formatPrice(form.totalprice)}}</td>
-                                                                                </tr>
-                                                                            </tbody>
-
-                                                                        </table>
-                                                                        <div class="modal-order text-right">
-                                                                            <hr>
-                                                                            <h4 style="padding-left: 100px" class="total fs-4">
-                                                                                Tổng cộng:
-                                                                                <strong>{{formatPrice(calculateTotal(form))}}</strong>
-                                                                            </h4>
-
-                                                                            <hr>
-                                                                            <label style="font-size: 20px; color: black;">Cập
-                                                                nhật trạng thái : </label> <select class="form-select w-auto select" ng-model="form.statusbooking.statusbookingid"
-                                                                                style="background-color: #f7f7f7; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
-
-                                                                <option ng-repeat="c in cates"
-                                                                    ng-value="c.statusbookingid">{{c.name}}</option>
-                                                            </select>
-                                                                            <div style="background-color: #007BFF; color: #fff;" ng-click="update()" class="btn">Save</div>
-                                                                        </div>
-                                                                    </div>
+                                                </div>
+                                                <div class="modal-body pb-5">
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
+                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Thông tin người đặt</div>
+                                                                <div style="padding: 10px;">
+                                                                	 <label>- Email người dùng: {{form.user.email}}</label><br/>  <labl>-
+																	Số điện thoại: {{form.user.phonenumber}}</label> <br/> <label style="padding-top: 10px" >-
+																	Ngày sinh: {{form.user.birthday | date:'dd-MM-yyyy'}}</label>
+                                                                </div>
+                                                       
                                                             </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
+                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Thời gian diễn ra (ngày đặt tour)</div>
+                                                                <div style="padding: 10px;">
+                                                                	 <label>- Ngày khởi hành: {{form.tour.departureday}}</label> <br> <label>-
+																	Ngày đặt Tour: {{form.tourDateBooking.tourdate.tourdates}}</label>
+                                                                </div>
+                                                               
+                                                            </div>
+                                                        </div>
+                                                         <div class="col-sm-4">
+                                                            <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
+                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px">Mã QRCODE</div>
+                                                                <div class="text-center" >
+                                                                	<img  ng-src="{{item.qrcode}}" alt="Product Image" style="width: 80px;">
+																	
+                                                                </div>
+                                                               
+                                                            </div>
+                                                        </div>
 
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table header-border">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">STT</th>
+                                                                    <th scope="col">Hỉnh ảnh</th>
+                                                                    <th scope="col">Tên tour</th>
+                                                                    <th scope="col">Dữ liệu tour</th>
+                                                                    <th scope="col">Số người lớn</th>
+                                                                    <th scope="col">Số trẻ em</th>
+                                                                    <th scope="col">Tổng tiền người lớn</th>
+                                                                    <th scope="col">Tổng tiền trẻ em</th>
+                                                                    <th scope="col">Tạm tính</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th scope="row">{{$index + 1}}</th>
+                                                                    <td><img ng-src="{{form.tour.image}}" alt="Tour Image" style="width: 80px;"></td>
+                                                                    <td style="width: 150px">{{form.tour.tourname}}</td>
+                                                                    <td style="width: 200px">Giá người lớn: {{form.tour.pricings.adultprice}} <br /> Giá trẻ em: {{item.tour.pricings.childprice}}
+                                                                    </td>
+                                 
+                                                                    <td>{{form.adultticketnumber}}</td>
+                                                                    <td>{{form.childticketnumber}}</td>
+                                                                    <td>{{formatPrice(form.adultticketnumber * form.tour.pricings.adultprice)}}
+                                                                    </td>
+                                                                    <td>{{formatPrice(form.childticketnumber * form.tour.pricings.childprice)}}
+                                                                    </td>
+                                                                    <td>{{formatPrice(form.totalprice)}}</td>
+                                                                </tr>
+                                                            </tbody>
+
+                                                        </table>
+                                                        <div class="modal-order text-right">
+                                                            <hr>
+                                                            <h4 style="padding-left: 100px" class="total fs-4">
+                                                                Tổng cộng: <strong>{{formatPrice(calculateTotal(form))}}</strong>
+                                                            </h4>
+
+                                                            <hr>
+                                                            <label style="font-size: 20px; color: black;">Cập
+																nhật trạng thái : </label> <select class="form-select w-auto select" ng-model="form.statusbooking.statusbookingid" style="background-color: #f7f7f7; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+
+																<option ng-repeat="c in cates"
+																	ng-value="c.statusbookingid">{{c.name}}</option>
+															</select>
+                                                            <div style="background-color: #007BFF; color: #fff;" ng-click="update()" class="btn">Save</div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                    </td>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
-                    </div>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>

@@ -14,7 +14,7 @@
       <!-- <marquee  direction="left" > Ưu đãi giảm 20% cho
 			Khách tham quan mua rau tại vườn - Ship nội thành Tuy Hoà, Ship trên
 			10kg ở Sài Gòn, Quy Nhơn, Nha Trang, Đà Nẵng,.... </marquee> -->
-      <div class="container-fluid bg-light pt-3d-none">
+      <div class="container-fluid bg-light pt-3d-none ">
         <div class="container">
           <div class="row">
             <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
@@ -26,29 +26,24 @@
             </div>
             <div class="col-lg-6 text-center text-lg-right">
               <div class="d-inline-flex align-items-center">
-                <!--  <span class="text-primary"></span>
+               <!--  <span class="text-primary"></span>
                 <a class="text-primary px-3" href="#" id="cart-toggle"
                   ><i class="fa fa-shopping-cart"></i></a
                 > -->
-                <a class="text-primary px-3" href="?language=vi_VN"
-                  ><img
-                    src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/vn.png"
-                  />
+                <a class="text-primary px-3" href="?language=vi_VN"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/vn.png">
                 </a>
-                <a class="text-primary pl-3" href="?language=en"
-                  ><img
-                    src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/us.png"
-                  />
-                </a>
+                <a class="text-primary pl-3" href="?language=en"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/us.png"> </a>
               </div>
             </div>
           </div>
         </div>
       </div>
 
+	
+
       <!-- Topbar End -->
       <!-- Topbar End -->
-      <!--       <div class="container cart-container mini-cart" id="mini-cart">
+<!--       <div class="container cart-container mini-cart" id="mini-cart">
         <div class="shopping-cart">
           <div class="shopping-cart-header">
             <i class="fa fa-shopping-cart cart-icon"></i
@@ -87,7 +82,7 @@
             class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5"
           >
             <a href="/" class="navbar-brand">
-              <img src="/assets/images/logo.png" style="width: 150px" />
+              <img src="/assets/images/logo.png" style="width: 150px">
             </a>
             <button
               type="button"
@@ -98,7 +93,7 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div
-              class="collapse navbar-collapse justify-content-between"
+              class="collapse navbar-collapse justify-content-between "
               id="navbarCollapse"
             >
               <div class="navbar-nav ml-auto font-weight-bold">
@@ -132,16 +127,16 @@
                   th:text="#{header.label.contact}"
                   >Contact</a
                 >
-                <!--  <a
+               <!--  <a
                   class="nav-item nav-link data-toggle"
                   href="booking/bookingtour"
                   >ĐẶT TOUR</a
                 > -->
-                <a
+                 <a
                   class="nav-item nav-link data-toggle"
                   href="/cart"
                   th:text="#{header.label.cart}"
-                  >Cart</a
+                  >Cart</a 
                 >
                 <div sec:authorize="isAnonymous()">
                   <a
