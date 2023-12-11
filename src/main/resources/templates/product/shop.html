@@ -11,11 +11,10 @@
 <body>
 	<div class="container">
 		<div class="pt-3">
-
+			
 			<div class="row">
 				<div class="col-md-3">
-					<img style="width: 250px; height: 250px" alt=""
-						src="https://chuyentrang.viendinhduong.vn/FileUpload/Images/vai_tro_cua_rau_cu_qua.jpg">
+				<img style="width:250px;height: 250px " alt="" src="https://chuyentrang.viendinhduong.vn/FileUpload/Images/vai_tro_cua_rau_cu_qua.jpg">
 				</div>
 				<div class="col-lg-9">
 					<div id="carouselExampleIndicators" class="carousel slide"
@@ -59,12 +58,12 @@
 					</div>
 				</div>
 				<div class="col-lg-3 py-5">
-					<div>
+					<div>						
 						<ul class="list-group list-group-light">
 							<li class="list-group-item border-0">
 								<h5 style="color: #000000" th:text="#{shop.label.category}"></h5>
 							</li>
-
+							
 						</ul>
 						<ul th:each="c:${cates}" class="list-group list-group-light"
 							style="font-size: 20px;">
@@ -90,42 +89,35 @@
 									<form id="filterForm" method="get">
 										<div class="form-check">
 											<input class="form-check-input" type="radio"
-												name="priceRange" value="all" id="flexRadioDefaultAll"
+												name="priceRange" value="under30k" id="flexRadioDefault0"
 												checked> <label class="form-check-label"
-												for="flexRadioDefaultAll"> Tất cả </label>
+												for="flexRadioDefault0"> 30,000₫ </label>
 										</div>
 										<div class="form-check">
 											<input class="form-check-input" type="radio"
-												name="priceRange" value="under30k" id="flexRadioDefault0">
-											<label class="form-check-label" for="flexRadioDefault0">
-												30,000₫ </label>
+												name="priceRange" value="30kTo70k" id="flexRadioDefault0"
+												checked> <label class="form-check-label"
+												for="flexRadioDefault0"> 30,000₫ - 70,000₫ </label>
 										</div>
 										<div class="form-check">
 											<input class="form-check-input" type="radio"
-												name="priceRange" value="30kTo70k" id="flexRadioDefault1">
-											<label class="form-check-label" for="flexRadioDefault1">
-												30,000₫ - 70,000₫ </label>
+												name="priceRange" value="70kTo100k" id="flexRadioDefault0"
+												checked> <label class="form-check-label"
+												for="flexRadioDefault0"> 70,000₫ - 100,000₫ </label>
 										</div>
 										<div class="form-check">
 											<input class="form-check-input" type="radio"
-												name="priceRange" value="70kTo100k" id="flexRadioDefault2">
-											<label class="form-check-label" for="flexRadioDefault2">
-												70,000₫ - 100,000₫ </label>
+												name="priceRange" value="100kTo150k" id="flexRadioDefault0"
+												checked> <label class="form-check-label"
+												for="flexRadioDefault0"> 100,000₫ - 150,000₫ </label>
 										</div>
 										<div class="form-check">
 											<input class="form-check-input" type="radio"
-												name="priceRange" value="100kTo150k" id="flexRadioDefault3">
-											<label class="form-check-label" for="flexRadioDefault3">
-												100,000₫ - 150,000₫ </label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input" type="radio"
-												name="priceRange" value="over150k" id="flexRadioDefault4">
-											<label class="form-check-label" for="flexRadioDefault4">
-												Trên 150,000₫ </label>
+												name="priceRange" value="over150k" id="flexRadioDefault0"
+												checked> <label class="form-check-label"
+												for="flexRadioDefault0"> Trên 150,000₫ </label>
 										</div>
 									</form>
-
 								</div>
 							</div>
 						</div>
@@ -231,66 +223,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-
-	//Khoảng giá
-	function filterProductsByCustomPriceRange(priceRange) {
-	    $.ajax({
-	        url: "/rest/products/filter-by-custom-price-range",
-	        type: "GET",
-	        data: { priceRange: priceRange },
-	        success: function(response) {
-	            displayProducts(response);
-	        },
-	        error: function(xhr) {
-	            console.log(xhr.responseText);
-	        },
-	    });
-	}
-	// Hàm xử lý sự kiện khi người dùng thay đổi giá trị radio
-	function handlePriceRangeChange() {
-	    var priceRange = $('input[name="priceRange"]:checked').val();
-	    filterProductsByCustomPriceRange(priceRange);
-	}
-	$(document).ready(function() {
-	    // ... (Các sự kiện và hàm khác ở đây)
-	
-	    // Gắn kết sự kiện khi người dùng thay đổi giá trị radio
-	    $('input[type="radio"]').change(handlePriceRangeChange);
-	});
-	
-	function createProductHTML(product) {
-		var productHTML = `
-	              <div 
-			class="col-lg-4 col-md-6 mb-4 text-center">
-			<div class="package-item bg-white mb-2">
-				<a href="/product/detail/${product.productid}"><img
-					style="height: 250px" class="img-fluid"
-					src="${product.image}" alt=""></a>
-				<div class="p-4">
-					<a 
-						class="h5 text-decoration-none" >${product.productname}</a>
-					<div class="border-top mt-4 pt-4">
-						<div class="text-center">				
-							 <h5 class="m-0">${formatPrice(product.price)}</h5>
-	
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	        `;
-		return productHTML;
-	}
-	
-	function formatPrice(price) {
-		// Thay đổi dấu chấm (.) thành dấu phẩy (,)
-		const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
-		return formattedPrice.replace(/\./g, ',');
-	
-	}
-// khoảng giá
-
-</script>
 </body>
+
 </html>

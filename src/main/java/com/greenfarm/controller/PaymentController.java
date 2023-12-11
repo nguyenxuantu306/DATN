@@ -1,8 +1,5 @@
 package com.greenfarm.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +46,9 @@ import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class PaymentController {
 	@Autowired
@@ -77,7 +77,7 @@ public class PaymentController {
 
 	@Autowired
 	VoucherOrderDAO voucherOrderDAO;
-	
+
 	@Autowired
 	AddressService addressService;
 
@@ -96,7 +96,6 @@ public class PaymentController {
 		String cancelUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
 		String successUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_SUCCESS;
 
-		
 		try {
 			Payment payment = paypalService.createPayment(totalPrice, "USD", PaypalPaymentMethod.paypal,
 					PaypalPaymentIntent.sale, "payment description", cancelUrl, successUrl);
@@ -135,11 +134,11 @@ public class PaymentController {
 					StatusOrder statusOrder = new StatusOrder();
 					statusOrder.setStatusorderid(1);
 					PaymentMethod paymentMethodObj = paymentMethodDAO.findById(3).get();
-					
+
 					HttpSession session = request.getSession();
 					Integer addressId = (Integer) session.getAttribute("addressId");
 					Address address = addressService.findByAddressid(addressId);
-					
+
 					if (user != null) {
 						Order orderItem = new Order();
 						orderItem.setUser(user);

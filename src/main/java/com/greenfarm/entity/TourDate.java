@@ -14,7 +14,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -34,12 +33,12 @@ public class TourDate implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Positive(message = "tourdateid không được là số âm")
 	private Integer tourdateid;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date tourdates;
-	
+
 	private Integer availableslots;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "tourid")
 	private Tour tour;

@@ -11,8 +11,9 @@
 									class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
 									id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 							</div>
-							<input type="search" class="form-control"
-								id="search" ng-model="searchText" ng-change="loadData()" placeholder="Nhập từ khóa">
+							<input ng-model="searchCategory" type="search"
+								class="form-control" placeholder="Tìm kiếm tên loại..."
+								aria-label="Tìm kiếm tên loại...">
 						</div>
 						<div class="col-md-6 text-right">
 							<button type="button" class="btn btn-success"
@@ -39,7 +40,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in pager.items">
+								<tr ng-repeat="item in pager.items | filter:searchCategory">
 									<th>{{$index + 1}}</th>
 									<th style="width: 150px">{{item.categoryname}}</th>
 									<th style="width: 750px">{{item.descriptions}}</th>
@@ -94,7 +95,7 @@
 									ng-submit="submitForm1()" novalidate>
 									<div class="form-group col-sm-6">
 										<label>Tên loại:</label> <input name="categoryname"
-											ng-minlength="5" ng-maxlength="1000" style="height: 55px"
+											ng-minlength="5" ng-maxlength="255" style="height: 55px"
 											type="text" ng-model="form.categoryname"
 											class="form-control input-default" placeholder="VD : Nhóm lá"
 											required /> <label
@@ -104,7 +105,7 @@
 											style="color: red;">Tên danh mục phải có ít nhất 5 ký
 											tự!</label> <label
 											ng-show="frmvalidate.$submitted && frmvalidate.categoryname.$error.maxlength"
-											style="color: red;">Tên danh mục chỉ tối đa 1000 ký
+											style="color: red;">Tên danh mục chỉ tối đa 255 ký
 											tự!</label>
 
 									</div>
@@ -112,7 +113,7 @@
 									<div class="form-group col-sm-6">
 										<label>Mô tả:</label>
 										<textarea name="descriptions" ng-minlength="5"
-											ng-maxlength="1000" type="text" ng-model="form.descriptions"
+											ng-maxlength="255" type="text" ng-model="form.descriptions"
 											class="form-control input-default"
 											placeholder="VD : Nhóm lá bao gồm..." required></textarea>
 										<label
@@ -121,7 +122,7 @@
 											ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.descriptions.$error.minlength"
 											style="color: red;">Mô tả phải có ít nhất 5 ký tự!</label> <label
 											ng-show="frmvalidate.$submitted && frmvalidate.descriptions.$error.maxlength"
-											style="color: red;">Mô tả chỉ tối đa 1000 ký tự!</label>
+											style="color: red;">Mô tả chỉ tối đa 255 ký tự!</label>
 									</div>
 
 									<div class="panel-footer text-right">
@@ -162,7 +163,7 @@
 									novalidate>
 									<div class="form-group col-sm-6">
 										<label>Tên loại:</label> <input name="categoryname"
-											ng-minlength="5" ng-maxlength="1000" style="height: 55px"
+											ng-minlength="5" ng-maxlength="255" style="height: 55px"
 											type="text" ng-model="form.categoryname"
 											class="form-control input-default" placeholder="VD : Nhóm lá"
 											required /> <label
@@ -172,14 +173,14 @@
 											style="color: red;">Tên danh mục phải có ít nhất 5 ký
 											tự!</label> <label
 											ng-show="frmvalidate.$submitted && frmvalidate.categoryname.$error.maxlength"
-											style="color: red;">Tên danh mục chỉ tối đa 1000 ký
+											style="color: red;">Tên danh mục chỉ tối đa 255 ký
 											tự!</label>
 									</div>
 
 									<div class="form-group col-sm-6">
 										<label>Mô tả:</label>
 										<textarea name="descriptions" ng-minlength="5"
-											ng-maxlength="1000" type="text" ng-model="form.descriptions"
+											ng-maxlength="255" type="text" ng-model="form.descriptions"
 											class="form-control input-default"
 											placeholder="VD : Nhóm lá bao gồm..." required></textarea>
 										<label
@@ -188,7 +189,7 @@
 											ng-show="frmvalidate.$submitted && frmvalidate.descriptions.$error.minlength"
 											style="color: red;">Mô tả phải có ít nhất 5 ký tự!</label> <label
 											ng-show="frmvalidate.$submitted && frmvalidate.descriptions.$error.maxlength"
-											style="color: red;">Mô tả chỉ tối đa 1000 ký tự!</label>
+											style="color: red;">Mô tả chỉ tối đa 255 ký tự!</label>
 									</div>
 
 									<div class="panel-footer text-right">

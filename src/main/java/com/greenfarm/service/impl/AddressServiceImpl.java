@@ -74,15 +74,15 @@ public class AddressServiceImpl implements AddressService {
 		// Kiểm tra xem address có tồn tại không
 		Address existingAddress = addressDAO.findById(id).orElse(null);
 
-	    if (existingAddress != null) {
-	        // Thực hiện cập nhật các trường của existingAddress dựa trên address mới
-	        existingAddress.setStreet(address.getStreet());
-	        existingAddress.setDistrict(address.getDistrict());
-	        existingAddress.setCity(address.getCity());
-	        existingAddress.setPhonenumber(address.getPhonenumber());
-	        existingAddress.setFullname(address.getFullname());
-	        // Cập nhật thông tin user nếu cần
-	        existingAddress.setUser(address.getUser());
+		if (existingAddress != null) {
+			// Thực hiện cập nhật các trường của existingAddress dựa trên address mới
+			existingAddress.setStreet(address.getStreet());
+			existingAddress.setDistrict(address.getDistrict());
+			existingAddress.setCity(address.getCity());
+			existingAddress.setPhonenumber(address.getPhonenumber());
+			existingAddress.setFullname(address.getFullname());
+			// Cập nhật thông tin user nếu cần
+			existingAddress.setUser(address.getUser());
 
 			// Lưu lại vào cơ sở dữ liệu
 			return addressDAO.save(existingAddress);
@@ -91,14 +91,10 @@ public class AddressServiceImpl implements AddressService {
 		return null;
 	}
 
-
 	@Override
 	public Address findByAddressid(Integer addressId) {
 		// TODO Auto-generated method stub
 		return addressDAO.findById(addressId).get();
 	}
 
-
-
-	
 }

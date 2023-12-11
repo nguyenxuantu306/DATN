@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
-import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Report7day;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
