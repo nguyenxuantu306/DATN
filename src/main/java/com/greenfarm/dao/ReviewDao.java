@@ -2,6 +2,8 @@ package com.greenfarm.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +17,7 @@ import com.greenfarm.entity.User;
 public interface ReviewDao extends JpaRepository<Review, Integer> {
 
 		
-	List<Review> findByProduct(Product product);
+	Page<Review> findByProduct(Product product, Pageable pageable);
 
 	// Đếm sao
 	@Query("SELECT DISTINCT new ReportRevenue(o.rating, count(o)) FROM Review o GROUP BY o.rating ORDER BY o.rating DESC")
