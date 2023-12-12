@@ -171,16 +171,17 @@ public class BookingController {
 
 		// Lấy danh sách TourDateBooking cho tourdate cụ thể
 		List<TourDateBooking> tourDateBookings = tourdatebookingService.getBookingsForTourDate(tourDate);
-		// Tính tổng số lượng slot đã đặt
-		int bookedSlots = tourDateBookings.stream().mapToInt(
-				booking -> booking.getBooking().getAdultticketnumber() + booking.getBooking().getChildticketnumber())
-				.sum();
-
-		// Tính số lượng slot khả dụng
-		int remainingSlots = availableSlots - bookedSlots;
-
-		// Đảm bảo số lượng slot không dưới 0
-		return Math.max(remainingSlots, 0);
+		/*
+		 * // Tính tổng số lượng slot đã đặt int bookedSlots =
+		 * tourDateBookings.stream().mapToInt( booking ->
+		 * booking.getBooking().getAdultticketnumber() +
+		 * booking.getBooking().getChildticketnumber()) .sum();
+		 * 
+		 * // Tính số lượng slot khả dụng int remainingSlots = availableSlots -
+		 * bookedSlots;
+		 * 
+		 * // Đảm bảo số lượng slot không dưới 0
+		 */		return Math.max(availableSlots, 0);
 	}
 
 }
