@@ -43,11 +43,7 @@ public class Authconfig {
 	@SuppressWarnings("deprecation")
 	@Bean
 	public SecurityFilterChain fillterchain(HttpSecurity http) throws Exception {
-<<<<<<< HEAD
-        http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable());
-=======
-		http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable());
->>>>>>> mergethu
+		 http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable());
 
 		http.authorizeRequests(authorize -> authorize
 				.requestMatchers("/profile", "/booking/*", "/checkout", "/cart").authenticated()

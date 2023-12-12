@@ -3,8 +3,10 @@ package com.greenfarm.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -68,17 +70,7 @@ public class RegisterController {
 	@Autowired
 	UserService userService;
 
-	@Autowired
-	UserRoleService userroleService;
-
-	@Autowired
-	RoleService roleService;
-
-	@Autowired
-	UserDetailsService detailsService;
-
-	@Autowired
-	AuthenticationManagerBuilder builder;
+	
 	
 
 	@GetMapping
