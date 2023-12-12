@@ -7,6 +7,7 @@ app.controller("bookingdate-ctrl", function($scope, $http) {
 	$scope.products = [];
 	$scope.selectedItem = null;
 	$scope.totalPrice = 0;
+	$scope.deletedItems = [];
 
 	$scope.initialize = function() {
 		// Load products
@@ -191,6 +192,39 @@ app.controller("bookingdate-ctrl", function($scope, $http) {
 		return priceString + " đ";
 	}
 
+	// Trong AngularJS controller hoặc service
+	$scope.exportExcel = function() {
+		$http.get('/excel-tourDateBooking', { responseType: 'arraybuffer' })
+			.then(function(response) {
+				var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+				var link = document.createElement('a');
+				link.href = window.URL.createObjectURL(blob);
 
+				link.download = 'exportTourBookingDate.xlsx';
+
+				link.download = 'tourdatebookingdata.xlsx';
+
+				link.click();
+			})
+			.catch(function(error) {
+				console.error('Error exporting Excel:', error);
+			});
+	};
+
+	$scope.exportPdf = function() {
+		$http.get('/pdf-tourDateBooking', { responseType: 'arraybuffer' })
+			.then(function(response) {
+				var blob = new Blob([response.data], { type: 'application/pdf' });
+				var objectUrl = URL.createObjectURL(blob);
+				var a = document.createElement('a');
+				a.href = objectUrl;
+				a.download = 'exportUser.pdf';
+				a.click();
+				URL.revokeObjectURL(objectUrl);
+			})
+			.catch(function(error) {
+				console.error('Error exporting PDF:', error);
+			});
+	};
 });
 

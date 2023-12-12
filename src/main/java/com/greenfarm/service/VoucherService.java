@@ -2,7 +2,9 @@ package com.greenfarm.service;
 
 import java.util.List;
 
-import com.greenfarm.entity.Category;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.greenfarm.entity.Voucher;
 
 public interface VoucherService {
@@ -16,9 +18,15 @@ public interface VoucherService {
 	Voucher update(Voucher voucher);
 
 	void delete(Integer voucherid);
+	
+	void save(Voucher voucher);
+	
 
 	List<Voucher> findByKeyword(String keyword);
 
 	Voucher findByVoucherid(long parseLong);
 
+	List<Voucher> findAllDeletedVouchers();
+
+	Page<Voucher> findAllByIsdeletedFalse(Pageable pageable);
 }
