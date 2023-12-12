@@ -33,4 +33,6 @@ public interface TourDateBookingService {
 	List<TourDateBooking> findAll();
 
 	List<TourDateBooking> findByDepartureDay(String departureday);
+
+	List<TourDateBooking> getBookingsForTourDate(TourDate tourDate);
 }

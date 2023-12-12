@@ -51,7 +51,9 @@ public class OrderController {
 				System.out.println("Order Status: " + order.getStatusOrder().getName());
 				return order.getStatusOrder().getName().equalsIgnoreCase(statusFilter);
 			}).collect(Collectors.toList());
-		}
+		}  else {
+	        orders = orders.stream().filter(order -> order.getStatusOrder().getStatusorderid() == 1).collect(Collectors.toList());
+	    }
 
 		Collections.sort(orders, (o1, o2) -> o2.getOrderDateFormatted().compareTo(o1.getOrderDateFormatted()));
 

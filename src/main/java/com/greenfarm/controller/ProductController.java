@@ -68,25 +68,30 @@ public class ProductController {
 
 	    return "product/shop";
 	}
-
+	
 	@GetMapping("/product/detail/{productid}")
-	public String detail(Model model, @PathVariable("productid") Integer productid) {
-		Integer id = productid;
-		Product item = productService.findById(id);
+	public String detail(Model model, @PathVariable("productid") Integer productid,
+	                     @PageableDefault(size = 2) Pageable pageable, UriComponentsBuilder uriBuilder) {
+	    Integer id = productid;
+	    Product item = productService.findById(id);
 
-		if (item != null) {
-			ProductDTO itemDTO = modelMapper.map(item, ProductDTO.class);
-			model.addAttribute("item", itemDTO);
-		} else {
-			// Xử lý trường hợp đối tượng không tồn tại
-		}
+	    if (item != null) {
+	        ProductDTO itemDTO = modelMapper.map(item, ProductDTO.class);
+	        model.addAttribute("item", itemDTO);
 
-		List<Review> review = reviewService.findbyproduct(item);
-		model.addAttribute("review", review);
-		model.addAttribute("reviewinsert", new Review());
+	        // Modify the findbyproduct method to return a Page<Review>
+	        Page<Review> reviewPage = reviewService.findbyproduct(item, pageable);
+	        model.addAttribute("review", reviewPage);
 
-		return "product/detail";
+	    } else {
+	        // Xử lý trường hợp đối tượng không tồn tại
+	    }
+
+	    model.addAttribute("reviewinsert", new Review());
+
+	    return "product/detail";
 	}
+
 
 //	@PostMapping("/product/detail/{productid}")
 //	public String review(Model model,@PathVariable("productid") Integer productid,@ModelAttribute("reviewinsert") Review reviewinsert) {
