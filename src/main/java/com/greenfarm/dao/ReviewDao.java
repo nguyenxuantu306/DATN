@@ -30,8 +30,14 @@ public interface ReviewDao extends JpaRepository<Review, Integer> {
 	@Query("SELECT r FROM Review r WHERE r.user = :user AND r.product = :product")
     Review findReviewByUserAndProduct(@Param("user") User user, @Param("product") Product product);
 
-	@Query("SELECT new StarCount(r.rating, COUNT(r.rating)) FROM Review r WHERE r.product.productid = :productId GROUP BY r.rating")
-	List<StarCount> countReviewsByRating(Integer productId);
+	@Query("SELECT NEW StarCount(ratings.rating, COALESCE(COUNT(reviews.rating), 0)) " +
+		       "FROM (SELECT 1 AS rating UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5) ratings " +
+		       "LEFT JOIN Review reviews ON ratings.rating = reviews.rating AND reviews.product.productid = :productId " +
+		       "GROUP BY ratings.rating " +
+		       "ORDER BY ratings.rating")
+		List<StarCount> countReviewsByRating(@Param("productId") Integer productId);
+
+
 
 
 

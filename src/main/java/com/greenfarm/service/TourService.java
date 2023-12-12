@@ -33,6 +33,8 @@ public interface TourService {
 	public static String generateTourId() {
 		return UUID.randomUUID().toString();
 	}
+	
+	Page<TourDTO> findToursByDeparturedayWithPagination(String departureday, Pageable pageable);
 
 	Page<TourDTO> findToursByAdultPriceWithPagination(Float minPrice, Float maxPrice, Pageable pageable);
 

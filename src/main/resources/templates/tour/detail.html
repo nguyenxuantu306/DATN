@@ -174,6 +174,37 @@
 								</tr>
 							</tbody>
 						</table>
+						<h3 class="mt-2">NGÀY GIỜ ĐẶT TOUR</h3>
+						<table class="table" style="text-align: center">
+							<thead>
+								<tr>
+									<th scope="col">STT</th>
+									<th scope="col">Ngày đặt chỗ</th>
+									<th scope="col">Chỗ còn trống</th>
+									<th scope="col">Hành động</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th style="padding-top: 20px" scope="row">1</th>
+									<td style="padding-top: 20px"
+										th:text="*{#numbers.formatDecimal(pricings.Adultprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
+									</td>
+									<td style="padding-top: 20px"
+										th:text="*{#numbers.formatDecimal(pricings.Childprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
+									</td>
+									<!-- <td style="padding-top: 20px" th:text="*{Availableslots}"></td> -->
+									<td>
+										<!-- Thay đổi nút thành "Tour đã hết chỗ" nếu hết chỗ --> <a
+										th:href="@{|/booking/${tourid}|}"
+										class="btn btn-md btn-primary p-2">Đặt ngay</a> <!-- <span style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
+										th:if="*{availableslots <= 0}" class="btn btn-md btn-primary p-2">Tour
+											đã hết chỗ</span> -->
+									</td>
+
+								</tr>
+							</tbody>
+						</table>
 					</div>
 					<div class="tab-pane fade" id="pills-infomation" role="tabpanel"
 						aria-labelledby="pills-infomation-tab" tabindex="0">
@@ -186,7 +217,7 @@
 							</div>
 							<div>
 								<i class="fa fa-bullhorn" aria-hidden="true"></i> <span
-									th:text="*{departureday}"></span> 
+									th:text="*{departureday}"></span>
 							</div>
 
 							<div>
