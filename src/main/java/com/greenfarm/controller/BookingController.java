@@ -78,7 +78,10 @@ public class BookingController {
 		if (statusFilter != null && !statusFilter.isEmpty()) {
 			bookings = bookings.stream().filter(booking -> booking.getStatusbooking().getName().equals(statusFilter))
 					.collect(Collectors.toList());
-		}
+		} else {
+			bookings = bookings.stream().filter(booking -> booking.getStatusbooking().getStatusbookingid() == 1).collect(Collectors.toList());
+	    }
+
 
 		model.addAttribute("bookings", bookings);
 		return "booking/mytiket";
