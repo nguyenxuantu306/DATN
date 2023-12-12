@@ -40,7 +40,6 @@ public class Order implements Serializable {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm a");
 		return orderdate.format(formatter);
 	}
-
 	@ManyToOne
 	@JoinColumn(name = "AddressID")
 	Address address;

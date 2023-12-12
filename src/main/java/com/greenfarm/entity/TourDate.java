@@ -1,8 +1,13 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +17,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,12 +33,12 @@ public class TourDate implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Positive(message = "tourdateid không được là số âm")
 	private Integer tourdateid;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date tourdates;
-	
+
 	private Integer availableslots;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "tourid")
 	private Tour tour;

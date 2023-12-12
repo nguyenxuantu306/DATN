@@ -34,6 +34,7 @@
 														<h4 class="pt-sm-2 pb-1 mb-0 text-nowrap"
 															th:text="${user.firstname + ' ' + user.lastname}">
 															Full Name</h4>
+														<p class="mb-0" th:text="${roles}"></p>
 														<div class="mt-2">
 															<label for="fileInput" class="btn btn-primary"> <i
 																	class="fa fa-fw fa-camera"></i> <span
@@ -45,6 +46,8 @@
 														</div>
 													</div>
 													<div class="text-center text-sm-right">
+														<span class="badge badge-secondary"
+															th:text="${roles}">@Administrator</span>
 														<div class="text-muted">
 															<small
 																th:text="${user.firstname + ' ' + user.lastname}"></small>
@@ -126,6 +129,7 @@
 																		<input class="form-control" type="email"
 																			name="email" th:placeholder="${user.email}"
 																			readonly="readonly" />
+																		<!-- 																			<i th:errors="*{email}"></i> -->
 																	</div>
 
 																</div>
@@ -183,6 +187,10 @@
 	</div>
 	<div class="col-sm-4">
 		<div class="menu mx-3">
+			<div sec:authorize="isAuthenticated()">
+				<span sec:authentication="name"></span>
+			</div>
+
 			<div class="list-group border border-0 rounded-0 my-3">
 				<a class="mb-3" href="/order/list">
 					<button type="button" class="list-group-item list-group-item-action" style="border-radius: 4px">
@@ -192,14 +200,12 @@
 					<button type="button" class="list-group-item list-group-item-action" style="border-radius: 4px">
 						<i class="bi bi-card-list"></i> <span th:text="#{profile.label.myTicket}"></span>
 					</button>
-				</a>
-				<a class="mb-3" href="/profile">
+				</a> <a class="mb-3" href="/profile">
 					<button type="button" class="list-group-item list-group-item-action active"
 						style="border-radius: 4px">
 						<i class="bi bi-person-lines-fill"></i> <span th:text="#{profile.label.profile}"></span>
 					</button>
-				</a>
-				<a href="/changepass" class="mb-3">
+				</a> <a class="mb-3" href="/changepass">
 					<button type="button" class="list-group-item list-group-item-action active"
 						style="border-radius: 4px">
 						<i class="bi bi-key-fill"></i> <span>Đổi mật khẩu</span>
@@ -210,6 +216,9 @@
 						<i class="bi bi-lock-fill"></i> <span>Quên mật khẩu</span>
 					</button>
 				</a>
+
+
+
 			</div>
 			<a class=" btn border border-danger my-3 text-decoration-none text-center text-danger fw-bold"
 				href="/logoff" style="width: 100%">Đăng xuất</a>

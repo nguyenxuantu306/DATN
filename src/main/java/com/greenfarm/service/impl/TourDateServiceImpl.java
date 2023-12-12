@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.TourDateDAO;
+import com.greenfarm.dto.TourDTO;
+import com.greenfarm.entity.Category;
+import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.TourDate;
 import com.greenfarm.service.TourDateService;
@@ -16,23 +19,21 @@ public class TourDateServiceImpl implements TourDateService {
 
 	@Autowired
 	TourDateDAO dao;
-	
+
 	@Override
 	public List<TourDate> findAll() {
 		return dao.findAll();
 	}
 
-    @Override
-    public List<TourDate> findByDate(Date date) {
-        return dao.findByTourdates(date);
-    }
-	
+	@Override
+	public List<TourDate> findByDate(Date date) {
+		return dao.findByTourdates(date);
+	}
+
 	@Override
 	public TourDate create(TourDate tourdate) {
 		return dao.save(tourdate);
 	}
-	
-	
 
 	@Override
 	public TourDate update(TourDate tourdate) {
@@ -41,16 +42,14 @@ public class TourDateServiceImpl implements TourDateService {
 
 	@Override
 	public void deleteTourDateById(Integer tourdateid) {
-			dao.deleteById(tourdateid);
-		
+		dao.deleteById(tourdateid);
+
 	}
 
 	@Override
 	public TourDate findById(Integer tourdateid) {
 		return dao.findById(tourdateid).get();
 	}
-
-
 
 	@Override
 	public TourDate findByTourAndTourdates(Tour tour, Date tourdates) {

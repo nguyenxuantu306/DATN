@@ -66,8 +66,8 @@ public interface UserService {
 	void save(User user);
 
 	User createADMIN(@Valid User user) throws UserAlreadyExistException;
-	
+
 	List<User> findByKeyword(String keyword);
-	
+
 	User findByPhonenumber(String Phonenumber);
 }

@@ -1,4 +1,3 @@
-
 package com.greenfarm.dto;
 
 import java.util.Date;

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout::dynamic(~{::body})}">
+<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
 
 <body>
 
@@ -122,8 +121,9 @@
                                 </td>
                                 <td style="padding-top: 40px" class="text-center" th:text="${#numbers.formatDecimal(cart.product.price, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></td>
 
-															<td style="padding-top: 40px" class="text-center"
-																th:text="${#numbers.formatDecimal(cart.product.price * cart.quantity, 0, 'COMMA', 0, 'POINT')}+ ' ₫'"></td>
+                              <td style="padding-top: 40px" class="text-center"
+                                th:text="${#numbers.formatDecimal(cart.product.price * cart.quantity, 0, 'COMMA', 0, 'POINT')}+ ' ₫'">
+                              </td>
 
                                 <td style="padding-top: 40px" class="text-center">
                                     <i style="color: #7AB730;" th:attr="onclick='removeCart(\'' + ${cart.product.productid} + '\')'" class="bi bi-trash3-fill"></i>
@@ -155,42 +155,42 @@
                               style="width: 45px"
                               alt="Avatar"
                             /> -->
-												</div>
-												<hr class="my-4" />
-												<!--   <div class="d-flex justify-content-between">
+                        </div>
+                        <hr class="my-4" />
+                        <!--   <div class="d-flex justify-content-between">
                             <p class="mb-2" th:text="#{cart.label.subtotal}">
                               Subtotal
                             </p>
                             <p class="mb-2" th:text="${#numbers.formatDecimal(totalPrice, 2, 'COMMA', 0, 'POINT')}+ ' ₫'"></p>
                           </div> -->
-												<!-- <div class="d-flex justify-content-between">
+                        <!-- <div class="d-flex justify-content-between">
                             <p class="mb-2" th:text="#{cart.label.shipping}">
                               Shipping
                             </p>
                             <p class="mb-2">20.000đ</p>
                           </div> -->
-												<a href="/checkout">
-													<button type="button"
-														class="btn btn-success btn-block btn-lg">
-														<div class="d-flex justify-content-between">
-															<span id="price"
-																th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')}+ ' ₫'"></span>
-															<span th:text="#{cart.label.submit}">Checkout
-																<i class="fas fa-long-arrow-alt-right ms-2"></i>
-															</span>
-														</div>
-													</button>
-												</a> <br />
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+                        <a href="/checkout">
+                          <button type="button" class="btn btn-success btn-block btn-lg">
+                            <div class="d-flex justify-content-between">
+                              <span id="price"
+                                th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')}+ ' ₫'"></span>
+                              <span th:text="#{cart.label.submit}">Checkout
+                                <i class="fas fa-long-arrow-alt-right ms-2"></i>
+                              </span>
+                            </div>
+                          </button>
+                        </a> <br />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </body>
+
 </html>
