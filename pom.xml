@@ -197,7 +197,7 @@
 			<version>0.11.2</version>
 			<scope>runtime</scope>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
@@ -218,7 +218,7 @@
 							<artifactId>mapstruct-processor</artifactId>
 							<version>1.5.5.Final</version>
 						</path>
-						 other annotation processors 
+						 other annotation processors
 					</annotationProcessorPaths>-->
 				</configuration>
 			</plugin>
