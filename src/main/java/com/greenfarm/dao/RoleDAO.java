@@ -6,5 +6,5 @@ import com.greenfarm.entity.Role;
 
 
 public interface RoleDAO extends JpaRepository<Role, Integer> {
-	
+
 }

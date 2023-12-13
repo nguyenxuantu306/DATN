@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.greenfarm.entity.Comment;
+import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.User;
 import java.util.Date;

@@ -85,12 +85,8 @@ public class ProductController {
 	        
 	        // Lấy thông tin đánh giá theo sao
 	        List<StarCount> ratingCountMap = reviewService.countReviewsByRating(productid);
-	        System.out.println("Rating Count Map:");
-	        for (StarCount starCount : ratingCountMap) {
-	            System.out.println("Rating: " + starCount.getStart() + ", Count: " + starCount.getStartcount());
-	        }
-
-	     // In danh sách ratingCountList để kiểm tra
+	       
+	        // In danh sách ratingCountList để kiểm tra
 	        long totalReviewCount = 0;
 	        for(StarCount st:ratingCountMap) {
 	        	totalReviewCount += st.getStartcount();
