@@ -68,6 +68,12 @@ app.controller("bookingdate-ctrl", function($scope, $http) {
 	$scope.loadData = function() {
 		var apiUrl = '/rest/tourdatebookings/searchkeywordtourdatebooking';
 
+		// Check if there is a selected departure day
+		if ($scope.selectedDepartureDay) {
+			apiUrl += '?keyword=' + $scope.selectedDepartureDay;
+		}
+
+
 		// Kiểm tra xem có từ khóa tìm kiếm không
 		if ($scope.searchText) {
 			apiUrl += '?keyword=' + $scope.searchText;
@@ -123,7 +129,7 @@ app.controller("bookingdate-ctrl", function($scope, $http) {
 
 
 
-	$scope.loadData2 = function() {
+	/*$scope.loadData2 = function() {
 		var apiUrl = '/rest/tourdatebookings/findByDepartureDay';
 
 		// Kiểm tra xem có selectedDepartureDay không
@@ -141,7 +147,9 @@ app.controller("bookingdate-ctrl", function($scope, $http) {
 			.catch(function(error) {
 				console.error('Lỗi khi tải dữ liệu:', error);
 			});
-	};
+	};*/
+
+
 
 
 	$scope.pager = {

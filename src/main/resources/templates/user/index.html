@@ -39,7 +39,10 @@
 
 								</i></small>
 							</div>
-							<a th:href="@{|/tour/detail/${tour.tour.tourid}|}"
+							<a style="color: #003C2D; text-decoration: none;"
+								onmouseover="this.style.color='#FFA500'"
+								onmouseout="this.style.color='#003C2D'"
+								th:href="@{|/tour/detail/${tour.tour.tourid}|}"
 								th:text="${tour.tour.Tourname}" class="h5 text-decoration-none"
 								href="/tour-detail"></a>
 							<div class="border-top mt-4 pt-4">
@@ -87,7 +90,8 @@
 								class="h5 text-decoration-none"></a>
 							<div class=" mt-2 pt-2">
 								<div class="text-center">
-									<span style="font-size: 20px; color: #003C2D; font-weight: bold;"
+									<span
+										style="font-size: 20px; color: #003C2D; font-weight: bold;"
 										th:text="*{#numbers.formatDecimal(product.product.price,0,'COMMA',0,'POINT')} + ' ₫ '"
 										class="m-0"></span>
 								</div>

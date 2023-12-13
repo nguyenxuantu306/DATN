@@ -18,8 +18,9 @@ import com.greenfarm.entity.VoucherUser;
 public interface TourDateBookingDAO extends JpaRepository<TourDateBooking, Integer> {
 	
 	
-	@Query("SELECT vu FROM TourDateBooking vu WHERE LOWER(vu.booking.tour.tourname) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+	@Query("SELECT vu FROM TourDateBooking vu WHERE LOWER(vu.booking.tour.tourname) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(vu.booking.tour.departureday) LIKE LOWER(CONCAT('%', :keyword, '%'))")
 	List<TourDateBooking> findByKeyword(@Param("keyword") String keyword);
+
 
 	
 	@Query("SELECT tdb FROM TourDateBooking tdb " + "JOIN Booking b ON tdb.booking.Bookingid = b.Bookingid "
