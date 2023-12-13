@@ -21,8 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import com.greenfarm.dao.Securetokendao;
 import com.greenfarm.dao.UserDAO;
+import com.greenfarm.dao.Securetokendao;
 import com.greenfarm.dto.Provider;
 import com.greenfarm.entity.ReportSP;
 import com.greenfarm.entity.Role;

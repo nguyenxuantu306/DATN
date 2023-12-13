@@ -3,9 +3,10 @@ package com.greenfarm;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
 public class GreenfarmApplication {
 
 	@Bean
@@ -17,4 +18,7 @@ public class GreenfarmApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GreenfarmApplication.class, args);
 	}
+
+	
 }
+
