@@ -30,6 +30,11 @@ app.controller("tour-ctrl", function($scope, $http) {
 		$http.get("/rest/tours/deleted").then(resp => {
 			$scope.deletedItems = resp.data;
 		});
+		
+		// Load các tour
+		$http.get("/rest/tours").then(resp => {
+			$scope.cates = resp.data;
+		});
 	}
 
 

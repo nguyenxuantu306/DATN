@@ -122,33 +122,38 @@ app.controller("user-ctrl", function($scope, $http) {
 
 	// Thêm mới
 	$scope.create = function() {
-		var item = angular.copy($scope.form);
-		$http.post(`/rest/users/admin`, item).then(resp => {
-			resp.data.createddate = new Date(resp.data.createddate);
-			resp.data.birthday = new Date(resp.data.birthday);
-			$scope.items.push(resp.data);
-			$scope.reset();
-			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Thêm tài khoản thành công!',
-			});
-			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-			$scope.frmvalidate.$setPristine();
-			$scope.frmvalidate.$setUntouched();
-			$scope.frmvalidate.$submitted = false;
+    var item = angular.copy($scope.form);
+    
+    // Đặt giá trị mặc định cho createddate là thời gian hiện tại
+    item.createddate = new Date();
+    
+    $http.post(`/rest/users/admin`, item).then(resp => {
+        resp.data.createddate = new Date(resp.data.createddate);
+        resp.data.birthday = new Date(resp.data.birthday);
+        $scope.items.push(resp.data);
+        $scope.reset();
+        // Sử dụng SweetAlert2 cho thông báo thành công
+        Swal.fire({
+            icon: 'success',
+            title: 'Thành công!',
+            text: 'Thêm tài khoản thành công!',
+        });
+        $scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+        $scope.frmvalidate.$setPristine();
+        $scope.frmvalidate.$setUntouched();
+        $scope.frmvalidate.$submitted = false;
 
-		}).catch(error => {
-			// Sử dụng SweetAlert2 cho thông báo lỗi
-			Swal.fire({
-				icon: 'error',
-				title: 'Lỗi!',
-				text: 'Lỗi thêm mới tài khoản',
-			});
-			console.log("Error", error);
-		});
-	}
+    }).catch(error => {
+        // Sử dụng SweetAlert2 cho thông báo lỗi
+        Swal.fire({
+            icon: 'error',
+            title: 'Lỗi!',
+            text: 'Lỗi thêm mới tài khoản',
+        });
+        console.log("Error", error);
+    });
+}
+
 
 
 	// cập loại nhật sản phẩm

@@ -20,4 +20,7 @@ public interface VoucherUserDAO extends JpaRepository<VoucherUser, Integer>{
 	@Query("SELECT vu FROM VoucherUser vu WHERE LOWER(vu.user.email) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(vu.voucher.code) LIKE LOWER(CONCAT('%', :keyword, '%'))")
 	List<VoucherUser> findByKeyword(@Param("keyword") String keyword);
 
+
+	
+
 }

@@ -7,7 +7,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 	$scope.products = [];
 	$scope.selectedItem = null;
 	$scope.totalPrice = 0;
-
+	$scope.deletedItems = [];
 
 	$scope.initialize = function() {
 		// Load products
@@ -17,11 +17,18 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 				item.expirationdate = new Date(item.expirationdate)
 			})
 		});
-		
+
 		$http.get("/rest/vouchers/user").then(resp => {
 			$scope.items2 = resp.data;
 		});
+
+		// Load deleted vouchers
+		$http.get("/rest/vouchers/deleted").then(resp => {
+			$scope.deletedItems = resp.data;
+		});
 	}
+
+
 
 	// Khởi đầu
 	$scope.initialize();
@@ -42,16 +49,20 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
 	}
-	
+
 	// Hiện thị lên form
 	$scope.edit2 = function(item2) {
 		$scope.form2 = angular.copy(item2);
 	}
 
-	// Thêm loại sản phẩm mới
-	$scope.createuser = function() {
-		var item2 = angular.copy($scope.form2);
-		$http.post(`/rest/vouchers/user`, item2).then(resp => {
+	// Thêm voucher
+	$scope.create = function() {
+		var item = angular.copy($scope.form);
+
+		// Đặt giá trị mặc định cho expirationdate là thời gian hiện tại
+		item.expirationdate = new Date();
+
+		$http.post(`/rest/vouchers`, item).then(resp => {
 			resp.data.expirationdate = new Date(resp.data.expirationdate)
 			$scope.items.push(resp.data);
 			$scope.reset();
@@ -75,8 +86,9 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 			console.log("Error", error);
 		});
 	}
-	
-	// cập loại nhật sản phẩm
+
+
+	// cập voucher
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
 		$http.put(`/rest/vouchers/${item.voucherid}`, item).then(resp => {
@@ -148,12 +160,27 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 			}
 		});
 	};
-	
-	
+
+
 	// Voucherusser
 	// Cấp mã
 	$scope.createuser = function() {
 		var item2 = angular.copy($scope.form2);
+
+		// Check if voucher with the same userid already exists
+		var existingVoucher = $scope.items2.find(function(voucher) {
+			return voucher.userid === item2.user.userid;
+		});
+
+		if (existingVoucher) {
+			// If voucher with the same userid exists, show an error message and return
+			Swal.fire({
+				icon: 'error',
+				title: 'Lỗi!',
+				text: 'Voucher cho UserID này đã tồn tại.',
+			});
+			return;
+		}
 		$http.post(`/rest/vouchers/user`, item2).then(resp => {
 			resp.data.expirationdate = new Date(resp.data.expirationdate)
 			$scope.items2.push(resp.data);
@@ -163,11 +190,17 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 				icon: 'success',
 				title: 'Thành công!',
 				text: 'Cấp mã giảm giá thành công!',
+			}).then((result) => {
+				// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+				if (result.isConfirmed) {
+					// Nếu đã bấm, thực hiện reload trang
+					location.reload();
+				}
 			});
 			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-			$scope.frmvalidate.$setPristine();
-			$scope.frmvalidate.$setUntouched();
-			$scope.frmvalidate.$submitted = false;
+			$scope.frmvalidateuser.$setPristine();
+			$scope.frmvalidateuser.$setUntouched();
+			$scope.frmvalidateuser.$submitted = false;
 		}).catch(error => {
 			// Sử dụng SweetAlert2 cho thông báo lỗi
 			Swal.fire({
@@ -178,8 +211,8 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 			console.log("Error", error);
 		});
 	}
-	
-	// cập loại nhật sản phẩm
+
+	// cập nhật mã user
 	$scope.updateuser = function() {
 		var item2 = angular.copy($scope.form2);
 		$http.put(`/rest/vouchers/user/${item2.voucheruserid}`, item2).then(resp => {
@@ -193,9 +226,9 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 			});
 			location.reload();
 			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-			$scope.frmvalidateupdate.$setPristine();
-			$scope.frmvalidateupdate.$setUntouched();
-			$scope.frmvalidateupdate.$submitted = false;
+			$scope.frmvalidateupdateuser.$setPristine();
+			$scope.frmvalidateupdateuser.$setUntouched();
+			$scope.frmvalidateupdateuser.$submitted = false;
 			$scope.edit2(item2);
 		})
 			.catch(error => {
@@ -252,7 +285,59 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 			}
 		});
 	};
-	
+
+	$scope.restore = function(voucherid) {
+		// Hiển thị cửa sổ xác nhận trước khi khôi phục
+		Swal.fire({
+			title: 'Xác nhận khôi phục',
+			text: 'Bạn có chắc chắn muốn khôi phục voucher này?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Đồng ý',
+			cancelButtonText: 'Hủy bỏ'
+		}).then((result) => {
+			// Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
+			if (result.isConfirmed) {
+				// Nếu đã bấm "Đồng ý", thực hiện khôi phục
+				try {
+					axios.put(`/rest/vouchers/${voucherid}/restore`)
+						.then(response => {
+							console.log("API Response:", response.data);
+							// Xử lý phản hồi thành công
+							Swal.fire({
+								icon: 'success',
+								title: 'Thành công!',
+								text: 'Khôi phục voucher thành công!',
+							}).then((result) => {
+								// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+								if (result.isConfirmed) {
+									// Nếu đã bấm, thực hiện reload trang
+									location.reload();
+								}
+							});
+						})
+						.catch(error => {
+							// Xử lý lỗi
+							Swal.fire({
+								icon: 'error',
+								title: 'Lỗi!',
+								text: 'Lỗi khôi phục voucher!',
+							});
+							console.log("Error", error);
+						});
+				} catch (error) {
+					// Xử lý lỗi ngoại lệ
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi khôi phục voucher',
+					});
+					console.log("Exception", error);
+				}
+			}
+		});
+	};
+
 	// tìm kiếm
 	$scope.loadData = function() {
 		var apiUrl = '/rest/vouchers/searchkeywordvoucher';
@@ -272,7 +357,7 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 				console.error('Lỗi khi tải dữ liệu:', error);
 			});
 	};
-	
+
 	// tìm kiếm
 	$scope.loadData1 = function() {
 		var apiUrl = '/rest/vouchers/user/searchkeywordvoucheruser';
