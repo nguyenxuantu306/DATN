@@ -31,7 +31,7 @@
 																alt="image" th:src="${user.image}">
 														</div>
 														<div>
-															<input name="attach" type="file">
+															<input name="attach" type="file" accept="image/x-png,image/gif,image/jpeg">
 														</div>
 													</div>
 												</div>
@@ -82,7 +82,9 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Birthday</label> <input class="form-control"
-																			th:placeholder="${user.birthday}" value="" />
+																			type="date" name="birthday"
+																			th:field="${user.birthday}" /> 
+
 																	</div>
 																</div>
 																<div class="col">
@@ -174,11 +176,11 @@
 								style="border-radius: 4px;">
 								<i class="bi bi-person-lines-fill"></i> Thông tin và sổ địa chỉ
 							</button>
-						</a> <a  href="/quanlydiachi">
+						</a> <a href="/quanlydiachi">
 							<button type="button"
 								class="list-group-item list-group-item-action active"
 								style="border-radius: 4px;">
-								<i class="bi bi-person-lines-fill"></i> Quản lý  địa chỉ
+								<i class="bi bi-person-lines-fill"></i> Quản lý địa chỉ
 							</button>
 						</a>
 
@@ -186,7 +188,7 @@
 					<a
 						class=" btn border border-danger my-3 text-decoration-none text-center text-danger fw-bold"
 						href="/logoff" style="width: 100%">Đăng xuất</a>
-			
+
 				</div>
 			</div>
 

@@ -46,6 +46,7 @@ import com.greenfarm.exception.UnkownIdentifierException;
 import com.greenfarm.exception.UserAlreadyExistException;
 import com.greenfarm.service.AddressService;
 import com.greenfarm.service.UserService;
+import com.greenfarm.utils.Log;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,7 +64,7 @@ public class SecurityController {
 
 	@Autowired
 	UserDAO acdao;
-	
+
 	@Autowired
 	AddressService addressService;
 
@@ -223,16 +224,9 @@ public class SecurityController {
 		// return "redirect:/login";
 	}
 
-
-	
 	@PostMapping("/profile")
 	public String profileupdate(Model model, @ModelAttribute("userchange") @Valid User userchange,
 			BindingResult bindingResult, @RequestParam("attach") MultipartFile attach) throws IOException {
-//		 if (bindingResult.hasErrors()) {
-//		 // Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
-//			 model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
-//			 return "profile";
-//		 }
 
 		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -244,38 +238,24 @@ public class SecurityController {
 			User user = userService.findByEmail(username);
 			System.out.println("*******");
 			System.out.println(user.getPassword());
-
-			// up image to cloud
-
-			// user.setImage(new String(file.getBytes())); // Chuyển đổi dữ liệu của file
-			// thành String và lưu vào entity
 			if (!attach.isEmpty()) {
-	            try {
-	              
-	                System.out.println("name"+attach.getOriginalFilename());
-					System.out.println("type"+attach.getContentType());
-					System.out.println("size"+attach.getSize());
-					System.out.println("111111111111111111");
+				try {
 					/// chay den day lla noloi do no cu tim trong o dia C
 					String imageUrl = cloudinaryService.uploadFile(attach);
-					
-					System.out.println("2222222222222222222222");
-					System.out.println(imageUrl);
 					user.setImage(imageUrl);
-					System.out.println(userchange.getImage());
-	                // Các bước xử lý khác...
-	            } catch (Exception e) {
-	                e.printStackTrace();
-	                // Xử lý lỗi khi lưu file
-	            }
-	        }
-				else if(attach.isEmpty()){
-				user.setImage(user.getImage());
+					// Các bước xử lý khác...
+				} catch (Exception e) {
+					e.printStackTrace();
+					// Xử lý lỗi khi lưu file
+					Log.error("Lỗi lưu ảnh", e);
+				}
 			}
 
 			if (isAtLeast16YearsOld(userchange.getBirthday())) {
 				user.setBirthday(userchange.getBirthday());
-				System.out.println(user.getBirthday());
+				
+			}else {
+				Log.warn("User birthday is less than 16 years old. Cannot update birthday.");
 			}
 			user.setFirstname(userchange.getFirstname());
 			user.setLastname(userchange.getLastname());
@@ -294,11 +274,11 @@ public class SecurityController {
 			return "profile";
 		} else {
 			System.out.println("Xin chào! Bạn chưa đăng nhập.");
-
+			return "redirect:/profile";
 		}
-		return "profile";
+
 	}
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AddressController.class);
 
 	@RequestMapping("/quanlydiachi")
