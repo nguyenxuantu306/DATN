@@ -71,5 +71,5 @@ public interface UserService {
 
 	User createADMIN(@Valid User user) throws UserAlreadyExistException;
 
-	User save(User user);
+	User save(User user);	
 }
