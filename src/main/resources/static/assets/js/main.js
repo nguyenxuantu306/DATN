@@ -1,6 +1,27 @@
 (function ($) {
   "use strict";
 
+  //Toast
+  document.addEventListener("DOMContentLoaded", function () {
+    const currentURL = window.location.pathname;
+
+    if (currentURL === "/login") {
+      localStorage.setItem("loggedIn", "true");
+    } else {
+      localStorage.removeItem("loggedIn");
+    }
+  });
+
+  //Profile
+  document.getElementById('fileInput').addEventListener('change', function(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var imageSrc = reader.result;
+        document.getElementById('previewImage').setAttribute('src', imageSrc);
+    };
+    reader.readAsDataURL(event.target.files[0]);
+});
+
   // Dropdown on mouse hover
   $(document).ready(function () {
     function toggleNavbarMethod() {
@@ -20,28 +41,15 @@
     $(window).resize(toggleNavbarMethod);
   });
 
-  // // Hiển thị nút back-to-top khi cuộn trang
-  // $(window).scroll(function () {
-  //   if ($(this).scrollTop() > 25) {
-  //     $(".back-to-top").fadeIn("slow");
-  //   } else {
-  //     $(".back-to-top").fadeOut("slow");
-  //   }
-  // });
-
-  // // Sử dụng event delegation để gắn kết sự kiện 'click' với nút back-to-top
-  // $(document).on("click", ".back-to-top", function () {
-  //   $("html, body").animate({ scrollTop: 0 }, 1500, "easeInOutExpo");
-  //   return false;
-  // });
+  
 
   // Date and time picker
-  $(".date").datetimepicker({
-    format: "L",
-  });
-  $(".time").datetimepicker({
-    format: "LT",
-  });
+  // $(".date").datetimepicker({
+  //   format: "L",
+  // });
+  // $(".time").datetimepicker({
+  //   format: "LT",
+  // });
 
   // Testimonials carousel
   $(".testimonial-carousel").owlCarousel({

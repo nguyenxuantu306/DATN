@@ -37,13 +37,11 @@ public class CustomOAuth2successHandler implements AuthenticationSuccessHandler 
 			Authentication authentication) throws IOException, ServletException {
 		
 		OAuth2User login = (OAuth2User) authentication.getPrincipal();
-		System.out.println(login);
 		System.out.println("CustomOAuth2UserService invoked");
 		OAuth2AuthenticationToken oauth2 = (OAuth2AuthenticationToken) authentication.getPrincipal();
 		System.out.println("day la xem facebook co gi"+oauth2);
 		// Lấy thông tin từ oauth2User
 	    String email = login.getAttribute("email");
-	    System.out.println(email);
 	    String provider = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
 	       
 	    // Kiểm tra xem người dùng đã tồn tại trong cơ sở dữ liệu chưa
@@ -79,12 +77,9 @@ public class CustomOAuth2successHandler implements AuthenticationSuccessHandler 
 //			    			SecurityContext sc = SecurityContextHolder.getContext();
 //			    			sc.setAuthentication(authentication2);
 
-			    			 SecurityContext check = SecurityContextHolder.getContext();
-			    			 System.out.println("damng adnag nhap");
-								System.out.println(check);
-			    			response.sendRedirect("/");
-			    			
-			    			
+			    		SecurityContext check = SecurityContextHolder.getContext();
+
+			    		response.sendRedirect("/");
 //						}else {
 //							dangnhap.setProvider(Provider.GOOGLE);
 //							dangnhap.setFirstname(login.getAttribute("given_name"));
@@ -109,9 +104,6 @@ public class CustomOAuth2successHandler implements AuthenticationSuccessHandler 
 		    		
 					
 				}else {
-					System.out.println(login);
-					System.out.println(" chua co taikhoan");
-					
 					// Thêm thông tin cần chuyển đi vào RedirectAttributes
 //		            RedirectAttributes redirectAttributes = (RedirectAttributes) authentication;
 //		            redirectAttributes.addFlashAttribute("logininfo", login);

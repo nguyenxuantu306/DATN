@@ -64,18 +64,12 @@ public class CustomLoginOAuth2successHandler implements AuthenticationSuccessHan
 				}else {
 					response.sendRedirect("/register/completelogin");
 				}
-		 		  
-		 		  
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
 				response.sendRedirect("/logoff");
-				
 			}
-		       
-		     
 	}else {
-		System.out.println("chưa đăng nhập");
 		response.sendRedirect("/login");
 	}
 		 

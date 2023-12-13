@@ -66,4 +66,6 @@ public interface UserService {
 	void save(User user);
 
 	User createADMIN(@Valid User user) throws UserAlreadyExistException;
+
+	User findByPhonenumber(String Phonenumber);
 }

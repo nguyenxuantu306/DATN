@@ -20,7 +20,28 @@
 						<div class="alert alert-danger" role="alert" th:if="${param.error}">
 							Tài khoản hoặc mật khẩu không đúng, vui lòng thử lại!
 						</div>
+						<div id="alertRegisterSuccess" style="display: none;">
+							<div class="alert alert-success" role="alert">
+								Đăng ký thành công! Bạn hãy kiểm tra hòm thư Email.
+							</div>
+						</div>
+						<div id="alertMissingToken" style="display: none;">
+							<div class="alert alert-danger" role="alert">
+								Không lấy được mã xác minh, vui lòng kiểm tra lại hòm thư!
+							</div>
+						</div>
+						<div id="alertInvalidToken" style="display: none;">
+							<div class="alert alert-danger" role="alert">
+								Mã xác minh không tồn tại, vui lòng kiểm tra lại hòm thư!
+							</div>
+						</div>
+						<div id="alertTokenSuccess" style="display: none;">
+							<div class="alert alert-success" role="alert">
+								Xác minh thành công! Bạn có thể đăng nhập.
+							</div>
+						</div>
 						
+							
 						<form th:action="@{/login}"  method="post" class="py-3">
 							<div class="mb-4 form-floating">
 								<input name="username" type="email" class="form-control"
@@ -37,7 +58,7 @@
 								<label for="password">Mật khẩu</label>
 							</div>
 							<button style="font-size: 20px" type="submit"
-								class="form-control-submit-button" >Đăng nhập</button>
+								class="form-control-submit-button">Đăng nhập</button>
 						<p class="p-2">
 						<a style="color:#0055AA;" class="blue underline" href="/forgot" >Quên mật khẩu ?</a>
 						</p>
@@ -77,28 +98,41 @@
 	</div>
 
 	<script src="./assets/js/formValidate.js"></script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			// Kiểm tra xem có cookie lưu thông tin tài khoản hay không
-			var rememberedUser = getCookie("rememberedUser");
-			if (rememberedUser) {
-				var userInfo = rememberedUser.split(":");
-				var username = userInfo[0];
-				var password = userInfo[1];
-		
-				// Điền thông tin vào các trường và check checkbox "Remember Me"
-				document.getElementById("email").value = username;
-				document.getElementById("password").value = password;
-				document.getElementById("rememberMe").checked = true;
-			}
-		});
-		
-		// Hàm lấy giá trị của cookie
-		function getCookie(name) {
-			var cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-			return cookieValue ? cookieValue.pop() : null;
-		}
-		</script>
+	<!-- ... -->
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+	  const alertRegisterSuccess = document.getElementById('alertRegisterSuccess');
+	  const alertMissingToken = document.getElementById('alertMissingToken');
+	  const alertInvalidToken = document.getElementById('alertInvalidToken');
+	  const alertTokenSuccess = document.getElementById('alertTokenSuccess');
+  
+	  if (window.location.href.includes('/login?success')) {
+		alertRegisterSuccess.style.display = 'block'; // Hiển thị phần tử
+	  } else {
+		alertRegisterSuccess.style.display = 'none'; // Ẩn phần tử
+	  }
+  
+	  if (window.location.href.includes('/login?missing')) {
+		alertMissingToken.style.display = 'block'; // Hiển thị phần tử
+	  } else {
+		alertMissingToken.style.display = 'none'; // Ẩn phần tử
+	  }
+  
+	  if (window.location.href.includes('/login?invalid')) {
+		alertInvalidToken.style.display = 'block'; // Hiển thị phần tử
+	  } else {
+		alertInvalidToken.style.display = 'none'; // Ẩn phần tử
+	  }
+  
+	  if (window.location.href.includes('/login?token')) {
+		alertTokenSuccess.style.display = 'block'; // Hiển thị phần tử
+	  } else {
+		alertTokenSuccess.style.display = 'none'; // Ẩn phần tử
+	  }
+	});
+  </script>
+  <!-- ... -->
+  
 		
 </body>
 </html>

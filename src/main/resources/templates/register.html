@@ -17,12 +17,19 @@
             <div class="text-box">
               <h2 class="py-4" style="text-align: center">Đăng Ký</h2>
 
+              <div id="alertContainer" style="display: none">
+                <div class="alert alert-danger" role="alert">
+                  Email đã tồn tại, vui lòng nhập Email khác!
+                </div>
+              </div>
+
               <form
                 action="/register"
                 th:object="${userinfo}"
                 method="post"
                 th:action="@{/register}"
                 class="py-3"
+                id="form"
               >
                 <div class="mb-4 form-floating">
                   <input
@@ -35,7 +42,7 @@
                     required
                     title
                   />
-                  <label for="firstname">Tên đầu</label>
+                  <label for="firstname">Họ và tên đệm</label>
                   <div
                     th:if="${#fields.hasErrors('firstname')}"
                     th:errors="*{firstname}"
@@ -53,7 +60,7 @@
                     th:errorClass="is-invalid"
                     required
                   />
-                  <label for="lastname">Tên cuối</label>
+                  <label for="lastname">Tên</label>
                   <div
                     th:errors="*{lastname}"
                     class="text-danger invalid-feedback"
@@ -99,43 +106,57 @@
                     class="text-danger invalid-feedback"
                   ></div>
                 </div>
-                <form id="form">
-                  <div class="mb-4 form-floating">
-                    <input
-                      name="password"
-                      type="password"
-                      th:field="*{password}"
-                      class="form-control"
-                      id="newpass"
-                      placeholder=""
-                      th:errorClass="is-invalid"
-                      required
-                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$"
-                      title="Vui lòng tối thiểu 8 ký tự bao gồm ít nhất 1 ký tự viết hoa, 1 ký tự viết thường và 1 số."
-                    />
-                    <label for="newpass">Mật khẩu</label>
-                  </div>
-                  <div class="mb-4 form-floating">
-                    <input
-                      name="repeatpassword"
-                      type="password"
-                      th:field="*{repeatpassword}"
-                      class="form-control"
-                      id="confirmpass"
-                      placeholder=""
-                      th:errorClass="is-invalid"
-                      required
-                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$"
-                      title="Vui lòng tối thiểu 8 ký tự bao gồm ít nhất 1 ký tự viết hoa, 1 ký tự viết thường và 1 số."
-                    />
-                    <label for="confirmpass">Nhập lại mật khẩu</label>
-                    <span id="message"></span>
-                  </div>
-                </form>
+                <div class="mb-4 form-floating input-group">
+                  <input
+                    name="password"
+                    type="password"
+                    th:field="*{password}"
+                    class="form-control"
+                    id="newpass"
+                    placeholder=""
+                    th:errorClass="is-invalid"
+                    required
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$"
+                    title="Vui lòng tối thiểu 8 ký tự bao gồm ít nhất 1 ký tự viết hoa, 1 ký tự viết thường và 1 số."
+                  />
+                  <span class="input-group-text"
+                    ><i
+                      id="newpassToggleIcon"
+                      class="fas fa-eye-slash"
+                      onclick="togglePasswordVisibility('newpass')"
+                      style="cursor: pointer"
+                    ></i
+                  ></span>
+                  <label for="newpass">Mật khẩu</label>
+                </div>
+                <div class="form-floating input-group">
+                  <input
+                    name="repeatpassword"
+                    type="password"
+                    th:field="*{repeatpassword}"
+                    class="form-control"
+                    id="confirmpass"
+                    placeholder=""
+                    th:errorClass="is-invalid"
+                    required
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$"
+                    title="Vui lòng tối thiểu 8 ký tự bao gồm ít nhất 1 ký tự viết hoa, 1 ký tự viết thường và 1 số."
+                  />
+                  <span class="input-group-text"
+                    ><i
+                      id="confirmpassToggleIcon"
+                      class="fas fa-eye-slash"
+                      onclick="togglePasswordVisibility('confirmpass')"
+                      style="cursor: pointer"
+                    ></i
+                  ></span>
+                  <label for="confirmpass">Nhập lại mật khẩu</label>
+                </div>
+                <span class="mb-4" id="message"></span>
                 <button
                   style="font-size: 20px"
                   type="submit"
-                  class="form-control-submit-button"
+                  class="mt-4 form-control-submit-button"
                 >
                   Tạo tài khoản
                 </button>
@@ -183,7 +204,7 @@
                 </p>
                 <div class="register">
                   <p style="text-align: center; padding: 10px">
-                    Bạn mới biết đến GreenFarm?
+                    Bạn đã có tài khoản
                     <a href="/login" class="link-danger">Đăng nhập</a>
                   </p>
                 </div>
@@ -195,5 +216,17 @@
     </div>
 
     <script src="./assets/js/formValidate.js"></script>
+    <script>
+      if (window.location.href.includes("/register?error")) {
+        // Nếu URL chứa '/login?success', hiển thị phần tử alertContainer
+        const alertContainer = document.getElementById("alertContainer");
+        alertContainer.style.display = "block"; // Hiển thị phần tử
+      } else {
+        // Nếu URL không chứa '/login?success', có thể ẩn hoặc xử lý khác tùy theo yêu cầu của bạn
+        // Ví dụ:
+        const alertContainer = document.getElementById("alertContainer");
+        alertContainer.style.display = "none"; // Ẩn phần tử
+      }
+    </script>
   </body>
 </html>

@@ -11502,42 +11502,55 @@ h1 {
 }
 
 .banner-home-outer .box_info {
-    padding: 60px 30px 30px;
-    border: 1px solid #BED747;
-    height: 90%;
+	padding: 60px 30px 30px;
+	border: 1px solid #BED747;
+	height: 90%;
 }
+
 .banner-home-outer .box-service {
-    position: relative;
-    text-align: center;
+	position: relative;
+	text-align: center;
 }
+
 .banner-home-outer .icon_title {
-    position: absolute;
-    top: -50px;
-    left: 0;
-    right: 0;
-    width: 100px;
-    height: 100px;
-    overflow: hidden;
-    border: 2px solid #BED747;
-    border-radius: 50%;
-    text-align: center;
-    background-color: #fff;
-    margin: auto;
-    -webkit-transition: 0.8s;
-    -moz-transition: 0.8s;
-    transition: 0.8s;
+	position: absolute;
+	top: -50px;
+	left: 0;
+	right: 0;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	border: 2px solid #BED747;
+	border-radius: 50%;
+	text-align: center;
+	background-color: #fff;
+	margin: auto;
+	-webkit-transition: 0.8s;
+	-moz-transition: 0.8s;
+	transition: 0.8s;
 }
+
 .banner-home-outer .icon_title img {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    transition: all 0.6s ease-in-out 0s;
-    -moz-transition: all 0.6s ease-in-out 0s;
-    -o-transition: all 0.6s ease-in-out 0s;
-    -webkit-transition: all 0.6s ease-in-out 0s;
-    -ms-transition: all 0.6s ease-in-out 0s;
-    cursor: pointer;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	transition: all 0.6s ease-in-out 0s;
+	-moz-transition: all 0.6s ease-in-out 0s;
+	-o-transition: all 0.6s ease-in-out 0s;
+	-webkit-transition: all 0.6s ease-in-out 0s;
+	-ms-transition: all 0.6s ease-in-out 0s;
+	cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+
+	input[type="number"] {
+		-moz-appearance: textfield;
+	}
 }

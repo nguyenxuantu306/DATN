@@ -8,6 +8,32 @@ let passwordsMatch = false;
 function validateForm() {
   isValid = form.checkValidity();
 
+  const password = password1El.value;
+
+  // Kiểm tra các yếu tố thiếu trong mật khẩu
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasNumber = /\d/.test(password);
+
+  // Xác định yếu tố nào đang thiếu
+  let missingRequirements = [];
+  if (!hasUpperCase) {
+    missingRequirements.push('ít nhất 1 chữ hoa');
+  }
+  if (!hasNumber) {
+    missingRequirements.push('ít nhất 1 số');
+  }
+
+
+  // Hiển thị thông báo về yếu tố thiếu (nếu có)
+  if (missingRequirements.length > 0) {
+    const missingText = missingRequirements.join(', ');
+    message.textContent = `Mật khẩu cần chứa ${missingText}.`;
+    message.style.color = 'red';
+    password1El.style.borderColor = 'red';
+    password2El.style.borderColor = 'red';
+    return; // Dừng lại nếu có yếu tố thiếu
+  }
+
   if (password1El.value === password2El.value) {
     passwordsMatch = true;
     password1El.style.borderColor = 'green';
@@ -22,6 +48,7 @@ function validateForm() {
     password2El.style.borderColor = 'red';
   }
 }
+
 
 function processFormData(e) {
   e.preventDefault();
@@ -47,10 +74,6 @@ function storeFormData() {
   console.log(user);
 }
 
-
-
-// Event Listeners
-form.addEventListener('submit', processFormData);
 
 function togglePasswordVisibility(fieldId) {
   var passwordField = document.getElementById(fieldId); // Lấy trường input password

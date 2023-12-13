@@ -165,7 +165,6 @@ public class SecurityController {
 			String roles = authentication.getAuthorities().toString();
 			model.addAttribute("roles", roles);
 			// Trả về thông tin tài khoản trong phản hồi
-			System.out.println("Xin chào, " + username + "! Bạn có các quyền: " + roles);
 			return "profile";
 		} else {
 			System.out.println("Xin chào! Bạn chưa đăng nhập.");

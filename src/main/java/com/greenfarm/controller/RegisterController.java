@@ -3,7 +3,6 @@ package com.greenfarm.controller;
 
 import java.util.Date;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -31,16 +30,16 @@ import jakarta.validation.Valid;
 @RequestMapping("/register")
 public class RegisterController {
 
-	private static final String REDIRECT_LOGIN = "redirect:/login";
+	private static final String REDIRECT_TOKEN_MISSING = "redirect:/login?missing";
+	private static final String REDIRECT_TOKEN_INVALID = "redirect:/login?invalid";
+	private static final String REDIRECT_TOKEN_SUCCESS = "redirect:/login?token";
+	private static final String REDIRECT_REGISTER_SUCCESS = "redirect:/login?success";
 
 	@Autowired
 	UserService userservice;
 
-	
-	
 	@GetMapping
-	public String registerUserq(Model model, @ModelAttribute("userinfo") RegisterDTO userInfo
-			) {
+	public String registerUserq(Model model, @ModelAttribute("userinfo") RegisterDTO userInfo) {
 		/*
 		 * if (bindingResult.hasErrors()) { // Nếu có lỗi từ dữ liệu người dùng, không
 		 * cần kiểm tra tiếp và xử lý lỗi. model.addAttribute("registrationMsg",
@@ -54,52 +53,53 @@ public class RegisterController {
 
 		// Nếu không có lỗi, tiếp tục xử lý đăng ký tài khoản.
 		// đăng ký
-//		try {
-//			// User user = Usermapper.INSTANCE.fromDto(userInfo);
-//			User user = new User();
-//			user.setFirstname(userInfo.getFirstname());
-//			user.setLastname(userInfo.getLastname());
-//			user.setEmail(userInfo.getEmail());
-//			user.setPassword(userInfo.getPassword());
-//			// user.setAddress(userInfo.getAddress());
-//			user.setPhonenumber(userInfo.getPhonenumber());
-//			// user.setBirthday(userInfo.getBirthday());
-//			// user.setImage(userInfo.getImage());
-//			// user.setGender(userInfo.getGender());
-//			user.setCreateddate(new Date());
-//			userservice.create(user);
-//		} catch (Exception e) {
-//			bindingResult.rejectValue("email", "error.userDTO", "An account already exists for this email.");
-//			model.addAttribute("registrationForm", userInfo);
-//			return "register";
-//		}
-//		User userinfo = new User();
-//		model.addAttribute("userinfo", userinfo);
-		
+		// try {
+		// // User user = Usermapper.INSTANCE.fromDto(userInfo);
+		// User user = new User();
+		// user.setFirstname(userInfo.getFirstname());
+		// user.setLastname(userInfo.getLastname());
+		// user.setEmail(userInfo.getEmail());
+		// user.setPassword(userInfo.getPassword());
+		// // user.setAddress(userInfo.getAddress());
+		// user.setPhonenumber(userInfo.getPhonenumber());
+		// // user.setBirthday(userInfo.getBirthday());
+		// // user.setImage(userInfo.getImage());
+		// // user.setGender(userInfo.getGender());
+		// user.setCreateddate(new Date());
+		// userservice.create(user);
+		// } catch (Exception e) {
+		// bindingResult.rejectValue("email", "error.userDTO", "An account already
+		// exists for this email.");
+		// model.addAttribute("registrationForm", userInfo);
+		// return "register";
+		// }
+		// User userinfo = new User();
+		// model.addAttribute("userinfo", userinfo);
+
 		return "register";
 	}
 
 	@InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        StringTrimmerEditor  stringTrimmerEditor = new StringTrimmerEditor(true);
-        binder.registerCustomEditor(String.class,stringTrimmerEditor);
-    }
+	protected void initBinder(WebDataBinder binder) {
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		binder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}
 
 	@PostMapping
 	public String registerUser(Model model, @ModelAttribute("userinfo") @Valid RegisterDTO userInfo,
 			BindingResult bindingResult) throws UserAlreadyExistException {
-		
+
 		if (bindingResult.hasErrors()) {
 			// Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
 			model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
-			System.out.println("pas");
 			return "register";
 		} else if (!userInfo.getPassword().equals(userInfo.getRepeatpassword())) {
 			// Nếu mật khẩu và xác nhận mật khẩu không khớp, thêm lỗi vào BindingResult.
-			System.out.println("repass");
 			bindingResult.rejectValue("repeatpassword", "error.userDTO", "Mật khẩu và xác nhận mật khẩu không khớp");
+		} else if (userservice.findByPhonenumber(userInfo.getPhonenumber()) != null) {
+			System.out.println("phonenumber");
+			bindingResult.rejectValue("phonenumber", "error.userDTO", "Số điện thoại đã được sử dụng");
 		}
-
 		// Nếu không có lỗi, tiếp tục xử lý đăng ký tài khoản.
 		// đăng ký
 		try {
@@ -115,13 +115,11 @@ public class RegisterController {
 			user.setImage(null);
 			user.setGender(null);
 			user.setCreateddate(new Date());
-			System.out.println("chay toi impl");
 			userservice.create(user);
-			return "redirect:/login";
+			return REDIRECT_REGISTER_SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
-			bindingResult.rejectValue("email", "error.userDTO", "An account already exists for this email.");
-			System.out.println("mail");
+			bindingResult.rejectValue("email", "error.userDTO", "Email này đã tồn tại!");
 			model.addAttribute("registrationForm", userInfo);
 			return "register";
 		}
@@ -129,8 +127,6 @@ public class RegisterController {
 		// model.addAttribute("registrationMsg",
 		// messageSource.getMessage("user.registration.verification.email.msg", null,
 		// LocaleContextHolder.getLocale()));
-
-		
 
 	}
 
@@ -150,7 +146,7 @@ public class RegisterController {
 			// messageSource.getMessage("user.registration.verification.missing.token",
 			// null,LocaleContextHolder.getLocale()));
 			System.out.println("missing token");
-			return REDIRECT_LOGIN;
+			return REDIRECT_TOKEN_MISSING;
 		}
 		try {
 			userservice.verifyUser(token);
@@ -159,14 +155,14 @@ public class RegisterController {
 			// messageSource.getMessage("user.registration.verification.invalid.token",
 			// null,LocaleContextHolder.getLocale()));
 			System.out.println("inatokenlid ");
-			return REDIRECT_LOGIN;
+			return REDIRECT_TOKEN_INVALID;
 		}
 
 		// redirAttr.addFlashAttribute("verifiedAccountMsg",
 		// messageSource.getMessage("user.registration.verification.success",
 		// null,LocaleContextHolder.getLocale()));
 		System.out.println("thanh cong");
-		return REDIRECT_LOGIN;
+		return REDIRECT_TOKEN_SUCCESS;
 	}
 
 }

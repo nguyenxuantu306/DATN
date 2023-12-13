@@ -41,6 +41,8 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 		}
 	}
 
+	Optional<User> findByPhonenumber(String phonenumber);
+
 	List<User> findAllByIsdeletedFalse();
 
 	List<User> findAllByIsdeletedTrue();
