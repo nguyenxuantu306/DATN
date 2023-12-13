@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout::dynamic(~{::body})}">
+<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
 
 <head>
-<meta charset="UTF-8" />
-<title>GreenFarm</title>
+	<meta charset="UTF-8" />
+	<title>GreenFarm</title>
 </head>
 
 <body>
@@ -18,20 +17,20 @@
 								<div class="card-body">
 									<div class="e-profile">
 										<form class="form" action="/profile" th:action="@{/profile}"
-											th:object="${userchange}" method="post"
-											enctype="multipart/form-data" novalidate>
+											th:object="${userchange}" method="post" enctype="multipart/form-data"
+											novalidate>
 											<div class="row">
 												<div class="col-12 col-sm-auto mb-3">
 													<div class="mx-auto" style="width: 140px">
-														<div
-															class="d-flex justify-content-center align-items-center rounded"
+														<div class="d-flex justify-content-center align-items-center rounded"
 															style="height: 140px; background-color: rgb(233, 236, 239);">
 
-															<img style="max-height: 140px; max-width: 140px"
-																alt="image" th:src="${user.image}">
+															<img style="max-height: 140px; max-width: 140px" alt="image"
+																th:src="${user.image}">
 														</div>
 														<div>
-															<input name="attach" type="file" accept="image/x-png,image/gif,image/jpeg">
+															<input name="attach" type="file"
+																accept="image/x-png,image/gif,image/jpeg">
 														</div>
 													</div>
 												</div>
@@ -63,16 +62,19 @@
 															<div class="row">
 																<div class="col">
 																	<div class="form-group">
-																		<label>First Name</label> <input class="form-control"
-																			th:field="${user.firstname}" type="text" name="name"
-																			th:value="${user.firstname}"
-																			th:placeholder="${user.firstname}" value="" />
+																		<label>First Name</label> <input
+																			class="form-control"
+																			th:field="${user.firstname}" type="text"
+																			name="name" th:value="${user.firstname}"
+																			th:placeholder="${user.firstname}"
+																			value="" />
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
-																		<label>Last Name</label> <input class="form-control"
-																			type="text" th:placeholder="${user.lastname}"
+																		<label>Last Name</label> <input
+																			class="form-control" type="text"
+																			th:placeholder="${user.lastname}"
 																			th:value="${user.lastname}"
 																			th:field="${user.lastname}" />
 																	</div>
@@ -81,9 +83,10 @@
 															<div class="row">
 																<div class="col">
 																	<div class="form-group">
-																		<label>Birthday</label> <input class="form-control"
-																			type="date" name="birthday"
-																			th:field="${user.birthday}" /> 
+																		<label>Birthday</label> <input
+																			class="form-control" type="date"
+																			name="birthday"
+																			th:field="${user.birthday}" />
 
 																	</div>
 																</div>
@@ -93,7 +96,8 @@
 																			class="form-control" type="number"
 																			th:value="${user.phonenumber}"
 																			th:field="${user.phonenumber}"
-																			th:placeholder="${user.phonenumber}" value="" />
+																			th:placeholder="${user.phonenumber}"
+																			value="" />
 																	</div>
 																</div>
 															</div>
@@ -113,15 +117,19 @@
 																		<label>Gender</label>
 																		<div class="form-check">
 																			<input class="form-check-input"
-																				th:field="${user.gender}" value="1" type="radio"
-																				name="flexRadioDefault" checked /> <label
-																				class="form-check-label" for="flexRadioDefault1">
+																				th:field="${user.gender}" value="1"
+																				type="radio" name="flexRadioDefault"
+																				checked /> <label
+																				class="form-check-label"
+																				for="flexRadioDefault1">
 																				Male </label>
 																		</div>
 																		<div class="form-check">
 																			<input class="form-check-input" type="radio"
-																				th:field="${user.gender}" value="0" checked /> <label
-																				class="form-check-label" for="flexRadioDefault2">
+																				th:field="${user.gender}" value="0"
+																				checked /> <label
+																				class="form-check-label"
+																				for="flexRadioDefault2">
 																				Female </label>
 																		</div>
 																	</div>
@@ -159,35 +167,31 @@
 					<div class="list-group border border-0 rounded-0 my-3">
 
 						<a class="mb-3" href="/order/list">
-							<button type="button"
-								class="list-group-item list-group-item-action"
+							<button type="button" class="list-group-item list-group-item-action"
 								style="border-radius: 4px;">
 								<i class="bi bi-card-list"></i> Đơn hàng đã đặt
 							</button>
 						</a> <a class="mb-3" href="/booking/list">
-							<button type="button"
-								class="list-group-item list-group-item-action "
+							<button type="button" class="list-group-item list-group-item-action "
 								style="border-radius: 4px;">
 								<i class="bi bi-card-list"></i> Lịch sử Booking
 							</button>
 						</a> <a class="mb-3" href="/profile">
-							<button type="button"
-								class="list-group-item list-group-item-action active"
+							<button type="button" class="list-group-item list-group-item-action active"
 								style="border-radius: 4px;">
 								<i class="bi bi-person-lines-fill"></i> Thông tin và sổ địa chỉ
 							</button>
 						</a> <a href="/quanlydiachi">
-							<button type="button"
-								class="list-group-item list-group-item-action active"
+							<button type="button" class="list-group-item list-group-item-action active"
 								style="border-radius: 4px;">
 								<i class="bi bi-person-lines-fill"></i> Quản lý địa chỉ
 							</button>
 						</a>
 
 					</div>
-					<a
-						class=" btn border border-danger my-3 text-decoration-none text-center text-danger fw-bold"
-						href="/logoff" style="width: 100%">Đăng xuất</a>
+					<a class="btn border border-danger my-3 text-decoration-none text-center text-white fw-bold"
+						style="width: 100%; background-color: red;" href="/logoff"
+						th:text="#{profile.label.logout}">Đăng xuất</a>
 
 				</div>
 			</div>

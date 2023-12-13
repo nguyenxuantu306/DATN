@@ -32,8 +32,6 @@ function formatPrice(price) {
 
 }
 
-
-
 // Hàm hiển thị danh sách sản phẩm
 function displayProducts(products) {
 	var Results = $("#Results");

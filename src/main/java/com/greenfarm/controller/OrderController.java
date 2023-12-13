@@ -41,19 +41,22 @@ public class OrderController {
 
 	@RequestMapping("/order/list")
 	public String list(Model model, HttpServletRequest request,
-			@RequestParam(name = "statusFilter", required = false) String statusFilter) {
+			@RequestParam(name = "statusFilter", required = false, defaultValue = "") String statusFilter) {
 		String email = request.getRemoteUser();
-		System.out.println("Status Filter: " + statusFilter);
 		List<Order> orders = orderService.findByEfindByIdAccountmail(email);
 
-		if (statusFilter != null && !statusFilter.isEmpty()) {
-			orders = orders.stream().filter(order -> {
-				System.out.println("Order Status: " + order.getStatusOrder().getName());
-				return order.getStatusOrder().getName().equalsIgnoreCase(statusFilter);
-			}).collect(Collectors.toList());
-		}  else {
-	        orders = orders.stream().filter(order -> order.getStatusOrder().getStatusorderid() == 1).collect(Collectors.toList());
-	    }
+		if ("all".equalsIgnoreCase(statusFilter)) {
+			// Trường hợp khi người dùng chọn "Tất cả đơn hàng"
+			// Không cần lọc theo trạng thái, lấy tất cả đơn hàng
+		} else if (statusFilter != null && !statusFilter.isEmpty()) {
+			// Trường hợp khi người dùng chọn một trạng thái khác
+			orders = orders.stream().filter(order -> order.getStatusOrder().getName().equalsIgnoreCase(statusFilter))
+					.collect(Collectors.toList());
+		} else {
+			// Trường hợp mặc định, không có trạng thái hoặc trạng thái rỗng
+			orders = orders.stream().filter(order -> order.getStatusOrder().getStatusorderid() == 1)
+					.collect(Collectors.toList());
+		}
 
 		Collections.sort(orders, (o1, o2) -> o2.getOrderDateFormatted().compareTo(o1.getOrderDateFormatted()));
 

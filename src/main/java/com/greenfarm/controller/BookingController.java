@@ -74,14 +74,16 @@ public class BookingController {
 		String email = request.getRemoteUser();
 		List<Booking> bookings = bookingService.findByEfindByIdAccountmail(email);
 
-		// Filter bookings based on status
-		if (statusFilter != null && !statusFilter.isEmpty()) {
+		if ("all".equalsIgnoreCase(statusFilter)) {
+			// Trường hợp khi người dùng chọn "Tất cả đơn hàng"
+			// Không cần lọc theo trạng thái, lấy tất cả đơn hàng
+		} else if (statusFilter != null && !statusFilter.isEmpty()) {
 			bookings = bookings.stream().filter(booking -> booking.getStatusbooking().getName().equals(statusFilter))
 					.collect(Collectors.toList());
 		} else {
-			bookings = bookings.stream().filter(booking -> booking.getStatusbooking().getStatusbookingid() == 1).collect(Collectors.toList());
-	    }
-
+			bookings = bookings.stream().filter(booking -> booking.getStatusbooking().getStatusbookingid() == 1)
+					.collect(Collectors.toList());
+		}
 
 		model.addAttribute("bookings", bookings);
 		return "booking/mytiket";
@@ -113,7 +115,6 @@ public class BookingController {
 			return "bookingform";
 		}
 
-
 		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(tourdate);
 		TourDate tourdate1 = tourdateService.findByTourAndTourdates(booking.getTour(), date1);
 
@@ -130,7 +131,6 @@ public class BookingController {
 			System.out.println("ko đủ số lượng");
 			return "redirect:/booking/" + booking.getTour().getTourid();
 		} else {
-
 
 			// Thời gian
 			booking.setBookingdate(LocalDateTime.now());
@@ -171,16 +171,17 @@ public class BookingController {
 
 		// Lấy danh sách TourDateBooking cho tourdate cụ thể
 		List<TourDateBooking> tourDateBookings = tourdatebookingService.getBookingsForTourDate(tourDate);
-		// Tính tổng số lượng slot đã đặt
-		int bookedSlots = tourDateBookings.stream().mapToInt(
-				booking -> booking.getBooking().getAdultticketnumber() + booking.getBooking().getChildticketnumber())
-				.sum();
-
-		// Tính số lượng slot khả dụng
-		int remainingSlots = availableSlots - bookedSlots;
-
-		// Đảm bảo số lượng slot không dưới 0
-		return Math.max(remainingSlots, 0);
+		/*
+		 * // Tính tổng số lượng slot đã đặt int bookedSlots =
+		 * tourDateBookings.stream().mapToInt( booking ->
+		 * booking.getBooking().getAdultticketnumber() +
+		 * booking.getBooking().getChildticketnumber()) .sum();
+		 * 
+		 * // Tính số lượng slot khả dụng int remainingSlots = availableSlots -
+		 * bookedSlots;
+		 * 
+		 * // Đảm bảo số lượng slot không dưới 0
+		 */ return Math.max(availableSlots, 0);
 	}
 
 }

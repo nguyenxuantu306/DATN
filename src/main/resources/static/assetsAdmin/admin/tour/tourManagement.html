@@ -37,12 +37,10 @@
 								<tr>
 									<th>STT</th>
 									<th>Hình ảnh</th>
-									<th>Tên địa điểm</th>
-									<!--<th>Ngày bắt đầu</th>
-									<th>Ngày kết thúc</th>-->
+									<th>Tên địa điểm</th>								
 									<th>Ngày</th>
 									<th>Giá</th>
-									<th>Số lượng người</th>
+									<th>Mô tả</th>
 									<th>Điều kiện</th>
 									<th>Tổng quan</th>
 									<th>Xem</th>
@@ -55,15 +53,15 @@
 									<td><img ng-src="{{item.image}}" alt="Tour Image"
 											style="width: 80px; height: 80px;"></td>
 									<td>{{item.tourname}}</td>
-									<!--<td>{{item.startdate | date:'dd-MM-yyyy'}}</td>
-									<td>{{item.enddate | date:'dd-MM-yyyy'}}</td>-->
 									<td>{{item.departureday}}</td>
-									<td>{{formatPrice(item.pricings.childprice)}}</td>
-									<td>{{item.availableslots}}</td>
+									<td>{{formatPrice(item.pricings.childprice)}}</td>	
+									<td><span class="text-success" ng-if="item.description">Đã có</span>
+										<span class="text-danger" ng-if="!item.description">Chưa có</span>
+									</td>					
 									<td><span class="text-success" ng-if="item.tourCondition.conditions">Đã có</span>
-										<span ng-if="!item.tourCondition.conditions">Chưa có</span>
+										<span class="text-danger" ng-if="!item.tourCondition.conditions">Chưa có</span>
 									</td>
-									<td><span class="text-success" ng-if="item.tourOverview.content">Đã có</span> <span
+									<td><span class="text-success" ng-if="item.tourOverview.content">Đã có</span> <span class="text-danger"
 											ng-if="!item.tourOverview.content">Chưa có</span></td>
 									<td><a type="button" ng-click="edit(item)" data-toggle="modal"
 											data-target="#exampleModal"> <i class="bi bi-pencil-square"></i>
@@ -110,7 +108,7 @@
 							<div class="col-lg-12">
 								<div class="basic-form">
 									<form class="row" name="frmvalidateupdate" ng-submit="submitForm1()" novalidate>
-										<div class="form-group col-6">
+										<div class="form-group col-12">
 											<label>Tên địa điểm</label> <input type="text" name="tourname"
 												ng-model="form.tourname" ng-minlength="5"
 												class="form-control input-default" placeholder="VD : Nông trại vui vẻ"
@@ -122,24 +120,7 @@
 												ký tự!</label>
 										</div>
 
-										<div class="form-group col-6">
-											<div class="form-group ">
-												<div>
-													<label>Lượng người</label> <input type="number"
-														name="availableslots" ng-model="form.availableslots"
-														class="form-control input-default" placeholder="VD : 29"
-														ng-min="0" ng-max="100" required /> <label
-														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.availableslots.$error.required"
-														style="color: red;">Lượng người không được để
-														trống!</label> <label
-														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.availableslots.$error.min"
-														style="color: red;">Lượng người ít nhất là 0!</label> <label
-														ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.availableslots.$error.max"
-														style="color: red;">Lượng người nhiều nhất là 100!</label>
-
-												</div>
-											</div>
-										</div>
+										
 										<div class="form-group col-6">
 											<div class="form-group ">
 												<div>
@@ -337,7 +318,7 @@
 							<div class="col-lg-12">
 								<div class="basic-form">
 									<form class="row" name="frmvalidateadd" ng-submit="submitForm()" novalidate>
-										<div class="form-group col-6">
+										<div class="form-group col-12">
 											<label>Tên địa điểm</label> <input type="text" name="tourname"
 												ng-model="form.tourname" ng-minlength="5"
 												class="form-control input-default" placeholder="VD : Nông trại vui vẻ"
@@ -349,24 +330,7 @@
 												ký tự!</label>
 										</div>
 
-										<div class="form-group col-6">
-											<div class="form-group ">
-												<div>
-													<label>Lượng người</label> <input type="number"
-														name="availableslots" ng-model="form.availableslots"
-														class="form-control input-default" placeholder="VD : 29"
-														ng-min="0" ng-max="50" required /> <label
-														ng-show="frmvalidateadd.$submitted && frmvalidateadd.availableslots.$error.required"
-														style="color: red;">Lượng người không được để
-														trống!</label> <label
-														ng-show="frmvalidateadd.$submitted && frmvalidateadd.availableslots.$error.min"
-														style="color: red;">Lượng người ít nhất là 0!</label> <label
-														ng-show="frmvalidateadd.$submitted && frmvalidateadd.availableslots.$error.max"
-														style="color: red;">Lượng người nhiều nhất là 50!</label>
-
-												</div>
-											</div>
-										</div>
+										
 										<div class="form-group col-6">
 											<div class="form-group ">
 												<div>
@@ -565,11 +529,9 @@
 								<th>STT</th>
 								<th>Hình ảnh</th>
 								<th>Tên địa điểm</th>
-								<!--<th>Ngày bắt đầu</th>
-									<th>Ngày kết thúc</th>-->
 								<th>Ngày</th>
-								<th>Giá</th>
-								<th>Số lượng người</th>
+								<th>Giá</th>	
+								<th>Mô tả</th>					
 								<th>Điều kiện</th>
 								<th>Tổng quan</th>
 								<th>Khôi phục</th>
@@ -580,12 +542,12 @@
 								<th>{{$index + 1}}</th>
 								<td><img ng-src="{{item.image}}" alt="Tour Image" style="width: 80px; height: 80px;">
 								</td>
-								<td>{{item.tourname}}</td>
-								<!--<td>{{item.startdate | date:'dd-MM-yyyy'}}</td>
-									<td>{{item.enddate | date:'dd-MM-yyyy'}}</td>-->
+								<td>{{item.tourname}}</td>				
 								<td>{{item.departureday}}</td>
 								<td>{{formatPrice(item.pricings.childprice)}}</td>
-								<td>{{item.availableslots}}</td>
+								<td><span class="text-success" ng-if="item.description">Đã có</span>
+										<span class="text-danger" ng-if="!item.description">Chưa có</span>
+									</td>
 								<td><span class="text-success" ng-if="item.tourCondition.conditions">Đã có</span> <span
 										ng-if="!item.tourCondition.conditions">Chưa có</span></td>
 								<td><span class="text-success" ng-if="item.tourOverview.content">Đã có</span> <span

@@ -2,6 +2,8 @@ package com.greenfarm.service.impl;
 
 import java.util.List;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +13,7 @@ import com.greenfarm.dao.ReviewDao;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.Review;
+import com.greenfarm.entity.StarCount;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.ReviewService;
 
@@ -59,5 +62,11 @@ public class ReviewServiceImpl implements ReviewService {
 		Review existingReview = dao.findReviewByUserAndProduct(user, product);
 		return existingReview != null;
 	}
+
+	
+	@Override
+    public List<StarCount> countReviewsByRating(Integer productId) {
+        return dao.countReviewsByRating(productId);
+    }
 
 }

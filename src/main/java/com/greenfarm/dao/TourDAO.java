@@ -50,4 +50,6 @@ public interface TourDAO extends JpaRepository<Tour, Integer> {
 
 	Page<Tour> findAllByIsdeletedFalse(Pageable pageable);
 
+	Page<Tour> findByDepartureday(String departureday, Pageable pageable);
+
 }

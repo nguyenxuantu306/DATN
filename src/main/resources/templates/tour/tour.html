@@ -62,7 +62,7 @@
 
 							<div class="search_panel">
 								<div class="row">
-									<div class="col-md-10 input-group">
+									<div class="col-md-8 input-group">
 										<input type="text" class="form-control mr-3"
 											placeholder="Tìm kiếm tên..." name="search" id="searchInput"
 											oninput="performSearch()">
@@ -71,7 +71,19 @@
 												th:text="#{tour.label.search}">Tìm kiếm</button>
 										</div> -->
 									</div>
-
+									<div class="col-xs-24 col-sm-8 col-md-2">
+										<select id="departureday" name="departureday"
+											class="form-control">
+											<option value="" th:text="#{tour.label.departureday}">---
+												Ngày khởi hành ---</option>
+											<option value="">Tất cả ngày</option>
+											<option value="Chủ nhật hàng tuần">Ngày chủ nhật</option>
+											<option value="Thứ bảy hàng tuần">Ngày thứ bảy</option>
+											<option value="Ngày 14 hàng tháng">Ngày 14</option>
+											<option value="Ngày 15 hàng tháng">Ngày 15</option>
+											<option value="Ngày 20 hàng tháng">Ngày 20</option>
+										</select>
+									</div>
 									<div class="col-xs-24 col-sm-8 col-md-2">
 										<select id="priceFilter" name="price_spread"
 											class="form-control">
@@ -263,6 +275,17 @@
 
 			console.log("Đang tìm kiếm: " + searchValue);
 		}
+	</script>
+	<script>
+		$(document).ready(function() {
+			$("#departureday").on("change", function() {
+				// Lấy giá trị đã chọn trong dropdown
+				var selectedValue = $(this).val();
+
+				// Chuyển hướng đến trang "tour" với giá trị đã chọn trong URL
+				window.location.href = "/tour?departureday=" + selectedValue;
+			});
+		});
 	</script>
 </body>
 

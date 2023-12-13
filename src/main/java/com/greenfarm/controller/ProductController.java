@@ -2,8 +2,10 @@ package com.greenfarm.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import org.apache.xmlgraphics.util.io.Finalizable;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Review;
+import com.greenfarm.entity.StarCount;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.ProductService;
 import com.greenfarm.service.ReviewService;
@@ -74,11 +77,22 @@ public class ProductController {
 	                     @PageableDefault(size = 2) Pageable pageable, UriComponentsBuilder uriBuilder) {
 	    Integer id = productid;
 	    Product item = productService.findById(id);
-
+	    
 	    if (item != null) {
 	        ProductDTO itemDTO = modelMapper.map(item, ProductDTO.class);
 	        model.addAttribute("item", itemDTO);
 
+	        
+	        // Lấy thông tin đánh giá theo sao
+	        List<StarCount> ratingCountMap = reviewService.countReviewsByRating(productid);
+	       
+	        // In danh sách ratingCountList để kiểm tra
+	        long totalReviewCount = 0;
+	        for(StarCount st:ratingCountMap) {
+	        	totalReviewCount += st.getStartcount();
+	        }
+	        model.addAttribute("ratingCountMap", ratingCountMap);
+	        model.addAttribute("totalReviewCount", totalReviewCount);
 	        // Modify the findbyproduct method to return a Page<Review>
 	        Page<Review> reviewPage = reviewService.findbyproduct(item, pageable);
 	        model.addAttribute("review", reviewPage);

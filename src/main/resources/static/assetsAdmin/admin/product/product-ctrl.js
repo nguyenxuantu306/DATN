@@ -118,6 +118,12 @@ app.controller("product-ctrl", function($scope, $http) {
 				icon: 'success',
 				title: 'Thành công!',
 				text: 'Thêm sản phẩm thành công!',
+			}).then((result) => {
+				// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+				if (result.isConfirmed) {
+					// Nếu đã bấm, thực hiện reload trang
+					location.reload();
+				}
 			});
 			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
 			$scope.frmvalidate.$setPristine();

@@ -135,5 +135,16 @@ public class TourServiceImpl implements TourService {
 	public List<Tour> findByKeyword(String keyword) {	
 		return dao.findByKeyword(keyword);
 	}
+	
+	 @Override
+	    public Page<TourDTO> findToursByDeparturedayWithPagination(String departureday, Pageable pageable) {
+		 Page<Tour> tourPage = dao.findByDepartureday(departureday, pageable);
+
+		    List<TourDTO> tourDTOs = tourPage.getContent().stream()
+		                                   .map(tour -> convertToDTOUsingModelMapper(tour))
+		                                   .collect(Collectors.toList());
+
+		    return new PageImpl<>(tourDTOs, pageable, tourPage.getTotalElements());
+	    }
 
 }
