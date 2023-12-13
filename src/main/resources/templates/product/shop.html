@@ -59,7 +59,7 @@
 					</div>
 				</div>
 				<div class="col-lg-3 py-5">
-					<div>
+					<div >
 						<ul class="list-group list-group-light">
 							<li class="list-group-item border-0">
 								<h5 style="color: #000000" th:text="#{shop.label.category}"></h5>
@@ -67,7 +67,7 @@
 
 						</ul>
 						<ul th:each="c:${cates}" class="list-group list-group-light"
-							style="font-size: 20px;">
+							style="font-size: 20px;color: #333333;">
 							<li class="list-group-item border-0"><a
 								style="color: black;"
 								th:href="@{|/product/shop?cid=${c.categoryid}|}">[[${c.categoryname}]]</a>
@@ -157,10 +157,12 @@
 				</div>
 				<div class="col-lg-9">
 
-					<div class="text-center">
-						<h1 th:text="#{shop.label.title}">List Product</h1>
+					<div class="text-center mt-3">
+						<h1
+							style="font-size: 27px; font-weight: bold; margin: 0; text-align: center;"
+							th:text="#{shop.label.title}">List Product</h1>
 					</div>
-					<div class="search-box" style="width: 500px">
+					<div class="search-box " style="width: 500px">
 						<div class="input-group">
 							<span class="input-group-text"> <i class="bi bi-search"></i>
 								<!-- Sử dụng biểu tượng tìm kiếm từ Bootstrap Icons -->
@@ -169,26 +171,33 @@
 						</div>
 					</div>
 
-					<div class="row text-center py-2" id="Results">
+					<div class="row text-center py-2 mt-3" id="Results">
 
 						<div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
-							<div class="package-item bg-white mb-2">
+							<div class="bg-white mb-2">
 								<a th:href="@{|/product/detail/${p.productid}|}"
 									style="display: block; position: relative;"> <img
-									style="height: 250px" class="img-fluid"
-									th:src="@{|${p.image}|}" alt=""> <span
-									th:if="${p.quantityavailable < 5}" class="out-of-stock-label"
-									th:text="#{shop.label.outOfStock}">Hết hàng</span>
+									style="height: 250px; border: 2px solid #7AB730; border-radius: 5px;"
+									class="img-fluid package-item " th:src="@{|${p.image}|}" alt="">
+									<span th:if="${p.quantityavailable <= 0}"
+									class="out-of-stock-label" th:text="#{shop.label.outOfStock}">Hết
+										hàng</span>
 								</a>
 
-								<div class="p-4">
-									<a th:utext="${p.productname}" class="h5 text-decoration-none"
+
+								<div class="p-2">
+									<a
+										style="font-size: 16px; color: #003C2D; text-decoration: none;"
+										onmouseover="this.style.color='#FFA500'"
+										onmouseout="this.style.color='#003C2D'"
+										th:utext="${p.productname}" class="h5 text-decoration-none"
 										th:href="@{|/product/detail/${p.productid}|}"></a>
-									<div class="border-top mt-4 pt-4">
+									<div class="mt-2 pt-2">
 										<div class="text-center">
-											<h5
+											<span
+												style="font-size: 20px; color: #003C2D; font-weight: bold;"
 												th:text="*{#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')} + ' ₫ '"
-												class=""></h5>
+												class=""></span>
 										</div>
 									</div>
 								</div>

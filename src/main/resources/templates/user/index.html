@@ -68,19 +68,28 @@
 			<div class="row text-center">
 				<div th:each="product : ${topList.content}"
 					class="col-lg-3 col-md-6 mb-4">
-					<div class="package-item bg-white mb-2">
-						<a th:href="@{|/product/detail/${product.product.productid}|}"><img
-							style="height: 250px" class="img-fluid "
-							th:src="@{|${product.product.image}|}" alt="" /> </a>
-						<div class="p-4">
-							<a th:href="@{|/product/detail/${product.product.productid}|}"
+					<div class="bg-white mb-2">
+						<a th:href="@{|/product/detail/${product.product.productid}|}"
+							style="display: block; position: relative;"><img
+							style="height: 250px; border: 2px solid #7AB730; border-radius: 5px;"
+							class="img-fluid package-item"
+							th:src="@{|${product.product.image}|}" alt="" /> <span
+							th:if="${product.product.quantityavailable <= 0}"
+							class="out-of-stock-label" th:text="#{shop.label.outOfStock}">Hết
+								hàng</span></a>
+						<div class="p-2">
+							<a
+								style="font-size: 16px; color: #003C2D; text-decoration: none;"
+								onmouseover="this.style.color='#FFA500'"
+								onmouseout="this.style.color='#003C2D'"
+								th:href="@{|/product/detail/${product.product.productid}|}"
 								th:text="${product.product.productname}"
 								class="h5 text-decoration-none"></a>
-							<div class="border-top mt-4 pt-4">
+							<div class=" mt-2 pt-2">
 								<div class="text-center">
-									<h5
+									<span style="font-size: 20px; color: #003C2D; font-weight: bold;"
 										th:text="*{#numbers.formatDecimal(product.product.price,0,'COMMA',0,'POINT')} + ' ₫ '"
-										class="m-0"></h5>
+										class="m-0"></span>
 								</div>
 							</div>
 						</div>
@@ -115,8 +124,8 @@
 							</div>
 							<div class="box_info">
 								<h3>Tiêu chuẩn chất lượng</h3>
-								<p class="content">Các vườn nông sản của GreenFarm được ứng dụng
-									nuôi trồng theo các tiêu chí an toàn hữu cơ tối thiểu theo
+								<p class="content">Các vườn nông sản của GreenFarm được ứng
+									dụng nuôi trồng theo các tiêu chí an toàn hữu cơ tối thiểu theo
 									chứng nhận của VietGap, GlobalGap</p>
 							</div>
 						</div>
@@ -137,7 +146,6 @@
 				</div>
 			</div>
 		</section>
-		
 </body>
 
 </html>

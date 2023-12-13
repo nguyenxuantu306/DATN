@@ -72,7 +72,7 @@ body {
 	line-height: 1.5;
 	color: #656565;
 	text-align: left;
-	background-color: #F3F3F3;
+	background-color:  #F3F3F3;;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -10510,7 +10510,8 @@ a.text-dark:focus {
 
 .text-decoration-none {
 	text-decoration: none !important;
-}
+}	
+
 
 .text-break {
 	word-break: break-word !important;
@@ -10812,12 +10813,23 @@ h6,
 }
 
 .package-item {
-	transition: .5s;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s, box-shadow 0.4s;
+}
+
+.package-item img {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 .package-item:hover {
-	box-shadow: 0 0 30px #CCCCCC;
+    transform: scale(1.00) translateY(-5px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .bg-registration {
 	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/carousel-1.jpg), no-repeat center center;
@@ -11009,7 +11021,7 @@ h6,
 }
 
 .lighter-text {
-	color: var(--light-text);
+	color: var(-rgb(255, 255, 255)text);
 }
 
 .main-color-text {
@@ -11021,7 +11033,7 @@ h6,
 
 nav {
 	padding: 20px 0 1px 0;
-	background: #F8F8F8;
+	background:#F8F8F8;
 	font-size: 16px;
 }
 
@@ -11196,8 +11208,7 @@ nav ul li a:hover {
 	width: fit-content;
 	height: fit-content;
 	position: relative;
-	margin: 20px;
-	/* Để cách trường tìm kiếm ra xa hơn từ nội dung khác */
+	padding-top: 10px;
 }
 
 .input-search {
@@ -11481,7 +11492,7 @@ h1 {
 	position: relative;
 }
 
-.package-item>a .out-of-stock-label {
+.out-of-stock-label {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -11493,18 +11504,7 @@ h1 {
 	border-radius: 5px 0 0 5px;
 	
 }
-.package-item>a .out-of-stock-label1 {
-	position: absolute;
-	top: 10;
-	right: 0;
-	background-color: rgb(0, 0, 0);
-	color: #ffffff;
-	padding: 5px 10px;
-	border: 1px solid #000;
-	font-size: 15px;
-	border-radius: 5px 0 0 5px;
-	
-}
+
 
 .thumbnail-image.selected {
 	border: 2px solid gold;
