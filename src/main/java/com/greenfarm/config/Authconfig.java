@@ -27,8 +27,8 @@ public class Authconfig {
 	@Autowired
 	private CustomFailHandle customFailHandle;
 	
-	@Value("${spring.security.oauth2.client.registration.client-id}")
-	private String clientId;
+//	@Value("${spring.security.oauth2.client.registration.client-id}")
+//	private String clientId;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
