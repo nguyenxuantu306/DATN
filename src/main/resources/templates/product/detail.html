@@ -21,21 +21,20 @@
 	<div class="container shop-detail">
 		<div class="pt-3">
 			<div th:object="${item}" class="row">
-				<nav aria-label="breadcrumb" style="background-color:#F3F3F3;">
-					<ol class="breadcrumb" >
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: white;">
 						<li style="color: #0055AA;" class="breadcrumb-item"><a
-							href="/" th:text="#{shopDetail.label.breadcrumbHome}">Trang
+							href="#" th:text="#{shopDetail.label.breadcrumbHome}">Trang
 								chủ</a></li>
 						<li style="color: #0055AA;" class="breadcrumb-item"><a
-							href="/product/shop" th:text="#{shopDetail.label.breadcrumbShop}">Shop</a></li>
-						<li style="font-weight:bold;" class="breadcrumb-item active" aria-current="page"
+							href="#" th:text="#{shopDetail.label.breadcrumbShop}">Shop</a></li>
+						<li class="breadcrumb-item active" aria-current="page"
 							th:text="*{productname}"></li>
 					</ol>
 				</nav>
-				
 				<div class="col-lg-6 border-1">
 					<img id="mainImage" th:src="@{|*{image}|}" alt=""
-						style="width: 100%; height: 400px; border: 2px solid #7AB730; border-radius: 5px;" >
+						style="width: 100%; height: 400px;">
 
 					<div class="tab-content produc_tab_c mt-2">
 						<div class="tab-pane fade show active" role="tabpanel">
@@ -53,21 +52,20 @@
 				</div>
 
 				<div class="col-lg-6 product-details">
-					<div class="text-left mb-3 pb-3" >
+					<div class="text-left mb-3 pb-3">
 						<h3 th:text="*{productname}" class="text-uppercase mt-3"></h3>
-						<hr  style="border:1px solid">
 						<h2 class="mb-3"
-							style="font-weight:bold; color: #003C2D; font-size: 28px">
+							style="font-weight: 300; color: #80bb01; font-size: 28px">
 							<!--<span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'"
 								style="color: #999; text-decoration: line-through"></span>-->
 							<span
 								th:text="*{#numbers.formatDecimal(price,0,'COMMA',0,'POINT')} + ' ₫ '"></span>
 						</h2>
-						<strong>Mô tả : </strong> <p th:text="*{description}" class="product-description mb-3"></p>
-						<strong>Số lượng : </strong> <span th:text="*{quantityavailable}"
+						<p th:text="*{description}" class="product-description mb-3"></p>
+						Số Lượng : <span th:text="*{quantityavailable}"
 							class="product-description mb-3"></span> sản phẩm có sẵn
 
-						<div class="cart-button mt-4 mb-4 d-flex">
+						<div class="cart-button mt-5 mb-5 d-flex">
 							<div class="d-flex">
 								<button
 									style="border: 1px solid rgba(0, 0, 0, .09); width: 32px"
@@ -92,61 +90,52 @@
 								<i class="fas fa-exclamation-circle"></i> Sản phẩm đã hết hàng
 							</button>
 
+							<!-- <a th:if="${item.quantityavailable <= 0}"
+								style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
+								href="#"> <i class="fas fa-exclamation-circle"></i> Liên hệ
+							</a> -->
 						</div>
 						<div class="">
-							<span style="font-weight:bold; color: #003C2D;font-size: 20px">
+							<h5>
 								<span th:text="#{shopDetail.label.category}">CATEGORIES :
 								</span> <span><a th:text="*{category.categoryname}" /></span>
-							</span>
+							</h5>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div id="wapper">
-			<div class="heading-title text-center title_bg ">
-				<h3 th:text="#{shopDetail.label.relatedProduct}">Sản phẩm liên
-					quan</h3>
+			<div class="">
+				<h1 class="py-3" th:text="#{shopDetail.label.relatedProduct}">SẢN
+					PHẨM LIÊN QUAN</h1>
 			</div>
 			<div class="row slider" th:object="${item}">
 				<div class="col-md-12 col-sm-12 col-xs-12 slide"
 					th:each="p : *{category.products}">
-					<div class="bg-white wap-items-ss brbox">
-						<a style="display: block; position: relative;"
-							th:href="@{|/product/detail/${p.productid}|}" class="wap-ss-img">
-							<img class="package-item1" th:src="@{|${p.image}|}"
-							alt="Product Image"
-							style="width: 250px; border: 2px solid #7AB730; border-radius: 5px;">
-							<span th:if="${p.quantityavailable <= 0}"
-									class="out-of-stock-label" th:text="#{shop.label.outOfStock}">Hết
-										hàng</span>
+					<div class="wap-items-ss brbox">
+						<a th:href="@{|/product/detail/${p.productid}|}"
+							class="wap-ss-img"> <img th:src="@{|${p.image}|}"
+							alt="Product Image" style="width: 270px;">
 						</a>
-						<div class="textleft p-2">
-							<a
-								style="font-size: 16px; color: #003C2D; text-decoration: none;"
-								onmouseover="this.style.color='#FFA500'"
-								onmouseout="this.style.color='#003C2D'"
-								th:href="@{|/product/detail/${p.productid}|}"
-								th:text="${p.productname}"></a>
-							<div class="mt-2 pt-2">
-								<!-- <b
-									th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"></b> -->
-
-								<div class="text-center">
-									<span
-										style="font-size: 20px; color: #003C2D; font-weight: bold;"
-										th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"
-										class=""></span>
-								</div>
+						<div class="textleft">
+							<a th:href="@{|/product/detail/${p.productid}|}"
+								th:text="${p.productname}"
+								style="color: black; text-decoration: none;"></a>
+							<div>
+								<b
+									th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"></b>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>	
-		<div class="heading-title text-center title_bg">
-			<h3 th:text="#{shopDetail.label.productReviews}">Đánh giá sản
-				phẩm</h3>
+		</div>
+		<br>
+
+		<div class=" mb-3">
+			<h1 th:text="#{shopDetail.label.productReviews}">ĐÁNH GIÁ SẢN
+				PHẨM</h1>
 		</div>
 		<div class="row ">
 			<div class="col-12 text-center">
@@ -160,10 +149,8 @@
 									th:each="starCount : ${ratingCountMap}">
 									<tr>
 										<td class="rating-label"><i
-											class="fas fa-star text-warning"> <span
-												style="color: black;" th:text="${starCount.start}"></span>
-										</i></td>
-
+											class="fas fa-star text-warning"> <span style="color: black;" th:text="${starCount.start}"></span> </i></td>
+											
 										<td class="rating-bar">
 
 
@@ -176,10 +163,7 @@
 
 
 										</td>
-										<td class="text-right"
-											th:text="${starCount.startcount} + ' Đánh giá'"><span
-											th:text="${starCount.startcount}"></span> <span>Đánh
-												giá</span></td>
+										<td class="text-right" th:text="${starCount.startcount} + ' Đánh giá'"><span  th:text="${starCount.startcount}"></span> <span>Đánh giá</span> </td>							
 									</tr>
 								</table>
 
@@ -217,8 +201,8 @@
 										</div>
 
 										<div class="d-flex justify-content-between mt-3">
-											<button style="width: 300px; background-color: #7AB730"
-												type="submit" class="btn btn-success"
+											<button style="width: 300px;background-color:#7AB730" type="submit"
+												class="btn btn-success"
 												th:text="#{shopDetail.label.sendReviews}">
 												Gửi đánh giá <i id="review-button"
 													class="fas fa-long-arrow-alt-right ms-1"></i>

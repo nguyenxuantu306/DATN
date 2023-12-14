@@ -1,25 +1,21 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,19 +24,33 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Tourdate")
-public class TourDate implements Serializable {
+@Table(name = "Discounts")
+public class Discount implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Positive(message = "tourdateid không được là số âm")
-	private Integer tourdateid;
-	
+	private Integer Discountid;
+
+	private String Name;
+
+	private Float Value;
+
 	@Temporal(TemporalType.DATE)
-	private Date tourdates;
-	
-	private Integer availableslots;
-	
+	private Date Startdate = new Date();
+
+	@Temporal(TemporalType.DATE)
+	private Date Enddate = new Date();
+
+	@Temporal(TemporalType.DATE)
+	private Date Createdate = new Date();
+
+//	private Integer Amount;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "discount")
+	List<ProductDiscount> productDiscounts;
+
 	@ManyToOne
-	@JoinColumn(name = "tourid")
-	private Tour tour;
+	@JoinColumn(name = "statusvoucherid")
+	StatusVoucher statusVoucher;
 }

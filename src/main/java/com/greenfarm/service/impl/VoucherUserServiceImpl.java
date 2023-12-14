@@ -50,12 +50,6 @@ public class VoucherUserServiceImpl implements VoucherUserService {
 		return dao.findByKeyword(keyword);
 	}
 
-	@Override
-	public boolean existsByUserIdAndVoucherId(Integer userId, Integer voucherId) {
-		// TODO Auto-generated method stub
-		return dao.existsByUserUseridAndVoucherVoucherid(userId, voucherId);
-	}
-
 
 	
 }

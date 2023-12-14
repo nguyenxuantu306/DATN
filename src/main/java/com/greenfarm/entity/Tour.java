@@ -50,6 +50,13 @@ public class Tour implements Serializable {
 	@NotBlank(message = "Location không được để trống")
 	private String location;
 
+//	@NotNull(message = "Availableslots không được để trống")
+//	@Column(name = "Availableslots")
+//	private Integer Availableslots;
+
+	@ManyToOne
+	@JoinColumn(name = "userid")
+	private User user;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "tour")

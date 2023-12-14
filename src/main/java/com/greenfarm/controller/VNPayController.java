@@ -176,7 +176,6 @@ public class VNPayController {
 				voucherOrderDAO.saveAll(voucherLists);
 
 				model.addAttribute("totalDiscount", discountedTotal);
-				model.addAttribute("discount", voucherLists);
 				model.addAttribute("orderConfirmation", orderItem);
 				model.addAttribute("total", total);
 				model.addAttribute("cartConfirmation", cartItems);
