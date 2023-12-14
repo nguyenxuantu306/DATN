@@ -49,7 +49,7 @@ public class VNPayController {
 
 	@Autowired
 	CartService cartService;
-	
+
 	@Autowired
 	CartDAO cartDAO;
 
@@ -64,40 +64,37 @@ public class VNPayController {
 
 	@Autowired
 	VoucherUserService voucherUserService;
-	
+
 	@Autowired
 	private VNPayService vnPayService;
 
 	@Autowired
 	VoucherService voucherService;
-	
+
 	@Autowired
 	VoucherOrderDAO voucherOrderDAO;
-	
 
 	@PostMapping("/submitOrder")
 	public String submidOrder(@RequestParam("hiddenTotalPrice") int totalPrice,
 
-			HttpServletRequest request,@RequestParam(name = "voucherid", required = false) String[] voucherIds ) {
+			HttpServletRequest request, @RequestParam(name = "voucherid", required = false) String[] voucherIds) {
 		String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 		String vnpayUrl = vnPayService.createOrder(totalPrice, baseUrl);
-		
+
 		HttpSession session = request.getSession();
 		session.setAttribute("voucherid", voucherIds);
-		
+
 		return "redirect:" + vnpayUrl;
 	}
 
 	@GetMapping("/cancelVNpay")
-	public String GetMapping(Model model, 
-			@ModelAttribute("Order") OrderDTO orderDTO, 
-			HttpServletRequest request) {
+	public String GetMapping(Model model, @ModelAttribute("Order") OrderDTO orderDTO, HttpServletRequest request) {
 		int paymentStatus = vnPayService.orderReturn(request);
 
-		if(paymentStatus != 1 ) {
+		if (paymentStatus != 1) {
 			return "cancel";
 		}
-		
+
 		// String orderInfo = request.getParameter("vnp_OrderInfo");
 		// String paymentTime = request.getParameter("vnp_PayDate");
 		// String transactionId = request.getParameter("vnp_TransactionNo");
@@ -112,7 +109,7 @@ public class VNPayController {
 			StatusOrder statusOrder = new StatusOrder();
 			statusOrder.setStatusorderid(1);
 			PaymentMethod paymentMethodObj = paymentMethodDAO.findById(2).get();
-		
+
 			if (user != null) {
 				Order orderItem = new Order();
 				orderItem.setUser(user);
@@ -122,9 +119,9 @@ public class VNPayController {
 				orderItem.setPaymentmethod(paymentMethodObj);
 				orderDAO.save(orderItem);
 
-				List<Cart> cartItems = cartDAO.findByUser(user); 
+				List<Cart> cartItems = cartDAO.findByUser(user);
 				List<OrderDetail> orderDetailList = new ArrayList<>();
-				
+
 				float total = 0;
 				for (Cart cartItem : cartItems) {
 					OrderDetail orderDetailItem = new OrderDetail();
@@ -137,31 +134,29 @@ public class VNPayController {
 
 				}
 				orderDetailDAO.saveAll(orderDetailList);
-				
+
 				float discountedTotal = 0;
 				List<VoucherOrder> voucherLists = new ArrayList<>();
 				HttpSession session = request.getSession();
 				String[] voucherIds = (String[]) session.getAttribute("voucherid");
-				
-				if (voucherIds != null && voucherIds.length > 0&&
-						!Arrays.asList(voucherIds).contains("0")) {
-				    for (String voucherId : voucherIds) {
-				        // Lấy thông tin Voucher từ voucherId
-				        Voucher voucher = voucherService.findByVoucherid(Long.parseLong(voucherId));
 
-				        // Tạo mới VoucherOrder và thêm vào danh sách
-				        VoucherOrder voucherOrder = new VoucherOrder();
-				        voucherOrder.setOrder(orderItem);
-				        voucherOrder.setVoucher(voucher);
-				        voucherLists.add(voucherOrder);
+				if (voucherIds != null && voucherIds.length > 0 && !Arrays.asList(voucherIds).contains("0")) {
+					for (String voucherId : voucherIds) {
+						// Lấy thông tin Voucher từ voucherId
+						Voucher voucher = voucherService.findByVoucherid(Long.parseLong(voucherId));
 
-				        // Áp dụng giảm giá từ voucher vào tổng giá trị đơn hàng
-				        discountedTotal =  total - (total *voucher.getDiscount());
-				    }
+						// Tạo mới VoucherOrder và thêm vào danh sách
+						VoucherOrder voucherOrder = new VoucherOrder();
+						voucherOrder.setOrder(orderItem);
+						voucherOrder.setVoucher(voucher);
+						voucherLists.add(voucherOrder);
+
+						// Áp dụng giảm giá từ voucher vào tổng giá trị đơn hàng
+						discountedTotal = total - (total * voucher.getDiscount());
+					}
 				} else {
 					System.out.println("heheehdeoco");
 				}
-
 
 				voucherOrderDAO.saveAll(voucherLists);
 
@@ -178,5 +173,5 @@ public class VNPayController {
 			return "login";
 		}
 	}
-	
+
 }

@@ -25,7 +25,6 @@ public class AddressServiceImpl implements AddressService {
 		return addressDAO.findAll();
 	}
 
-
 	@Override
 	public Address findById(Integer addressid) {
 		return addressDAO.findById(addressid).get();
@@ -54,45 +53,42 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	@Transactional
-	public void setActiveStatus(String email,Integer addressId) {
-		 // Cập nhật trạng thái Active của địa chỉ được chọn là true
-	    addressDAO.setActiveStatus(addressId);
+	public void setActiveStatus(String email, Integer addressId) {
+		// Cập nhật trạng thái Active của địa chỉ được chọn là true
+		addressDAO.setActiveStatus(addressId);
 
-	    // Cập nhật trạng thái Active của các địa chỉ của người dùng đăng nhập còn lại là false
-	    List<Address> userAddresses = addressDAO.findByEfindByIdAccountmail(email);
-	    for (Address address : userAddresses) {
-	        if (!address.getAddressID().equals(addressId)) {
-	            address.setActive(false);
-	            addressDAO.save(address);
-	        }
-	    }
-		
+		// Cập nhật trạng thái Active của các địa chỉ của người dùng đăng nhập còn lại
+		// là false
+		List<Address> userAddresses = addressDAO.findByEfindByIdAccountmail(email);
+		for (Address address : userAddresses) {
+			if (!address.getAddressID().equals(addressId)) {
+				address.setActive(false);
+				addressDAO.save(address);
+			}
+		}
+
 	}
-
 
 	@Override
 	public Address updateById(Integer id, Address address) {
-	    // Kiểm tra xem address có tồn tại không
-	    Address existingAddress = addressDAO.findById(id).orElse(null);
+		// Kiểm tra xem address có tồn tại không
+		Address existingAddress = addressDAO.findById(id).orElse(null);
 
-	    if (existingAddress != null) {
-	        // Thực hiện cập nhật các trường của existingAddress dựa trên address mới
-	        existingAddress.setStreet(address.getStreet());
-	        existingAddress.setDistrict(address.getDistrict());
-	        existingAddress.setCity(address.getCity());
-	        existingAddress.setPhonenumber(address.getPhonenumber());
-	        existingAddress.setFullname(address.getFullname());
-	        // Cập nhật thông tin user nếu cần
-	        existingAddress.setUser(address.getUser());
+		if (existingAddress != null) {
+			// Thực hiện cập nhật các trường của existingAddress dựa trên address mới
+			existingAddress.setStreet(address.getStreet());
+			existingAddress.setDistrict(address.getDistrict());
+			existingAddress.setCity(address.getCity());
+			existingAddress.setPhonenumber(address.getPhonenumber());
+			existingAddress.setFullname(address.getFullname());
+			// Cập nhật thông tin user nếu cần
+			existingAddress.setUser(address.getUser());
 
-	        // Lưu lại vào cơ sở dữ liệu
-	        return addressDAO.save(existingAddress);
-	    }
+			// Lưu lại vào cơ sở dữ liệu
+			return addressDAO.save(existingAddress);
+		}
 
-	    return null;
+		return null;
 	}
 
-
-
-	
 }

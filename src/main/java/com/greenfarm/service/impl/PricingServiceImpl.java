@@ -12,7 +12,6 @@ public class PricingServiceImpl implements PricingService {
 	@Autowired
 	PricingDAO dao;
 
-	
 	public Pricing create(Pricing pricings) {
 		return dao.save(pricings);
 	}

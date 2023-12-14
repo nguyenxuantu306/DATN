@@ -11,11 +11,11 @@ import com.greenfarm.entity.Tour;
 import com.greenfarm.service.CommentService;
 
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	CommentDAO commentDAO;
-	
+
 	@Override
 	public Comment create(Comment comment) {
 		return commentDAO.save(comment);
@@ -48,7 +48,7 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	public List<Comment> getCommentsOrderByDateDesc() {
-	     return commentDAO.findAllByOrderByCommentdateDesc();
-	} 
+		return commentDAO.findAllByOrderByCommentdateDesc();
+	}
 
 }

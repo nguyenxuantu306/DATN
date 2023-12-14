@@ -23,50 +23,50 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class CustomOAuth2successHandler implements AuthenticationSuccessHandler {
-	
-	
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	UserDetailsService details;
-	
+
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		
+
 		OAuth2User login = (OAuth2User) authentication.getPrincipal();
 		System.out.println("CustomOAuth2UserService invoked");
 		OAuth2AuthenticationToken oauth2 = (OAuth2AuthenticationToken) authentication.getPrincipal();
-		System.out.println("day la xem facebook co gi"+oauth2);
+		System.out.println("day la xem facebook co gi" + oauth2);
 		// Lấy thông tin từ oauth2User
-	    String email = login.getAttribute("email");
-	    String provider = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
-	       
-	    // Kiểm tra xem người dùng đã tồn tại trong cơ sở dữ liệu chưa
-	 //   User user2 = userService.findByEmailAndProvider(email, Provider.GOOGLE); // Thay Provider.GOOGLE bằng giá trị tương ứng
-	    try {
-	    	 User dangnhap = userService.findByEmail(email);
-	    	// Optional<User> account = Optional.ofNullable(userService.findByEmail(email));
-		    	if (dangnhap != null) {
-		    		
-		    		try {
-		    				
-		    			// Lấy thông tin đăng nhập từ người dùng
-		    			String username = dangnhap.getEmail();  // Giả sử email là tên người dùng
+		String email = login.getAttribute("email");
+		String provider = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
 
-		    			// Tải thông tin người dùng từ UserDetailsService
-		    			UserDetails userDetails = details.loadUserByUsername(username);
+		// Kiểm tra xem người dùng đã tồn tại trong cơ sở dữ liệu chưa
+		// User user2 = userService.findByEmailAndProvider(email, Provider.GOOGLE); //
+		// Thay Provider.GOOGLE bằng giá trị tương ứng
+		try {
+			User dangnhap = userService.findByEmail(email);
+			// Optional<User> account = Optional.ofNullable(userService.findByEmail(email));
+			if (dangnhap != null) {
 
-		    			// Tạo một đối tượng Authentication
-		    			Authentication authentication2 = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+				try {
 
-		    			// Đặt thông tin xác thực vào SecurityContext
-		    			SecurityContext sc = SecurityContextHolder.getContext();
-		    			sc.setAuthentication(authentication2);
+					// Lấy thông tin đăng nhập từ người dùng
+					String username = dangnhap.getEmail(); // Giả sử email là tên người dùng
 
-			    			// Lấy thông tin đăng nhập từ người dùng
+					// Tải thông tin người dùng từ UserDetailsService
+					UserDetails userDetails = details.loadUserByUsername(username);
+
+					// Tạo một đối tượng Authentication
+					Authentication authentication2 = new UsernamePasswordAuthenticationToken(userDetails, null,
+							userDetails.getAuthorities());
+
+					// Đặt thông tin xác thực vào SecurityContext
+					SecurityContext sc = SecurityContextHolder.getContext();
+					sc.setAuthentication(authentication2);
+
+					// Lấy thông tin đăng nhập từ người dùng
 //			    			String username = dangnhap.getEmail();  // Giả sử email là tên người dùng
 //			    			String password = dangnhap.getPassword();  // Giả sử password là mật khẩu
 //
@@ -77,9 +77,9 @@ public class CustomOAuth2successHandler implements AuthenticationSuccessHandler 
 //			    			SecurityContext sc = SecurityContextHolder.getContext();
 //			    			sc.setAuthentication(authentication2);
 
-			    		SecurityContext check = SecurityContextHolder.getContext();
+					SecurityContext check = SecurityContextHolder.getContext();
 
-			    		response.sendRedirect("/");
+					response.sendRedirect("/");
 //						}else {
 //							dangnhap.setProvider(Provider.GOOGLE);
 //							dangnhap.setFirstname(login.getAttribute("given_name"));
@@ -91,39 +91,35 @@ public class CustomOAuth2successHandler implements AuthenticationSuccessHandler 
 //							System.out.println(check);
 //							response.sendRedirect("/");
 //						}
-					} catch (Exception e) {
-						// TODO: handle exception
-						e.printStackTrace();
-						authentication.setAuthenticated(false);
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					authentication.setAuthenticated(false);
 
-			            // Xóa thông tin đăng nhập
-			            SecurityContextHolder.getContext().setAuthentication(null);
-			       
-						response.sendRedirect("/login");
-					}
-		    		
-					
-				}else {
-					// Thêm thông tin cần chuyển đi vào RedirectAttributes
+					// Xóa thông tin đăng nhập
+					SecurityContextHolder.getContext().setAuthentication(null);
+
+					response.sendRedirect("/login");
+				}
+
+			} else {
+				// Thêm thông tin cần chuyển đi vào RedirectAttributes
 //		            RedirectAttributes redirectAttributes = (RedirectAttributes) authentication;
 //		            redirectAttributes.addFlashAttribute("logininfo", login);
 
-		            response.sendRedirect("/register/completelogin");
-				}
+				response.sendRedirect("/register/completelogin");
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			authentication.setAuthenticated(false);
 
-            // Xóa thông tin đăng nhập
-            SecurityContextHolder.getContext().setAuthentication(null);
-       
-		}	
-	    
-	   
+			// Xóa thông tin đăng nhập
+			SecurityContextHolder.getContext().setAuthentication(null);
+
+		}
+
 	}
-	
-	
 
 }
 //OAuth2User user = (OAuth2User) authentication.getPrincipal();

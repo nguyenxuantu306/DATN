@@ -19,6 +19,5 @@ public class CategorySalesByDate implements Serializable {
 	@Id
 	Serializable group;
 	Long count;
-	
-	
+
 }

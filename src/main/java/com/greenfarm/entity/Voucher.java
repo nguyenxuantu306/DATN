@@ -21,19 +21,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Vouchers")
-public class Voucher implements Serializable{
+public class Voucher implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer voucherid;
-	
+
 	private String code;
 	private Float discount;
 	private Date expirationdate = new Date();
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "voucher")
 	List<VoucherUser> voucheruser;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "voucher")
 	List<VoucherOrder> voucherorder;

@@ -78,20 +78,18 @@ public class TourRestController {
 		return new ResponseEntity<>(tourDTO, HttpStatus.OK);
 	}
 
-	
 	@GetMapping("/deleted")
 	public ResponseEntity<List<TourDTO>> getDeletedList() {
-		List<Tour> deletedUser= tourService.findAllDeletedTour();
+		List<Tour> deletedUser = tourService.findAllDeletedTour();
 
 		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
-		List<TourDTO> TourDTOs = deletedUser.stream()
-				.map(tour -> modelMapper.map(tour, TourDTO.class)).collect(Collectors.toList());
+		List<TourDTO> TourDTOs = deletedUser.stream().map(tour -> modelMapper.map(tour, TourDTO.class))
+				.collect(Collectors.toList());
 
 		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(TourDTOs, HttpStatus.OK);
 	}
-	
-	
+
 	@PostMapping()
 	public ResponseEntity<TourDTO> create(@RequestBody @Valid TourDTO tourDTO, BindingResult result) {
 
@@ -285,8 +283,7 @@ public class TourRestController {
 		tourService.deleteTourById(tourid);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
-	
+
 	@PutMapping("/{tourid}/restore")
 	public ResponseEntity<String> restoreTour(@PathVariable("tourid") Integer tourid) {
 		// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu

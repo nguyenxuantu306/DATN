@@ -23,12 +23,11 @@ public class TourDateBooking implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer tourdatebookingid;
-	
-	
+
 	@ManyToOne
 	@JoinColumn(name = "TourdateID")
 	private TourDate tourdate;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "BookingID")
 	private Booking booking;

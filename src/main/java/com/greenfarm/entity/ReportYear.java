@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReportYear implements Serializable {	
+public class ReportYear implements Serializable {
 	@Id
 	private Integer yearValue;
 	Double sum;

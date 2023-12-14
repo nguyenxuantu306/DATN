@@ -20,5 +20,5 @@ public class ReportSP implements Serializable {
 	Serializable group;
 	Double sum;
 	Double count;
-	
+
 }

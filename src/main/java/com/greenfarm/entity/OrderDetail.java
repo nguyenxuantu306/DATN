@@ -35,17 +35,15 @@ public class OrderDetail implements Serializable {
 
 	Float totalprice;
 
-
-	
-	public  Float getTotalPrice() {
-	    return totalprice;
+	public Float getTotalPrice() {
+		return totalprice;
 	}
-	
+
 	public void getTotalPrice(Float totalPrice) {
-	    this.totalprice = totalPrice;
+		this.totalprice = totalPrice;
 	}
 
 	public void setTotalPrice(Float totalPrice) {
-	    this.totalprice = totalPrice;
+		this.totalprice = totalPrice;
 	}
 }

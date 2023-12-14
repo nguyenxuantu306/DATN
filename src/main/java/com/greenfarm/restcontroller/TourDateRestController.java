@@ -92,8 +92,7 @@ public class TourDateRestController {
 			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy product để cập nhật
 			return ResponseEntity.notFound().build();
 		}
-		
-		
+
 		// Sử dụng ModelMapper để ánh xạ từ Product đã cập nhật thành ProductDTO
 		TourDateDTO tourdateDTO = modelMapper.map(updatedTourDateResult, TourDateDTO.class);
 
@@ -101,13 +100,12 @@ public class TourDateRestController {
 		return new ResponseEntity<>(tourdateDTO, HttpStatus.OK);
 	}
 
-
 	@DeleteMapping("/{tourdateid}")
 	public ResponseEntity<Void> deletetourdate(@PathVariable("tourdateid") Integer tourdateid) {
 		toudateService.deleteTourDateById(tourdateid);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
+
 //	@GetMapping("/searchkeywordcategory")
 //	public ResponseEntity<List<TourDateDTO>> getList(@RequestParam(required = false) String keyword) {
 //		List<TourDate> categorys;

@@ -22,8 +22,8 @@ public class Report7day implements Serializable {
 	Double sum;
 
 	// Constructor
-    public Report7day(Date date, Double sum) {
-        this.date = date;
-        this.sum = sum;
-    }
+	public Report7day(Date date, Double sum) {
+		this.date = date;
+		this.sum = sum;
+	}
 }

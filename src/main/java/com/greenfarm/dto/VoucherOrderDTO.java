@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class VoucherOrderDTO {
 	private Integer voucherorderid;
-	
+
 	private Order order;
-	
+
 	private Voucher voucher;
-	
+
 }

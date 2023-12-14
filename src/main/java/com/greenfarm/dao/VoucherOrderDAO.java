@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.greenfarm.entity.VoucherOrder;
 
-public interface VoucherOrderDAO extends JpaRepository<VoucherOrder, Integer>{
+public interface VoucherOrderDAO extends JpaRepository<VoucherOrder, Integer> {
 
 }

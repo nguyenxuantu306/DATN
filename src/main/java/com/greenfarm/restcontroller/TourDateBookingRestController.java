@@ -39,10 +39,12 @@ public class TourDateBookingRestController {
 	public ResponseEntity<List<TourDateBookingDTO>> getList() {
 		List<TourDateBooking> tourdatebookings = toudatebookingService.findAll();
 
-		// Sử dụng modelMapper để ánh xạ danh sách TourDateBooking sang danh sách TourDateBookingBookingDTO
+		// Sử dụng modelMapper để ánh xạ danh sách TourDateBooking sang danh sách
+		// TourDateBookingBookingDTO
 		ModelMapper modelMapper = new ModelMapper();
 		List<TourDateBookingDTO> tourdatebookingDtos = tourdatebookings.stream()
-				.map(tourdatebooking -> modelMapper.map(tourdatebooking, TourDateBookingDTO.class)).collect(Collectors.toList());
+				.map(tourdatebooking -> modelMapper.map(tourdatebooking, TourDateBookingDTO.class))
+				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(tourdatebookingDtos); // ResponseEntity.ok() tương đương HttpStatus.OK
 	}
@@ -56,7 +58,8 @@ public class TourDateBookingRestController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		// Sử dụng modelMapper để ánh xạ từ TourDateBooking sang TourDateBookingBookingDTO
+		// Sử dụng modelMapper để ánh xạ từ TourDateBooking sang
+		// TourDateBookingBookingDTO
 		ModelMapper modelMapper = new ModelMapper();
 		TourDateBookingDTO tourdatebookingDTO = modelMapper.map(tourdatebooking, TourDateBookingDTO.class);
 
@@ -69,15 +72,18 @@ public class TourDateBookingRestController {
 		TourDateBooking createdTourDateBooking = toudatebookingService.create(toudatebooking);
 
 		if (createdTourDateBooking == null) {
-			// Nếu không thể tạo TourDateBooking, trả về mã trạng thái 500 Internal Server Error
+			// Nếu không thể tạo TourDateBooking, trả về mã trạng thái 500 Internal Server
+			// Error
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 
-		// Sử dụng ModelMapper để ánh xạ từ TourDateBooking sang TourDateBookingBookingDTO
+		// Sử dụng ModelMapper để ánh xạ từ TourDateBooking sang
+		// TourDateBookingBookingDTO
 		ModelMapper modelMapper = new ModelMapper();
 		TourDateBookingDTO toudatebookingDTO = modelMapper.map(createdTourDateBooking, TourDateBookingDTO.class);
 
-		// Trả về TourDateBookingBookingDTO bằng ResponseEntity với mã trạng thái 201 Created
+		// Trả về TourDateBookingBookingDTO bằng ResponseEntity với mã trạng thái 201
+		// Created
 		return ResponseEntity.status(HttpStatus.CREATED).body(toudatebookingDTO);
 	}
 
@@ -92,22 +98,21 @@ public class TourDateBookingRestController {
 			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy product để cập nhật
 			return ResponseEntity.notFound().build();
 		}
-		
-		
+
 		// Sử dụng ModelMapper để ánh xạ từ Product đã cập nhật thành ProductDTO
 		TourDateBookingDTO tourdatebookingDTO = modelMapper.map(updatedTourDateBookingResult, TourDateBookingDTO.class);
 
-		// Trả về updatedTourDateBookingBookingDTO bằng ResponseEntity với mã trạng thái 200 OK
+		// Trả về updatedTourDateBookingBookingDTO bằng ResponseEntity với mã trạng thái
+		// 200 OK
 		return new ResponseEntity<>(tourdatebookingDTO, HttpStatus.OK);
 	}
-
 
 	@DeleteMapping("/{tourdatebookingid}")
 	public ResponseEntity<Void> deletetourdate(@PathVariable("tourdatebookingid") Integer tourdatebookingid) {
 		toudatebookingService.deleteTourDateBookingById(tourdatebookingid);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
+
 //	@GetMapping("/searchkeywordcategory")
 //	public ResponseEntity<List<TourDateBookingBookingDTO>> getList(@RequestParam(required = false) String keyword) {
 //		List<TourDateBooking> categorys;

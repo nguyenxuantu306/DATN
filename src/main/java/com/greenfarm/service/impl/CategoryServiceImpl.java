@@ -41,18 +41,16 @@ public class CategoryServiceImpl implements CategoryService {
 		return dao.save(category);
 	}
 
-	
 	@Override
 	@Transactional
 	public void deleteCategoryById(Integer categoryid) {
 		dao.deleteCategoryById(categoryid);
-		
+
 	}
 
 	@Override
 	public List<Category> findAllDeletedCategory() {
 		return dao.findAllByIsdeletedTrue();
 	}
-
 
 }

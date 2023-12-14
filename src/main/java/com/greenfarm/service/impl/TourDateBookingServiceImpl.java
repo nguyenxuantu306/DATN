@@ -14,18 +14,16 @@ public class TourDateBookingServiceImpl implements TourDateBookingService {
 
 	@Autowired
 	TourDateBookingDAO dao;
-	
+
 	@Override
 	public List<TourDateBooking> findAll() {
 		return dao.findAll();
 	}
-	
+
 	@Override
 	public TourDateBooking create(TourDateBooking tourdatebooking) {
 		return dao.save(tourdatebooking);
 	}
-	
-	
 
 	@Override
 	public TourDateBooking update(TourDateBooking tourdatebooking) {
@@ -34,16 +32,13 @@ public class TourDateBookingServiceImpl implements TourDateBookingService {
 
 	@Override
 	public void deleteTourDateBookingById(Integer tourdatebookingid) {
-			dao.deleteById(tourdatebookingid);
-		
+		dao.deleteById(tourdatebookingid);
+
 	}
-
-
 
 	@Override
 	public TourDateBooking findById(Integer tourdatebookingid) {
 		return dao.findById(tourdatebookingid).get();
 	}
-
 
 }

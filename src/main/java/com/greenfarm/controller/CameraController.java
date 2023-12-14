@@ -48,74 +48,72 @@ public class CameraController {
 //        // Return the byte array as ResponseEntity
 //        return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
 //    }
-    
-    @GetMapping("/soatve")
-    public String soatve() {
-    	
-    	return null;
-    }
-    
-    @GetMapping("/captureqr")
-    public String capture1() {
-    	
-    	// Lấy danh sách các camera
-    	List<Webcam> webcams = Webcam.getWebcams();
-System.out.println(webcams);
-    	// Chọn camera đầu tiên trong danh sách
-    	Webcam selectedWebcam = webcams.get(0);
-    	System.out.println(selectedWebcam);
-    	
-    	// Đóng camera hiện tại
-    	
-    	//webcam.close();
 
-    	// Mở camera mới
-    	selectedWebcam.open(true);
+	@GetMapping("/soatve")
+	public String soatve() {
 
-    	// Đổi sang camera khác (ví dụ: camera thứ hai)
-    	//selectedWebcam = webcams.get(1);
+		return null;
+	}
 
-        try {
-            //BufferedImage bufferedImage = webcamService.capture();
-            BufferedImage bufferedImage = selectedWebcam.getImage();
+	@GetMapping("/captureqr")
+	public String capture1() {
 
-            // Convert BufferedImage to byte array
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "png", baos);
-            baos.flush();
+		// Lấy danh sách các camera
+		List<Webcam> webcams = Webcam.getWebcams();
+		System.out.println(webcams);
+		// Chọn camera đầu tiên trong danh sách
+		Webcam selectedWebcam = webcams.get(0);
+		System.out.println(selectedWebcam);
 
-            // Set the content type as image/png
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.IMAGE_PNG);
+		// Đóng camera hiện tại
 
-            // Return the byte array as ResponseEntity
-           
+		// webcam.close();
+
+		// Mở camera mới
+		selectedWebcam.open(true);
+
+		// Đổi sang camera khác (ví dụ: camera thứ hai)
+		// selectedWebcam = webcams.get(1);
+
+		try {
+			// BufferedImage bufferedImage = webcamService.capture();
+			BufferedImage bufferedImage = selectedWebcam.getImage();
+
+			// Convert BufferedImage to byte array
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImage, "png", baos);
+			baos.flush();
+
+			// Set the content type as image/png
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.IMAGE_PNG);
+
+			// Return the byte array as ResponseEntity
 
 //            // Decode QR code from the captured image
 //            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(
 //                    new BufferedImageLuminanceSource(bufferedImage)));
-            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer( 
-            		new BufferedImageLuminanceSource(bufferedImage)
-            		));
-            
-            
-            Result result = new MultiFormatReader().decode(bitmap);
+			BinaryBitmap bitmap = new BinaryBitmap(
+					new HybridBinarizer(new BufferedImageLuminanceSource(bufferedImage)));
 
-            // You can use the result.getText() to get the decoded QR code value
-            String qrCodeValue = result.getText();
+			Result result = new MultiFormatReader().decode(bitmap);
 
-            // Perform any action with the decoded QR code value
-            System.out.println("Decoded QR Code: " + qrCodeValue);
+			// You can use the result.getText() to get the decoded QR code value
+			String qrCodeValue = result.getText();
 
-            // You can return the decoded QR code value as part of the response
-            ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
-            return "redirect:/"+qrCodeValue;
-           // return ResponseEntity.ok(qrCodeValue);
-        } catch (Exception e) {
-            e.printStackTrace();
-            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error capturing and decoding QR code.");
-            System.out.println("loi");
-            return "/captureqr"; 
-        }
-    }
+			// Perform any action with the decoded QR code value
+			System.out.println("Decoded QR Code: " + qrCodeValue);
+
+			// You can return the decoded QR code value as part of the response
+			ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
+			return "redirect:/" + qrCodeValue;
+			// return ResponseEntity.ok(qrCodeValue);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error
+			// capturing and decoding QR code.");
+			System.out.println("loi");
+			return "/captureqr";
+		}
+	}
 }

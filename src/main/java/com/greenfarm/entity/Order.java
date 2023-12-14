@@ -63,7 +63,4 @@ public class Order implements Serializable {
 	@OneToMany(mappedBy = "order")
 	List<VoucherOrder> voucherorder;
 
-	
-	
-
 }

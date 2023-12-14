@@ -122,7 +122,7 @@ public class PdfController {
 					.map(address -> address.getStreet() + ", " + address.getDistrict() + ", " + address.getCity())
 					.collect(Collectors.joining("; "));
 			// Thêm thông tin địa chỉ vào cột thứ 4
-			table.addCell(createCell(addressInfo, false, unicodeFonts)); 
+			table.addCell(createCell(addressInfo, false, unicodeFonts));
 			table.addCell(createCell(data.getGender() != null && data.getGender() ? "Nam" : "Nữ", false, unicodeFonts));
 			table.addCell(createCell(createDateString, false, unicodeFonts));
 

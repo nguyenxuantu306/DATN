@@ -11,16 +11,16 @@ public interface ReviewService {
 
 	// Create
 	Review create(Review review);
-	
+
 	// get all ratings
 	List<Review> getReviews();
-	
+
 	List<Review> findbyproduct(Product product);
-	
+
 	boolean deleteReviewById(Integer reviewid);
 
 	List<ReportRevenue> getRatingStats();
-	
+
 	boolean hasUserReviewedProduct(User user, Product product);
 
 }

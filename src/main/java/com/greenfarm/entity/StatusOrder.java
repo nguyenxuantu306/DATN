@@ -30,10 +30,9 @@ public class StatusOrder implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "statusOrder")
 	List<Order> order;
-	
 
 	public Integer getStatusorderid() {
-        return statusorderid;
-    }
+		return statusorderid;
+	}
 
 }

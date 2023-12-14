@@ -27,12 +27,12 @@ public class TourDate implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Positive(message = "tourdateid không được là số âm")
 	private Integer tourdateid;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date tourdates;
-	
+
 	private Integer Availableslots;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "tourid")
 	private Tour tour;

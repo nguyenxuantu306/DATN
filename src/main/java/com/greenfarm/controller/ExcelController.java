@@ -128,7 +128,7 @@ public class ExcelController {
 
 		int rowIdx = 2;
 
-for (int i = 0; i < dataList.size(); i++) {
+		for (int i = 0; i < dataList.size(); i++) {
 			User data = dataList.get(i);
 
 			Row row = sheet.createRow(rowIdx++);

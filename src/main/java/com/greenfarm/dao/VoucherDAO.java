@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import com.greenfarm.entity.Voucher;
 
 @EnableJpaRepositories
-public interface VoucherDAO extends JpaRepository<Voucher, Integer>{
+public interface VoucherDAO extends JpaRepository<Voucher, Integer> {
 
 	Voucher findByVoucherid(long parseLong);
 }

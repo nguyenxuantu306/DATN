@@ -10,7 +10,7 @@ import com.greenfarm.entity.TourImage;
 
 public interface TourImageDAO extends JpaRepository<TourImage, Integer> {
 
-	//TourImage findByTourTourid(Integer tourid);
+	// TourImage findByTourTourid(Integer tourid);
 
 	void deleteByTourimageid(Integer tourimageid);
 

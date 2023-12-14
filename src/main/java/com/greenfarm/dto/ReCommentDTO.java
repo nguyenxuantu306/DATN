@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 public class ReCommentDTO {
 	private Integer recommentid;
 	private String recommenttext;
-	
+
 	private Date recommentdate = new Date();
-	
+
 	private User user;
-	
+
 	private Comment comment;
 }

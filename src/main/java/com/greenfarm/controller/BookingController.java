@@ -54,10 +54,10 @@ public class BookingController {
 
 	@Autowired
 	TourService tourService;
-	
+
 	@Autowired
 	TourDateService tourdateService;
-	
+
 	@Autowired
 	TourDateBookingService tourdatebookingService;
 
@@ -101,8 +101,7 @@ public class BookingController {
 
 	@PostMapping("/booking/create")
 	public String createBooking(Model model, @ModelAttribute("booking") BookingDTO bookingDto,
-			@RequestParam("tourdate") String tourdate,
-			BindingResult bindingResult) throws IOException, ParseException {
+			@RequestParam("tourdate") String tourdate, BindingResult bindingResult) throws IOException, ParseException {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("booking", bookingDto);
@@ -110,12 +109,9 @@ public class BookingController {
 			return "bookingform";
 		}
 
-		
 		Booking booking = modelMapper.map(bookingDto, Booking.class);
 		// Thời gian
 		booking.setBookingdate(LocalDateTime.now());
-		
-		
 
 		// Trạng thái
 		StatusBooking statusBooking = statusBookingService.findById(1);
@@ -128,15 +124,14 @@ public class BookingController {
 
 		bookingService.saveBooking(booking);
 		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(tourdate);
-		
+
 		TourDate tourdate1 = tourdateService.findByTourAndTourdates(booking.getTour(), date1);
-		
+
 		TourDateBooking tourdatebooking = new TourDateBooking();
 		tourdatebooking.setBooking(booking);
 		tourdatebooking.setTourdate(tourdate1);
 		tourdatebookingService.create(tourdatebooking);
-		
-		
+
 		// Generate and save QR code to the qrcode field
 		String qrCodeContent = "http://localhost:8080/rest/bookings/kiemtrave/" + booking.getBookingid();
 		System.out.println(qrCodeContent);

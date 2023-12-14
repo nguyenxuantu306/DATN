@@ -16,19 +16,16 @@ public class TourDateServiceImpl implements TourDateService {
 
 	@Autowired
 	TourDateDAO dao;
-	
+
 	@Override
 	public List<TourDate> findAll() {
 		return dao.findAll();
 	}
 
-	
 	@Override
 	public TourDate create(TourDate tourdate) {
 		return dao.save(tourdate);
 	}
-	
-	
 
 	@Override
 	public TourDate update(TourDate tourdate) {
@@ -37,8 +34,8 @@ public class TourDateServiceImpl implements TourDateService {
 
 	@Override
 	public void deleteTourDateById(Integer tourdateid) {
-			dao.deleteById(tourdateid);
-		
+		dao.deleteById(tourdateid);
+
 	}
 
 	@Override
@@ -46,12 +43,9 @@ public class TourDateServiceImpl implements TourDateService {
 		return dao.findById(tourdateid).get();
 	}
 
-
-
 	@Override
 	public TourDate findByTourAndTourdates(Tour tour, Date tourdates) {
 		return dao.findByTourAndTourdates(tour, tourdates).get(0);
 	}
 
-	
 }

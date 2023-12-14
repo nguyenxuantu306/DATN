@@ -25,15 +25,15 @@ public class PaypalConfig {
 
 	@SuppressWarnings("deprecation")
 	@Bean
-    public APIContext apiContext() throws PayPalRESTException {
-        Map<String, String> sdkConfig = new HashMap<>();
-        sdkConfig.put("mode", mode);
- 
-        String accessToken = new OAuthTokenCredential(clientId, clientSecret, sdkConfig).getAccessToken();
- 
-        APIContext apiContext = new APIContext(accessToken);
-        apiContext.setConfigurationMap(sdkConfig);
- 
-        return apiContext;
-    }
+	public APIContext apiContext() throws PayPalRESTException {
+		Map<String, String> sdkConfig = new HashMap<>();
+		sdkConfig.put("mode", mode);
+
+		String accessToken = new OAuthTokenCredential(clientId, clientSecret, sdkConfig).getAccessToken();
+
+		APIContext apiContext = new APIContext(accessToken);
+		apiContext.setConfigurationMap(sdkConfig);
+
+		return apiContext;
+	}
 }

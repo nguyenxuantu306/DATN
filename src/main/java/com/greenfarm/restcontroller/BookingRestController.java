@@ -202,12 +202,12 @@ public class BookingRestController {
 			ModelAndView mav = new ModelAndView("mytiecketseen");
 			mav.addObject("message", "Bạn không có quyền xác nhận vé.");
 			model.addAttribute("bookinguse", booking);
-			
+
 			return mav;
 		}
 	}
 
-	//Lấy quyền user
+	// Lấy quyền user
 	private String getUserRole(Principal principal) {
 		User user = userService.findByEmail(principal.getName());
 
@@ -224,7 +224,7 @@ public class BookingRestController {
 			}
 		}
 
-		return "USER"; 
+		return "USER";
 	}
 
 }

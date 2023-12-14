@@ -25,41 +25,38 @@ public class TourController {
 	@Autowired
 	ModelMapper modelMapper;
 
-	
-	
 	@RequestMapping("/tour")
 	public String Tour(@RequestParam(name = "price_spread", required = false) String priceSpread,
-	                   @RequestParam(name = "search", required = false) String searchTerm,
-	                   @RequestParam(name = "page", defaultValue = "1") int page,
-	                   @RequestParam(name = "size", defaultValue = "6") Integer size,
-	                   Model model) {
+			@RequestParam(name = "search", required = false) String searchTerm,
+			@RequestParam(name = "page", defaultValue = "1") int page,
+			@RequestParam(name = "size", defaultValue = "6") Integer size, Model model) {
 		Pageable pageable = PageRequest.of(page - 1, size);
 
-        if (priceSpread != null && !priceSpread.isEmpty()) {
-            String[] priceRange = priceSpread.split("-");
-            if (priceRange.length == 2) {
-                Float minPrice = Float.parseFloat(priceRange[0]);
-                Float maxPrice = Float.parseFloat(priceRange[1]);
-                Page<TourDTO> tourPage = tourservice.findToursByAdultPriceWithPagination(minPrice, maxPrice, pageable);
-                model.addAttribute("tourDTOs", tourPage.getContent());
-                model.addAttribute("totalPages", tourPage.getTotalPages());
-                model.addAttribute("currentPage", page);
-            }
-        } else if (searchTerm != null && !searchTerm.isEmpty()) {
-            Page<TourDTO> tourPage = tourservice.findToursByTournameWithPagination(searchTerm, pageable);
-            model.addAttribute("tourDTOs", tourPage.getContent());
-            model.addAttribute("totalPages", tourPage.getTotalPages());
-            model.addAttribute("currentPage", page);
-        } else {
-            Page<Tour> tourPage = tourservice.findAllWithPagination(pageable);
-            model.addAttribute("items", tourPage.getContent());
-            model.addAttribute("totalPages", tourPage.getTotalPages());
-            model.addAttribute("currentPage", page);
-        }
-        
-	    return "tour/tour";
+		if (priceSpread != null && !priceSpread.isEmpty()) {
+			String[] priceRange = priceSpread.split("-");
+			if (priceRange.length == 2) {
+				Float minPrice = Float.parseFloat(priceRange[0]);
+				Float maxPrice = Float.parseFloat(priceRange[1]);
+				Page<TourDTO> tourPage = tourservice.findToursByAdultPriceWithPagination(minPrice, maxPrice, pageable);
+				model.addAttribute("tourDTOs", tourPage.getContent());
+				model.addAttribute("totalPages", tourPage.getTotalPages());
+				model.addAttribute("currentPage", page);
+			}
+		} else if (searchTerm != null && !searchTerm.isEmpty()) {
+			Page<TourDTO> tourPage = tourservice.findToursByTournameWithPagination(searchTerm, pageable);
+			model.addAttribute("tourDTOs", tourPage.getContent());
+			model.addAttribute("totalPages", tourPage.getTotalPages());
+			model.addAttribute("currentPage", page);
+		} else {
+			Page<Tour> tourPage = tourservice.findAllWithPagination(pageable);
+			model.addAttribute("items", tourPage.getContent());
+			model.addAttribute("totalPages", tourPage.getTotalPages());
+			model.addAttribute("currentPage", page);
+		}
+
+		return "tour/tour";
 	}
-	
+
 	@GetMapping("/tour/detail/{tourid}")
 	public String detail(Model model, @PathVariable("tourid") Integer tourid) {
 		Tour item = tourservice.findById(tourid);
@@ -73,5 +70,5 @@ public class TourController {
 
 		return "tour/detail";
 	}
-	
+
 }

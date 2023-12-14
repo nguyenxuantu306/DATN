@@ -23,15 +23,15 @@ public class TourDTO {
 	private String departureday;
 	private String location;
 	private Integer Availableslots;
-	
+
 	private User user;
 	private List<Booking> booking;
 	private TourConditionDTO tourCondition;
-    private TourOverviewDTO tourOverview;
-    private Pricing pricings;
-    private List<TourImageDTO> tourImage;
-    private List<CommentDTO> comment;
-    
-    private Boolean isdeleted = Boolean.FALSE;
-     
+	private TourOverviewDTO tourOverview;
+	private Pricing pricings;
+	private List<TourImageDTO> tourImage;
+	private List<CommentDTO> comment;
+
+	private Boolean isdeleted = Boolean.FALSE;
+
 }

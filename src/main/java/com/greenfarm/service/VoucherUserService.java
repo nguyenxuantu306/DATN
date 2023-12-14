@@ -10,7 +10,7 @@ public interface VoucherUserService {
 	List<VoucherUser> findByUser(User user);
 
 	List<VoucherUser> findAll();
-	
+
 	VoucherUser findById(Integer voucheruserId);
 
 	VoucherUser create(VoucherUser voucheruser);

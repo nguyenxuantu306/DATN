@@ -23,24 +23,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "Reviews")
 public class Review implements Serializable {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer reviewid;
-	
+
 	private String content;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	LocalDateTime datepost ;
-	
+	LocalDateTime datepost;
+
 	private Integer rating;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "userid")
 	private User user;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "productid")
 	private Product product;
-	
+
 }

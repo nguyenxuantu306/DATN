@@ -32,7 +32,7 @@ public class Tour implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Positive(message = "TourID không được là số âm")
 	private Integer tourid;
-	
+
 	@NotBlank(message = "Tour name không được phép trống (chỉ chứa khoảng trắng)")
 	private String tourname;
 
@@ -41,7 +41,7 @@ public class Tour implements Serializable {
 
 	@NotBlank(message = "Image URL không được để trống")
 	private String image;
-	
+
 	@NotBlank(message = "Departure không được để trống")
 	private String departureday;
 
@@ -67,7 +67,7 @@ public class Tour implements Serializable {
 	@JsonIgnore
 	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
 	private TourCondition tourCondition;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "tour", orphanRemoval = true)
 	private List<TourDate> tourDate;
@@ -87,9 +87,10 @@ public class Tour implements Serializable {
 	public String toString() {
 		return "";
 	}
-	
+
 	private Boolean isdeleted = Boolean.FALSE;
+
 	public void setIsDeleted(boolean isdeleted) {
-	    this.isdeleted = isdeleted;
+		this.isdeleted = isdeleted;
 	}
 }

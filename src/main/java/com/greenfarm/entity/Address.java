@@ -29,6 +29,6 @@ public class Address {
 	private String Fullname;
 	private Boolean Active = Boolean.FALSE;
 	@ManyToOne
-    @JoinColumn(name = "userid")
-    private User user;
+	@JoinColumn(name = "userid")
+	private User user;
 }

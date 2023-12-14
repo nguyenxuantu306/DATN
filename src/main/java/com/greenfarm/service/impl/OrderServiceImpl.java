@@ -205,8 +205,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-    public List<Report7day> getRevenueLast7Days() {
-        return dao.RevenueLast7Days();
-    }
+	public List<Report7day> getRevenueLast7Days() {
+		return dao.RevenueLast7Days();
+	}
 
 }

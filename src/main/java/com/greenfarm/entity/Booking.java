@@ -42,18 +42,17 @@ public class Booking implements Serializable {
 	private Float Totalprice;
 
 	@NotNull(message = "Số lượng vé người lớn không được để trống")
-    @Min(value = 1, message = "Số lượng vé người lớn phải lớn hơn hoặc bằng 1")
+	@Min(value = 1, message = "Số lượng vé người lớn phải lớn hơn hoặc bằng 1")
 	private Integer Adultticketnumber;
 
 	@NotNull(message = "Số lượng vé trẻ em không được để trống")
-    @Min(value = 0, message = "Số lượng vé trẻ em không được nhỏ hơn 0")
+	@Min(value = 0, message = "Số lượng vé trẻ em không được nhỏ hơn 0")
 	private Integer Childticketnumber;
 
-	
 //	@JsonIgnore
 //	@OneToMany(mappedBy = "booking")
 //	private List<TourDate> tourDate;
-	
+
 	private String qrcode;
 	@ManyToOne
 	@JoinColumn(name = "userid")
@@ -71,5 +70,4 @@ public class Booking implements Serializable {
 	@JoinColumn(name = "paymentmethodid")
 	PaymentMethod paymentmethod;
 
-	
 }

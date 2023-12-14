@@ -28,16 +28,16 @@ import com.greenfarm.service.TourService;
 @RestController
 @RequestMapping("/rest/comment")
 public class CommentRestController {
-	
+
 	@Autowired
 	CommentService commentService;
-	
+
 	@Autowired
 	ModelMapper modelMapper;
-	
+
 	@Autowired
 	TourService tourService;
-	
+
 //	@GetMapping()
 //	public ResponseEntity<List<CommentDTO>> getListcomment(){
 //		List<Comment> comments = commentService.getComments();
@@ -48,28 +48,26 @@ public class CommentRestController {
 //		
 //	}
 	@GetMapping()
-	public ResponseEntity<List<CommentDTO>> getListcomment(){
+	public ResponseEntity<List<CommentDTO>> getListcomment() {
 		List<Comment> comments = commentService.getCommentsOrderByDateDesc();
 		List<CommentDTO> commenDtos = comments.stream().map(comment -> modelMapper.map(comment, CommentDTO.class))
 				.collect(Collectors.toList());
 
 		return new ResponseEntity<>(commenDtos, HttpStatus.OK);
-		
-	} 
 
+	}
 
 	@GetMapping("/tour/{tourid}")
-	public ResponseEntity<List<CommentDTO>> getListcommentbytour(@PathVariable("tourid") Integer tourid){
+	public ResponseEntity<List<CommentDTO>> getListcommentbytour(@PathVariable("tourid") Integer tourid) {
 		Tour tour = tourService.findById(tourid);
 		List<Comment> comments = commentService.commentbytourid(tour);
 		List<CommentDTO> commenDtos = comments.stream().map(comment -> modelMapper.map(comment, CommentDTO.class))
 				.collect(Collectors.toList());
-				
+
 		return new ResponseEntity<>(commenDtos, HttpStatus.OK);
-		
+
 	}
-	
-	
+
 	@GetMapping("{commentid}")
 	public ResponseEntity<CommentDTO> getOne(@PathVariable("commentid") Integer commentid) {
 		Comment Comment = commentService.findById(commentid);
@@ -85,19 +83,17 @@ public class CommentRestController {
 		// Trả về CommentDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(CommentDTO, HttpStatus.OK);
 	}
-	
-	
+
 	@PostMapping()
-	public ResponseEntity<CommentDTO> create(@RequestBody Comment comment,
-			Model model) {
-		
-			Comment createdComment = commentService.create(comment);
+	public ResponseEntity<CommentDTO> create(@RequestBody Comment comment, Model model) {
 
-			// Sử dụng ModelMapper để ánh xạ từ Comment đã tạo thành CommentDTO
-			CommentDTO CommentDTO = modelMapper.map(createdComment, CommentDTO.class);
+		Comment createdComment = commentService.create(comment);
 
-			// Trả về CommentDTO bằng ResponseEntity với mã trạng thái 201 Created
-			return new ResponseEntity<>(CommentDTO, HttpStatus.CREATED);				
+		// Sử dụng ModelMapper để ánh xạ từ Comment đã tạo thành CommentDTO
+		CommentDTO CommentDTO = modelMapper.map(createdComment, CommentDTO.class);
+
+		// Trả về CommentDTO bằng ResponseEntity với mã trạng thái 201 Created
+		return new ResponseEntity<>(CommentDTO, HttpStatus.CREATED);
 	}
 
 	@PutMapping("{commentid}")
@@ -132,5 +128,5 @@ public class CommentRestController {
 		// Trả về mã trạng thái 204 No Content để chỉ ra thành công trong việc xóa
 		return ResponseEntity.noContent().build();
 	}
-	
+
 }

@@ -14,13 +14,13 @@ public class TourImageDTO {
 	private Integer tourimageid;
 	private String imageurl;
 	private Tour tour;
-	
+
 	public TourImageDTO() {
 	}
-	
+
 	public TourImageDTO(String imageurl) {
 		super();
 		this.imageurl = imageurl;
 	}
-	
+
 }

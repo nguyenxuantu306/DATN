@@ -13,14 +13,13 @@ public class ProductImageDTO {
 	private Integer productimageid;
 	private String imageurl;
 	private Product product;
-	
+
 	public ProductImageDTO() {
 	}
-	
+
 	public ProductImageDTO(String imageurl) {
 		super();
 		this.imageurl = imageurl;
 	}
-	
-	
+
 }

@@ -29,10 +29,8 @@ import com.greenfarm.service.ProductService;
 import com.greenfarm.service.ReviewService;
 import com.greenfarm.service.UserService;
 
-
 @Controller
 public class ProductController {
-
 
 	@Autowired
 	ReviewService reviewService;
@@ -49,21 +47,21 @@ public class ProductController {
 	// List All
 	@GetMapping("/product/shop")
 	public String shopList(Model model, @PageableDefault(size = 9) Pageable pageable,
-	        @RequestParam("cid") Optional<String> cid, UriComponentsBuilder uriBuilder) {
-	    if (cid.isPresent()) {
-	        List<Product> list = productService.findByCategoryId(cid.get());
-	        model.addAttribute("items", new PageImpl<>(list, pageable, list.size()));
-	    } else {
-	        Page<Product> productsPage = productService.findAllByIsdeletedFalse(pageable);
-	        Page<ProductDTO> productDTOPage = productsPage.map(product -> modelMapper.map(product, ProductDTO.class));
-	        model.addAttribute("items", productDTOPage);
+			@RequestParam("cid") Optional<String> cid, UriComponentsBuilder uriBuilder) {
+		if (cid.isPresent()) {
+			List<Product> list = productService.findByCategoryId(cid.get());
+			model.addAttribute("items", new PageImpl<>(list, pageable, list.size()));
+		} else {
+			Page<Product> productsPage = productService.findAllByIsdeletedFalse(pageable);
+			Page<ProductDTO> productDTOPage = productsPage.map(product -> modelMapper.map(product, ProductDTO.class));
+			model.addAttribute("items", productDTOPage);
 
-	        // Thêm thông tin URL phân trang
-	        String url = uriBuilder.path("/product/shop").queryParam("page", "{page}").build().toUriString();
-	        model.addAttribute("url", url);
-	    }
+			// Thêm thông tin URL phân trang
+			String url = uriBuilder.path("/product/shop").queryParam("page", "{page}").build().toUriString();
+			model.addAttribute("url", url);
+		}
 
-	    return "product/shop";
+		return "product/shop";
 	}
 
 	@GetMapping("/product/detail/{productid}")

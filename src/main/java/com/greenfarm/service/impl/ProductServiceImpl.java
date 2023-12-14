@@ -179,7 +179,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void save(Product product) {
-	    dao.save(product);
+		dao.save(product);
 	}
 
 }

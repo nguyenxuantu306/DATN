@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class ForgotPasswordForm {
 
 	@NotBlank(message = "Email không được để trống")
-    @Email(message = "Địa chỉ email không hợp lệ")
-    private String email;
+	@Email(message = "Địa chỉ email không hợp lệ")
+	private String email;
 }

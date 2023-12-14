@@ -65,11 +65,9 @@ public class CategoriesRestController {
 	public ResponseEntity<List<CategoryDTO>> getDeletedList() {
 		List<Category> deletedCategory = categoryService.findAllDeletedCategory();
 
-	
 		List<CategoryDTO> CategoryDTOs = deletedCategory.stream()
 				.map(category -> modelMapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
 
-		
 		return new ResponseEntity<>(CategoryDTOs, HttpStatus.OK);
 	}
 
@@ -101,8 +99,7 @@ public class CategoriesRestController {
 			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy product để cập nhật
 			return ResponseEntity.notFound().build();
 		}
-		
-		
+
 		// Sử dụng ModelMapper để ánh xạ từ Product đã cập nhật thành ProductDTO
 		CategoryDTO categoryDTO = modelMapper.map(updatedCategoryResult, CategoryDTO.class);
 
@@ -124,8 +121,7 @@ public class CategoriesRestController {
 
 		return new ResponseEntity<>("Khôi phục Danh mục thành công", HttpStatus.OK);
 	}
-	
-	
+
 	@DeleteMapping("/{categoryid}")
 	public ResponseEntity<Void> deleteBooking(@PathVariable("categoryid") Integer categoryid) {
 		categoryService.deleteCategoryById(categoryid);

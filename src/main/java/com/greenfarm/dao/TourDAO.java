@@ -17,16 +17,16 @@ public interface TourDAO extends JpaRepository<Tour, Integer> {
 	@Query("SELECT t FROM Tour t JOIN t.pricings p WHERE p.adultprice BETWEEN :minPrice AND :maxPrice AND t.isdeleted = false")
 	Page<Tour> findByAdultpriceAndIsdeletedFalse(Float minPrice, Float maxPrice, Pageable pageable);
 
-    Page<Tour> findByTournameContainingIgnoreCaseAndIsdeletedFalse(String searchTerm, Pageable pageable);
-	
+	Page<Tour> findByTournameContainingIgnoreCaseAndIsdeletedFalse(String searchTerm, Pageable pageable);
+
 	List<Tour> findByTournameContainingIgnoreCase(String searchTerm);
-	
+
 	@Query("SELECT p FROM Tour p WHERE p.isdeleted = true")
 	List<Booking> findAllDeletedBooking();
 
 	@Query("SELECT p FROM Tour p WHERE p.tourid = :id")
 	Tour findTourById(@Param("id") Integer id);
-	
+
 	default void deleteByIsDeleted(Integer id) {
 		Tour tour = findTourById(id);
 		if (tour != null) {

@@ -128,34 +128,33 @@ public class ProductRestController {
 //		// Trả về ProductDTO bằng ResponseEntity với mã trạng thái 201 Created
 //		return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
 //	}
-	
+
 	@PostMapping()
 	public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO productDTO) {
-	    // Create Product object
+		// Create Product object
 		Product product = modelMapper.map(productDTO, Product.class);
 
-	    // Create ProductImage objects and associate them with the product
-	    List<ProductImage> productImages = new ArrayList<>();
-	    if (productDTO.getProductimage() != null) {
-	        for (ProductImageDTO productImageDTO : productDTO.getProductimage()) {
-	            ProductImage productImage = new ProductImage();
-	            productImage.setImageurl(productImageDTO.getImageurl());
-	            productImage.setProduct(product);
-	            productImages.add(productImage);
-	        }
-	    }
+		// Create ProductImage objects and associate them with the product
+		List<ProductImage> productImages = new ArrayList<>();
+		if (productDTO.getProductimage() != null) {
+			for (ProductImageDTO productImageDTO : productDTO.getProductimage()) {
+				ProductImage productImage = new ProductImage();
+				productImage.setImageurl(productImageDTO.getImageurl());
+				productImage.setProduct(product);
+				productImages.add(productImage);
+			}
+		}
 
-	    // Set the list of images in the product
-	    product.setProductimage(productImages);
+		// Set the list of images in the product
+		product.setProductimage(productImages);
 
-	    // Save product and associated images
-	    Product createdProduct = productService.create(product);
+		// Save product and associated images
+		Product createdProduct = productService.create(product);
 
-	    // Map to DTO and return
-	    ProductDTO createdProductDTO = modelMapper.map(createdProduct, ProductDTO.class);
-	    return new ResponseEntity<>(createdProductDTO, HttpStatus.CREATED);
+		// Map to DTO and return
+		ProductDTO createdProductDTO = modelMapper.map(createdProduct, ProductDTO.class);
+		return new ResponseEntity<>(createdProductDTO, HttpStatus.CREATED);
 	}
-
 
 	@PutMapping("{productid}")
 	public ResponseEntity<ProductDTO> update(@PathVariable("productid") Integer productid,

@@ -29,8 +29,8 @@ public class TourImage implements Serializable {
 	Integer tourimageid;
 
 	String Imageurl;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "tourid",referencedColumnName = "tourid")
+	@JoinColumn(name = "tourid", referencedColumnName = "tourid")
 	Tour tour;
 }

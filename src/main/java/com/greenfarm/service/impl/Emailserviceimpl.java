@@ -70,15 +70,15 @@ public class Emailserviceimpl implements EmailService {
 
 	@Override
 	public void sendEmailWithBooking(String toAddress, String subject, String message, String qrCodeUrl)
-	        throws MessagingException{
-	    MimeMessage mimeMessage = emailSender.createMimeMessage();
-	    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
-	    messageHelper.setTo(toAddress);
-	    messageHelper.setSubject(subject);
-	    messageHelper.setText(message);
+			throws MessagingException {
+		MimeMessage mimeMessage = emailSender.createMimeMessage();
+		MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
+		messageHelper.setTo(toAddress);
+		messageHelper.setSubject(subject);
+		messageHelper.setText(message);
 
-	    // Truyền đường dẫn URL trực tiếp vào email
-	    try {
+		// Truyền đường dẫn URL trực tiếp vào email
+		try {
 			messageHelper.addInline("Purchase Order", new URLDataSource(new URL(qrCodeUrl)));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -86,7 +86,7 @@ public class Emailserviceimpl implements EmailService {
 			e.printStackTrace();
 		}
 
-	    emailSender.send(mimeMessage);
+		emailSender.send(mimeMessage);
 	}
 
 }

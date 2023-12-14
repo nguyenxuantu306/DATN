@@ -106,8 +106,7 @@ public class CheckoutController {
 
 	@PostMapping("/checkout/payment")
 	public String Payment(Model model, @ModelAttribute("Order") OrderDTO orderDTO,
-			@RequestParam(name = "voucherid", required = false) String[] voucherIds,
-			HttpServletRequest request) {
+			@RequestParam(name = "voucherid", required = false) String[] voucherIds, HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -122,7 +121,7 @@ public class CheckoutController {
 				Order orderItem = new Order();
 				orderItem.setUser(user);
 				orderItem.setOrderdate(now);
-				//orderItem.setAddress(orderDTO.getAddress());
+				// orderItem.setAddress(orderDTO.getAddress());
 				orderItem.setStatusOrder(statusOrder);
 				orderItem.setPaymentmethod(paymentMethodObj);
 				orderItem.setVoucherorder(orderDTO.getVoucherorder());
@@ -149,25 +148,23 @@ public class CheckoutController {
 				List<VoucherOrder> voucherLists = new ArrayList<>();
 //				String[] voucherIds = request.getParameterValues("voucherid");
 
-				if (voucherIds != null && voucherIds.length > 0&&
-						!Arrays.asList(voucherIds).contains("0")) {
-				    for (String voucherId : voucherIds) {
-				        // Lấy thông tin Voucher từ voucherId
-				        Voucher voucher = voucherService.findByVoucherid(Long.parseLong(voucherId));
+				if (voucherIds != null && voucherIds.length > 0 && !Arrays.asList(voucherIds).contains("0")) {
+					for (String voucherId : voucherIds) {
+						// Lấy thông tin Voucher từ voucherId
+						Voucher voucher = voucherService.findByVoucherid(Long.parseLong(voucherId));
 
-				        // Tạo mới VoucherOrder và thêm vào danh sách
-				        VoucherOrder voucherOrder = new VoucherOrder();
-				        voucherOrder.setOrder(orderItem);
-				        voucherOrder.setVoucher(voucher);
-				        voucherLists.add(voucherOrder);
+						// Tạo mới VoucherOrder và thêm vào danh sách
+						VoucherOrder voucherOrder = new VoucherOrder();
+						voucherOrder.setOrder(orderItem);
+						voucherOrder.setVoucher(voucher);
+						voucherLists.add(voucherOrder);
 
-				        // Áp dụng giảm giá từ voucher vào tổng giá trị đơn hàng
-				        discountedTotal =  total - (total *voucher.getDiscount());
-				      }
+						// Áp dụng giảm giá từ voucher vào tổng giá trị đơn hàng
+						discountedTotal = total - (total * voucher.getDiscount());
+					}
 				}
 
-
-				voucherOrderDAO.saveAll(voucherLists); 
+				voucherOrderDAO.saveAll(voucherLists);
 
 				model.addAttribute("totalDiscount", discountedTotal);
 				model.addAttribute("discount", voucherLists);

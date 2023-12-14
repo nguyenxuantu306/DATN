@@ -14,9 +14,8 @@ public interface ProductService {
 
 	// Danh sách sản phẩm
 	List<Product> findAll();
-	
-	List<Product> findAllDeletedProducts();
 
+	List<Product> findAllDeletedProducts();
 
 	// Phân trang
 	Page<Product> findAllByIsdeletedFalse(Pageable pageable);
@@ -57,16 +56,14 @@ public interface ProductService {
 	// Thống kê sản phẩm tồn kho
 	List<Product> getReportSpTk();
 
-
 	List<Report> getReportspbanchay();
-	
+
 //	void purchaseProduct(Integer productId, Integer quantityBought);
-	
+
 //	void purchaseProduct(ThongkeTK thongketk);
-	
+
 	List<Product> getProductsByCategory(Category category);
 
 	void save(Product product);
 
-	
 }

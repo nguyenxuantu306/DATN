@@ -15,7 +15,6 @@ import com.greenfarm.dto.PaymentMethodDTO;
 import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.service.PaymentMethodService;
 
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/paymentmethods")
@@ -31,10 +30,11 @@ public class PaymentMethodRestController {
 		List<PaymentMethod> paymentMethods = paymentMethodService.findAll();
 
 		ModelMapper modelMapper = new ModelMapper();
-		List<PaymentMethodDTO> paymentMethodDtos = paymentMethods.stream().map(paymentMethod -> modelMapper.map(paymentMethod, PaymentMethodDTO.class))
+		List<PaymentMethodDTO> paymentMethodDtos = paymentMethods.stream()
+				.map(paymentMethod -> modelMapper.map(paymentMethod, PaymentMethodDTO.class))
 				.collect(Collectors.toList());
 
-		return ResponseEntity.ok(paymentMethodDtos); 
+		return ResponseEntity.ok(paymentMethodDtos);
 	}
 
 }

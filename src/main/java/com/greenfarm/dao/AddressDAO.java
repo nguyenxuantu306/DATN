@@ -19,5 +19,4 @@ public interface AddressDAO extends JpaRepository<Address, Integer> {
 	@Query("UPDATE Address a SET a.Active = true WHERE a.AddressID = :addressId")
 	void setActiveStatus(@Param("addressId") Integer addressId);
 
-
 }

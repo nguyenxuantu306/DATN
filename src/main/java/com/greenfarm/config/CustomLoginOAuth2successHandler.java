@@ -23,12 +23,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class CustomLoginOAuth2successHandler implements AuthenticationSuccessHandler {
-	
-	
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	UserDetailsService details;
 
@@ -36,20 +34,20 @@ public class CustomLoginOAuth2successHandler implements AuthenticationSuccessHan
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		 if (authentication != null) {
-		        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-		        String provider = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
-		        // provider là tên đăng ký của nhà cung cấp OAuth2 (ví dụ: "google", "facebook")
-		      //  return "Logged in via " + provider ;
-		        String email = oAuth2User.getAttribute("email");
-		 	   try {
-		 		  User dangnhap = userService.findByEmail(email);
-		 		  if (dangnhap != null) {
-		 			// Lấy thông tin đăng nhập từ người dùng
-		    			//String username = dangnhap.getEmail();  // Giả sử email là tên người dùng
+		if (authentication != null) {
+			OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+			String provider = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
+			// provider là tên đăng ký của nhà cung cấp OAuth2 (ví dụ: "google", "facebook")
+			// return "Logged in via " + provider ;
+			String email = oAuth2User.getAttribute("email");
+			try {
+				User dangnhap = userService.findByEmail(email);
+				if (dangnhap != null) {
+					// Lấy thông tin đăng nhập từ người dùng
+					// String username = dangnhap.getEmail(); // Giả sử email là tên người dùng
 
-		    			setAuthenticationInSecurityContext(dangnhap.getEmail());
-		    			// Tải thông tin người dùng từ UserDetailsService
+					setAuthenticationInSecurityContext(dangnhap.getEmail());
+					// Tải thông tin người dùng từ UserDetailsService
 //		    			UserDetails userDetails = details.loadUserByUsername(username);
 //
 //		    			// Tạo một đối tượng Authentication
@@ -59,9 +57,9 @@ public class CustomLoginOAuth2successHandler implements AuthenticationSuccessHan
 //		    			SecurityContext sc = SecurityContextHolder.getContext();
 //		    			sc.setAuthentication(authentication2);
 //		    			SecurityContext check = SecurityContextHolder.getContext();
-		    			
-		    			response.sendRedirect("/");
-				}else {
+
+					response.sendRedirect("/");
+				} else {
 					response.sendRedirect("/register/completelogin");
 				}
 			} catch (Exception e) {
@@ -69,24 +67,22 @@ public class CustomLoginOAuth2successHandler implements AuthenticationSuccessHan
 				e.printStackTrace();
 				response.sendRedirect("/logoff");
 			}
-	}else {
-		response.sendRedirect("/login");
-	}
-		 
-		 
-	
+		} else {
+			response.sendRedirect("/login");
+		}
 
-}
-	
+	}
+
 	private void setAuthenticationInSecurityContext(String username) {
-	    // Tải thông tin người dùng từ UserDetailsService
-	    UserDetails userDetails = details.loadUserByUsername(username);
+		// Tải thông tin người dùng từ UserDetailsService
+		UserDetails userDetails = details.loadUserByUsername(username);
 
-	    // Tạo một đối tượng Authentication
-	    Authentication authentication2 = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+		// Tạo một đối tượng Authentication
+		Authentication authentication2 = new UsernamePasswordAuthenticationToken(userDetails, null,
+				userDetails.getAuthorities());
 
-	    // Đặt thông tin xác thực vào SecurityContext
-	    SecurityContext sc = SecurityContextHolder.getContext();
-	    sc.setAuthentication(authentication2);
+		// Đặt thông tin xác thực vào SecurityContext
+		SecurityContext sc = SecurityContextHolder.getContext();
+		sc.setAuthentication(authentication2);
 	}
-	}
+}

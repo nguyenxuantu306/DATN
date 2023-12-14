@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 public class CommentDTO {
 	private Integer commentid;
 	private String Commenttext;
-	
+
 	private Date commentdate = new Date();
-	
+
 	private User user;
-	
+
 	private Tour tour;
-	
+
 	private List<ReCommentDTO> recomment;
 }

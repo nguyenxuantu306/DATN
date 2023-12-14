@@ -24,11 +24,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
-	
+
 	@Positive(message = "Id tài khoản phải lớn hơn 0")
 	private Integer userid;
-	
-	
+
 	@NotBlank(message = "Email là bắt buộc")
 	private String email;
 
@@ -41,21 +40,21 @@ public class UserDTO {
 
 	@NotBlank(message = "Tên đầu là bắt buộc")
 	private String firstname;
-	
+
 	@NotBlank(message = "Tên cuối là bắt buộc")
 	private String lastname;
-	
+
 	@NotBlank(message = "Số điện thoại không được để trống")
-    @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
+	@Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
 	private String phonenumber;
 
-	//@NotBlank(message = "Ảnh đại diện là bắt buộc")
-	private String image; 
-	
+	// @NotBlank(message = "Ảnh đại diện là bắt buộc")
+	private String image;
+
 	@NotBlank(message = "Địa chỉ là bắt buộc")
 	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
 	private String address;
-	
+
 	@NotNull(message = "Giới tính phải được chọn")
 	private Boolean gender;
 
@@ -66,7 +65,7 @@ public class UserDTO {
 	@Past(message = "Ngày tạo phải trước ngày hiện tại")
 	@Temporal(TemporalType.DATE)
 	private Date createddate;
-	
+
 	private Boolean isdeleted = Boolean.FALSE;
 
 	private List<Comment> comment;

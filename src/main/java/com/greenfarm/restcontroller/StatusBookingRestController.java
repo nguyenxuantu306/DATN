@@ -29,7 +29,8 @@ public class StatusBookingRestController {
 
 		ModelMapper modelMapper = new ModelMapper();
 		List<StatusBookingDTO> statusBookingDtos = statusBooking.stream()
-				.map(statusbooking -> modelMapper.map(statusbooking, StatusBookingDTO.class)).collect(Collectors.toList());
+				.map(statusbooking -> modelMapper.map(statusbooking, StatusBookingDTO.class))
+				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(statusBookingDtos);
 	}

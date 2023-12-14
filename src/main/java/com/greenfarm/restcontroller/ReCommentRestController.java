@@ -34,24 +34,26 @@ public class ReCommentRestController {
 	CommentService commentService;
 
 	@GetMapping()
-	public ResponseEntity<List<ReCommentDTO>> getListrecomment(){ 
+	public ResponseEntity<List<ReCommentDTO>> getListrecomment() {
 		List<ReComment> recomments = recommentService.findAll();
-		List<ReCommentDTO> reCommentDTOs = recomments.stream().map(recomment -> modelMapper.map(recomment, ReCommentDTO.class)).collect(Collectors.toList());
+		List<ReCommentDTO> reCommentDTOs = recomments.stream()
+				.map(recomment -> modelMapper.map(recomment, ReCommentDTO.class)).collect(Collectors.toList());
 		return new ResponseEntity<>(reCommentDTOs, HttpStatus.OK);
-		
+
 	}
-	
+
 	@GetMapping("comment/{commentid}")
-	public ResponseEntity<List<ReCommentDTO>> getListrecommentbycomment(@PathVariable("commentid") Integer commentid){
-		
+	public ResponseEntity<List<ReCommentDTO>> getListrecommentbycomment(@PathVariable("commentid") Integer commentid) {
+
 		Comment comment = commentService.findById(commentid);
 		List<ReComment> recomments = recommentService.getrecommenComments(comment);
-		List<ReCommentDTO> reCommentDTOs = recomments.stream().map(recomment -> modelMapper.map(recomment, ReCommentDTO.class)).collect(Collectors.toList());
+		List<ReCommentDTO> reCommentDTOs = recomments.stream()
+				.map(recomment -> modelMapper.map(recomment, ReCommentDTO.class)).collect(Collectors.toList());
 		return new ResponseEntity<>(reCommentDTOs, HttpStatus.OK);
-		
+
 	}
 }
-	//@GetMapping("/tour/{tourid}")
+// @GetMapping("/tour/{tourid}")
 ////public ResponseEntity<List<ReCommentDTO>>
 //getListcommentbytour(@PathVariable("tourid") Integer tourid){
 ////Tour tour = tourService.findById(tourid);

@@ -20,11 +20,9 @@ public interface AddressService {
 	void delete(Integer addressid);
 
 	List<Address> findByEfindByIdAccountmail(String email);
-	
-	
-	void setActiveStatus(String email,Integer addressId);
+
+	void setActiveStatus(String email, Integer addressId);
 
 	Address updateById(Integer id, Address address);
-	
 
 }

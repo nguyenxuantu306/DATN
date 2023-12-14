@@ -63,7 +63,7 @@ public class User implements Serializable {
 
 	@Column(unique = true)
 	@NotBlank(message = "Số điện thoại không được để trống")
-    @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
+	@Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
 	String phonenumber;
 
 // @NotBlank(message = "Ảnh đại diện là bắt buộc")
@@ -72,7 +72,6 @@ public class User implements Serializable {
 //	@NotNull(message = "Giới tính phải được chọn")
 	Boolean gender;
 
-	
 //	@DateTimeFormat(pattern = "yyyy-MM-dd")
 //	@Past(message = "Ngày sinh phải là một ngày trong quá khứ")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -86,9 +85,9 @@ public class User implements Serializable {
 	// Boolean IsActive;
 
 	@JsonIgnore
-	@OneToMany( mappedBy = "user")
+	@OneToMany(mappedBy = "user")
 	List<Address> address;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Booking> booking;

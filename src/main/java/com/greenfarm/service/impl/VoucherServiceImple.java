@@ -39,12 +39,9 @@ public class VoucherServiceImple implements VoucherService {
 		dao.deleteById(voucherid);
 	}
 
-
-
 	@Override
 	public Voucher findByVoucherid(long parseLong) {
 		return dao.findByVoucherid(parseLong);
 	}
-
 
 }

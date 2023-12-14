@@ -16,7 +16,6 @@ public interface VoucherService {
 
 	void delete(Integer voucherid);
 
-
 	Voucher findByVoucherid(long parseLong);
 
 }
