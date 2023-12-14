@@ -10829,22 +10829,6 @@ h6,
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 }
 
-.package-item1 {
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.4s, box-shadow 0.4s;
-}
-
-.package-item1 img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.package-item1:hover {
-    transform: scale(1.00) translateY(2px);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-}
 
 
 .bg-registration {
@@ -11569,16 +11553,4 @@ h1 {
     -webkit-transition: all 0.6s ease-in-out 0s;
     -ms-transition: all 0.6s ease-in-out 0s;
     cursor: pointer;
-}
-
-.title_bg {
-    text-align: center;
-    margin-top: 50px;
-    margin-bottom: 30px;
-    padding: 10px;
-    border-radius: 10px;
-    background: #7AB730;
-    color: #7AB730;
-    font-weight: 700;
-    text-transform: uppercase;
 }

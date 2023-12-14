@@ -52,6 +52,7 @@ public class Product implements Serializable {
 	private String image;
 
 	@NotNull(message = "Số lượng rau là bắt buộc")
+	@Positive(message = "Số lượng phải lớn hơn 0 ")
 	private Integer quantityavailable;
 
 	

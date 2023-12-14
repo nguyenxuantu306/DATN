@@ -5,33 +5,76 @@
 				<div class="card-body">
 					<h2 class="card">Soát Vé</h2>
 					<div class="row py-3">
-						<div class="col-5 border ">
+						<div class="col-6 border ">
 							<h1>Camera Selection</h1>
 
-							Dropdown để chọn camera
-							<label for="cameraSelect">Select Camera:</label> <select
-								id="cameraSelect" ng-click="selectCamera()" >
+							Dropdown để chọn camera <label for="cameraSelect">Select
+								Camera:</label> <select id="cameraSelect" ng-click="selectCamera()">
 							</select>
-							
+
 							<button ng-click="captureAndSend()">Capture and Send</button>
-							
+
 							<hr>
-								<div class="bg-primary" style="max-width: 640; max-height: 480">
+							<div class="bg-primary" style="max-width: 640; max-height: 480">
 								Hiển thị video từ camera được chọn
-							<video id="camera-view" style="max-width: 100%" autoplay></video>
-					
+								<video id="camera-view" style="max-width: 100%" autoplay></video>
+
+							</div>
+						</div>
+
+						<div class="col-6 bg-success">
+							<div>
+								<h2>Các tour diễn ra trong ngày</h2>
+								<div class="table-responsive">
+									<table
+										class="table table-striped table-bordered zero-configuration">
+										<thead>
+											<tr>
+												<th>STT</th>
+												<th>Tên Tour</th>
+												<th>Ngày khởi hành</th>
+												<th>Thời gian</th>
+												<th>Đã tham gia</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="item in tourlist">
+												<th>{{$index + 1}}</th>
+												<th>{{item.tour.tourname}}</th>
+												<td style="width: 200px; font-weight: bold;"
+													ng-style="{
+								    'color': item.tour.departureday === 'Chủ nhật hàng tuần' ? 'Brown' :
+								             item.tour.departureday === 'Thứ bảy hàng tuần' ? 'orange' :
+								             item.tour.departureday === 'Ngày 14 hàng tháng' ? 'green' :
+								             item.tour.departureday === 'Ngày 15 hàng tháng' ? 'red' :
+								             item.tour.departureday === 'Ngày 20 hàng tháng' ? 'Purple' : ''
+									}">{{item.tour.departureday}}</td>
+
+												<th style="width: 200px; color: blue;">{{item.tourdates
+													| date:'dd/MM/yyyy'}}</th>
+												<th>{{item.availableslots}}</th>
+										</tbody>
+									</table>
+
 								</div>
-								</div>
-								
-								show thong tin ve
-						<div class="col-5 bg-success">
-						<div style="text-align: center; background-color: white;" class="py-3">
+							</div>
+
+
+						</div>
+					</div>
+
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div>
+		<div style="text-align: center; background-color: white;" class="py-3">
 			<div class="confirmation-message">
-				<img
-					src="https://firebasestorage.googleapis.com/v0/b/luuanh-7c9d9.appspot.com/o/logo.png?alt=media&token=4679050b-5088-44ac-8d0e-3eb5e45f8b37">
-				<h2>Xác nhận kiểm tra vé thành công bạn có thể vào cổng !</h2>
-				<p style="color: red;">Cảm ơn bạn đã sử dụng dịch vụ của chúng
-					tôi</p>
+				<h2>{{ketquakiemtra}}</h2>
 			</div>
 			<h3>Thông tin đặt vé của bạn</h3>
 			<div class="row">
@@ -42,16 +85,18 @@
 								khách hàng</h4>
 							<br>
 							<p class="card-text">
-								<i class="fas fa-envelope"></i> Email : {{bookings.user.email}} <strong
-									th:text="${bookinguse.user.email}"></strong>
+								<i class="fas fa-envelope"></i> Email : {{bookings.user.email}}
+								<strong th:text="${bookinguse.user.email}"></strong>
 							</p>
 
 							<p class="card-text phone">
-								<i class="fas fa-phone"></i> Số điện thoại : {{bookings.user.phonenumber}} <strong id="phoneNumber"
+								<i class="fas fa-phone"></i> Số điện thoại :
+								{{bookings.user.phonenumber}} <strong id="phoneNumber"
 									th:text="${bookinguse.user.phonenumber}"></strong>
 							</p>
 							<p class="card-text">
-								<i class="far fa-calendar-alt"></i> Ngày tạo đơn: {{bookings.bookingdate}} <strong
+								<i class="far fa-calendar-alt"></i> Ngày tạo đơn:
+								{{bookings.bookingdate}} <strong
 									th:text="${bookinguse.bookingdate}"></strong>
 							</p>
 						</div>
@@ -65,23 +110,26 @@
 								đặt vé</h4>
 							<p class="card-text">
 								<i class="fas fa-ticket-alt"></i> Mã vé: <strong>{{bookings.bookingid}}<strong
-										th:text="${bookingus.bookingid}"></strong></strong>
+									th:text="${bookingus.bookingid}"></strong></strong>
 							</p>
 							<p class="card-text">
-								<i class="fas fa-user"></i> Số vé người lớn:  {{bookings.Adultticketnumber}} <strong
+								<i class="fas fa-user"></i> Số vé người lớn:
+								{{bookings.Adultticketnumber}} <strong
 									th:text="${bookinguse.Adultticketnumber}"></strong> <strong>
 									Vé</strong>
 							</p>
 							<p class="card-text">
-								<i class="fas fa-child"></i> Số vé người trẻ em: {{bookings.Childticketnumber}} <strong
+								<i class="fas fa-child"></i> Số vé người trẻ em:
+								{{bookings.Childticketnumber}} <strong
 									th:text="${bookinguse.Childticketnumber}"></strong> <strong>
 									Vé</strong>
 							</p>
 							<p class="card-text">
 								<i class="fas fa-route"></i> Tên tour: <strong
-									th:text="${bookinguse.tour.Tourname}"> {{bookings.tour.tourname}}</strong>
+									th:text="${bookinguse.tour.Tourname}">
+									{{bookings.tour.tourname}}</strong>
 							</p>
-							<!-- Thêm các thông tin khác tùy thuộc vào yêu cầu của bạn -->
+							Thêm các thông tin khác tùy thuộc vào yêu cầu của bạn
 						</div>
 
 					</div>
@@ -91,22 +139,13 @@
 			</div>
 
 
-		</div>
-						
-						</div>
-					</div>
-
-
-
-				</div>
-			</div>
 		</div>
 	</div>
 </div>
 
 
- 
- <!-- 
+
+<!-- 
   <div class="container-fluid">
         <div class="row">
             <div class="col-12">

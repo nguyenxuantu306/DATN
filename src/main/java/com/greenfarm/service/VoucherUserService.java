@@ -21,6 +21,4 @@ public interface VoucherUserService {
 	VoucherUser update(VoucherUser voucheruser);
 
 	void delete(Integer voucheruserid);
-
-	boolean existsByUserIdAndVoucherId(Integer userId, Integer voucherId);
 }

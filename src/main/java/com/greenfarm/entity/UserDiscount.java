@@ -17,17 +17,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Voucherusers")
-public class VoucherUser  implements Serializable{
+@Table(name = "Userdiscounts")
+public class UserDiscount implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer voucheruserid;
-	
+	private Integer userdiscountid;
+
 	@ManyToOne
 	@JoinColumn(name = "userid")
-	private User user;
-	
+	User user;
+
 	@ManyToOne
-	@JoinColumn(name = "voucherid")
-	private Voucher voucher;
+	@JoinColumn(name = "discountid")
+	Discount discount;
+
 }

@@ -3,8 +3,18 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
 $scope.items = [];
 $scope.bookings = [];
 
+$scope.tourlist = [];
 
     $scope.initialize = function() {
+		
+		$http.get("/rest/tourdates/today").then(resp => {
+			$scope.tourlist = resp.data;
+			$scope.tourlist.forEach(item => {
+				item.tourdates = new Date(item.tourdates)
+			})
+		});
+		
+		
 		$http.get("/soatve/kiemtrave").then(resp => {
 			$scope.bookings = resp.data;
 			console.log(resp.data.bookingid);

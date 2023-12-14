@@ -105,9 +105,7 @@ div[style*="margin: 16px 0;"] {
 										style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
 										<p
 											style="font-size: 18px; font-weight: bold; line-height: 24px; color: black; text-align: center;">
-											Thông tin giao dịch (No.<span
-												th:text="${orderConfirmation.orderid}"></span>)
-										</p>
+											Thông tin giao dịch</p>
 									</td>
 								</tr>
 
@@ -115,17 +113,16 @@ div[style*="margin: 16px 0;"] {
 									<td align="left" style="padding-top: 20px;">
 										<table cellspacing="0" cellpadding="0" border="0" width="100%"
 											ng-repeat="item in bookings">
-
 											<tr>
 												<td width="50%" align="left" bgcolor="#eeeeee"
-													style="font-family:Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-													Tên sản phẩm</td>
+													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+													Xác nhận đơn hàng #</td>
 												<td width="25%" align="left" bgcolor="#eeeeee"
-													style="font-family:Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
 													Số lượng</td>
 												<td width="25%" align="left" bgcolor="#eeeeee"
-													style="font-family:Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-													Giá
+													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+													No.<span th:text="${orderConfirmation.orderid}"></span>
 												</td>
 											</tr>
 											<tr th:each="item : ${cartConfirmation}">
@@ -144,8 +141,43 @@ div[style*="margin: 16px 0;"] {
 												</td>
 											</tr>
 
-										</table>
+											<tr>
+												<td width="25%" align="left"
+													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
 
+													<!-- Kiểm tra xem có voucher hay không -->
+													<div th:if="${not #lists.isEmpty(discount)}">
+														Voucher : <span th:text="${discount[0].voucher.voucherid}"></span>
+													</div>
+												</td>
+
+												<td width="25%" align="left"
+													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+
+													<!-- Kiểm tra xem có voucher hay không -->
+													<div th:if="${not #lists.isEmpty(discount)}">
+														<span th:text="${discount[0].voucher.discount}"></span>
+													</div>
+												</td>
+
+
+												<td width="25%" align="left"
+													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+													<div th:each="discount : ${discount}">
+														Voucher : <span th:text="${discount.voucher.voucherid}"></span>
+													</div>
+												</td>
+												<td width="25%" align="left"
+													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+													<div th:each="discount : ${discount}">
+														<span th:text="${discount.voucher.discount}"></span>
+													</div>
+												</td>
+
+
+											</tr>
+
+										</table>
 									</td>
 								</tr>
 
@@ -155,7 +187,7 @@ div[style*="margin: 16px 0;"] {
 											<tr>
 												<td width="75%" align="left"
 													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-													Tổng phụ</td>
+													TOTAL</td>
 
 												<td width="25%" align="left"
 													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
@@ -166,21 +198,7 @@ div[style*="margin: 16px 0;"] {
 											<tr>
 												<td width="75%" align="left"
 													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-													<div th:if="${not #lists.isEmpty(discount)}">
-														Voucher <span th:text="${discount[0].voucher.voucherid}"></span>
-													</div>
-												</td>
-												<td width="25%" align="left"
-													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-													<div th:each="discount : ${discount}">
-														<span th:text="${discount.voucher.discount}"></span>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td width="75%" align="left"
-													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-													Tổng tiền</td>
+													TOTAL DISCOUNT</td>
 
 												<td width="25%" align="left"
 													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
