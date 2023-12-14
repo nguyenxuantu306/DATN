@@ -35,10 +35,8 @@ import com.greenfarm.service.ProductService;
 import com.greenfarm.service.ReviewService;
 import com.greenfarm.service.UserService;
 
-
 @Controller
 public class ProductController {
-
 
 	@Autowired
 	ReviewService reviewService;
@@ -55,57 +53,65 @@ public class ProductController {
 	// List All
 	@GetMapping("/product/shop")
 	public String shopList(Model model, @PageableDefault(size = 9) Pageable pageable,
-	        @RequestParam("cid") Optional<String> cid, UriComponentsBuilder uriBuilder) {
-	    if (cid.isPresent()) {
-	        List<Product> list = productService.findByCategoryId(cid.get());
-	        model.addAttribute("items", new PageImpl<>(list, pageable, list.size()));
-	    } else {
-	        Page<Product> productsPage = productService.findAllByIsdeletedFalse(pageable);
-	        Page<ProductDTO> productDTOPage = productsPage.map(product -> modelMapper.map(product, ProductDTO.class));
-	        model.addAttribute("items", productDTOPage);
+			@RequestParam("cid") Optional<String> cid, UriComponentsBuilder uriBuilder) {
+		if (cid.isPresent()) {
+			List<Product> list = productService.findByCategoryId(cid.get());
+			model.addAttribute("items", new PageImpl<>(list, pageable, list.size()));
+		} else {
+			Page<Product> productsPage = productService.findAllByIsdeletedFalse(pageable);
+			Page<ProductDTO> productDTOPage = productsPage.map(product -> modelMapper.map(product, ProductDTO.class));
+			model.addAttribute("items", productDTOPage);
 
-	        // Thêm thông tin URL phân trang
-	        String url = uriBuilder.path("/product/shop").queryParam("page", "{page}").build().toUriString();
-	        model.addAttribute("url", url);
-	    }
+			// Thêm thông tin URL phân trang
+			String url = uriBuilder.path("/product/shop").queryParam("page", "{page}").build().toUriString();
+			model.addAttribute("url", url);
+		}
 
-	    return "product/shop";
+		return "product/shop";
 	}
-	
+
 	@GetMapping("/product/detail/{productid}")
 	public String detail(Model model, @PathVariable("productid") Integer productid,
-	                     @PageableDefault(size = 2) Pageable pageable, UriComponentsBuilder uriBuilder) {
-	    Integer id = productid;
-	    Product item = productService.findById(id);
-	    
-	    if (item != null) {
-	        ProductDTO itemDTO = modelMapper.map(item, ProductDTO.class);
-	        model.addAttribute("item", itemDTO);
+			@PageableDefault(size = 2) Pageable pageable, UriComponentsBuilder uriBuilder) {
+		Integer id = productid;
+		Product item = productService.findById(id);
 
-	        
-	        // Lấy thông tin đánh giá theo sao
-	        List<StarCount> ratingCountMap = reviewService.countReviewsByRating(productid);
-	       
-	        // In danh sách ratingCountList để kiểm tra
-	        long totalReviewCount = 0;
-	        for(StarCount st:ratingCountMap) {
-	        	totalReviewCount += st.getStartcount();
-	        }
-	        model.addAttribute("ratingCountMap", ratingCountMap);
-	        model.addAttribute("totalReviewCount", totalReviewCount);
-	        // Modify the findbyproduct method to return a Page<Review>
-	        Page<Review> reviewPage = reviewService.findbyproduct(item, pageable);
-	        model.addAttribute("review", reviewPage);
+		if (item != null) {
+			ProductDTO itemDTO = modelMapper.map(item, ProductDTO.class);
+			model.addAttribute("item", itemDTO);
 
-	    } else {
-	        // Xử lý trường hợp đối tượng không tồn tại
-	    }
+			// Lấy thông tin đánh giá theo sao
+			List<StarCount> ratingCountMap = reviewService.countReviewsByRating(productid);
 
-	    model.addAttribute("reviewinsert", new Review());
+			// Kiểm tra nếu ratingCountMap là null, gán totalReviewCount là 0
+			long totalReviewCount = 1;
+			if (ratingCountMap != null) {
+				totalReviewCount = 0;
+				// In danh sách ratingCountList để kiểm tra
+				for (StarCount st : ratingCountMap) {
+					totalReviewCount += st.getStartcount();
+				}
+				if (totalReviewCount == 0) {
+					totalReviewCount = 1;
+					model.addAttribute("ratingCountMap", ratingCountMap);
+				} else {
+					model.addAttribute("ratingCountMap", ratingCountMap);
+				}
+			}
+			model.addAttribute("totalReviewCount", totalReviewCount);
 
-	    return "product/detail";
+			// Modify the findbyproduct method to return a Page<Review>
+			Page<Review> reviewPage = reviewService.findbyproduct(item, pageable);
+			model.addAttribute("review", reviewPage);
+
+		} else {
+			// Xử lý trường hợp đối tượng không tồn tại
+		}
+
+		model.addAttribute("reviewinsert", new Review());
+
+		return "product/detail";
 	}
-
 
 //	@PostMapping("/product/detail/{productid}")
 //	public String review(Model model,@PathVariable("productid") Integer productid,@ModelAttribute("reviewinsert") Review reviewinsert) {

@@ -110,9 +110,7 @@
 							<div class="package-item bg-white mb-2">
 								<a th:href="@{|/tour/detail/${p.tourid}|}"> <img
 									style="height: 350px; width: 100%" class="img-fluid"
-									th:src="@{|${p.image}|}" alt="" /> <!-- <span
-									th:if="${p.Availableslots <=0}" class="out-of-stock-label1">Hết
-										chỗ</span> -->
+									th:src="@{|${p.image}|}" alt="" />
 								</a>
 								<div class="p-4">
 									<div class="d-flex justify-content-between mb-3">
@@ -122,7 +120,11 @@
 										</i>
 										</small>
 									</div>
-									<a th:utext="${p.Tourname}" class="h5 text-decoration-none"
+									<a
+										style="color: #003C2D; text-decoration: none;"
+										onmouseover="this.style.color='#FFA500'"
+										onmouseout="this.style.color='#003C2D'"
+										th:utext="${p.Tourname}" class="h5 text-decoration-none"
 										th:href="@{|/tour/detail/${p.tourid}|}"></a>
 									<div class="border-top mt-4 pt-4">
 										<div class="d-flex justify-content-between">
@@ -133,12 +135,6 @@
 												<a th:href="@{|/booking/${p.tourid}|}"
 													th:text="#{label.booking}">Đặt tour</a>
 											</button>
-											<!-- <button style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"  th:if="${p.availableslots <= 0}"
-												class="btn btn-primary"> 
-												<span class="text-white">Tour
-												đã hết chỗ</span>
-											</button> -->
-
 										</div>
 									</div>
 								</div>
@@ -184,9 +180,7 @@
 							<div class="package-item bg-white mb-2">
 								<a th:href="@{|/tour/detail/${p.tourid}|}"> <img
 									style="height: 350px; width: 100%" class="img-fluid"
-									th:src="@{|${p.image}|}" alt="" /> <!-- <span
-									th:if="${p.Availableslots <=0}" class="out-of-stock-label1">Hết
-										chỗ</span> -->
+									th:src="@{|${p.image}|}" alt="" />
 								</a>
 								<div class="p-4">
 									<div class="d-flex justify-content-between mb-3">
@@ -196,7 +190,11 @@
 										</i>
 										</small>
 									</div>
-									<a th:utext="${p.Tourname}" class="h5 text-decoration-none"
+									<a
+										style="color: #003C2D; text-decoration: none;"
+										onmouseover="this.style.color='#FFA500'"
+										onmouseout="this.style.color='#003C2D'"
+										th:utext="${p.Tourname}" class="h5 text-decoration-none"
 										th:href="@{|/tour/detail/${p.tourid}|}"></a>
 									<div class="border-top mt-4 pt-4">
 										<div class="d-flex justify-content-between">
@@ -207,12 +205,6 @@
 												<a th:href="@{|/booking/${p.tourid}|}"
 													th:text="#{label.booking}">Đặt tour</a>
 											</button>
-											<!-- <button style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"  th:if="${p.availableslots <= 0}"
-												class="btn btn-primary"> 
-												<span class="text-white">Tour
-												đã hết chỗ</span>
-											</button> -->
-
 										</div>
 									</div>
 								</div>

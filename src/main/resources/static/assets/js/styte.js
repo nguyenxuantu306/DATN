@@ -1,19 +1,26 @@
 function createProductHTML(product) {
 	// Kiểm tra số lượng sản phẩm
-	var outOfStockLabel = (product.quantityavailable < 5) ? '<span style="position: absolute;top: 1;right: 0;background-color: rgb(0, 0, 0);color: #ffffff;padding: 5px;border: 1px solid #000;border-radius: 5px 0 0 5px; " class="out - of - stock - label">Hết hàng</span>' : '';
+	var outOfStockLabel = (product.quantityavailable <= 0) ? '<span style="position: absolute;font-size: 12px;top:0;right: 0;background-color: rgb(0, 0, 0);color: #ffffff;padding: 5px 10px;border: 1px solid #000;border-radius: 5px 0 0 5px; " class="out-of-stock-label">Hết hàng</span>' : '';
 
 	var productHTML = `
         <div class="col-lg-4 col-md-6 mb-4 text-center">
-            <div class="package-item bg-white mb-2">
-                <a  href="/product/detail/${product.productid}">
-                    <img style="height: 250px" class="img-fluid" src="${product.image}" alt="">
+            <div class=" bg-white mb-2">
+                <a  href="/product/detail/${product.productid}" style="display: block; position: relative;">
+                    <img style="height: 250px; border: 2px solid #7AB730; border-radius: 5px;" class="img-fluid package-item" src="${product.image}" alt="">
                     ${outOfStockLabel}
                 </a>
-                <div class="p-4">
-                    <a class="h5 text-decoration-none">${product.productname}</a>
-                    <div class="border-top mt-4 pt-4">
-                        <div class="text-center">                
-                            <h5 class="m-0">${formatPrice(product.price)}</h5>
+                <div class="p-2">
+                    <a
+					style="font-size: 16px; color: #003C2D; text-decoration: none;"
+					onmouseover="this.style.color='#FFA500'"
+					onmouseout="this.style.color='#003C2D'"
+					th:utext="${product.productname}" class="h5 text-decoration-none"
+					href="/product/detail/${product.productid}">${product.productname}</a>
+                    <div class="mt-2 pt-2">
+                        <div class="text-center">                             
+                            <span
+							style="font-size: 20px; color: #003C2D; font-weight: bold;"
+							class="">${formatPrice(product.price)}</span>
                         </div>
                     </div>
                 </div>

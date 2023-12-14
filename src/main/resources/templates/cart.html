@@ -8,10 +8,10 @@
 		<div class="h-100">
 			<div
 				class="row d-flex justify-content-center align-items-center h-100">
-				<div th:if="${#lists.isEmpty(cartList)}" style="text-align: center;">
+				<div th:if="${#lists.isEmpty(cartList)}" style="text-align: center;background-color: #F3F3F3;">
 					<img class="" style="width: 108x;height: 98px;" alt="" src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/9bdd8040b334d31946f49e36beaf32db.png">
 					<p class="text-center fw-bold fs-4">Giỏ hàng của bạn còn trống!</p>
-					<button type="button" style="background-color: #7AB730" class="btn btn-success"> <a href="/product/shop">MUA NGAY</a> </button>
+					<button type="button" style="background-color: #7AB730;border-radius:3px;width: 150px" class="btn btn-success"> <a href="/product/shop">MUA NGAY</a> </button>
 				</div>
 				<div th:if="${not #lists.isEmpty(cartList)}">
 					<div class="col">

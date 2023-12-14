@@ -213,7 +213,7 @@ public class SecurityController {
 
 			model.addAttribute("roles", roles);
 			// Trả về thông tin tài khoản trong phản hồi
-			System.out.println("Xin chào, " + username + "! Bạn có các quyền: " + roles);
+//			System.out.println("Xin chào, " + username + "! Bạn có các quyền: " + roles);
 			return "profile";
 		} else {
 			System.out.println("Xin chào! Bạn chưa đăng nhập.");
@@ -230,13 +230,13 @@ public class SecurityController {
 
 		// Lấy thông tin người dùng đã xác thực từ SecurityContextHolder
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println(authentication);
+		/* System.out.println(authentication); */
 		// Kiểm tra nếu người dùng đã xác thực
 		if (authentication.isAuthenticated()) {
 			// Lấy tên người dùng
 			String username = authentication.getName();
 			User user = userService.findByEmail(username);
-			System.out.println("*******");
+			/* System.out.println("*******"); */
 			System.out.println(user.getPassword());
 			if (!attach.isEmpty()) {
 				try {
