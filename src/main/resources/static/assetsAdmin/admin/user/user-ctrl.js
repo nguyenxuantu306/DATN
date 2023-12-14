@@ -1,6 +1,5 @@
 app.controller("user-ctrl", function($scope, $http) {
 	$scope.items = [];
-	$scope.address = [];
 	$scope.cates = [];
 	$scope.form = {};
 	$scope.field = [];
@@ -37,9 +36,6 @@ app.controller("user-ctrl", function($scope, $http) {
 				// Convert date strings to Date objects
 				item.createddate = new Date(item.createddate);
 				item.birthday = new Date(item.birthday);
-
-				// Filter addresses where active is false
-				item.address = item.address.filter(address => !address.active);
 			});
 		});
 

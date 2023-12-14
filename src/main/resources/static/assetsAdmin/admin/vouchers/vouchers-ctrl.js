@@ -166,51 +166,55 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 	// Cấp mã
 	$scope.createuser = function() {
 		var item2 = angular.copy($scope.form2);
-
-		// Check if voucher with the same userid already exists
-		var existingVoucher = $scope.items2.find(function(voucher) {
-			return voucher.userid === item2.user.userid;
-		});
-
-		if (existingVoucher) {
-			// If voucher with the same userid exists, show an error message and return
-			Swal.fire({
-				icon: 'error',
-				title: 'Lỗi!',
-				text: 'Voucher cho UserID này đã tồn tại.',
-			});
-			return;
-		}
-		$http.post(`/rest/vouchers/user`, item2).then(resp => {
-			resp.data.expirationdate = new Date(resp.data.expirationdate)
-			$scope.items2.push(resp.data);
-			$scope.reset();
-			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Cấp mã giảm giá thành công!',
-			}).then((result) => {
-				// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
-				if (result.isConfirmed) {
-					// Nếu đã bấm, thực hiện reload trang
-					location.reload();
+		item2.expirationdate = new Date();
+		// Check if the combination of user and voucher already exists
+		$http.get(`/rest/vouchers/user/check?userid=${item2.user.userid}&voucherid=${item2.voucher.voucherid}`)
+			.then(checkResp => {
+				if (checkResp.data.exists) {
+					// Combination already exists, show an error message
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Người dùng đã có mã giảm giá này',
+					});
+				} else {
+					// Combination doesn't exist, proceed with creating the voucher user
+					$http.post(`/rest/vouchers/user`, item2).then(resp => {
+						resp.data.expirationdate = new Date(resp.data.expirationdate)
+						$scope.items2.push(resp.data);
+						$scope.reset();
+						// Sử dụng SweetAlert2 cho thông báo thành công
+						Swal.fire({
+							icon: 'success',
+							title: 'Thành công!',
+							text: 'Cấp mã giảm giá thành công!',
+						}).then((result) => {
+							// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+							if (result.isConfirmed) {
+								// Nếu đã bấm, thực hiện reload trang
+								location.reload();
+							}
+						});
+						$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+						$scope.frmvalidateuser.$setPristine();
+						$scope.frmvalidateuser.$setUntouched();
+						$scope.frmvalidateuser.$submitted = false;
+					}).catch(error => {
+						// Sử dụng SweetAlert2 cho thông báo lỗi
+						Swal.fire({
+							icon: 'error',
+							title: 'Lỗi!',
+							text: 'Lỗi cấp mã giảm giá',
+						});
+						console.log("Error", error);
+					});
 				}
+			})
+			.catch(error => {
+				console.log("Error checking voucher existence", error);
 			});
-			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-			$scope.frmvalidateuser.$setPristine();
-			$scope.frmvalidateuser.$setUntouched();
-			$scope.frmvalidateuser.$submitted = false;
-		}).catch(error => {
-			// Sử dụng SweetAlert2 cho thông báo lỗi
-			Swal.fire({
-				icon: 'error',
-				title: 'Lỗi!',
-				text: 'Lỗi cấp mã giảm giá',
-			});
-			console.log("Error", error);
-		});
 	}
+
 
 	// cập nhật mã user
 	$scope.updateuser = function() {
