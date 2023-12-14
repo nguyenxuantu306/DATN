@@ -93,7 +93,7 @@ public class User implements Serializable {
 	// Boolean IsActive;
 
 	@JsonIgnore
-	@OneToMany( mappedBy = "user")
+	@OneToMany(mappedBy = "user")
 	List<Address> address;
 	
 	@JsonIgnore
@@ -133,12 +133,4 @@ public class User implements Serializable {
 	public void setIsDeleted(boolean isdeleted) {
 		this.isdeleted = isdeleted;
 	}
-	
-    public List<Address> getAddress() {
-        return address;
-    }
-
-    public void setAddress(List<Address> address) {
-        this.address = address;
-    }
 }

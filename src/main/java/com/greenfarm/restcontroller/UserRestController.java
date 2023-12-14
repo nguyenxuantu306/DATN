@@ -64,7 +64,7 @@ public class UserRestController {
 			UserDTO userDto = modelMapper.map(user, UserDTO.class);
 			// Lọc danh sách địa chỉ có active là FALSE
 			userDto.setAddress(
-					userDto.getAddress().stream().filter(address -> !address.getActive()).collect(Collectors.toList()));
+					userDto.getAddress().stream().filter(address -> address.getActive()).collect(Collectors.toList()));
 			return userDto;
 		}).collect(Collectors.toList());
 
