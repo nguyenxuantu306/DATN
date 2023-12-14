@@ -57,6 +57,7 @@
 									ng-if="!(item.address | filter: {active: true}).length">
 									Chưa có
 								</td>
+
 								<td>{{item.gender?'Nam':'Nữ'}}</td>
 								<td>{{item.createddate | date:'dd-MM-yyyy'}}</td>
 								<td><a type="button" ng-click="edit(item)" data-toggle="modal"

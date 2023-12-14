@@ -1,5 +1,6 @@
 package com.greenfarm.controller;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -170,6 +171,21 @@ public class VNPayController {
 				    }
 				} else {
 					System.out.println("Không có mã giảm giá!");
+				}
+				List<String> formattedDiscounts = new ArrayList<>();
+				DecimalFormat decimalFormat = new DecimalFormat("#");
+
+				for (VoucherOrder voucherOrder : voucherLists) {
+					String formattedDiscount = decimalFormat.format(voucherOrder.getVoucher().getDiscount() * 100);
+					formattedDiscounts.add(formattedDiscount);
+				}
+
+				// Add the formatted discounts to the model
+				model.addAttribute("formattedDiscounts", formattedDiscounts);
+
+				voucherOrderDAO.saveAll(voucherLists);
+				if (discountedTotal == 0) {
+					discountedTotal = total;
 				}
 
 
