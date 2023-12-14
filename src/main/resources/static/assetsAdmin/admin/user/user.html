@@ -50,11 +50,11 @@
 								<th><img ng-src="{{item.image}}" alt="Hình ảnh" style="width: 70px; height: 100px"></th>
 								<td>{{item.firstname}}</td>
 								<td>{{item.email}}</td>
-								<td style="width: 350px" ng-if="item.address.length > 0"
-									ng-repeat="address in item.address | filter: {active: true}">
+								<td style="width: 350px" ng-repeat="address in item.address | filter: {active: true}">
 									{{address.street}}, {{address.district}}, {{address.city}}
 								</td>
-								<td style="width: 350px; color: orange;" ng-if="item.address.length === 0">
+								<td style="width: 350px; color: orange;"
+									ng-if="!(item.address | filter: {active: true}).length">
 									Chưa có
 								</td>
 								<td>{{item.gender?'Nam':'Nữ'}}</td>
