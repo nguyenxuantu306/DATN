@@ -108,17 +108,11 @@ public class User implements Serializable {
 	@OneToMany(cascade = jakarta.persistence.CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "user")
 	List<UserRole> userRole;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "user")
-	List<Tour> tour;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Order> order;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "user")
-	List<UserDiscount> discount;
 
 	private boolean accountVerified;
 

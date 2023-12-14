@@ -27,7 +27,4 @@ public class StatusVoucher implements Serializable {
 
 	private String name;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "statusVoucher")
-	List<Discount> discount;
 }

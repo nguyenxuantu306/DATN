@@ -186,6 +186,7 @@ public class PaymentController {
 						}
 
 						voucherOrderDAO.saveAll(voucherLists);
+						model.addAttribute("discount", voucherLists);
 						model.addAttribute("totalDiscount", discountedTotal);
 						model.addAttribute("orderConfirmation", orderItem);
 						model.addAttribute("total", total);
