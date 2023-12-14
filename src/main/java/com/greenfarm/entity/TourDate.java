@@ -19,6 +19,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,9 +36,11 @@ public class TourDate implements Serializable {
 	@Positive(message = "tourdateid không được là số âm")
 	private Integer tourdateid;
 	
+	
 	@Temporal(TemporalType.DATE)
 	private Date tourdates;
 	
+	@NotNull(message = "Số lượng availableslots là bắt buộc")
 	private Integer availableslots;
 	
 	@ManyToOne
