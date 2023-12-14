@@ -50,7 +50,8 @@ public class CartController {
 	}
 
 	@RequestMapping("/add/{productId}")
-	public String addToCart(HttpSession session, @PathVariable("productId") Integer productId, @RequestParam("quantity") Float quantity) {
+	public String addToCart(HttpSession session, @PathVariable("productId") Integer productId,
+			@RequestParam("quantity") Float quantity) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null && authentication.isAuthenticated()
 				&& !"anonymousUser".equals(authentication.getPrincipal())) {
@@ -73,12 +74,11 @@ public class CartController {
 				return "redirect:/product/shop";
 			}
 		}
-		return "redirect:/login";
+		return "login";
 	}
 
 	@RequestMapping("/update/{productId}")
-	public String viewUpdate(Model model,
-			@PathVariable("productId") Integer productId,
+	public String viewUpdate(Model model, @PathVariable("productId") Integer productId,
 			@RequestParam("quantity") Float newQuantity) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null && authentication.isAuthenticated()
@@ -149,10 +149,6 @@ public class CartController {
 		}
 		return "cart";
 	}
-
-	
-	
-
 
 	public double totalPrice(List<Cart> cartItems) {
 		double total = 0;

@@ -17,13 +17,13 @@ import com.greenfarm.service.UserService;
 @ControllerAdvice
 public class GlobalController {
 
-    @Autowired
-    UserService userService;
+	@Autowired
+	UserService userService;
 
-    @Autowired
-    CartDAO cartDAO;
+	@Autowired
+	CartDAO cartDAO;
 
-    @GetMapping
+	@GetMapping
 	public String viewCart(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null && authentication.isAuthenticated()
@@ -39,7 +39,7 @@ public class GlobalController {
 		return "cart";
 	}
 
-    public double totalPrice(List<Cart> cartItems) {
+	public double totalPrice(List<Cart> cartItems) {
 		double total = 0;
 		for (Cart cartItem : cartItems) {
 			total += cartItem.getProduct().getPrice() * cartItem.getQuantity();

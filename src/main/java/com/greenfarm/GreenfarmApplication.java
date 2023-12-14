@@ -9,12 +9,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class GreenfarmApplication {
-
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
-	
 
 	public static void main(String[] args) {
 		SpringApplication.run(GreenfarmApplication.class, args);

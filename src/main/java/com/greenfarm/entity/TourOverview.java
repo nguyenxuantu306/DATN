@@ -21,20 +21,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Touroverviews")
-public class TourOverview implements Serializable{
+public class TourOverview implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Positive(message = "Touroverviewid không được là số âm")
 	private Integer touroverviewid;
-	
+
 	@NotBlank(message = "Title không được phép trống")
 	private String Title;
-	
+
 	@NotBlank(message = "Content không được phép trống")
 	private String Content;
-	
+
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "tourid")
 	Tour tour;
-	
+
 }

@@ -4,14 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.greenfarm.dao.AddressDAO;
 import com.greenfarm.entity.Address;
-
 import com.greenfarm.service.AddressService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AddressServiceImpl implements AddressService {
@@ -74,15 +73,15 @@ public class AddressServiceImpl implements AddressService {
 		// Kiểm tra xem address có tồn tại không
 		Address existingAddress = addressDAO.findById(id).orElse(null);
 
-	    if (existingAddress != null) {
-	        // Thực hiện cập nhật các trường của existingAddress dựa trên address mới
-	        existingAddress.setStreet(address.getStreet());
-	        existingAddress.setDistrict(address.getDistrict());
-	        existingAddress.setCity(address.getCity());
-	        existingAddress.setPhonenumber(address.getPhonenumber());
-	        existingAddress.setFullname(address.getFullname());
-	        // Cập nhật thông tin user nếu cần
-	        existingAddress.setUser(address.getUser());
+		if (existingAddress != null) {
+			// Thực hiện cập nhật các trường của existingAddress dựa trên address mới
+			existingAddress.setStreet(address.getStreet());
+			existingAddress.setDistrict(address.getDistrict());
+			existingAddress.setCity(address.getCity());
+			existingAddress.setPhonenumber(address.getPhonenumber());
+			existingAddress.setFullname(address.getFullname());
+			// Cập nhật thông tin user nếu cần
+			existingAddress.setUser(address.getUser());
 
 			// Lưu lại vào cơ sở dữ liệu
 			return addressDAO.save(existingAddress);

@@ -1,7 +1,6 @@
 package com.greenfarm.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +15,7 @@ public interface ReviewService {
 
 	// Create
 	Review create(Review review);
-	
+
 	// get all ratings
 	List<Review> getReviews();
 	
@@ -25,7 +24,7 @@ public interface ReviewService {
 	boolean deleteReviewById(Integer reviewid);
 
 	List<ReportRevenue> getRatingStats();
-	
+
 	boolean hasUserReviewedProduct(User user, Product product);
 
 	List<StarCount> countReviewsByRating(Integer productId);

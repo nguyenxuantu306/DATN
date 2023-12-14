@@ -33,7 +33,7 @@ public class Product implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Positive(message="ID phải lớn hơn 0")
+	@Positive(message = "ID phải lớn hơn 0")
 	private Integer productid;
 
 	@NotBlank(message = "Bạn chưa nhập tên rau")
@@ -54,9 +54,8 @@ public class Product implements Serializable {
 	@NotNull(message = "Số lượng rau là bắt buộc")
 	private Integer quantityavailable;
 
-	
 	private Boolean isdeleted = Boolean.FALSE;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "categoryid")
 	Category category;
@@ -68,12 +67,12 @@ public class Product implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	List<ProductImage> productimage;
-	
+
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
 	List<Review> Review;
 
 	public void setIsDeleted(boolean isdeleted) {
-	    this.isdeleted = isdeleted;
+		this.isdeleted = isdeleted;
 	}
 }

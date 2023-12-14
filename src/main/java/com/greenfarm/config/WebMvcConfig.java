@@ -16,31 +16,31 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Bean(name = "localeResolver")
-    public LocaleResolver getLocaleResolver() {
-        CookieLocaleResolver resolver = new CookieLocaleResolver();
-        resolver.setDefaultLocale(new Locale("vi"));
-        resolver.setCookiePath("/");
-        Duration maxAge = Duration.ofSeconds(3600);
-        resolver.setCookieMaxAge(maxAge);
-        return resolver;
-    }
+	@Bean(name = "localeResolver")
+	public LocaleResolver getLocaleResolver() {
+		CookieLocaleResolver resolver = new CookieLocaleResolver();
+		resolver.setDefaultLocale(new Locale("vi"));
+		resolver.setCookiePath("/");
+		Duration maxAge = Duration.ofSeconds(3600);
+		resolver.setCookieMaxAge(maxAge);
+		return resolver;
+	}
 
-    @Bean(name = "messageSource")
-    public MessageSource getMessageResource() {
-        ReloadableResourceBundleMessageSource messageResource = new ReloadableResourceBundleMessageSource();
+	@Bean(name = "messageSource")
+	public MessageSource getMessageResource() {
+		ReloadableResourceBundleMessageSource messageResource = new ReloadableResourceBundleMessageSource();
 
-        // Đọc vào file i18n/messages_xxx.properties
-        // Ví dụ: i18n/messages_en.properties
-        messageResource.setBasename("classpath:i18n/messages");
-        messageResource.setDefaultEncoding("UTF-8");
-        return messageResource;
-    }
+		// Đọc vào file i18n/messages_xxx.properties
+		// Ví dụ: i18n/messages_en.properties
+		messageResource.setBasename("classpath:i18n/messages");
+		messageResource.setDefaultEncoding("UTF-8");
+		return messageResource;
+	}
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        LocaleChangeInterceptor localeInterceptor = new LocaleChangeInterceptor();
-        localeInterceptor.setParamName("language");
-        registry.addInterceptor(localeInterceptor).addPathPatterns("/**");
-    }
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		LocaleChangeInterceptor localeInterceptor = new LocaleChangeInterceptor();
+		localeInterceptor.setParamName("language");
+		registry.addInterceptor(localeInterceptor).addPathPatterns("/**");
+	}
 }

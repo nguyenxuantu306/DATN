@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VoucherUserDTO {
-	
+
 	private Integer voucheruserid;
 	private User user;
 	private Voucher voucher;

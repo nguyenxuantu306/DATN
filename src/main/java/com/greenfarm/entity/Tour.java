@@ -6,7 +6,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +16,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,7 +32,7 @@ public class Tour implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Positive(message = "TourID không được là số âm")
 	private Integer tourid;
-	
+
 	@NotBlank(message = "Tour name không được phép trống (chỉ chứa khoảng trắng)")
 	private String tourname;
 
@@ -43,7 +41,7 @@ public class Tour implements Serializable {
 
 	@NotBlank(message = "Image URL không được để trống")
 	private String image;
-	
+
 	@NotBlank(message = "Departure không được để trống")
 	private String departureday;
 
@@ -65,7 +63,7 @@ public class Tour implements Serializable {
 	@JsonIgnore
 	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
 	private TourCondition tourCondition;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "tour")
 	private List<TourDate> tourdate;
@@ -85,9 +83,10 @@ public class Tour implements Serializable {
 	public String toString() {
 		return "";
 	}
-	
+
 	private Boolean isdeleted = Boolean.FALSE;
+
 	public void setIsDeleted(boolean isdeleted) {
-	    this.isdeleted = isdeleted;
+		this.isdeleted = isdeleted;
 	}
 }

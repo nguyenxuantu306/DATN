@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Pricing;
-import com.greenfarm.entity.TourDate;
 import com.greenfarm.entity.User;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +23,7 @@ public class TourDTO {
 	private String departureday;
 	private String location;
 	private Integer Availableslots;
-	
+
 	private User user;
 	private List<Booking> booking;
 	private TourConditionDTO tourCondition;

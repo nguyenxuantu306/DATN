@@ -10,6 +10,7 @@
 
 :root {
 	--blue: #007bff;
+	--indigo: #6610f2;
 	--purple: #6f42c1;
 	--pink: #e83e8c;
 	--red: #dc3545;
@@ -2180,7 +2181,7 @@ pre code {
 
 .form-control {
 	display: block;
-	width: 100%;
+	width: 99%;
 	height: calc(1.5em + 0.75rem + 2px);
 	padding: 0.375rem 0.75rem;
 	font-size: 1rem;
@@ -11514,13 +11515,10 @@ h1 {
 	right: 0;
 	background-color: rgb(0, 0, 0);
 	color: #ffffff;
-	padding: 5px 10px;
+	padding: 5px;
 	border: 1px solid #000;
-	font-size: 12px;
 	border-radius: 5px 0 0 5px;
-	
 }
-
 
 .thumbnail-image.selected {
 	border: 2px solid gold;
@@ -11531,44 +11529,47 @@ h1 {
 }
 
 .banner-home-outer .box_info {
-    padding: 60px 30px 30px;
-    border: 1px solid #BED747;
-    height: 90%;
+	padding: 60px 30px 30px;
+	border: 1px solid #BED747;
+	height: 90%;
 }
+
 .banner-home-outer .box-service {
-    position: relative;
-    text-align: center;
+	position: relative;
+	text-align: center;
 }
+
 .banner-home-outer .icon_title {
-    position: absolute;
-    top: -50px;
-    left: 0;
-    right: 0;
-    width: 100px;
-    height: 100px;
-    overflow: hidden;
-    border: 2px solid #BED747;
-    border-radius: 50%;
-    text-align: center;
-    background-color: #fff;
-    margin: auto;
-    -webkit-transition: 0.8s;
-    -moz-transition: 0.8s;
-    transition: 0.8s;
+	position: absolute;
+	top: -50px;
+	left: 0;
+	right: 0;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	border: 2px solid #BED747;
+	border-radius: 50%;
+	text-align: center;
+	background-color: #fff;
+	margin: auto;
+	-webkit-transition: 0.8s;
+	-moz-transition: 0.8s;
+	transition: 0.8s;
 }
+
 .banner-home-outer .icon_title img {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    transition: all 0.6s ease-in-out 0s;
-    -moz-transition: all 0.6s ease-in-out 0s;
-    -o-transition: all 0.6s ease-in-out 0s;
-    -webkit-transition: all 0.6s ease-in-out 0s;
-    -ms-transition: all 0.6s ease-in-out 0s;
-    cursor: pointer;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	transition: all 0.6s ease-in-out 0s;
+	-moz-transition: all 0.6s ease-in-out 0s;
+	-o-transition: all 0.6s ease-in-out 0s;
+	-webkit-transition: all 0.6s ease-in-out 0s;
+	-ms-transition: all 0.6s ease-in-out 0s;
+	cursor: pointer;
 }
 
 .title_bg {
@@ -11581,4 +11582,13 @@ h1 {
     color: #7AB730;
     font-weight: 700;
     text-transform: uppercase;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+
+	input[type="number"] {
+		-moz-appearance: textfield;
+	}
 }

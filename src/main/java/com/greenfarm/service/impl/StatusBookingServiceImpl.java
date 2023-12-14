@@ -9,8 +9,8 @@ import com.greenfarm.entity.StatusBooking;
 import com.greenfarm.service.StatusBookingService;
 
 @Service
-public class StatusBookingServiceImpl implements StatusBookingService{
-	
+public class StatusBookingServiceImpl implements StatusBookingService {
+
 	@Autowired
 	StatusBookingDAO dao;
 

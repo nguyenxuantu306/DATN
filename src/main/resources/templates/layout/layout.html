@@ -1,31 +1,92 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	th:fragment="dynamic(view)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(view)">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GreenFarm</title>
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/images/favicon.svg"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
 
-<head>
-<meta charset="UTF-8" />
-<title>GreenFarm</title>
-<!-- Favicon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	href="/assets/images/favicon.svg">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link href="/assets/css/style.css" rel="stylesheet" />
+    <link href="/assets/css/security.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <!--  silder -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"
+      integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
+      integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <style type="text/css">
+      .invalid-feedback {
+        font-size: 14px;
+        font-weight: 600px;
+        text-align: left;
+      }
+    </style>
+    <style type="text/css">
+      /* Thiết lập kiểu dáng cơ bản cho nút "Add to Cart" */
+      .add-to-cart-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      }
 
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-	rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
-<link
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
-	rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<link href="/assets/css/style.css" rel="stylesheet" />
-<link href="/assets/css/security.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+      /* Icon trong nút */
+      .add-to-cart-button i {
+        margin-right: 5px;
+      }
 
 <!--  silder -->
 <link rel="stylesheet"
@@ -75,53 +136,106 @@
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Icon trong nút */
-.add-to-cart-button i {
-	margin-right: 5px;
-}
+      .wap-ss-img {
+        text-align: center;
+        width: 100%;
+      }
 
-/* Khi di chuột vào nút */
-.add-to-cart-button:hover {
-	background-color: #0056b3;
-	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-}
+      .wap-ss-img img {
+        height: 250px;
+        margin: 0 auto;
+      }
 
-.wap-ss-img {
-	text-align: center;
-	width: 100%;
-}
+      .textleft {
+        text-align: center;
+      }
 
-.wap-ss-img img {
-	height: 250px;
-	margin: 0 auto;
-}
+      .slick-prev:before,
+      .slick-next:before {
+        font-family: fontawesome;
+        font-size: 30px;
+        color: black;
+      }
 
-.textleft {
-	text-align: center;
-}
+      .slick-prev:before {
+        content: "\f100";
+      }
 
-.slick-prev:before, .slick-next:before {
-	font-family: fontawesome;
-	font-size: 30px;
-	color: black;
-}
+      .slick-next:before {
+        content: "\f101";
+      }
 
-.slick-prev:before {
-	content: "\f100";
-}
+      /* Input */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
 
-.slick-next:before {
-	content: "\f101";
-}
-</style>
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+      }
+    </style>
+    <!-- Gọi angularjs ánh xạ -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+  </head>
+  <body ng-app="user-app">
+    <div th:fragment="navbar" class="header_area">
+      <div class="pos_page">
+        <div>
+          <div class="pos_page_inner">
+            <nav
+              class="container"
+              th:insert="~{/layout/_header.html::header}"
+            ></nav>
+            <main th:replace="${view}"></main>
+          </div>
+        </div>
+      </div>
+      <div th:insert="~{/layout/_footer.html::footer}"></div>
+    </div>
 
-<!-- Gọi angularjs ánh xạ -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+      <div
+        id="loginSuccessToast"
+        class="toast"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="toast-header">
+          <strong class="me-auto">GreenFarm</strong>
+          <small>0 mins ago</small>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="toast-body" style="background-color: #32cd32; color: white">
+          Đăng nhập thành công!
+        </div>
+      </div>
+    </div>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
-</head>
+    <script src="/assets/js/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/angular.js"></script>
+    <script src="/assets/js/angular-route.min.js"></script>
+    <!-- Template Javascript -->
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/comment.js"></script>
+    <script type="text/javascript" src="/assets/js/styte.js"></script>
+    <script
+      type="text/javascript"
+      src="/assets/js/shopping-cart-app.js"
+    ></script>
+    <!-- slider -->
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <body>
 	<div th:fragment="navbar" class="header_area">

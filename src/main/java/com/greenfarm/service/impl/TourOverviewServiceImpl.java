@@ -10,10 +10,10 @@ import com.greenfarm.entity.TourOverview;
 import com.greenfarm.service.TourOverviewService;
 
 @Service
-public class TourOverviewServiceImpl implements TourOverviewService{
+public class TourOverviewServiceImpl implements TourOverviewService {
 	@Autowired
 	TourOverviewDAO dao;
-	
+
 	@Override
 	public TourOverview create(TourOverview tourOverview) {
 		return dao.save(tourOverview);

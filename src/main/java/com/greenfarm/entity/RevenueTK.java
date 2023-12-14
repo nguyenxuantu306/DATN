@@ -18,7 +18,6 @@ public class RevenueTK implements Serializable {
 	private static final long serialVersionUID = -5885342208000278840L;
 	@Id
 	private String month;
-    private Float totalRevenue;
+	private Float totalRevenue;
 
-    
 }

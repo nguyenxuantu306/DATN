@@ -3,15 +3,14 @@ package com.greenfarm.controller;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.net.http.HttpHeaders;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
+import javax.naming.spi.DirStateFactory.Result;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,28 +20,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.sarxos.webcam.Webcam;
-import com.google.zxing.Binarizer;
 import com.google.zxing.BinaryBitmap;
-import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
-import com.google.zxing.common.BitArray;
-import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
-import com.greenfarm.service.impl.WebcamService;
 
 @RestController
 @RequestMapping("/api/camera")
 @CrossOrigin(origins = "http://localhost:8080/")
 public class CameraController {
-    @Autowired
-    private WebcamService webcamService;
 
 //    @GetMapping("/capture")
 //    public ResponseEntity<byte[]> capture() {
@@ -128,7 +117,7 @@ System.out.println(webcams);
     	// Lấy danh sách các camera
     	List<Webcam> webcams = Webcam.getWebcams();
     	model.addAttribute("listcamera", webcams);
-System.out.println(webcams);
+        System.out.println(webcams);
 
     	// Chọn camera đầu tiên trong danh sách
     	Webcam selectedWebcam = webcams.get(0);
@@ -137,44 +126,59 @@ System.out.println(webcams);
     	// Đóng camera hiện tại
     	
     	//webcam.close();
+    }
+    
+	@GetMapping("/soatve")
+	public String soatve() {
 
-    	// Mở camera mới
-    	selectedWebcam.open(true);
+		return null;
+	}
 
-    	// Đổi sang camera khác (ví dụ: camera thứ hai)
-    	//selectedWebcam = webcams.get(1);
+	@GetMapping("/captureqr")
+	public String capture1() {
 
-        try {
-            //BufferedImage bufferedImage = webcamService.capture();
-            BufferedImage bufferedImage = selectedWebcam.getImage();
+		// Lấy danh sách các camera
+		List<Webcam> webcams = Webcam.getWebcams();
+		System.out.println(webcams);
+		// Chọn camera đầu tiên trong danh sách
+		Webcam selectedWebcam = webcams.get(0);
+		System.out.println(selectedWebcam);
 
-            // Convert BufferedImage to byte array
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "png", baos);
-            baos.flush();
+		// Đóng camera hiện tại
 
-            // Set the content type as image/png
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.IMAGE_PNG);
+		// webcam.close();
 
-            // Return the byte array as ResponseEntity
-           
+		// Mở camera mới
+		selectedWebcam.open(true);
+
+		// Đổi sang camera khác (ví dụ: camera thứ hai)
+		// selectedWebcam = webcams.get(1);
+
+		try {
+			// BufferedImage bufferedImage = webcamService.capture();
+			BufferedImage bufferedImage = selectedWebcam.getImage();
+
+			// Convert BufferedImage to byte array
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImage, "png", baos);
+			baos.flush();
+
+			// Set the content type as image/png
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.IMAGE_PNG);
+
+			// Return the byte array as ResponseEntity
 
 //            // Decode QR code from the captured image
 //            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(
 //                    new BufferedImageLuminanceSource(bufferedImage)));
-            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer( 
-            		new BufferedImageLuminanceSource(bufferedImage)
-            		));
-            
-            
-            Result result = new MultiFormatReader().decode(bitmap);
+			BinaryBitmap bitmap = new BinaryBitmap(
+					new HybridBinarizer(new BufferedImageLuminanceSource(bufferedImage)));
 
-            // You can use the result.getText() to get the decoded QR code value
-            String qrCodeValue = result.getText();
+			Result result = new MultiFormatReader().decode(bitmap);
 
-            // Perform any action with the decoded QR code value
-            System.out.println("Decoded QR Code: " + qrCodeValue);
+			// You can use the result.getText() to get the decoded QR code value
+			String qrCodeValue = result.getText();
 
             // You can return the decoded QR code value as part of the response
             ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);

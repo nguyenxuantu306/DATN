@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.entity.OrderDetail;
-import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportSP;
 import com.greenfarm.service.OrderDetailService;
 
 @CrossOrigin("*")
@@ -28,7 +28,7 @@ public class OrderDeatailRestController {
 	}
 
 	@GetMapping("/thongke")
-	public ResponseEntity<List<Report>> tongdoanhthu() {
+	public ResponseEntity<List<ReportSP>> tongdoanhthu() {
 		return new ResponseEntity<>(orderDetailService.tongdoanhthu(), HttpStatus.OK);
 
 	}

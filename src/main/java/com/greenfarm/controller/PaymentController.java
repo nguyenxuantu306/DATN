@@ -1,14 +1,12 @@
 package com.greenfarm.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
-import org.slf4j.Logger;
+import org.jcp.xml.dsig.internal.dom.Utils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -44,10 +42,12 @@ import com.greenfarm.service.VoucherService;
 import com.greenfarm.service.VoucherUserService;
 import com.greenfarm.utils.PaypalPaymentIntent;
 import com.greenfarm.utils.PaypalPaymentMethod;
-import com.greenfarm.utils.Utils;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PaymentController {
@@ -96,7 +96,6 @@ public class PaymentController {
 		String cancelUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
 		String successUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_SUCCESS;
 
-		
 		try {
 			Payment payment = paypalService.createPayment(totalPrice, "USD", PaypalPaymentMethod.paypal,
 					PaypalPaymentIntent.sale, "payment description", cancelUrl, successUrl);

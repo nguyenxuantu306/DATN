@@ -5,13 +5,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.greenfarm.dto.Provider;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -30,7 +27,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -66,23 +62,18 @@ public class User implements Serializable {
 
 	@Column(unique = true)
 	@NotBlank(message = "Số điện thoại không được để trống")
-    @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
+	@Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
 	String phonenumber;
 
 // @NotBlank(message = "Ảnh đại diện là bắt buộc")
 	String image;
 
-//	@NotBlank(message = "Địa chỉ là bắt buộc")
-//	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
-	
-
 //	@NotNull(message = "Giới tính phải được chọn")
 	Boolean gender;
 
-	
 //	@DateTimeFormat(pattern = "yyyy-MM-dd")
 //	@Past(message = "Ngày sinh phải là một ngày trong quá khứ")
-	 @DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 
 //	@Past(message = "Ngày tạo phải trước ngày hiện tại")
@@ -93,9 +84,9 @@ public class User implements Serializable {
 	// Boolean IsActive;
 
 	@JsonIgnore
-	@OneToMany( mappedBy = "user")
+	@OneToMany(mappedBy = "user")
 	List<Address> address;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Booking> booking;
@@ -105,7 +96,7 @@ public class User implements Serializable {
 	List<Comment> comment;
 
 	@JsonIgnore
-	@OneToMany(cascade = jakarta.persistence.CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	List<UserRole> userRole;
 
 	@JsonIgnore

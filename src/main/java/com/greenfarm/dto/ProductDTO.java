@@ -3,7 +3,6 @@ package com.greenfarm.dto;
 import java.util.List;
 
 import com.greenfarm.entity.Category;
-import com.greenfarm.entity.ProductImage;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,12 +15,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProductDTO {
 	private Integer productid;
-    private String productname;
-    private String description;
-    private Double price;
-    private String image;
-    private Integer quantityavailable;
+	private String productname;
+	private String description;
+	private Double price;
+	private String image;
+	private Integer quantityavailable;
 	private Boolean isdeleted = Boolean.FALSE;
-    private Category category;
-    private List<ProductImageDTO> productimage;
+	private Category category;
+	private List<ProductImageDTO> productimage;
 }

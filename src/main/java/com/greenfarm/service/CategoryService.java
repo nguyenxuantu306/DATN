@@ -3,7 +3,7 @@ package com.greenfarm.service;
 import java.util.List;
 
 import com.greenfarm.entity.Category;
-import com.greenfarm.entity.Product;
+
 public interface CategoryService {
 	// API show loại sản phẩm
 	List<Category> findAll();
@@ -14,8 +14,6 @@ public interface CategoryService {
 	// API thêm loại sản phẩm
 	Category create(Category category);
 
-	List<Category> findByKeyword(String keyword);
-	
 	// API cập nhật sản phẩm
 	Category update(Category category);
 

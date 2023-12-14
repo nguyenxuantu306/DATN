@@ -19,22 +19,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "recomments")
-public class ReComment implements Serializable{
+public class ReComment implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer recommentid;
-	
-	
+
 	private String recommenttext;
-	
+
 	private Date recommentdate = new Date();
-	
-	
+
 	@ManyToOne
 	@JoinColumn(name = "userid")
 	private User user;
-	
-	@ManyToOne	
+
+	@ManyToOne
 	@JoinColumn(name = "CommentID")
 	Comment comment;
 }

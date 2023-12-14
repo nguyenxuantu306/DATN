@@ -18,13 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.greenfarm.dto.CategoryDTO;
 import com.greenfarm.dto.TourDTO;
 import com.greenfarm.dto.TourImageDTO;
-import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Pricing;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.TourCondition;
@@ -81,20 +78,18 @@ public class TourRestController {
 		return new ResponseEntity<>(tourDTO, HttpStatus.OK);
 	}
 
-	
 	@GetMapping("/deleted")
 	public ResponseEntity<List<TourDTO>> getDeletedList() {
-		List<Tour> deletedUser= tourService.findAllDeletedTour();
+		List<Tour> deletedUser = tourService.findAllDeletedTour();
 
 		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
-		List<TourDTO> TourDTOs = deletedUser.stream()
-				.map(tour -> modelMapper.map(tour, TourDTO.class)).collect(Collectors.toList());
+		List<TourDTO> TourDTOs = deletedUser.stream().map(tour -> modelMapper.map(tour, TourDTO.class))
+				.collect(Collectors.toList());
 
 		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(TourDTOs, HttpStatus.OK);
 	}
-	
-	
+
 	@PostMapping()
 	public ResponseEntity<TourDTO> create(@RequestBody @Valid TourDTO tourDTO, BindingResult result) {
 
@@ -288,8 +283,7 @@ public class TourRestController {
 		tourService.deleteTourById(tourid);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
-	
+
 	@PutMapping("/{tourid}/restore")
 	public ResponseEntity<String> restoreTour(@PathVariable("tourid") Integer tourid) {
 		// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu
@@ -304,24 +298,6 @@ public class TourRestController {
 		tourService.save(tour);
 
 		return new ResponseEntity<>("Khôi phục địa điểm thành công", HttpStatus.OK);
-	}
-	
-	@GetMapping("/searchkeywordtour")
-	public ResponseEntity<List<TourDTO>> getList(@RequestParam(required = false) String keyword) {
-		List<Tour> tours;
-
-		if (keyword != null && !keyword.isEmpty()) {
-			// Nếu có từ khóa, thực hiện tìm kiếm
-			tours = tourService.findByKeyword(keyword);
-		} else {
-			// Nếu không có từ khóa, lấy tất cả người dùng
-			tours = tourService.findAll();
-		}
-
-		List<TourDTO> toursDtos = tours.stream().map(tour -> modelMapper.map(tour, TourDTO.class))
-				.collect(Collectors.toList());
-
-		return ResponseEntity.ok(toursDtos);
 	}
 
 }

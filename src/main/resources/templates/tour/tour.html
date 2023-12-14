@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout::dynamic(~{::body})}">
+<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
 
 <head>
-<meta charset="UTF-8">
-<title>GreenFarm</title>
+	<meta charset="UTF-8">
+	<title>GreenFarm</title>
 </head>
 
 <body>
@@ -12,53 +11,52 @@
 		<div class="pt-3">
 			<div class="text-center mb-3 pb-3">
 				<div id="carouselExampleIndicators" class="carousel slide"
-					data-bs-ride="carousel">
-					<div class="carousel-indicators">
-						<button type="button" data-bs-target="#carouselExampleIndicators"
-							data-bs-slide-to="0" class="active" aria-current="true"
-							aria-label="Slide 1"></button>
-						<button type="button" data-bs-target="#carouselExampleIndicators"
-							data-bs-slide-to="1" aria-label="Slide 2"></button>
-						<button type="button" data-bs-target="#carouselExampleIndicators"
-							data-bs-slide-to="2" aria-label="Slide 3"></button>
+						data-bs-ride="carousel">
+						<div class="carousel-indicators">
+							<button type="button" data-bs-target="#carouselExampleIndicators"
+								data-bs-slide-to="0" class="active" aria-current="true"
+								aria-label="Slide 1"></button>
+							<button type="button" data-bs-target="#carouselExampleIndicators"
+								data-bs-slide-to="1" aria-label="Slide 2"></button>
+							<button type="button" data-bs-target="#carouselExampleIndicators"
+								data-bs-slide-to="2" aria-label="Slide 3"></button>
+						</div>
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<img style="height:250px"
+									src="https://theme.hstatic.net/200000594657/1000977329/14/slideshow_1.jpg?v=22"
+									class="d-block w-100" alt="...">
+							</div>
+							<div class="carousel-item">
+								<img style="height:250px"
+									src="https://theme.hstatic.net/200000594657/1000977329/14/slideshow_2.jpg?v=22"
+									class="d-block w-100 " alt="...">
+							</div>
+							<div class="carousel-item">
+								<img style="height:250px"
+									src="https://static.wixstatic.com/media/7406f4_adbbc9305d5b48ce828f9672e6a4ef85~mv2.jpg/v1/fill/w_1899,h_825,al_r,q_85,usm_0.66_1.00_0.01,enc_auto/7406f4_adbbc9305d5b48ce828f9672e6a4ef85~mv2.jpg"
+									class="d-block w-100" alt="...">
+							</div>
+						</div>
+						<button class="carousel-control-prev" type="button"
+							data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
 					</div>
-					<div class="carousel-inner">
-						<div class="carousel-item active">
-							<img style="height: 250px"
-								src="https://theme.hstatic.net/200000594657/1000977329/14/slideshow_1.jpg?v=22"
-								class="d-block w-100" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img style="height: 250px"
-								src="https://theme.hstatic.net/200000594657/1000977329/14/slideshow_2.jpg?v=22"
-								class="d-block w-100 " alt="...">
-						</div>
-						<div class="carousel-item">
-							<img style="height: 250px"
-								src="https://static.wixstatic.com/media/7406f4_adbbc9305d5b48ce828f9672e6a4ef85~mv2.jpg/v1/fill/w_1899,h_825,al_r,q_85,usm_0.66_1.00_0.01,enc_auto/7406f4_adbbc9305d5b48ce828f9672e6a4ef85~mv2.jpg"
-								class="d-block w-100" alt="...">
-						</div>
-					</div>
-					<button class="carousel-control-prev" type="button"
-						data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Previous</span>
-					</button>
-					<button class="carousel-control-next" type="button"
-						data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Next</span>
-					</button>
-				</div>
 				<h1 th:text="#{tour.label.title}">List Tour</h1>
 			</div>
 			<div class="tab-content py-3">
 				<div role="tabpanel" class="tab-pane active" id="plan">
 					<div class="block_search">
 						<form action="/tour" method="get">
-							<input type="hidden" name="language" value="vi"> <input
-								type="hidden" name="nv" value="tour"> <input
-								type="hidden" name="op" value="search">
+							<input type="hidden" name="language" value="vi"> <input type="hidden" name="nv"
+								value="tour"> <input type="hidden" name="op" value="search">
 
 							<div class="search_panel">
 								<div class="row">
@@ -114,11 +112,11 @@
 								</a>
 								<div class="p-4">
 									<div class="d-flex justify-content-between mb-3">
-										<small class="m-0"> <i
-											class="fa fa-calendar-alt text-primary "> <span
-												style="font-size: 18px" th:text="${p.departureday}"></span>
-										</i>
+										<small class="m-0"> <i class="fa fa-calendar-alt text-primary ">
+												<span style="font-size:18px" th:text="${p.departureday}"></span>
+											</i>
 										</small>
+										
 									</div>
 									<a
 										style="color: #003C2D; text-decoration: none;"
@@ -128,8 +126,7 @@
 										th:href="@{|/tour/detail/${p.tourid}|}"></a>
 									<div class="border-top mt-4 pt-4">
 										<div class="d-flex justify-content-between">
-											<h5
-												th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"
+											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"
 												class="m-0 p-1"></h5>
 											<button class="btn btn-primary">
 												<a th:href="@{|/booking/${p.tourid}|}"
@@ -144,30 +141,23 @@
 					<div class="row">
 						<div class="col-md-12">
 							<ul class="pagination justify-content-center">
-								<li
-									th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=1&size=${size}|}" class="page-link"><i
-										class="bi bi-chevron-double-left"></i></a>
+								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{|/tour?page=1&size=${size}|}" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
 								</li>
-								<li
-									th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
 									<a th:href="@{|/tour?page=${currentPage - 1}&size=${size}|}"
-									class="page-link"><i class="bi bi-chevron-left"></i></a>
+										class="page-link"><i class="bi bi-chevron-left"></i></a>
 								</li>
 								<li th:each="i: ${#numbers.sequence(1, totalPages)}"
 									th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
-									<a th:href="@{|/tour?page=${i}&size=${size}|}"
-									class="page-link" th:text="${i}"></a>
+									<a th:href="@{|/tour?page=${i}&size=${size}|}" class="page-link" th:text="${i}"></a>
 								</li>
-								<li
-									th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
 									<a th:href="@{|/tour?page=${currentPage + 1}&size=${size}|}"
-									class="page-link"><i class="bi bi-chevron-right"></i></a>
+										class="page-link"><i class="bi bi-chevron-right"></i></a>
 								</li>
-								<li
-									th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=${totalPages}&size=${size}|}"
-									class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{|/tour?page=${totalPages}&size=${size}|}" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
 								</li>
 							</ul>
 						</div>
@@ -184,10 +174,9 @@
 								</a>
 								<div class="p-4">
 									<div class="d-flex justify-content-between mb-3">
-										<small class="m-0"> <i
-											class="fa fa-calendar-alt text-primary"> <span
-												style="font-size: 18px" th:text="${p.departureday}"></span>
-										</i>
+										<small class="m-0"> <i class="fa fa-calendar-alt text-primary">
+												<span style="font-size:18px" th:text="${p.departureday}"></span>
+											</i>
 										</small>
 									</div>
 									<a
@@ -198,8 +187,7 @@
 										th:href="@{|/tour/detail/${p.tourid}|}"></a>
 									<div class="border-top mt-4 pt-4">
 										<div class="d-flex justify-content-between">
-											<h5
-												th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"
+											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"
 												class="m-0 p-1"></h5>
 											<button class="btn btn-primary">
 												<a th:href="@{|/booking/${p.tourid}|}"
@@ -214,30 +202,23 @@
 					<div class="row">
 						<div class="col-md-12">
 							<ul class="pagination justify-content-center">
-								<li
-									th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=1&size=${6}|}" class="page-link"><i
-										class="bi bi-chevron-double-left"></i></a>
+								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{|/tour?page=1&size=${6}|}" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
 								</li>
-								<li
-									th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
 									<a th:href="@{|/tour?page=${currentPage - 1}&size=${6}|}"
-									class="page-link"><i class="bi bi-chevron-left"></i></a>
+										class="page-link"><i class="bi bi-chevron-left"></i></a>
 								</li>
 								<li th:each="i: ${#numbers.sequence(1, totalPages)}"
 									th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
-									<a th:href="@{|/tour?page=${i}&size=${6}|}" class="page-link"
-									th:text="${i}"></a>
+									<a th:href="@{|/tour?page=${i}&size=${6}|}" class="page-link" th:text="${i}"></a>
 								</li>
-								<li
-									th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
 									<a th:href="@{|/tour?page=${currentPage + 1}&size=${6}|}"
-									class="page-link"><i class="bi bi-chevron-right"></i></a>
+										class="page-link"><i class="bi bi-chevron-right"></i></a>
 								</li>
-								<li
-									th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=${totalPages}&size=${6}|}"
-									class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{|/tour?page=${totalPages}&size=${6}|}" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
 								</li>
 							</ul>
 						</div>
@@ -247,8 +228,8 @@
 		</div>
 	</div>
 	<script>
-		$(document).ready(function() {
-			$("#priceFilter").on("change", function() {
+		$(document).ready(function () {
+			$("#priceFilter").on("change", function () {
 				// Lấy giá trị đã chọn trong dropdown
 				var selectedValue = $(this).val();
 

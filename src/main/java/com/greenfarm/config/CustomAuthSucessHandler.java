@@ -18,9 +18,10 @@ public class CustomAuthSucessHandler implements AuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-
+		// Your existing code to check user roles
 		Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
+		// Redirect to appropriate URL based on roles
 		if (roles.contains("ROLE_Administrator")) {
 			response.sendRedirect("/admin");
 		} else {

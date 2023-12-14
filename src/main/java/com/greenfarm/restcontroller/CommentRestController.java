@@ -16,12 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.greenfarm.dto.CategoryDTO;
 import com.greenfarm.dto.CommentDTO;
-import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Comment;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.service.CommentService;
@@ -31,16 +28,16 @@ import com.greenfarm.service.TourService;
 @RestController
 @RequestMapping("/rest/comment")
 public class CommentRestController {
-	
+
 	@Autowired
 	CommentService commentService;
-	
+
 	@Autowired
 	ModelMapper modelMapper;
-	
+
 	@Autowired
 	TourService tourService;
-	
+
 //	@GetMapping()
 //	public ResponseEntity<List<CommentDTO>> getListcomment(){
 //		List<Comment> comments = commentService.getComments();
@@ -51,28 +48,26 @@ public class CommentRestController {
 //		
 //	}
 	@GetMapping()
-	public ResponseEntity<List<CommentDTO>> getListcomment(){
+	public ResponseEntity<List<CommentDTO>> getListcomment() {
 		List<Comment> comments = commentService.getCommentsOrderByDateDesc();
 		List<CommentDTO> commenDtos = comments.stream().map(comment -> modelMapper.map(comment, CommentDTO.class))
 				.collect(Collectors.toList());
 
 		return new ResponseEntity<>(commenDtos, HttpStatus.OK);
-		
-	} 
 
+	}
 
 	@GetMapping("/tour/{tourid}")
-	public ResponseEntity<List<CommentDTO>> getListcommentbytour(@PathVariable("tourid") Integer tourid){
+	public ResponseEntity<List<CommentDTO>> getListcommentbytour(@PathVariable("tourid") Integer tourid) {
 		Tour tour = tourService.findById(tourid);
 		List<Comment> comments = commentService.commentbytourid(tour);
 		List<CommentDTO> commenDtos = comments.stream().map(comment -> modelMapper.map(comment, CommentDTO.class))
 				.collect(Collectors.toList());
-				
+
 		return new ResponseEntity<>(commenDtos, HttpStatus.OK);
-		
+
 	}
-	
-	
+
 	@GetMapping("{commentid}")
 	public ResponseEntity<CommentDTO> getOne(@PathVariable("commentid") Integer commentid) {
 		Comment Comment = commentService.findById(commentid);
@@ -88,19 +83,17 @@ public class CommentRestController {
 		// Trả về CommentDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(CommentDTO, HttpStatus.OK);
 	}
-	
-	
+
 	@PostMapping()
-	public ResponseEntity<CommentDTO> create(@RequestBody Comment comment,
-			Model model) {
-		
-			Comment createdComment = commentService.create(comment);
+	public ResponseEntity<CommentDTO> create(@RequestBody Comment comment, Model model) {
 
-			// Sử dụng ModelMapper để ánh xạ từ Comment đã tạo thành CommentDTO
-			CommentDTO CommentDTO = modelMapper.map(createdComment, CommentDTO.class);
+		Comment createdComment = commentService.create(comment);
 
-			// Trả về CommentDTO bằng ResponseEntity với mã trạng thái 201 Created
-			return new ResponseEntity<>(CommentDTO, HttpStatus.CREATED);				
+		// Sử dụng ModelMapper để ánh xạ từ Comment đã tạo thành CommentDTO
+		CommentDTO CommentDTO = modelMapper.map(createdComment, CommentDTO.class);
+
+		// Trả về CommentDTO bằng ResponseEntity với mã trạng thái 201 Created
+		return new ResponseEntity<>(CommentDTO, HttpStatus.CREATED);
 	}
 
 	@PutMapping("{commentid}")
@@ -135,23 +128,5 @@ public class CommentRestController {
 		// Trả về mã trạng thái 204 No Content để chỉ ra thành công trong việc xóa
 		return ResponseEntity.noContent().build();
 	}
-	
-	
-	@GetMapping("/searchkeywordcomment")
-	public ResponseEntity<List<CommentDTO>> getList(@RequestParam(required = false) String keyword) {
-		List<Comment> comments;
 
-		if (keyword != null && !keyword.isEmpty()) {
-			// Nếu có từ khóa, thực hiện tìm kiếm
-			comments = commentService.findByKeyword(keyword);
-		} else {
-			// Nếu không có từ khóa, lấy tất cả người dùng
-			comments = commentService.findAll();
-		}
-
-		List<CommentDTO> commentServiceDtos = comments.stream().map(comment -> modelMapper.map(comment, CommentDTO.class))
-				.collect(Collectors.toList());
-
-		return ResponseEntity.ok(commentServiceDtos);
-	}
 }

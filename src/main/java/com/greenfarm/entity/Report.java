@@ -20,5 +20,5 @@ public class Report implements Serializable {
 	Serializable group;
 	Double sum;
 	Long count;
-	
+
 }

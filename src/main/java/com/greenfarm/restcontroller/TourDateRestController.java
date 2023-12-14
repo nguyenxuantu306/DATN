@@ -1,11 +1,10 @@
 package com.greenfarm.restcontroller;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -24,8 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.greenfarm.dto.TourDateDTO;
 import com.greenfarm.entity.TourDate;
 import com.greenfarm.service.TourDateService;
-
-import org.modelmapper.ModelMapper;
 
 @CrossOrigin("*")
 @RestController
@@ -95,15 +92,13 @@ public class TourDateRestController {
 			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy product để cập nhật
 			return ResponseEntity.notFound().build();
 		}
-		
-		
+
 		// Sử dụng ModelMapper để ánh xạ từ Product đã cập nhật thành ProductDTO
 		TourDateDTO tourdateDTO = modelMapper.map(updatedTourDateResult, TourDateDTO.class);
 
 		// Trả về updatedTourDateDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(tourdateDTO, HttpStatus.OK);
 	}
-
 
 	@DeleteMapping("/{tourdateid}")
 	public ResponseEntity<Void> deletetourdate(@PathVariable("tourdateid") Integer tourdateid) {

@@ -13,7 +13,7 @@ import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Voucher;
 
 @EnableJpaRepositories
-public interface VoucherDAO extends JpaRepository<Voucher, Integer>{
+public interface VoucherDAO extends JpaRepository<Voucher, Integer> {
 
 	Voucher findByVoucherid(long parseLong);
 	

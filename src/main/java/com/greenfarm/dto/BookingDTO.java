@@ -25,26 +25,26 @@ import lombok.Setter;
 public class BookingDTO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Bookingid; 
-	
+	private Integer Bookingid;
+
 	private LocalDateTime bookingdate;
-	
+
 	private Float Totalprice;
-	
+
 	@NotNull(message = "Số lượng vé người lớn không được để trống")
-    @Min(value = 1, message = "Số lượng vé người lớn phải lớn hơn hoặc bằng 1")
+	@Min(value = 1, message = "Số lượng vé người lớn phải lớn hơn hoặc bằng 1")
 	private Integer Adultticketnumber;
-	
+
 	@NotNull(message = "Số lượng vé trẻ em không được để trống")
 	@Min(value = 0, message = "Số lượng vé trẻ em không được nhỏ hơn 0")
 	private Integer Childticketnumber;
 	private String qrcode;
 	private User user;
-	
+
 	private Tour tour;
-	
+
 	private StatusBooking statusbooking;
-	
+
 	private PaymentMethod paymentmethod;
 	
 	TourDateBooking tourDateBooking;

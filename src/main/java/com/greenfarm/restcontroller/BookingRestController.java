@@ -208,7 +208,6 @@ public class BookingRestController {
 			} else {
 				StatusBooking statusBooking = statusBookingService.findById(5);
 				booking.setStatusbooking(statusBooking);
-				Booking updatedBooking = bookingService.update(booking);
 				System.out.println("Đã xác nhận thành công");
 				// Trả về giao diện Thymeleaf khi xác nhận thành công
 				ModelAndView mav = new ModelAndView("mytiecketuse");
@@ -222,12 +221,12 @@ public class BookingRestController {
 			ModelAndView mav = new ModelAndView("mytiecketseen");
 			mav.addObject("message", "Bạn không có quyền xác nhận vé.");
 			model.addAttribute("bookinguse", booking);
-			
+
 			return mav;
 		}
 	}
 
-	//Lấy quyền user
+	// Lấy quyền user
 	private String getUserRole(Principal principal) {
 		User user = userService.findByEmail(principal.getName());
 
@@ -244,7 +243,7 @@ public class BookingRestController {
 			}
 		}
 
-		return "USER"; 
+		return "USER";
 	}
 
 }

@@ -11,11 +11,11 @@ import com.greenfarm.entity.ReComment;
 import com.greenfarm.service.ReCommentService;
 
 @Service
-public class ReCommentServiceImpl implements ReCommentService{
+public class ReCommentServiceImpl implements ReCommentService {
 
 	@Autowired
 	ReCommentDAO reCommentDAO;
-	
+
 	@Override
 	public List<ReComment> findAll() {
 		return reCommentDAO.findAll();
@@ -30,7 +30,6 @@ public class ReCommentServiceImpl implements ReCommentService{
 	public List<ReComment> getReComments() {
 		return reCommentDAO.findAll();
 	}
-
 
 	@Override
 	public ReComment findById(Integer ReCommentid) {

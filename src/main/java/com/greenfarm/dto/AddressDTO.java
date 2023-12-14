@@ -1,6 +1,5 @@
 package com.greenfarm.dto;
 
-
 import com.greenfarm.entity.User;
 
 import lombok.AllArgsConstructor;
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddressDTO {
 	private Integer AddressID;
-	
+
 	private String Street;
 	private String Ward;
 	private String District;
@@ -21,6 +20,5 @@ public class AddressDTO {
 	private String Fullname;
 	private Boolean Active = Boolean.FALSE;
 	private User user;
-	
-	
+
 }

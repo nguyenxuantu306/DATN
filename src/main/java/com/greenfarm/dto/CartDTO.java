@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartDTO {
-    private Integer cartID;
-    private Integer quantity;
-     
-    Product product;
-    User user;
+	private Integer cartID;
+	private Integer quantity;
+
+	Product product;
+	User user;
 }

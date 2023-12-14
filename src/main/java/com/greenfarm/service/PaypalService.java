@@ -17,23 +17,16 @@ import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 
-
 @Service
 public class PaypalService {
 	@Autowired
 	private APIContext apiContext;
-	
-	public Payment createPayment(
-			Double total, 
-			String currency, 
-			PaypalPaymentMethod method, 
-			PaypalPaymentIntent intent, 
-			String description, 
-			String cancelUrl, 
-			String successUrl) throws PayPalRESTException {
+
+	public Payment createPayment(Double total, String currency, PaypalPaymentMethod method, PaypalPaymentIntent intent,
+			String description, String cancelUrl, String successUrl) throws PayPalRESTException {
 		Amount amount = new Amount();
 		amount.setCurrency(currency);
-		amount.setTotal(String.format("%.0f", total/23000));	
+		amount.setTotal(String.format("%.0f", total / 23000));
 
 		Transaction transaction = new Transaction();
 		transaction.setDescription(description);
@@ -56,9 +49,8 @@ public class PaypalService {
 		apiContext.setMaskRequestId(true);
 		return payment.create(apiContext);
 	}
-	
-	
-	public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException{
+
+	public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
 		Payment payment = new Payment();
 		payment.setId(paymentId);
 		PaymentExecution paymentExecute = new PaymentExecution();

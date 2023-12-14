@@ -18,15 +18,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Voucherusers")
-public class VoucherUser  implements Serializable{
+public class VoucherUser implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer voucheruserid;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "userid")
 	private User user;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "voucherid")
 	private Voucher voucher;

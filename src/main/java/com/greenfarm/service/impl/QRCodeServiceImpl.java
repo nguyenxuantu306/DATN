@@ -17,21 +17,21 @@ import java.io.IOException;
 @Service
 public class QRCodeServiceImpl implements QRCodeService {
 
-    private Logger logger = LoggerFactory.getLogger(QRCodeServiceImpl.class);
+	private Logger logger = LoggerFactory.getLogger(QRCodeServiceImpl.class);
 
-    @Override
-    public byte[] generateQRCode(String qrContent, int width, int height) {
-        try {
-            QRCodeWriter qrCodeWriter = new QRCodeWriter();
-            BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, width, height);
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", byteArrayOutputStream);
-            return byteArrayOutputStream.toByteArray();
-        } catch (WriterException e) {
-            logger.error(e.getMessage(), e);
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-        }
-        return null;
-    }
+	@Override
+	public byte[] generateQRCode(String qrContent, int width, int height) {
+		try {
+			QRCodeWriter qrCodeWriter = new QRCodeWriter();
+			BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, width, height);
+			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+			MatrixToImageWriter.writeToStream(bitMatrix, "PNG", byteArrayOutputStream);
+			return byteArrayOutputStream.toByteArray();
+		} catch (WriterException e) {
+			logger.error(e.getMessage(), e);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
 }

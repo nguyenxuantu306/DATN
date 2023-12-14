@@ -138,7 +138,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Report> getTk_loai() {
+	public List<ReportSP> getTk_loai() {
 		return dao.getInventoryByCategory();
 	}
 
@@ -153,8 +153,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ReportSP> getReportspbanchay() {
-		List<ReportSP> productsBygetReportspbanchay = dao.getTop10ProductsBygetReportspbanchay();
+	public List<Report> getReportspbanchay() {
+		List<Report> productsBygetReportspbanchay = dao.getTop10ProductsBygetReportspbanchay();
 		if (productsBygetReportspbanchay.size() > 10) {
 			return productsBygetReportspbanchay.subList(0, 10);
 		} else {
@@ -170,7 +170,7 @@ public class ProductServiceImpl implements ProductService {
 //	@Override
 //	public void purchaseProduct(ThongkeTK thongketk) {
 //		dao.updateProductQuantity(thongketk.getProductid(),thongketk.getQuantitybought());
-//		
+//
 //	}
 	@Override
 	public List<Product> getProductsByCategory(Category category) {
@@ -179,13 +179,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void save(Product product) {
-	    dao.save(product);
-	}
-
-	@Override
-	public List<Product> findByKeyword(String keyword) {
-		// TODO Auto-generated method stub
-		return dao.findByKeyword(keyword);
+		dao.save(product);
 	}
 
 }

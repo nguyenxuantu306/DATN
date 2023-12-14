@@ -8,21 +8,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
-import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Report7day;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
 
 public interface OrderService {
 	List<Order> findOrdersByDateRange(LocalDateTime atStartOfDay, LocalDateTime plusDays, int page, int size);
-	
-	
-	List<Order> findByOrderdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int page, int size);
 
+	List<Order> findByOrderdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int page, int size);
 
 	Order create(JsonNode orderData);
 
-	
 //	List<Order> findAll();
 
 	List<Order> findByIdAccount(Integer Id);
@@ -51,19 +47,15 @@ public interface OrderService {
 	// lọc trạng thái trong history_order
 	List<Order> findByUserEmailAndStatus(String email, String status);
 
-
 	List<ReportYear> getYearRevenue();
 
-
 //	List<Report> getMonthlyRevenue();
-	
-	List<FindReportYear> findYearlyRevenue(Integer year);
-	
-	 List<Order> findByUserEmailAndStatusOrderName(String userEmail, String statusName);
 
+	List<FindReportYear> findYearlyRevenue(Integer year);
+
+	List<Order> findByUserEmailAndStatusOrderName(String userEmail, String statusName);
 
 	List<CategorySalesByDate> getCategorySalesByDate(LocalDate date);
-
 
 	List<Report7day> getRevenueLast7Days();
 }

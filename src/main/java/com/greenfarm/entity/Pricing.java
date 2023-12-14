@@ -30,10 +30,10 @@ public class Pricing implements Serializable {
 	private Float adultprice;
 	private Float childprice;
 //	private Float infantprice;
-	
+
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "tourid")
 	private Tour tour;
-	
+
 }

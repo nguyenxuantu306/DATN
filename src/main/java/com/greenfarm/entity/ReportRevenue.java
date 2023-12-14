@@ -21,14 +21,14 @@ public class ReportRevenue implements Serializable {
 	Long count;
 	Integer tinh;
 
-	public ReportRevenue(String group, Long count) { 
+	public ReportRevenue(String group, Long count) {
 		this.group = group;
-		this.count =count; 
+		this.count = count;
 	}
 
-	public ReportRevenue(Integer tinh, Long count) { 
+	public ReportRevenue(Integer tinh, Long count) {
 		this.tinh = tinh;
-		this.count = count; 
+		this.count = count;
 	}
 
 }

@@ -26,10 +26,10 @@ public class TourCondition implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Positive(message = "Tourconditionid không được là số âm")
 	private Integer tourconditionid;
-	
+
 	@NotBlank(message = "Conditions không được phép trống")
 	private String conditions;
-	
+
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "tourid")
 	private Tour tour;

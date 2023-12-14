@@ -33,8 +33,7 @@ public class TourImageRestController {
 				.map(tourimage -> modelMapper.map(tourimage, TourImageDTO.class)).collect(Collectors.toList());
 		return new ResponseEntity<>(tourImageDTOs, HttpStatus.OK);
 	}
-	
-	
+
 //	@DeleteMapping("/image/{tourimageid}")
 //	public ResponseEntity<Void> delete(@PathVariable("tourimageid") Integer tourimageid) {
 //		tourImageService.delete(tourimageid);

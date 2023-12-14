@@ -10,7 +10,7 @@ import com.greenfarm.entity.User;
 import com.greenfarm.entity.Voucher;
 import com.greenfarm.entity.VoucherUser;
 
-public interface VoucherUserDAO extends JpaRepository<VoucherUser, Integer>{
+public interface VoucherUserDAO extends JpaRepository<VoucherUser, Integer> {
 
 //	@Query("SELECT o FROM VoucherUser o WHERE o.user.email =?1")
 //	Object findByEfindByIdAccountmail(String email);

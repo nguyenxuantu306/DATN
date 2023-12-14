@@ -26,6 +26,6 @@ public class OrderDTO {
 	User user;
 	StatusOrder statusOrder;
 	private PaymentMethod paymentmethod;
-	//private String formattedOrderDate;
+	// private String formattedOrderDate;
 	private List<VoucherOrder> voucherorder;
 }

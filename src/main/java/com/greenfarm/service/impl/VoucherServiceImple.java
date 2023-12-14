@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.greenfarm.dao.VoucherDAO;
 import com.greenfarm.dao.VoucherUserDAO;
 import com.greenfarm.entity.Voucher;
-import com.greenfarm.entity.VoucherUser;
 import com.greenfarm.service.VoucherService;
 
 @Service
@@ -54,7 +53,6 @@ public class VoucherServiceImple implements VoucherService {
 	public void delete(Integer voucherid) {
 		dao.deleteByIsDeleted(voucherid);
 	}
-
 
 	@Override
 	public Voucher findByVoucherid(long parseLong) {

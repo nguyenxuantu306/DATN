@@ -83,108 +83,81 @@
                                             </div>
                                         </div>
 
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelVoucherSelection()">HỦY</button>
-                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="applyVoucher()">OK</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal" onclick="cancelVoucherSelection()">HỦY</button>
+									<button type="button" class="btn btn-primary"
+										data-bs-dismiss="modal" onclick="applyVoucher()">OK</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-                </div>
-            </div>
-
-            <div class="col-md-8 order-md-1">
-                <h4 class="mb-3">Địa chỉ thanh toán</h4>
-                <form id="myForm" class="needs-validation" novalidate th:object="${Order}" th:method="post" th:action="@{/checkout/payment}">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="firstName">Tên đầu</label> <input th:field="${user.firstname}" th:value="${user.firstname}" th:placeholder="${user.firstname}" type="text" class="form-control" id="firstName" placeholder="" value="" required disabled
-                            />
-                            <div class="invalid-feedback">Valid first name is required.
-                            </div>
-
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="lastName">Tên cuối</label> <input th:placeholder="${user.lastname}" th:value="${user.lastname}" th:field="${user.lastname}" type="text" class="form-control" id="lastName" placeholder="" value="" required disabled
-                            />
-                            <div class="invalid-feedback">Valid last name is required.</div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="email">Email <!-- <span class="text-muted">(Optional)</span> --></label>
-                        <input type="email" class="form-control" id="email" th:placeholder="${user.email}" readonly="readonly" />
-                        <div class="invalid-feedback">Please enter a valid email address for shipping updates.</div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="">Số điện thoại</label> <input type="tel" class="form-control" id="" th:value="${user.phonenumber}" th:field="${user.phonenumber}" th:placeholder="${user.phonenumber}" required disabled />
-                        <div class="invalid-feedback">Please enter your shipping .</div>
-                    </div>
-
-                    <div class="mb-3">
-                        <div th:each="address : ${user.address}" th:if="${address.active}" class="mt-2">
-
-                            <!-- 								<div> -->
-                            <!-- 									<label class="form-label" th:if="${address.active}">Địa -->
-                            <!-- 										chỉ:</label> <a href="/address"><input type="text" readonly th:if="${address.active}" -->
-                            <!-- 										th:value="${address.street + ', ' + address.district + ', ' + address.city}" -->
-                            <!-- 										class="form-control" /></a> -->
-                            <!-- 								</div> -->
-                            <div class="row">
-                                <input type="hidden" th:name="addressId" th:value="${address.AddressID}" />
-                                <div class="col">
-                                    <label class="form-label" th:if="${address.active}">Họ
-										và tên:</label> <input type="text" readonly th:if="${address.active}" class="form-control" th:value="${address.fullname}" />
-                                </div>
-
-                                <div class="col">
-                                    <label class="form-label" th:if="${address.active}">Số
-										điện thoại:</label> <input type="text" readonly th:if="${address.active}" th:value="${address.phonenumber}" class="form-control" />
-                                </div>
-                            </div>
-
-
-                            <hr th:if="${address.active}" />
-
-                        </div>
-                        <div class="card">
-                            <div class="card-body"> <span class="card-title">Địa chỉ nhận hàng.</span> <span th:each="address : ${user.address}">
-									<div th:if="${address.active}"
-										th:text="${address.street + ', ' + address.district + ', ' + address.city}">
+			<div class="col-md-8 order-md-1">
+				<h4 class="mb-3">Địa chỉ thanh toán</h4>
+				<form id="myForm" class="needs-validation" novalidate
+					th:object="${Order}" th:method="post"
+					th:action="@{/checkout/payment}">
+					<div class="mb-3">
+						<div th:each="address : ${user.address}" class="mt-2">
+							<form>
+								<div class="row">
+									<div class="col">
+										<label class="form-label" th:if="${address.active}">Họ
+											và tên:</label> <input type="text" readonly th:if="${address.active}"
+											class="form-control" th:value="${address.fullname}" />
 									</div>
 
-								</span>
-                                <a href="/address" class="btn btn-success float-end">Thay đổi</a>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                    <input type="hidden" id="hiddenTotalPrice" name="hiddenTotalPrice" th:value="${totalPrice}" th:data-original-price="${totalPrice}">
-
-
-
-                    <!--	<input type="hidden" id="totalPrice" name="totalPrice" th:value="${totalPrice}">-->
-
-
-                    <h4 class="mb-3">Payment</h4>
-
-                    <div class="d-block my-3">
-                        <div class="custom-control custom-radio">
-                            <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required onclick="showButton('debit')" checked value="1" /> <label class="custom-control-label" for="debit">COD</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required onclick="showButton('paypal')" value="2" /> <label class="custom-control-label" for="paypal">PayPal</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input id="vnpay" name="paymentMethod" type="radio" class="custom-control-input" required onclick="showButton('vnpay')" value="3" /> <label class="custom-control-label" for="vnpay">VNPAY</label>
-                        </div>
-                    </div>
+									<div class="col">
+										<label class="form-label" th:if="${address.active}">Số
+											điện thoại:</label> <input type="text" readonly
+											th:if="${address.active}" th:value="${address.phonenumber}"
+											class="form-control" />
+									</div>
+								</div>
+								<hr th:if="${address.active}" />
+							</form>
+						</div>
+						<div class="card">
+							<div class="card-body"> <span
+								class="card-title">Địa chỉ nhận hàng.</span> <span
+								th:each="address : ${user.address}">
+									<div th:if="${address.active}"
+										th:text="${address.street + ', ' + address.ward + ', ' + address.district + ', ' + address.city}"></div>
+							</span>
+							<a  href="/address"class="btn btn-success float-end">Thay đổi</a>
+							</div>
+						</div>
+					</div>
+					<!-- <hr class="mb-4" /> -->
+					<hr class="mb-4" />
+					<input type="hidden" id="hiddenTotalPrice" name="hiddenTotalPrice"
+						th:value="${totalPrice}" th:data-original-price="${totalPrice}">
+					<h4 class="mb-3">Payment</h4>
+					<div class="d-block my-3">
+						<div class="custom-control custom-radio">
+							<input id="debit" name="paymentMethod" type="radio"
+								class="custom-control-input" required
+								onclick="showButton('debit')" checked value="1" /> <label
+								class="custom-control-label" for="debit">COD</label>
+						</div>
+						<div class="custom-control custom-radio">
+							<input id="paypal" name="paymentMethod" type="radio"
+								class="custom-control-input" required
+								onclick="showButton('paypal')" value="2" /> <label
+								class="custom-control-label" for="paypal">PayPal</label>
+						</div>
+						<div class="custom-control custom-radio">
+							<input id="vnpay" name="paymentMethod" type="radio"
+								class="custom-control-input" required
+								onclick="showButton('vnpay')" value="3" /> <label
+								class="custom-control-label" for="vnpay">VNPAY</label>
+						</div>
+					</div>
 
                     <input type="hidden" name="voucherid" id="voucherid" th:value="0">
 

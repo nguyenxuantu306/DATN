@@ -22,7 +22,6 @@ import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
-import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Report7day;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
@@ -206,8 +205,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-    public List<Report7day> getRevenueLast7Days() {
-        return dao.RevenueLast7Days();
-    }
+	public List<Report7day> getRevenueLast7Days() {
+		return dao.RevenueLast7Days();
+	}
 
 }

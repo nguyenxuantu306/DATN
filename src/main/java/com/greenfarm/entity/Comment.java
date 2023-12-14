@@ -26,34 +26,32 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Comments")
-public class Comment implements Serializable{
+public class Comment implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	@NotNull(message = "Commentid không được để trống")
 //	@Positive(message = "Commentid không được là số âm")
 	private Integer commentid;
-	
+
 	@NotBlank(message = "Commenttext không được phép trống (chỉ chứa khoảng trắng)")
 	private String commenttext;
-	
-	
+
 	@NotNull(message = "Comment date không được phép trống")
 //	@Past(message = "Comment date phải là ngày ở trong khóa khứ")
 	private Date commentdate = new Date();
-	
-	
+
 	@ManyToOne
 	@JoinColumn(name = "userid")
 	private User user;
-	
-	@ManyToOne	
+
+	@ManyToOne
 	@JoinColumn(name = "TourID")
 	Tour tour;
-	
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
 	private List<ReComment> recomment;
+
 //	@ManyToOne
 //	@JoinColumn(name = "recomments")
 //	private ReComment reComment;

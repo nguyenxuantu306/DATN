@@ -1,14 +1,10 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,8 +22,8 @@ public class Report7day implements Serializable {
 	Double sum;
 
 	// Constructor
-    public Report7day(Date date, Double sum) {
-        this.date = date;
-        this.sum = sum;
-    }
+	public Report7day(Date date, Double sum) {
+		this.date = date;
+		this.sum = sum;
+	}
 }

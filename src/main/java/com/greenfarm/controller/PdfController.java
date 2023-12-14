@@ -25,7 +25,6 @@ import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Product;
-import com.greenfarm.entity.Report;
 import com.greenfarm.entity.ReportSP;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.TourDateBooking;
@@ -131,7 +130,7 @@ public class PdfController {
 					.map(address -> address.getStreet() + ", " + address.getDistrict() + ", " + address.getCity())
 					.collect(Collectors.joining("; "));
 			// Thêm thông tin địa chỉ vào cột thứ 4
-			table.addCell(createCell(addressInfo, false, unicodeFonts)); 
+			table.addCell(createCell(addressInfo, false, unicodeFonts));
 			table.addCell(createCell(data.getGender() != null && data.getGender() ? "Nam" : "Nữ", false, unicodeFonts));
 			table.addCell(createCell(createDateString, false, unicodeFonts));
 
@@ -313,7 +312,7 @@ public class PdfController {
 
 	@GetMapping("/pdf-categorytatistics")
 	public ResponseEntity<byte[]> PDCAtegoryStatistics() throws IOException, DocumentException {
-		List<Report> dataList = getCategoryStatitics(); // Hàm này tạo dữ liệu mẫu
+		List<ReportSP> dataList = getCategoryStatitics(); // Hàm này tạo dữ liệu mẫu
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		Document document = new Document();
@@ -356,7 +355,7 @@ public class PdfController {
 
 		// Thiết lập dữ liệu cho từng hàng
 		for (int i = 0; i < dataList.size(); i++) {
-			Report data = dataList.get(i);
+			ReportSP data = dataList.get(i);
 			Category category = (Category) data.getGroup();
 
 			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
@@ -375,7 +374,7 @@ public class PdfController {
 		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
 
-	public final List<Report> getCategoryStatitics() {
+	public final List<ReportSP> getCategoryStatitics() {
 		return productService.getTk_loai();
 	}
 
