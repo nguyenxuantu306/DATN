@@ -69,7 +69,7 @@ public class ScanticketRestController {
 	            System.out.println(qrCodeValue);
 	            System.out.println("list"+ketqua);
 	            // ResponseEntity.ok(qrCodeValue);
-	           
+	           System.out.println("ket qua qr tra ve :"+qrCodeValue);
 	            return new ResponseEntity<>(qrCodeValue, HttpStatus.OK);
 	            
 	        }
@@ -94,8 +94,7 @@ public class ScanticketRestController {
 	StatusBookingService statusBookingService;
 	
 	@GetMapping("/soatve/kiemtrave")
-	public ResponseEntity<Booking> updatekiemtrave( Model model
-			) {
+	public ResponseEntity<Booking> updatekiemtrave( Model model) {
 		
 		ketqua.add("6");
 		ketqua.add("101");

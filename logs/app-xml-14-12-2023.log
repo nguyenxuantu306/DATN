@@ -18378,3 +18378,424 @@ Caused by: java.io.IOException: An established connection was aborted by the sof
 [INFO ] 14-12-2023 15:11:28 [http-nio-8080-exec-1] [/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 [INFO ] 14-12-2023 15:11:28 [http-nio-8080-exec-1] DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 [INFO ] 14-12-2023 15:11:28 [http-nio-8080-exec-1] DispatcherServlet - Completed initialization in 5 ms
+[INFO ] 14-12-2023 15:15:43 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 16 class path changes (0 additions, 0 deletions, 16 modifications)
+[INFO ] 14-12-2023 15:15:43 [Thread-36] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:15:43 [Thread-36] StandardService - Stopping service [Tomcat]
+[INFO ] 14-12-2023 15:15:43 [Thread-36] [/] - Destroying Spring FrameworkServlet 'dispatcherServlet'
+[INFO ] 14-12-2023 15:15:43 [Thread-36] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:15:43 [Thread-36] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:15:43 [Thread-36] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 14-12-2023 15:15:43 [Thread-36] HikariDataSource - HikariPool-9 - Shutdown initiated...
+[INFO ] 14-12-2023 15:15:43 [Thread-36] HikariDataSource - HikariPool-9 - Shutdown completed.
+[INFO ] 14-12-2023 15:15:44 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 19.0.2 with PID 1704 (D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN\target\classes started by Nghia in D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN)
+[DEBUG] 14-12-2023 15:15:44 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 14-12-2023 15:15:44 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 14-12-2023 15:15:46 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 14-12-2023 15:15:46 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 346 ms. Found 31 JPA repository interfaces.
+[INFO ] 14-12-2023 15:15:47 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 14-12-2023 15:15:47 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:15:47 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 14-12-2023 15:15:47 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 14-12-2023 15:15:47 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 14-12-2023 15:15:47 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2659 ms
+[INFO ] 14-12-2023 15:15:47 [restartedMain] HikariDataSource - HikariPool-10 - Starting...
+[INFO ] 14-12-2023 15:15:47 [restartedMain] HikariPool - HikariPool-10 - Added connection com.mysql.cj.jdbc.ConnectionImpl@331bfb2b
+[INFO ] 14-12-2023 15:15:47 [restartedMain] HikariDataSource - HikariPool-10 - Start completed.
+[INFO ] 14-12-2023 15:15:47 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 14-12-2023 15:15:47 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:15:47 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 14-12-2023 15:15:47 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:15:49 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 14-12-2023 15:15:49 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 14-12-2023 15:15:51 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 14-12-2023 15:15:51 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 14-12-2023 15:15:51 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@325c3024, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@c31ecdb, org.springframework.security.web.context.SecurityContextHolderFilter@34ee5c6a, org.springframework.security.web.header.HeaderWriterFilter@71b6b22c, org.springframework.security.web.authentication.logout.LogoutFilter@36b0b0e1, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@567ae146, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@7cddf443, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6d5a613d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@45b4cefd, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@34184cf5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@dc04cca, org.springframework.security.web.access.ExceptionTranslationFilter@41260f79, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@8e8c4f8]
+[INFO ] 14-12-2023 15:15:52 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 14-12-2023 15:15:52 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:15:52 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 14-12-2023 15:15:52 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 8.142 seconds (process running for 1280.417)
+[INFO ] 14-12-2023 15:15:52 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 14-12-2023 15:16:09 [http-nio-8080-exec-1] [/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[INFO ] 14-12-2023 15:16:09 [http-nio-8080-exec-1] DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+[INFO ] 14-12-2023 15:16:09 [http-nio-8080-exec-1] DispatcherServlet - Completed initialization in 9 ms
+[INFO ] 14-12-2023 15:22:55 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[INFO ] 14-12-2023 15:22:56 [Thread-40] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:22:56 [Thread-40] StandardService - Stopping service [Tomcat]
+[INFO ] 14-12-2023 15:22:56 [Thread-40] [/] - Destroying Spring FrameworkServlet 'dispatcherServlet'
+[INFO ] 14-12-2023 15:22:56 [Thread-40] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:22:56 [Thread-40] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:22:56 [Thread-40] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 14-12-2023 15:22:56 [Thread-40] HikariDataSource - HikariPool-10 - Shutdown initiated...
+[INFO ] 14-12-2023 15:22:56 [Thread-40] HikariDataSource - HikariPool-10 - Shutdown completed.
+[INFO ] 14-12-2023 15:22:57 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 19.0.2 with PID 1704 (D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN\target\classes started by Nghia in D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN)
+[DEBUG] 14-12-2023 15:22:57 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 14-12-2023 15:22:57 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 14-12-2023 15:23:06 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 14-12-2023 15:23:07 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 636 ms. Found 31 JPA repository interfaces.
+[INFO ] 14-12-2023 15:23:08 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 14-12-2023 15:23:08 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:23:08 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 14-12-2023 15:23:08 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 14-12-2023 15:23:08 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 14-12-2023 15:23:08 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 10899 ms
+[INFO ] 14-12-2023 15:23:08 [restartedMain] HikariDataSource - HikariPool-11 - Starting...
+[INFO ] 14-12-2023 15:23:08 [restartedMain] HikariPool - HikariPool-11 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4a330b67
+[INFO ] 14-12-2023 15:23:08 [restartedMain] HikariDataSource - HikariPool-11 - Start completed.
+[INFO ] 14-12-2023 15:23:08 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 14-12-2023 15:23:08 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:23:08 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 14-12-2023 15:23:08 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:23:09 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 14-12-2023 15:23:09 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 14-12-2023 15:23:14 [restartedMain] AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'tourDateRestController' defined in file [D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN\target\classes\com\greenfarm\restcontroller\TourDateRestController.class]: Failed to instantiate [com.greenfarm.restcontroller.TourDateRestController]: Constructor threw exception
+[INFO ] 14-12-2023 15:23:14 [restartedMain] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 14-12-2023 15:23:14 [restartedMain] HikariDataSource - HikariPool-11 - Shutdown initiated...
+[INFO ] 14-12-2023 15:23:14 [restartedMain] HikariDataSource - HikariPool-11 - Shutdown completed.
+[INFO ] 14-12-2023 15:23:14 [restartedMain] StandardService - Stopping service [Tomcat]
+[INFO ] 14-12-2023 15:23:14 [restartedMain] ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[ERROR] 14-12-2023 15:23:14 [restartedMain] SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'tourDateRestController' defined in file [D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN\target\classes\com\greenfarm\restcontroller\TourDateRestController.class]: Failed to instantiate [com.greenfarm.restcontroller.TourDateRestController]: Constructor threw exception
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1314) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1199) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:942) ~[spring-context-6.0.11.jar:6.0.11]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:608) ~[spring-context-6.0.11.jar:6.0.11]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734) [spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:436) [spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312) [spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) [spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) [spring-boot-3.1.3.jar:3.1.3]
+	at com.greenfarm.GreenfarmApplication.main(GreenfarmApplication.java:20) [classes/:?]
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:578) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.1.3.jar:3.1.3]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.greenfarm.restcontroller.TourDateRestController]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:224) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:87) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1308) ~[spring-beans-6.0.11.jar:6.0.11]
+	... 20 more
+Caused by: java.lang.Error: Unresolved compilation problems: 
+	Syntax error, insert "enum Identifier" to complete EnumHeader
+	Syntax error, insert "EnumBody" to complete EnumDeclaration
+
+	at com.greenfarm.restcontroller.TourDateRestController.<init>(TourDateRestController.java:147) ~[classes/:?]
+	at jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:67) ~[?:?]
+	at java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500) ~[?:?]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:484) ~[?:?]
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:198) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:87) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1308) ~[spring-beans-6.0.11.jar:6.0.11]
+	... 20 more
+[INFO ] 14-12-2023 15:23:22 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 19.0.2 with PID 1704 (D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN\target\classes started by Nghia in D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN)
+[DEBUG] 14-12-2023 15:23:22 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 14-12-2023 15:23:22 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 14-12-2023 15:23:24 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 14-12-2023 15:23:24 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 254 ms. Found 31 JPA repository interfaces.
+[INFO ] 14-12-2023 15:23:24 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 14-12-2023 15:23:24 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:23:24 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 14-12-2023 15:23:24 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 14-12-2023 15:23:24 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 14-12-2023 15:23:24 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2412 ms
+[INFO ] 14-12-2023 15:23:25 [restartedMain] HikariDataSource - HikariPool-12 - Starting...
+[INFO ] 14-12-2023 15:23:25 [restartedMain] HikariPool - HikariPool-12 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4cbf7910
+[INFO ] 14-12-2023 15:23:25 [restartedMain] HikariDataSource - HikariPool-12 - Start completed.
+[INFO ] 14-12-2023 15:23:25 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 14-12-2023 15:23:25 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:23:25 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 14-12-2023 15:23:25 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:23:26 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 14-12-2023 15:23:26 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 14-12-2023 15:23:30 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 14-12-2023 15:23:31 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 14-12-2023 15:23:31 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@57d985f1, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1c0fad88, org.springframework.security.web.context.SecurityContextHolderFilter@2662c2c7, org.springframework.security.web.header.HeaderWriterFilter@31c4b02b, org.springframework.security.web.authentication.logout.LogoutFilter@65a7d0a4, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@565280bb, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@d8070ba, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6da4c72d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2341605, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@41b2e1c0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5e1ab1ea, org.springframework.security.web.access.ExceptionTranslationFilter@62943a31, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@223f178c]
+[INFO ] 14-12-2023 15:23:31 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 14-12-2023 15:23:31 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:23:31 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 14-12-2023 15:23:31 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 9.335 seconds (process running for 1739.42)
+[INFO ] 14-12-2023 15:23:31 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 14-12-2023 15:24:02 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[INFO ] 14-12-2023 15:24:02 [Thread-44] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:24:02 [Thread-44] StandardService - Stopping service [Tomcat]
+[INFO ] 14-12-2023 15:24:02 [Thread-44] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:24:02 [Thread-44] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:24:02 [Thread-44] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 14-12-2023 15:24:02 [Thread-44] HikariDataSource - HikariPool-12 - Shutdown initiated...
+[INFO ] 14-12-2023 15:24:02 [Thread-44] HikariDataSource - HikariPool-12 - Shutdown completed.
+[INFO ] 14-12-2023 15:24:03 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 19.0.2 with PID 1704 (D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN\target\classes started by Nghia in D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN)
+[DEBUG] 14-12-2023 15:24:03 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 14-12-2023 15:24:03 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 14-12-2023 15:24:06 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 14-12-2023 15:24:07 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 291 ms. Found 31 JPA repository interfaces.
+[INFO ] 14-12-2023 15:24:07 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 14-12-2023 15:24:07 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:24:07 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 14-12-2023 15:24:07 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 14-12-2023 15:24:07 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 14-12-2023 15:24:07 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4648 ms
+[INFO ] 14-12-2023 15:24:08 [restartedMain] HikariDataSource - HikariPool-13 - Starting...
+[INFO ] 14-12-2023 15:24:08 [restartedMain] HikariPool - HikariPool-13 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1838ff6e
+[INFO ] 14-12-2023 15:24:08 [restartedMain] HikariDataSource - HikariPool-13 - Start completed.
+[INFO ] 14-12-2023 15:24:08 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 14-12-2023 15:24:08 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:24:08 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 14-12-2023 15:24:08 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:24:10 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 14-12-2023 15:24:10 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 14-12-2023 15:24:12 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 14-12-2023 15:24:13 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 14-12-2023 15:24:13 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@409ab1f1, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2f96647d, org.springframework.security.web.context.SecurityContextHolderFilter@4bf2b690, org.springframework.security.web.header.HeaderWriterFilter@453bb54e, org.springframework.security.web.authentication.logout.LogoutFilter@1879a237, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@70c46612, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@6263cca7, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7e522631, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5528744c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5e68850b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7c31736b, org.springframework.security.web.access.ExceptionTranslationFilter@46c9b042, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@570ebaa0]
+[INFO ] 14-12-2023 15:24:13 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 14-12-2023 15:24:13 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:24:13 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 14-12-2023 15:24:13 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 10.729 seconds (process running for 1781.548)
+[INFO ] 14-12-2023 15:24:13 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 14-12-2023 15:24:18 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[INFO ] 14-12-2023 15:24:18 [Thread-51] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:24:18 [Thread-51] StandardService - Stopping service [Tomcat]
+[INFO ] 14-12-2023 15:24:18 [Thread-51] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:24:18 [Thread-51] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:24:18 [Thread-51] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 14-12-2023 15:24:18 [Thread-51] HikariDataSource - HikariPool-13 - Shutdown initiated...
+[INFO ] 14-12-2023 15:24:18 [Thread-51] HikariDataSource - HikariPool-13 - Shutdown completed.
+[INFO ] 14-12-2023 15:24:18 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 19.0.2 with PID 1704 (D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN\target\classes started by Nghia in D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN)
+[DEBUG] 14-12-2023 15:24:18 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 14-12-2023 15:24:18 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 14-12-2023 15:24:19 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 14-12-2023 15:24:19 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 138 ms. Found 31 JPA repository interfaces.
+[INFO ] 14-12-2023 15:24:19 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 14-12-2023 15:24:19 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:24:19 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 14-12-2023 15:24:19 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 14-12-2023 15:24:19 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 14-12-2023 15:24:19 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1121 ms
+[INFO ] 14-12-2023 15:24:20 [restartedMain] HikariDataSource - HikariPool-14 - Starting...
+[INFO ] 14-12-2023 15:24:20 [restartedMain] HikariPool - HikariPool-14 - Added connection com.mysql.cj.jdbc.ConnectionImpl@23577e56
+[INFO ] 14-12-2023 15:24:20 [restartedMain] HikariDataSource - HikariPool-14 - Start completed.
+[INFO ] 14-12-2023 15:24:20 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 14-12-2023 15:24:20 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:24:20 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 14-12-2023 15:24:20 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:24:21 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 14-12-2023 15:24:21 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 14-12-2023 15:24:22 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 14-12-2023 15:24:23 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 14-12-2023 15:24:23 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@152a4e9d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5b727b57, org.springframework.security.web.context.SecurityContextHolderFilter@5c0d6771, org.springframework.security.web.header.HeaderWriterFilter@2fe9e9a2, org.springframework.security.web.authentication.logout.LogoutFilter@1f3679df, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@7ba36383, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@8346807, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@818d1ce, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1c458812, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4873f102, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3b2da4c1, org.springframework.security.web.access.ExceptionTranslationFilter@64a61880, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2a26e4b8]
+[INFO ] 14-12-2023 15:24:24 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 14-12-2023 15:24:24 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:24:24 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 14-12-2023 15:24:24 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 5.64 seconds (process running for 1792.107)
+[INFO ] 14-12-2023 15:24:24 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 14-12-2023 15:25:00 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[INFO ] 14-12-2023 15:25:00 [Thread-55] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:25:00 [Thread-55] StandardService - Stopping service [Tomcat]
+[INFO ] 14-12-2023 15:25:00 [Thread-55] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:25:00 [Thread-55] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:25:00 [Thread-55] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 14-12-2023 15:25:00 [Thread-55] HikariDataSource - HikariPool-14 - Shutdown initiated...
+[INFO ] 14-12-2023 15:25:00 [Thread-55] HikariDataSource - HikariPool-14 - Shutdown completed.
+[INFO ] 14-12-2023 15:25:01 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 19.0.2 with PID 1704 (D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN\target\classes started by Nghia in D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN)
+[DEBUG] 14-12-2023 15:25:01 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 14-12-2023 15:25:01 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 14-12-2023 15:25:03 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 14-12-2023 15:25:03 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 233 ms. Found 31 JPA repository interfaces.
+[INFO ] 14-12-2023 15:25:03 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 14-12-2023 15:25:03 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:25:03 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 14-12-2023 15:25:03 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 14-12-2023 15:25:04 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 14-12-2023 15:25:04 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2585 ms
+[INFO ] 14-12-2023 15:25:04 [restartedMain] HikariDataSource - HikariPool-15 - Starting...
+[INFO ] 14-12-2023 15:25:04 [restartedMain] HikariPool - HikariPool-15 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5037aed0
+[INFO ] 14-12-2023 15:25:04 [restartedMain] HikariDataSource - HikariPool-15 - Start completed.
+[INFO ] 14-12-2023 15:25:04 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 14-12-2023 15:25:04 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:25:04 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 14-12-2023 15:25:04 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:25:04 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 14-12-2023 15:25:04 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 14-12-2023 15:25:06 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 14-12-2023 15:25:06 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 14-12-2023 15:25:06 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7162a6f7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7e835d7e, org.springframework.security.web.context.SecurityContextHolderFilter@7b9f579c, org.springframework.security.web.header.HeaderWriterFilter@5b9152f, org.springframework.security.web.authentication.logout.LogoutFilter@3b48d8c6, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@d3522f, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@7359f181, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@10b3ebbe, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@722b44a3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@77b72814, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@645b3aab, org.springframework.security.web.access.ExceptionTranslationFilter@c812319, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@567a887d]
+[INFO ] 14-12-2023 15:25:07 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 14-12-2023 15:25:07 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:25:07 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 14-12-2023 15:25:07 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 5.906 seconds (process running for 1834.912)
+[INFO ] 14-12-2023 15:25:07 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 14-12-2023 15:26:26 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[INFO ] 14-12-2023 15:26:26 [Thread-59] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:26:26 [Thread-59] StandardService - Stopping service [Tomcat]
+[INFO ] 14-12-2023 15:26:26 [Thread-59] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:26:26 [Thread-59] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:26:26 [Thread-59] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 14-12-2023 15:26:26 [Thread-59] HikariDataSource - HikariPool-15 - Shutdown initiated...
+[INFO ] 14-12-2023 15:26:26 [Thread-59] HikariDataSource - HikariPool-15 - Shutdown completed.
+[INFO ] 14-12-2023 15:26:26 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 19.0.2 with PID 1704 (D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN\target\classes started by Nghia in D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN)
+[DEBUG] 14-12-2023 15:26:26 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 14-12-2023 15:26:26 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 14-12-2023 15:26:29 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 14-12-2023 15:26:29 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 319 ms. Found 31 JPA repository interfaces.
+[INFO ] 14-12-2023 15:26:30 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 14-12-2023 15:26:30 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:26:30 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 14-12-2023 15:26:30 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 14-12-2023 15:26:30 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 14-12-2023 15:26:30 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4192 ms
+[INFO ] 14-12-2023 15:26:31 [restartedMain] HikariDataSource - HikariPool-16 - Starting...
+[INFO ] 14-12-2023 15:26:31 [restartedMain] HikariPool - HikariPool-16 - Added connection com.mysql.cj.jdbc.ConnectionImpl@50420dfa
+[INFO ] 14-12-2023 15:26:31 [restartedMain] HikariDataSource - HikariPool-16 - Start completed.
+[INFO ] 14-12-2023 15:26:31 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 14-12-2023 15:26:31 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:26:31 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 14-12-2023 15:26:31 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:26:32 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 14-12-2023 15:26:32 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 14-12-2023 15:26:35 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 14-12-2023 15:26:36 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 14-12-2023 15:26:36 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@41c13a06, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@65676ae8, org.springframework.security.web.context.SecurityContextHolderFilter@441ace93, org.springframework.security.web.header.HeaderWriterFilter@6abfb61b, org.springframework.security.web.authentication.logout.LogoutFilter@2983ce26, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@4090115, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@106ce920, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@35d22a1c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@244bad1b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2c678565, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@29aadef8, org.springframework.security.web.access.ExceptionTranslationFilter@37a7e06f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@75948d16]
+[INFO ] 14-12-2023 15:26:37 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 14-12-2023 15:26:37 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:26:37 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 14-12-2023 15:26:37 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 10.968 seconds (process running for 1925.047)
+[INFO ] 14-12-2023 15:26:37 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 14-12-2023 15:26:45 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[INFO ] 14-12-2023 15:26:45 [Thread-63] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:26:45 [Thread-63] StandardService - Stopping service [Tomcat]
+[INFO ] 14-12-2023 15:26:45 [Thread-63] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:26:45 [Thread-63] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:26:46 [Thread-63] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 14-12-2023 15:26:46 [Thread-63] HikariDataSource - HikariPool-16 - Shutdown initiated...
+[INFO ] 14-12-2023 15:26:46 [Thread-63] HikariDataSource - HikariPool-16 - Shutdown completed.
+[INFO ] 14-12-2023 15:26:46 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 19.0.2 with PID 1704 (D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN\target\classes started by Nghia in D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN)
+[DEBUG] 14-12-2023 15:26:46 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 14-12-2023 15:26:46 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 14-12-2023 15:26:47 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 14-12-2023 15:26:48 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 310 ms. Found 31 JPA repository interfaces.
+[INFO ] 14-12-2023 15:26:48 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 14-12-2023 15:26:48 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:26:48 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 14-12-2023 15:26:48 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 14-12-2023 15:26:49 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 14-12-2023 15:26:49 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2709 ms
+[INFO ] 14-12-2023 15:26:49 [restartedMain] HikariDataSource - HikariPool-17 - Starting...
+[INFO ] 14-12-2023 15:26:49 [restartedMain] HikariPool - HikariPool-17 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7ce0f3a
+[INFO ] 14-12-2023 15:26:49 [restartedMain] HikariDataSource - HikariPool-17 - Start completed.
+[INFO ] 14-12-2023 15:26:49 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 14-12-2023 15:26:49 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:26:49 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 14-12-2023 15:26:49 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:26:50 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 14-12-2023 15:26:50 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 14-12-2023 15:26:52 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 14-12-2023 15:26:52 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 14-12-2023 15:26:52 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@a61da09, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3f4c567b, org.springframework.security.web.context.SecurityContextHolderFilter@6929bea3, org.springframework.security.web.header.HeaderWriterFilter@351f7a27, org.springframework.security.web.authentication.logout.LogoutFilter@121b0535, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@a756055, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@3becc5a8, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@1b75cdab, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@d4841c9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7863fa85, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1e9aee0f, org.springframework.security.web.access.ExceptionTranslationFilter@223afc91, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4a9f6478]
+[INFO ] 14-12-2023 15:26:52 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 14-12-2023 15:26:52 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:26:52 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 14-12-2023 15:26:52 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 6.506 seconds (process running for 1940.591)
+[INFO ] 14-12-2023 15:26:52 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 14-12-2023 15:26:59 [http-nio-8080-exec-1] [/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[INFO ] 14-12-2023 15:26:59 [http-nio-8080-exec-1] DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+[INFO ] 14-12-2023 15:26:59 [http-nio-8080-exec-1] DispatcherServlet - Completed initialization in 4 ms
+[INFO ] 14-12-2023 15:37:13 [File Watcher] LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+[INFO ] 14-12-2023 15:37:13 [Thread-67] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:37:13 [Thread-67] StandardService - Stopping service [Tomcat]
+[INFO ] 14-12-2023 15:37:13 [Thread-67] [/] - Destroying Spring FrameworkServlet 'dispatcherServlet'
+[INFO ] 14-12-2023 15:37:13 [Thread-67] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:37:13 [Thread-67] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:37:13 [Thread-67] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 14-12-2023 15:37:13 [Thread-67] HikariDataSource - HikariPool-17 - Shutdown initiated...
+[INFO ] 14-12-2023 15:37:13 [Thread-67] HikariDataSource - HikariPool-17 - Shutdown completed.
+[INFO ] 14-12-2023 15:37:13 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 19.0.2 with PID 1704 (D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN\target\classes started by Nghia in D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN)
+[DEBUG] 14-12-2023 15:37:13 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 14-12-2023 15:37:13 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 14-12-2023 15:37:14 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 14-12-2023 15:37:14 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 145 ms. Found 31 JPA repository interfaces.
+[INFO ] 14-12-2023 15:37:15 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 14-12-2023 15:37:15 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:37:15 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 14-12-2023 15:37:15 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 14-12-2023 15:37:15 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 14-12-2023 15:37:15 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1424 ms
+[INFO ] 14-12-2023 15:37:15 [restartedMain] HikariDataSource - HikariPool-18 - Starting...
+[INFO ] 14-12-2023 15:37:15 [restartedMain] HikariPool - HikariPool-18 - Added connection com.mysql.cj.jdbc.ConnectionImpl@197936cd
+[INFO ] 14-12-2023 15:37:15 [restartedMain] HikariDataSource - HikariPool-18 - Start completed.
+[INFO ] 14-12-2023 15:37:15 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 14-12-2023 15:37:15 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:37:15 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 14-12-2023 15:37:15 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 15:37:16 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 14-12-2023 15:37:16 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[WARN ] 14-12-2023 15:37:17 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 14-12-2023 15:37:17 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 14-12-2023 15:37:17 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2276e1dc, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@33a15459, org.springframework.security.web.context.SecurityContextHolderFilter@2617fd33, org.springframework.security.web.header.HeaderWriterFilter@3fc9575a, org.springframework.security.web.authentication.logout.LogoutFilter@4ea32cdc, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@7e94153d, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@4cc35e21, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@4d7b97bc, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@d150302, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@22424df7, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6dc292ed, org.springframework.security.web.access.ExceptionTranslationFilter@3243a770, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@77b32d08]
+[INFO ] 14-12-2023 15:37:18 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 14-12-2023 15:37:18 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 15:37:18 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 14-12-2023 15:37:18 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 4.736 seconds (process running for 2566.015)
+[INFO ] 14-12-2023 15:37:18 [restartedMain] ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+[INFO ] 14-12-2023 17:20:32 [RMI TCP Connection(155)-127.0.0.1] SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+[INFO ] 14-12-2023 17:20:32 [RMI TCP Connection(155)-127.0.0.1] Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 17:20:32 [RMI TCP Connection(155)-127.0.0.1] StandardService - Stopping service [Tomcat]
+[INFO ] 14-12-2023 17:20:32 [RMI TCP Connection(155)-127.0.0.1] Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 17:20:32 [RMI TCP Connection(155)-127.0.0.1] Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 17:20:34 [RMI TCP Connection(155)-127.0.0.1] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 14-12-2023 17:20:34 [RMI TCP Connection(155)-127.0.0.1] HikariDataSource - HikariPool-18 - Shutdown initiated...
+[INFO ] 14-12-2023 17:20:34 [RMI TCP Connection(155)-127.0.0.1] HikariDataSource - HikariPool-18 - Shutdown completed.
+[INFO ] 14-12-2023 21:11:43 [background-preinit] Version - HV000001: Hibernate Validator 8.0.1.Final
+[INFO ] 14-12-2023 21:11:43 [restartedMain] GreenfarmApplication - Starting GreenfarmApplication using Java 19.0.2 with PID 240 (D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN\target\classes started by Nghia in D:\FPTPOLYTECHNIC\DUANTOTNGHIEP\DATN)
+[DEBUG] 14-12-2023 21:11:43 [restartedMain] GreenfarmApplication - Running with Spring Boot v3.1.3, Spring v6.0.11
+[INFO ] 14-12-2023 21:11:43 [restartedMain] GreenfarmApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 14-12-2023 21:11:43 [restartedMain] ChangeableUrls - The Class-Path manifest attribute in C:\Users\Nghia\.m2\repository\xalan\xalan\2.7.2\xalan-2.7.2.jar referenced one or more files that do not exist: file:/C:/Users/Nghia/.m2/repository/xalan/xalan/2.7.2/xercesImpl.jar,file:/C:/Users/Nghia/.m2/repository/xalan/xalan/2.7.2/xml-apis.jar,file:/C:/Users/Nghia/.m2/repository/xalan/xalan/2.7.2/serializer.jar
+[INFO ] 14-12-2023 21:11:43 [restartedMain] ChangeableUrls - The Class-Path manifest attribute in C:\Users\Nghia\.m2\repository\xalan\serializer\2.7.2\serializer-2.7.2.jar referenced one or more files that do not exist: file:/C:/Users/Nghia/.m2/repository/xalan/serializer/2.7.2/xml-apis.jar
+[INFO ] 14-12-2023 21:11:43 [restartedMain] ChangeableUrls - The Class-Path manifest attribute in C:\Users\Nghia\.m2\repository\org\apache\xmlgraphics\batik-rasterizer-ext\1.13\batik-rasterizer-ext-1.13.jar referenced one or more files that do not exist: file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-shared-resources-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-svgrasterizer-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-parser-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-xml-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-transcoder-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-svggen-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-constants-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-i18n-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-codec-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-extension-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-anim-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-awt-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/xmlgraphics-commons-2.4.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/commons-io-1.3.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/commons-logging-1.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-bridge-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-script-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-css-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-dom-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/xalan-2.7.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/serializer-2.7.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/xml-apis-1.4.01.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-ext-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-gvt-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/batik-svg-dom-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer-ext/1.13/xml-apis-ext-1.3.04.jar
+[INFO ] 14-12-2023 21:11:43 [restartedMain] ChangeableUrls - The Class-Path manifest attribute in C:\Users\Nghia\.m2\repository\org\apache\xmlgraphics\batik-rasterizer\1.13\batik-rasterizer-1.13.jar referenced one or more files that do not exist: file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-shared-resources-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-svgrasterizer-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-parser-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-awt-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/xmlgraphics-commons-2.4.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/commons-io-1.3.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/commons-logging-1.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-xml-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/xml-apis-ext-1.3.04.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-transcoder-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-anim-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-css-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-ext-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-svg-dom-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-bridge-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-script-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-dom-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/xalan-2.7.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/serializer-2.7.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/xml-apis-1.4.01.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-gvt-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-svggen-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-constants-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-i18n-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/batik-codec-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-rasterizer/1.13/lib/fop-transcoder-allinone-2.5.jar
+[INFO ] 14-12-2023 21:11:43 [restartedMain] ChangeableUrls - The Class-Path manifest attribute in C:\Users\Nghia\.m2\repository\org\apache\xmlgraphics\batik-slideshow\1.13\batik-slideshow-1.13.jar referenced one or more files that do not exist: file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-bridge-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-anim-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-ext-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-awt-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-css-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-dom-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/xalan-2.7.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/serializer-2.7.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/xml-apis-1.4.01.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-parser-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-script-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-svg-dom-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-constants-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-i18n-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-xml-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/xmlgraphics-commons-2.4.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/commons-io-1.3.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/commons-logging-1.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-gvt-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/batik-shared-resources-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-slideshow/1.13/lib/xml-apis-ext-1.3.04.jar
+[INFO ] 14-12-2023 21:11:43 [restartedMain] ChangeableUrls - The Class-Path manifest attribute in C:\Users\Nghia\.m2\repository\org\apache\xmlgraphics\batik-squiggle-ext\1.13\batik-squiggle-ext-1.13.jar referenced one or more files that do not exist: file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-shared-resources-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-svgbrowser-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-anim-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-bridge-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-script-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/xmlgraphics-commons-2.4.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/commons-io-1.3.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/commons-logging-1.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-dom-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/xalan-2.7.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/serializer-2.7.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/xml-apis-1.4.01.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-gvt-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-swing-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-gui-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-transcoder-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-svggen-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-constants-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-i18n-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-xml-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/xml-apis-ext-1.3.04.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-extension-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-awt-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-css-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-ext-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-parser-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle-ext/1.13/batik-svg-dom-1.13.jar
+[INFO ] 14-12-2023 21:11:43 [restartedMain] ChangeableUrls - The Class-Path manifest attribute in C:\Users\Nghia\.m2\repository\org\apache\xmlgraphics\batik-squiggle\1.13\batik-squiggle-1.13.jar referenced one or more files that do not exist: file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-shared-resources-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-svgbrowser-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-anim-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-awt-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-css-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-ext-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-parser-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-svg-dom-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-bridge-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-script-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/xmlgraphics-commons-2.4.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/commons-io-1.3.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/commons-logging-1.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-dom-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/xalan-2.7.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/serializer-2.7.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/xml-apis-1.4.01.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-gvt-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-swing-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-gui-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-transcoder-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-svggen-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-constants-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-i18n-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/batik-xml-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-squiggle/1.13/lib/xml-apis-ext-1.3.04.jar
+[INFO ] 14-12-2023 21:11:43 [restartedMain] ChangeableUrls - The Class-Path manifest attribute in C:\Users\Nghia\.m2\repository\org\apache\xmlgraphics\batik-svgpp\1.13\batik-svgpp-1.13.jar referenced one or more files that do not exist: file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-shared-resources-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-transcoder-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-anim-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-css-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-ext-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-parser-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-svg-dom-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-awt-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/xmlgraphics-commons-2.4.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/commons-io-1.3.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/commons-logging-1.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-bridge-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-script-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-dom-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/xalan-2.7.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/serializer-2.7.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/xml-apis-1.4.01.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-gvt-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-svggen-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-xml-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/xml-apis-ext-1.3.04.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-constants-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-svgpp/1.13/lib/batik-i18n-1.13.jar
+[INFO ] 14-12-2023 21:11:43 [restartedMain] ChangeableUrls - The Class-Path manifest attribute in C:\Users\Nghia\.m2\repository\org\apache\xmlgraphics\batik-ttf2svg\1.13\batik-ttf2svg-1.13.jar referenced one or more files that do not exist: file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-ttf2svg/1.13/lib/batik-shared-resources-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-ttf2svg/1.13/lib/batik-svggen-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-ttf2svg/1.13/lib/batik-awt-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-ttf2svg/1.13/lib/xmlgraphics-commons-2.4.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-ttf2svg/1.13/lib/commons-io-1.3.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-ttf2svg/1.13/lib/commons-logging-1.2.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-ttf2svg/1.13/lib/batik-util-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-ttf2svg/1.13/lib/batik-constants-1.13.jar,file:/C:/Users/Nghia/.m2/repository/org/apache/xmlgraphics/batik-ttf2svg/1.13/lib/batik-i18n-1.13.jar
+[INFO ] 14-12-2023 21:11:43 [restartedMain] ChangeableUrls - The Class-Path manifest attribute in C:\Users\Nghia\.m2\repository\io\grpc\grpc-netty-shaded\1.21.0\grpc-netty-shaded-1.21.0.jar referenced one or more files that do not exist: file:/C:/Users/Nghia/.m2/repository/io/grpc/grpc-netty-shaded/1.21.0/grpc-core-1.21.0.jar,file:/C:/Users/Nghia/.m2/repository/io/grpc/grpc-netty-shaded/1.21.0/opencensus-contrib-grpc-metrics-0.21.0.jar,file:/C:/Users/Nghia/.m2/repository/io/grpc/grpc-netty-shaded/1.21.0/opencensus-api-0.21.0.jar,file:/C:/Users/Nghia/.m2/repository/io/grpc/grpc-netty-shaded/1.21.0/grpc-api-1.21.0.jar,file:/C:/Users/Nghia/.m2/repository/io/grpc/grpc-netty-shaded/1.21.0/gson-2.7.jar,file:/C:/Users/Nghia/.m2/repository/io/grpc/grpc-netty-shaded/1.21.0/annotations-4.1.1.4.jar,file:/C:/Users/Nghia/.m2/repository/io/grpc/grpc-netty-shaded/1.21.0/grpc-context-1.21.0.jar,file:/C:/Users/Nghia/.m2/repository/io/grpc/grpc-netty-shaded/1.21.0/error_prone_annotations-2.3.2.jar,file:/C:/Users/Nghia/.m2/repository/io/grpc/grpc-netty-shaded/1.21.0/jsr305-3.0.2.jar,file:/C:/Users/Nghia/.m2/repository/io/grpc/grpc-netty-shaded/1.21.0/animal-sniffer-annotations-1.17.jar,file:/C:/Users/Nghia/.m2/repository/io/grpc/grpc-netty-shaded/1.21.0/guava-26.0-android.jar,file:/C:/Users/Nghia/.m2/repository/io/grpc/grpc-netty-shaded/1.21.0/checker-compat-qual-2.5.2.jar,file:/C:/Users/Nghia/.m2/repository/io/grpc/grpc-netty-shaded/1.21.0/j2objc-annotations-1.1.jar
+[INFO ] 14-12-2023 21:11:43 [restartedMain] DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[INFO ] 14-12-2023 21:11:43 [restartedMain] DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[INFO ] 14-12-2023 21:11:48 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 14-12-2023 21:11:48 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 253 ms. Found 31 JPA repository interfaces.
+[INFO ] 14-12-2023 21:11:49 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+[INFO ] 14-12-2023 21:11:49 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 21:11:49 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 14-12-2023 21:11:49 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+[INFO ] 14-12-2023 21:11:49 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 14-12-2023 21:11:49 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 6344 ms
+[INFO ] 14-12-2023 21:11:50 [restartedMain] HikariDataSource - HikariPool-1 - Starting...
+[INFO ] 14-12-2023 21:11:50 [restartedMain] HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5ed80420
+[INFO ] 14-12-2023 21:11:50 [restartedMain] HikariDataSource - HikariPool-1 - Start completed.
+[INFO ] 14-12-2023 21:11:50 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 14-12-2023 21:11:50 [restartedMain] Version - HHH000412: Hibernate ORM core version 6.2.7.Final
+[INFO ] 14-12-2023 21:11:50 [restartedMain] Environment - HHH000406: Using bytecode reflection optimizer
+[INFO ] 14-12-2023 21:11:51 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 21:11:51 [restartedMain] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 14-12-2023 21:11:52 [restartedMain] BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+[INFO ] 14-12-2023 21:11:54 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 14-12-2023 21:11:54 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 14-12-2023 21:11:54 [restartedMain] QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+[INFO ] 14-12-2023 21:11:56 [restartedMain] Webcam - WebcamDefaultDriver capture driver will be used
+[INFO ] 14-12-2023 21:11:59 [restartedMain] FCMInitializer - Firebase application has been initialized
+[WARN ] 14-12-2023 21:11:59 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 14-12-2023 21:12:00 [restartedMain] EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+[INFO ] 14-12-2023 21:12:00 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@433c304f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2671b2ca, org.springframework.security.web.context.SecurityContextHolderFilter@13c077ce, org.springframework.security.web.header.HeaderWriterFilter@4095d2a2, org.springframework.security.web.authentication.logout.LogoutFilter@440cb066, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@14be22c0, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@5dc7a1c9, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@735eeef7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@66e00306, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@9c918df, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@46d88624, org.springframework.security.web.access.ExceptionTranslationFilter@10454ad1, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6b4828f5]
+[INFO ] 14-12-2023 21:12:03 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 14-12-2023 21:12:03 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 14-12-2023 21:12:03 [restartedMain] TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+[INFO ] 14-12-2023 21:12:03 [restartedMain] GreenfarmApplication - Started GreenfarmApplication in 21.019 seconds (process running for 24.559)
+[INFO ] 14-12-2023 21:12:04 [RMI TCP Connection(3)-127.0.0.1] [/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[INFO ] 14-12-2023 21:12:04 [RMI TCP Connection(3)-127.0.0.1] DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+[INFO ] 14-12-2023 21:12:04 [RMI TCP Connection(3)-127.0.0.1] DispatcherServlet - Completed initialization in 5 ms
