@@ -105,5 +105,37 @@ public class Emailserviceimpl implements EmailService {
 		mimeMessageHelper.setText(emailContent, true);
 		emailSender.send(message);
 	}
+//	
+//	@Override
+//	public void sendEmailWithAttachment(String toAddress, String subject, String message, String attachment)
+//			throws MessagingException, FileNotFoundException {
+//		MimeMessage mimeMessage = emailSender.createMimeMessage();
+//		MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
+//		messageHelper.setTo(toAddress);
+//		messageHelper.setSubject(subject);
+//		messageHelper.setText(message);
+//		FileSystemResource file = new FileSystemResource(ResourceUtils.getFile(attachment));
+//		messageHelper.addAttachment("Purchase Order", file);
+//		emailSender.send(mimeMessage);
+//	}	
+
+	@Override
+	public void sendBookingMail(BookingConfirmEmailContext email) throws MessagingException {
+		// TODO Auto-generated method stub
+		MimeMessage message = emailSender.createMimeMessage();
+		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message,
+				MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
+		org.thymeleaf.context.Context context = new org.thymeleaf.context.Context();
+		context.setVariables(email.getContext());
+		String emailContent = templateEngine.process(email.getTemplateLocation(), context);
+		System.out.println(context);
+		System.out.println(email.getContext());
+		mimeMessageHelper.setTo(email.getTo());
+		mimeMessageHelper.setSubject(email.getSubject());
+		mimeMessageHelper.setFrom(email.getFrom());
+		mimeMessageHelper.setText(emailContent, true);
+		
+		emailSender.send(message);
+	}
 
 }

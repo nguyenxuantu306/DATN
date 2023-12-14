@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:v="urn:schemas-microsoft-com:vml"
+	xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+
+<body>
+
+	<div class="col-5 bg-success">
+		<div style="text-align: center; background-color: white;" class="py-3">
+			<div class="confirmation-message">
+				<img
+					src="https://firebasestorage.googleapis.com/v0/b/luuanh-7c9d9.appspot.com/o/logo.png?alt=media&token=4679050b-5088-44ac-8d0e-3eb5e45f8b37">
+				<h2>Chào {{Tên Khách Hàng}}</h2>
+				<h2 th:text="${firstName}"></h2>
+				<h3>
+					<p style="color: red;">CẢM ƠN QUÍ KHÁCH ĐÃ SỬ DỤNG DỊCH VỤ CỦA
+						CHÚNG TÔI</p>
+				</h3>
+			</div>
+			<div class="text-center">
+				<h3>Mã QR của Quý Khách:</h3>
+
+				<img alt="QRcode" th:src="${qrCodeData}"> {{Địa Chỉ Mã QR của
+				khách hàng}} <a th:text="${qrCodeData}"></a>
+
+			</div>
+			<div class="card">
+				<div class="card-body">
+					<h3 class="card-title" style="text-align: center;">Thông tin
+						đặt vé</h3>
+					<p class="card-text">
+						<i class="fas fa-ticket-alt"></i> Mã vé: <strong
+							th:text="${bookingid}"></strong>
+					</p>
+					<p class="card-text">
+						<i class="fas fa-ticket-alt"></i> Ngày Đặt: <strong
+							th:text="${bookingdate}"></strong>
+					</p>
+					<p class="card-text">
+						<i class="fas fa-user"></i> Số vé người lớn: <strong
+							th:text="${Adultticketnumber}"></strong> <strong> Vé</strong>
+					</p>
+					<p class="card-text">
+						<i class="fas fa-child"></i> Số vé người trẻ em: <strong
+							th:text="${Childticketnumber}"></strong> <strong> Vé</strong>
+					</p>
+					<p class="card-text">
+						<i class="fas fa-route"></i> Tên tour: <strong
+							th:text="${bookingtour}"> </strong> 
+							<i class="fa fa-calendar" ></i> - Tổ chức ngày :<strong
+							th:text="${eventdate}"> </strong>
+					</p>
+					<p class="card-text">
+						Tổng tiền: <a th:text="${Totalprice}"></a> (VND)
+					</p>
+
+				</div>
+
+			</div>
+
+
+
+
+
+
+
+
+		</div>
+
+	</div>
+</body>
+
+</html>

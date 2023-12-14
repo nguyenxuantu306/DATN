@@ -291,16 +291,19 @@
 
 							</div>
 							<p>{{p.commenttext}}</p>
+
 							<div class="d-flex flex-row align-items-center"
 								th:if="${#authorization.expression('isAuthenticated()')}"
 								ng-model="p.user.email">
-								<!-- recomment button  -->
+
 								<div class="dropdown me-2">
 									<button class="btn btn-secondary dropdown-toggle" type="button"
 										id="dropdownMenuButton1" data-bs-toggle="dropdown"
 										aria-expanded="false">
-										<i class="far fa-comment-dots me-2"></i> Comment
+										<i class="far fa-comment-dots me-2"></i> ReComment
 									</button>
+									
+
 									<div class="dropdown-menu" style="min-width: 500px"
 										aria-labelledby="dropdownMenuButton1">
 
@@ -320,7 +323,12 @@
 											</div>
 											<div class="float-end mt-2 pt-1">
 												<button type="button" class="btn btn-primary btn-sm"
+													ng-disabled="!form.recommenttext || form.recommenttext.trim() === ''"
 													ng-click="createrecomment(p)">Post recomment</button>
+												<button type="button" class="btn btn-primary btn-sm"
+													ng-click="updaterecm(recm)"
+													ng-disabled="!form.recommenttext || form.recommenttext.trim() === ''">Update
+													recomment</button>
 												<button type="button" class="btn btn-outline-primary btn-sm"
 													ng-click="resetrecm()">Cancel</button>
 											</div>
@@ -342,8 +350,10 @@
 										<p class="mb-0" ng-click="edit(p)">Sửa</p>
 									</a>
 
+
 								</div>
 							</div>
+
 						</div>
 						<!-- //recomment -->
 						<div class="row" ng-repeat="recm in p.recomment">
@@ -373,7 +383,7 @@
 										</a> <a href="#!"
 											class="d-inline-flex align-items-center  me-3 list-inline-item">
 											<i class="far fa-comment-dots me-2"></i>
-											<p class="mb-0" ng-click="editrecm(recm)">Sửa</p>
+											<p  class="mb-0" ng-click="editrecm(recm)">Sửa</p>
 										</a>
 
 									</div>
@@ -425,6 +435,7 @@
 					</div>
 					<div class="float-end mt-2 pt-1">
 						<button type="button" class="btn btn-primary btn-sm"
+							ng-disabled="!form.commenttext || form.commenttext.trim() === ''"
 							ng-click="update()">Post comment</button>
 						<button type="button" class="btn btn-outline-primary btn-sm"
 							ng-click="reset()">Cancel</button>
