@@ -115,10 +115,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Order> order;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "user")
-	List<UserDiscount> discount;
+	
 
 	private boolean accountVerified;
 
