@@ -1,5 +1,6 @@
 package com.greenfarm.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class VoucherDTO {
 	private Integer voucherid;
 	private String code;
 	private Float discount;
-	private Date expirationdate = new Date();
+	private LocalDateTime expirationdate;
 	private Boolean isdeleted = Boolean.FALSE;
 	
 	private List<VoucherUser> voucheruser;

@@ -16,7 +16,7 @@ public interface AddressDAO extends JpaRepository<Address, Integer> {
 	List<Address> findByEfindByIdAccountmail(String email);
 
 	@Modifying
-	@Query("UPDATE Address a SET a.Active = true WHERE a.AddressID = :addressId")
+	@Query("UPDATE Address a SET a.active = true WHERE a.AddressID = :addressId")
 	void setActiveStatus(@Param("addressId") Integer addressId);
 
 

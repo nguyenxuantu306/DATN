@@ -19,7 +19,7 @@ public class AddressDTO {
 	private String City;
 	private String Phonenumber;
 	private String Fullname;
-	private Boolean Active = Boolean.FALSE;
+	private Boolean active = Boolean.FALSE;
 	private User user;
 	
 	
