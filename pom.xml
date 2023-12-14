@@ -9,8 +9,8 @@
 		<version>3.1.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.poly</groupId>
-	<artifactId>com.poly</artifactId>
+	<groupId>com.greenfarm</groupId>
+	<artifactId>com.greenfarm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>DATN_WEB_GREENFARM</name>
@@ -41,7 +41,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-			<version>2.7.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
