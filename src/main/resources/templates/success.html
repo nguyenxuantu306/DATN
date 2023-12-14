@@ -1,72 +1,72 @@
-<html xmlns="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout::dynamic(~{::body})}">
+<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
 
 <head>
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap"
-	rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet" />
 
 </head>
 <style type="text/css">
-body, table, td, a {
-	-webkit-text-size-adjust: 100%;
-	-ms-text-size-adjust: 100%;
-}
-
-table, td {
-	mso-table-lspace: 0pt;
-	mso-table-rspace: 0pt;
-}
-
-img {
-	-ms-interpolation-mode: bicubic;
-}
-
-img {
-	border: 0;
-	height: auto;
-	line-height: 100%;
-	outline: none;
-	text-decoration: none;
-}
-
-table {
-	border-collapse: collapse !important;
-}
-
-body {
-	height: 100% !important;
-	margin: 0 !important;
-	padding: 0 !important;
-	width: 100% !important;
-}
-
-a[x-apple-data-detectors] {
-	color: inherit !important;
-	text-decoration: none !important;
-	font-size: inherit !important;
-	font-family: inherit !important;
-	font-weight: inherit !important;
-	line-height: inherit !important;
-}
-
-@media screen and (max-width: 480px) {
-	.mobile-hide {
-		display: none !important;
+	body,
+	table,
+	td,
+	a {
+		-webkit-text-size-adjust: 100%;
+		-ms-text-size-adjust: 100%;
 	}
-	.mobile-center {
-		text-align: center !important;
-	}
-}
 
-div[style*="margin: 16px 0;"] {
-	margin: 0 !important;
-}
+	table,
+	td {
+		mso-table-lspace: 0pt;
+		mso-table-rspace: 0pt;
+	}
+
+	img {
+		-ms-interpolation-mode: bicubic;
+	}
+
+	img {
+		border: 0;
+		height: auto;
+		line-height: 100%;
+		outline: none;
+		text-decoration: none;
+	}
+
+	table {
+		border-collapse: collapse !important;
+	}
+
+	body {
+		height: 100% !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		width: 100% !important;
+	}
+
+	a[x-apple-data-detectors] {
+		color: inherit !important;
+		text-decoration: none !important;
+		font-size: inherit !important;
+		font-family: inherit !important;
+		font-weight: inherit !important;
+		line-height: inherit !important;
+	}
+
+	@media screen and (max-width: 480px) {
+		.mobile-hide {
+			display: none !important;
+		}
+
+		.mobile-center {
+			text-align: center !important;
+		}
+	}
+
+	div[style*="margin: 16px 0;"] {
+		margin: 0 !important;
+	}
 </style>
 
-<body
-	style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;"
-	bgcolor="#eeeeee">
+<body style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;" bgcolor="#eeeeee">
 
 
 	<div
@@ -77,24 +77,20 @@ div[style*="margin: 16px 0;"] {
 
 	<table border="0" cellpadding="0" cellspacing="0" width="100%">
 		<tr>
-			<td align="center" style="background-color: #eeeeee;"
-				bgcolor="#eeeeee">
+			<td align="center" style="background-color: #eeeeee;" bgcolor="#eeeeee">
 
-				<table align="center" border="0" cellpadding="0" cellspacing="0"
-					width="100%" style="max-width: 700px;">
+				<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 700px;">
 
 					<tr>
-						<td align="center"
-							style="padding: 35px 35px 20px 35px; background-color: #ffffff;"
+						<td align="center" style="padding: 35px 35px 20px 35px; background-color: #ffffff;"
 							bgcolor="#ffffff">
-							<table align="center" border="0" cellpadding="0" cellspacing="0"
-								width="100%" style="max-width: 600px;">
+							<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%"
+								style="max-width: 600px;">
 								<tr>
 									<td align="center"
 										style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 25px;">
-										<img
-										src="http://dgtlmrktng.s3.amazonaws.com/go/emails/generic-email-template/tick.png"
-										width="125" height="120" style="display: block; border: 0px;" /><br>
+										<img src="http://dgtlmrktng.s3.amazonaws.com/go/emails/generic-email-template/tick.png"
+											width="125" height="120" style="display: block; border: 0px;" /><br>
 										<h2
 											style="font-size: 30px; font-weight: 800; line-height: 36px; color: #f16522; margin: 0;">
 											Cảm ơn bạn đã đặt hàng của GreenFarm !</h2>
@@ -129,16 +125,14 @@ div[style*="margin: 16px 0;"] {
 												</td>
 											</tr>
 											<tr th:each="item : ${cartConfirmation}">
-												<td th:text="${item.product.productname}" width="50%"
-													align="left"
+												<td th:text="${item.product.productname}" width="50%" align="left"
 													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
 
 												</td>
 												<td th:text="${item.Quantity}" width="25%" align="left"
 													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
 												</td>
-												<td
-													th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')}+'đ'"
+												<td th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')}+'đ'"
 													width="25%" align="left"
 													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
 												</td>
@@ -160,7 +154,7 @@ div[style*="margin: 16px 0;"] {
 												<td width="25%" align="left"
 													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
 													<span
-													th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+														th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
 												</td>
 											</tr>
 											<tr>
@@ -172,8 +166,9 @@ div[style*="margin: 16px 0;"] {
 												</td>
 												<td width="25%" align="left"
 													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-													<div th:each="discount : ${discount}">
-														<span th:text="${discount.voucher.discount}"></span>
+													<div th:each="formattedDiscount : ${formattedDiscounts}">
+														<!-- Use the formattedDiscount directly -->
+														<span th:text="${formattedDiscount} + '%'"></span>
 													</div>
 												</td>
 											</tr>
@@ -185,8 +180,8 @@ div[style*="margin: 16px 0;"] {
 												<td width="25%" align="left"
 													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
 													<span
-													th:text="${#numbers.formatDecimal(totalDiscount, 0, 'COMMA', 0, 'POINT')}+'đ'"
-													class="text-danger"></span>
+														th:text="${#numbers.formatDecimal(totalDiscount, 0, 'COMMA', 0, 'POINT')}+'đ'"
+														class="text-danger"></span>
 												</td>
 											</tr>
 										</table>
@@ -213,116 +208,112 @@ div[style*="margin: 16px 0;"] {
 													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
 
 													<span
-													th:text="${orderConfirmation.paymentmethod.Methodname}"></span>
+														th:text="${orderConfirmation.paymentmethod.Methodname}"></span>
 												</td>
-												</td>
+									</td>
 
 
 
-											</tr>
-											<tr>
-												<td width="75%" align="left" bgcolor="#eeeeee"
-													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-													Thông tin người nhận hàng #</td>
-												<td width="25%" align="left" bgcolor="#eeeeee"
-													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+								</tr>
+								<tr>
+									<td width="75%" align="left" bgcolor="#eeeeee"
+										style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+										Thông tin người nhận hàng #</td>
+									<td width="25%" align="left" bgcolor="#eeeeee"
+										style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
 
-												</td>
-											</tr>
-											<tr>
-												<td width="75%" align="left"
-													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-													Tên khách hàng</td>
-												<td width="25%" align="left"
-													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+									</td>
+								</tr>
+								<tr>
+									<td width="75%" align="left"
+										style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+										Tên khách hàng</td>
+									<td width="25%" align="left"
+										style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
 
-													<span th:text="${orderConfirmation.Address.Fullname}"></span>
-												</td>
+										<span th:text="${orderConfirmation.Address.Fullname}"></span>
+									</td>
 
-											</tr>
-											<tr>
+								</tr>
+								<tr>
 
-												<td width="100%" align="left"
-													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-													Số điện thoại khách hàng</td>
-												<td width="25%" align="left"
-													style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+									<td width="100%" align="left"
+										style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+										Số điện thoại khách hàng</td>
+									<td width="25%" align="left"
+										style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
 
-													<span th:text="${orderConfirmation.Address.Phonenumber}"></span>
-												</td>
-											</tr>
-										</table>
+										<span th:text="${orderConfirmation.Address.Phonenumber}"></span>
 									</td>
 								</tr>
 							</table>
+						</td>
+					</tr>
+				</table>
+
+			</td>
+		</tr>
+		<tr>
+			<td align="center" height="100%" valign="top" width="100%"
+				style="padding: 0 35px 35px 60px; background-color: #ffffff;" bgcolor="#ffffff">
+				<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 700px;">
+					<tr>
+						<td align="center" valign="top" style="font-size: 0;">
+							<div class="row">
+								<div class="col-md-6"
+									style="display: inline-block; max-width: 50%; min-width: 240px; vertical-align: top; width: 100%;">
+
+									<table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"
+										style="max-width: 300px;">
+										<tr>
+											<td align="left" valign="top"
+												style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
+												<p style="font-weight: 800;">Địa chỉ giao hàng</p>
+												<p>
+													<span th:text="${orderConfirmation.Address.Street + ', ' + orderConfirmation.Address.Ward 
+															+ ', ' + orderConfirmation.Address.District + ', ' + orderConfirmation.Address.City 
+															+ ', ' + orderConfirmation.Address.Phonenumber + ', ' + orderConfirmation.Address.Fullname}"></span>
+												</p>
+											</td>
+										</tr>
+									</table>
+								</div>
+								<div class="col-md-6"
+									style="display: inline-block; max-width: 50%; min-width: 240px; vertical-align: top; width: 100%;">
+									<table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"
+										style="max-width: 300px;">
+										<tr>
+											<td align="left" valign="top"
+												style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
+												<p style="font-weight: 800;">Ngày tạo hóa đơn</p>
+												<p>
+													<span
+														th:text="${#temporals.format(orderConfirmation.orderdate, 'dd-MM-yyyy HH:mm:ss')}"></span>
+												</p>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
 
 						</td>
 					</tr>
 					<tr>
-						<td align="center" height="100%" valign="top" width="100%"
-							style="padding: 0 35px 35px 60px; background-color: #ffffff;"
-							bgcolor="#ffffff">
-							<table align="center" border="0" cellpadding="0" cellspacing="0"
-								width="100%" style="max-width: 700px;">
-								<tr>
-									<td align="center" valign="top" style="font-size: 0;">
-										<div class="row">
-											<div class="col-md-6"
-												style="display: inline-block; max-width: 50%; min-width: 240px; vertical-align: top; width: 100%;">
-
-												<table align="left" border="0" cellpadding="0"
-													cellspacing="0" width="100%" style="max-width: 300px;">
-													<tr>
-														<td align="left" valign="top"
-															style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
-															<p style="font-weight: 800;">Địa chỉ giao hàng</p>
-															<p>
-																<span
-																	th:text="${orderConfirmation.Address.Street + ', ' + orderConfirmation.Address.Ward 
-															+ ', ' + orderConfirmation.Address.District + ', ' + orderConfirmation.Address.City 
-															+ ', ' + orderConfirmation.Address.Phonenumber + ', ' + orderConfirmation.Address.Fullname}"></span>
-															</p>
-														</td>
-													</tr>
-												</table>
-											</div>
-											<div class="col-md-6"
-												style="display: inline-block; max-width: 50%; min-width: 240px; vertical-align: top; width: 100%;">
-												<table align="left" border="0" cellpadding="0"
-													cellspacing="0" width="100%" style="max-width: 300px;">
-													<tr>
-														<td align="left" valign="top"
-															style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
-															<p style="font-weight: 800;">Ngày tạo hóa đơn</p>
-															<p>
-																<span
-																	th:text="${#temporals.format(orderConfirmation.orderdate, 'dd-MM-yyyy HH:mm:ss')}"></span>
-															</p>
-														</td>
-													</tr>
-												</table>
-											</div>
-										</div>
-
-									</td>
-								</tr>
-								<tr>
-									<td align="left"
-										style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
-										<p
-											style="font-size: 18px; font-weight: bold; line-height: 24px; color: black;">
-											Thông báo : Trạng thái giao dịch thanh toán thành công !</p>
-									</td>
-								</tr>
-							</table> <a href="/" class="btn btn-success"
-							style="display: inline-block; padding: 10px 20px; text-align: center; text-decoration: none; border: 1px solid #007bff; border-radius: 5px; transition: background-color 0.3s ease; width: 500px;">Về
-								Trang Chủ</a>
+						<td align="left"
+							style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
+							<p style="font-size: 18px; font-weight: bold; line-height: 24px; color: black;">
+								Thông báo : Trạng thái giao dịch thanh toán thành công !</p>
 						</td>
-
 					</tr>
+				</table> <a href="/" class="btn btn-success"
+					style="display: inline-block; padding: 10px 20px; text-align: center; text-decoration: none; border: 1px solid #007bff; border-radius: 5px; transition: background-color 0.3s ease; width: 500px;">Về
+					Trang Chủ</a>
+			</td>
+
+		</tr>
 
 
-				</table>
+	</table>
 </body>
 
 </html>

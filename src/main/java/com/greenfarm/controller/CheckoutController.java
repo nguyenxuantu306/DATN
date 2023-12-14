@@ -1,5 +1,6 @@
 package com.greenfarm.controller;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,7 +57,7 @@ public class CheckoutController {
 
 	@Autowired
 	EmailService emailService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -83,7 +84,7 @@ public class CheckoutController {
 
 	@Autowired
 	VoucherOrderDAO voucherOrderDAO;
-	
+
 	@Autowired
 	AddressService addressService;
 
@@ -123,8 +124,7 @@ public class CheckoutController {
 	@PostMapping("/checkout/payment")
 	public String Payment(Model model, @ModelAttribute("Order") OrderDTO orderDTO,
 			@RequestParam(name = "voucherid", required = false) String[] voucherIds,
-			 @RequestParam(name = "addressId") Integer addressId,
-			HttpServletRequest request) throws MessagingException {
+			@RequestParam(name = "addressId") Integer addressId, HttpServletRequest request) throws MessagingException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -134,13 +134,13 @@ public class CheckoutController {
 			StatusOrder statusOrder = new StatusOrder();
 			statusOrder.setStatusorderid(1);
 			PaymentMethod paymentMethodObj = paymentMethodDAO.findById(1).get();
-	        Address address = addressService.findByAddressid(addressId);
-			
+			Address address = addressService.findByAddressid(addressId);
+
 			if (user != null) {
 				Order orderItem = new Order();
 				orderItem.setUser(user);
 				orderItem.setOrderdate(now);
-		        orderItem.setAddress(address);
+				orderItem.setAddress(address);
 				orderItem.setStatusOrder(statusOrder);
 				orderItem.setPaymentmethod(paymentMethodObj);
 				orderItem.setVoucherorder(orderDTO.getVoucherorder());
@@ -167,26 +167,36 @@ public class CheckoutController {
 				List<VoucherOrder> voucherLists = new ArrayList<>();
 //				String[] voucherIds = request.getParameterValues("voucherid");
 
-				if (voucherIds != null && voucherIds.length > 0&&
-						!Arrays.asList(voucherIds).contains("0")) {
-				    for (String voucherId : voucherIds) {
-				        // Lấy thông tin Voucher từ voucherId
-				        Voucher voucher = voucherService.findByVoucherid(Long.parseLong(voucherId));
+				if (voucherIds != null && voucherIds.length > 0 && !Arrays.asList(voucherIds).contains("0")) {
+					for (String voucherId : voucherIds) {
+						// Lấy thông tin Voucher từ voucherId
+						Voucher voucher = voucherService.findByVoucherid(Long.parseLong(voucherId));
 
-				        // Tạo mới VoucherOrder và thêm vào danh sách
-				        VoucherOrder voucherOrder = new VoucherOrder();
-				        voucherOrder.setOrder(orderItem);
-				        voucherOrder.setVoucher(voucher);
-				        voucherLists.add(voucherOrder);
+						// Tạo mới VoucherOrder và thêm vào danh sách
+						VoucherOrder voucherOrder = new VoucherOrder();
+						voucherOrder.setOrder(orderItem);
+						voucherOrder.setVoucher(voucher);
+						voucherLists.add(voucherOrder);
 
-				        // Áp dụng giảm giá từ voucher vào tổng giá trị đơn hàng
-				        discountedTotal =  total - (total *voucher.getDiscount());
-				      }
+						// Áp dụng giảm giá từ voucher vào tổng giá trị đơn hàng
+						discountedTotal = total - (total * voucher.getDiscount());
+					}
+				}
+				List<String> formattedDiscounts = new ArrayList<>();
+				DecimalFormat decimalFormat = new DecimalFormat("#");
+
+				for (VoucherOrder voucherOrder : voucherLists) {
+					String formattedDiscount = decimalFormat.format(voucherOrder.getVoucher().getDiscount() * 100);
+					formattedDiscounts.add(formattedDiscount);
 				}
 
+				// Add the formatted discounts to the model
+				model.addAttribute("formattedDiscounts", formattedDiscounts);
 
-				voucherOrderDAO.saveAll(voucherLists); 
-
+				voucherOrderDAO.saveAll(voucherLists);
+				if (discountedTotal == 0) {
+					discountedTotal = total;
+				}
 				model.addAttribute("totalDiscount", discountedTotal);
 				model.addAttribute("discount", voucherLists);
 				model.addAttribute("total", total);
@@ -195,20 +205,18 @@ public class CheckoutController {
 				cartService.delete(cartItems);
 				OrderEmailContext abstractEmailContext = new OrderEmailContext();
 				abstractEmailContext.init(orderItem.getUser());
-				
+
 //				 Map<String, Object> myContext = new HashMap<>();
 //				 for (abad ac : orderDetailList) {
 //					 myContext.put(orderitem.getprof.getname,quang);
 //				}
-				 
-				 
+
 //				abstractEmailContext.setContext(myContext);
 //				emailService.sendMail(abstractEmailContext);			
 			}
-			
-			 
+
 			return "success";
-			
+
 		} else
 
 		{
