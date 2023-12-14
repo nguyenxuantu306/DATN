@@ -29,7 +29,7 @@ public interface UserService {
 
 	// Security
 	User findByEmail(String email);
-	
+
 	User findByPhonenumber(String Phonenumber);
 
 	public List<User> getAdministrators();
@@ -67,9 +67,9 @@ public interface UserService {
 	// Tổng tiền đặt vé của các user
 	List<Report> getBookingTotalPurchaseByUser();
 
-	//void save(User user);
+	// void save(User user);
 
 	User createADMIN(@Valid User user) throws UserAlreadyExistException;
 
-	User save(User user);	
+	User save(User user);
 }

@@ -79,7 +79,13 @@ commentapp.controller("comment-ctrl", function($scope, $http, $routeParams) {
 	}
 	
 	$scope.editrecm = function(item) {
-		$scope.form.recommenttext = angular.copy(item.recommenttext);	
+		console.log(item);
+		$scope.form.recommenttext = angular.copy(item.recommenttext);
+		console.log('them id vao comment');	
+		
+		$scope.form.recommentid = angular.copy(item.recommentid);
+		$scope.form.comment = angular.copy(item.comment);
+		console.log('them id vao comment'+item.recommentid);	
 	}
 	
 	$scope.reset = function() {
@@ -153,6 +159,7 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 	// Cập nhật comment tour
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
+		
 		if (item.commentid == null) {
 			return $scope.create();
 		} else if (item.commentid != null) {
@@ -174,6 +181,7 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 					text: 'Lỗi cập nhật tour!',
 				});
 				console.log("Error", error);
+				console.error("Error", error);
 			});
 		} else {
 			alert("comment  không tồn tại");
@@ -231,19 +239,17 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 		$http.post(`/rest/recomment`, $scope.form).then(resp => {
 			
 			resp.data.recommentdate = new Date(resp.data.recommentdate);
-			 
-			 
 			/*$scope.items.push(resp.data);*/
-			
 			$scope.items.forEach(function(item) {
   // Kiểm tra xem mảng con recomment có tồn tại không
   if (item.recomment) {
     // Thêm dữ liệu mới vào mảng recomment
     item.recomment.push(resp.data);
-  } else {
+    $scope.initialize();
+  } /*else {
     // Nếu mảng recomment chưa tồn tại, bạn có thể tạo nó
     item.recomment = [resp.data];
-  }
+  }*/
 });
 			console.log("du lieu"+$scope.items);
 			$scope.resetrecm();
@@ -267,17 +273,24 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 		});
 	};
 
+
 // Cập nhật comment tour
 	$scope.updaterecm = function(item) {
+			
 		var item = angular.copy($scope.form);
-		console.log("item.recommentid:"+item.recommentid );
+		item.comment = $scope.form.comment;
+			item.user =  $scope.users ;
 		if (item.recommentid == null) {
+			
 			return $scope.createrecomment();
 		} else if (item.recommentid != null) {
+				console.log("day la recm id ow comment:"+item.recommentid, item );
+				
 			$http.put(`/rest/recomment/${item.recommentid}`, item).then(resp => {
 				var index = $scope.items.findIndex(recm => recm.recommentid == item.recommentid);
 				$scope.items[index] = item;
 				$scope.reset();
+				  $scope.initialize();
 				// Sử dụng SweetAlert2 cho thông báo thành công
 				Swal.fire({
 					icon: 'success',
@@ -304,6 +317,7 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 			var index = $scope.items.findIndex(recm => recm.recommentid == item.recommentid);
 			$scope.items.splice(index, 1);
 			$scope.reset();
+			$scope.initialize();
 			// Sử dụng SweetAlert2 cho thông báo thành công
 			Swal.fire({
 				icon: 'success',
@@ -392,5 +406,6 @@ $http.get("/rest/users/email/" + $scope.loggedInUser).then(resp => {
 			this.page = this.count - 1;
 		}
 	}
-
+	
+	
 });

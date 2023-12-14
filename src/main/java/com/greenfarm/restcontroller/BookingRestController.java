@@ -42,6 +42,7 @@ import com.greenfarm.service.BookingService;
 import com.greenfarm.service.EmailService;
 import com.greenfarm.service.StatusBookingService;
 import com.greenfarm.service.UserService;
+import com.greenfarm.service.impl.BookingConfirmEmailContext;
 
 import jakarta.mail.MessagingException;
 
@@ -161,10 +162,28 @@ public class BookingRestController {
 
 		System.out.println(qrCodeUrl);
 		System.out.println(booking.getUser().getEmail());
-
-		// Gửi email với đường dẫn URL của hình ảnh đính kèm
-		emailService.sendEmailWithBooking(booking.getUser().getEmail(), "Order Confirmation",
-				"Thanks for your recent order", qrCodeUrl);
+		
+			System.out.println("đang chyaj bth");
+			// Gửi email với đường dẫn URL của hình ảnh đính kèm
+			BookingConfirmEmailContext bookingConfirmEmailContext = new BookingConfirmEmailContext();
+			System.out.println("đang chyaj bth 1");
+			User user = booking.getUser();
+			bookingConfirmEmailContext.init(booking);
+			System.out.println("đang chyaj bth2");
+			bookingConfirmEmailContext.setQrCodeData(qrCodeUrl);
+			bookingConfirmEmailContext.setBooking(booking);
+			System.out.println("đang chyaj bth2");
+			try {
+			//emailService.sendBookingMail(bookingConfirmEmailContext);
+			emailService.sendMail(bookingConfirmEmailContext);
+//			emailService.sendEmailWithBooking(booking.getUser().getEmail(), "Order Confirmation",
+//					"Thanks for your recent order", qrCodeUrl);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("Lỗi");
+		}
+		
 	}
 
 	@Autowired
