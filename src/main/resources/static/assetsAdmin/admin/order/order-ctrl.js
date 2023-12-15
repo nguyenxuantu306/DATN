@@ -116,7 +116,7 @@ app.controller("order-ctrl", function($scope, $http) {
 
 		var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
 		// Kiểm tra và trừ số lượng sản phẩm trong giỏ hàng
-		if (item.statusOrder.statusorderid == '2') {
+		if (item.statusOrder.statusorderid == '3') {
 			angular.forEach($scope.form.orderDetail, function(orderDetail) {
 				var product = orderDetail.product;
 				var quantityAvailable = orderDetail.product.quantityavailable;
