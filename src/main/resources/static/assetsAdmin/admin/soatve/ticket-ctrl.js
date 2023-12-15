@@ -2,7 +2,6 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
     $scope.selectedCameraId = null;
 $scope.items = [];
 $scope.bookings = [];
-
 $scope.tourlist = [];
 
     $scope.initialize = function() {
@@ -15,12 +14,6 @@ $scope.tourlist = [];
 		});
 		
 		
-		$http.get("/soatve/kiemtrave").then(resp => {
-			$scope.bookings = resp.data;
-			console.log(resp.data.bookingid);
-		});
-		
-
 		
         // Lấy danh sách camera từ WebRTC API
         
@@ -43,6 +36,25 @@ $scope.tourlist = [];
     }
 
 
+ $scope.kiemtrave = function (items) {
+        switch (items.statusbooking.statusbookingid) {
+            case 1:
+                $scope.ketquakiemtra = "Ve dang cho xac nhan, chua the su dung";
+                break;
+            case 2:
+                $scope.ketquakiemtra = "Ve hop le co the su dung";
+                break;
+            case 3:
+            case 4:
+                $scope.ketquakiemtra = "Ve da bi huy";
+                break;
+            case 5:
+                $scope.ketquakiemtra = "Ve da duoc su dung";
+                break;
+            default:
+                $scope.ketquakiemtra = "Trang thai ve khong hop le";
+        }
+    };
 
     $scope.selectCamera = function(){
         const selectedCameraId = document.getElementById('cameraSelect').value;
@@ -77,16 +89,18 @@ $scope.tourlist = [];
 
         const imageData = canvas.toDataURL('image/png');
         console.log("day la du lieu gui di"+imageData);
-        $http.post('/capture', { imageData: imageData})
+        $http.post('/checktikcet', { imageData: imageData})
             .then(resp => {
 				console.log("cmthành công " ); 
 				console.log(resp.data);
 				$scope.items.push(resp.data);
+				$scope.kiemtrave($scope.items);
 				
 			}).catch(error => {
 			// Sử dụng SweetAlert2 cho thông báo lỗi
 			
 			console.log("cmt lỗi " ); 
+			console.error("Error", error);
 			console.log("Error", error);
 		});
 				
@@ -99,7 +113,11 @@ $scope.tourlist = [];
                 console.error('Error capturing and sending image:', error);
             });*/
     }
+    
+     
 
     // Khởi đầu
     $scope.initialize();
+    
+   
 });

@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -152,9 +153,8 @@ public class BookingController {
 			tourdatebookingService.create(tourdatebooking);
 
 			// Generate and save QR code to the qrcode field
-			String qrCodeContent = "" + booking.getBookingid();
-			System.out.println(qrCodeContent);
-			System.out.println(booking.getBookingid());
+			String Content = "" + booking.getBookingid();
+			String qrCodeContent = encode(Content);
 			String qrCodeUrl = imageRestController.uploadQRCodeToCloud(qrCodeContent);
 			// Save the QR code URL to the booking
 			booking.setQrcode(qrCodeUrl);
@@ -184,4 +184,12 @@ public class BookingController {
 		 */ return Math.max(availableSlots, 0);
 	}
 
+	public static String encode(String text) {
+        return Base64.getEncoder().encodeToString(text.getBytes());
+    }
+
+    public static String decode(String encodedText) {
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedText);
+        return new String(decodedBytes);
+    }
 }

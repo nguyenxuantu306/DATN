@@ -15,11 +15,11 @@
 							<button ng-click="captureAndSend()">Capture and Send</button>
 
 							<hr>
-
+	
 							<div class="bg-success" style="max-width: 640; max-height: 480">
-
-								<video id="camera-view" style="max-width: 100%" autoplay></video>
 								<h3 style="text-align: center;">Quét mã tại đây</h3>
+								<video id="camera-view" style="max-width: 100%" autoplay></video>
+
 							</div>
 						</div>
 
@@ -73,7 +73,7 @@
 
 
 	<div>
-		<div style="text-align: center; background-color: white;" class="py-3">
+		<div style="text-align: center; background-color: white;" class="py-3" ng-repeat="bookings in items">
 			<div class="confirmation-message">
 				<h2>{{ketquakiemtra}}</h2>
 			</div>
@@ -85,6 +85,7 @@
 							<h4 class="card-title" style="text-align: center;">Thông tin
 								khách hàng</h4>
 							<br>
+							{{bookings.statusbooking.statusbookingid}}
 							<p class="card-text">
 								<i class="fas fa-envelope"></i> Email : {{bookings.user.email}}
 								<strong th:text="${bookinguse.user.email}"></strong>
@@ -104,7 +105,7 @@
 					</div>
 				</div>
 
-				<div class="col-md-6" style="text-align: left;">
+				<div class="col-md-6" style="text-align: left;" >
 					<div class="card">
 						<div class="card-body">
 							<h4 class="card-title" style="text-align: center;">Thông tin
@@ -136,6 +137,7 @@
 					</div>
 
 				</div>
+
 
 			</div>
 
