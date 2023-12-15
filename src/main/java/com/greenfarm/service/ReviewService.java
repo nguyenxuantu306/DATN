@@ -30,4 +30,6 @@ public interface ReviewService {
 
 	List<StarCount> countReviewsByRating(Integer productId);
 
+	Page<Review> findByProductOrderByDateCreatedDesc(Product item, Pageable pageable);
+
 }

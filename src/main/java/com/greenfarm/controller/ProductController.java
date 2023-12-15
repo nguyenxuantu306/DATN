@@ -100,14 +100,17 @@ public class ProductController {
 			}
 			model.addAttribute("totalReviewCount", totalReviewCount);
 
-			// Modify the findbyproduct method to return a Page<Review>
-			Page<Review> reviewPage = reviewService.findbyproduct(item, pageable);
+			Page<Review> reviewPage = reviewService.findByProductOrderByDateCreatedDesc(item, pageable);
 			model.addAttribute("review", reviewPage);
 
 		} else {
 			// Xử lý trường hợp đối tượng không tồn tại
 		}
-
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		User user = userService.findByEmail(username);
+		boolean hasUserReviewedProduct = reviewService.hasUserReviewedProduct(user, item);
+		model.addAttribute("hasUserReviewedProduct", hasUserReviewedProduct);
 		model.addAttribute("reviewinsert", new Review());
 
 		return "product/detail";

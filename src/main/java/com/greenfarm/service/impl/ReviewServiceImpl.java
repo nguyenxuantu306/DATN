@@ -69,4 +69,10 @@ public class ReviewServiceImpl implements ReviewService {
         return dao.countReviewsByRating(productId);
     }
 
+	@Override
+	public Page<Review> findByProductOrderByDateCreatedDesc(Product item, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return dao.findByProductOrderByDateCreatedDesc(item, pageable);
+	}
+
 }
