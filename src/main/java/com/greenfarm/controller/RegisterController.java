@@ -54,7 +54,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/register")
 public class RegisterController {
 
-	private static final String REDIRECT_LOGIN = "redirect:/login";
+	private static final String REDIRECT_TOKEN_MISSING = "redirect:/login?missing";
+	private static final String REDIRECT_TOKEN_INVALID = "redirect:/login?invalid";
+	private static final String REDIRECT_TOKEN_SUCCESS = "redirect:/login?token";
+	private static final String REDIRECT_REGISTER_SUCCESS = "redirect:/login?success";
+	private static final String REDIRECT_REGISTER_ERROR_EMAIL = "redirect:/register?errorEmail";
+	private static final String REDIRECT_REGISTER_ERROR_PHONE_NUMBER = "redirect:/register?errorPhoneNumber";
 
 	@Autowired
 	com.greenfarm.service.UserService userservice;
@@ -128,15 +133,13 @@ public class RegisterController {
 		if (bindingResult.hasErrors()) {
 			// Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
 			model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
-			System.out.println("pas");
 			return "register";
 		} else if (!userInfo.getPassword().equals(userInfo.getRepeatpassword())) {
 			// Nếu mật khẩu và xác nhận mật khẩu không khớp, thêm lỗi vào BindingResult.
-			System.out.println("repass");
 			bindingResult.rejectValue("repeatpassword", "error.userDTO", "Mật khẩu và xác nhận mật khẩu không khớp");
 		} else if (userservice.findByPhonenumber(userInfo.getPhonenumber()) != null) {
-			System.out.println("phonenumber");
-			bindingResult.rejectValue("phonenumber", "error.userDTO", "so dien thoai da ton tai");
+			bindingResult.rejectValue("phonenumber", "error.userDTO", "Số điện thoại đã được sử dụng");
+			return REDIRECT_REGISTER_ERROR_PHONE_NUMBER;
 		}
 		
 		else {
@@ -155,15 +158,13 @@ public class RegisterController {
 				user.setImage(null);
 				user.setGender(null);
 				user.setCreateddate(new Date());
-				System.out.println("chay toi impl");
 				userservice.create(user);
-				return "redirect:/login";
+				return REDIRECT_REGISTER_SUCCESS;
 			} catch (Exception e) {
 				e.printStackTrace();
-				bindingResult.rejectValue("email", "error.userDTO", "An account already exists for this email.");
-				System.out.println("mail");
+				bindingResult.rejectValue("email", "error.userDTO", "Email này đã tồn tại");
 				model.addAttribute("registrationForm", userInfo);
-				return "register";
+				return REDIRECT_REGISTER_ERROR_EMAIL;
 			}
 		}
 		return null;
@@ -223,18 +224,15 @@ public class RegisterController {
 		if (bindingResult.hasErrors()) {
 			// Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
 			model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
-			
 			return "registeroauth";
 		}else if (userservice.findByEmail(userInfo.getEmail()) != null) {
-			
-			bindingResult.rejectValue("email", "error.userDTO", "Đã có tài khoản sử dụng email này");
-			return "registeroauth";
+			bindingResult.rejectValue("email", "error.userDTO", "Email này đã tồn tại");
+			return REDIRECT_REGISTER_ERROR_EMAIL;
 		}
 		
 		else if (userservice.findByPhonenumber(userInfo.getPhonenumber()) != null) {
-			System.out.println("phonenumber");
-			bindingResult.rejectValue("phonenumber", "error.userDTO", "so dien thoai da ton tai");
-			return "registeroauth";
+			bindingResult.rejectValue("phonenumber", "error.userDTO", "Số điện thoại đã tồn tại");
+			return REDIRECT_REGISTER_ERROR_PHONE_NUMBER;
 		}
 		else {
 			
@@ -271,7 +269,6 @@ public class RegisterController {
 				userservice.save(user);
 				// them role
 				Role role = roleService.findByid(2);
-				System.out.println("Role : " + role);
 				UserRole userRole = new UserRole();
 				userRole.setRole(role);
 				userRole.setUser(user);
@@ -283,8 +280,6 @@ public class RegisterController {
 
 				try {
 					UserDetails userDetails = detailsService.loadUserByUsername(user.getEmail());
-					System.out.println("userdetaile>.........");
-					System.out.println(userDetails);
 					// Tạo một đối tượng Authentication
 					List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
 
@@ -307,7 +302,6 @@ public class RegisterController {
 			e.printStackTrace();
 			// bindingResult.rejectValue("email", "error.userDTO", "An account already
 			// exists for this email.");
-			System.out.println("lôi");
 			model.addAttribute("registrationForm", userInfo);
 			return "registeroauth";
 		}
@@ -323,8 +317,7 @@ public class RegisterController {
 			// redirAttr.addFlashAttribute("tokenError",
 			// messageSource.getMessage("user.registration.verification.missing.token",
 			// null,LocaleContextHolder.getLocale()));
-			System.out.println("missing token");
-			return REDIRECT_LOGIN;
+			return REDIRECT_TOKEN_MISSING;
 		}
 		try {
 			userservice.verifyUser(token);
@@ -332,15 +325,13 @@ public class RegisterController {
 			// redirAttr.addFlashAttribute("tokenError",
 			// messageSource.getMessage("user.registration.verification.invalid.token",
 			// null,LocaleContextHolder.getLocale()));
-			System.out.println("inatokenlid ");
-			return REDIRECT_LOGIN;
+			return REDIRECT_TOKEN_INVALID;
 		}
 
 		// redirAttr.addFlashAttribute("verifiedAccountMsg",
 		// messageSource.getMessage("user.registration.verification.success",
 		// null,LocaleContextHolder.getLocale()));
-		System.out.println("thanh cong");
-		return REDIRECT_LOGIN;
+		return REDIRECT_TOKEN_SUCCESS;
 	}
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {

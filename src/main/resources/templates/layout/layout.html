@@ -139,9 +139,27 @@
 		<div th:insert="~{/layout/_footer.html::footer}"></div>
 	</div>
 
-	<!-- Back to Top -->
-	<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
-		class="fa fa-angle-double-up"></i></a>
+	<div class="toast-container position-fixed top-0 end-0 p-3">
+		<div
+				id="loginSuccessToast"
+				class="toast"
+				role="alert"
+				aria-live="assertive"
+				aria-atomic="true"
+		>
+			<div class="toast-header">
+				<strong class="me-auto">GreenFarm</strong>
+				<small>0 mins ago</small>
+				<button
+						type="button"
+						class="btn-close"
+						data-bs-dismiss="toast"
+						aria-label="Close"
+				></button>
+			</div>
+			<div class="toast-body" style="background-color: #32CD32; color: white">Đăng nhập thành công!</div>
+		</div>
+	</div>
 
 	<script src="/assets/js/angular.min.js"></script>
 	<script
@@ -156,23 +174,16 @@
 	<script type="text/javascript" src="/assets/js/styte.js"></script>
 	<script type="text/javascript" src="/assets/js/shopping-cart-app.js"></script>
 
-	<!--	<script>
-		(function () {
-			$("#cart").on("click", function () {
-				$("#mini-cart").fadeToggle("fast");
-			});
-		})();
-	</script>-->
-
-
-	<!--	<script>
-		$(document).ready(function () {
-			$("#cart").on("click", function (e) {
-				e.preventDefault(); // Ngăn chặn mặc định của thẻ a
-				$("#mini-cart").fadeToggle("fast");
-			});
-		});
-	</script>-->
+	<script>
+		const currentURL = window.location.pathname;
+		if (currentURL === "/" && localStorage.getItem("loggedIn") === "true") {
+			const toastLiveExample = document.getElementById("loginSuccessToast");
+			const toastBootstrap =
+					bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+			toastBootstrap.show();
+			localStorage.removeItem("loggedIn");
+		}
+	</script>
 
 	<!-- slider -->
 	<script src="/assets/js/jquery.min.js"></script>

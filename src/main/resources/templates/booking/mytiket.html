@@ -117,11 +117,15 @@
 				</div>
 				<div class="col-sm-4">
 					<div class="menu mx-3">
-						<div sec:authorize="isAuthenticated()">
-							<span sec:authentication="name"></span>
-						</div>
-
 						<div class="list-group border border-0 rounded-0 my-3">
+							<a class="mb-3" href="/profile">
+								<button type="button"
+										class="list-group-item list-group-item-action"
+										style="border-radius: 4px">
+									<i class="bi bi-person-lines-fill"></i> <span
+										th:text="#{profile.label.profile}"></span>
+								</button>
+							</a>
 							<a class="mb-3" href="/order/list">
 								<button type="button"
 									class="list-group-item list-group-item-action"
@@ -136,14 +140,6 @@
 									<i class="bi bi-card-list"></i> <span
 										th:text="#{profile.label.myTicket}"></span>
 								</button>
-							</a> <a href="/profile">
-								<button type="button"
-									class="list-group-item list-group-item-action"
-									style="border-radius: 4px">
-									<i class="bi bi-person-lines-fill"></i> <span
-										th:text="#{profile.label.profile}"></span>
-								</button>
-							</a>
 						</div>
 						<a
 							class="btn border border-danger my-3 text-decoration-none text-center text-white fw-bold"

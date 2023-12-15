@@ -88,7 +88,6 @@ public class CustomOAuth2successHandler implements AuthenticationSuccessHandler 
 //			    			sc.setAuthentication(authentication2);
 
 			    			 SecurityContext check = SecurityContextHolder.getContext();
-			    			 System.out.println("damng adnag nhap");
 								System.out.println(check);
 			    			response.sendRedirect("/");
 			    			
@@ -111,15 +110,11 @@ public class CustomOAuth2successHandler implements AuthenticationSuccessHandler 
 
 			            // Xóa thông tin đăng nhập
 			            SecurityContextHolder.getContext().setAuthentication(null);
-			       
 						response.sendRedirect("/login");
 					}
 		    		
 					
 				}else {
-					System.out.println(login);
-					System.out.println(" chua co taikhoan");
-					
 					// Thêm thông tin cần chuyển đi vào RedirectAttributes
 //		            RedirectAttributes redirectAttributes = (RedirectAttributes) authentication;
 //		            redirectAttributes.addFlashAttribute("logininfo", login);

@@ -51,7 +51,7 @@
 															<th class="text-center" th:text="#{cart.label.name}">
 																Tên</th>
 															<th class="text-center" th:text="#{cart.label.quantity}">
-																Số lượng</th>
+																Số lượng(KG)</th>
 															<th class="text-center" th:text="#{cart.label.price}">
 																Giá</th>
 															<th class="text-center" th:text="#{cart.label.total}">
@@ -74,9 +74,9 @@
 																	style="border: 1px solid rgba(0, 0, 0, .09); width: 32px"
 																	href="javascript:void(0)"
 																	onclick="decreaseQuantity(this)">
-																	-</button> <input type="text"
+																	-</button> <input type="number"
 																style="border: 1px solid rgba(0, 0, 0, .09);"
-																class="cart-quantity text-center w-25"
+																class="cart-quantity text-center w-25" min="0.5"
 																th:value="${cart.quantity}"
 																th:data-productid="${cart.product.productid}"
 																onchange="updateQuantity(this)" />

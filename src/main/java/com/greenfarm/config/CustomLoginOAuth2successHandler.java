@@ -83,7 +83,6 @@ public class CustomLoginOAuth2successHandler implements AuthenticationSuccessHan
 		       
 		     
 	}else {
-		System.out.println("chưa đăng nhập");
 		response.sendRedirect("/login");
 	}
 		 

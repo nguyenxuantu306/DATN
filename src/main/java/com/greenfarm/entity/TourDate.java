@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 public class TourDate implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Positive(message = "tourdateid không được là số âm")
+	@Positive(message = "TourDateId không được là số âm")
 	private Integer tourdateid;
 	
 	

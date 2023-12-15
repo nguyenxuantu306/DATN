@@ -197,6 +197,16 @@ $(document).ready(function() {
 function addToCart(productId) {
 	var quantity = document.getElementById('quantityInput').value;
 
+	// Kiểm tra nếu quantity không phải là số hoặc nhỏ hơn 0.5
+	if (isNaN(quantity) || parseFloat(quantity) < 0.5) {
+		Swal.fire({
+			icon: 'error',
+			title: 'Lỗi!',
+			text: 'Số lượng phải lớn hơn hoặc bằng 0.5Kg',
+		});
+		return; // Ngừng thực hiện hàm nếu số lượng không hợp lệ
+	}
+
 	$.ajax({
 		type: "POST",
 		url: "/cart/add/" + productId,
@@ -294,8 +304,14 @@ quantityInputs.forEach(function(quantityInput) {
 		if (event.key === "Enter") {
 			var productId = quantityInput.getAttribute('data-productid');
 			var newQuantity = parseInt(quantityInput.value);
-			if (!isNaN(newQuantity) && newQuantity >= 1) {
+			if (!isNaN(newQuantity) && newQuantity >= 0.5) {
 				updateQuantity(productId, newQuantity);
+			} else {
+				Swal.fire({
+					icon: 'error',
+					title: 'Lỗi!',
+					text: 'Số lượng phải lớn hơn hoặc bằng 0.5Kg',
+				});
 			}
 		}
 	});
