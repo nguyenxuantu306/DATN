@@ -59,12 +59,13 @@
 									style="width: 70px; height: 100px"></th>
 								<td>{{item.firstname}}</td>
 								<td>{{item.email}}</td>
-								<!-- <td>{{item.phonenumber}}</td> -->
-								<!-- <td
-									ng-repeat="address in item.address | filter: { active: true }"> -->
-								<td style="width: 350px"
-									ng-repeat="address in item.address | filter: { active: !true}">
-									{{address.street}}, {{address.district}}, {{address.city}}</td>
+								<td style="width: 350px" ng-if="item.address.length > 0"
+									ng-repeat="address in item.address | filter: {active: true}">
+									{{address.street}}, {{address.district}}, {{address.city}}
+								</td>
+								<td style="width: 350px; color: orange;" ng-if="item.address.length === 0">
+									Chưa có
+								</td>
 								<td>{{item.gender?'Nam':'Nữ'}}</td>
 								<td>{{item.createddate | date:'dd-MM-yyyy'}}</td>
 								<td><a type="button" ng-click="edit(item)"
