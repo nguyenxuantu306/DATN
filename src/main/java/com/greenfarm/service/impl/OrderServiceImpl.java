@@ -1,8 +1,8 @@
 package com.greenfarm.service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,13 +18,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfarm.dao.OrderDAO;
 import com.greenfarm.dao.OrderDetailDAO;
 import com.greenfarm.dao.StatusOrderDAO;
+import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.Report7day;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
-import com.greenfarm.entity.RevenueTK;
 import com.greenfarm.entity.StatusOrder;
 import com.greenfarm.service.OrderService;
 
@@ -39,29 +40,25 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	StatusOrderDAO statusOrderDAO;
 
-	
-	
 	@Override
-    public List<Order> findOrdersByDateRange(LocalDateTime startDay, LocalDateTime endDay, int page, int size) {
-        // Tính toán số lượng bản ghi bỏ qua (offset)
-        int offset = page * size;
+	public List<Order> findOrdersByDateRange(LocalDateTime startDay, LocalDateTime endDay, int page, int size) {
+		// Tính toán số lượng bản ghi bỏ qua (offset)
+		int offset = page * size;
 
-        // Gọi phương thức findOrdersByDateRange trong OrderDAO
-        List<Order> orders = dao.findOrdersByDateRange(startDay, endDay);
+		// Gọi phương thức findOrdersByDateRange trong OrderDAO
+		List<Order> orders = dao.findOrdersByDateRange(startDay, endDay);
 
-        // Kiểm tra và cắt danh sách đơn hàng dựa trên trang và kích thước
-        if (offset < orders.size()) {
-            int toIndex = Math.min(offset + size, orders.size());
-            orders = orders.subList(offset, toIndex);
-        } else {
-            orders = Collections.emptyList();
-        }
+		// Kiểm tra và cắt danh sách đơn hàng dựa trên trang và kích thước
+		if (offset < orders.size()) {
+			int toIndex = Math.min(offset + size, orders.size());
+			orders = orders.subList(offset, toIndex);
+		} else {
+			orders = Collections.emptyList();
+		}
 
-        return orders;
-    }
-	
-	
-	
+		return orders;
+	}
+
 	@Override
 	public List<Order> getAllOrders(int page, int size) {
 		int offset = page * size;
@@ -91,7 +88,6 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<Order> findByEfindByIdAccountmail(String email) {
-		// TODO Auto-generated method stub
 		return dao.findByEfindByIdAccountmail(email);
 	}
 
@@ -168,7 +164,6 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<Order> findAll() {
-		// TODO Auto-generated method stub
 		return dao.findAll();
 	}
 
@@ -193,18 +188,26 @@ public class OrderServiceImpl implements OrderService {
 		return dao.findYearlyRevenue(year);
 	}
 
-
-
 	@Override
 	public List<Order> findByOrderdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int page,
 			int size) {
 		Pageable pageable = PageRequest.of(page, size);
-        return dao.findByOrderdateBetween(startDateTime, endDateTime, pageable);
+		return dao.findByOrderdateBetween(startDateTime, endDateTime, pageable);
 	}
 
+	@Override
+	public List<Order> findByUserEmailAndStatusOrderName(String userEmail, String statusName) {
+		return dao.findByUserEmailAndStatusOrder_Name(userEmail, statusName);
+	}
 
+	@Override
+	public List<CategorySalesByDate> getCategorySalesByDate(LocalDate date) {
+		return dao.getCategorySalesByDate(date);
+	}
 
-
-	
+	@Override
+    public List<Report7day> getRevenueLast7Days() {
+        return dao.RevenueLast7Days();
+    }
 
 }

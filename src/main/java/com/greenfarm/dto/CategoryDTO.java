@@ -15,4 +15,5 @@ public class CategoryDTO {
 	private String categoryname;
 	private String descriptions;
 	private List<ProductDTO> products;
+	private Boolean isdeleted = Boolean.FALSE;
 }

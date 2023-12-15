@@ -17,7 +17,7 @@ app.controller('productstatistics-ctrl', function($scope, $http) {
 	}
 	$scope.pager = {
 		page: 0,
-		size: 5,
+		size: 10,
 		get itemsThongKeSp() {
 			var start = this.page * this.size;
 			return $scope.itemsThongKeSp.slice(start, start + this.size);
@@ -88,7 +88,7 @@ app.controller('productstatistics-ctrl', function($scope, $http) {
 	}
 	
 	// biểu đồ
-	fetch('/rest/products/thongke/top10spbanchay') // Thay thế bằng đường dẫn của API
+	/*fetch('/rest/products/thongke/top10spbanchay') // Thay thế bằng đường dẫn của API
   .then(response => response.json())
   .then(data => {
     const labels = data.map(item => item.group.productname);
@@ -123,7 +123,7 @@ function generateRandomColors(count) {
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+}*/
 
 
 

@@ -1,11 +1,11 @@
 package com.greenfarm.service.impl;
 
-import java.util.Arrays;
-
 import java.util.Collection;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -37,17 +37,15 @@ import com.greenfarm.service.EmailService;
 import com.greenfarm.service.Securetokenservice;
 import com.greenfarm.service.UserRoleService;
 import com.greenfarm.service.UserService;
-import com.mysql.cj.util.StringUtils;
 
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 
 @Service
 public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Autowired
 	UserDAO dao;
-
-	private UserDetails userDetails;
 
 	@Autowired
 	UserRoleService userRoleService;
@@ -66,7 +64,12 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public List<User> findAll() {
-		return dao.findAll();
+		return dao.findAllByIsdeletedFalse();
+	}
+
+	@Override
+	public List<User> findAllDeletedUser() {
+		return dao.findAllByIsdeletedTrue();
 	}
 
 	@Override
@@ -83,9 +86,39 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		// return user;
 	}
 
-	@Override
-	public User create(User user) throws UserAlreadyExistException {
-		return dao.save(user);	}
+	//
+	// System.out.println("ben trong impl");
+	//// try {
+	// Optional<User> account = dao.findByEmail(user.getEmail());
+	//
+	// System.out.println("sau find");
+	// if (account.isPresent()) {
+	// System.out.println("đã có tk");
+	// throw new UserAlreadyExistException("đã có tài khoản dùng email này");
+	// }
+	// //emailExists(user.getEmail())
+	// else{
+	//
+	//// User user1 = account.get();
+	//// System.out.println(user1.getEmail());
+	// try {
+	//
+	// System.out.println("ko to tk");
+	// User userentity = new User();
+	// BeanUtils.copyProperties(user, userentity);
+	// userentity.setPassword(PE.encode(userentity.getPassword()));
+	// System.out.println("luu us");
+	// dao.save(userentity);
+	// System.out.println("luu thanh cong");
+	// sendRegistrationConfirmationEmail(userentity);
+	// System.out.println("gui mail");
+	// return userentity;
+	// } catch (Exception e) {
+	// e.getStackTrace();
+	// }
+	//
+	//
+	// }
 
 	@Override
 	public User update(User user) {
@@ -94,7 +127,7 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public void delete(Integer userid) {
-		dao.deleteById(userid);
+		dao.deleteByIsDeleted(userid);
 	}
 
 	@Override
@@ -152,18 +185,14 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public User findByEmail(String email) {
-		User user = dao.findByEmail(email).get();
-		return user;
-	}
+		Optional<User> user = dao.findByEmail(email);
+		if (user.isPresent()) {
+			return user.get();
+		} else {
 
-	@Override
-	public boolean emailExists(String email) {
-		return dao.findByEmail(email) != null;
-	}
+			return null;
+		}
 
-	@Override
-	public boolean checkIfUserExist(String email) {
-		return false;
 	}
 
 	@Override
@@ -204,14 +233,12 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public boolean isPasswordMatching(String password, String confirmPassword) {
-		// TODO Auto-generated method stub
 
 		return password.equals(confirmPassword);
 	}
 
 	@Override
 	public boolean iscurrentPasswordMatching(User user, String password) {
-		// TODO Auto-generated method stub
 		// Lấy mật khẩu hiện tại của người dùng
 		String currentPassword = user.getPassword(); // Giả sử rằng mật khẩu đã được mã hóa
 
@@ -219,16 +246,21 @@ public class UserServerImpl implements UserService, UserDetailsService {
 		return PE.matches(password, currentPassword);
 	}
 
+	// @Override
+	// public void forgottenPassword(String userName) throws
+	// UnkownIdentifierException {
+	// User user = dao.findByEmail(userName).get();
+	// sendResetPasswordEmail(user);
+	// }
 	@Override
 	public void forgottenPassword(String userName) throws UnkownIdentifierException {
-		// TODO Auto-generated method stub
-		User user = dao.findByEmail(userName).get();
+		User user = dao.findByEmail(userName).orElseThrow(
+				() -> new UnkownIdentifierException("Không tìm thấy người dùng với địa chỉ email đã nhập."));
 		sendResetPasswordEmail(user);
 	}
 
 	@Override
 	public void updatePassword(String password, String token) throws InvalidTokenException, UnkownIdentifierException {
-		// TODO Auto-generated method stub
 		Securetoken securetoken = securetokenservice.findByToken(token);
 		if (Objects.isNull(securetoken)
 				|| !org.apache.commons.codec.binary.StringUtils.equals(token, securetoken.getToken())
@@ -249,7 +281,6 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public boolean loginDisabled(String username) {
-		// TODO Auto-generated method stub
 		User user = dao.findByEmail(username).get();
 		return false;
 	}
@@ -271,25 +302,21 @@ public class UserServerImpl implements UserService, UserDetailsService {
 
 	@Override
 	public void loginFormOAuth2(OAuth2AuthenticationToken oauth2) {
-		// TODO Auto-generated method stub
 		String email = oauth2.getPrincipal().getAttribute("email");
 		String password = Long.toHexString(System.currentTimeMillis());
-		//
 
 		UserDetails user = org.springframework.security.core.userdetails.User.withUsername(email)
 				.password(PE.encode(password)).roles("2").build();
 		Authentication auth = new UsernamePasswordAuthenticationToken(password, null, user.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
-		//
 
 	}
 
 	@Override
 	public UserDetails createNewUser(String email) throws UserAlreadyExistException {
-		// TODO Auto-generated method stub
 		// Kiểm tra xem người dùng đã tồn tại trong hệ thống chưa
 
-		if (!emailExists(email)) {
+		if (emailExists(email)) {
 			// Nếu người dùng đã tồn tại, trả về UserDetails của họ
 			throw new UserAlreadyExistException("đã có tài khoản dùng email này");
 		} else {
@@ -310,24 +337,29 @@ public class UserServerImpl implements UserService, UserDetailsService {
 			dao.save(newUser);
 
 			// Trả về UserDetails của tài khoản mới
+			return null;
 
 		}
-		return null;
+
 	}
 
 	@Override
 	public void processOAuthPostLogin(String username) {
-		User existUser = dao.findByEmail(username).get();
-		if (existUser == null) {
+		System.out.println("start check account");
+		Optional<User> existUser = dao.findByEmail(username);
+		System.out.println("it exxit");
+		if (existUser.isEmpty()) {
 			User newUser = new User();
-			newUser.setFirstname("google");
-			newUser.setLastname("google");
-			newUser.setPhonenumber("1234567");
+			// newUser.setFirstname("google");
+			// newUser.setLastname("google");
+			// newUser.setPhonenumber("0000000000");
 			newUser.setEmail(username);
 			newUser.setProvider(Provider.GOOGLE);
 			newUser.setAccountVerified(true);
 			newUser.setCreateddate(new Date());
+			System.out.println("cretea a account");
 			dao.save(newUser);
+			System.out.println("done");
 		}
 
 	}
@@ -340,6 +372,100 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	@Override
 	public List<Report> getBookingTotalPurchaseByUser() {
 		return dao.BookingTotalPurchaseByUser();
+	}
+
+	@Override
+	public User save(User user) {
+		return dao.save(user);
+
+	}
+
+	@Override
+	public User create(User user) throws UserAlreadyExistException {
+		// Kiểm tra xem user đã tồn tại chưa
+		if (emailExists(user.getEmail())) {
+			// Nếu đã tồn tại, ném ngoại lệ
+
+			System.out.println("da co tk");
+			throw new UserAlreadyExistException("Đã có tài khoản sử dụng email này");
+		} else {
+			// Nếu chưa tồn tại, tạo user và trả về
+			User userEntity = new User();
+			BeanUtils.copyProperties(user, userEntity);
+			userEntity.setPassword(PE.encode(userEntity.getPassword()));
+			System.out.println(userEntity.getEmail());
+			System.out.println(userEntity.getFirstname());
+			System.out.println(userEntity.getLastname());
+			System.out.println(userEntity.getPassword());
+			System.out.println(userEntity.getPhonenumber());
+
+			userEntity.setBirthday(null);
+			userEntity.setAddress(null);
+			userEntity.setGender(null);
+			userEntity.setImage(null);
+			System.out.println("Lưu user vào database");
+			try {
+				dao.save(userEntity);
+			} catch (Exception e) {
+				System.out.println("ko luu dc");
+				e.printStackTrace();
+			}
+
+			sendRegistrationConfirmationEmail(userEntity);
+			System.out.println("Gửi email xác nhận đăng ký");
+			return userEntity;
+		}
+	}
+
+	@Override
+	public boolean emailExists(String email) {
+		Optional<User> account = dao.findByEmail(email);
+		return account.isPresent();
+	}
+
+	@Override
+	public User createADMIN(@Valid User user) throws UserAlreadyExistException {
+		// Kiểm tra xem user đã tồn tại chưa
+		if (emailExists(user.getEmail())) {
+			// Nếu đã tồn tại, ném ngoại lệ
+			System.out.println("da co tk");
+			throw new UserAlreadyExistException("Đã có tài khoản sử dụng email này");
+		} else {
+			// Nếu chưa tồn tại, tạo user và trả về
+			User userEntity = new User();
+			BeanUtils.copyProperties(user, userEntity);
+			userEntity.setPassword(PE.encode(userEntity.getPassword()));
+			userEntity.setAccountVerified(true);
+			System.out.println("Lưu user vào database");
+			try {
+				dao.save(userEntity);
+			} catch (Exception e) {
+				System.out.println("ko luu dc");
+				e.printStackTrace();
+			}
+
+			sendRegistrationConfirmationEmail(userEntity);
+			System.out.println("Gửi email xác nhận đăng ký");
+			return userEntity;
+		}
+	}
+
+	@Override
+	public List<User> findByKeyword(String keyword) {
+		// Triển khai tìm kiếm theo từ khóa trong repository
+		return dao.findByKeyword(keyword);
+	}
+
+	@Override
+	public User findByPhonenumber(String Phonenumber) {
+		// TODO Auto-generated method stub
+		Optional<User> user = dao.findByPhonenumber(Phonenumber);
+		if (user.isPresent()) {
+			return user.get();
+		} else {
+
+			return null;
+		}
 	}
 
 }

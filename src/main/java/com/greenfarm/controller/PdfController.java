@@ -1,43 +1,53 @@
 package com.greenfarm.controller;
 
 import java.io.ByteArrayOutputStream;
-
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.MediaType;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.Font.FontFamily;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
+
+import com.greenfarm.entity.Address;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.ReportSP;
 import com.greenfarm.entity.Tour;
+import com.greenfarm.entity.TourDateBooking;
 import com.greenfarm.entity.User;
 import com.greenfarm.service.BookingService;
 import com.greenfarm.service.OrderService;
 import com.greenfarm.service.ProductService;
+import com.greenfarm.service.TourDateBookingService;
 import com.greenfarm.service.TourService;
 import com.greenfarm.service.UserService;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-
-import java.text.DecimalFormat;
 
 @RestController
 public class PdfController {
@@ -57,6 +67,9 @@ public class PdfController {
 	@Autowired
 	TourService tourService;
 
+	@Autowired
+	TourDateBookingService toudatebookingService;
+	
 	@GetMapping("/export-to-pdf")
 	public ResponseEntity<byte[]> exportToPDF() throws IOException, DocumentException {
 		List<User> dataList = getAll(); // Hàm này tạo dữ liệu mẫu
@@ -109,7 +122,16 @@ public class PdfController {
 			table.addCell(createCell(data.getFirstname(), false, unicodeFonts));
 			table.addCell(createCell(data.getEmail(), false, unicodeFonts));
 			table.addCell(createCell(data.getPhonenumber(), false, unicodeFonts));
-			table.addCell(createCell(data.getAddress(), false, unicodeFonts));
+			// Lấy danh sách địa chỉ có active = false
+			List<Address> inactiveAddresses = data.getAddress().stream().filter(address -> !address.getActive())
+					.collect(Collectors.toList());
+
+			// Tạo một chuỗi chứa thông tin địa chỉ có active = false
+			String addressInfo = inactiveAddresses.stream()
+					.map(address -> address.getStreet() + ", " + address.getDistrict() + ", " + address.getCity())
+					.collect(Collectors.joining("; "));
+			// Thêm thông tin địa chỉ vào cột thứ 4
+			table.addCell(createCell(addressInfo, false, unicodeFonts)); 
 			table.addCell(createCell(data.getGender() != null && data.getGender() ? "Nam" : "Nữ", false, unicodeFonts));
 			table.addCell(createCell(createDateString, false, unicodeFonts));
 
@@ -218,7 +240,7 @@ public class PdfController {
 
 	@GetMapping("/pdf-productstatistics")
 	public ResponseEntity<byte[]> PDFProductStatistics() throws IOException, DocumentException {
-		List<Report> dataList = getProductStatitics(); // Hàm này tạo dữ liệu mẫu
+		List<ReportSP> dataList = getProductStatitics(); // Hàm này tạo dữ liệu mẫu
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		Document document = new Document();
@@ -265,7 +287,7 @@ public class PdfController {
 
 		// Thiết lập dữ liệu cho từng hàng
 		for (int i = 0; i < dataList.size(); i++) {
-			Report data = dataList.get(i);
+			ReportSP data = dataList.get(i);
 			Product product = (Product) data.getGroup();
 
 			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
@@ -285,7 +307,7 @@ public class PdfController {
 		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
 
-	public final List<Report> getProductStatitics() {
+	public final List<ReportSP> getProductStatitics() {
 		return productService.getTk_sp();
 	}
 
@@ -503,7 +525,7 @@ public class PdfController {
 
 	@GetMapping("/pdf-inventorystatistics")
 	public ResponseEntity<byte[]> PDFInventorystatistics() throws IOException, DocumentException {
-		List<Report> dataList = Inventorystatistics(); // Hàm này tạo dữ liệu mẫu
+		List<ReportSP> dataList = Inventorystatistics(); // Hàm này tạo dữ liệu mẫu
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		Document document = new Document();
@@ -543,7 +565,7 @@ public class PdfController {
 
 		// Thiết lập dữ liệu cho từng hàng
 		for (int i = 0; i < dataList.size(); i++) {
-			Report data = dataList.get(i);
+			ReportSP data = dataList.get(i);
 			Product product = (Product) data.getGroup();
 
 			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
@@ -598,7 +620,7 @@ public class PdfController {
 		table.addCell(createCell("Tên Tour", true, unicodeFonts));
 		table.addCell(createCell("Ngày", true, unicodeFonts));
 		table.addCell(createCell("Giá", true, unicodeFonts));
-		table.addCell(createCell("Số lượng người", true, unicodeFonts));
+		table.addCell(createCell("Mô tả", true, unicodeFonts));
 		table.addCell(createCell("Điều kiện", true, unicodeFonts));
 		table.addCell(createCell("Tổng quan", true, unicodeFonts));
 
@@ -616,12 +638,20 @@ public class PdfController {
 			table.addCell(createCell(data.getTourname(), false, unicodeFonts));
 			table.addCell(createCell(data.getDepartureday(), false, unicodeFonts));
 			table.addCell(createCell(decimalFormat.format(data.getPricings().getAdultprice()), false, unicodeFonts));
-			table.addCell(createCell(String.valueOf(data.getAvailableslots()), false, unicodeFonts));
+//			table.addCell(createCell(String.valueOf(data.getAvailableslots()), false, unicodeFonts));
 
 			// Kiểm tra và hiển thị "đã có" nếu điều kiện được đáp ứng
+			String description = data.getDescription();
 			String tourConditions = data.getTourCondition().getConditions();
 			String tourOverviewContent = data.getTourOverview().getContent();
 
+				
+			if (description != null && !description.isEmpty()) {
+				table.addCell(createCell("Đã có", false, unicodeFonts));
+			} else {
+				table.addCell(createCell("", false, unicodeFonts));
+			}
+			
 			if (tourConditions != null && !tourConditions.isEmpty()) {
 				table.addCell(createCell("Đã có", false, unicodeFonts));
 			} else {
@@ -644,6 +674,95 @@ public class PdfController {
 
 		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
 	}
+	
+	@GetMapping("/pdf-tourDateBooking")
+	public ResponseEntity<byte[]> ExcelTourDateBooking() throws IOException, DocumentException {
+		List<TourDateBooking> dataList = getTourDateBooking(); // Hàm này tạo dữ liệu mẫu
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		Document document = new Document();
+		PdfWriter.getInstance(document, outputStream);
+
+		// Khởi tạo font Unicode từ tệp font
+		BaseFont unicodeFont = BaseFont.createFont("./static/Unicode/arial.ttf", BaseFont.IDENTITY_H,
+				BaseFont.EMBEDDED);
+		// String fontPath = "classpath:static/Unicode/arial.ttf"; // Đường dẫn tương
+
+		document.open();// Thêm tiêu đề vào tài liệu
+		String title = "DANH SÁCH THỜI GIAN ĐẶT TOURS";
+		document.addTitle(title);
+
+		document.open();
+
+		// Thêm tiêu đề chính
+		// Tạo font chữ với font Unicode
+		Font unicodeFonts = new Font(unicodeFont, 12, Font.NORMAL, BaseColor.BLACK);
+		Paragraph titleParagraph = new Paragraph(title, unicodeFonts);
+
+		titleParagraph.setAlignment(Element.ALIGN_CENTER);
+		titleParagraph.setSpacingAfter(20); // Khoảng cách dưới tiêu đề chính
+		document.add(titleParagraph);
+
+		// Tạo bảng PDF
+		PdfPTable table = new PdfPTable(6); // Số cột trong bảng
+
+		// Thiết lập tiêu đề cho từng cột
+		table.addCell(createCell("STT", true, unicodeFonts));
+		table.addCell(createCell("Tên tour", true, unicodeFonts));
+		table.addCell(createCell("Ngày đặt", true, unicodeFonts));
+		table.addCell(createCell("Tổng chi", true, unicodeFonts));
+		table.addCell(createCell("Ngày khởi hành", true, unicodeFonts));
+		table.addCell(createCell("Số chỗ còn trống", true, unicodeFonts));
+
+		// Định dạng giá tiền
+		DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+		symbols.setGroupingSeparator(',');
+		symbols.setDecimalSeparator('.');
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0 Đ", symbols);
+
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		// Thiết lập dữ liệu cho từng hàng
+		for (int i = 0; i < dataList.size(); i++) {
+			TourDateBooking data = dataList.get(i);
+
+			table.addCell(createCell(String.valueOf(i + 1), false, unicodeFonts));
+			table.addCell(createCell(data.getBooking().getTour().getTourname(), false, unicodeFonts));
+			// table.addCell(createCell(data.getTourdate().getTourdates().toString(), false,
+			// unicodeFonts)); // Convert LocalDate to String
+
+			// Assuming data.getTourdate().getTourdates() returns a Date object
+			Date tourDate = data.getTourdate().getTourdates();
+
+			// Convert Date to String using SimpleDateFormat
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy"); // You can use the format you need
+			String formattedDate = dateFormat.format(tourDate);
+
+			// Now, pass the formatted date to the createCell method
+			table.addCell(createCell(formattedDate, false, unicodeFonts));
+
+			table.addCell(createCell(decimalFormat.format(data.getBooking().getTotalprice()), false, unicodeFonts));
+
+		
+			table.addCell(
+					createCell(String.valueOf(data.getBooking().getTour().getDepartureday()), false, unicodeFonts)); // Convert
+																														// Integer
+																														// to
+																														// String
+			table.addCell(createCell(String.valueOf(data.getTourdate().getAvailableslots()), false, unicodeFonts)); // Convert
+																													// Integer
+																													// to
+																													// String
+		}
+
+		document.add(table);
+		document.close();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		headers.setContentDispositionFormData("attachment", "exportPDF.pdf");
+
+		return ResponseEntity.ok().headers(headers).body(outputStream.toByteArray());
+	}
 
 	public final List<Order> getAllOrder() {
 		return orderService.findAll();
@@ -653,11 +772,15 @@ public class PdfController {
 		return bookingService.findAll();
 	}
 
-	public final List<Report> Inventorystatistics() {
+	public final List<ReportSP> Inventorystatistics() {
 		return productService.getTk_sp();
 	}
 
 	public final List<Tour> getAllTour() {
 		return tourService.findAll();
+	}
+	
+	public final List<TourDateBooking> getTourDateBooking() {
+		return toudatebookingService.findAll();
 	}
 }

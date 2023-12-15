@@ -1,63 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.thymeleaf.org"
+	  th:replace="~{/layout/layout::dynamic(~{::body})}">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Change Password</title>
-<link rel="stylesheet" href="assets/login/login.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+
 </head>
 <body>
-	<section>
-		<div class="form-box">
-			<div class="form-value">
-				<form action="/changepass" th:object="${passchange}" method="post">
-					<!-- th:action="@{/changepass}" -->
-					<h2>Change Password</h2>
-					<!-- Hiển thị lỗi nếu có -->
-					<div class="inputbox">
-						<ion-icon name="lock-outline"></ion-icon>
-						<input name="currentpass" type="password"
-							th:field="*{currentpass}" required> <label for="">Current
-							Password</label>
-						<div th:if="${#fields.hasErrors('currentpass')}"
-							th:errors="*{currentpass}"></div>
-					</div>
-					<div class="inputbox">
-						<ion-icon name="lock-closed-outline"></ion-icon>
-						<input name="newpass" type="password" th:field="*{newpass}"
-							required="required"> <label for="">New Password</label>
-						<div th:if="${#fields.hasErrors('newpass')}"
-							th:errors="*{newpass}"></div>
-					</div>
-					<div class="inputbox">
-						<ion-icon name="lock-closed-outline"></ion-icon>
-						<input name="confirmpass" type="password"
-							th:field="*{confirmpass}" required="required"> <label
-							for="">Confirm Password</label>
-						<div th:if="${#fields.hasErrors('confirmpass')}"
-							th:errors="*{confirmpass}"></div>
-					</div>
-					<div class="forget">
-						<label for=""> <a href="/forgot">Forget Password</a></label>
-					</div>
-					<button>Change</button>
-					<div class="register">
-						<p>
-							Return Profile Page <a href="/profile">Profile</a>
-						</p>
-						<a href="/"><ion-icon class="iconHome" name="home-outline"></ion-icon></a>
-					</div>
 
-				</form>
+<!-- Basic -->
+<div class="ex-form-1 ">
+	<div class="container">
+		<div class="row">
+
+			<div class="col-xl-6 offset-xl-3">
+				<div class="text-box ">
+					<h2 class="py-4" style="text-align: center;">Đổi mật khẩu</h2>
+					<form action="/changepass" th:object="${passchange}" method="post"
+						  class="py-3" id="form">
+						<div class="mb-4 form-floating input-group">
+							<input name="currentpass" type="password" th:field="*{currentpass}" class="form-control" id="currentpass" placeholder="currentpass" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" title="Vui lòng tối thiểu 8 ký tự bao gồm ít nhất 1 ký tự viết hoa, 1 ký tự viết thường và 1 số.">
+							<span class="input-group-text"><i id="currentpassToggleIcon" class="fas fa-eye-slash" onclick="togglePasswordVisibility('currentpass')" style="cursor: pointer;"></i></span>
+							<label for="currentpass">Mật khẩu cũ</label>
+						</div>
+						<div class="mb-4 form-floating input-group">
+							<input name="newpass" type="password" th:field="*{newpass}" class="form-control" id="newpass" placeholder="newpass" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" title="Vui lòng tối thiểu 8 ký tự bao gồm ít nhất 1 ký tự viết hoa, 1 ký tự viết thường và 1 số.">
+							<span class="input-group-text"><i id="newpassToggleIcon" class="fas fa-eye-slash" onclick="togglePasswordVisibility('newpass')" style="cursor: pointer;"></i></span>
+							<label for="newpass">Mật khẩu mới</label>
+						</div>
+						<div class="mb-4 form-floating input-group">
+							<input name="confirmpass" type="password" th:field="*{confirmpass}" class="form-control" id="confirmpass" placeholder="" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" title="Vui lòng tối thiểu 8 ký tự bao gồm ít nhất 1 ký tự viết hoa, 1 ký tự viết thường và 1 số.">
+							<label for="confirmpass">Xác nhận mật khẩu mới</label>
+							<span class="input-group-text"><i id="confirmpassToggleIcon" class="fas fa-eye-slash" onclick="togglePasswordVisibility('confirmpass')" style="cursor: pointer;"></i></span>
+							<div class="text-danger invalid-feedback">
+								<span id="message"></span>
+							</div>
+						</div>
+
+						<button style="font-size: 20px" type="submit"
+								class="form-control-submit-button">Đổi mật khẩu</button>
+					</form>
+				</div>
 			</div>
 		</div>
-	</section>
+	</div>
+</div>
 
-
-
-	<script type="module"
-		src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-	<script nomodule
-		src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="./assets/js/formValidate.js"></script>
 </body>
 </html>

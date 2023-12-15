@@ -22,12 +22,22 @@ app.config(function($routeProvider) {
 			templateUrl: "/assetsAdmin/admin/message/message.html",
 			controller: "message-ctrl"
 		})
+		.when("/vouchers", {
+			templateUrl: "/assetsAdmin/admin/vouchers/vouchers.html",
+			controller: "vouchers-ctrl"
+		})
 		.when("/order", {
 			templateUrl: "/assetsAdmin/admin/order/order.html",
 			controller: "order-ctrl"
 		}).when("/bookingtour", {
 			templateUrl: "/assetsAdmin/admin/booking/booking.html",
 			controller: "booking-ctrl"
+		}).when("/tourdate", {
+			templateUrl: "/assetsAdmin/admin/tourdate/tourdate.html",
+			controller: "tourdate-ctrl"
+		}).when("/bookingdate", {
+			templateUrl: "/assetsAdmin/admin/bookingdate/bookingdate.html",
+			controller: "bookingdate-ctrl"
 		}).when("/productS", {
 			templateUrl: "/assetsAdmin/admin/statistics/_productstatistics.html",
 			controller: 'productstatistics-ctrl'
@@ -46,10 +56,14 @@ app.config(function($routeProvider) {
 			templateUrl: "/assetsAdmin/admin/statistics/_inventorystatistics.html",
 			controller: "inventorystatistics-ctrl"
 		})
+		.when("/ticket", {
+			templateUrl: "/assetsAdmin/admin/soatve/ticket.html",
+			controller: "ticket-ctrl"
+		})
 		.when("/dashboard", {
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
 		})
-		
+
 		.otherwise({
 			templateUrl: "/assetsAdmin/admin/homeAdmin.html",
 			controller: "revenueindex-ctrl"

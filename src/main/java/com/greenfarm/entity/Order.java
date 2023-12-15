@@ -2,7 +2,7 @@ package com.greenfarm.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,7 +21,6 @@ import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.format.DateTimeFormatter;
 
 @Data
 @Entity
@@ -42,7 +41,9 @@ public class Order implements Serializable {
 		return orderdate.format(formatter);
 	}
 
-	private String Address;
+	@ManyToOne
+	@JoinColumn(name = "AddressID")
+	Address address;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")
@@ -55,8 +56,16 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "statusorderid")
 	StatusOrder statusOrder;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "Paymentmethodid")
 	PaymentMethod paymentmethod;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "order")
+	List<VoucherOrder> voucherorder;
+
+	
+	
+
 }

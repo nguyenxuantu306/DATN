@@ -19,6 +19,8 @@ public interface BookingService {
 	Page<Top3> getTop3Tour(Pageable pageable1);
 
 	List<Booking> findAll();
+	
+	
 
 	List<Booking> getAllBookings(int page, int size);
 
@@ -41,4 +43,6 @@ public interface BookingService {
 	List<Booking> findByEfindByIdAccountmail(String email);
 
 	void saveBooking(Booking booking);
+	
+	
 }

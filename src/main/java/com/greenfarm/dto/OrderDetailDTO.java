@@ -1,7 +1,6 @@
 package com.greenfarm.dto;
 
 import com.greenfarm.entity.Order;
-import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.Product;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderDetailDTO {
 	private Integer orderDetailid;
-	private Integer quantityordered;
+	private Float quantityordered;
 	private Float totalprice;
 	private Order order;
 	private Product product;

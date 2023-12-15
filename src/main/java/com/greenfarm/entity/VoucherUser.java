@@ -1,12 +1,9 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
-import java.util.List;
+import java.time.LocalDateTime;
 
-import org.hibernate.annotations.ManyToAny;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +27,10 @@ public class VoucherUser  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer voucheruserid;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "expirationdate")
+	private LocalDateTime expirationdate;
+	
 	@ManyToOne
 	@JoinColumn(name = "userid")
 	private User user;
@@ -35,4 +38,6 @@ public class VoucherUser  implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "voucherid")
 	private Voucher voucher;
+	
+	
 }

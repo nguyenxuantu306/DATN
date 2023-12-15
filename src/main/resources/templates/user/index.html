@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
+<html xmlns="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout::dynamic(~{::body})}">
 
 <head>
-	<meta charset="UTF-8" />
-	<title>GreenFarm</title>
+<meta charset="UTF-8" />
+<title>GreenFarm</title>
 </head>
 
 <body>
@@ -11,40 +12,48 @@
 		<!-- Header Start -->
 		<div class=" page-header">
 			<div class="container">
-				<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
-
-				</div>
+				<div
+					class="d-flex flex-column align-items-center justify-content-center"
+					style="min-height: 400px"></div>
 			</div>
 		</div>
 		<div class="pb-3">
 			<div class="text-center my-3 pb-3">
 				<h6 class="text-primary text-uppercase" style="letter-spacing: 5px"
-					th:text="#{index.label.destination}">
-					Destination</h6>
-				<h1 th:text="#{index.label.outstanding}">The most outstanding tour</h1>
+					th:text="#{index.label.destination}">Destination</h6>
+				<h1 th:text="#{index.label.outstanding}">The most outstanding
+					tour</h1>
 			</div>
 			<div class="row">
-				<div th:each="tour : ${topTour.content}" class="col-lg-4 col-md-6 mb-4">
+				<div th:each="tour : ${topTour.content}"
+					class="col-lg-4 col-md-6 mb-4">
 					<div class="package-item bg-white mb-2">
-						<a th:href="@{|/tour/detail/${tour.tour.tourid}|}"><img style="height: 300px;width: 100%"
-								class="img-fluid " th:src="@{|${tour.tour.image}|}" alt="" /></a>
+						<a th:href="@{|/tour/detail/${tour.tour.tourid}|}"><img
+							style="height: 300px; width: 100%" class="img-fluid "
+							th:src="@{|${tour.tour.image}|}" alt="" /></a>
 						<div class="p-4">
 							<div class="d-flex justify-content-between mb-3">
-								<small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2">
-										<span style="font-size:18px" th:text="${tour.tour.departureday}"></span>
+								<small class="m-0"><i
+									class="fa fa-calendar-alt text-primary mr-2"> <span
+										style="font-size: 18px" th:text="${tour.tour.departureday}"></span>
 
-									</i></small>
+								</i></small>
 							</div>
-							<a th:href="@{|/tour/detail/${tour.tour.tourid}|}" th:text="${tour.tour.Tourname}"
-								class="h5 text-decoration-none" href="/tour-detail"></a>
+							<a style="color: #003C2D; text-decoration: none;"
+								onmouseover="this.style.color='#FFA500'"
+								onmouseout="this.style.color='#003C2D'"
+								th:href="@{|/tour/detail/${tour.tour.tourid}|}"
+								th:text="${tour.tour.Tourname}" class="h5 text-decoration-none"
+								href="/tour-detail"></a>
 							<div class="border-top mt-4 pt-4">
 								<div class="d-flex justify-content-between">
 
-									<h5 th:text="${#numbers.formatDecimal(tour.tour.pricings.Adultprice,0,'COMMA',0,'POINT')} + 'đ'"
+									<h5
+										th:text="*{#numbers.formatDecimal(tour.tour.pricings.Adultprice,0,'COMMA',0,'POINT')} + ' ₫ '"
 										class="m-0"></h5>
 									<button class="btn btn-primary">
-										<a th:href="@{|/booking/${tour.tour.tourid}|}" th:text="#{label.booking}">Đặt
-											tour</a>
+										<a th:href="@{|/booking/${tour.tour.tourid}|}"
+											th:text="#{label.booking}">Đặt tour</a>
 									</button>
 								</div>
 							</div>
@@ -55,23 +64,36 @@
 			</div>
 
 			<div class="text-center mb-3 pb-3">
-				<h6 class="text-primary text-uppercase" style="letter-spacing: 5px" th:text="#{index.label.shop}">
-					Shop</h6>
+				<h6 class="text-primary text-uppercase" style="letter-spacing: 5px"
+					th:text="#{index.label.shop}">Shop</h6>
 				<h1 th:text="#{index.label.selling}">Selling Products</h1>
 			</div>
 			<div class="row text-center">
-				<div th:each="product : ${topList.content}" class="col-lg-3 col-md-6 mb-4">
-					<div class="package-item bg-white mb-2">
-						<a th:href="@{|/product/detail/${product.product.productid}|}"><img style="height: 250px"
-								class="img-fluid " th:src="@{|${product.product.image}|}" alt="" />
-						</a>
-						<div class="p-4">
-							<a th:href="@{|/product/detail/${product.product.productid}|}"
-								th:text="${product.product.productname}" class="h5 text-decoration-none"></a>
-							<div class="border-top mt-4 pt-4">
+				<div th:each="product : ${topList.content}"
+					class="col-lg-3 col-md-6 mb-4">
+					<div class="bg-white mb-2">
+						<a th:href="@{|/product/detail/${product.product.productid}|}"
+							style="display: block; position: relative;"><img
+							style="height: 250px; border: 2px solid #7AB730; border-radius: 5px;"
+							class="img-fluid package-item"
+							th:src="@{|${product.product.image}|}" alt="" /> <span
+							th:if="${product.product.quantityavailable <= 0}"
+							class="out-of-stock-label" th:text="#{shop.label.outOfStock}">Hết
+								hàng</span></a>
+						<div class="p-2">
+							<a
+								style="font-size: 16px; color: #003C2D; text-decoration: none;"
+								onmouseover="this.style.color='#FFA500'"
+								onmouseout="this.style.color='#003C2D'"
+								th:href="@{|/product/detail/${product.product.productid}|}"
+								th:text="${product.product.productname}"
+								class="h5 text-decoration-none"></a>
+							<div class=" mt-2 pt-2">
 								<div class="text-center">
-									<h5 th:text="${#numbers.formatDecimal(product.product.price,0,'COMMA',0,'POINT')} + 'đ'"
-										class="m-0"></h5>
+									<span
+										style="font-size: 20px; color: #003C2D; font-weight: bold;"
+										th:text="*{#numbers.formatDecimal(product.product.price,0,'COMMA',0,'POINT')} + ' ₫ '"
+										class="m-0"></span>
 								</div>
 							</div>
 						</div>
@@ -79,6 +101,55 @@
 				</div>
 			</div>
 		</div>
+		<section id="section-banner-home" class="section section-banner py-5">
+			<div class="container-fluid">
+				<div class="banner-home-outer">
+					<div class="row FlexMargin">
+						<div class="box-service col-md-4 col-sm-4 col-xs-12">
+							<div class="icon_title fade-box">
+								<img class=" lazyloaded"
+									data-src="//theme.hstatic.net/200000240163/1000702133/14/banner_img_1.png?v=339"
+									src="//theme.hstatic.net/200000240163/1000702133/14/banner_img_1.png?v=339"
+									alt="icon1">
+							</div>
+							<div class="box_info">
+								<h3>Nguồn giống tiêu chuẩn</h3>
+								<p class="content">Nguồn giống khỏe giúp cây trồng đạt năng
+									suất và chất lượng tốt. Giống mới lạ đem đến trải nghiệm mới
+									cho thực khách</p>
+							</div>
+						</div>
+						<div class="box-service col-md-4 col-sm-4 col-xs-12">
+							<div class="icon_title fade-box">
+								<img class=" lazyloaded"
+									data-src="//theme.hstatic.net/200000240163/1000702133/14/banner_img_2.png?v=339"
+									src="//theme.hstatic.net/200000240163/1000702133/14/banner_img_2.png?v=339"
+									alt="icon2">
+							</div>
+							<div class="box_info">
+								<h3>Tiêu chuẩn chất lượng</h3>
+								<p class="content">Các vườn nông sản của GreenFarm được ứng
+									dụng nuôi trồng theo các tiêu chí an toàn hữu cơ tối thiểu theo
+									chứng nhận của VietGap, GlobalGap</p>
+							</div>
+						</div>
+						<div class="box-service col-md-4 col-sm-4 col-xs-12">
+							<div class="icon_title fade-box">
+								<img class=" lazyloaded"
+									data-src="//theme.hstatic.net/200000240163/1000702133/14/banner_img_3.png?v=339"
+									src="//theme.hstatic.net/200000240163/1000702133/14/banner_img_3.png?v=339"
+									alt="icon3">
+							</div>
+							<div class="box_info">
+								<h3>Sản phẩm dinh dưỡng</h3>
+								<p class="content">Nông sản an toàn được đánh giá không chỉ
+									an toàn và ngon mà còn có nhiều giá trị dinh dưỡng thiết thực</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 </body>
 
 </html>

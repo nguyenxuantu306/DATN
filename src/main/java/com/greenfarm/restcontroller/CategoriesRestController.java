@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.CategoryDTO;
+import com.greenfarm.dto.ProductDTO;
 import com.greenfarm.entity.Category;
+import com.greenfarm.entity.Product;
 import com.greenfarm.service.CategoryService;
 import org.modelmapper.ModelMapper;
 
@@ -61,6 +64,18 @@ public class CategoriesRestController {
 		return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
 	}
 
+	@GetMapping("/deleted")
+	public ResponseEntity<List<CategoryDTO>> getDeletedList() {
+		List<Category> deletedCategory = categoryService.findAllDeletedCategory();
+
+	
+		List<CategoryDTO> CategoryDTOs = deletedCategory.stream()
+				.map(category -> modelMapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
+
+		
+		return new ResponseEntity<>(CategoryDTOs, HttpStatus.OK);
+	}
+
 	@PostMapping()
 	public ResponseEntity<CategoryDTO> create(@RequestBody Category category) {
 		Category createdCategory = categoryService.create(category);
@@ -80,44 +95,61 @@ public class CategoriesRestController {
 
 	@PutMapping("{categoryid}")
 	public ResponseEntity<CategoryDTO> update(@PathVariable("categoryid") Integer categoryid,
-			@RequestBody Category updatedCategory) {
-		Category existingCategory = categoryService.findById(categoryid);
-
-		if (existingCategory == null) {
-			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy category
-			return ResponseEntity.notFound().build();
-		}
-
-		// Cập nhật thông tin của existingCategory với dữ liệu từ updatedCategory
-		existingCategory.setCategoryname(updatedCategory.getCategoryname());
-		// Các cập nhật khác (nếu có)
+			@RequestBody Category category) {
 
 		// Thực hiện cập nhật trong service
-		Category updatedCategoryResult = categoryService.update(existingCategory);
+		Category updatedCategoryResult = categoryService.update(category);
 
-		// Sử dụng modelMapper để ánh xạ từ updatedCategoryResult sang CategoryDTO
-		ModelMapper modelMapper = new ModelMapper();
-		CategoryDTO updatedCategoryDTO = modelMapper.map(updatedCategoryResult, CategoryDTO.class);
-
-		// Trả về updatedCategoryDTO bằng ResponseEntity với mã trạng thái 200 OK
-		return ResponseEntity.ok(updatedCategoryDTO);
-	}
-
-	@DeleteMapping("{categoryid}")
-	public ResponseEntity<Void> delete(@PathVariable("categoryid") Integer categoryid) {
-
-		Category existingCategory = categoryService.findById(categoryid);
-
-		if (existingCategory == null) {
-			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy category
+		if (updatedCategoryResult == null) {
+			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy product để cập nhật
 			return ResponseEntity.notFound().build();
 		}
+		
+		
+		// Sử dụng ModelMapper để ánh xạ từ Product đã cập nhật thành ProductDTO
+		CategoryDTO categoryDTO = modelMapper.map(updatedCategoryResult, CategoryDTO.class);
 
-		// Thực hiện xóa trong service
-		categoryService.delete(categoryid);
-
-		// Trả về mã trạng thái 204 No Content để chỉ ra thành công trong việc xóa
-		return ResponseEntity.noContent().build();
+		// Trả về updatedCategoryDTO bằng ResponseEntity với mã trạng thái 200 OK
+		return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
 	}
 
+	@PutMapping("/{categoryid}/restore")
+	public ResponseEntity<String> restoreTour(@PathVariable("categoryid") Integer categoryid) {
+		// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu
+		Category category = categoryService.findById(categoryid);
+
+		if (category == null) {
+			return new ResponseEntity<>("Danh mục không tồn tại", HttpStatus.NOT_FOUND);
+		}
+		category.setIsDeleted(false);
+
+		categoryService.save(category);
+
+		return new ResponseEntity<>("Khôi phục Danh mục thành công", HttpStatus.OK);
+	}
+	
+	
+	@DeleteMapping("/{categoryid}")
+	public ResponseEntity<Void> deleteBooking(@PathVariable("categoryid") Integer categoryid) {
+		categoryService.deleteCategoryById(categoryid);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping("/searchkeywordcategory")
+	public ResponseEntity<List<CategoryDTO>> getList(@RequestParam(required = false) String keyword) {
+		List<Category> categorys;
+
+		if (keyword != null && !keyword.isEmpty()) {
+			// Nếu có từ khóa, thực hiện tìm kiếm
+			categorys = categoryService.findByKeyword(keyword);
+		} else {
+			// Nếu không có từ khóa, lấy tất cả người dùng
+			categorys = categoryService.findAll();
+		}
+
+		List<CategoryDTO> categoryDtos = categorys.stream().map(category -> modelMapper.map(category, CategoryDTO.class))
+				.collect(Collectors.toList());
+
+		return ResponseEntity.ok(categoryDtos);
+	}
 }

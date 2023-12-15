@@ -1,152 +1,236 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::body})}">
+<html xmlns="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout::dynamic(~{::body})}">
 
 <head>
-	<meta charset="UTF-8">
-	<title>GreenFarm</title>
+<meta charset="UTF-8">
+<title>GreenFarm</title>
 
 </head>
 
 <body>
 	<div class="container">
 		<div class="pt-3">
-			<div class="text-center mb-3 pb-3">
-				<h1 th:text="#{shop.label.title}">List Product</h1>
-			</div>
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="accordion" id="accordionExample">
-						<div class="accordion-item">
-							<h2 class="accordion-header">
-								<button class="accordion-button" type="button" data-bs-toggle="collapse"
-									data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" th:text="#{shop.label.category}">
-									Category</button>
-							</h2>
 
-							<div id="collapseOne" class="accordion-collapse collapse show"
-								data-bs-parent="#accordionExample">
-								<div class="accordion-body">
-									<ul th:each="c:${cates}" class="list-unstyled" style="font-size: 20px;">
-										<li><a style="color: black;"
-												th:href="@{|/product/shop?cid=${c.categoryid}|}">[[${c.categoryname}]]</a>
-										</li>
-									</ul>
-								</div>
+			<div class="row">
+				<div class="col-md-3">
+					<img style="width: 250px; height: 250px" alt=""
+						src="https://chuyentrang.viendinhduong.vn/FileUpload/Images/vai_tro_cua_rau_cu_qua.jpg">
+				</div>
+				<div class="col-lg-9">
+					<div id="carouselExampleIndicators" class="carousel slide"
+						data-bs-ride="carousel">
+						<div class="carousel-indicators">
+							<button type="button" data-bs-target="#carouselExampleIndicators"
+								data-bs-slide-to="0" class="active" aria-current="true"
+								aria-label="Slide 1"></button>
+							<button type="button" data-bs-target="#carouselExampleIndicators"
+								data-bs-slide-to="1" aria-label="Slide 2"></button>
+							<button type="button" data-bs-target="#carouselExampleIndicators"
+								data-bs-slide-to="2" aria-label="Slide 3"></button>
+						</div>
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<img style="height: 250px"
+									src="https://firebasestorage.googleapis.com/v0/b/poly-java6-d9468.appspot.com/o/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn.png?alt=media&token=83a5e8ef-2b08-4bdd-9ab4-72ce3b50363b"
+									class="d-block w-100" alt="...">
+							</div>
+							<div class="carousel-item">
+								<img style="height: 250px"
+									src="https://firebasestorage.googleapis.com/v0/b/poly-java6-d9468.appspot.com/o/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(1).png?alt=media&token=ab66c93b-9460-4895-b6bc-36b6cae93bc9"
+									class="d-block w-100 " alt="...">
+							</div>
+							<div class="carousel-item">
+								<img style="height: 250px"
+									src="https://firebasestorage.googleapis.com/v0/b/poly-java6-d9468.appspot.com/o/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(2).png?alt=media&token=40573242-78b0-47d6-b4f7-cc8abee499ab"
+									class="d-block w-100" alt="...">
 							</div>
 						</div>
+						<button class="carousel-control-prev" type="button"
+							data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
+					</div>
+				</div>
+				<div class="col-lg-3 py-5">
+					<div >
+						<ul class="list-group list-group-light">
+							<li class="list-group-item border-0">
+								<h5 style="color: #000000" th:text="#{shop.label.category}"></h5>
+							</li>
+
+						</ul>
+						<ul th:each="c:${cates}" class="list-group list-group-light"
+							style="font-size: 20px;color: #333333;">
+							<li class="list-group-item border-0"><a
+								style="color: black;"
+								th:href="@{|/product/shop?cid=${c.categoryid}|}">[[${c.categoryname}]]</a>
+							</li>
+						</ul>
+					</div>
+					<hr style="color: black;">
+					<div class="accordion" id="accordionExample">
+
 						<div class="accordion-item">
 							<h2 class="accordion-header">
-								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-									data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" th:text="#{shop.label.price}">
-									Price</button>
+								<button class="accordion-button collapsed " type="button"
+									data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+									aria-expanded="false" aria-controls="collapseTwo"
+									th:text="#{shop.label.price}">Price</button>
 							</h2>
-							<div id="collapseTwo" class="accordion-collapse collapse"
+							<div id="collapseTwo" class="accordion-collapse collapse show"
 								data-bs-parent="#accordionExample">
 								<div class="accordion-body" style="font-size: 14px;">
 									<form id="filterForm" method="get">
 										<div class="form-check">
-											<input class="form-check-input" type="radio" name="priceRange"
-												value="under30k" id="flexRadioDefault0" checked> <label
-												class="form-check-label" for="flexRadioDefault0"> 30,000₫ </label>
+											<input class="form-check-input" type="radio"
+												name="priceRange" value="all" id="flexRadioDefaultAll"
+												checked> <label class="form-check-label"
+												for="flexRadioDefaultAll"> Tất cả </label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" type="radio" name="priceRange"
-												value="30kTo70k" id="flexRadioDefault0" checked> <label
-												class="form-check-label" for="flexRadioDefault0"> 30,000₫ - 70,000₫
-											</label>
+											<input class="form-check-input" type="radio"
+												name="priceRange" value="under30k" id="flexRadioDefault0">
+											<label class="form-check-label" for="flexRadioDefault0">
+												30,000₫ </label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" type="radio" name="priceRange"
-												value="70kTo100k" id="flexRadioDefault0" checked> <label
-												class="form-check-label" for="flexRadioDefault0"> 70,000₫ - 100,000₫
-											</label>
+											<input class="form-check-input" type="radio"
+												name="priceRange" value="30kTo70k" id="flexRadioDefault1">
+											<label class="form-check-label" for="flexRadioDefault1">
+												30,000₫ - 70,000₫ </label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" type="radio" name="priceRange"
-												value="100kTo150k" id="flexRadioDefault0" checked> <label
-												class="form-check-label" for="flexRadioDefault0"> 100,000₫ - 150,000₫
-											</label>
+											<input class="form-check-input" type="radio"
+												name="priceRange" value="70kTo100k" id="flexRadioDefault2">
+											<label class="form-check-label" for="flexRadioDefault2">
+												70,000₫ - 100,000₫ </label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" type="radio" name="priceRange"
-												value="over150k" id="flexRadioDefault0" checked> <label
-												class="form-check-label" for="flexRadioDefault0"> Trên 150,000₫ </label>
+											<input class="form-check-input" type="radio"
+												name="priceRange" value="100kTo150k" id="flexRadioDefault3">
+											<label class="form-check-label" for="flexRadioDefault3">
+												100,000₫ - 150,000₫ </label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="radio"
+												name="priceRange" value="over150k" id="flexRadioDefault4">
+											<label class="form-check-label" for="flexRadioDefault4">
+												Trên 150,000₫ </label>
 										</div>
 									</form>
+
 								</div>
 							</div>
 						</div>
 						<div class="accordion-item">
 							<h2 class="accordion-header">
-								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-									data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" th:text="#{shop.label.arrange}">
-									Arrange</button>
+								<button class="accordion-button collapsed" type="button"
+									data-bs-toggle="collapse" data-bs-target="#collapseThree"
+									aria-expanded="false" aria-controls="collapseThree"
+									th:text="#{shop.label.arrange}">Arrange</button>
 							</h2>
 							<div id="collapseThree" class="accordion-collapse collapse"
 								data-bs-parent="#accordionExample">
 								<ul class="list-unstyled p-3" id="productList">
-									<li><a style="color: black;" href="#" data-sort="asc" th:text="#{shop.label.sortaz}">Sort
-											by name A - Z</a></li>
-									<li><a style="color: black;" href="#" data-sort="desc" th:text="#{shop.label.sortza}">Sort
-											by name Z-A</a></li>
-									<li><a style="color: black;" href="#" data-sortprice="1" th:text="#{shop.label.sortHigh}">Sort
-											by high price</a></li>
-									<li><a style="color: black;" href="#" data-sortprice="2" th:text="#{shop.label.sortLow}">Sort
-											by low price</a></li>
+									<li><a style="color: black;" href="#" data-sort="asc"
+										th:text="#{shop.label.sortaz}">Sort by name A - Z</a></li>
+									<li><a style="color: black;" href="#" data-sort="desc"
+										th:text="#{shop.label.sortza}">Sort by name Z-A</a></li>
+									<li><a style="color: black;" href="#" data-sortprice="1"
+										th:text="#{shop.label.sortHigh}">Sort by high price</a></li>
+									<li><a style="color: black;" href="#" data-sortprice="2"
+										th:text="#{shop.label.sortLow}">Sort by low price</a></li>
 								</ul>
 							</div>
 						</div>
 					</div>
+
+
+
 				</div>
 				<div class="col-lg-9">
-					<div class="search-box">
-						<button id="searchForm" class="btn-search">
-							<i class="fas fa-search"></i>
-						</button>
-						<input type="text" id="searchKeyword" class="input-search" placeholder="Type to Search..." />
-					</div>
-					<div class="row text-center" id="Results">
-						<div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
-							<div class="package-item bg-white mb-2">
-								<a th:href="@{|/product/detail/${p.productid}|}"
-									style="display: block; position: relative;">
-									<img style="height: 250px" class="img-fluid" th:src="@{|${p.image}|}" alt="">
 
-									<span th:if="${p.quantityavailable < 5}" class="out-of-stock-label" th:text="#{shop.label.outOfStock}">Hết hàng</span>
+					<div class="text-center mt-3">
+						<h1
+							style="font-size: 27px; font-weight: bold; margin: 0; text-align: center;"
+							th:text="#{shop.label.title}">List Product</h1>
+					</div>
+					<div class="search-box " style="width: 500px">
+						<div class="input-group">
+							<span class="input-group-text"> <i class="bi bi-search"></i>
+								<!-- Sử dụng biểu tượng tìm kiếm từ Bootstrap Icons -->
+							</span> <input type="text" id="searchKeyword" class="form-control"
+								placeholder="Search..." />
+						</div>
+					</div>
+
+					<div class="row text-center py-2 mt-3" id="Results">
+
+						<div th:each="p:${items}" class="col-lg-4 col-md-6 mb-4">
+							<div class="bg-white mb-2">
+								<a th:href="@{|/product/detail/${p.productid}|}"
+									style="display: block; position: relative;"> <img
+									style="height: 250px; border: 2px solid #7AB730; border-radius: 5px;"
+									class="img-fluid package-item " th:src="@{|${p.image}|}" alt="">
+									<span th:if="${p.quantityavailable <= 0}"
+									class="out-of-stock-label" th:text="#{shop.label.outOfStock}">Hết
+										hàng</span>
 								</a>
 
-								<div class="p-4">
-									<a th:utext="${p.productname}" class="h5 text-decoration-none"
+
+								<div class="p-2">
+									<a
+										style="font-size: 16px; color: #003C2D; text-decoration: none;"
+										onmouseover="this.style.color='#FFA500'"
+										onmouseout="this.style.color='#003C2D'"
+										th:utext="${p.productname}" class="h5 text-decoration-none"
 										th:href="@{|/product/detail/${p.productid}|}"></a>
-									<div class="border-top mt-4 pt-4">
+									<div class="mt-2 pt-2">
 										<div class="text-center">
-											<h5 th:text="*{#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}+ 'đ'"
-												class=""></h5>
+											<span
+												style="font-size: 20px; color: #003C2D; font-weight: bold;"
+												th:text="*{#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')} + ' ₫ '"
+												class=""></span>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div th:if="${items.totalPages > 1}" class="pagination justify-content-center">
+						<div th:if="${items.totalPages > 1}"
+							class="pagination justify-content-center">
 							<ul class="pagination justify-content-center">
-								<li th:class="${items.number == 0} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{${url}(page=0)}" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
+								<li
+									th:class="${items.number == 0} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{${url}(page=0)}" class="page-link"><i
+										class="bi bi-chevron-double-left"></i></a>
 								</li>
-								<li th:class="${items.number == 0} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{${url}(page=${items.number - 1})}" class="page-link"><i class="bi bi-chevron-left"></i></a>
+								<li
+									th:class="${items.number == 0} ? 'page-item disabled' : 'page-item'">
+									<a th:href="@{${url}(page=${items.number - 1})}"
+									class="page-link"><i class="bi bi-chevron-left"></i></a>
 								</li>
-								<li th:each="pageNumber : ${#numbers.sequence(0, items.totalPages - 1)}"
+								<li
+									th:each="pageNumber : ${#numbers.sequence(0, items.totalPages - 1)}"
 									th:class="${items.number == pageNumber} ? 'page-item active' : 'page-item'">
 									<a th:href="@{${url}(page=${pageNumber})}" class="page-link"
-										th:text="${pageNumber + 1}"></a>
+									th:text="${pageNumber + 1}"></a>
 								</li>
 								<li
 									th:class="${items.number == items.totalPages - 1} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{${url}(page=${items.number + 1})}" class="page-link"><i class="bi bi-chevron-right"></i></a>
+									<a th:href="@{${url}(page=${items.number + 1})}"
+									class="page-link"><i class="bi bi-chevron-right"></i></a>
 								</li>
 								<li
 									th:class="${items.number == items.totalPages - 1} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{${url}(page=${items.totalPages - 1})}" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+									<a th:href="@{${url}(page=${items.totalPages - 1})}"
+									class="page-link"><i class="bi bi-chevron-double-right"></i></a>
 								</li>
 							</ul>
 						</div>
@@ -156,6 +240,66 @@
 			</div>
 		</div>
 	</div>
-</body>
+	<script type="text/javascript">
 
+	//Khoảng giá
+	function filterProductsByCustomPriceRange(priceRange) {
+	    $.ajax({
+	        url: "/rest/products/filter-by-custom-price-range",
+	        type: "GET",
+	        data: { priceRange: priceRange },
+	        success: function(response) {
+	            displayProducts(response);
+	        },
+	        error: function(xhr) {
+	            console.log(xhr.responseText);
+	        },
+	    });
+	}
+	// Hàm xử lý sự kiện khi người dùng thay đổi giá trị radio
+	function handlePriceRangeChange() {
+	    var priceRange = $('input[name="priceRange"]:checked').val();
+	    filterProductsByCustomPriceRange(priceRange);
+	}
+	$(document).ready(function() {
+	    // ... (Các sự kiện và hàm khác ở đây)
+	
+	    // Gắn kết sự kiện khi người dùng thay đổi giá trị radio
+	    $('input[type="radio"]').change(handlePriceRangeChange);
+	});
+	
+	function createProductHTML(product) {
+		var productHTML = `
+	              <div 
+			class="col-lg-4 col-md-6 mb-4 text-center">
+			<div class="package-item bg-white mb-2">
+				<a href="/product/detail/${product.productid}"><img
+					style="height: 250px" class="img-fluid"
+					src="${product.image}" alt=""></a>
+				<div class="p-4">
+					<a 
+						class="h5 text-decoration-none" >${product.productname}</a>
+					<div class="border-top mt-4 pt-4">
+						<div class="text-center">				
+							 <h5 class="m-0">${formatPrice(product.price)}</h5>
+	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	        `;
+		return productHTML;
+	}
+	
+	function formatPrice(price) {
+		// Thay đổi dấu chấm (.) thành dấu phẩy (,)
+		const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+		return formattedPrice.replace(/\./g, ',');
+	
+	}
+// khoảng giá
+
+</script>
+</body>
 </html>

@@ -10,15 +10,10 @@
 								class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
 								id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 						</div>
-						<input type="search" class="form-control"
+						<input ng-model="searchThongKeSp" type="search" class="form-control"
 							placeholder="Tìm kiếm tên sản phẩm...">
 					</div>
-					<div class="col-md-6 text-right">
-						<button type="button" class="btn btn-success">
-							<a type="button" data-toggle="modal" data-target="#exampleModal">
-								<i class="fas fa-chart-bar"></i> Biểu đồ : Xếp hạng 10 Sản phẩm dư nhiều nhất
-							</a>
-						</button>
+					<div class="col-md-6 text-right">					
 						<button type="button" class="btn btn-success"
 							ng-click="exportExcel()">
 							<i class="fa fa-file-excel-o"></i> Excel
@@ -41,7 +36,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="item in pager.itemsThongKeSp">
+							<tr ng-repeat="item in pager.itemsThongKeSp | filter:searchThongKeSp">
 								<td>{{$index + 1}}</td>
 								<td><img ng-src="{{item.group.image}}" alt="Product Image"
 									style="width: 80px;"></td>

@@ -2,12 +2,9 @@ package com.greenfarm.service;
 
 import java.util.List;
 
-import com.greenfarm.entity.Product;
-import com.greenfarm.entity.Report;
-import com.greenfarm.entity.ReportRevenue;
-import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.Comment;
-import com.greenfarm.entity.User;
+import com.greenfarm.entity.Product;
+import com.greenfarm.entity.Tour;
 
 public interface CommentService {
 
@@ -28,8 +25,10 @@ public interface CommentService {
 	void deleteCommentById(Integer commentid);
 
 	List<Comment> getCommentsOrderByDateDesc();
+
+	List<Comment> findAll();
 	
-	
+	List<Comment> findByKeyword(String keyword);
 
 	
 

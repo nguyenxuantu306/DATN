@@ -1,9 +1,6 @@
 package com.greenfarm.entity;
 
 import java.io.Serializable;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,8 +16,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -55,13 +50,6 @@ public class Tour implements Serializable {
 	@NotBlank(message = "Location không được để trống")
 	private String location;
 
-	@NotNull(message = "Availableslots không được để trống")
-	@Column(name = "Availableslots")
-	private Integer Availableslots;
-
-	@ManyToOne
-	@JoinColumn(name = "userid")
-	private User user;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "tour")
@@ -74,6 +62,10 @@ public class Tour implements Serializable {
 	@JsonIgnore
 	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
 	private TourCondition tourCondition;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "tour")
+	private List<TourDate> tourdate;
 
 	@JsonIgnore
 	@OneToOne(mappedBy = "tour", orphanRemoval = true, cascade = CascadeType.ALL)
@@ -89,5 +81,10 @@ public class Tour implements Serializable {
 	@Override
 	public String toString() {
 		return "";
+	}
+	
+	private Boolean isdeleted = Boolean.FALSE;
+	public void setIsDeleted(boolean isdeleted) {
+	    this.isdeleted = isdeleted;
 	}
 }

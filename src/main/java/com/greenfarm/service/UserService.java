@@ -11,11 +11,15 @@ import com.greenfarm.exception.InvalidTokenException;
 import com.greenfarm.exception.UnkownIdentifierException;
 import com.greenfarm.exception.UserAlreadyExistException;
 
+import jakarta.validation.Valid;
+
 public interface UserService {
 
 	List<User> findAll();
 
-	User findById(Integer userid) throws UnkownIdentifierException;
+	List<User> findAllDeletedUser();
+
+	User findById(Integer userid);
 
 	User create(User user) throws UserAlreadyExistException;
 
@@ -26,35 +30,46 @@ public interface UserService {
 	// Security
 	User findByEmail(String email);
 
+	User findByPhonenumber(String Phonenumber);
+
 	public List<User> getAdministrators();
 
 	boolean emailExists(String email);
 
 	// yeyye
 
-	boolean checkIfUserExist(final String email);
+	List<User> findByKeyword(String keyword);
 
-	
+	void sendRegistrationConfirmationEmail(final User user);
 
-    void sendRegistrationConfirmationEmail(final User user);
-    boolean verifyUser(final String token) throws com.greenfarm.exception.InvalidTokenException;
-    public boolean iscurrentPasswordMatching(User user,String password) ;
+	boolean verifyUser(final String token) throws com.greenfarm.exception.InvalidTokenException;
 
-    public boolean isPasswordMatching(String password, String confirmPassword);
-    
-    void forgottenPassword(final String userName) throws UnkownIdentifierException;
-    void updatePassword(final String password, final String token) throws InvalidTokenException, UnkownIdentifierException;
-    boolean loginDisabled(final String username);
-    
-    public UserDetails createNewUser(String email) throws UserAlreadyExistException;
-    public void loginFormOAuth2(OAuth2AuthenticationToken oauth2);
-    public void processOAuthPostLogin(String username);
+	public boolean iscurrentPasswordMatching(User user, String password);
 
-    //Tổng tiền mua hàng của các user
+	public boolean isPasswordMatching(String password, String confirmPassword);
+
+	void forgottenPassword(final String userName) throws UnkownIdentifierException;
+
+	void updatePassword(final String password, final String token)
+			throws InvalidTokenException, UnkownIdentifierException;
+
+	boolean loginDisabled(final String username);
+
+	public UserDetails createNewUser(String email) throws UserAlreadyExistException;
+
+	public void loginFormOAuth2(OAuth2AuthenticationToken oauth2);
+
+	public void processOAuthPostLogin(String username);
+
+	// Tổng tiền mua hàng của các user
 	List<Report> getTotalPurchaseByUser();
-	
-	//Tổng tiền đặt vé của các user
+
+	// Tổng tiền đặt vé của các user
 	List<Report> getBookingTotalPurchaseByUser();
 
-	
+	// void save(User user);
+
+	User createADMIN(@Valid User user) throws UserAlreadyExistException;
+
+	User save(User user);
 }

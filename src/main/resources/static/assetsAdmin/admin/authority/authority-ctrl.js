@@ -46,9 +46,18 @@ app.controller("authority-ctrl", function($scope, $http, $location) {
 	$scope.grant_authority = function(authority) {
 		$http.post(`/rest/authorities`, authority).then(resp => {
 			$scope.authorities.push(resp.data);
-			alert("cấp quyền sử dụng thành công!");
+			// Sử dụng SweetAlert2 cho thông báo thành công
+	        Swal.fire({
+	            icon: 'success',
+	            title: 'Thành công!',
+	            text: 'cấp quyền sử dụng thành công!',
+	        });
 		}).catch(error => {
-			alert("cấp quyền sử dụng thất bại!");
+			Swal.fire({
+	            icon: 'error',
+	            title: 'Lỗi!',
+	            text: 'cấp quyền sử dụng thất bại!',
+	        });
 			console.log("Error", error);
 		});
 
@@ -60,10 +69,18 @@ app.controller("authority-ctrl", function($scope, $http, $location) {
 		$http.delete(`/rest/authorities/${authority.userroleid}`).then(resp => {
 			var index = $scope.authorities.findIndex(a => a.userroleid == authority.userroleid);
 			$scope.authorities.splice(index, 1);
-			alert("Thu hồi quyền sử dụng thành công!");
+			Swal.fire({
+	            icon: 'success',
+	            title: 'Thành công!',
+	            text: 'Thu hồi quyền sử dụng thành công!',
+	        });
 		})
-			.catch(error => {
-				alert("Thu hồi quyền sử dụng thất bại!");
+			.catch(error => {				
+				Swal.fire({
+	            icon: 'error',
+	            title: 'Lỗi!',
+	            text: 'Thu hồi quyền sử dụng thất bại!',
+	        });
 				console.log("Error", error);
 			});
 

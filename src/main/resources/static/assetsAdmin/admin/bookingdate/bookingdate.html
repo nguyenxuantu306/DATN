@@ -1,0 +1,219 @@
+<div class="container-fluid mt-3">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
+				<h2 class="card">Danh sách thời gian đặt tour</h2>
+				<div class="row py-3">
+					<div class="col-md-3 input-group icons">
+						<div class="input-group-prepend">
+							<span
+								class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
+								id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
+						</div>
+						<input type="search" class="form-control" id="search"
+							ng-model="searchText" ng-change="loadData()"
+							placeholder="Nhập từ khóa">
+					</div>
+					<div class="col-md-3 input-group icons">
+						<input type="date" class="form-control" ng-model="selectedDate"
+							ng-change="loadData1()">
+
+						<button style="margin-left: 10px;" class="btn btn-success"
+							ng-click="clearData()">Xóa dữ liệu</button>
+					</div>
+					<div class="col-md-2  input-group icons ">
+						<!-- Sử dụng select thay vì input và thêm ng-change -->
+						<select class="form-control bg-success" ng-model="selectedDepartureDay"
+							ng-change="loadData2()">
+							<option value="">Tất cả</option>
+							<option value="Chủ nhật hàng tuần">Ngày Chủ nhật</option>
+							<option value="Thứ bảy hàng tuần">Ngày Thứ bảy</option>
+							<option value="Ngày 14 hàng tháng">Ngày 14</option>
+							<option value="Ngày 15 hàng tháng">Ngày 15</option>
+							<option value="Ngày 20 hàng tháng">Ngày 20</option>
+						</select>
+					</div>
+					<div class="col-md-4 text-right">
+						<button style="height: 45px;" type="button"
+							class="btn btn-success" ng-click="exportExcel()">
+							<i class="fa fa-file-excel-o"></i> Excel
+						</button>
+						<button style="height: 45px;" type="button"
+							class="btn btn-success" ng-click="exportPdf()">
+							<i class="fa fa-file-pdf-o"></i> PDF
+						</button>
+					</div>
+				</div>
+				<div id="orderList"></div>
+				<div class="table-responsive">
+					<table class="table header-border zero-configuration">
+						<thead>
+							<tr class="text-center">
+								<th scope="col" ng-click="sortBy('index')">STT <span
+									ng-class="{'arrow-up': sortKey=='index' && sortType=='asc', 'arrow-down': sortKey=='index' && sortType=='desc'}"></span></th>
+								<th scope="col" ng-click="sortBy('tourname')">Tên tour <span
+									ng-class="{'arrow-up': sortKey=='tourname' && sortType=='asc', 'arrow-down': sortKey=='tourname' && sortType=='desc'}"></span></th>
+								<th scope="col" ng-click="sortBy('tourdate')">Ngày đặt <span
+									ng-class="{'arrow-up': sortKey=='tourdate' && sortType=='asc', 'arrow-down': sortKey=='tourdate' && sortType=='desc'}"></span></th>
+								<th scope="col" ng-click="sortBy('totalprice')">Tổng chi<span
+									ng-class="{'arrow-up': sortKey=='totalprice' && sortType=='asc', 'arrow-down': sortKey=='totalprice' && sortType=='desc'}"></span>
+								</th>
+								<th scope="col" ng-click="sortBy('departureday')">Ngày khởi
+									hành <span
+									ng-class="{'arrow-up': sortKey=='departureday' && sortType=='asc', 'arrow-down': sortKey=='departureday' && sortType=='desc'}"></span>
+								</th>
+								<th scope="col" ng-click="sortBy('availableslots')">Số chỗ
+									còn trống <span
+									ng-class="{'arrow-up': sortKey=='availableslots' && sortType=='asc', 'arrow-down': sortKey=='availableslots' && sortType=='desc'}"></span>
+								</th>
+								<th>Xem</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="text-center"
+								ng-repeat="item in pager.items | orderBy:sortKey:sortType">
+								<th scope="row">{{$index + 1}}</th>
+								<td style="width: 250px">{{item.booking.tour.tourname}}</td>
+								<td style="width: 100px; color: blue; font-weight: bold;">{{item.tourdate.tourdates
+									| date:'dd-MM-yyyy'}}</td>
+								<td>{{item.booking.totalprice | number :0 }} đ</td>
+								<td style="width: 160px; font-weight: bold;"
+									ng-style="{
+								    'color': item.booking.tour.departureday === 'Chủ nhật hàng tuần' ? 'Brown' :
+								             item.booking.tour.departureday === 'Thứ bảy hàng tuần' ? 'orange' :
+								             item.booking.tour.departureday === 'Ngày 14 hàng tháng' ? 'green' :
+								             item.booking.tour.departureday === 'Ngày 15 hàng tháng' ? 'red' :
+								             item.booking.tour.departureday === 'Ngày 20 hàng tháng' ? 'Purple' : ''
+									}">{{item.booking.tour.departureday}}</td>
+								<td style="width: 150px">{{item.tourdate.availableslots}}</td>
+								<td><a type="button" ng-click="edit(item)"
+									data-toggle="modal" data-target="#exampleModal"> <i
+										class="bi bi-sticky"></i>
+								</a>
+									<div style="text-align: left;" class="modal fade"
+										id="exampleModal" tabindex="-1"
+										aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-xl custom-modal3">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h3 class="modal-title fs-6" id="exampleModalLabel">
+														Chi tiết thời gian đặt Tour : {{form.tourdate.tourdates |
+														date: 'dd-MM-yyyy'}} - #{{form.tourdate.tourdateid}} -
+														{{form.booking.user.email}}</h3>
+
+
+												</div>
+												<div class="modal-body pb-5">
+													<div class="row">
+														<div class="col-lg-6 col-sm-6 mx-auto">
+															<!-- <div class="card">
+																<div class="card-body text-center">
+																	<img ng-src="{{form.booking.user.image}}"
+																		alt="Tour Image" style="width: 100px;">
+																	<h5 class="mt-3 mb-1">{{form.booking.user.firstname}}</h5>																
+																	<h5 class="m-0">{{form.booking.user.email}}</h5>											
+																	<h5 class="m-0">{{form.booking.user.phonenumber}}</h5>
+
+																</div>
+															</div> -->
+															<div class="card mb-3" style="max-width: 540px;">
+																<div class="row g-0">
+																	<div class="col-md-4">
+																		<img style="width: 200px;height: 200px" ng-src="{{form.booking.user.image}}"
+																			alt="Trendy Pants and Shoes"
+																			class="img-fluid rounded-start" />
+																	</div>
+																	<div class="col-md-8">
+																		<div class="card-body">
+																			<h4 class="card-title">{{form.booking.user.firstname}}
+																				{{form.booking.user.lastname}}</h4>
+																			<h5 class="card-text">Email:
+																				{{form.booking.user.email}}</h5>
+																			<h5 class="card-text">Điện thoại:
+																				{{form.booking.user.phonenumber}}</h5>
+																			<h5 class="card-text">Ngày sinh:
+																				{{form.booking.user.birthday | date:'dd/MM/yyyy'}}</h5>
+
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="table-responsive">
+														<table class="table header-border">
+															<thead>
+																<tr>
+																	<th scope="col">STT</th>
+																	<th scope="col">Hỉnh ảnh</th>
+																	<th scope="col">Tên tour</th>
+																	<th scope="col">Dữ liệu tour</th>
+																	<th scope="col">Số người lớn</th>
+																	<th scope="col">Số trẻ em</th>
+																	<th scope="col">Tổng tiền người lớn</th>
+																	<th scope="col">Tổng tiền trẻ em</th>
+																	<th scope="col">Tạm tính</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<th scope="row">{{$index + 1}}</th>
+																	<td><img ng-src="{{form.booking.tour.image}}"
+																		alt="Tour Image" style="width: 80px;"></td>
+																	<td style="width: 150px">{{form.booking.tour.tourname}}</td>
+																	<td style="width: 200px">Giá người lớn:
+																		{{form.booking.tour.pricings.adultprice}} <br /> Giá
+																		trẻ em: {{item.booking.tour.pricings.childprice}}
+																	</td>
+
+																	<td>{{form.booking.adultticketnumber}}</td>
+																	<td>{{form.booking.childticketnumber}}</td>
+																	<td>{{formatPrice(form.booking.adultticketnumber *
+																		form.booking.tour.pricings.adultprice)}}</td>
+																	<td>{{formatPrice(form.booking.childticketnumber *
+																		form.booking.tour.pricings.childprice)}}</td>
+																	<td>{{formatPrice(form.booking.totalprice)}}</td>
+																</tr>
+															</tbody>
+
+														</table>
+														<div class="modal-order text-right">
+															<hr>
+															<h4 style="padding-left: 100px" class="total fs-4">
+																Tổng cộng: <strong>{{formatPrice(calculateTotal(form))}}</strong>
+															</h4>
+
+
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="panel-footer text-right">
+						<span class="col-md-6"
+							style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
+							+ 1}} / {{pager.count}} </span>
+						<button ng-click="pager.first()" class="btn btn-success">
+							<i class="fas fa-angle-double-left"></i>
+						</button>
+						<button ng-click="pager.prev()" class="btn btn-success">
+							<i class="fas fa-angle-left"></i>
+						</button>
+						<button ng-click="pager.next()" class="btn btn-success">
+							<i class="fas fa-angle-right"></i>
+						</button>
+						<button ng-click="pager.last()" class="btn btn-success">
+							<i class="fas fa-angle-double-right"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

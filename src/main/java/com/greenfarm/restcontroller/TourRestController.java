@@ -1,19 +1,12 @@
 package com.greenfarm.restcontroller;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -28,13 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.greenfarm.dto.OrderDTO;
+import com.greenfarm.dto.CategoryDTO;
 import com.greenfarm.dto.TourDTO;
 import com.greenfarm.dto.TourImageDTO;
-import com.greenfarm.entity.Order;
+import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Pricing;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.TourCondition;
@@ -46,8 +36,6 @@ import com.greenfarm.service.TourImageService;
 import com.greenfarm.service.TourOverviewService;
 import com.greenfarm.service.TourService;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -73,7 +61,6 @@ public class TourRestController {
 
 	@Autowired
 	TourImageService tourImageService;
-	
 
 	@GetMapping()
 	public ResponseEntity<List<TourDTO>> getList() {
@@ -94,14 +81,28 @@ public class TourRestController {
 		return new ResponseEntity<>(tourDTO, HttpStatus.OK);
 	}
 
+	
+	@GetMapping("/deleted")
+	public ResponseEntity<List<TourDTO>> getDeletedList() {
+		List<Tour> deletedUser= tourService.findAllDeletedTour();
+
+		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
+		List<TourDTO> TourDTOs = deletedUser.stream()
+				.map(tour -> modelMapper.map(tour, TourDTO.class)).collect(Collectors.toList());
+
+		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
+		return new ResponseEntity<>(TourDTOs, HttpStatus.OK);
+	}
+	
+	
 	@PostMapping()
 	public ResponseEntity<TourDTO> create(@RequestBody @Valid TourDTO tourDTO, BindingResult result) {
-		
+
 //		if (result.hasErrors()) {
 //	        // Lỗi validation, trả về danh sách lỗi
 //	        return  ResponseEntity.badRequest().body(result.getAllErrors());
 //	    }
-		
+
 		// Map DTO to entity
 		Tour tour = modelMapper.map(tourDTO, Tour.class);
 
@@ -247,47 +248,80 @@ public class TourRestController {
 		List<TourImage> tourImagesToDelete = new ArrayList<>();
 
 		for (TourImageDTO tourImageDTO : tourDTO.getTourImage()) {
-		    Integer tourImageId = tourImageDTO.getTourimageid();;
-		    Optional<TourImage> optionalTourImage = tourImages.stream()
-                    .filter(ti -> ti.getTourimageid() != null && ti.getTourimageid().equals(tourImageId))
-                    .findFirst();
-		    if (optionalTourImage.isPresent()) {
-		        TourImage tourImage = optionalTourImage.get();
-		        tourImage.setImageurl(tourImageDTO.getImageurl());
-		        tourImage.setTour(tour);
-		        tempTourImages.add(tourImage);
-		    } else {
-		        TourImage tourImage = new TourImage();
-		        tourImage.setImageurl(tourImageDTO.getImageurl());
-		        tourImage.setTour(tour);
-		        tourImageService.save(tourImage);
-		        tempTourImages.add(tourImage);
-		    }
+			Integer tourImageId = tourImageDTO.getTourimageid();
+			;
+			Optional<TourImage> optionalTourImage = tourImages.stream()
+					.filter(ti -> ti.getTourimageid() != null && ti.getTourimageid().equals(tourImageId)).findFirst();
+			if (optionalTourImage.isPresent()) {
+				TourImage tourImage = optionalTourImage.get();
+				tourImage.setImageurl(tourImageDTO.getImageurl());
+				tourImage.setTour(tour);
+				tempTourImages.add(tourImage);
+			} else {
+				TourImage tourImage = new TourImage();
+				tourImage.setImageurl(tourImageDTO.getImageurl());
+				tourImage.setTour(tour);
+				tourImageService.save(tourImage);
+				tempTourImages.add(tourImage);
+			}
 		}
 
 		for (TourImage tourImage : tourImages) {
-		    if (!tempTourImages.contains(tourImage)) {
-		        tourImagesToDelete.add(tourImage);
-		    }
+			if (!tempTourImages.contains(tourImage)) {
+				tourImagesToDelete.add(tourImage);
+			}
 		}
 
 		tourImages.removeAll(tourImagesToDelete);
 		tourImages.addAll(tempTourImages);
 
 		for (TourImage tourImage : tourImagesToDelete) {
-		    tourImageService.delete(tourImage);
+			tourImageService.delete(tourImage);
 		}
-		
+
 		tour.setTourImage(tourImages);
 		return tourService.update(tour);
 	}
 
-	@DeleteMapping("{tourid}")
-	public ResponseEntity<Void> delete(@PathVariable("tourid") Integer tourid) {
-		tourService.delete(tourid);
+	@DeleteMapping("/{tourid}")
+	public ResponseEntity<Void> deleteBooking(@PathVariable("tourid") Integer tourid) {
+		tourService.deleteTourById(tourid);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
+	
+	@PutMapping("/{tourid}/restore")
+	public ResponseEntity<String> restoreTour(@PathVariable("tourid") Integer tourid) {
+		// Tìm kiếm sản phẩm với id tương ứng trong cơ sở dữ liệu
+		Tour tour = tourService.findById(tourid);
 
+		if (tour == null) {
+			return new ResponseEntity<>("Địa điểm không tồn tại", HttpStatus.NOT_FOUND);
+		}
+
+		tour.setIsDeleted(false);
+
+		tourService.save(tour);
+
+		return new ResponseEntity<>("Khôi phục địa điểm thành công", HttpStatus.OK);
+	}
+	
+	@GetMapping("/searchkeywordtour")
+	public ResponseEntity<List<TourDTO>> getList(@RequestParam(required = false) String keyword) {
+		List<Tour> tours;
+
+		if (keyword != null && !keyword.isEmpty()) {
+			// Nếu có từ khóa, thực hiện tìm kiếm
+			tours = tourService.findByKeyword(keyword);
+		} else {
+			// Nếu không có từ khóa, lấy tất cả người dùng
+			tours = tourService.findAll();
+		}
+
+		List<TourDTO> toursDtos = tours.stream().map(tour -> modelMapper.map(tour, TourDTO.class))
+				.collect(Collectors.toList());
+
+		return ResponseEntity.ok(toursDtos);
+	}
 
 }

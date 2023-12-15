@@ -1,12 +1,13 @@
 package com.greenfarm.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
-import com.greenfarm.entity.Voucher;
+import com.greenfarm.entity.VoucherOrder;
+import com.greenfarm.entity.VoucherUser;
 
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,9 +17,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VoucherDTO {
-private Integer voucherid;
-	
+	private Integer voucherid;
 	private String code;
 	private Float discount;
-	private Date expirationdate = new Date();
+	private LocalDateTime expirationdate;
+	private Boolean isdeleted = Boolean.FALSE;
+	
+	private List<VoucherUser> voucheruser;
+	private List<VoucherOrder> voucherorder;
 }

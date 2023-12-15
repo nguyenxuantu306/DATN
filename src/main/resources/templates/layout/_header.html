@@ -11,37 +11,25 @@
   <body>
     <div th:fragment="header" class="header_area">
       <!-- Topbar Start -->
-      <div class="container-fluid bg-light pt-3d-none pt-3">
+      <!-- <marquee  direction="left" > Ưu đãi giảm 20% cho
+			Khách tham quan mua rau tại vườn - Ship nội thành Tuy Hoà, Ship trên
+			10kg ở Sài Gòn, Quy Nhơn, Nha Trang, Đà Nẵng,.... </marquee> -->
+      <div class="container-fluid bg-light pt-3d-none">
         <div class="container">
           <div class="row">
             <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
               <div class="d-inline-flex align-items-center">
-                <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
+                <p><i class="fa fa-envelope mr-2"></i>greenfarm@gmail.com</p>
                 <p class="text-body px-3">|</p>
                 <p><i class="fa fa-phone-alt mr-2"></i>+012 345 6789</p>
               </div>
             </div>
             <div class="col-lg-6 text-center text-lg-right">
               <div class="d-inline-flex align-items-center">
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-twitter"></i>
-                </a>
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-instagram"></i>
-                </a>
-                <a class="text-primary px-3" href="">
-                  <i class="fab fa-youtube"></i>
-                </a>
-                <span class="text-primary">|</span>
+               <!--  <span class="text-primary"></span>
                 <a class="text-primary px-3" href="#" id="cart-toggle"
                   ><i class="fa fa-shopping-cart"></i></a
-                >
+                > -->
                 <a class="text-primary px-3" href="?language=vi_VN"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/vn.png">
                 </a>
                 <a class="text-primary pl-3" href="?language=en"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/us.png"> </a>
@@ -51,11 +39,11 @@
         </div>
       </div>
 
-
+	
 
       <!-- Topbar End -->
       <!-- Topbar End -->
-      <div class="container cart-container mini-cart" id="mini-cart">
+<!--       <div class="container cart-container mini-cart" id="mini-cart">
         <div class="shopping-cart">
           <div class="shopping-cart-header">
             <i class="fa fa-shopping-cart cart-icon"></i
@@ -65,7 +53,7 @@
               <span class="main-color-text" th:text="${totalPrice}"></span>
             </div>
           </div>
-          <!--end shopping-cart-header -->
+          end shopping-cart-header
 
           <ul class="shopping-cart-items">
             <li class="clearfix" th:each="item : ${cartList}">
@@ -82,8 +70,8 @@
 
           <a href="/cart" class="button">Checkout</a>
         </div>
-        <!--end shopping-cart -->
-      </div>
+        end shopping-cart
+      </div> -->
       <!-- Navbar Start -->
       <div class="container-fluid position-relative nav-bar p-0">
         <div
@@ -105,7 +93,7 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div
-              class="collapse navbar-collapse justify-content-between px-3"
+              class="collapse navbar-collapse justify-content-between "
               id="navbarCollapse"
             >
               <div class="navbar-nav ml-auto font-weight-bold">
@@ -128,22 +116,27 @@
                   >Tour</a
                 >
                 <a
-                  href="about.html"
+                  href="/about"
                   class="nav-item nav-link"
                   th:text="#{header.label.about}"
                   >About</a
                 >
                 <a
-                  href="contact.html"
+                  href="/contact"
                   class="nav-item nav-link"
                   th:text="#{header.label.contact}"
                   >Contact</a
                 >
-                <a
+               <!--  <a
+                  class="nav-item nav-link data-toggle"
+                  href="booking/bookingtour"
+                  >ĐẶT TOUR</a
+                > -->
+                 <a
                   class="nav-item nav-link data-toggle"
                   href="/cart"
                   th:text="#{header.label.cart}"
-                  >Cart</a
+                  >Cart</a 
                 >
                 <div sec:authorize="isAnonymous()">
                   <a
@@ -156,7 +149,7 @@
                 <div sec:authorize="isAuthenticated()">
                   <a th:href="@{/profile}" class="rounded-circle">
                     <img
-                      src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                      src="https://i.pinimg.com/1200x/89/90/48/899048ab0cc455154006fdb9676964b3.jpg"
                       style="padding: 15px; width: 85px"
                       alt="Avatar"
                     />

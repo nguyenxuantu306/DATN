@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout :: dynamic(~{::body})}">
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout :: dynamic(~{::body})}">
 
 <head>
-	<meta charset="utf-8" />
-	<title>Insert title here</title>
+<meta charset="utf-8" />
+<title>Insert title here</title>
 </head>
 
 <body>
@@ -11,125 +12,160 @@
 		<div class="container">
 			<div class="row mt-3">
 				<div class="col-sm-8">
-					<h6 class="fw-bold" th:text="#{orderList.label.purchasedOrder}">
-						Đơn hàng đã mua:
-					</h6>
-					<div th:each="order, state:${sortedOrders}">
-						<div class="card border border-0 rounded-0 mt-3" style="
-                  padding: 20px;
-                  width: auto;
-                  border-radius: 3px;
-                  background-color: #fff;
-                  font-size: 14px;
-                  flex-direction: column;
-                ">
-							<div class="card-header" style="background-color: #fff">
-								<span class="fw-bold" th:text="#{orderList.label.order}">Đơn hàng:</span>
-								#[[${order.orderid}]]
-								<span class="fw-bold" th:text="${order.getOrderDateFormatted()}"></span>
-								<span th:if="${order.statusOrder.name} =='Đã hủy'" class="float-end text-danger fw-bold"
-									th:text="${order.statusOrder.name}"></span>
-								<span th:if="${order.statusOrder.name} !='Đã hủy'"
-									class="float-end text-success fw-bold" th:text="${order.statusOrder.name}"></span>
-							</div>
-							<!-- Chi tiết đơn hàng -->
-							<div class="row g-0 mt-1" th:each="orderDetail : ${order.orderDetail}">
-								<div class="col-md-2">
-									<img th:src="*{orderDetail.product.image}" class="img-fluid" alt="..." />
+					<form action="/order/list" method="get"
+						style="width: 450px; display: flex; align-items: center;"
+						id="orderForm">
+						<div class="form-group " style="flex: 1;">
+							<div class="input-group mt-2">
+								<div class="input-group-prepend">
+									<i class="input-group-text fas fa-filter" style="padding:10px"></i>
 								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<span>
-											<span th:text="${orderDetail.product.productname}"></span><br />
-											<span
+								<select class="form-control" id="statusFilter"
+									name="statusFilter" >
+									<option value="1">Chọn trạng thái</option>
+									<option value="all">Tất cả</option>
+									<option value="Chờ xác nhận">Chờ xác nhận</option>
+									<option value="Đang giao">Đang giao</option>
+									<option value="Giao hàng thành công">Giao hàng thành công</option>
+									<option value="Đã hủy">Đã hủy</option>
+									<!-- Các tùy chọn khác -->
+								</select>
+							</div>
+
+						</div>
+					</form>
+					<div th:if="${not #lists.isEmpty(sortedOrders)}">
+						<div th:each="order, state:${sortedOrders}">
+							<div class="card border border-0 rounded-0 mt-3"
+								style="padding: 20px; width: auto; border-radius: 3px; background-color: #fff; font-size: 14px; flex-direction: column;">
+								<div class="card-header" style="background-color: #fff">
+									<span class="fw-bold" th:text="#{orderList.label.order}">Đơn
+										hàng:</span> #[[${order.orderid}]] <span class="fw-bold"
+										th:text="${order.getOrderDateFormatted()}"></span> <span
+										th:if="${order.statusOrder.name} =='Đã hủy'"
+										class="float-end text-danger fw-bold"
+										th:text="${order.statusOrder.name}"></span> <span
+										th:if="${order.statusOrder.name} !='Đã hủy'"
+										class="float-end text-success fw-bold"
+										th:text="${order.statusOrder.name}"></span>
+								</div>
+								<!--							<label th:if="${order.voucherorder != null and order.voucherorder.size() > 0}">-->
+								<!--								<input class="order-id voucher-input" id="order-id"-->
+								<!--									th:value="${order.voucherorder[0]?.voucher?.discount}" />-->
+								<!--							</label>-->
+								<label
+									th:if="${order.voucherorder != null and order.voucherorder.size() > 0}">
+									<input class="order-id voucher-input"
+									th:id="'order-id-' + ${order.orderid}"
+									th:value="${order.voucherorder[0]?.voucher?.discount}"
+									style="display: none;" />
+								</label>
+
+
+
+								<!-- Chi tiết đơn hàng -->
+								<div class="row g-0 mt-1"
+									th:each="orderDetail : ${order.orderDetail}">
+									<div class="col-md-2">
+										<img th:src="*{orderDetail.product.image}" class="img-fluid"
+											alt="..." />
+									</div>
+									<div class="col-md-8">
+										<div class="card-body">
+											<span> <span
+												th:text="${orderDetail.product.productname}"></span><br />
+												<span
 												th:text="'Số lượng: '+${orderDetail.quantityordered}+'kg'"></span><br />
-											Giá:
-											<span
+												Giá: <span
 												th:text="${#numbers.formatDecimal(orderDetail.product.price, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
-										</span>
+											</span>
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="mr-2">
+											<span th:with="subtotal=${orderDetail.totalPrice}">
+												<p class="float-end"
+													th:text="${#numbers.formatDecimal(subtotal, 0, 'COMMA', 0, 'POINT')}+'đ'">
+												</p>
+											</span>
+
+										</div>
 									</div>
 								</div>
-								<div class="col-sm-2">
+								<hr class="" />
+								<!-- Tổng tiền đơn hàng -->
+								<div>
 									<div class="mr-2">
-										<span th:with="subtotal=${orderDetail.totalPrice}">
-											<p class="float-end"
-												th:text="${#numbers.formatDecimal(subtotal, 0, 'COMMA', 0, 'POINT')}+'đ'">
-											</p>
-										</span>
+										<div class="float-end text-danger">
+											Tổng giá: <span class="orderTotal"></span>
+										</div>
+									</div>
+									<br />
+									<div class="mr-2">
+										<div class="discountprice float-end text-primary">
+											<span class="orderTotal2"></span>
+										</div>
 									</div>
 								</div>
-							</div>
-							<hr class="" />
-							<!-- Tổng tiền đơn hàng -->
-							<div>
-								<div class="mr-2">
-									<div class="float-end text-danger">
-										<span class="orderTotal"></span>
-									</div>
+								<div class="mt-3">
+									<span th:if="*{order.statusOrder.name} == 'Chờ xác nhận'">
+										<button th:id="'cancelButton_' + ${order.orderid}"
+											class="cancel-button btn mt-3 text-danger float-end btn-white border border-danger ms-2"
+											th:text="#{orderList.label.cancelOrder}">Hủy đơn</button>
+									</span> <a th:href="@{|/order/detail/${order.orderid}|}"
+										class="btn mt-3 text-success float-end border border-success"
+										th:text="#{orderList.label.seeDetail}">Xem chi tiết</a>
 								</div>
 							</div>
-							<div class="mt-3">
-								<span th:if="*{order.statusOrder.name} == 'Chờ xác nhận'">
-									<button th:id="'cancelButton_' + ${order.orderid}"
-										class="cancel-button btn mt-3 text-danger float-end btn-white border border-danger ms-2"
-										th:text="#{orderList.label.cancelOrder}">
-										Hủy đơn
-									</button>
-								</span>
-								<a th:href="@{|/order/detail/${order.orderid}|}"
-									class="btn mt-3 text-success float-end border border-success"
-									th:text="#{orderList.label.seeDetail}">Xem chi tiết</a>
+						</div>
+					</div>
+					<div th:if="${#lists.isEmpty(sortedOrders)}">
+						<div class="card mx-auto rounded-0 mt-4"
+							style="height: 250px; text-align: center;">
+							<div class="card-body">
+								<img alt=""
+									style="background-position: 50% center; background-size: contain; background-repeat: no-repeat; width: 100px; height: 100px"
+									src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/orderlist/5fafbb923393b712b96488590b8f781f.png">
+								<p
+									class="card-title text-center fw-bold text-uppercase text-muted"
+									style="margin-top: 50px;">RẤT TIẾC BẠN CHƯA CÓ ĐƠN HÀNG NÀO
+									TẠI GREENFARM</p>
+
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="menu mx-3">
-						<div sec:authorize="isAuthenticated()">
-							<span sec:authentication="name"></span>
-						</div>
 						<div class="list-group border border-0 rounded-0 my-3">
+							<a class="mb-3" href="/profile">
+								<button type="button"
+										class="list-group-item list-group-item-action"
+										style="border-radius: 4px">
+									<i class="bi bi-person-lines-fill"></i> <span
+										th:text="#{profile.label.profile}"></span>
+								</button>
+							</a>
 							<a class="mb-3" href="/order/list">
-								<button type="button" class="list-group-item list-group-item-action active"
+								<button type="button"
+									class="list-group-item list-group-item-action active"
 									style="border-radius: 4px">
-									<i class="bi bi-card-list"></i>
-									 <span th:text="#{profile.label.myOrder}"></span>
+									<i class="bi bi-card-list"></i> <span
+										th:text="#{profile.label.myOrder}"></span>
 								</button>
-							</a>
-							<a class="mb-3" href="/booking/list">
-								<button type="button" class="list-group-item list-group-item-action"
+							</a> <a href="/booking/list">
+								<button type="button"
+									class="list-group-item list-group-item-action"
 									style="border-radius: 4px">
-									<i class="bi bi-card-list"></i> 
-									<span th:text="#{profile.label.myTicket}"></span>
-								</button>
-							</a>
-							<a href="/profile">
-								<button type="button" class="list-group-item list-group-item-action"
-									style="border-radius: 4px">
-									<i class="bi bi-person-lines-fill"></i> 
-									<span th:text="#{profile.label.profile}"></span>
+									<i class="bi bi-card-list"></i> <span
+										th:text="#{profile.label.myTicket}"></span>
 								</button>
 							</a>
 						</div>
-						<a class="btn border border-danger my-3 text-decoration-none text-center text-danger fw-bold"
-							style="width: 100%" href="/logoff" th:text="#{profile.label.logout}">Đăng xuất</a>
-						<div class="card mt-3" style="background-color: #fff">
-							<div class="card-header">Tổng điểm tích lũy: 180.616 điểm</div>
-							<div class="card-body">
-								<div class="row">
-									<div class="col-sm-8">
-										<small>Tích & sử dụng điểm cho khách hàng thân thiết. Sản phẩm
-											của tập đoàn MWG. Tìm hiểu thêm</small>
-									</div>
-									<div class="col-sm-4">
-										<img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/QR_Code_example.png" style="width: 50px;" alt="Quét mã QR" />
-									</div>
-								</div>
-								<div class="">
-									<a href="#" class="btn mt-3" style="background-color: #aaaaaa">Dowload App Store</a>
-								</div>
-							</div>
-						</div>
+						<a
+							class="btn border border-danger my-3 text-decoration-none text-center text-white fw-bold"
+							style="width: 100%; background-color: red;" href="/logoff"
+							th:text="#{profile.label.logout}">Đăng xuất</a>
 					</div>
 				</div>
 			</div>
@@ -147,7 +183,7 @@
 					})
 						.then(function (response) {
 							if (response.status === 200) {
-								// Nếu thành công, bạn có thể thực hiện các tác vụ sau khi đổi trạng thái
+								// Nếu thành công, bạn có thể thực hiện các tác vụ sau khi đổi trạng thái						
 								alert("Đã hủy đơn hàng thành công");
 								location.reload();
 							} else {
@@ -165,22 +201,50 @@
 		</script>
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
-				const orderCards = document.querySelectorAll(
-					".card.border.border-0.rounded-0.mt-3"
-				);
+				const orderCards = document.querySelectorAll(".card.border.border-0.rounded-0.mt-3");
+
 				orderCards.forEach(function (orderCard) {
-					const subtotalElements =
-						orderCard.querySelectorAll(".col-sm-2 span");
+					const subtotalElements = orderCard.querySelectorAll(".col-sm-2 span");
 					let orderTotal = 0;
+					let orderTotalLater = 0;
+
 					subtotalElements.forEach(function (subtotalElement) {
 						const subtotalText = subtotalElement.innerText;
-						const subtotal = parseFloat(
-							subtotalText.replace(/[^0-9.-]+/g, "")
-						);
+						const subtotal = parseFloat(subtotalText.replace(/[^0-9.-]+/g, ""));
 						orderTotal += subtotal;
 					});
-					const orderTotalElement = orderCard.querySelector(".orderTotal");
-					orderTotalElement.textContent = `${orderTotal.toLocaleString()}đ`;
+
+					const orderElements = orderCard.querySelectorAll(".order-id");
+
+					orderElements.forEach(function (orderElement) {
+						const voucherDiscount = parseFloat(orderElement.value);
+						if (!isNaN(voucherDiscount) && voucherDiscount > 0) {
+							orderTotalLater = orderTotal - (orderTotal * voucherDiscount);
+						} else {
+							orderTotalLater = orderTotal;
+						}
+
+						const orderTotalElement = orderCard.querySelector(".orderTotal");
+						const orderTotalElement2 = orderCard.querySelector(".orderTotal2");
+
+						orderTotalElement.textContent = `${orderTotal.toLocaleString()}đ`;
+						orderTotalElement2.textContent = `Giá khuyến mãi: ${orderTotalLater.toLocaleString()}đ`;
+					});
+
+					if (isNaN(orderElements)) {
+						const orderTotalElement = orderCard.querySelector(".orderTotal");
+						orderTotalElement.textContent = `${orderTotal.toLocaleString()}đ`;
+					}
+				});
+			});
+		</script>
+		<script>
+			// Sử dụng jQuery để theo dõi sự kiện khi người dùng thay đổi giá trị của select
+			$(document).ready(function () {
+				$('#statusFilter').change(function (e) {
+					e.preventDefault();
+					$('#orderForm').submit();
+
 				});
 			});
 		</script>

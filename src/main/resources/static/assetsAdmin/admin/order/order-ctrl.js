@@ -19,6 +19,39 @@ app.controller("order-ctrl", function($scope, $http) {
 		return total;
 	};
 
+	//Tính tổng đơn hàng
+	$scope.calculateTotalVoucher = function(item) {
+		var totalVoucher = 0.0;
+		var voucherDiscount = 0.0;
+		var discountAmount = 0.0;
+		// Tính tổng giá trị sản phẩm trong đơn hàng
+		if (item.orderDetail && item.orderDetail.length > 0) {
+			for (var i = 0; i < item.orderDetail.length; i++) {
+				totalVoucher += item.orderDetail[i].totalPrice;
+			}
+		}
+
+
+		// Áp dụng giảm giá từ voucher nếu có
+		if (item.voucherorder && item.voucherorder.length > 0 && item.voucherorder[0].voucher && item.voucherorder[0].voucher.discount) {
+			voucherDiscount = item.voucherorder[0].voucher.discount;
+			discountAmount = totalVoucher * voucherDiscount;
+
+			// Giảm giá từ voucher
+			totalVoucher -= discountAmount;
+		} else {
+			console.log("Không có voucher hoặc thông tin voucher không đúng!");
+			//console.log(item);
+		}
+
+		// Đảm bảo tổng không âm
+		if (totalVoucher < 0) {
+			totalVoucher = 0;
+		}
+
+		return totalVoucher;
+	};
+
 
 	$scope.formatPrice = function(price) {
 		var priceString = price.toString();
@@ -40,8 +73,8 @@ app.controller("order-ctrl", function($scope, $http) {
 		$http.get("/rest/orderdetails").then(resp => {
 			$scope.items2 = resp.data;
 
-			$scope.totalPrice = $scope.items2.reduce((sum, item) => sum + item.totalprice, 0);
-			console.log($scope.totalPrice);
+			/*	$scope.totalPrice = $scope.items2.reduce((sum, item) => sum + item.totalprice, 0);
+				console.log($scope.totalPrice);*/
 		});
 
 		// Load states
@@ -83,7 +116,7 @@ app.controller("order-ctrl", function($scope, $http) {
 
 		var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
 		// Kiểm tra và trừ số lượng sản phẩm trong giỏ hàng
-		if (item.statusOrder.statusorderid == '2') {
+		if (item.statusOrder.statusorderid == '3') {
 			angular.forEach($scope.form.orderDetail, function(orderDetail) {
 				var product = orderDetail.product;
 				var quantityAvailable = orderDetail.product.quantityavailable;
@@ -100,7 +133,7 @@ app.controller("order-ctrl", function($scope, $http) {
 
 				$http.put(`/rest/products/${orderDetail.product.productid}`, orderDetail.product)
 					.then(function(response) {
-						console.log("Update success" , response);
+						console.log("Update success", response);
 					})
 					.catch(function(error) {
 						// Xử lý lỗi
@@ -144,22 +177,22 @@ app.controller("order-ctrl", function($scope, $http) {
 	$scope.selectedStatus = "1";
 
 	$scope.filterOrders = function() {
-    // Gửi yêu cầu HTTP đến API /byStatusName với tham số statusName là giá trị đã chọn
-    $http.get('/rest/orders/byStatusName', { params: { statusName: $scope.selectedStatus } })
-        .then(function(response) {
-            // Xử lý dữ liệu trả về từ API
-            $scope.items = response.data;
-        })
-        .catch(function(error) {
-            console.error("Lỗi trong quá trình gửi yêu cầu: " + error);
-        });
-};
+		// Gửi yêu cầu HTTP đến API /byStatusName với tham số statusName là giá trị đã chọn
+		$http.get('/rest/orders/byStatusName', { params: { statusName: $scope.selectedStatus } })
+			.then(function(response) {
+				// Xử lý dữ liệu trả về từ API
+				$scope.items = response.data;
+			})
+			.catch(function(error) {
+				console.error("Lỗi trong quá trình gửi yêu cầu: " + error);
+			});
+	};
 
 
 
 	$scope.pager = {
 		page: 0,
-		size: 40,
+		size: 100,
 		get items() {
 			var start = this.page * this.size;
 			return $scope.items.slice(start, start + this.size);
@@ -251,6 +284,7 @@ app.controller("order-ctrl", function($scope, $http) {
 					$scope.items = resp.data;
 
 
+					//$scope.exportExcel();
 
 					$scope.items.forEach(function(item) {
 						var formattedOrderDate = moment(item.orderdate, "YYYY-MM-DDTHH:mm:ss").toDate();
@@ -301,7 +335,13 @@ app.controller("order-ctrl", function($scope, $http) {
 
 	// Trong AngularJS controller hoặc service
 	$scope.exportExcel = function() {
-		$http.get('/excel-order', { responseType: 'arraybuffer' })
+		$http.get('/excel-order', {
+			params: {
+				startDateTime: $scope.startDateTime,
+				endDateTime: $scope.endDateTime
+			},
+			responseType: 'arraybuffer'
+		})
 			.then(function(response) {
 				var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 				var link = document.createElement('a');

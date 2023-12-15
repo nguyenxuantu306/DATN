@@ -1,18 +1,20 @@
 package com.greenfarm.restcontroller;
 
-import java.text.SimpleDateFormat;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,21 +29,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.greenfarm.dto.OrderDTO;
+import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
-import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
+import com.greenfarm.entity.Report7day;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
-import com.greenfarm.entity.RevenueTK;
-import com.greenfarm.service.OrderDetailService;
 import com.greenfarm.service.OrderService;
-import com.greenfarm.service.ProductService;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalTime;
 
 @CrossOrigin("*")
 @RestController
@@ -49,12 +47,6 @@ import java.time.LocalTime;
 public class OrderRestController {
 	@Autowired
 	OrderService orderService;
-
-	@Autowired
-	private ProductService productService;
-
-	@Autowired
-	private OrderDetailService orderDetailService;
 
 	@Autowired
 	ModelMapper modelMapper;
@@ -71,51 +63,7 @@ public class OrderRestController {
 		return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
 	}
 
-//	public ResponseEntity<String> getAllOrders(
-//	        @RequestParam(defaultValue = "0") int page,
-//	        @RequestParam(defaultValue = "10") int size,
-//	        @RequestParam(required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate startDay,
-//	        @RequestParam(required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate endDay) {
-//	    List<Order> orders;
-//
-//	    // Kiểm tra xem người dùng đã cung cấp ngày bắt đầu hay chưa
-//	    if (startDay != null) {
-//	        // Lấy ngày hiện tại
-//	        LocalDate currentDate = LocalDate.now();
-//
-//	        // Lọc danh sách đơn hàng từ ngày bắt đầu đến ngày hiện tại
-//	        LocalDateTime startTime = LocalDateTime.of(startDay, LocalTime.MIN);
-//	        LocalDateTime endTime = LocalDateTime.of(currentDate, LocalTime.MIN).plusDays(1);
-//	        orders = orderService.findOrdersByDateRange(startTime, endTime, page, size);
-//	    } else if (endDay != null) {
-//	        // Lọc danh sách đơn hàng từ ngày đầu tiên đến ngày kết thúc
-//	        LocalDateTime startTime = LocalDateTime.of(LocalDate.MIN, LocalTime.MIN);
-//	        LocalDateTime endTime = LocalDateTime.of(endDay, LocalTime.MIN).plusDays(1);
-//	        orders = orderService.findOrdersByDateRange(startTime, endTime, page, size);
-//	    } else {
-//	        // Lấy toàn bộ danh sách đơn hàng nếu không có ngày bắt đầu và ngày kết thúc
-//	        orders = orderService.getAllOrders(page, size);
-//	    }
-//
-//	    // Sắp xếp danh sách đơn hàng theo ngày giảm dần (từ mới nhất đến cũ nhất)
-//	    orders.sort(Comparator.comparing(Order::getOrderDateFormatted).reversed());
-//
-//	    List<OrderDTO> orderDTOs = orders.stream()
-//	            .map(order -> modelMapper.map(order, OrderDTO.class))
-//	            .collect(Collectors.toList());
-//
-//	    ObjectMapper objectMapper = new ObjectMapper();
-//	    objectMapper.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
-//
-//	    try {
-//	        String json = objectMapper.writeValueAsString(orderDTOs);
-//	        return ResponseEntity.ok(json);
-//	    } catch (JsonProcessingException e) {
-//	        // Xử lý lỗi nếu chuyển đổi sang JSON không thành công
-//	        e.printStackTrace();
-//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//	    }
-//	}
+
 
 	@GetMapping("/search")
 	public ResponseEntity<String> searchOrdersByDate(
@@ -139,6 +87,7 @@ public class OrderRestController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
+
 
 	@PostMapping()
 	public Order create(@RequestBody JsonNode orderData) {
@@ -205,5 +154,18 @@ public class OrderRestController {
 	@GetMapping("/findyearrevenue/{year}")
 	public List<FindReportYear> getYearlyRevenue(@PathVariable Integer year) {
 		return orderService.findYearlyRevenue(year);
+	}
+
+	@GetMapping("/getCategorySalesByDate")
+	public ResponseEntity<List<CategorySalesByDate>> getCategorySalesByDate(
+			@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+
+		List<CategorySalesByDate> result = orderService.getCategorySalesByDate(date);
+		return ResponseEntity.ok(result);
+	}
+
+	@GetMapping("/last7days")
+	public List<Report7day> getRevenueLast7Days() {
+		return orderService.getRevenueLast7Days();
 	}
 }
