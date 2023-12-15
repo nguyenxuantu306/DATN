@@ -15,10 +15,11 @@
 							<button ng-click="captureAndSend()">Capture and Send</button>
 
 							<hr>
-							<div class="bg-primary" style="max-width: 640; max-height: 480">
-								Hiển thị video từ camera được chọn
-								<video id="camera-view" style="max-width: 100%" autoplay></video>
 
+							<div class="bg-success" style="max-width: 640; max-height: 480">
+
+								<video id="camera-view" style="max-width: 100%" autoplay></video>
+								<h3 style="text-align: center;">Quét mã tại đây</h3>
 							</div>
 						</div>
 
@@ -39,9 +40,9 @@
 										</thead>
 										<tbody>
 											<tr ng-repeat="item in tourlist">
-												<th>{{$index + 1}}</th>
-												<th>{{item.tour.tourname}}</th>
-												<td style="width: 200px; font-weight: bold;"
+												<th style="width: 50px">{{$index + 1}}</th>
+												<th style="width: 200px">{{item.tour.tourname}}</th>
+												<td style="width: 100px; font-weight: bold;"
 													ng-style="{
 								    'color': item.tour.departureday === 'Chủ nhật hàng tuần' ? 'Brown' :
 								             item.tour.departureday === 'Thứ bảy hàng tuần' ? 'orange' :
@@ -50,7 +51,7 @@
 								             item.tour.departureday === 'Ngày 20 hàng tháng' ? 'Purple' : ''
 									}">{{item.tour.departureday}}</td>
 
-												<th style="width: 200px; color: blue;">{{item.tourdates
+												<th style="width: 100px; color: blue;">{{item.tourdates
 													| date:'dd/MM/yyyy'}}</th>
 												<th>{{item.availableslots}}</th>
 										</tbody>
