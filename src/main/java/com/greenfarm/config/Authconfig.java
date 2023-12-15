@@ -110,7 +110,7 @@ public class Authconfig {
 
 		http.authorizeRequests(authorize -> authorize
 				.requestMatchers("/profile", "/booking/*","/checkout", "/cart").authenticated()
-				.requestMatchers("/assetsAdmin/", "/admin")
+				.requestMatchers("/assetsAdmin/**", "/admin")
 				.hasRole("Administrator")
 				.requestMatchers("/assets/*").permitAll()
 				.anyRequest().permitAll())

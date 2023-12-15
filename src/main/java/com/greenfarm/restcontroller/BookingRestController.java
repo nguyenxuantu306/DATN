@@ -143,7 +143,7 @@ public class BookingRestController {
 		List<ReportYear> yearRevenue = bookingService.getbookingYearRevenue();
 		return new ResponseEntity<>(yearRevenue, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/findbookingyearrevenue/{year}")
 	public List<FindReportYear> getBookingYearlyRevenue(@PathVariable Integer year) {
 		return bookingService.findBookingYearlyRevenue(year);
@@ -162,28 +162,23 @@ public class BookingRestController {
 
 		System.out.println(qrCodeUrl);
 		System.out.println(booking.getUser().getEmail());
-		
-			System.out.println("đang chyaj bth");
-			// Gửi email với đường dẫn URL của hình ảnh đính kèm
-			BookingConfirmEmailContext bookingConfirmEmailContext = new BookingConfirmEmailContext();
-			System.out.println("đang chyaj bth 1");
-			User user = booking.getUser();
-			bookingConfirmEmailContext.init(booking);
-			System.out.println("đang chyaj bth2");
-			bookingConfirmEmailContext.setQrCodeData(qrCodeUrl);
-			bookingConfirmEmailContext.setBooking(booking);
-			System.out.println("đang chyaj bth2");
-			try {
-			//emailService.sendBookingMail(bookingConfirmEmailContext);
+
+		// Gửi email với đường dẫn URL của hình ảnh đính kèm
+		BookingConfirmEmailContext bookingConfirmEmailContext = new BookingConfirmEmailContext();
+
+		User user = booking.getUser();
+		bookingConfirmEmailContext.init(booking);
+		bookingConfirmEmailContext.setQrCodeData(qrCodeUrl);
+		bookingConfirmEmailContext.setBooking(booking);
+		try {
 			emailService.sendMail(bookingConfirmEmailContext);
 //			emailService.sendEmailWithBooking(booking.getUser().getEmail(), "Order Confirmation",
 //					"Thanks for your recent order", qrCodeUrl);
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			System.out.println("Lỗi");
 		}
-		
+
 	}
 
 	@Autowired
@@ -222,12 +217,12 @@ public class BookingRestController {
 			ModelAndView mav = new ModelAndView("mytiecketseen");
 			mav.addObject("message", "Bạn không có quyền xác nhận vé.");
 			model.addAttribute("bookinguse", booking);
-			
+
 			return mav;
 		}
 	}
 
-	//Lấy quyền user
+	// Lấy quyền user
 	private String getUserRole(Principal principal) {
 		User user = userService.findByEmail(principal.getName());
 
@@ -244,7 +239,7 @@ public class BookingRestController {
 			}
 		}
 
-		return "USER"; 
+		return "USER";
 	}
 
 }

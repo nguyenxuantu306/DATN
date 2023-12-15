@@ -134,67 +134,82 @@
 					<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
 						tabindex="0">
 						<h3>BẢNG GIÁ</h3>
-						<table class="table" style="text-align: center">
-							<thead>
-								<tr>
-									<th scope="col">STT</th>
-									<th scope="col">Giá người lớn</th>
-									<th scope="col">Giá trẻ em</th>
-									<th scope="col">Hành động</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th style="padding-top: 20px" scope="row">1</th>
-									<td style="padding-top: 20px"
-										th:text="*{#numbers.formatDecimal(pricings.Adultprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
-									</td>
-									<td style="padding-top: 20px"
-										th:text="*{#numbers.formatDecimal(pricings.Childprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
-									</td>
-									<!-- <td style="padding-top: 20px" th:text="*{Availableslots}"></td> -->
-									<td>
-										<!-- Thay đổi nút thành "Tour đã hết chỗ" nếu hết chỗ --> <a
-											th:href="@{|/booking/${tourid}|}" class="btn btn-md btn-primary p-2">Đặt
-											ngay</a> <!-- <span style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
+						<div>
+
+
+							<table class="table" style="text-align: center">
+								<thead>
+									<tr>
+										<th scope="col">STT</th>
+										<th scope="col">Giá người lớn</th>
+										<th scope="col">Giá trẻ em</th>
+										<th scope="col">Hành động</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th style="padding-top: 20px" scope="row">1</th>
+										<td style="padding-top: 20px"
+											th:text="*{#numbers.formatDecimal(pricings.Adultprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
+										</td>
+										<td style="padding-top: 20px"
+											th:text="*{#numbers.formatDecimal(pricings.Childprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}">
+										</td>
+										<!-- <td style="padding-top: 20px" th:text="*{Availableslots}"></td> -->
+										<td>
+											<!-- Thay đổi nút thành "Tour đã hết chỗ" nếu hết chỗ --> <a
+												th:href="@{|/booking/${tourid}|}" class="btn btn-md btn-primary p-2">Đặt
+												ngay</a> <!-- <span style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
 										th:if="*{availableslots <= 0}" class="btn btn-md btn-primary p-2">Tour
 											đã hết chỗ</span> -->
-									</td>
+										</td>
 
-								</tr>
-							</tbody>
-						</table>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 						<h3 class="mt-2">NGÀY GIỜ ĐẶT TOUR</h3>
-						<table class="table" style="text-align: center">
-							<thead>
-								<tr>
-									<th scope="col">STT</th>
-									<th scope="col">Ngày đặt chỗ</th>
-									<th scope="col">Chỗ còn trống</th>
-									<th scope="col">Hành động</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="tourDate, iterStat : ${item.tourdate}"
-									th:if="${tourDate.tourdates.after(#dates.createNow())}">
-									<td th:text="${iterStat.index + 1}"></td>
-									<td th:text="${#dates.format(tourDate.tourdates, 'dd-MM-yyyy')}"></td>
-									<td th:text="${tourDate.availableslots}"></td>
-									<td>
-										<!-- Check if availableslots is greater than 0 -->
-										<a th:if="${tourDate.availableslots > 0}"
-											th:href="@{|/booking/${tourDate.tour.tourid}|}"
-											class="btn btn-md btn-primary p-2">Đặt ngay</a>
+						<!-- Store the condition result in a variable -->
+						<th:block
+							th:with="hasEvents=${#lists.isEmpty(item.tourdate.?[tourdates.after(#dates.createNow())])}">
+							<!-- Check if there are events -->
+							<div th:unless="${hasEvents}">
+								<table class="table" style="text-align: center">
+									<thead>
+										<tr>
+											<th scope="col">STT</th>
+											<th scope="col">Ngày đặt chỗ</th>
+											<th scope="col">Chỗ còn trống</th>
+											<th scope="col">Hành động</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="tourDate, iterStat : ${item.tourdate}"
+											th:if="${tourDate.tourdates.after(#dates.createNow())}">
+											<td th:text="${iterStat.index + 1}"></td>
+											<td th:text="${#dates.format(tourDate.tourdates, 'dd-MM-yyyy')}"></td>
+											<td th:text="${tourDate.availableslots}"></td>
+											<td>
+												<!-- Check if availableslots is greater than 0 -->
+												<a th:if="${tourDate.availableslots > 0}"
+													th:href="@{|/booking/${tourDate.tour.tourid}|}"
+													class="btn btn-md btn-primary p-2">Đặt ngay</a>
 
-										<!-- Display "Tour đã hết chỗ" if availableslots is 0 or less -->
-										<span th:if="${tourDate.availableslots <= 0}"
-											style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
-											class="btn btn-md btn-primary p-2">Tour đã hết chỗ</span>
-									</td>
-								</tr>
-							</tbody>
+												<!-- Display "Tour đã hết chỗ" if availableslots is 0 or less -->
+												<span th:if="${tourDate.availableslots <= 0}"
+													style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
+													class="btn btn-md btn-primary p-2">Tour đã hết chỗ</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- Display the message if there are no events -->
+							<div th:if="${hasEvents}">
+								<p class="text-center">Hiện tại không có sự kiện này</p>
+							</div>
+						</th:block>
 
-						</table>
 					</div>
 					<div class="tab-pane fade" id="pills-infomation" role="tabpanel"
 						aria-labelledby="pills-infomation-tab" tabindex="0">
