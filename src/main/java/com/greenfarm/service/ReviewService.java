@@ -1,7 +1,6 @@
 package com.greenfarm.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,5 +28,7 @@ public interface ReviewService {
 	boolean hasUserReviewedProduct(User user, Product product);
 
 	List<StarCount> countReviewsByRating(Integer productId);
+
+	Page<Review> findByProductOrderByDateCreatedDesc(Product item, Pageable pageable);
 
 }

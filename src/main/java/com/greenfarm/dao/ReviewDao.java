@@ -20,6 +20,10 @@ public interface ReviewDao extends JpaRepository<Review, Integer> {
 
 		
 	Page<Review> findByProduct(Product product, Pageable pageable);
+	
+	@Query("SELECT r FROM Review r WHERE r.product = :product ORDER BY r.datepost DESC")
+    Page<Review> findByProductOrderByDateCreatedDesc(@Param("product") Product product, Pageable pageable);
+	
 
 	// Đếm sao
 	@Query("SELECT DISTINCT new ReportRevenue(o.rating, count(o)) FROM Review o GROUP BY o.rating ORDER BY o.rating DESC")
