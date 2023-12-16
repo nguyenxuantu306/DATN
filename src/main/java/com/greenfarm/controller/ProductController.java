@@ -72,7 +72,7 @@ public class ProductController {
 
 	@GetMapping("/product/detail/{productid}")
 	public String detail(Model model, @PathVariable("productid") Integer productid,
-			@PageableDefault(size = 2) Pageable pageable, UriComponentsBuilder uriBuilder) {
+			@PageableDefault(size = 3) Pageable pageable, UriComponentsBuilder uriBuilder) {
 		Integer id = productid;
 		Product item = productService.findById(id);
 

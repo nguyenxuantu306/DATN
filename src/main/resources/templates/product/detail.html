@@ -241,7 +241,7 @@
 				<div th:each="review : ${review}" class="cardrating">
 					<div class="row ">
 						<div class="col-md-6">
-							<img style="width: 50px; height: 50px" class="profile-pic"
+							<img style="width: 40px; height: 40px" class="profile-pic"
 								th:src="@{|${review.user.image}|}" alt="User Image"
 								th:text="${review.user.email}" />
 
@@ -292,25 +292,9 @@
 					</div>
 
 				</div>
-				<!--<div class="panel-footer text-center py-3">
-					<span class="col-md-6"
-						style="text-align: right; font-weight: bold; color: black; font-size: 15px;"></span>
-					<button ng-click="pager.first()" class="btn btn-success" style="background-color: #7AB730">
-						<i class="fas fa-angle-double-left"></i>
-					</button>
-					<button ng-click="pager.prev()" class="btn btn-success" style="background-color: #7AB730">
-						<i class="fas fa-angle-left"></i>
-					</button>
-					<button ng-click="pager.next()" class="btn btn-success" style="background-color: #7AB730">
-						<i class="fas fa-angle-right"></i>
-					</button>
-					<button ng-click="pager.last()" class="btn btn-success" style="background-color: #7AB730">
-						<i class="fas fa-angle-double-right"></i>
-					</button>
+				
 
-				</div>-->
-
-				<div th:if="${review.totalPages > 1}"
+				<div style="padding-top:30px" th:if="${review.totalPages > 1}"
 					class="pagination justify-content-center">
 					<ul class="pagination justify-content-center">
 						<li
