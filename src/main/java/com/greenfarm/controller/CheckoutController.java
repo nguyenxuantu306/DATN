@@ -206,9 +206,9 @@ public class CheckoutController {
 				model.addAttribute("cartConfirmation", cartItems);
 				cartService.delete(cartItems);
 				
-				
+				// gửi mail khi thành công
 				OrderConfirmEmailContext confirmEmailContext = new OrderConfirmEmailContext();
-				confirmEmailContext.init(orderItem, orderDetailList);
+				confirmEmailContext.init(orderItem, orderDetailList,total,discountedTotal);
 				emailService.sendMail(confirmEmailContext);
 
 			}

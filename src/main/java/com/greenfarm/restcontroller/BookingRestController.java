@@ -1,6 +1,7 @@
 package com.greenfarm.restcontroller;
 
 import java.io.FileNotFoundException;
+
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,6 +34,8 @@ import com.greenfarm.dto.BookingDTO;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.ReportRevenue;
+import com.greenfarm.entity.ReportSP;
+import com.greenfarm.entity.ReportTop5Tour;
 import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.Role;
 import com.greenfarm.entity.StatusBooking;
@@ -251,6 +254,11 @@ public class BookingRestController {
 		}
 
 		return "USER";
+	}
+	
+	@GetMapping("/thongke/top5toudatnhieunhat")
+	public List<ReportTop5Tour> gettourdatNT() {
+		return bookingService.gettourdatNT();
 	}
 
 }

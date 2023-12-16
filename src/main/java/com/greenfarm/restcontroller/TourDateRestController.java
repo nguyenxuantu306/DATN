@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.TourDateDTO;
+import com.greenfarm.entity.CategorySalesByDate;
 import com.greenfarm.entity.TourDate;
 import com.greenfarm.service.TourDateService;
 
@@ -150,5 +151,13 @@ public class TourDateRestController {
 
 		return ResponseEntity.ok(tourdateDtos);
 	}
+	
+//	@GetMapping("/getTourByDate")
+//	public ResponseEntity<List<CategorySalesByDate>> getTourByDate(
+//			@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+//
+//		List<CategorySalesByDate> result = orderService.getTourByDate(date);
+//		return ResponseEntity.ok(result);
+//	}
 
 }

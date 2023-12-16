@@ -35,11 +35,14 @@ import com.greenfarm.entity.Voucher;
 import com.greenfarm.entity.VoucherOrder;
 import com.greenfarm.service.AddressService;
 import com.greenfarm.service.CartService;
+import com.greenfarm.service.EmailService;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.VNPayService;
 import com.greenfarm.service.VoucherService;
 import com.greenfarm.service.VoucherUserService;
+import com.greenfarm.service.impl.OrderConfirmEmailContext;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -80,6 +83,8 @@ public class VNPayController {
 	@Autowired
 	AddressService addressService;
 	
+	@Autowired
+	EmailService emailService;
 
 	@PostMapping("/submitOrder")
 	public String submidOrder(@RequestParam("hiddenTotalPrice") int totalPrice,
@@ -99,7 +104,7 @@ public class VNPayController {
 	@GetMapping("/cancelVNpay")
 	public String GetMapping(Model model, 
 			@ModelAttribute("Order") OrderDTO orderDTO, 
-			HttpServletRequest request) {
+			HttpServletRequest request) throws MessagingException {
 		int paymentStatus = vnPayService.orderReturn(request);
 
 		if(paymentStatus != 1 ) {
@@ -197,6 +202,11 @@ public class VNPayController {
 				model.addAttribute("total", total);
 				model.addAttribute("cartConfirmation", cartItems);
 				cartService.delete(cartItems);
+				
+				// gửi mail
+				OrderConfirmEmailContext confirmEmailContext = new OrderConfirmEmailContext();
+				confirmEmailContext.init(orderItem, orderDetailList,total,discountedTotal);
+				emailService.sendMail(confirmEmailContext); 
 			}
 
 			return "success";

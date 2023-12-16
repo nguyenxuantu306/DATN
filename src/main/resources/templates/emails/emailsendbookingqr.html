@@ -8,72 +8,201 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+	crossorigin="anonymous">
+
 </head>
 
 <body>
 
-	<div class="col-5 bg-success">
-		<div style="text-align: center; background-color: white;" class="py-3">
-			<div class="confirmation-message">
-				<img
-					src="https://firebasestorage.googleapis.com/v0/b/luuanh-7c9d9.appspot.com/o/logo.png?alt=media&token=4679050b-5088-44ac-8d0e-3eb5e45f8b37">
-				<h2>Chào {{Tên Khách Hàng}}</h2>
-				<h2 th:text="${firstName}"></h2>
-				<h3>
-					<p style="color: red;">CẢM ƠN QUÍ KHÁCH ĐÃ SỬ DỤNG DỊCH VỤ CỦA
-						CHÚNG TÔI</p>
-				</h3>
-			</div>
-			<div style="text-align: center; margin: 0 auto;">
-				<h3>Mã QR của Quý Khách:</h3>
 
-				<img alt="QRcode" th:src="${qrCodeData}"> {{Địa Chỉ Mã QR của
-				khách hàng}} <a th:text="${qrCodeData}"></a>
+	<div style="text-align: center;">
+		<div>
+			<img
+				src="https://firebasestorage.googleapis.com/v0/b/luuanh-7c9d9.appspot.com/o/logo.png?alt=media&token=4679050b-5088-44ac-8d0e-3eb5e45f8b37">
+			<h2>
+				Chào: <span th:text="${firstName}"></span>
+			</h2>
+			<h3>
+				<p style="color: red;">CẢM ƠN QUÍ KHÁCH ĐÃ SỬ DỤNG DỊCH VỤ CỦA
+					CHÚNG TÔI</p>
+			</h3>
+		</div>
+	</div>
 
-			</div>
-			<div class="card">
-				<div class="card-body">
-					<h3 class="card-title" style="text-align: center;">Thông tin
-						đặt vé</h3>
-					<p class="card-text">
-						<i class="fas fa-ticket-alt"></i> Mã vé: <strong
-							th:text="${bookingid}"></strong>
-					</p>
-					<p class="card-text">
-						<i class="fas fa-ticket-alt"></i> Ngày Đặt: <strong
-							th:text="${bookingdate}"></strong>
-					</p>
-					<p class="card-text">
-						<i class="fas fa-user"></i> Số vé người lớn: <strong
-							th:text="${Adultticketnumber}"></strong> <strong> Vé</strong>
-					</p>
-					<p class="card-text">
-						<i class="fas fa-child"></i> Số vé người trẻ em: <strong
-							th:text="${Childticketnumber}"></strong> <strong> Vé</strong>
-					</p>
-					<p class="card-text">
-						<i class="fas fa-route"></i> Tên tour: <strong
-							th:text="${bookingtour}"> </strong> <i class="fa fa-calendar"></i>
-						- Tổ chức ngày :<strong th:text="${eventdate}"> </strong>
-					</p>
-					<p class="card-text">
-						Tổng tiền: <a th:text="${Totalprice}"></a> (VND)
-					</p>
+	<div class="u-row-container"
+		style="padding: 0px; background-color: transparent">
+		<div class="u-row"
+			style="margin: 0 auto; min-width: 320px; max-width:1000px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;">
+			<div
+				style="border-collapse: collapse; display: table; width: 100%; height: 100%; background-color: transparent;">
+				<div class="u-col u-col-50"
+					style="max-width: 320px; min-width: 300px; display: table-cell; vertical-align: top;">
+					<div style="height: 100%; width: 100% !important;">
 
+						<div class="v-col-padding"
+							style="box-sizing: border-box; height: 100%; padding: 0px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-right: 0px solid transparent; border-bottom: 0px solid transparent;">
+
+
+							<table style="font-family: arial, helvetica, sans-serif;"
+								role="presentation" cellpadding="0" cellspacing="0" width="100%"
+								border="0">
+								<tbody>
+									<tr>
+										<td
+											style="overflow-wrap: break-word; word-break: break-word; padding: 0px; font-family: arial, helvetica, sans-serif;"
+											align="left">
+
+											<table width="100%" cellpadding="0" cellspacing="0"
+												border="0">
+												<tbody>
+													<tr>
+														<td class="v-text-align"
+															style="padding-right: 0px; padding-left: 0px;"
+															align="center"><img align="center" border="0"
+															th:src="${qrCodeData}" alt="Facial Cleanser"
+															title="Facial Cleanser"
+															style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; clear: both; display: inline-block !important; border: none; height: auto; float: none; width: 100%; max-width: 300px;"
+															width="400"> </td>
+														
+													</tr>
+												</tbody>
+											</table>
+
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+
+						</div>
+
+					</div>
+				</div>
+
+				<div id="u_column_5" class="u-col u-col-50"
+					style="max-width: 320px; min-width: 300px; display: table-cell; vertical-align: top;">
+					<div style="height: 100%; width: 100% !important;">
+						<!--[if (!mso)&(!IE)]><!-->
+						<div class="v-col-padding"
+							style="box-sizing: border-box; height: 100%; padding: 0px 0px 0px 10px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-right: 0px solid transparent; border-bottom: 0px solid transparent;">
+							<!--<![endif]-->
+
+							<table style="font-family: arial, helvetica, sans-serif;"
+								role="presentation" cellpadding="0" cellspacing="0" width="100%"
+								border="0">
+								<tbody>
+									<tr>
+										<td
+											style="overflow-wrap: break-word; word-break: break-word; padding: 10px; font-family: arial, helvetica, sans-serif;"
+											align="left">
+
+											<table height="0px" align="center" border="0" cellpadding="0"
+												cellspacing="0" width="100%"
+												style="border-collapse: collapse; table-layout: fixed; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; vertical-align: top; border-top: 1px solid #ffffff; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%">
+												<tbody>
+													<tr style="vertical-align: top">
+														<td
+															style="word-break: break-word; border-collapse: collapse !important; vertical-align: top; font-size: 0px; line-height: 0px; mso-line-height-rule: exactly; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%">
+															<span>&nbsp;</span>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<table id="u_content_heading_2"
+								style="font-family: arial, helvetica, sans-serif;"
+								role="presentation" cellpadding="0" cellspacing="0" width="100%"
+								border="0">
+								<tbody>
+									<tr>
+										<td
+											style="overflow-wrap: break-word; word-break: break-word; padding: 10px; font-family: arial, helvetica, sans-serif;"
+											align="left">
+											<!--[if mso]><table width="100%"><tr><td><![endif]-->
+											<h1 class="v-text-align"
+												style="margin: 0px; line-height: 140%; text-align: left; word-wrap: break-word; font-family: book antiqua, palatino; font-size: 20px; font-weight: 400;">
+												<strong>Thôn tin đặt vé</strong>
+											</h1> <!--[if mso]></td></tr></table><![endif]-->
+
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<table id="u_content_text_2"
+								style="font-family: arial, helvetica, sans-serif;"
+								role="presentation" cellpadding="0" cellspacing="0" width="100%"
+								border="0">
+								<tbody>
+									<tr>
+										<td>
+											<div class="card">
+												<div class="card-body">
+													
+													<p class="card-text">
+														<i class="fas fa-ticket-alt"></i> Mã vé: <strong
+															th:text="${bookingid}"></strong>
+													</p>
+													<p class="card-text">
+														<i class="fas fa-ticket-alt"></i> Ngày Đặt: <strong
+															th:text="${bookingdate}"></strong>
+													</p>
+													<p class="card-text">
+														<i class="fas fa-user"></i> Số vé người lớn: <strong
+															th:text="${Adultticketnumber}"></strong> <strong>
+															Vé</strong>
+													</p>
+													<p class="card-text">
+														<i class="fas fa-child"></i> Số vé người trẻ em: <strong
+															th:text="${Childticketnumber}"></strong> <strong>
+															Vé</strong>
+													</p>
+													<p class="card-text">
+														<i class="fas fa-route"></i> Tên tour: <strong
+															th:text="${bookingtour}"> </strong> <i
+															class="fa fa-calendar"></i> - Tổ chức ngày :<strong
+															th:text="${eventdate}"> </strong>
+													</p>
+													<p class="card-text">
+														Tổng tiền: <a th:text="${Totalprice}"></a> (VND)
+													</p>
+													<p class="card-text">
+														Địa chỉ mã qr: <a style="color: blue;" th:text="${qrCodeData}"></a>
+													</p>
+
+												</div>
+
+											</div>
+
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+
+
+							<!--[if (!mso)&(!IE)]><!-->
+						</div>
+						<!--<![endif]-->
+					</div>
 				</div>
 
 			</div>
-
-
-
-
-
-
-
-
 		</div>
-
 	</div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+		integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+		crossorigin="anonymous"></script>
 </body>
 
 </html>

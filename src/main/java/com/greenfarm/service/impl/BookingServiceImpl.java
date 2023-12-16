@@ -18,6 +18,8 @@ import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.ReportRevenue;
+import com.greenfarm.entity.ReportSP;
+import com.greenfarm.entity.ReportTop5Tour;
 import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.StatusBooking;
 import com.greenfarm.entity.StatusOrder;
@@ -130,6 +132,16 @@ public class BookingServiceImpl implements BookingService {
 			} else {
 				throw new RuntimeException("Không tìm tour.");
 			}
+		}
+	}
+
+	@Override
+	public List<ReportTop5Tour> gettourdatNT() {
+		List<ReportTop5Tour> toursBygetReporttourbanchay = dao.getTop5ToursBygetReporttourdatNT();
+		if (toursBygetReporttourbanchay.size() > 5) {
+			return toursBygetReporttourbanchay.subList(0, 5);
+		} else {
+			return toursBygetReporttourbanchay;
 		}
 	}
 }

@@ -33,12 +33,14 @@ public class OrderConfirmEmailContext extends AbstractEmailContext {
 //		
 //	}
 	
-	public void init(Order orderItem, List<OrderDetail> orderDetailList) {
+	public void init(Order orderItem, List<OrderDetail> orderDetailList,float total,float discountedTotal) {
 	    System.out.println(orderItem.getOrderid());
 	    User customer = orderItem.getUser();
 	    put("firstName", customer.getFirstname());
 	    put("order", orderItem);
 	    put("orderDetails", orderDetailList);
+	    put("total", total);
+	    put("discountedTotal",discountedTotal);
 	    setTemplateLocation("emails/emailsendorder");
 	    setSubject("Confirm Order");
 	    setFrom("no-reply@javadevjournal.com");
