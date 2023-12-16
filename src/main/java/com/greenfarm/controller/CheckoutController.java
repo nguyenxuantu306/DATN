@@ -46,6 +46,7 @@ import com.greenfarm.service.UserService;
 import com.greenfarm.service.VoucherService;
 import com.greenfarm.service.VoucherUserService;
 import com.greenfarm.service.impl.AccountVerificationEmailContext;
+import com.greenfarm.service.impl.OrderConfirmEmailContext;
 import com.greenfarm.service.impl.OrderEmailContext;
 
 import jakarta.mail.MessagingException;
@@ -87,6 +88,8 @@ public class CheckoutController {
 
 	@Autowired
 	AddressService addressService;
+	
+	
 
 	@GetMapping("/checkout")
 	public String Checkout(ModelMap modelMap, HttpServletRequest request, Model model) {
@@ -144,7 +147,6 @@ public class CheckoutController {
 				orderItem.setStatusOrder(statusOrder);
 				orderItem.setPaymentmethod(paymentMethodObj);
 				orderItem.setVoucherorder(orderDTO.getVoucherorder());
-				System.out.println(orderDTO.getAddress());
 				orderDAO.save(orderItem);
 
 				List<Cart> cartItems = cartDAO.findByUser(user);
@@ -203,16 +205,11 @@ public class CheckoutController {
 				model.addAttribute("orderConfirmation", orderItem);
 				model.addAttribute("cartConfirmation", cartItems);
 				cartService.delete(cartItems);
-				OrderEmailContext abstractEmailContext = new OrderEmailContext();
-				abstractEmailContext.init(orderItem.getUser());
-
-//				 Map<String, Object> myContext = new HashMap<>();
-//				 for (abad ac : orderDetailList) {
-//					 myContext.put(orderitem.getprof.getname,quang);
-//				}
-
-//				abstractEmailContext.setContext(myContext);
-//				emailService.sendMail(abstractEmailContext);			
+				OrderConfirmEmailContext confirmEmailContext = new OrderConfirmEmailContext();
+				confirmEmailContext.init(orderItem);
+				
+				emailService.sendMail(confirmEmailContext);
+				
 			}
 
 			return "success";

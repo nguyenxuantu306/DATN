@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
 		<div class="confirmation-message  ">
 			<img
 				src="https://firebasestorage.googleapis.com/v0/b/luuanh-7c9d9.appspot.com/o/logo.png?alt=media&token=4679050b-5088-44ac-8d0e-3eb5e45f8b37" />
-			<h1> CHÚC MỪNG BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG</h1>
+			<h1>CHÚC MỪNG BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG</h1>
 			<h3>
 				<p style="color: green;">Đơn hàng của bạn:</p>
 			</h3>
@@ -33,18 +33,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="item : ${OrderDetail}">
-					<th scope="row">1</th>
-					<td th:text="${item.product.image}"></td>
-					<td th:text="${item.product.productname}"></td>
-					<td>@mdo</td>
-				</tr>
-				<tr>
-					<th scope="row">2</th>
-					<td>Jacob</td>
-					<td>Thornton</td>
-					<td>@fat</td>
-				</tr>
+			<tr th:each="detail : ${list}">
+                    <td th:text="${detailStat.index + 1}"></td>
+                    <td th:text="${detail.product.productName}"></td>
+                    <td th:text="${detail.quantityordered}"></td>
+                    <td th:text="${detail.totalprice}"></td>
+                </tr>
 			</tbody>
 		</table>
 	</div>

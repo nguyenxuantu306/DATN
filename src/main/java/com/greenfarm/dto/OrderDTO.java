@@ -22,7 +22,7 @@ public class OrderDTO {
 	private Integer Orderid;
 	private LocalDateTime orderdate;
 	private Address address;
-	List<OrderDetail> orderDetail;
+	private List<OrderDetail> orderDetail;
 	User user;
 	StatusOrder statusOrder;
 	private PaymentMethod paymentmethod;
