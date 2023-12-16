@@ -43,6 +43,8 @@ public interface BookingService {
 	List<Booking> findByEfindByIdAccountmail(String email);
 
 	void saveBooking(Booking booking);
+
+	void cancelBooking(Integer bookingid);
 	
 	
 }

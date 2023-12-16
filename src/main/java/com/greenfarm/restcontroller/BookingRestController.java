@@ -108,6 +108,17 @@ public class BookingRestController {
 		BookingDTO bookingDTO = modelMapper.map(updatedBooking, BookingDTO.class);
 		return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
 	}
+	
+
+	@PutMapping("/cancel/{bookingid}")
+	public ResponseEntity<String> cancelBooking(@PathVariable("bookingid") Integer bookingid) {
+		try {
+			bookingService.cancelBooking(bookingid);
+			return new ResponseEntity<>("Đã hủy tour thành công", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Lỗi khi hủy tour: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@GetMapping("/search")
 	public ResponseEntity<String> searchBookingsByDate(
