@@ -88,8 +88,6 @@ public class CheckoutController {
 
 	@Autowired
 	AddressService addressService;
-	
-	
 
 	@GetMapping("/checkout")
 	public String Checkout(ModelMap modelMap, HttpServletRequest request, Model model) {
@@ -199,17 +197,20 @@ public class CheckoutController {
 				if (discountedTotal == 0) {
 					discountedTotal = total;
 				}
+			
+				
 				model.addAttribute("totalDiscount", discountedTotal);
 				model.addAttribute("discount", voucherLists);
 				model.addAttribute("total", total);
 				model.addAttribute("orderConfirmation", orderItem);
 				model.addAttribute("cartConfirmation", cartItems);
 				cartService.delete(cartItems);
+				
+				
 				OrderConfirmEmailContext confirmEmailContext = new OrderConfirmEmailContext();
-				confirmEmailContext.init(orderItem);
-				
+				confirmEmailContext.init(orderItem, orderDetailList);
 				emailService.sendMail(confirmEmailContext);
-				
+
 			}
 
 			return "success";

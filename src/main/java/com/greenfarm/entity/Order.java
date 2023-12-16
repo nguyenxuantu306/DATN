@@ -20,9 +20,12 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -64,8 +67,4 @@ public class Order implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")
 	List<VoucherOrder> voucherorder;
-
-	
-	
-
 }
