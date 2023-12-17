@@ -205,7 +205,7 @@ public class VNPayController {
 				
 				// gửi mail
 				OrderConfirmEmailContext confirmEmailContext = new OrderConfirmEmailContext();
-				confirmEmailContext.init(orderItem, orderDetailList,total,discountedTotal);
+				confirmEmailContext.init(orderItem, orderDetailList,total,formattedDiscounts,voucherLists, discountedTotal);
 				emailService.sendMail(confirmEmailContext); 
 			}
 

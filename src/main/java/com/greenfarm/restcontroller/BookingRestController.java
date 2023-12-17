@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -261,4 +262,18 @@ public class BookingRestController {
 		return bookingService.gettourdatNT();
 	}
 
+	@GetMapping("/Scantoday")
+	public ResponseEntity<List<BookingDTO>> getListScantoday() {
+		LocalDateTime dateTime = LocalDateTime.now();
+		List<Booking> bookings = bookingService.Scantoday(dateTime);
+
+		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
+		List<BookingDTO> BookingsDTOs = bookings.stream().map(booking -> modelMapper.map(booking, BookingDTO.class))
+				.collect(Collectors.toList());
+
+		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
+		return new ResponseEntity<>(BookingsDTOs, HttpStatus.OK);
+	}
+	
+	
 }

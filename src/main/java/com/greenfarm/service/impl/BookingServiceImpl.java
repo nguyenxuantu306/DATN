@@ -1,6 +1,7 @@
 package com.greenfarm.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ public class BookingServiceImpl implements BookingService {
 
 	@Autowired
 	BookingDAO dao;
-	
+
 	@Autowired
 	StatusBookingDAO statusBookingDAO;
 
@@ -60,17 +61,16 @@ public class BookingServiceImpl implements BookingService {
 		return booking;
 	}
 
-	
 	@Override
 	public Booking update(Booking booking) {
 		return dao.save(booking);
 	}
-	
+
 	@Override
 	public List<Booking> findByBookingdateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int page,
 			int size) {
 		Pageable pageable = PageRequest.of(page, size);
-        return dao.findByBookingdateBetween(startDateTime, endDateTime, pageable);
+		return dao.findByBookingdateBetween(startDateTime, endDateTime, pageable);
 	}
 
 	@Override
@@ -88,12 +88,10 @@ public class BookingServiceImpl implements BookingService {
 		return dao.findBookingYearlyRevenue(year);
 	}
 
-	
 	public Booking findById(Integer bookingid) {
 		return dao.findById(bookingid).get();
 	}
-	
-	
+
 	@Override
 	public List<Booking> findByEfindByIdAccountmail(String email) {
 		return dao.findByEfindByIdAccountmail(email);
@@ -104,11 +102,17 @@ public class BookingServiceImpl implements BookingService {
 		dao.save(booking);
 	}
 
+	@Override
+	public List<Booking> Scantoday(LocalDateTime date) {
+		// TODO Auto-generated method stub
+		return dao.findByUsedate(date);
+	}
+
 	private StatusBooking getCanceledStatusBooking() {
 		int canceledStatusBookingid = 4; //
 		return statusBookingDAO.getStatusbookingByStatusbookingid(canceledStatusBookingid);
 	}
-	
+
 	@Override
 	public void cancelBooking(Integer bookingid) {
 		Optional<Booking> optionalBooking = dao.findById(bookingid);
@@ -118,7 +122,7 @@ public class BookingServiceImpl implements BookingService {
 			if (booking.getStatusbooking().getStatusbookingid() == 1) {
 				// Cập nhật trạng thái đơn hàng thành "Đã hủy"
 				StatusBooking canceledStatus = getCanceledStatusBooking(); // Lấy trạng thái "Đã hủy" từ cơ sở dữ
-																		// liệu
+																			// liệu
 
 				if (canceledStatus != null) {
 					// Cập nhật trạng thái của đơn hàng thành "Đã hủy"

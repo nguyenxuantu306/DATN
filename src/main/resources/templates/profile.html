@@ -40,9 +40,9 @@
 															<label for="fileInput" class="btn btn-primary"> <i
 																	class="fa fa-fw fa-camera"></i> <span
 																	th:text="#{profile.label.changePhoto}">Change
-																Photo</span> <input type="file" id="fileInput"
-																					th:value="${user.image}" th:field="${user.image}"
-																					name="attach" style="display: none" accept="image/jpeg, image/png"/>
+																Photo</span> 
+																					<input name="attach" type="file" id="fileInput"
+																accept="image/x-png,image/gif,image/jpeg"  style="display: none">
 															</label>
 														</div>
 													</div>
@@ -178,6 +178,14 @@
 								style="border-radius: 4px;">
 								<i class="bi bi-card-list"></i> <span
 									th:text="#{profile.label.myTicket}"></span>
+							</button>
+						</a>
+						<br>
+					<a href="/changepass">
+							<button type="button" class="list-group-item list-group-item-action "
+								style="border-radius: 4px;">
+								<i class="bi bi-card-list"></i> <span
+									>Đổi mật khẩu</span>
 							</button>
 						</a>
 					</div>

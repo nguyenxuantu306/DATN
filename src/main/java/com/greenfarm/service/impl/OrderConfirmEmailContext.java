@@ -12,6 +12,7 @@ import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.User;
+import com.greenfarm.entity.VoucherOrder;
 import com.greenfarm.service.OrderDetailService;
 
 public class OrderConfirmEmailContext extends AbstractEmailContext {
@@ -33,14 +34,16 @@ public class OrderConfirmEmailContext extends AbstractEmailContext {
 //		
 //	}
 	
-	public void init(Order orderItem, List<OrderDetail> orderDetailList,float total,float discountedTotal) {
+	public void init(Order orderItem, List<OrderDetail> orderDetailList,float total,List<String> formattedDiscounts, List<VoucherOrder> voucherLists, float discountedTotal) {
 	    System.out.println(orderItem.getOrderid());
 	    User customer = orderItem.getUser();
 	    put("firstName", customer.getFirstname());
 	    put("order", orderItem);
 	    put("orderDetails", orderDetailList);
 	    put("total", total);
-	    put("discountedTotal",discountedTotal);
+	    put("formattedDiscounts",formattedDiscounts);
+	    put("voucherLists", voucherLists);
+	    put("totalDiscount", discountedTotal);
 	    setTemplateLocation("emails/emailsendorder");
 	    setSubject("Confirm Order");
 	    setFrom("no-reply@javadevjournal.com");

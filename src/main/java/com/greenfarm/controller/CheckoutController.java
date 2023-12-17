@@ -208,7 +208,7 @@ public class CheckoutController {
 				
 				// gửi mail khi thành công
 				OrderConfirmEmailContext confirmEmailContext = new OrderConfirmEmailContext();
-				confirmEmailContext.init(orderItem, orderDetailList,total,discountedTotal);
+				confirmEmailContext.init(orderItem, orderDetailList,total,formattedDiscounts,voucherLists, discountedTotal);
 				emailService.sendMail(confirmEmailContext);
 
 			}

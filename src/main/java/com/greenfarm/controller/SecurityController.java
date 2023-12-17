@@ -369,7 +369,7 @@ public class SecurityController {
 			// String userName = email;
 			userService.forgottenPassword(email);
 		} catch (Exception e) {
-
+				e.printStackTrace();
 		}
 
 		return "redirect:/login";
@@ -400,7 +400,7 @@ public class SecurityController {
 			BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			// Nếu có lỗi từ dữ liệu người dùng, không cần kiểm tra tiếp và xử lý lỗi.
-			model.addAttribute("error", "Thông tin đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
+			model.addAttribute("error", "Thông tin  không hợp lệ. Vui lòng kiểm tra lại.");
 			return "security/resetpass";
 		}
 		try {
@@ -408,19 +408,12 @@ public class SecurityController {
 			// customerAccountService.updatePassword(data.getPassword(), data.getToken());
 		} catch (InvalidTokenException | UnkownIdentifierException e) {
 			e.getStackTrace();
-			// log error statement
-			// model.addAttribute("tokenError",
-			// messageSource.getMessage("user.registration.verification.invalid.token",
-			// null, LocaleContextHolder.getLocale())
-			// );
+			
 			System.out.println("Báo lỗi không thấy token");
 
 			return "security/resetpass";
 		}
-		// model.addAttribute("passwordUpdateMsg",
-		// messageSource.getMessage("user.password.updated.msg", null,
-		// LocaleContextHolder.getLocale())
-		// );
+	
 		System.out.println("Báo đã update");
 		setResetPasswordForm(model, new ResetPassWordData());
 
