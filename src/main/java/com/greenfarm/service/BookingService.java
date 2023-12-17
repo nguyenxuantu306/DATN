@@ -1,6 +1,7 @@
 package com.greenfarm.service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -49,6 +50,8 @@ public interface BookingService {
 	void cancelBooking(Integer bookingid);
 
 	List<ReportTop5Tour> gettourdatNT();
+	
+	List<Booking> Scantoday(LocalDateTime date);
 	
 	
 }

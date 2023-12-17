@@ -262,20 +262,24 @@ public class UserServerImpl implements UserService, UserDetailsService {
 	@Override
 	public void updatePassword(String password, String token) throws InvalidTokenException, UnkownIdentifierException {
 		Securetoken securetoken = securetokenservice.findByToken(token);
+		System.out.println(securetoken);
 		if (Objects.isNull(securetoken)
 				|| !org.apache.commons.codec.binary.StringUtils.equals(token, securetoken.getToken())
 				|| securetoken.isExpired()) {
 			throw new InvalidTokenException("Token is not valid");
+		} else {
+			User user = dao.findUserById(securetoken.getUser().getUserid());
+			System.out.println(user.getEmail());
+			if (Objects.isNull(user)) {
+				throw new UnkownIdentifierException("unable to find user for the token");
+			} else {
+				
+				user.setPassword(PE.encode(password));
+				dao.save(user);
+				securetokenservice.removeToken(securetoken);
+				System.out.println("doi mk");
+			}
 		}
-		User user = dao.getOne(securetoken.getUser().getUserid());
-		System.out.println(user.getEmail());
-		if (Objects.isNull(user)) {
-			throw new UnkownIdentifierException("unable to find user for the token");
-		}
-		securetokenservice.removeToken(securetoken);
-		System.out.println("doi mk");
-		user.setPassword(PE.encode(password));
-		dao.save(user);
 
 	}
 

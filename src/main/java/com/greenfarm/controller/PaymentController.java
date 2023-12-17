@@ -214,7 +214,7 @@ public class PaymentController {
 						cartService.delete(cartItems);
 						
 						OrderConfirmEmailContext confirmEmailContext = new OrderConfirmEmailContext();
-						confirmEmailContext.init(orderItem, orderDetailList,total,discountedTotal);
+						confirmEmailContext.init(orderItem, orderDetailList,total,formattedDiscounts,voucherLists, discountedTotal);
 						emailService.sendMail(confirmEmailContext);
 					}
 				} else {

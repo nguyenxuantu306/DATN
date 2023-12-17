@@ -3,6 +3,7 @@ package com.greenfarm.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -57,6 +58,8 @@ public class Booking implements Serializable {
 	// @JsonIgnore
 	// @OneToMany(mappedBy = "booking")
 	// private List<TourDate> tourDate;
+	
+	private LocalDateTime usedate;
 
 	private String qrcode;
 	@ManyToOne
