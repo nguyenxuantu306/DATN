@@ -285,7 +285,7 @@
 				<div class="card mb-4" ng-repeat="p in pager.items">
 
 
-					<div class="card-body">
+					<div class="card-body" id="commentid">
 
 						<div>
 							<div class="d-flex justify-content-between mb-2">
@@ -447,7 +447,7 @@
 			angular.element(document).ready(function () {
 				$timeout(function () {
 					// Sử dụng commentid để cuộn xuống vị trí bình luận
-					var commentElement = document.getElementById('commentid');
+					var commentElement = document.getElementById(commentid);
 					if (commentElement) {
 						commentElement.scrollIntoView();
 					}

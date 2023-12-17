@@ -1,49 +1,49 @@
 <!DOCTYPE html>
-<html
-  xmlns="http://www.thymeleaf.org"
-  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
->
-  <head>
-    <meta charset="UTF-8" />
-    <title>GreenFarm</title>
-  </head>
+<html xmlns="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
-  <body>
-    <div th:fragment="header" class="header_area">
-      <!-- Topbar Start -->
-      <!-- <marquee  direction="left" > Ưu đãi giảm 20% cho
+<head>
+	<meta charset="UTF-8" />
+	<title>GreenFarm</title>
+</head>
+
+<body>
+	<div th:fragment="header" class="header_area">
+		<!-- Topbar Start -->
+		<!-- <marquee  direction="left" > Ưu đãi giảm 20% cho
 			Khách tham quan mua rau tại vườn - Ship nội thành Tuy Hoà, Ship trên
 			10kg ở Sài Gòn, Quy Nhơn, Nha Trang, Đà Nẵng,.... </marquee> -->
-      <div class="container-fluid bg-light pt-3d-none">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
-              <div class="d-inline-flex align-items-center">
-                <p><i class="fa fa-envelope mr-2"></i>greenfarm@gmail.com</p>
-                <p class="text-body px-3">|</p>
-                <p><i class="fa fa-phone-alt mr-2"></i>+012 345 6789</p>
-              </div>
-            </div>
-            <div class="col-lg-6 text-center text-lg-right">
-              <div class="d-inline-flex align-items-center">
-               <!--  <span class="text-primary"></span>
+		<div class="container-fluid bg-light pt-3d-none">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+						<div class="d-inline-flex align-items-center">
+							<p><i class="fa fa-envelope mr-2"></i>greenfarm@gmail.com</p>
+							<p class="text-body px-3">|</p>
+							<p><i class="fa fa-phone-alt mr-2"></i>+012 345 6789</p>
+						</div>
+					</div>
+					<div class="col-lg-6 text-center text-lg-right">
+						<div class="d-inline-flex align-items-center">
+							<!--  <span class="text-primary"></span>
                 <a class="text-primary px-3" href="#" id="cart-toggle"
                   ><i class="fa fa-shopping-cart"></i></a
                 > -->
-                <a class="text-primary px-3" href="?language=vi_VN"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/vn.png">
-                </a>
-                <a class="text-primary pl-3" href="?language=en"><img src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/us.png"> </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+							<a class="text-primary px-3" href="?language=vi_VN"><img
+									src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/vn.png">
+							</a>
+							<a class="text-primary pl-3" href="?language=en"><img
+									src="https://dichthuatphuongdong.com/tienich/uploads/flags/flat/32x32/us.png"> </a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-	
 
-      <!-- Topbar End -->
-      <!-- Topbar End -->
-<!--       <div class="container cart-container mini-cart" id="mini-cart">
+
+		<!-- Topbar End -->
+		<!-- Topbar End -->
+		<!--       <div class="container cart-container mini-cart" id="mini-cart">
         <div class="shopping-cart">
           <div class="shopping-cart-header">
             <i class="fa fa-shopping-cart cart-icon"></i
@@ -72,95 +72,72 @@
         </div>
         end shopping-cart
       </div> -->
-      <!-- Navbar Start -->
-      <div class="container-fluid position-relative nav-bar p-0">
-        <div
-          class="container-lg position-relative p-0 px-lg-3"
-          style="z-index: 9"
-        >
-          <nav
-            class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5"
-          >
-            <a href="/" class="navbar-brand">
-              <img src="/assets/images/logo.png" style="width: 200px">
-            </a>
-            <button
-              type="button"
-              class="navbar-toggler"
-              data-toggle="collapse"
-              data-target="#navbarCollapse"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div
-              class="collapse navbar-collapse justify-content-between "
-              id="navbarCollapse"
-            >
-              <div class="navbar-nav ml-auto font-weight-bold">
-                <a
-                  href="/"
-                  class="nav-item nav-link"
-                  th:text="#{header.label.home}"
-                  >Home</a
-                >
-                <a
-                  href="/product/shop"
-                  class="nav-item nav-link"
-                  th:text="#{header.label.shop}"
-                  >Shop</a
-                >
-                <a
-                  href="/tour"
-                  class="nav-item nav-link"
-                  th:text="#{header.label.tour}"
-                  >Tour</a
-                >
-                <a
-                  href="/about"
-                  class="nav-item nav-link"
-                  th:text="#{header.label.about}"
-                  >About</a
-                >
-                <a
-                  href="/contact"
-                  class="nav-item nav-link"
-                  th:text="#{header.label.contact}"
-                  >Contact</a
-                >
-               <!--  <a
+		<!-- Navbar Start -->
+		<div class="container-fluid position-relative nav-bar p-0">
+			<div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9">
+				<nav class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5">
+					<a href="/" class="navbar-brand">
+						<img src="/assets/images/logo.png" style="width: 200px">
+					</a>
+					<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse justify-content-between " id="navbarCollapse">
+						<div class="navbar-nav ml-auto font-weight-bold">
+							<a href="/" class="nav-item nav-link" th:text="#{header.label.home}">Home</a>
+							<a href="/product/shop" class="nav-item nav-link" th:text="#{header.label.shop}">Shop</a>
+							<a href="/tour" class="nav-item nav-link" th:text="#{header.label.tour}">Tour</a>
+							<a href="/about" class="nav-item nav-link" th:text="#{header.label.about}">About</a>
+							<a href="/contact" class="nav-item nav-link" th:text="#{header.label.contact}">Contact</a>
+							<!--  <a
                   class="nav-item nav-link data-toggle"
                   href="booking/bookingtour"
                   >ĐẶT TOUR</a
                 > -->
-                 <a
-                  class="nav-item nav-link data-toggle"
-                  href="/cart"
-                  th:text="#{header.label.cart}"
-                  >Cart</a 
-                >
-                <div sec:authorize="isAnonymous()">
-                  <a
-                    class="nav-item nav-link data-toggle"
-                    th:href="@{/login}"
-                    th:text="#{label.login}"
-                    >Login</a
-                  >
-                </div>
-                <div sec:authorize="isAuthenticated()">
-                  <a th:href="@{/profile}" class="rounded-circle">
-                    <img
-                      src="https://i.pinimg.com/1200x/89/90/48/899048ab0cc455154006fdb9676964b3.jpg"
-                      style="padding: 15px; width: 85px"
-                      alt="Avatar"
-                    />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </nav>
-        </div>
-      </div>
-      <!-- Navbar End -->
-    </div>
-  </body>
+							<a class="nav-item nav-link data-toggle" href="/cart"
+								th:text="#{header.label.cart}">Cart</a>
+							<div sec:authorize="isAnonymous()">
+								<a class="nav-item nav-link data-toggle" th:href="@{/login}"
+									th:text="#{label.login}">Login</a>
+							</div>
+							<div sec:authorize="isAuthenticated()">
+								<a th:href="@{/profile}" class="rounded-circle">
+									<img name="userImage" id="userImage" style="padding: 15px; width: 85px"
+										/>
+								</a>
+							</div>
+							<script th:inline="javascript">
+								/*<![CDATA[*/
+
+								// Function to get user details including the image URL
+								function getUserDetails() {
+									$.ajax({
+										type: 'GET',
+										url: '/rest/users/email',
+										dataType: 'json',
+										success: function (user) {
+											// Set the user's image URL to the 'src' attribute of the image element
+											$('#userImage').attr('src', user.image);
+										},
+										error: function (error) {
+											console.error('Error fetching user details:', error);
+										}
+									});
+								}
+
+								// Call the function when the page is loaded
+								$(document).ready(getUserDetails);
+
+								/*]]>*/
+							</script>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<!-- Navbar End -->
+	</div>
+
+</body>
+
 </html>

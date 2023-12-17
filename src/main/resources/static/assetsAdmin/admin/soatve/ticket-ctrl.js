@@ -1,9 +1,11 @@
 app.controller("ticket-ctrl", function($scope, $http, $window) {
 	$scope.selectedCameraId = null;
 	$scope.items = [];
+	$scope.items2 = [];
 	$scope.bookings = [];
 	$scope.tourlist = [];
 	$scope.history = [];
+	$scope.tourdatebk = [];
 
 	$scope.initialize = function() {
 
@@ -14,14 +16,22 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
 			})
 		});
 
-
+		$http.get("/rest/tourdates").then(resp => {
+			$scope.items2 = resp.data;
+			$scope.items2.forEach(item => {
+				item.tourdates = new Date(item.tourdates)
+			})
+		});
 
 
 		$scope.reset = function() {
 			$scope.error = ['err'];
 			$scope.form = {
+				
 			};
 		}
+
+
 
 		// Lấy danh sách camera từ WebRTC API
 
@@ -43,13 +53,21 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
 			});
 	}
 
-	$scope.getlistbooking = function(item) {
-		$http.get('/rest/tourdatebookings/getbytourdate/${item}').then(resp => {
-			$scope.history = resp.data;
-			/*$scope.history.forEach(item => {
-				item.tourdates = new Date(item.tourdates)
-			})*/
-		});
+	//count booking
+	$scope.countbk = function(item) {
+		const count = item.tourdatebooking ? item.tourdatebooking.length : 0;
+		return count;
+	};
+
+
+
+
+
+	// Hiện thị lên form
+	$scope.edit = function(item) {
+		$scope.selectedItem = item;
+		$scope.form = angular.copy(item);
+		/*$(".nav-tabs a:eq(0)").tab('show');*/
 	}
 
 	$scope.update = function(item) {
@@ -147,10 +165,8 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
 				console.log("cmthành công ");
 				console.log(resp.data);
 				console.log("cmthành công ");
-
-				$scope.history.push(resp.data);
-				console.log($scope.history);
 				$scope.items.push(resp.data);
+				
 				$scope.kiemtrave(resp.data);
 
 			}).catch(error => {
@@ -170,7 +186,11 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
 		console.error('Error capturing and sending image:', error);
 	});*/
 	}
-
+	$scope.formatPrice = function(price) {
+		var priceString = price.toString();
+		priceString = priceString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		return priceString + " đ";
+	}
 
 
 	// Khởi đầu

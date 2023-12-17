@@ -6,6 +6,7 @@ app.controller("message-ctrl", function($scope, $http, $window) {
 	$scope.products = [];
 	$scope.selectedItem = null;
 	$scope.totalPrice = 0;
+	$scope.loggedInUser = [];
 
 
 	$scope.initialize = function() {
@@ -21,41 +22,90 @@ app.controller("message-ctrl", function($scope, $http, $window) {
 	// Khởi đầu
 	$scope.initialize();
 
-	$scope.delete = function(item) {
-    // Hiển thị cửa sổ xác nhận trước khi xóa
-    Swal.fire({
-        title: 'Xác nhận xóa',
-        text: 'Bạn có chắc chắn muốn xóa bình luận này?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Đồng ý',
-        cancelButtonText: 'Hủy bỏ'
-    }).then((result) => {
-        // Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
-        if (result.isConfirmed) {
-            // Nếu đã bấm "Đồng ý", thực hiện xóa
-            $http.delete(`/rest/comment/${item.commentid}`).then(resp => {
-                var index = $scope.items.findIndex(p => p.commentid == item.commentid);
-                $scope.items.splice(index, 1);
+	// Hiện thị lên form
+	$scope.edit = function(item) {
+		$scope.form = angular.copy(item);
+		$scope.form.commentid = item.commentid;
+	}
 
-                // Hiển thị thông báo thành công
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Thành công!',
-                    text: 'Xóa bình luận thành công!',
-                });
-            }).catch(error => {
-                // Hiển thị thông báo lỗi
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi!',
-                    text: 'Lỗi xóa bình luận!',
-                });
-                console.log("Error", error);
-            });
-        }
-    });
-};
+
+	//Thêm recomments
+	$scope.update = function() {
+		$http.get("/rest/users/email").then(resp => {
+			$scope.loggedInUser = resp.data;
+
+			// Create a new object with the required data
+			var requestData = {
+				recommenttext: $scope.form.recommenttext,
+				user: $scope.loggedInUser,
+				comment: $scope.form,
+				recommentdate: new Date()
+			};
+
+			console.log("Data to be sent:", requestData);
+
+			$http.post(`/rest/recomment`, requestData).then(resp => {
+				resp.data.recommentdate = new Date(resp.data.recommentdate);
+				
+				
+				// Sử dụng SweetAlert2 cho thông báo thành công
+				Swal.fire({
+					icon: 'success',
+					title: 'Thành công!',
+					text: 'Trả lời bình luận thành công!',
+				});
+				location.reload();
+			})
+				.catch(error => {
+					// Sử dụng SweetAlert2 cho thông báo lỗi
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Trả lời bình luận thất bại!',
+					});
+					console.log("Error", error);
+				});
+		});
+	}
+
+
+
+	//Xóa comment
+	$scope.delete = function(item) {
+		// Hiển thị cửa sổ xác nhận trước khi xóa
+		Swal.fire({
+			title: 'Xác nhận xóa',
+			text: 'Bạn có chắc chắn muốn xóa bình luận này?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Đồng ý',
+			cancelButtonText: 'Hủy bỏ'
+		}).then((result) => {
+			// Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
+			if (result.isConfirmed) {
+				// Nếu đã bấm "Đồng ý", thực hiện xóa
+				$http.delete(`/rest/comment/${item.commentid}`).then(resp => {
+					var index = $scope.items.findIndex(p => p.commentid == item.commentid);
+					$scope.items.splice(index, 1);
+
+					// Hiển thị thông báo thành công
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công!',
+						text: 'Xóa bình luận thành công!',
+					});
+				}).catch(error => {
+					// Hiển thị thông báo lỗi
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi xóa bình luận!',
+					});
+					console.log("Error", error);
+				});
+			}
+		});
+	};
 
 
 	$scope.gotoComment = function(item) {
@@ -63,7 +113,7 @@ app.controller("message-ctrl", function($scope, $http, $window) {
 		var url = '/tour/detail/' + item.tour.tourid + '#comment-' + item.commentid;
 		$window.open(url, '_blank');
 	}
-	
+
 	// tìm kiếm
 	$scope.loadData = function() {
 		var apiUrl = '/rest/comment/searchkeywordcomment';

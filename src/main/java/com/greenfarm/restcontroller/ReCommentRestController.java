@@ -75,9 +75,7 @@ public class ReCommentRestController {
 	
 	
 	@PostMapping()
-	public ResponseEntity<ReCommentDTO> create(@RequestBody ReComment recomment,
-			Model model) {
-		
+	public ResponseEntity<ReCommentDTO> create(@RequestBody ReComment recomment) {
 			ReComment createdReComment = recommentService.create(recomment);
 
 			// Sử dụng ModelMapper để ánh xạ từ Comment đã tạo thành ReCommentDTO
