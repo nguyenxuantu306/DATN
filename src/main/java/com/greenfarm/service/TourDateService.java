@@ -13,6 +13,7 @@ import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.TourDate;
+import com.greenfarm.entity.TourdateByDate;
 
 public interface TourDateService {
 
@@ -35,4 +36,7 @@ public interface TourDateService {
 	TourDate findByTourAndTourdates(Tour tour, Date tourdates);
 
 	List<TourDate> findAll();
+
+	
+	List<TourdateByDate> getTourByDate(Date date);
 }

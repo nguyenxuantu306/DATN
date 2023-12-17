@@ -9,6 +9,14 @@ app.controller("bookingdate-ctrl", function($scope, $http) {
 	$scope.totalPrice = 0;
 
 	$scope.initialize = function() {
+		
+		$http.get("/rest/tourdates").then(resp => {
+			$scope.items2 = resp.data;
+			$scope.items2.forEach(item => {
+				item.tourdates = new Date(item.tourdates)
+			})
+		});
+		
 		// Load products
 		$http.get("/rest/tourdatebookings").then(resp => {
 			$scope.items = resp.data;

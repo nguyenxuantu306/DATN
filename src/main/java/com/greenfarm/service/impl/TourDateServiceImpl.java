@@ -16,6 +16,7 @@ import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.TourDate;
+import com.greenfarm.entity.TourdateByDate;
 import com.greenfarm.service.TourConditionService;
 import com.greenfarm.service.TourDateService;
 
@@ -69,5 +70,10 @@ public class TourDateServiceImpl implements TourDateService {
 	public List<TourDate> findByKeyword(Integer keyword) {
 		// TODO Auto-generated method stub
 		return dao.findByKeyword(keyword);
+	}
+
+	@Override
+	public List<TourdateByDate> getTourByDate(Date date) {
+		return dao.getTourByDate(date);
 	}
 }

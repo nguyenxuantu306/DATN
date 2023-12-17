@@ -19,4 +19,6 @@ public class TourDateBookingDTO {
 	private Integer tourdatebookingid;
 	private TourDate tourdate;
 	private Booking booking;
+	
+	
 }

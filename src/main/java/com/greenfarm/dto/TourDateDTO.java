@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.greenfarm.entity.Tour;
+import com.greenfarm.entity.TourDateBooking;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,4 +20,6 @@ public class TourDateDTO {
 	private Date tourdates;
 	private Integer availableslots;
 	private Tour tour;
+	
+	List<TourDateBooking> tourdatebooking;
 }
