@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -213,8 +214,26 @@ public class ScanticketRestController {
 	           try {
 	        	   Integer bookingid = Integer.parseInt(decodedText);
 	        	   Booking booking = bookingService.findById(bookingid);
-	   	   		BookingDTO bookingDTOs = modelMapper.map(booking, BookingDTO.class);
-	   	   		return new ResponseEntity<>(bookingDTOs, HttpStatus.OK);
+	   	   		
+
+	   	   	if (booking.getStatusbooking().getStatusbookingid() == 5) {
+	   	   	BookingDTO bookingDTOs = modelMapper.map(booking, BookingDTO.class);
+	   	 return new ResponseEntity<>(bookingDTOs, HttpStatus.OK);
+				
+			} else if(booking.getStatusbooking().getStatusbookingid() == 2 || booking.getBookingdate() == LocalDateTime.now()) {
+				StatusBooking statusBooking = statusBookingService.findById(5);
+				booking.setStatusbooking(statusBooking);
+				booking.setUsedate(LocalDateTime.now());
+				Booking updatedBooking = bookingService.update(booking);
+				
+				BookingDTO bookingDTOs = modelMapper.map(booking, BookingDTO.class);
+				Log.info("Đã xác nhận thành công");
+				return new ResponseEntity<>(bookingDTOs, HttpStatus.OK);
+				
+			}else {
+				BookingDTO bookingDTOs = modelMapper.map(booking, BookingDTO.class);
+			   	 return new ResponseEntity<>(bookingDTOs, HttpStatus.OK);
+			}
 	        	    
 			} catch (Exception e) {
 				// TODO: handle exception
