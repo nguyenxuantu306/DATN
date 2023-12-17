@@ -134,15 +134,18 @@ public class ProductController {
 //	}
 	@PostMapping("/product/detail/{productid}")
 	public String review(Model model, @PathVariable("productid") Integer productid,
-			@ModelAttribute("reviewinsert") Review reviewinsert) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			@ModelAttribute("reviewinsert") Review reviewinsert,Authentication authentication) {
+	
+		if (authentication != null && authentication.isAuthenticated()) {
+			authentication = SecurityContextHolder.getContext().getAuthentication();
+		
 		String username = authentication.getName();
 		User user = userService.findByEmail(username);
 		Product product = productService.findById(productid);
 
 		// Kiểm tra xem tài khoản đã đánh giá sản phẩm này chưa
 		boolean hasUserReviewedProduct = reviewService.hasUserReviewedProduct(user, product);
-
+		
 		if (hasUserReviewedProduct) {
 			// Nếu đã đánh giá rồi, hiển thị thông báo lỗi và không lưu đánh giá mới
 			model.addAttribute("errorMessage", "Bạn đã đánh giá sản phẩm này rồi.");
@@ -157,6 +160,9 @@ public class ProductController {
 		}
 
 		return "redirect:/product/detail/" + productid;
+		}else {
+			return "redirect:/login";
+		}
 	}
 
 //	@PostMapping("/product/detail/{productid}")
