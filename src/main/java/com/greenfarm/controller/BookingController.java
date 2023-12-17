@@ -121,9 +121,7 @@ public class BookingController {
 
 		// Kiểm tra số lượng slot khả dụng
 		int availableSlots = getAvailableSlots(tourdate1);
-		System.out.println(availableSlots);
 		int requestedSlots = booking.getAdultticketnumber() + booking.getChildticketnumber();
-		System.out.println(requestedSlots);
 
 		if (availableSlots < requestedSlots) {
 			// Số lượng slot không đủ, trả về trang form với thông báo lỗi
