@@ -12,9 +12,12 @@ import com.greenfarm.entity.VoucherOrder;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDTO {
@@ -22,10 +25,9 @@ public class OrderDTO {
 	private Integer Orderid;
 	private LocalDateTime orderdate;
 	private Address address;
-	List<OrderDetail> orderDetail;
+	private List<OrderDetail> orderDetail;
 	User user;
 	StatusOrder statusOrder;
 	private PaymentMethod paymentmethod;
-	//private String formattedOrderDate;
 	private List<VoucherOrder> voucherorder;
 }

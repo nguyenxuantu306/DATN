@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.ReportRevenue;
+import com.greenfarm.entity.ReportSP;
+import com.greenfarm.entity.ReportTop5Tour;
 import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.Top3;
 
@@ -44,6 +46,10 @@ public interface BookingService {
 	List<Booking> findByEfindByIdAccountmail(String email);
 
 	void saveBooking(Booking booking);
+
+	void cancelBooking(Integer bookingid);
+
+	List<ReportTop5Tour> gettourdatNT();
 	
 	List<Booking> Scantoday(LocalDateTime date);
 	

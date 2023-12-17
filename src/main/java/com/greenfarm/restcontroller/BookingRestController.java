@@ -1,6 +1,7 @@
 package com.greenfarm.restcontroller;
 
 import java.io.FileNotFoundException;
+
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -34,6 +35,8 @@ import com.greenfarm.dto.BookingDTO;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.ReportRevenue;
+import com.greenfarm.entity.ReportSP;
+import com.greenfarm.entity.ReportTop5Tour;
 import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.Role;
 import com.greenfarm.entity.StatusBooking;
@@ -108,6 +111,17 @@ public class BookingRestController {
 		}
 		BookingDTO bookingDTO = modelMapper.map(updatedBooking, BookingDTO.class);
 		return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
+	}
+	
+
+	@PutMapping("/cancel/{bookingid}")
+	public ResponseEntity<String> cancelBooking(@PathVariable("bookingid") Integer bookingid) {
+		try {
+			bookingService.cancelBooking(bookingid);
+			return new ResponseEntity<>("Đã hủy tour thành công", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Lỗi khi hủy tour: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@GetMapping("/search")
@@ -241,6 +255,11 @@ public class BookingRestController {
 		}
 
 		return "USER";
+	}
+	
+	@GetMapping("/thongke/top5toudatnhieunhat")
+	public List<ReportTop5Tour> gettourdatNT() {
+		return bookingService.gettourdatNT();
 	}
 
 	@GetMapping("/Scantoday")

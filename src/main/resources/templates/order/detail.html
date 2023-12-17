@@ -7,7 +7,8 @@
 </head>
 
 <body>
-	<main th:object="${order}" class="voucher-order" th:data-voucher-discount="${order.voucherorder[0]?.voucher?.discount}">
+	<main th:object="${order}" class="voucher-order"
+		th:data-voucher-discount="${order.voucherorder != null and order.voucherorder.size() > 0 and order.voucherorder[0].voucher != null ? order.voucherorder[0].voucher.discount : '0'}">
 		<div class="container mt-5">
 			<div class="row">
 				<div class="col-sm-7">
@@ -157,7 +158,11 @@
 					tempTotalPriceSum += totalPrice;
 
 					const voucherOrderElement = totalPriceElement.closest(".voucher-order");
-					if (voucherOrderElement) {
+					if (voucherOrderElement == 0) {
+						const discountAmount = totalPrice;
+						totalDiscount = 0;
+					}
+					else {
 						const voucherDiscountPercentage = parseFloat(voucherOrderElement.dataset.voucherDiscount);
 						const discountAmount = (totalPrice * voucherDiscountPercentage);
 						totalDiscount += discountAmount;

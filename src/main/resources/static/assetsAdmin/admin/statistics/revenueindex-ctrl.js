@@ -761,6 +761,46 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 
 	// Biểu đồ cột thông kê doanh thu 7 ngày trc đó
 
+	// Biểu đồ cột thông kê top 5 tour đặt nhiều nhất
+	fetch('/rest/bookings/thongke/top5toudatnhieunhat') // Thay thế bằng đường dẫn của API
+		.then(response => response.json())
+		.then(data => {
+			const labels = data.map(item => item.group);
+			const values = data.map(item => item.count);
+
+			const backgroundColors = generateRandomColors(data.length);
+
+			const chartData = {
+				datasets: [{
+					data: values,
+					backgroundColor: backgroundColors,
+					label: 'Tour đặt nhiều nhất'
+				}],
+				labels: labels
+			};
+
+			var ctx = document.getElementById('myChart11').getContext('2d');
+			new Chart(ctx, {
+				data: chartData,
+				type: 'horizontalBar'
+			});
+		});
+
+	function generateRandomColors(count) {
+		const colors = [];
+		for (let i = 0; i < count; i++) {
+			const randomColor = `rgba(${getRandomInt(0, 255)}, ${getRandomInt(0, 255)}, ${getRandomInt(0, 255)}, 0.6)`;
+			colors.push(randomColor);
+		}
+		return colors;
+	}
+
+	function getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+	// Biểu đồ cột thông kê top 5 tour đặt nhiều nhất
+
+
 	$scope.pager = {
 		page: 0,
 		size: 10,

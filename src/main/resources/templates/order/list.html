@@ -49,10 +49,7 @@
 										class="float-end text-success fw-bold"
 										th:text="${order.statusOrder.name}"></span>
 								</div>
-								<!--							<label th:if="${order.voucherorder != null and order.voucherorder.size() > 0}">-->
-								<!--								<input class="order-id voucher-input" id="order-id"-->
-								<!--									th:value="${order.voucherorder[0]?.voucher?.discount}" />-->
-								<!--							</label>-->
+					
 								<label
 									th:if="${order.voucherorder != null and order.voucherorder.size() > 0}">
 									<input class="order-id voucher-input"
