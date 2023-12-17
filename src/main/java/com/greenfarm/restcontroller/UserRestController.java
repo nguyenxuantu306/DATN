@@ -267,5 +267,27 @@ public class UserRestController {
 	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	        }
 	    }
+	 
+	 @GetMapping("/userimage")
+	 public ResponseEntity<String> getUserImage() {
+		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		// Kiểm tra nếu người dùng đã xác thực
+		    if (authentication.isAuthenticated()) {
+		        // Lấy tên người dùng
+		        String username = authentication.getName();
+		        User user = userService.findByEmail(username);
+
+		        if (user != null && user.getImage() != null) {
+		            return ResponseEntity.ok(user.getImage());
+		        } else {
+		            return ResponseEntity.notFound().build();
+		        }
+		    } else {
+		        // Trả về URL mặc định nếu không xác thực
+		        return ResponseEntity.ok("https://i.pinimg.com/1200x/89/90/48/899048ab0cc455154006fdb9676964b3.jpg");
+		    }
+	 }
+
 
 }
