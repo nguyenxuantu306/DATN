@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Top10;
+import com.greenfarm.entity.Order;
+
 
 public interface OrderDetailDAO extends JpaRepository<OrderDetail, Integer> {
 
@@ -21,4 +23,6 @@ public interface OrderDetailDAO extends JpaRepository<OrderDetail, Integer> {
 			+ "o GROUP BY o.product ORDER BY sum(o.quantityordered) DESC")
 	Page<Top10> getTop10(Pageable pegeable);
 
+	
+	List<OrderDetail> findByOrder(Order order);
 }

@@ -120,7 +120,7 @@
 											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"
 												class="m-0 p-1"></h5>
 											<th:block
-												th:with="hasEvent2=${#lists.isEmpty(items.tourdate.?[tourdates.after(#dates.createNow())])}">
+												th:with="hasEvent2=${#lists.isEmpty(p.tourdate.?[tourdates.after(#dates.createNow())])}">
 												<button th:unless="${hasEvent2}" class="btn btn-primary">
 													<a th:href="@{|/booking/${p.tourid}|}"
 														th:text="#{label.booking}">Đặt tour</a>

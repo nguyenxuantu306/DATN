@@ -46,6 +46,7 @@ import com.greenfarm.service.UserService;
 import com.greenfarm.service.VoucherService;
 import com.greenfarm.service.VoucherUserService;
 import com.greenfarm.service.impl.AccountVerificationEmailContext;
+import com.greenfarm.service.impl.OrderConfirmEmailContext;
 import com.greenfarm.service.impl.OrderEmailContext;
 
 import jakarta.mail.MessagingException;
@@ -144,7 +145,6 @@ public class CheckoutController {
 				orderItem.setStatusOrder(statusOrder);
 				orderItem.setPaymentmethod(paymentMethodObj);
 				orderItem.setVoucherorder(orderDTO.getVoucherorder());
-				System.out.println(orderDTO.getAddress());
 				orderDAO.save(orderItem);
 
 				List<Cart> cartItems = cartDAO.findByUser(user);
@@ -197,22 +197,20 @@ public class CheckoutController {
 				if (discountedTotal == 0) {
 					discountedTotal = total;
 				}
+			
+				
 				model.addAttribute("totalDiscount", discountedTotal);
 				model.addAttribute("discount", voucherLists);
 				model.addAttribute("total", total);
 				model.addAttribute("orderConfirmation", orderItem);
 				model.addAttribute("cartConfirmation", cartItems);
 				cartService.delete(cartItems);
-				OrderEmailContext abstractEmailContext = new OrderEmailContext();
-				abstractEmailContext.init(orderItem.getUser());
+				
+				// gửi mail khi thành công
+				OrderConfirmEmailContext confirmEmailContext = new OrderConfirmEmailContext();
+				confirmEmailContext.init(orderItem, orderDetailList,total,discountedTotal);
+				emailService.sendMail(confirmEmailContext);
 
-//				 Map<String, Object> myContext = new HashMap<>();
-//				 for (abad ac : orderDetailList) {
-//					 myContext.put(orderitem.getprof.getname,quang);
-//				}
-
-//				abstractEmailContext.setContext(myContext);
-//				emailService.sendMail(abstractEmailContext);			
 			}
 
 			return "success";

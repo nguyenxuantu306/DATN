@@ -268,19 +268,7 @@
 	        return false; // Ngăn chặn gửi biểu mẫu
 	    }
 
-	 // Lấy ngày đi của tour từ thuộc tính data-tourdate
-	    var tourDate = $('#tourdate').data('tourdate');
-
-	    // Kiểm tra xem ngày đã hết ngày đi của tour chưa
-	    if (moment(selectedDate).isBefore(tourDate, 'day')) {
-	        // Nếu ngày đã hết ngày đi, hiển thị thông báo khác
-	        Swal.fire({
-	            icon: 'info',
-	            title: 'Thông báo',
-	            text: 'Tour đã diễn ra hoặc ngày đi đã qua. Vui lòng chọn một ngày khác.'
-	        });
-	        return false; // Ngăn chặn gửi biểu mẫu
-	    }
+	 
 
 	    // Kiểm tra thêm số lượng chỗ còn trống
 	    var selectedAdultTickets = parseInt($('#adultticketnumber').val());

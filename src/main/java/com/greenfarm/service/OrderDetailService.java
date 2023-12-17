@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Top10;
@@ -17,5 +18,7 @@ public interface OrderDetailService {
 	List<Report> tongdoanhthu();
 
 	Page<Top10> getTop10(Pageable pageable);
+	
+	List<OrderDetail> getbyOrder(Order order);
 
 }

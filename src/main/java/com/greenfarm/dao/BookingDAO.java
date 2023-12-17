@@ -1,6 +1,7 @@
 package com.greenfarm.dao;
 
 import java.time.LocalDateTime;
+
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.ReportRevenue;
+import com.greenfarm.entity.ReportTop5Tour;
 import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.Top3;
 
@@ -49,5 +51,11 @@ public interface BookingDAO extends JpaRepository<Booking, Integer> {
 
 	@Query("SELECT o FROM Booking o WHERE o.user.email =?1")
 	List<Booking> findByEfindByIdAccountmail(String email);
+
+	@Query("SELECT new ReportTop5Tour(b.tour.tourname, COUNT(b.Bookingid) as totalBookings) " +
+		       "FROM Booking b " +
+		       "GROUP BY b.tour.tourname " +
+		       "ORDER BY totalBookings DESC")
+		List<ReportTop5Tour> getTop5ToursBygetReporttourdatNT();
 
 }
