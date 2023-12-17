@@ -112,14 +112,26 @@ public class TourDateRestController {
 	}
 
 	@GetMapping("/searchkeywordtourdate")
-	public ResponseEntity<List<TourDateDTO>> getList(@RequestParam(required = false) Integer keyword) {
-		List<TourDate> tourdates = (keyword != null) ? toudateService.findByKeyword(keyword) : toudateService.findAll();
+	public ResponseEntity<List<TourDateDTO>> getList(
+	        @RequestParam(required = false) String keyword) {
 
-		List<TourDateDTO> tourdateDtos = tourdates.stream()
-				.map(tourdate -> modelMapper.map(tourdate, TourDateDTO.class)).collect(Collectors.toList());
+	    List<TourDate> tourdates;
 
-		return ResponseEntity.ok(tourdateDtos);
+	    if (keyword != null) {
+	        // Nếu ít nhất một trong hai tham số được cung cấp, thực hiện tìm kiếm
+	        tourdates = toudateService.findByKeywordAndTourName(keyword);
+	    } else {
+	        // Nếu không có tham số nào được cung cấp, lấy tất cả các tourdate
+	        tourdates = toudateService.findAll();
+	    }
+
+	    List<TourDateDTO> tourdateDtos = tourdates.stream()
+	            .map(tourdate -> modelMapper.map(tourdate, TourDateDTO.class))
+	            .collect(Collectors.toList());
+
+	    return ResponseEntity.ok(tourdateDtos);
 	}
+
 
 	@GetMapping("/filtertourdate")
 	public ResponseEntity<List<TourDateDTO>> getList(
@@ -158,6 +170,8 @@ public class TourDateRestController {
 	    List<TourdateByDate> result = toudateService.getTourByDate(date);
 	    return ResponseEntity.ok(result);
 	}
+	
+	
 
 
 }

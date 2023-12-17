@@ -23,8 +23,10 @@ public interface TourDateDAO extends JpaRepository<TourDate, Integer> {
 	List<TourDate> findByTourAndTourdates(Tour tour, Date tourdates);
 	
 	
-	@Query("SELECT p FROM TourDate p WHERE p.availableslots = :keyword")
-	List<TourDate> findByKeyword(@Param("keyword") Integer keyword);
+	@Query("SELECT p FROM TourDate p WHERE p.tour.tourname LIKE %:keyword% OR p.tour.departureday LIKE %:keyword%")
+	List<TourDate> findByKeywordOrTourName(@Param("keyword") String keyword);
+
+
 
 	@Query("SELECT p FROM TourDate p WHERE DATE(p.tourdates) = :date")
 	List<TourDate> findByTourdates(@Param("date") Date date);

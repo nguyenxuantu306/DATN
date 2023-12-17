@@ -29,7 +29,7 @@ public interface TourDateService {
 	// API cập nhật sản phẩm
 	TourDate update(TourDate tourdate);
 
-	List<TourDate> findByKeyword(Integer keyword);
+	List<TourDate> findByKeywordAndTourName(String keyword);
 	
 	void deleteTourDateById(Integer tourdateid);
 	

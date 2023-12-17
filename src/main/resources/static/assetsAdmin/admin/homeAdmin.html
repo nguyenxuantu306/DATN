@@ -312,7 +312,7 @@
 			</div>
 		</div>
 	</div>
-		<div class="row">
+	<div class="row">
 		<div class="col-lg-12">
 			<div class="card">
 				<div class="card-body">
@@ -335,7 +335,7 @@
 							<div id="chart">
 								<canvas id="myChart10"></canvas>
 							</div>
-							
+
 						</div>
 					</div>
 				</div>
@@ -469,10 +469,10 @@
 					<table class="table header-border table-hover verticle-middle ">
 						<thead>
 							<tr>
-								<th scope="col">STT</th>
-								<th scope="col">Email</th>
-								<th scope="col">Số điện thoại</th>
-								<th scope="col" style="text-align: center;">Tổng tiền đã
+								<th style="width:50px" scope="col">STT</th>
+								<th style="width:220px" scope="col">Email</th>
+								<th style="width:200px" scope="col">Số điện thoại</th>
+								<th style="width:200px">Tổng tiền đã
 									mua hàng</th>
 							</tr>
 						</thead>
@@ -487,26 +487,28 @@
 										{{pager.itemsThongKetotaluser[0].sum | number:0}} đ <i
 											style="color: orange;" class="fas fa-trophy gold-icon"></i>
 										Top 2: {{pager.itemsThongKetotaluser[1].group.email}} -
-										{{pager.itemsThongKetotaluser[1].sum | number:0}} đ
+										{{pager.itemsThongKetotaluser[1].sum | number:0}} đ <i
+											style="color: yellow;" class="fas fa-trophy gold-icon"></i>
+										Top 3: {{pager.itemsThongKetotaluser[2].group.email}} -
+										{{pager.itemsThongKetotaluser[2].sum | number:0}} đ
 									</div>
-
 								</td>
 							</tr>
+
 
 							<!-- Các dòng còn lại sử dụng ng-repeat -->
 							<tr
 								ng-repeat="user in pager.itemsThongKetotaluser | orderBy:'-group.sum'">
-								<th>{{$index + 1}}</th>
-								<td>{{user.group.email}}</td>
-								<td>{{user.group.email}}</td>
-								<td>{{user.group.phonenumber}}</td>
-								<td style="text-align: center;"><span
+								<th style="width:50px">{{$index + 1}}</th>
+								<td style="width:220px">{{user.group.email}}</td>
+								<td style="width:200px">{{user.group.phonenumber}}</td>
+								<td style="width:200px"><span
 									class="label gradient-4 btn-rounded"> {{user.sum |
 										number:0}} đ</span></td>
 							</tr>
 						</tbody>
 					</table>
-				
+
 					<div class="panel-footer text-right">
 						<span class="col-md-6"
 							style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
@@ -552,10 +554,10 @@
 					<table class="table header-border table-hover verticle-middle">
 						<thead>
 							<tr>
-								<th scope="col">STT</th>
-								<th scope="col">Email</th>
-								<th scope="col">Số điện thoại</th>
-								<th scope="col" style="text-align: center;">Tổng tiền đã
+								<th style="width:50px" scope="col">STT</th>
+								<th style="width:220px" scope="col">Email</th>
+								<th style="width:200px" scope="col">Số điện thoại</th>
+								<th style="width:200px" scope="col" >Tổng tiền đã
 									đặt vé</th>
 							</tr>
 						</thead>
@@ -566,20 +568,24 @@
 								<td colspan="4">
 									<div class="marquee-content" style="font-weight: bold;">
 										<i style="color: red;" class="fas fa-trophy gold-icon"></i>
-										Top 1: {{pager.itemsThongKeBookingtotaluser[0].group.email}} - 
+										Top 1: {{pager.itemsThongKeBookingtotaluser[0].group.email}} -
 										{{pager.itemsThongKeBookingtotaluser[0].sum | number:0}} đ <i
 											style="color: orange;" class="fas fa-trophy gold-icon"></i>
 										Top 2: {{pager.itemsThongKeBookingtotaluser[1].group.email}} -
 										{{pager.itemsThongKeBookingtotaluser[1].sum | number:0}} đ
+										<i
+											style="color: blue;" class="fas fa-trophy gold-icon"></i>
+										Top 3: {{pager.itemsThongKeBookingtotaluser[2].group.email}} -
+										{{pager.itemsThongKeBookingtotaluser[2].sum | number:0}} đ
 									</div>
 
 								</td>
 							</tr>
 							<tr ng-repeat="tour in pager.itemsThongKeBookingtotaluser">
-								<th>{{$index + 1}}</th>
-								<td>{{tour.group.email}}</td>
-								<td>{{tour.group.phonenumber}}</td>
-								<td style="text-align: center;"><span
+								<th style="width:50px">{{$index + 1}}</th>
+								<td style="width:220px">{{tour.group.email}}</td>
+								<td style="width:200px">{{tour.group.phonenumber}}</td>
+								<td style="width:200px"><span
 									class="label gradient-4 btn-rounded"> {{tour.sum
 										|number:0}} đ</span></td>
 							</tr>

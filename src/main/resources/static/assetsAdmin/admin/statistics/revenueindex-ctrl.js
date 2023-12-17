@@ -722,7 +722,7 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 				data: {
 					labels: formattedDates,
 					datasets: [{
-						label: 'Tổng Doanh thu 7 ngày trước',
+						label: 'Tổng doanh thu 7 ngày trước',
 						data: values,
 						backgroundColor: backgroundColors, // Sử dụng mảng màu sắc ngẫu nhiên
 						borderWidth: 1,
@@ -817,78 +817,82 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 
 	// Biểu đồ thống kê số lượng vé trong 1 ngày cụ thể
 	async function fetchTourDataAndDrawChart(date) {
-    try {
-        const response = await fetch(`/rest/tourdates/getTourByDate?date=${date}`);
-        const data = await response.json();
-        console.log(data);
+		try {
+			const response = await fetch(`/rest/tourdates/getTourByDate?date=${date}`);
+			const data = await response.json();
+			console.log(data);
 
-        // Extracting data for the chart
-        const labels = data.map(item => `Tổng các đơn đặt hàng ${item.count}`);
-        const adultValues = data.map(item => item.sumAdult);
-        const childValues = data.map(item => item.sumChild);
+			// Extracting data for the chart
+			const labels = data.map(item => `Tổng các đơn đặt hàng ${item.count}`);
+			const adultValues = data.map(item => item.sumAdult);
+			const childValues = data.map(item => item.sumChild);
 
-        // Random colors for the bars
-        const backgroundColorsAdult = generateRandomColors(data.length);
-        const backgroundColorsChild = generateRandomColors(data.length);
 
-        // Drawing the chart with two datasets (adults and children)
-        let myChart = document.getElementById('myChart12').getContext('2d');
+			// Random colors for the bars
+			const backgroundColorsAdult = generateRandomColors(data.length);
+			const backgroundColorsChild = generateRandomColors(data.length);
 
-        let massPopChart1 = new Chart(myChart, {
-            type: 'bar', // Change the chart type to 'bar'
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Adults',
-                        data: adultValues,
-                        backgroundColor: backgroundColorsAdult,
-                        borderWidth: 1,
-                        borderColor: '#777',
-                        hoverBorderWidth: 3,
-                        hoverBorderColor: '#000'
-                    },
-                    {
-                        label: 'Children',
-                        data: childValues,
-                        backgroundColor: backgroundColorsChild,
-                        borderWidth: 1,
-                        borderColor: '#777',
-                        hoverBorderWidth: 3,
-                        hoverBorderColor: '#000'
-                    }
-                ]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true // Ensure the y-axis starts from 0
-                    }
-                },
-                legend: {
-                    display: true,
-                    position: 'top'
-                },
-                layout: {
-                    padding: {
-                        left: 50,
-                        right: 0,
-                        bottom: 0,
-                        top: -10
-                    }
-                },
-                tooltips: {
-                    enabled: true
+			// Drawing the chart with two datasets (adults and children)
+			let myChart = document.getElementById('myChart12').getContext('2d');
+
+			let massPopChart1 = new Chart(myChart, {
+				type: 'bar', // Change the chart type to 'bar'
+				data: {
+					labels: labels,
+					datasets: [
+						{
+							label: 'Adults',
+							data: adultValues,
+							backgroundColor: backgroundColorsAdult,
+							borderWidth: 1,
+							borderColor: '#777',
+							hoverBorderWidth: 3,
+							hoverBorderColor: '#000'
+						},
+						{
+							label: 'Children',
+							data: childValues,
+							backgroundColor: backgroundColorsChild,
+							borderWidth: 1,
+							borderColor: '#777',
+							hoverBorderWidth: 3,
+							hoverBorderColor: '#000'
+						}
+					]
+				},
+				options: {
+					scales: {
+						y: {
+							min: 0, // Đặt giá trị tối thiểu cho trục y
+                ticks: {
+                    beginAtZero: true
                 }
-            }
-        });
-    } catch (error) {
-        console.error('Error fetching tour data:', error);
-        throw error;
-    }
-}
+						}
+					},
+					legend: {
+						display: true,
+						position: 'top'
+					},
+					layout: {
+						padding: {
+							left: 50,
+							right: 0,
+							bottom: 0,
+							top: -10
+						}
+					},
+					tooltips: {
+						enabled: true
+					}
+				}
+			});
+		} catch (error) {
+			console.error('Error fetching tour data:', error);
+			throw error;
+		}
+	}
 
-// Rest of your code remains the same
+	// Rest of your code remains the same
 
 
 	document.getElementById('dateInput1').addEventListener('change', function() {
@@ -924,11 +928,11 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 	// Gọi hàm để cập nhật biểu đồ mặc định khi trang được tải lên
 	updateChartWithDefaultDate();
 
-	// Biểu đồ thống kê số lượng vé trong 1 ngày cụ thể
+
 
 	$scope.pager = {
 		page: 0,
-		size: 10,
+		size: 15,
 		get itemsThongKetotaluser() {
 			var start = this.page * this.size;
 			return $scope.itemsThongKetotaluser.slice(start, start + this.size);

@@ -67,9 +67,9 @@ public class TourDateServiceImpl implements TourDateService {
 	}
 
 	@Override
-	public List<TourDate> findByKeyword(Integer keyword) {
+	public List<TourDate> findByKeywordAndTourName(String keyword) {
 		// TODO Auto-generated method stub
-		return dao.findByKeyword(keyword);
+		return dao.findByKeywordOrTourName(keyword);
 	}
 
 	@Override

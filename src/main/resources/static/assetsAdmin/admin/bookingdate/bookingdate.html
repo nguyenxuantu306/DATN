@@ -11,12 +11,12 @@
 								id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 						</div>
 						<input type="search" class="form-control" id="search"
-							ng-model="searchText" ng-change="loadData()"
+							ng-model="searchText" ng-change="loadData1()"
 							placeholder="Nhập từ khóa">
 					</div>
 					<div class="col-md-3 input-group icons">
 						<input type="date" class="form-control" ng-model="selectedDate"
-							ng-change="loadData1()">
+							ng-change="loadData()">
 
 						<button style="margin-left: 10px;" class="btn btn-success"
 							ng-click="clearData()">Xóa dữ liệu</button>
@@ -55,9 +55,6 @@
 									ng-class="{'arrow-up': sortKey=='tourname' && sortType=='asc', 'arrow-down': sortKey=='tourname' && sortType=='desc'}"></span></th>
 								<th scope="col" ng-click="sortBy('tourdate')">Ngày đặt <span
 									ng-class="{'arrow-up': sortKey=='tourdate' && sortType=='asc', 'arrow-down': sortKey=='tourdate' && sortType=='desc'}"></span></th>
-								<th scope="col" ng-click="sortBy('totalprice')">Tổng chi<span
-									ng-class="{'arrow-up': sortKey=='totalprice' && sortType=='asc', 'arrow-down': sortKey=='totalprice' && sortType=='desc'}"></span>
-								</th>
 								<th scope="col" ng-click="sortBy('departureday')">Ngày khởi
 									hành <span
 									ng-class="{'arrow-up': sortKey=='departureday' && sortType=='asc', 'arrow-down': sortKey=='departureday' && sortType=='desc'}"></span>
@@ -66,15 +63,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center"
-								ng-repeat="item in items2 | orderBy:sortKey:sortType">
+							<tr class="text-center" ng-repeat="item in pager.items ">
 								<th scope="row">{{$index + 1}}</th>
-								<td style="width: 250px">{{item.tour.tourname}}</td>
-								<td style="width: 100px; color: blue; font-weight: bold;">{{item.tourdates
+								<td>{{item.tour.tourname}}</td>
+								<td style="color: blue; font-weight: bold;">{{item.tourdates
 									| date:'dd-MM-yyyy'}}</td>
-								<td>{{item.tourdatebooking.booking.totalprice | number :0
-									}} đ</td>
-								<td style="width: 160px; font-weight: bold;"
+								<td style="font-weight: bold;"
 									ng-style="{
 								    'color': item.tour.departureday === 'Chủ nhật hàng tuần' ? 'Brown' :
 								             itemtour.departureday === 'Thứ bảy hàng tuần' ? 'orange' :
@@ -93,9 +87,9 @@
 											<div class="modal-content">
 												<div class="modal-header">
 													<h3 class="modal-title fs-6" id="exampleModalLabel">
-														Chi tiết thời gian đặt Tour : {{form.tourdate.tourdates |
-														date: 'dd-MM-yyyy'}} - #{{form.tourdate.tourdateid}} -
-														{{form.booking.user.email}}</h3>
+														Chi tiết danh sách đi tour ngày: {{form.tourdates |
+														date:'dd-MM-yyyy'}} - #{{form.tourdateid}} -
+														{{form.availableslots}}</h3>
 
 
 												</div>
@@ -105,9 +99,9 @@
 													<div class="table-responsive">
 														<table class="table header-border">
 															<thead>
-																<tr>
+																<tr ng-if="form.tourdatebooking.length > 0">
 																	<th scope="col">STT</th>
-																	<th scope="col">Hỉnh ảnh</th>
+																	<th scope="col">Hình ảnh</th>
 																	<th scope="col">Tên khách hàng</th>
 																	<th scope="col">Dữ liệu tour</th>
 																	<th scope="col">Số người lớn</th>
@@ -119,42 +113,59 @@
 															</thead>
 															<tbody>
 																<tr ng-repeat="booking in form.tourdatebooking">
-																	<!-- <th scope="row">{{$index + 1}}</th> -->
-																	<!-- <td><img
-																		ng-src="{{form.tourdatebooking.booking.user.image}}"
-																		alt="Tour Image" style="width: 80px;"></td> -->
+																	<th scope="row">{{$index + 1}}</th>
+																	<td><img ng-src="{{booking.booking.user.image}}"
+																		alt="Tour Image" style="width: 80px; height: 80px"></td>
 																	<td style="width: 150px">{{booking.booking.user.email}}</td>
-																	<!-- <span th:each="booking : ${form.tourdatebooking}">
-																		Truy cập email của người dùng trong từng booking
-																		<span th:text="${booking.booking.user.email}"></span>
-																		Nếu không phải là phần tử cuối cùng, thêm dấu phẩy và khoảng trắng
-																		<span th:if="${not #lists.last(booking)}">, </span>
-																	</span> -->
-																	<!-- <td style="width: 200px">Giá người lớn:
-																		{{form.booking.tour.pricings.adultprice}} <br /> Giá
-																		trẻ em: {{item.booking.tour.pricings.childprice}}
+
+																	<td style="width: 200px">Giá người lớn:
+																		{{booking.booking.tour.pricings.adultprice}} <br />
+																		Giá trẻ em:
+																		{{booking.booking.tour.pricings.childprice}}
 																	</td>
 
-																	<td>{{form.booking.adultticketnumber}}</td>
-																	<td>{{form.booking.childticketnumber}}</td>
-																	<td>{{formatPrice(form.booking.adultticketnumber *
-																		form.booking.tour.pricings.adultprice)}}</td>
-																	<td>{{formatPrice(form.booking.childticketnumber *
-																		form.booking.tour.pricings.childprice)}}</td>
-																	<td>{{formatPrice(form.booking.totalprice)}}</td> -->
+																	<td>{{booking.booking.adultticketnumber}}</td>
+																	<td>{{booking.booking.childticketnumber}}</td>
+																	<td>{{formatPrice(booking.booking.adultticketnumber
+																		* booking.booking.tour.pricings.adultprice)}}</td>
+																	<td>{{formatPrice(booking.booking.childticketnumber
+																		* booking.booking.tour.pricings.childprice)}}</td>
+																	<td>{{formatPrice(booking.booking.totalprice)}}</td>
+
 																</tr>
+																<tr ng-if="form.tourdatebooking.length === 0"
+																	style="text-align: center; font-size: 18px; font-weight: bold; color: red;">
+																	<td colspan="9"><img
+																			style="width: 300px; padding: 15px;"
+																			src="/assets/images/logo.png" alt="">
+																		<h2 class="mt-4">
+																			<i class="fa fa-thumbs-down text-danger"></i> Yêu cầu
+																			không hợp lệ
+																		</h2>
+																		<h4>Hiện tại tour này vẫn còn trống và chưa có ai đặt!</h4>
+																		<form class="mt-5 mb-5">
+
+																			<div class="text-center mb-4 mt-4">
+																				<button type="button" class="btn btn-success"
+																					data-dismiss="modal">Tôi biết rồi</button>
+																			</div>
+																		</form></td>
+																</tr>
+
+
 															</tbody>
 
 														</table>
-														<div class="modal-order text-right">
+														<div ng-if="form.tourdatebooking.length > 0" class="modal-order text-right">
 															<hr>
 															<h4 style="padding-left: 100px" class="total fs-4">
-																Tổng cộng: <strong>{{formatPrice(calculateTotal(form))}}</strong>
+																Tổng doanh thu của tour: <strong style="color: red">{{formatPrice(calculateTotalBookingPrice())}}</strong>
 															</h4>
 
 
 														</div>
 													</div>
+
 												</div>
 
 											</div>

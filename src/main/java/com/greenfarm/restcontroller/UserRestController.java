@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -244,29 +245,34 @@ public class UserRestController {
 		return new ResponseEntity<>(totalPurchaseList, HttpStatus.OK);
 	}
 	
-	 @GetMapping("/email")
-	    public ResponseEntity<User> getUserByEmail() {
-	        // Get the current authentication
-	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	@GetMapping("/email")
+	public ResponseEntity<User> getUserByEmail() {
+	    // Get the current authentication
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-	        // Ensure the user is authenticated
-	        if (authentication != null && authentication.isAuthenticated()) {
-	            // Get user details from the authentication principal
-	            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+	    // Ensure the user is authenticated
+	    if (isUserAuthenticated(authentication)) {
+	        // Get user details from the authentication principal
+	        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-	            // Find the user by email
-	            User user = userService.findByEmail(userDetails.getUsername());
+	        // Find the user by email
+	        User user = userService.findByEmail(userDetails.getUsername());
 
-	            if (user != null) {
-	                return ResponseEntity.ok(user);
-	            } else {
-	                return ResponseEntity.notFound().build();
-	            }
+	        if (user != null) {
+	            return ResponseEntity.ok(user);
 	        } else {
-	            // Handle unauthenticated request
-	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	            return ResponseEntity.notFound().build();
 	        }
+	    } else {
+	        // Handle unauthenticated request
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	    }
+	}
+
+	private boolean isUserAuthenticated(Authentication authentication) {
+	    return authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
+	}
+
 	 
 	 @GetMapping("/userimage")
 	 public ResponseEntity<String> getUserImage() {
