@@ -1,6 +1,7 @@
 package com.greenfarm.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,4 +94,12 @@ public class BookingServiceImpl implements BookingService {
 	public void saveBooking(Booking booking) {
 		dao.save(booking);
 	}
+
+	@Override
+	public List<Booking> Scantoday(LocalDateTime date) {
+		// TODO Auto-generated method stub
+		return dao.findByUsedate(date);
+	}
+	
+	
 }

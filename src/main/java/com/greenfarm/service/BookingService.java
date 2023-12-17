@@ -1,6 +1,7 @@
 package com.greenfarm.service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -43,6 +44,8 @@ public interface BookingService {
 	List<Booking> findByEfindByIdAccountmail(String email);
 
 	void saveBooking(Booking booking);
+	
+	List<Booking> Scantoday(LocalDateTime date);
 	
 	
 }

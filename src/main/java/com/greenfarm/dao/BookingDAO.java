@@ -49,5 +49,7 @@ public interface BookingDAO extends JpaRepository<Booking, Integer> {
 
 	@Query("SELECT o FROM Booking o WHERE o.user.email =?1")
 	List<Booking> findByEfindByIdAccountmail(String email);
+	
+	List<Booking> findByUsedate(LocalDateTime usedate);
 
 }

@@ -15,7 +15,7 @@
 							<button ng-click="captureAndSend()">Capture and Send</button>
 
 							<hr>
-	
+
 							<div class="bg-success" style="max-width: 640; max-height: 480">
 								<h3 style="text-align: center;">Quét mã tại đây</h3>
 								<video id="camera-view" style="max-width: 100%" autoplay></video>
@@ -36,6 +36,7 @@
 												<th>Ngày khởi hành</th>
 												<th>Thời gian</th>
 												<th>Đã tham gia</th>
+												<th>Danh sách vé đã quét</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -54,6 +55,13 @@
 												<th style="width: 100px; color: blue;">{{item.tourdates
 													| date:'dd/MM/yyyy'}}</th>
 												<th>{{item.availableslots}}</th>
+
+												<td><button type="button" class="btn btn-success"
+														ng-click="getlistbooking(item.tourdates)"
+														data-toggle="modal" data-target="#exampleModa2">
+														<i class="fa fa-plus-square"></i></i> Xem Vé đã quét
+													</button></td>
+											</tr>
 										</tbody>
 									</table>
 
@@ -73,7 +81,8 @@
 
 
 	<div>
-		<div style="text-align: center; background-color: white;" class="py-3" ng-repeat="bookings in items">
+		<div style="text-align: center; background-color: white;" class="py-3"
+			ng-repeat="bookings in items">
 			<div class="confirmation-message">
 				<h2>{{ketquakiemtra}}</h2>
 			</div>
@@ -84,8 +93,7 @@
 						<div class="card-body">
 							<h4 class="card-title" style="text-align: center;">Thông tin
 								khách hàng</h4>
-							<br>
-							{{bookings.statusbooking.statusbookingid}}
+							<br> {{bookings.statusbooking.statusbookingid}}
 							<p class="card-text">
 								<i class="fas fa-envelope"></i> Email : {{bookings.user.email}}
 								<strong th:text="${bookinguse.user.email}"></strong>
@@ -105,7 +113,7 @@
 					</div>
 				</div>
 
-				<div class="col-md-6" style="text-align: left;" >
+				<div class="col-md-6" style="text-align: left;">
 					<div class="card">
 						<div class="card-body">
 							<h4 class="card-title" style="text-align: center;">Thông tin
@@ -129,7 +137,7 @@
 							<p class="card-text">
 								<i class="fas fa-route"></i> Tên tour: <strong
 									th:text="${bookinguse.tour.Tourname}">
-									{{bookings.tour.tourname}}</strong>
+									{{bookings.tour.tourname}}</strong> Tổ chức ngày : <strong>{{bookings.tourDateBooking.tourdate.tourdates}}</strong>
 							</p>
 							Thêm các thông tin khác tùy thuộc vào yêu cầu của bạn
 						</div>
@@ -147,6 +155,56 @@
 </div>
 
 
+<div class="modal fade" id="exampleModa2" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl custom-modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title " id="exampleModalLabel">Danh sách vé</h3>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="col-lg-12">
+					<div class="card info">
+						<div class="card-body">
+							<div class="basic-form">
+								<div>
+									<h2>Các tour diễn ra trong ngày</h2>
+									<div class="table-responsive">
+										<table
+											class="table table-striped table-bordered zero-configuration">
+											<thead>
+												<tr>
+													<th>STT</th>
+													<th>Tên Khách Hàng</th>
+													<th>Vé người lớn</th>
+													<th>Vé trẻ em</th>
+													<th>Đã tham gia</th>
+													<th>Danh sách vé đã quét</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="item in history">
+													<th style="width: 50px">{{$index + 1}}</th>
+												<th style="width: 200px">{{item.tour.tourname}}</th>
+												
+												</tr>
+											</tbody>
+										</table>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
 
 <!-- 
   <div class="container-fluid">

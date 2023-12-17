@@ -48,4 +48,6 @@ public class BookingDTO {
 	private PaymentMethod paymentmethod;
 	
 	TourDateBooking tourDateBooking;
+	
+	private LocalDateTime usedate;
 }
