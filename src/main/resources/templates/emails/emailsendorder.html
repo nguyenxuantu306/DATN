@@ -169,7 +169,7 @@ div[style*="margin: 16px 0;"] {
 												th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')} + ' VNĐ' "></span>
 											</td>
 										</tr>
-										<tr>
+										<tr th:if="${not #lists.isEmpty(voucherLists)}">
 											<td width="75%" align="left"
 												style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
 												<div>
@@ -178,10 +178,10 @@ div[style*="margin: 16px 0;"] {
 											</td>
 											<td width="25%" align="left"
 												style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-												<div>
-													<!-- Use the formattedDiscount directly -->
-													<!-- <span th:text="${formattedDiscount} + '%'"></span> -->
-												</div>
+												<div th:each="formattedDiscount : ${formattedDiscounts}">
+														<!-- Use the formattedDiscount directly -->
+														<span th:text="${formattedDiscount} + '%'"></span>
+													</div>
 											</td>
 										</tr>
 										<tr>
