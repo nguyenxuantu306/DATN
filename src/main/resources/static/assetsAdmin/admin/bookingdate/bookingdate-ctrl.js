@@ -17,10 +17,6 @@ app.controller("bookingdate-ctrl", function($scope, $http) {
 			})
 		});
 		
-		// Load products
-		$http.get("/rest/tourdatebookings").then(resp => {
-			$scope.items = resp.data;
-		});
 
 
 	}
