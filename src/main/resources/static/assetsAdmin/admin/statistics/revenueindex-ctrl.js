@@ -265,8 +265,8 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 
 
 			// Thêm khoảng cách giữa icon và năm
-    		icon.style.marginRight = '10px';
-			
+			icon.style.marginRight = '10px';
+
 			const link = document.createElement('a');
 			link.href = '#';
 			link.setAttribute('data-year', year);
@@ -595,94 +595,109 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 	// Biểu đồ cột thông kê top10sp tồn kho
 
 	// Biểu đồ thống kê số loại sản phẩm bán được
-	async function fetchData(date) {
-		try {
-			const response = await fetch(`/rest/orders/getCategorySalesByDate?date=${date}`);
-			const data = await response.json();
-			return data;
-		} catch (error) {
-			console.error('Error fetching data:', error);
-			throw error;
+	class ChartUpdater {
+		constructor() {
+			this.dateInput = document.getElementById('dateInput');
+			this.chartCanvas = document.getElementById('myChart9').getContext('2d');
+			this.defaultDate = new Date().toISOString().slice(0, 10);
+
+			if (!this.dateInput) {
+				console.error("Element with id 'dateInput' not found.");
+				return;
+			}
+
+			this.setupEventListeners();
 		}
-	}
 
-	// Sử dụng hàm fetchData để lấy dữ liệu và vẽ biểu đồ
-	document.getElementById('dateInput').addEventListener('change', function() {
-		const selectedDate = this.value;
+		async fetchData(date) {
+			try {
+				const response = await fetch(`/rest/orders/getCategorySalesByDate?date=${date}`);
+				const data = await response.json();
+				return data;
+			} catch (error) {
+				console.error('Error fetching data:', error);
+				throw error;
+			}
+		}
 
-		fetchData(selectedDate)
-			.then(data => {
-				console.log(data); // In ra dữ liệu từ API trong console
+		generateRandomColors(count) {
+			return Array.from({ length: count }, () =>
+				`rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.7)`
+			);
+		}
+
+		drawChart(labels, values, backgroundColors) {
+			const massPopChart = new Chart(this.chartCanvas, {
+				type: 'horizontalBar',
+				data: {
+					labels: labels,
+					datasets: [{
+						label: 'Số lượng sản phẩm bán theo danh mục',
+						data: values,
+						backgroundColor: backgroundColors,
+						borderWidth: 1,
+						borderColor: '#777',
+						hoverBorderWidth: 3,
+						hoverBorderColor: '#000'
+					}]
+				},
+				options: {
+					scales: {
+						x: {
+							suggestedMin: 0, // Set the minimum value for the x-axis
+						}
+					},
+					legend: {
+						display: true,
+						position: 'top'
+					},
+					layout: {
+						padding: {
+							left: 50,
+							right: 0,
+							bottom: 0,
+							top: -10
+						}
+					},
+					tooltips: {
+						enabled: true
+					}
+				}
+			});
+		}
+
+		setupEventListeners() {
+			this.dateInput.addEventListener('input', async () => {
+				await this.updateChart(this.dateInput.value);
+			});
+		}
+
+		async updateChart(date) {
+			try {
+				const data = await this.fetchData(date);
 				const labels = data.map(item => item.group);
 				const values = data.map(item => item.count);
-
-				// Tạo mảng màu sắc ngẫu nhiên
-				const backgroundColors = generateRandomColors(data.length);
-
-				// Vẽ biểu đồ bằng dữ liệu lấy được và màu sắc tương ứng
-				let myChart = document.getElementById('myChart9').getContext('2d');
-
-				// Cấu hình biểu đồ
-				let massPopChart = new Chart(myChart, {
-					type: 'horizontalBar', // Thay đổi loại biểu đồ từ 'bar' sang 'horizontalBar'
-					data: {
-						labels: labels,
-						datasets: [{
-							label: 'Số lượng sản phẩm bán theo danh mục',
-							data: values,
-							backgroundColor: backgroundColors, // Sử dụng mảng màu sắc ngẫu nhiên
-							borderWidth: 1,
-							borderColor: '#777',
-							hoverBorderWidth: 3,
-							hoverBorderColor: '#000'
-						}]
-					},
-					options: {
-						legend: {
-							display: true,
-							position: 'top' // Chuyển chú thích lên trên đầu
-						},
-						layout: {
-							padding: {
-								left: 50,
-								right: 0,
-								bottom: 0,
-								top: -10 // Di chuyển biểu đồ lên một chút
-							}
-						},
-						tooltips: {
-							enabled: true
-						}
-					}
-				});
-			})
-			.catch(error => {
-				// Xử lý lỗi nếu có
-				console.error('Error:', error);
-			});
-	});
-
-
-	// Hàm tạo mảng màu sắc ngẫu nhiên
-	function generateRandomColors(count) {
-		const colors = [];
-		for (let i = 0; i < count; i++) {
-			const color = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.7)`;
-			colors.push(color);
+				const backgroundColors = this.generateRandomColors(data.length);
+				this.drawChart(labels, values, backgroundColors);
+			} catch (error) {
+				console.error('Error updating chart:', error);
+			}
 		}
-		return colors;
+
+		updateChartWithDefaultDate() {
+			this.dateInput.value = this.defaultDate;
+			this.dateInput.dispatchEvent(new Event('input'));
+		}
 	}
 
-	// Sử dụng hàm fetchData để lấy dữ liệu và vẽ biểu đồ
-	function updateChartWithDefaultDate() {
-		const defaultDate = new Date().toISOString().slice(0, 10);
-		const dateInput = document.getElementById('dateInput');
-		dateInput.value = defaultDate;
+	// Create an instance of the ChartUpdater class
+	const chartUpdater = new ChartUpdater();
 
-		// Gọi sự kiện change để kích hoạt lấy dữ liệu và vẽ biểu đồ
-		const changeEvent = new Event('change');
-		dateInput.dispatchEvent(changeEvent);
-	}
+	// Call the method to set default date and update chart
+	chartUpdater.updateChartWithDefaultDate();
+
+
+
 
 
 	// Biểu đồ thống kê số loại sản phẩm bán được
@@ -800,6 +815,116 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 	}
 	// Biểu đồ cột thông kê top 5 tour đặt nhiều nhất
 
+	// Biểu đồ thống kê số lượng vé trong 1 ngày cụ thể
+	async function fetchTourDataAndDrawChart(date) {
+    try {
+        const response = await fetch(`/rest/tourdates/getTourByDate?date=${date}`);
+        const data = await response.json();
+        console.log(data);
+
+        // Extracting data for the chart
+        const labels = data.map(item => `Tổng các đơn đặt hàng ${item.count}`);
+        const adultValues = data.map(item => item.sumAdult);
+        const childValues = data.map(item => item.sumChild);
+
+        // Random colors for the bars
+        const backgroundColorsAdult = generateRandomColors(data.length);
+        const backgroundColorsChild = generateRandomColors(data.length);
+
+        // Drawing the chart with two datasets (adults and children)
+        let myChart = document.getElementById('myChart12').getContext('2d');
+
+        let massPopChart1 = new Chart(myChart, {
+            type: 'bar', // Change the chart type to 'bar'
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Adults',
+                        data: adultValues,
+                        backgroundColor: backgroundColorsAdult,
+                        borderWidth: 1,
+                        borderColor: '#777',
+                        hoverBorderWidth: 3,
+                        hoverBorderColor: '#000'
+                    },
+                    {
+                        label: 'Children',
+                        data: childValues,
+                        backgroundColor: backgroundColorsChild,
+                        borderWidth: 1,
+                        borderColor: '#777',
+                        hoverBorderWidth: 3,
+                        hoverBorderColor: '#000'
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true // Ensure the y-axis starts from 0
+                    }
+                },
+                legend: {
+                    display: true,
+                    position: 'top'
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: -10
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching tour data:', error);
+        throw error;
+    }
+}
+
+// Rest of your code remains the same
+
+
+	document.getElementById('dateInput1').addEventListener('change', function() {
+		const selectedDate = this.value;
+
+		// Gọi hàm để lấy dữ liệu và vẽ biểu đồ
+		fetchTourDataAndDrawChart(selectedDate);
+	});
+
+	function generateRandomColors(count) {
+		const colors = [];
+		for (let i = 0; i < count; i++) {
+			const color = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.7)`;
+			colors.push(color);
+		}
+		return colors;
+	}
+
+	// Sử dụng hàm fetchData để lấy dữ liệu và vẽ biểu đồ mặc định
+	function updateChartWithDefaultDate() {
+		const defaultDate = new Date().toISOString().slice(0, 10);
+		const dateInput = document.getElementById('dateInput1');
+		dateInput.value = defaultDate;
+
+		// Gọi sự kiện change để kích hoạt lấy dữ liệu và vẽ biểu đồ
+		const changeEvent = new Event('change');
+		dateInput.dispatchEvent(changeEvent);
+
+		// Gọi hàm để lấy dữ liệu và vẽ biểu đồ mặc định
+		fetchTourDataAndDrawChart(defaultDate);
+	}
+
+	// Gọi hàm để cập nhật biểu đồ mặc định khi trang được tải lên
+	updateChartWithDefaultDate();
+
+	// Biểu đồ thống kê số lượng vé trong 1 ngày cụ thể
 
 	$scope.pager = {
 		page: 0,
