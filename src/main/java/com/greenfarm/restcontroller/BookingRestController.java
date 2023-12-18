@@ -47,6 +47,7 @@ import com.greenfarm.service.EmailService;
 import com.greenfarm.service.StatusBookingService;
 import com.greenfarm.service.UserService;
 import com.greenfarm.service.impl.BookingConfirmEmailContext;
+import com.greenfarm.utils.Log;
 
 import jakarta.mail.MessagingException;
 
@@ -67,15 +68,24 @@ public class BookingRestController {
 	UserService userService;
 
 	@GetMapping()
-	public ResponseEntity<List<BookingDTO>> getList() {
-		List<Booking> bookings = bookingService.findAll();
+	public ResponseEntity<List<BookingDTO>> getBookingList() {
+		try {
+			Log.info("Nhận yêu cầu để lấy danh sách đặt tour.");
 
-		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
-		List<BookingDTO> BookingsDTOs = bookings.stream().map(booking -> modelMapper.map(booking, BookingDTO.class))
-				.collect(Collectors.toList());
+			List<Booking> bookings = bookingService.findAll();
 
-		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
-		return new ResponseEntity<>(BookingsDTOs, HttpStatus.OK);
+			// Sử dụng ModelMapper để ánh xạ từ danh sách Booking sang danh sách BookingDTO
+			List<BookingDTO> bookingDTOs = bookings.stream().map(booking -> modelMapper.map(booking, BookingDTO.class))
+					.collect(Collectors.toList());
+
+			// Trả về danh sách BookingDTO bằng ResponseEntity với mã trạng thái 200 OK
+			Log.info("Trả về danh sách đặt tour: {}.", bookingDTOs.size());
+			return new ResponseEntity<>(bookingDTOs, HttpStatus.OK);
+		} catch (Exception e) {
+			Log.error("Đã xảy ra lỗi khi lấy danh sách đặt tour.", e);
+			// Trả về ResponseEntity với mã trạng thái 500 INTERNAL SERVER ERROR nếu có lỗi
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
 	@GetMapping("{bookingid}")
@@ -103,23 +113,39 @@ public class BookingRestController {
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<BookingDTO> update(@PathVariable("id") Integer id, @RequestBody Booking booking) {
-		Booking updatedBooking = bookingService.update(booking);
+	public ResponseEntity<BookingDTO> updateBooking(@PathVariable("id") Integer id, @RequestBody Booking booking) {
+		try {
+			Log.info("Nhận yêu cầu cập nhật đặt tour với ID: {}.", id);
 
-		if (updatedBooking == null) {
-			return ResponseEntity.notFound().build();
+			Booking updatedBooking = bookingService.update(booking);
+
+			if (updatedBooking == null) {
+				Log.warn("Không tìm thấy đặt tour với ID: {} để cập nhật.", id);
+				return ResponseEntity.notFound().build();
+			}
+
+			BookingDTO bookingDTO = modelMapper.map(updatedBooking, BookingDTO.class);
+
+			Log.info("Cập nhật đặt tour thành công với ID: {}.", id);
+			return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
+		} catch (Exception e) {
+			Log.error("Đã xảy ra lỗi khi cập nhật đặt tour với ID: {}.", id, e);
+			// Trả về ResponseEntity với mã trạng thái 500 INTERNAL SERVER ERROR nếu có lỗi
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-		BookingDTO bookingDTO = modelMapper.map(updatedBooking, BookingDTO.class);
-		return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
 	}
-	
 
 	@PutMapping("/cancel/{bookingid}")
 	public ResponseEntity<String> cancelBooking(@PathVariable("bookingid") Integer bookingid) {
 		try {
+			Log.info("Nhận yêu cầu hủy đặt tour với ID: {}.", bookingid);
+
 			bookingService.cancelBooking(bookingid);
+
+			Log.info("Đã hủy đặt phòng thành công với ID: {}.", bookingid);
 			return new ResponseEntity<>("Đã hủy tour thành công", HttpStatus.OK);
 		} catch (Exception e) {
+			Log.error("Lỗi khi hủy đặt phòng với ID: {}.", bookingid, e);
 			return new ResponseEntity<>("Lỗi khi hủy tour: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -200,40 +226,50 @@ public class BookingRestController {
 	StatusBookingService statusBookingService;
 
 	@GetMapping("/kiemtrave/{bookingid}")
-	public ModelAndView updatekiemtrave(@PathVariable("bookingid") Integer bookingid, Model model,
+	public ModelAndView updateKiemTraVe(@PathVariable("bookingid") Integer bookingid, Model model,
 			Principal principal) {
-		String userRole = getUserRole(principal);
+		try {
+			Log.info("Nhận yêu cầu kiểm tra và cập nhật vé với ID: {}.", bookingid);
 
-		// Kiểm tra quyền nếu là Admin -> chuyển trạng thái
-		if ("Administrator".equals(userRole)) {
-			Booking booking = bookingService.findById(bookingid);
-			if (booking.getStatusbooking().getStatusbookingid() == 5) {
-				System.out.println("Vé đã được sử dụng");
-				// Trả về giao diện Thymeleaf khi vé đã được sử dụng
-				ModelAndView mav = new ModelAndView("mytiecketuse");
-				// Thêm dữ liệu vào model nếu cần
-				model.addAttribute("bookinguse", booking);
-				mav.addObject("message", "Vé đã được sử dụng");
-				return mav;
+			String userRole = getUserRole(principal);
+
+			// Kiểm tra quyền nếu là Admin -> chuyển trạng thái
+			if ("Administrator".equals(userRole)) {
+				Booking booking = bookingService.findById(bookingid);
+				if (booking.getStatusbooking().getStatusbookingid() == 5) {
+					Log.info("Vé đã được sử dụng");
+					// Trả về giao diện Thymeleaf khi vé đã được sử dụng
+					ModelAndView mav = new ModelAndView("mytiecketuse");
+					// Thêm dữ liệu vào model nếu cần
+					model.addAttribute("bookinguse", booking);
+					mav.addObject("message", "Vé đã được sử dụng");
+					return mav;
+				} else {
+					StatusBooking statusBooking = statusBookingService.findById(5);
+					booking.setStatusbooking(statusBooking);
+					Booking updatedBooking = bookingService.update(booking);
+					Log.info("Đã xác nhận thành công");
+					// Trả về giao diện Thymeleaf khi xác nhận thành công
+					ModelAndView mav = new ModelAndView("mytiecketuse");
+					// Thêm dữ liệu vào model nếu cần
+					model.addAttribute("bookinguse", booking);
+					mav.addObject("message", "Đã xác nhận thành công");
+					return mav;
+				}
 			} else {
-				StatusBooking statusBooking = statusBookingService.findById(5);
-				booking.setStatusbooking(statusBooking);
-				Booking updatedBooking = bookingService.update(booking);
-				System.out.println("Đã xác nhận thành công");
-				// Trả về giao diện Thymeleaf khi xác nhận thành công
-				ModelAndView mav = new ModelAndView("mytiecketuse");
-				// Thêm dữ liệu vào model nếu cần
+				Booking booking = bookingService.findById(bookingid);
+				ModelAndView mav = new ModelAndView("mytiecketseen");
+				mav.addObject("message", "Bạn không có quyền xác nhận vé.");
 				model.addAttribute("bookinguse", booking);
-				mav.addObject("message", "Đã xác nhận thành công");
+
 				return mav;
 			}
-		} else {
-			Booking booking = bookingService.findById(bookingid);
-			ModelAndView mav = new ModelAndView("mytiecketseen");
-			mav.addObject("message", "Bạn không có quyền xác nhận vé.");
-			model.addAttribute("bookinguse", booking);
-
-			return mav;
+		} catch (Exception e) {
+			Log.error("Đã xảy ra lỗi khi kiểm tra và cập nhật vé với ID: {}.", bookingid, e);
+			// Trả về giao diện Thymeleaf khi có lỗi
+			ModelAndView errorMav = new ModelAndView("errorpage");
+			errorMav.addObject("errorMessage", "Đã xảy ra lỗi khi kiểm tra và cập nhật vé.");
+			return errorMav;
 		}
 	}
 
@@ -256,7 +292,7 @@ public class BookingRestController {
 
 		return "USER";
 	}
-	
+
 	@GetMapping("/thongke/top5toudatnhieunhat")
 	public List<ReportTop5Tour> gettourdatNT() {
 		return bookingService.gettourdatNT();
@@ -274,6 +310,5 @@ public class BookingRestController {
 		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
 		return new ResponseEntity<>(BookingsDTOs, HttpStatus.OK);
 	}
-	
-	
+
 }
