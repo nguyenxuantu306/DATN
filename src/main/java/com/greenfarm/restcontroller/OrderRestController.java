@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,6 +39,7 @@ import com.greenfarm.entity.Report7day;
 import com.greenfarm.entity.ReportRevenue;
 import com.greenfarm.entity.ReportYear;
 import com.greenfarm.service.OrderService;
+import com.greenfarm.utils.Log;
 
 @CrossOrigin("*")
 @RestController
@@ -51,19 +51,28 @@ public class OrderRestController {
 	@Autowired
 	ModelMapper modelMapper;
 
+	// Lấy danh sách đơn hàng
 	@GetMapping()
 	public ResponseEntity<List<OrderDTO>> getList() {
-		List<Order> orders = orderService.findAll();
+		try {
+			Log.info("Nhận yêu cầu lấy danh sách đơn hàng");
 
-		// Sử dụng ModelMapper để ánh xạ từ danh sách Product sang danh sách ProductDTO
-		List<OrderDTO> orderDTOs = orders.stream().map(order -> modelMapper.map(order, OrderDTO.class))
-				.collect(Collectors.toList());
+			List<Order> orders = orderService.findAll();
 
-		// Trả về danh sách ProductDTO bằng ResponseEntity với mã trạng thái 200 OK
-		return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
+			// Sử dụng ModelMapper để ánh xạ từ danh sách Order sang danh sách OrderDTO
+			ModelMapper modelMapper = new ModelMapper();
+			List<OrderDTO> orderDTOs = orders.stream().map(order -> modelMapper.map(order, OrderDTO.class))
+					.collect(Collectors.toList());
+
+			Log.info("Trả về danh sách đơn hàng thành công.");
+			// Trả về danh sách OrderDTO bằng ResponseEntity với mã trạng thái 200 OK
+			return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
+		} catch (Exception e) {
+			Log.error("Đã xảy ra lỗi khi lấy danh sách đơn hàng", e);
+			// Trả về ResponseEntity với mã trạng thái 500 INTERNAL SERVER ERROR nếu có lỗi
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
-
-
 
 	@GetMapping("/search")
 	public ResponseEntity<String> searchOrdersByDate(
@@ -88,21 +97,36 @@ public class OrderRestController {
 		}
 	}
 
-
 	@PostMapping()
 	public Order create(@RequestBody JsonNode orderData) {
 		return orderService.create(orderData);
 	}
 
+	// Cập nhật một đơn hàng
 	@PutMapping("{id}")
 	public ResponseEntity<OrderDTO> update(@PathVariable("id") Integer id, @RequestBody Order order) {
-		Order updatedOrder = orderService.update(order);
+		try {
+			Log.info("Nhận yêu cầu cập nhật đơn hàng với ID: {}", id);
 
-		if (updatedOrder == null) {
-			return ResponseEntity.notFound().build();
+			// Thực hiện cập nhật trong service
+			Order updatedOrder = orderService.update(order);
+
+			if (updatedOrder == null) {
+				Log.warn("Không tìm thấy đơn hàng với ID {}. Không thể cập nhật.", id);
+				return ResponseEntity.notFound().build();
+			}
+
+			// Sử dụng ModelMapper để ánh xạ từ Order đã cập nhật thành OrderDTO
+			ModelMapper modelMapper = new ModelMapper();
+			OrderDTO orderDTO = modelMapper.map(updatedOrder, OrderDTO.class);
+
+			Log.info("Đơn hàng với ID {} đã được cập nhật thành công.", id);
+			return new ResponseEntity<>(orderDTO, HttpStatus.OK);
+		} catch (Exception e) {
+			Log.error("Đã xảy ra lỗi khi cập nhật đơn hàng với ID: {}", id, e);
+			// Trả về ResponseEntity với mã trạng thái 500 INTERNAL SERVER ERROR nếu có lỗi
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-		OrderDTO orderDTO = modelMapper.map(updatedOrder, OrderDTO.class);
-		return new ResponseEntity<>(orderDTO, HttpStatus.OK);
 	}
 
 	@GetMapping("/byStatusName")
@@ -134,13 +158,19 @@ public class OrderRestController {
 		return new ResponseEntity<>(orderService.slstatus(), HttpStatus.OK);
 	}
 
+	// Hủy một đơn hàng
 	@PutMapping("/cancel/{orderid}")
 	public ResponseEntity<String> cancelOrder(@PathVariable("orderid") Integer orderid) {
-		// Thực hiện các thao tác hủy đơn hàng
 		try {
+			Log.info("Nhận yêu cầu hủy đơn hàng với ID: {}", orderid);
+
+			// Thực hiện các thao tác hủy đơn hàng trong service
 			orderService.cancelOrder(orderid);
+
+			Log.info("Đã hủy đơn hàng với ID {} thành công.", orderid);
 			return new ResponseEntity<>("Đã hủy đơn hàng thành công", HttpStatus.OK);
 		} catch (Exception e) {
+			Log.error("Lỗi khi hủy đơn hàng với ID: {}", orderid, e);
 			return new ResponseEntity<>("Lỗi khi hủy đơn hàng: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

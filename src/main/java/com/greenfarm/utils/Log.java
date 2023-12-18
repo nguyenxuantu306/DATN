@@ -65,4 +65,8 @@ public class Log{
 		Log.error(string, productid, e);
 	}
 
+	public static void info(String string, String keyword) {
+		Log.info(string, keyword);
+	}
+
 }
