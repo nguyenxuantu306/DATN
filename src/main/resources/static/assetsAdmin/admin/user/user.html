@@ -114,24 +114,11 @@
 													<div class="form-group col-sm-6">
 														<label>Mật khẩu : </label> <input name="password"
 															type="password" ng-model="form.password"
-															ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,100}$/"
+															
 															class="form-control input-default" ng-readonly="isEdit"
-															required> <label
-															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.password.$error.required"
-															style="color: red;">Vui lòng nhập mật khẩu !</label> <label
-															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.password.$error.pattern"
-															style="color: red;">Mật khẩu phải có từ 8 đến 16
-															ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.</label>
+															required> 
 													</div>
-
-													<!-- <div class="form-group col-sm-6">
-														<label>Địa chỉ : </label> <input name="address"
-															type="text" ng-model="form.address"
-															placeholder="VD : Công viên..."
-															class="form-control input-default" required> <label
-															ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.address.$error.required"
-															style="color: red;">Vui lòng nhập địa chỉ !</label> <label>
-													</div> -->
+											
 													<div class="form-group col-sm-6">
 														<label>Ngày tạo:</label> <input ng-model="form.createddate"
 															type="date" name="createddate"
@@ -224,7 +211,7 @@
 											</div>
 											<div class="panel-footer ">
 												<button type="submit" name="submit"
-													ng-click="frmvalidateupdate.$valid && update()"
+													ng-click="update()"
 													class="btn btn-success">Cập nhật người dùng</button>
 
 											</div>

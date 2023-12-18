@@ -86,7 +86,7 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 	        "JOIN OrderDetail od ON o.Orderid = od.order.Orderid " +
 	        "WHERE o.orderdate BETWEEN DATEADD(DAY, -7, CURRENT_DATE) AND CURRENT_DATE " +
 	        "GROUP BY DATE(o.orderdate) " +
-	        "ORDER BY DATE(o.orderdate) DESC")
+	        "ORDER BY DATE(o.orderdate) ASC")
 	List<Report7day> RevenueLast7Days();
 
 }

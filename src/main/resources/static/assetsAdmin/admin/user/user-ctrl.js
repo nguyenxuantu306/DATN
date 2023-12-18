@@ -152,12 +152,14 @@ app.controller("user-ctrl", function($scope, $http) {
 
 
 
-	// cập loại nhật sản phẩm
+	// cập nhật user
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
+		console.log(item)
 		$http.put(`/rest/users/${item.userid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.userid == item.userid);
 			$scope.items[index] = item;
+			
 			// Sử dụng SweetAlert2 cho thông báo thành công
 			Swal.fire({
 				icon: 'success',
