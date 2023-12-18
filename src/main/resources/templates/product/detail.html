@@ -62,7 +62,7 @@
 						</h2>
 						<strong>Mô tả : </strong>
 						<p th:text="*{description}" class="product-description mb-3"></p>
-						<strong>Số lượng : </strong> <span th:text="*{quantityavailable}"
+						<strong>Số lượng : </strong> <span id="quantityavailable" th:text="*{quantityavailable}"
 							class="product-description mb-3"></span> kilogam có sẵn <br>
 						<strong>Đơn vị: </strong> Kilogam
 						<div class="cart-button mt-4 mb-4 d-flex">
@@ -70,7 +70,7 @@
 								<button style="border: 1px solid rgba(0, 0, 0, .09); width: 32px"
 									onclick="decQuantity()">-</button>
 								<input style="border: 1px solid rgba(0, 0, 0, .09);" class="w-25 text-center"
-									type="number" id="quantityInput" name="quantity" value="1" min="1" />
+									type="number" id="quantityInput" name="quantity" value="1" min="0.5" />
 								<button style="border: 1px solid rgba(0, 0, 0, .09); width: 32px"
 									onclick="incQuantity()">+</button>
 							</div>
