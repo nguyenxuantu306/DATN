@@ -757,6 +757,7 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 					scales: {
 						yAxes: [{
 							ticks: {
+								beginAtZero: true,
 								callback: function(value, index, values) {
 									return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
 								}
@@ -862,12 +863,11 @@ app.controller('revenueindex-ctrl', function($scope, $http) {
 				},
 				options: {
 					scales: {
-						y: {
-							min: 0, // Đặt giá trị tối thiểu cho trục y
-                ticks: {
-                    beginAtZero: true
-                }
-						}
+						yAxes: [{
+							ticks: {
+								beginAtZero: true
+							}
+						}]
 					},
 					legend: {
 						display: true,
