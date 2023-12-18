@@ -112,19 +112,19 @@
 																</tr>
 															</thead>
 															<tbody>
-																<tr ng-repeat="booking in form.tourdatebooking">
+																<tr ng-repeat="booking in form.tourdatebooking | orderBy:'-booking.bookingdate'">
 																	<th scope="row">{{$index + 1}}</th>
 																	<td><img ng-src="{{booking.booking.user.image}}"
 																		alt="Tour Image" style="width: 80px; height: 80px"></td>
-																	<td style="width: 150px">{{booking.booking.user.email}}</td>
-
+																	<td style="width: 150px;color: blue;">{{booking.booking.user.email}} <br />
+																		{{booking.booking.bookingdate | date:'dd-MM-yyyy HH:mm a'}}
+																	</td>
 																	<td style="width: 200px">Giá người lớn:
 																		{{booking.booking.tour.pricings.adultprice}} <br />
 																		Giá trẻ em:
-																		{{booking.booking.tour.pricings.childprice}}
+																		{{booking.booking.tour.pricings.childprice}} 
 																	</td>
-
-																	<td>{{booking.booking.adultticketnumber}}</td>
+																	<td>{{booking.booking.adultticketnumber}}</td>						
 																	<td>{{booking.booking.childticketnumber}}</td>
 																	<td>{{formatPrice(booking.booking.adultticketnumber
 																		* booking.booking.tour.pricings.adultprice)}}</td>
