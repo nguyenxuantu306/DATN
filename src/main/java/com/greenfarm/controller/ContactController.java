@@ -44,12 +44,15 @@ public class ContactController {
 			return "contact";
 		}else {
 			//Booking booking = modelMapper.map(bookingDto, Booking.class);
-			com.greenfarm.entity.Contact contact = modelMapper.map(contactinfo, Contact.class);
+			Contact contact = modelMapper.map(contactinfo, Contact.class);
 			System.out.println(contact.getEmail());
 			try {
 				contact.setCreateddate(new Date());
 				contactService.Create(contact);
 				Log.info("Lưu liên hệ và phản hồi của khách hàng"+contact.getEmail());
+				
+			      // Add an empty ContactDTO object to reset the form
+	            model.addAttribute("contact", new ContactDTO());
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -59,9 +62,6 @@ public class ContactController {
 			return "contact";
 		}
 		
-		
-		
 	}
-	
 	
 }
