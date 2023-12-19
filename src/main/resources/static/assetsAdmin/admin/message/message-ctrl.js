@@ -28,6 +28,24 @@ app.controller("message-ctrl", function($scope, $http, $window) {
 		$scope.form.commentid = item.commentid;
 	}
 
+	$scope.checkAndReply = function () {
+        // Kiểm tra xem nội dung bình luận có rỗng hay không
+        if (!$scope.form.recommenttext) {
+            // Hiển thị thông báo cảnh báo nếu rỗng
+            Swal.fire({
+                icon: 'warning',
+                title: 'Vui lòng nhập nội dung trả lời trước khi gửi.',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+
+            // Dừng việc thực hiện tiếp
+            return;
+        }
+
+        // Nếu bình luận không rỗng, tiếp tục gọi hàm update()
+        $scope.update();
+    };
 
 	//Thêm recomments
 	$scope.update = function() {

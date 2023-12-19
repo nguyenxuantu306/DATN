@@ -19,6 +19,7 @@ import com.greenfarm.service.EmailService;
 
 import jakarta.activation.URLDataSource;
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
 @Service
@@ -63,21 +64,31 @@ public class Emailserviceimpl implements EmailService {
 
 		mimeMessageHelper.setTo(email.getTo());
 		mimeMessageHelper.setSubject(email.getSubject());
-		mimeMessageHelper.setFrom(email.getFrom());
-		mimeMessageHelper.setText(emailContent, true);
-		emailSender.send(message);
+		try {
+			InternetAddress fromAddress = new InternetAddress(email.getFrom(), "GreenFarm");
+			mimeMessageHelper.setFrom(fromAddress);
+			mimeMessageHelper.setText(emailContent, true);
+			emailSender.send(message);
+		} catch (Exception e) {
+			// TODO: handle exception
+			mimeMessageHelper.setFrom(email.getFrom());
+			mimeMessageHelper.setText(emailContent, true);
+			emailSender.send(message);
+		}
+
+	
 	}
 
 	@Override
 	public void sendEmailWithBooking(String toAddress, String subject, String message, String qrCodeUrl)
-	        throws MessagingException{
-	    MimeMessage mimeMessage = emailSender.createMimeMessage();
-	    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
-	    messageHelper.setTo(toAddress);
-	    messageHelper.setSubject(subject);
-	    messageHelper.setText(message);
-	    // Truyền đường dẫn URL trực tiếp vào email
-	    try {
+			throws MessagingException {
+		MimeMessage mimeMessage = emailSender.createMimeMessage();
+		MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
+		messageHelper.setTo(toAddress);
+		messageHelper.setSubject(subject);
+		messageHelper.setText(message);
+		// Truyền đường dẫn URL trực tiếp vào email
+		try {
 			messageHelper.addInline("Purchase Order", new URLDataSource(new URL(qrCodeUrl)));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -85,7 +96,7 @@ public class Emailserviceimpl implements EmailService {
 			e.printStackTrace();
 		}
 
-	    emailSender.send(mimeMessage);
+		emailSender.send(mimeMessage);
 	}
 
 	@Override
@@ -134,7 +145,7 @@ public class Emailserviceimpl implements EmailService {
 		mimeMessageHelper.setSubject(email.getSubject());
 		mimeMessageHelper.setFrom(email.getFrom());
 		mimeMessageHelper.setText(emailContent, true);
-		
+
 		emailSender.send(message);
 	}
 

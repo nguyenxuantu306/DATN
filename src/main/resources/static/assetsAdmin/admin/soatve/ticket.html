@@ -12,12 +12,13 @@
 								chọn Máy ảnh:</label> <select id="cameraSelect"
 								ng-click="selectCamera()">
 							</select>
-
+							<h2>{{ketquaquet}}</h2>
 							<!-- <button class="bg-success" ng-click="captureAndSend()">Chụp và gửi</button> -->
 							<button type="button" class="btn btn-success"
 								ng-click="captureAndSend()">
 								<i class="fa fa-camera"></i> Quét
 							</button>
+
 							<hr>
 
 							<div
@@ -27,16 +28,17 @@
 							</div>
 
 
+
 						</div>
 
 						<div class="col-6 bg-success">
 							<div>
 								<h2>Các tour diễn ra trong ngày</h2>
 								<div class="table-responsive">
-									
+
 									<table
 										class="table table-striped table-bordered zero-configuration">
-										<thead ng-if="tourlist.length > 0" >
+										<thead ng-if="tourlist.length > 0">
 											<tr>
 												<th>STT</th>
 												<th>Tên Tour</th>
@@ -73,11 +75,12 @@
 									</table>
 									<div ng-if="tourlist.length === 0" style="text-align: center;">
 										<img style="width: 300px; padding: 15px;"
-										src="/assets/images/logo.png" alt="">
+											src="/assets/images/logo.png" alt="">
 										<h4 class="mt-4">
-											<i class="fa fa-thumbs-down text-danger"></i> Hiện tại chưa có tour nào trong ngày hôm nay !
+											<i class="fa fa-thumbs-down text-danger"></i> Hiện tại chưa
+											có tour nào trong ngày hôm nay !
 										</h4>
-										
+
 									</div>
 								</div>
 							</div>
@@ -101,7 +104,7 @@
 				<h2>{{ketquakiemtra}}</h2>
 				<h3>
 					<i class="far fa-calendar-alt"></i>Sử dụng lúc : {{
-					bookings.bookingdate | date:'dd/MM/yyyy HH:mm' }}
+					bookings.usedate | date:'dd/MM/yyyy HH:mm a' }}
 				</h3>
 			</div>
 			<h3>Thông tin đặt vé của bạn</h3>
@@ -155,7 +158,8 @@
 							<p class="card-text">
 								<i class="fas fa-route"></i> Tên tour: <strong
 									th:text="${bookinguse.tour.Tourname}">
-									{{bookings.tour.tourname}}</strong> Tổ chức ngày : <strong>{{bookings.tourDateBooking.tourdate.tourdates}}</strong>
+									{{bookings.tour.tourname}}</strong> Tổ chức ngày : <strong>{{bookings.tourDateBooking.tourdate.tourdates
+									| date:'dd/MM/yyyy'}}</strong>
 							</p>
 							Thêm các thông tin khác tùy thuộc vào yêu cầu của bạn
 						</div>

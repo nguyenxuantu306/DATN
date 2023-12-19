@@ -119,15 +119,21 @@ public class HomeController {
 		return total;
 	}
 	
-	@RequestMapping("/error/404")
+	@RequestMapping("/error/pagenotfound")
     public String handle404() {
 		return "security/404";
 		
 	}
 	
+	
+	@RequestMapping("/error/accessdenied")
+    public String handle403() {
+		return "security/403";
+		
+	}
 	 @RequestMapping(value = "/*", method = RequestMethod.GET)
 	    public String notFound() {
-	    	return "redirect:/error/404";
+	    	return "redirect:/error/pagenotfound";
 	    }
 
 }
