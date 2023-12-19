@@ -2,7 +2,6 @@ package com.greenfarm.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -20,10 +19,7 @@ import com.greenfarm.dao.TourOverviewDAO;
 import com.greenfarm.dto.TourDTO;
 import com.greenfarm.entity.Pricing;
 import com.greenfarm.entity.Tour;
-import com.greenfarm.entity.TourImage;
 import com.greenfarm.service.TourService;
-
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class TourServiceImpl implements TourService {
@@ -45,7 +41,7 @@ public class TourServiceImpl implements TourService {
 
 	@Override
 	public List<Tour> findAll() {
-		return dao.findAll();
+		return dao.findAllByIsdeletedFalse();
 	}
 
 	@Override
@@ -63,12 +59,6 @@ public class TourServiceImpl implements TourService {
 		return dao.save(tour);
 	}
 
-	@Override
-	public void delete(Integer tourImageId) {
-		Tour tourImage = dao.findById(tourImageId)
-				.orElseThrow(() -> new EntityNotFoundException("Cannot find TourImage with id: " + tourImageId));
-		dao.delete(tourImage);
-	}
 
 	public List<TourDTO> findToursByAdultPrice(Float minPrice, Float maxPrice) {
 		List<Pricing> pricings = pricingdao.findByAdultpriceBetween(minPrice, maxPrice);
@@ -101,7 +91,7 @@ public class TourServiceImpl implements TourService {
 
 	@Override
 	public Page<TourDTO> findToursByAdultPriceWithPagination(Float minPrice, Float maxPrice, Pageable pageable) {
-	    Page<Tour> tourPage = dao.findByAdultprice(minPrice, maxPrice, pageable);
+	    Page<Tour> tourPage = dao.findByAdultpriceAndIsdeletedFalse(minPrice, maxPrice, pageable);
 
 	    List<TourDTO> tourDTOs = tourPage.getContent().stream()
 	                                   .map(tour -> convertToDTOUsingModelMapper(tour))
@@ -116,7 +106,7 @@ public class TourServiceImpl implements TourService {
 
 	@Override
 	public Page<TourDTO> findToursByTournameWithPagination(String searchTerm, Pageable pageable) {
-	    Page<Tour> tourPage = dao.findByTournameContainingIgnoreCase(searchTerm, pageable);
+	    Page<Tour> tourPage = dao.findByTournameContainingIgnoreCaseAndIsdeletedFalse(searchTerm, pageable);
 
 	    List<TourDTO> tourDTOs = tourPage.getContent().stream()
 	                                   .map(tour -> convertToDTOUsingModelMapper(tour))
@@ -127,7 +117,34 @@ public class TourServiceImpl implements TourService {
 
 	@Override
 	public Page<Tour> findAllWithPagination(Pageable pageable) {
-		return dao.findAll(pageable);
+		return dao.findAllByIsdeletedFalse(pageable);
 	}
+	
+	@Override
+	public List<Tour> findAllDeletedTour() {
+		return dao.findAllByIsdeletedTrue();
+	}
+
+	@Override
+    @Transactional
+    public void deleteTourById(Integer tourid) {
+		dao.deleteTourById(tourid);
+    }
+
+	@Override
+	public List<Tour> findByKeyword(String keyword) {	
+		return dao.findByKeyword(keyword);
+	}
+	
+	 @Override
+	    public Page<TourDTO> findToursByDeparturedayWithPagination(String departureday, Pageable pageable) {
+		 Page<Tour> tourPage = dao.findByDepartureday(departureday, pageable);
+
+		    List<TourDTO> tourDTOs = tourPage.getContent().stream()
+		                                   .map(tour -> convertToDTOUsingModelMapper(tour))
+		                                   .collect(Collectors.toList());
+
+		    return new PageImpl<>(tourDTOs, pageable, tourPage.getTotalElements());
+	    }
 
 }

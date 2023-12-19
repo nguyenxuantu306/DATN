@@ -10,9 +10,46 @@
 	<div class="container">
 		<div class="pt-3">
 			<div class="text-center mb-3 pb-3">
+				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+					<div class="carousel-indicators">
+						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+							class="active" aria-current="true" aria-label="Slide 1"></button>
+						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+							aria-label="Slide 2"></button>
+						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+							aria-label="Slide 3"></button>
+					</div>
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img style="height: 250px"
+								src="https://theme.hstatic.net/200000594657/1000977329/14/slideshow_1.jpg?v=22"
+								class="d-block w-100" alt="...">
+						</div>
+						<div class="carousel-item">
+							<img style="height: 250px"
+								src="https://theme.hstatic.net/200000594657/1000977329/14/slideshow_2.jpg?v=22"
+								class="d-block w-100 " alt="...">
+						</div>
+						<div class="carousel-item">
+							<img style="height: 250px"
+								src="https://static.wixstatic.com/media/7406f4_adbbc9305d5b48ce828f9672e6a4ef85~mv2.jpg/v1/fill/w_1899,h_825,al_r,q_85,usm_0.66_1.00_0.01,enc_auto/7406f4_adbbc9305d5b48ce828f9672e6a4ef85~mv2.jpg"
+								class="d-block w-100" alt="...">
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+						data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+						data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
 				<h1 th:text="#{tour.label.title}">List Tour</h1>
 			</div>
-			<div class="tab-content py-5">
+			<div class="tab-content py-3">
 				<div role="tabpanel" class="tab-pane active" id="plan">
 					<div class="block_search">
 						<form action="/tour" method="get">
@@ -21,16 +58,31 @@
 
 							<div class="search_panel">
 								<div class="row">
-									<div class="col-md-10 input-group">
+									<div class="col-md-8 input-group">
 										<input type="text" class="form-control mr-3" placeholder="Tìm kiếm tên..."
-											name="search" id="searchInput">
-										<div class="input-group-append ">
-											<button class="btn btn-primary" type="submit" th:text="#{tour.label.search}">Tìm kiếm</button>
-										</div>
+											name="search" id="searchInput" oninput="performSearch()">
+										<!-- <div class="input-group-append">
+											<button class="btn btn-primary" type="submit"
+												th:text="#{tour.label.search}">Tìm kiếm</button>
+										</div> -->
+									</div>
+									<div class="col-xs-24 col-sm-8 col-md-2">
+										<select id="departureday" name="departureday" class="form-control">
+											<option value="" th:text="#{tour.label.departureday}">---
+												Ngày khởi hành ---</option>
+											<option value="">Tất cả ngày</option>
+											<option value="Chủ nhật hàng tuần">Ngày chủ nhật</option>
+											<option value="Thứ bảy hàng tuần">Ngày thứ bảy</option>
+											<option value="Ngày 14 hàng tháng">Ngày 14</option>
+											<option value="Ngày 15 hàng tháng">Ngày 15</option>
+											<option value="Ngày 20 hàng tháng">Ngày 20</option>
+										</select>
 									</div>
 									<div class="col-xs-24 col-sm-8 col-md-2">
 										<select id="priceFilter" name="price_spread" class="form-control">
-											<option value="" th:text="#{tour.label.priceRange}">--- Khoảng giá ---</option>
+											<option value="" th:text="#{tour.label.priceRange}">---
+												Khoảng giá ---</option>
+											<option value="100000-11000000">Tất cả giá</option>
 											<option value="100000-200000">100 - 200 VNĐ</option>
 											<option value="200000-300000">200 - 300 VNĐ</option>
 											<option value="300000-400000">300 - 400 VNĐ</option>
@@ -54,18 +106,29 @@
 								</a>
 								<div class="p-4">
 									<div class="d-flex justify-content-between mb-3">
-										<small class="m-0"> <i class="fa fa-calendar-alt text-primary ">
-												<span style="font-size:18px" th:text="${p.departureday}"></span>
+										<small class="m-0"> <i class="fa fa-calendar-alt text-primary "> <span
+													style="font-size: 18px" th:text="${p.departureday}"></span>
 											</i>
 										</small>
-										
 									</div>
-									<a th:utext="${p.Tourname}" class="h5 text-decoration-none" th:href="@{|/tour/detail/${p.tourid}|}"></a>
-									<div class="border-top mt-4 pt-4">
+									<a style="color: #003C2D; text-decoration: none;"
+										onmouseover="this.style.color='#FFA500'" onmouseout="this.style.color='#003C2D'"
+										th:utext="${p.Tourname}" class="h5 text-decoration-none"
+										th:href="@{|/tour/detail/${p.tourid}|}"></a>
+									<div th:object="${items}"  class="border-top mt-4 pt-4">
 										<div class="d-flex justify-content-between">
-											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + 'đ'"
+											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"
 												class="m-0 p-1"></h5>
-											<button class="btn btn-primary"><a th:href="@{|/booking/${p.tourid}|}" th:text="#{label.booking}">Đặt tour</a></button>
+											<th:block
+												th:with="hasEvent2=${#lists.isEmpty(p.tourdate.?[tourdates.after(#dates.createNow())])}">
+												<button th:unless="${hasEvent2}" class="btn btn-primary">
+													<a th:href="@{|/booking/${p.tourid}|}"
+														th:text="#{label.booking}">Đặt tour</a>
+												</button>
+												<button th:if="${hasEvent2}" class="btn btn-primary">
+													<a>Tour tạm đóng</a>
+												</button>
+											</th:block>
 										</div>
 									</div>
 								</div>
@@ -76,22 +139,24 @@
 						<div class="col-md-12">
 							<ul class="pagination justify-content-center">
 								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=1&size=${size}|}" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
+									<a th:href="@{|/tour?page=1&size=${size}|}" class="page-link"><i
+											class="bi bi-chevron-double-left"></i></a>
 								</li>
 								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=${currentPage - 1}&size=${size}|}"
-										class="page-link"><i class="bi bi-chevron-left"></i></a>
+									<a th:href="@{|/tour?page=${currentPage - 1}&size=${size}|}" class="page-link"><i
+											class="bi bi-chevron-left"></i></a>
 								</li>
 								<li th:each="i: ${#numbers.sequence(1, totalPages)}"
 									th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
 									<a th:href="@{|/tour?page=${i}&size=${size}|}" class="page-link" th:text="${i}"></a>
 								</li>
 								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=${currentPage + 1}&size=${size}|}"
-										class="page-link"><i class="bi bi-chevron-right"></i></a>
+									<a th:href="@{|/tour?page=${currentPage + 1}&size=${size}|}" class="page-link"><i
+											class="bi bi-chevron-right"></i></a>
 								</li>
 								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=${totalPages}&size=${size}|}" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+									<a th:href="@{|/tour?page=${totalPages}&size=${size}|}" class="page-link"><i
+											class="bi bi-chevron-double-right"></i></a>
 								</li>
 							</ul>
 						</div>
@@ -107,17 +172,33 @@
 								</a>
 								<div class="p-4">
 									<div class="d-flex justify-content-between mb-3">
-										<small class="m-0"> <i class="fa fa-calendar-alt text-primary">
-												<span style="font-size:18px" th:text="${p.departureday}"></span>
+										<small class="m-0"> <i class="fa fa-calendar-alt text-primary"> <span
+													style="font-size: 18px" th:text="${p.departureday}"></span>
 											</i>
 										</small>
 									</div>
-									<a th:utext="${p.Tourname}" class="h5 text-decoration-none" th:href="@{|/tour/detail/${p.tourid}|}"></a>
+									<a style="color: #003C2D; text-decoration: none;"
+										onmouseover="this.style.color='#FFA500'" onmouseout="this.style.color='#003C2D'"
+										th:utext="${p.Tourname}" class="h5 text-decoration-none"
+										th:href="@{|/tour/detail/${p.tourid}|}"></a>
 									<div class="border-top mt-4 pt-4">
 										<div class="d-flex justify-content-between">
-											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + 'đ'"
+											<h5 th:text="${#numbers.formatDecimal(p.pricings.Adultprice, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"
 												class="m-0 p-1"></h5>
-											<button class="btn btn-primary"><a th:href="@{|/booking/${p.tourid}|}" th:text="#{label.booking}">Đặt tour</a></button>
+											<th:block
+												th:with="hasEvent2=${#lists.isEmpty(p.tourdate.?[tourdates.after(#dates.createNow())])}">
+												<div th:unless="${hasEvent2}">
+													<button class="btn btn-primary">
+														<a th:href="@{|/booking/${p.tourid}|}"
+															th:text="#{label.booking}">Đặt tour</a>
+													</button>
+												</div>
+												<div th:if="${hasEvent2}">
+													<button class="btn btn-primary">
+														<a>Tour tạm đóng</a>
+													</button>
+												</div>
+											</th:block>
 										</div>
 									</div>
 								</div>
@@ -128,22 +209,24 @@
 						<div class="col-md-12">
 							<ul class="pagination justify-content-center">
 								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=1&size=${6}|}" class="page-link"><i class="bi bi-chevron-double-left"></i></a>
+									<a th:href="@{|/tour?page=1&size=${6}|}" class="page-link"><i
+											class="bi bi-chevron-double-left"></i></a>
 								</li>
 								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=${currentPage - 1}&size=${6}|}"
-										class="page-link"><i class="bi bi-chevron-left"></i></a>
+									<a th:href="@{|/tour?page=${currentPage - 1}&size=${6}|}" class="page-link"><i
+											class="bi bi-chevron-left"></i></a>
 								</li>
 								<li th:each="i: ${#numbers.sequence(1, totalPages)}"
 									th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
 									<a th:href="@{|/tour?page=${i}&size=${6}|}" class="page-link" th:text="${i}"></a>
 								</li>
 								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=${currentPage + 1}&size=${6}|}"
-										class="page-link"><i class="bi bi-chevron-right"></i></a>
+									<a th:href="@{|/tour?page=${currentPage + 1}&size=${6}|}" class="page-link"><i
+											class="bi bi-chevron-right"></i></a>
 								</li>
 								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
-									<a th:href="@{|/tour?page=${totalPages}&size=${6}|}" class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+									<a th:href="@{|/tour?page=${totalPages}&size=${6}|}" class="page-link"><i
+											class="bi bi-chevron-double-right"></i></a>
 								</li>
 							</ul>
 						</div>
@@ -160,6 +243,28 @@
 
 				// Chuyển hướng đến trang "tour" với giá trị đã chọn trong URL
 				window.location.href = "/tour?price_spread=" + selectedValue;
+			});
+		});
+	</script>
+	<script>
+		function performSearch() {
+			// Lấy giá trị từ trường input
+			var searchValue = document.getElementById("searchInput").value;
+
+			// Thực hiện các bước tìm kiếm hoặc xử lý dữ liệu theo ý muốn
+			// Ví dụ: Gọi hàm tìm kiếm AJAX hoặc thực hiện tác vụ tương ứng
+
+			console.log("Đang tìm kiếm: " + searchValue);
+		}
+	</script>
+	<script>
+		$(document).ready(function () {
+			$("#departureday").on("change", function () {
+				// Lấy giá trị đã chọn trong dropdown
+				var selectedValue = $(this).val();
+
+				// Chuyển hướng đến trang "tour" với giá trị đã chọn trong URL
+				window.location.href = "/tour?departureday=" + selectedValue;
 			});
 		});
 	</script>

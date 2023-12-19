@@ -43,9 +43,46 @@ app.controller("booking-ctrl", function($scope, $http) {
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
 
+		var hasInsufficientQuantity = false; // biến boolean để kiểm tra số lượng sản phẩm
+		// Kiểm tra và trừ số lượng vé
+
+		if (item.statusbooking.statusbookingid == '2') {
+				var Availableslots = item.tourDateBooking.tourdate.availableslots;
+				// Kiểm tra số lượng chỗ
+				console.log(Availableslots)
+				console.log(item.adultticketnumber + item.childticketnumber)
+				if (Availableslots < (item.adultticketnumber + item.childticketnumber)) {
+					// Thông báo lỗi				
+					alert("Số lượng slot '" + item.tourDateBooking.tourdate.tour.tourname + "' không đủ slot của tour.");
+					hasInsufficientQuantity = true; // Đặt biến này thành true nếu sản phẩm không đủ số lượng
+					return false; //Thoát khỏi vòng lặp ngay lập tức
+				}
+				
+				// Trừ số lượng người tham gia
+				item.tourDateBooking.tourdate.availableslots -= (item.adultticketnumber + item.childticketnumber);
+				console.log(item.tourDateBooking.tourdate.availableslots);
+				$http.put(`/rest/tourdates/${item.tourDateBooking.tourdate.tourdateid}`,item.tourDateBooking.tourdate)
+					.then(function(response) {
+						console.log("Update success", response);
+					})
+					.catch(function(error) {
+						// Xử lý lỗi
+						console.log("Error updating product: ", error);
+					});
+			
+		}
+		if (hasInsufficientQuantity) { // Nếu sản phẩm không đủ số lượng, không cập nhật trạng thái đơn hàng
+			return;
+		}
+
+
 		$http.put(`/rest/bookings/${item.bookingid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.bookingid == item.bookingid);
 			$scope.items[index] = item;
+			if(item.statusbooking.statusbookingid == '2'){
+				$http.get(`/rest/bookings/sendbooking/${item.bookingid}`);
+			}
+			
 			// Sử dụng SweetAlert2 cho thông báo thành công
 			Swal.fire({
 				icon: 'success',
@@ -63,6 +100,31 @@ app.controller("booking-ctrl", function($scope, $http) {
 				});
 				console.log("Error", error);
 			});
+		
+		/*$http.put(`/rest/bookings/${item.bookingid}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.bookingid == item.bookingid);
+			$scope.items[index] = item;
+			if(item.statusbooking.statusbookingid == 2){
+				$http.get(`/rest/bookings/sendbooking/${item.bookingid}`);
+			}
+			
+			// Sử dụng SweetAlert2 cho thông báo thành công
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công!',
+				text: 'Cập nhật trạng thái thành công !',
+			});
+			refreshPage();
+		})
+			.catch(error => {
+				// Sử dụng SweetAlert2 cho thông báo lỗi
+				Swal.fire({
+					icon: 'error',
+					title: 'Lỗi!',
+					text: 'Cập nhật trạng thái thất bại !',
+				});
+				console.log("Error", error);
+			});*/
 	}
 
 	function refreshPage() {
@@ -94,7 +156,7 @@ app.controller("booking-ctrl", function($scope, $http) {
 
 	$scope.pager = {
 		page: 0,
-		size: 40,
+		size: 100,
 		get items() {
 			var start = this.page * this.size;
 			return $scope.items.slice(start, start + this.size);

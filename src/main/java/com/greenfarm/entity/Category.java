@@ -11,11 +11,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,7 +28,7 @@ public class Category implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Positive(message="Categoryid phải lớn hơn 0")
+	@Positive(message = "Categoryid phải lớn hơn 0")
 	private Integer categoryid;
 
 	@NotBlank(message = "Tên loại rau là bắt buộc")
@@ -39,6 +38,12 @@ public class Category implements Serializable {
 	@NotBlank(message = "Mô tả là bắt buộc")
 	@Size(max = 1000, message = "Mô tả phải ít hơn 1000 ký tự")
 	private String descriptions;
+
+	private Boolean isdeleted = Boolean.FALSE;
+
+	public void setIsDeleted(boolean isdeleted) {
+		this.isdeleted = isdeleted;
+	}
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "category")

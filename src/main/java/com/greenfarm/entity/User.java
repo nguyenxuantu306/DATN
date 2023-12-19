@@ -5,9 +5,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greenfarm.dto.Provider;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,15 +27,16 @@ import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,49 +45,57 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Positive(message = "IdUser phải lớn hơn 0")
-	Integer userid;
+	@Positive(message = "Id tài khoản phải lớn hơn 0")
+	private Integer userid;
 
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
-	@NotEmpty(message = "Thiếu password")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,100}$", message = "Mật khẩu phải có từ 8 đến 16 ký tự, phải bao gồm ít nhất 1 chữ viết hoa và 1 số.")
+	@NotEmpty(message = "Vui lòng nhập mật khẩu")
 	String password;
 
-	@Column(unique = true)
+	@Column(name = "Email", unique = true)
 	@Pattern(regexp = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", message = "Email phải đúng định dạng.")
 	@NotBlank(message = "Email là bắt buộc")
 	@Email(message = "Email không hợp lệ!")
 	String email;
 
-	@NotBlank(message = "Mô tả là bắt buộc")
+	@NotBlank(message = "Tên đầu là bắt buộc")
 	String firstname;
 
-	@NotBlank(message = "Mô tả là bắt buộc")
+	@NotBlank(message = "Tên cuối là bắt buộc")
 	String lastname;
 
-	/*
-	 * @Pattern(regexp = "^[1-9][0-9]*$", message =
-	 * "Số điện thoại phải là số nguyên dương và không chứa ký tự khác")
-	 */
+	@Column(unique = true)
+	@NotBlank(message = "Số điện thoại không được để trống")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
 	String phonenumber;
 
-	@NotBlank(message = "Ảnh đại diện là bắt buộc")
+// @NotBlank(message = "Ảnh đại diện là bắt buộc")
 	String image;
 
-	@NotBlank(message = "Địa chỉ là bắt buộc")
-	String address;
+//	@NotBlank(message = "Địa chỉ là bắt buộc")
+//	@Size(min = 5, max = 255, message = "Địa chỉ phải có từ 6 đến 255 ký tự")
+	
 
-	@NotNull(message = "Giới tính là bắt buộc")
+//	@NotNull(message = "Giới tính phải được chọn")
 	Boolean gender;
 
-	@Past(message = "Ngày sinh phải trước ngày hiện tại")
-	@Temporal(TemporalType.DATE)
-	Date birthday = new Date();
+	
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
+//	@Past(message = "Ngày sinh phải là một ngày trong quá khứ")
+	 @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date birthday;
 
+//	@Past(message = "Ngày tạo phải trước ngày hiện tại")
 	@Temporal(TemporalType.DATE)
 	Date createddate = new Date();
 
+	private Boolean isdeleted = Boolean.FALSE;
 	// Boolean IsActive;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	List<Address> address;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Booking> booking;
@@ -92,20 +105,14 @@ public class User implements Serializable {
 	List<Comment> comment;
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	@OneToMany(cascade = jakarta.persistence.CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "user")
 	List<UserRole> userRole;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "user")
-	List<Tour> tour;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Order> order;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "user")
-	List<UserDiscount> discount;
 
 	private boolean accountVerified;
 
@@ -123,4 +130,7 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user")
 	List<VoucherUser> voucheruser;
 
+	public void setIsDeleted(boolean isdeleted) {
+		this.isdeleted = isdeleted;
+	}
 }

@@ -1,6 +1,7 @@
 package com.greenfarm.service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -10,6 +11,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.greenfarm.entity.Booking;
 import com.greenfarm.entity.FindReportYear;
 import com.greenfarm.entity.ReportRevenue;
+import com.greenfarm.entity.ReportSP;
+import com.greenfarm.entity.ReportTop5Tour;
 import com.greenfarm.entity.ReportYear;
 import com.greenfarm.entity.Top3;
 
@@ -19,6 +22,8 @@ public interface BookingService {
 	Page<Top3> getTop3Tour(Pageable pageable1);
 
 	List<Booking> findAll();
+	
+	
 
 	List<Booking> getAllBookings(int page, int size);
 
@@ -41,4 +46,12 @@ public interface BookingService {
 	List<Booking> findByEfindByIdAccountmail(String email);
 
 	void saveBooking(Booking booking);
+
+	void cancelBooking(Integer bookingid);
+
+	List<ReportTop5Tour> gettourdatNT();
+	
+	List<Booking> Scantoday(LocalDateTime date);
+	
+	
 }

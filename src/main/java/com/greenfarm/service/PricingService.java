@@ -1,7 +1,6 @@
 package com.greenfarm.service;
 
 import com.greenfarm.entity.Pricing;
-import com.greenfarm.entity.TourOverview;
 
 public interface PricingService {
 

@@ -20,7 +20,7 @@ app.controller("inventorystatistics-ctrl", function($scope, $http) {
 	}
 	$scope.pager = {
 		page: 0,
-		size: 5,
+		size: 10,
 		get itemsThongKeSp() {
 			var start = this.page * this.size;
 			return $scope.itemsThongKeSp.slice(start, start + this.size);
@@ -92,7 +92,7 @@ app.controller("inventorystatistics-ctrl", function($scope, $http) {
 
 
 
-	fetch('/rest/products/thongke/top10tk')
+	/*fetch('/rest/products/thongke/top10tk')
 		.then(response => response.json())
 		.then(data => {
 			console.log(data); // In ra dữ liệu từ API trong console
@@ -163,7 +163,7 @@ app.controller("inventorystatistics-ctrl", function($scope, $http) {
 	// Hàm trả về số nguyên ngẫu nhiên trong một phạm vi
 	function getRandomInt(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
-	}
+	}*/
 
 
 

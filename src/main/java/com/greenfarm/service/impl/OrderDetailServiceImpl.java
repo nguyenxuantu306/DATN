@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.OrderDetailDAO;
+import com.greenfarm.entity.Order;
 import com.greenfarm.entity.OrderDetail;
 import com.greenfarm.entity.Report;
 import com.greenfarm.entity.Top10;
@@ -31,6 +32,12 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	@Override
 	public Page<Top10> getTop10(Pageable pageable) {
 		return dao.getTop10(pageable);
+	}
+
+	@Override
+	public List<OrderDetail> getbyOrder(Order order) {
+		// TODO Auto-generated method stub
+		return dao.findByOrder(order);
 	}
 
 }

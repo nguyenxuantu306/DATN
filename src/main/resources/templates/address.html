@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html
+		xmlns="http://www.thymeleaf.org"
+		th:replace="~{/layout/layout::dynamic(~{::body})}"
+>
+<head>
+	<meta charset="UTF-8" />
+	<title>GreenFarm</title>
+</head>
+
+<body>
+<div class="container">
+	<div
+			th:each="address : ${addresses}"
+			class="card border border-0 rounded-0 mt-3"
+			style="
+          padding: 20px;
+          width: auto;
+          border-radius: 3px;
+          background-color: #fff;
+          font-size: 14px;
+          flex-direction: column;
+        "
+	>
+		<div class="card-header" style="background-color: #fff">
+          <span class="form-check">
+            <input
+					class="form-check-input"
+					type="radio"
+					name="flexRadioDefault"
+					id="flexRadioDefault1"
+					th:attr="onclick='updateAddressStatus(\'' + ${address.addressID} + '\')'"
+			/>
+            <span class="fw-bold"
+			>[[${address.Fullname}]] | [[${address.Phonenumber}]]</span
+			>
+            <span class="fw-bold float-end">
+              <button
+					  type="button"
+					  class="update-button text-danger border-0 bg-white fw-bold"
+					  data-bs-toggle="modal"
+					  data-bs-target="#myModalUpdate"
+					  th:data-address-id="${address.addressID}"
+					  th:data-address-fullname="${address.Fullname}"
+					  th:data-address-phonenumber="${address.Phonenumber}"
+					  th:data-address-city="${address.City}"
+					  th:data-address-district="${address.District}"
+					  th:data-address-ward="${address.Ward}"
+					  th:data-address-street="${address.Street}"
+					  th:data-user-id="${address.user.userid}"
+					  th:data-address-all="${address.City + ', ' + address.District  + ', ' + address.Ward}"
+			  >
+                Cập nhật
+              </button>
+            </span>
+          </span>
+		</div>
+
+		<div class="ms-4">
+          <span
+		  >[[${address.City}]], [[${address.District}]], [[${address.Ward}]],
+            [[${address.Street}]]</span
+		  >
+		</div>
+	</div>
+	<hr />
+	<div class="add_address text-danger text-center">
+		<button
+				class="bi bi-plus-circle border-0 text-danger"
+				data-bs-toggle="modal"
+				data-bs-target="#myModalCreate"
+		>
+			Thêm mới địa chỉ
+		</button>
+	</div>
+
+	<!-- The Modal -->
+	<div
+			class="modal fade"
+			id="myModalUpdate"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="myModalLabel"
+	>
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Cập nhật địa chỉ</h4>
+					<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+					></button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form action="/">
+						<div data-mdb-input-init class="form-outline d-flex">
+							<div class="d-inline-grid w-50">
+								<label class="form-check-label fw-bold">Họ tên: </label>
+								<input
+										type="text"
+										id="fullname"
+										class="form-control"
+										required
+								/>
+								<!-- Thêm thuộc tính required ở đây -->
+								<input
+										type="number"
+										id="addressId"
+										class="form-control"
+										hidden
+								/>
+								<input
+										type="number"
+										id="userid"
+										class="form-control"
+										hidden
+								/>
+							</div>
+							<div class="d-inline-grid w-50">
+								<label>Số điện thoại</label>
+								<input
+										type="text"
+										id="phonenumber"
+										placeholder=""
+										class="form-control"
+										required
+										pattern="(\+84|0)\d{9,10}"
+										title="Nhập số điện thoại từ phonenumber10 đến 11 số"
+								/>
+
+								<!-- Thêm thuộc tính required và pattern ở đây -->
+							</div>
+						</div>
+						<input
+								type="text"
+								id="address"
+								class="form-control mt-3"
+								placeholder=""
+								disabled
+						/>
+						<!-- Địa chỉ -->
+						<div class="d-flex w-100 mt-3">
+							<select
+									class="form-select form-select-sm form-control mr-3"
+									id="city"
+									aria-label=".form-select-sm"
+									onchange="updateAddress()"
+									required
+							>
+								<!-- Thêm thuộc tính required ở đây -->
+								<option value="" selected>Chọn tỉnh thành</option>
+							</select>
+							<select
+									class="form-select form-select-sm form-control mr-3"
+									id="district"
+									aria-label=".form-select-sm"
+									onchange="updateAddress()"
+									required
+							>
+								<!-- Thêm thuộc tính required ở đây -->
+								<option value="" selected>Chọn quận huyện</option>
+							</select>
+							<select
+									class="form-select form-select-sm form-control"
+									id="ward"
+									aria-label=".form-select-sm"
+									onchange="updateAddress()"
+									required
+							>
+								<!-- Thêm thuộc tính required ở đây -->
+								<option value="" selected>Chọn phường xã</option>
+							</select>
+						</div>
+						<div class="mt-3 w-100">
+							<label>Địa chỉ cụ thể: </label>
+							<input
+									type="text"
+									class="form-control"
+									id="street"
+									required
+							/>
+							<!-- Thêm thuộc tính required ở đây -->
+						</div>
+					</form>
+				</div>
+
+				<!-- Modal footer -->
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="updateAddress">
+						Cập nhật
+					</button>
+					<button
+							type="button"
+							class="btn btn-danger"
+							data-bs-dismiss="modal"
+					>
+						Đóng
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Thêm mới địa chỉ -->
+	<div
+			class="modal fade"
+			id="myModalCreate"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="myModalLabel"
+	>
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Thêm mới địa chỉ</h4>
+					<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+					></button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div data-mdb-input-init class="form-outline d-flex">
+						<div class="d-inline-grid w-50">
+							<label class="form-check-label fw-bold">Họ tên: </label>
+							<input type="text" id="fullname_add" class="form-control" />
+						</div>
+						<div class="d-inline-grid w-50">
+							<label>Số điện thoại</label>
+							<input
+									type="text"
+									id="phonenumber_add"
+									placeholder=""
+									class="form-control"
+									required
+									pattern="(\+84|0)\d{9,10}"
+									title="Nhập số điện thoại từ 10 đến 11 số"
+							/>
+						</div>
+					</div>
+					<div class="d-flex w-100 mt-3">
+						<select
+								class="form-select form-select-sm form-control mr-3"
+								id="city_add"
+								aria-label=".form-select-sm"
+						>
+							<option value="" selected>Chọn tỉnh thành</option>
+						</select>
+						<select
+								class="form-select form-select-sm form-control mr-3"
+								id="district_add"
+								aria-label=".form-select-sm"
+						>
+							<option value="" selected>Chọn quận huyện</option>
+						</select>
+						<select
+								class="form-select form-select-sm form-control"
+								id="ward_add"
+								aria-label=".form-select-sm"
+						>
+							<option value="" selected>Chọn phường xã</option>
+						</select>
+					</div>
+					<div class="mt-3 w-100">
+						<label>Địa chỉ cụ thể: </label>
+						<input type="text" class="form-control" id="street_add" />
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary" id="createAddress">
+						Lưu
+					</button>
+
+					<button
+							type="button"
+							class="btn btn-danger"
+							data-bs-dismiss="modal"
+					>
+						Đóng
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Address -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="/assets/js/address.js"></script>
+</body>
+</html>

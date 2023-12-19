@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenfarm.dto.PaymentMethodDTO;
-import com.greenfarm.dto.UserDTO;
 import com.greenfarm.entity.PaymentMethod;
-import com.greenfarm.entity.User;
 import com.greenfarm.service.PaymentMethodService;
-import com.greenfarm.service.UserService;
 
 
 @CrossOrigin("*")

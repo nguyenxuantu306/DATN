@@ -2,10 +2,7 @@ package com.greenfarm.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.format.DateTimeFormatter;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,8 +32,12 @@ public class Review implements Serializable {
 	private String content;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	LocalDateTime datepost ;
+	LocalDateTime datepost;
 	
+	public String getDatePost() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm a");
+		return datepost.format(formatter);
+	}
 	private Integer rating;
 	
 	@ManyToOne

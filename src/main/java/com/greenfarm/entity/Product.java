@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -51,10 +52,10 @@ public class Product implements Serializable {
 	private String image;
 
 	@NotNull(message = "Số lượng rau là bắt buộc")
-	@Positive(message = "Số lượng phải lớn hơn 0 ")
 	private Integer quantityavailable;
 
 	
+	private Boolean isdeleted = Boolean.FALSE;
 	
 	@ManyToOne
 	@JoinColumn(name = "categoryid")
@@ -65,10 +66,14 @@ public class Product implements Serializable {
 	List<OrderDetail> orderDetails;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	List<ProductImage> productimage;
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
 	List<Review> Review;
+
+	public void setIsDeleted(boolean isdeleted) {
+	    this.isdeleted = isdeleted;
+	}
 }

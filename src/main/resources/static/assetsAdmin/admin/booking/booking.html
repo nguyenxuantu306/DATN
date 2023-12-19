@@ -22,6 +22,7 @@
 							<option value="2">Đặt tour thành công</option>
 							<option value="3">Tour bị hủy</option>
 							<option value="4">Khách hàng cancel</option>
+							<option value="5">Vé đã được sử dụng</option>
 						</select>
                     </div>
                     <div class="col-md-3 text-right">
@@ -43,7 +44,7 @@
                                 <th scope="col">Thời gian tạo</th>
                                 <th scope="col">Số lượng người</th>
                                 <th scope="col">Tổng</th>
-                              <!--  <th scope="col">Hình thức thanh toán</th>-->
+                              	<!--  <th scope="col">Hình thức thanh toán</th>-->
                                 <th scope="col">Trạng thái</th>
                                 <th scope="col">Xem</th>
                             </tr>
@@ -52,15 +53,17 @@
                             <tr class="text-center" ng-repeat="item in items | orderBy:'-bookingdate'" ng-if="item.statusbooking.statusbookingid == selectedStatus || selectedStatus == '0'">
                                 <th scope="row">{{$index + 1}}</th>
                                 <td>{{item.user.email}}</td>
-                                <td>{{item.bookingdate | date:'dd-MM-yyyy HH:mm a'}}</td>
+                                <td>{{item.bookingdate | date:'dd-MM-yyyy HH:mm a'}}</td>                        
                                 <td>{{item.adultticketnumber + item.childticketnumber}}</td>
                                 <td>{{item.totalprice | number :0 }} đ</td>
+                                <!-- <td>{{item.tourDateBooking}}</td> -->
                               <!--  <td>{{item.paymentmethod.methodname}}</td>-->
                                 <td style="color: white; width: 300px;" ng-class="{
 							        'bg-primary': item.statusbooking.statusbookingid == 1,
 							        'bg-success': item.statusbooking.statusbookingid == 2,
 							        'bg-danger': item.statusbooking.statusbookingid == 3,
-							        'bg-warning': item.statusbooking.statusbookingid == 4
+							        'bg-warning': item.statusbooking.statusbookingid == 4,
+							        'bg-secondary': item.statusbooking.statusbookingid == 5
    									 }">{{item.statusbooking.name}}</td>
                                 <td>
                                     <a type="button" ng-click="edit(item)" data-toggle="modal" data-target="#exampleModal"> <i class="bi bi-sticky"></i>	
@@ -76,23 +79,33 @@
                                                 </div>
                                                 <div class="modal-body pb-5">
                                                     <div class="row">
-                                                        <div class="col-sm-6">
+                                                        <div class="col-sm-4">
                                                             <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
-                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Địa chỉ người nhận</div>
+                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Thông tin người đặt</div>
                                                                 <div style="padding: 10px;">
-                                                                	 <label>- Địa chỉ: {{form.user.address}}</label><br/>  <labl>-
-																	Email người dùng: {{form.user.email}}</label> <br/> <label style="padding-top: 10px" >-
-																	Số điện thoại: {{form.user.phonenumber}}</label>
+                                                                	 <label>- Email người dùng: {{form.user.email}}</label><br/>  <labl>-
+																	Số điện thoại: {{form.user.phonenumber}}</label> <br/> <label style="padding-top: 10px" >-
+																	Ngày sinh: {{form.user.birthday | date:'dd-MM-yyyy'}}</label>
                                                                 </div>
                                                        
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-6">
+                                                        <div class="col-sm-4">
                                                             <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
-                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Hình thức thanh toán</div>
+                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Thời gian diễn ra (ngày đặt tour)</div>
                                                                 <div style="padding: 10px;">
-                                                                	 <label>- Hình thức thanh toán: {{form.paymentmethod.methodname}}</label> <br> <label>-
-																	Trạng thái thanh toán: {{form.statusbooking.name}}</label>
+                                                                	 <label>- Ngày khởi hành: {{form.tour.departureday}}</label> <br> <label>-
+																	Ngày đặt Tour: {{form.tourDateBooking.tourdate.tourdates}}</label>
+                                                                </div>
+                                                               
+                                                            </div>
+                                                        </div>
+                                                         <div class="col-sm-4">
+                                                            <div class="form-group" style="border: 1px solid #000;border-radius: 5px;height:130px">
+                                                                <div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px">Mã QRCODE</div>
+                                                                <div class="text-center" >
+                                                                	<img  ng-src="{{item.qrcode}}" alt="Product Image" style="width: 80px;">
+																	
                                                                 </div>
                                                                
                                                             </div>
@@ -117,7 +130,7 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <th scope="row">{{$index + 1}}</th>
-                                                                    <td><img ng-src="{{item.tour.image}}" alt="Tour Image" style="width: 80px;"></td>
+                                                                    <td><img ng-src="{{form.tour.image}}" alt="Tour Image" style="width: 80px;"></td>
                                                                     <td style="width: 150px">{{form.tour.tourname}}</td>
                                                                     <td style="width: 200px">Giá người lớn: {{form.tour.pricings.adultprice}} <br /> Giá trẻ em: {{item.tour.pricings.childprice}}
                                                                     </td>

@@ -7,37 +7,37 @@
 </head>
 
 <body>
-	<main th:object="${order}">
+	<main th:object="${order}" class="voucher-order"
+		th:data-voucher-discount="${order.voucherorder != null and order.voucherorder.size() > 0 and order.voucherorder[0].voucher != null ? order.voucherorder[0].voucher.discount : '0'}">
 		<div class="container mt-5">
 			<div class="row">
 				<div class="col-sm-7">
 					<p class="title mb-2" th:text="#{orderDetail.label.orderDetail}">
-						Chi tiết đơn hàng:#:<i th:text="${orderid}"></i>
-						<i th:if="${order.statusOrder.name}=='Đã hủy'"
+						Chi tiết đơn hàng:#:<i th:text="${orderid}"></i> <i th:if="${order.statusOrder.name}=='Đã hủy'"
 							class="text-danger">[[${order.statusOrder.name}]]</i>
 						<i th:if="${order.statusOrder.name}!='Đã hủy'"
 							class="text-success">[[${order.statusOrder.name}]]</i>
 					</p>
-					<div class="card mb-3 border border-0" style="
-                width: 650px;
-                height: 200px;
-                background-color: #fff;
-                box-shadow: 0 0 16px rgba(0, 0, 0, 0.11);
-              ">
+					<div class="card mb-3 border border-0"
+						style="width: 650px; height: 200px; background-color: #fff; box-shadow: 0 0 16px rgba(0, 0, 0, 0.11);">
 						<div class="row g-0 ms-3">
 							<h5 class="card-title mt-3">
-								<i class="bi bi-person-square" th:text="#{orderDetail.label.deliveryInfomation}">
-									THÔNG TIN NHẬN HÀNG</i>
+								<i class="bi bi-person-square" th:text="#{orderDetail.label.deliveryInfomation}"> THÔNG
+									TIN NHẬN HÀNG</i>
 							</h5>
-							<div class="col-md-3 fw-bold">
+							<div class="col-md-4 fw-bold">
 								<p th:text="#{orderDetail.label.receiver}">Người nhận:</p>
 								<p th:text="#{orderDetail.label.address}">Địa chỉ:</p>
 								<p th:text="#{orderDetail.label.deliveryTime}">Giao lúc:</p>
 							</div>
-							<div class="col-md-9">
+							<div class="col-md-8">
 								<p th:text="${order.user.firstname}+ ' '+${order.user.lastname}"></p>
-								<p th:text="${order.user.address}"></p>
-								<p>3h sáng</p>
+
+								<div th:each="address : ${order.address}">
+									<p th:text="${address.street + ', ' + address.district + ', ' + address.city}"></p>
+								</div>
+
+								<p>Hàng được giao trong khoảng 24h trước khi đặt hàng</p>
 							</div>
 						</div>
 					</div>
@@ -50,32 +50,27 @@
 							<!-- <i th:text="${#dates.format(order.orderdate, 'dd/MM/yyyy HH:mm:ss')}"></i> -->
 							<i th:text="${order.getOrderDateFormatted()}"></i>
 						</p>
-						<div class="card mb-3 border border-0" style="
-                  height: 200px;
-                  background-color: #fff;
-                  box-shadow: 0 0 16px rgba(0, 0, 0, 0.11);
-                ">
+						<div class="card mb-3 border border-0"
+							style="height: 200px; background-color: #fff; box-shadow: 0 0 16px rgba(0, 0, 0, 0.11);">
 							<h5 class="card-title mt-3 ms-3">
 								<i class="bi bi-credit-card-2-front-fill"
-									th:text="#{orderDetail.label.billingInformation}">
-									THÔNG TIN THANH TOÁN</i>
+									th:text="#{orderDetail.label.billingInformation}"> THÔNG
+									TIN THANH TOÁN</i>
 							</h5>
 							<p class="ms-3">
-								<span th:text="#{orderDetail.label.paymentByForm}">Thanh toán bằng hình thức:
-								</span><span th:text="${order.paymentmethod.Methodname}"></span>
+								<span th:text="#{orderDetail.label.paymentByForm}">Thanh
+									toán bằng hình thức: </span><span
+									th:text="${order.paymentmethod.Methodname}"></span>
 							</p>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="row mx-1" style="
-            height: auto;
-            background-color: #fff;
-            box-shadow: 0 0 16px rgba(0, 0, 0, 0.11);
-          ">
+			<div class="row mx-1"
+				style="height: auto; background-color: #fff; box-shadow: 0 0 16px rgba(0, 0, 0, 0.11);">
 				<h5 class="mt-3">
-					<i class="bi bi-person-heart"></i>
-					<span th:text="#{orderDetail.label.productInformation}">THÔNG TIN SẢN PHẨM</span>
+					<i class="bi bi-person-heart"></i> <span th:text="#{orderDetail.label.productInformation}">THÔNG TIN
+						SẢN PHẨM</span>
 				</h5>
 
 				<div class="row border-bottom ms-1" th:each="detail: *{orderDetail}" th:object="${detail}">
@@ -89,17 +84,14 @@
 								<div class="col-md-10">
 									<div class="card-body">
 										<h5 class="card-title fw-bold">
-											[[*{product.productname}]]
-										</h5>
+											[[*{product.productname}]]</h5>
 										<small class="card-text"><span th:text="#{orderDetail.label.cost}">Giá: </span>
 											[[*{#numbers.formatDecimal(product.price, 0, 'COMMA', 0,
-											'POINT')}]] VNĐ</small>
-										<small class="card-text"><br />
-											<span th:text="#{orderDetail.label.quatity}">Số lượng:
-											</span><span>[[*{quantityordered}]]kg</span> </small><br />
-
-										<small class="card-text" th:text="#{orderDetail.label.promotion}">Khuyến
-											mãi</small>
+											'POINT')}]] VNĐ</small> <small class="card-text"><br /> <span
+												th:text="#{orderDetail.label.quatity}">Số lượng:
+											</span><span>[[*{quantityordered}]]kg</span>
+										</small><br /> <small class="card-text"
+											th:text="#{orderDetail.label.promotion}">Khuyến mãi</small>
 									</div>
 								</div>
 							</div>
@@ -112,10 +104,9 @@
 							<div class="col text-end mt-5">
 								<p class="total-price">
 									[[*{#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0,
-									'POINT')}]] VNĐ
-								</p>
+									'POINT')}]] VNĐ</p>
 
-								<p class="text-decoration-line-through">Giá chưa KM</p>
+								<!--<p class="text-decoration-line-through">Giá chưa KM</p>-->
 							</div>
 						</div>
 					</div>
@@ -126,14 +117,18 @@
 						<div class="row mt-3">
 							<div class="col-sm-8">
 								<p th:text="#{orderDetail.label.subtotal}">Tạm tính:</p>
-								<p th:text="#{orderDetail.label.total}">Tổng tiền:</p>
-								<p th:text="#{orderDetail.label.totalPayment}">
-									Số tiền đã thanh toán:
-								</p>
+								<p th:text="#{orderDetail.label.total}">Khuyễn mãi:</p>
+								<p th:text="#{orderDetail.label.totalPayment}">Số tiền đã
+									thanh toán:</p>
 							</div>
 
 							<div class="col-sm-4 text-end">
-								<p><span id="tempTotalPriceSum">0 VNĐ</span></p>
+								<p>
+									<span id="tempTotalPriceSum">0 VNĐ</span>
+								</p>
+								<p>
+									<span id="totalDiscount">0 VNĐ</span>
+								</p>
 								<p class="text-danger fw-bold">
 									<span id="totalPriceSum">0 VNĐ</span>
 								</p>
@@ -145,36 +140,54 @@
 
 				<div class="text-center">
 					<a class="btn btn-white border border-danger text-danger fw-bold dh mb-3 rounded-3"
-						th:href="@{/order/list}" th:text="#{orderDetail.label.back}">VỀ TRANG DANH SÁCH ĐƠN HÀNG</a>
+						th:href="@{/order/list}" th:text="#{orderDetail.label.back}">VỀ
+						TRANG DANH SÁCH ĐƠN HÀNG</a>
 				</div>
 			</div>
 		</div>
 		<script>
-			// Đợi tài liệu HTML được tải hoàn toàn
-			document.addEventListener("DOMContentLoaded", function () {
-				// Lấy tất cả các phần tử có class "total-price"
-				const totalPrices = document.querySelectorAll(".total-price");
-				let totalPriceSum = 0;
-				let tempTotalPriceSum = 0;
 
-				// Duyệt qua mảng các giá trị totalPrice và cộng dồn chúng vào biến tổng
+			<!-- Trong JavaScript -->
+			document.addEventListener("DOMContentLoaded", function () {
+				const totalPrices = document.querySelectorAll(".total-price");
+				let tempTotalPriceSum = 0;
+				let totalDiscount = 0;
+
 				totalPrices.forEach(function (totalPriceElement) {
-					const totalPrice = parseFloat(
-						totalPriceElement.innerText.replace(/\D/g, "")
-					);
+					const totalPrice = parseFloat(totalPriceElement.innerText.replace(/\D/g, ""));
 					tempTotalPriceSum += totalPrice;
+
+					const voucherOrderElement = totalPriceElement.closest(".voucher-order");
+					if (voucherOrderElement == 0) {
+						const discountAmount = totalPrice;
+						totalDiscount = 0;
+					}
+					else {
+						const voucherDiscountPercentage = parseFloat(voucherOrderElement.dataset.voucherDiscount);
+						const discountAmount = (totalPrice * voucherDiscountPercentage);
+						totalDiscount += discountAmount;
+					}
 				});
 
-				// Cập nhật giá trị tổng trên trang web
-				const tempTotalPriceSumElement =
-					document.getElementById("tempTotalPriceSum");
-				tempTotalPriceSumElement.textContent = `${tempTotalPriceSum.toLocaleString()} VNĐ`;
+				const tempTotalPriceSumElement = document.getElementById("tempTotalPriceSum");
+				tempTotalPriceSumElement.textContent = formatCurrency(tempTotalPriceSum);
 
 				const totalPriceSumElement = document.getElementById("totalPriceSum");
-				totalPriceSumElement.textContent = `${tempTotalPriceSum.toLocaleString()} VNĐ`;
-				//	document.getElementById("totalPriceSum").textContent = `Tổng tiền: ${totalPriceSum.toLocaleString()} VNĐ`;
+				totalPriceSumElement.textContent = formatCurrency(tempTotalPriceSum - totalDiscount);
+
+				const totalDiscountElement = document.getElementById("totalDiscount");
+				totalDiscountElement.textContent = formatCurrency(totalDiscount);
 			});
+
+			// Hàm để định dạng giá tiền
+			function formatCurrency(amount) {
+				return new Intl.NumberFormat('vi-VN', {
+					style: 'currency',
+					currency: 'VND'
+				}).format(amount);
+			}
 		</script>
+
 	</main>
 </body>
 

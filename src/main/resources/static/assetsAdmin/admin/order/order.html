@@ -6,7 +6,7 @@
 				<div class="row py-3">
 					<div class="col-md-7 input-group icons">
 						<div>
-							<!-- 						datetime-local -->
+							<!-- datetime-local -->
 							<input type="datetime-local" id="startDateTime"
 								ng-model="startDateTime" style="height: 45px;"> <span
 								style="margin: 0 15px;">Đến</span> <input type="datetime-local"
@@ -28,10 +28,12 @@
 						</select>
 					</div>
 					<div class="col-md-3 text-right">
-						<button type="button" class="btn btn-success"ng-click="exportExcel()">
+						<button type="button" class="btn btn-success"
+							ng-click="exportExcel()">
 							<i class="fa fa-file-excel-o"></i> Excel
 						</button>
-						<button type="button" class="btn btn-success"ng-click="exportPdf()">
+						<button type="button" class="btn btn-success"
+							ng-click="exportPdf()">
 							<i class="fa fa-file-pdf-o"></i> PDF
 						</button>
 					</div>
@@ -44,6 +46,7 @@
 								<th scope="col">STT</th>
 								<th scope="col">Người mua</th>
 								<th scope="col">Thời gian tạo</th>
+								<!-- <th scope="col">Địa chỉ</th> -->
 								<th scope="col">Tổng</th>
 								<th scope="col">Trạng thái</th>
 								<th scope="col">Xem</th>
@@ -55,8 +58,19 @@
 								ng-repeat="item in pager.items| orderBy:'-orderdate'"
 								ng-if="selectedStatus == item.statusOrder.statusorderid || selectedStatus == '0'">
 								<th scope="row">{{$index + 1}}</th>
-								<td>{{item.user.firstname}}</td>
-								<td>{{item.orderdate  | date:'dd-MM-yyyy HH:mm a'}}</td>
+								<td>{{item.user.email}}</td>
+								<td>{{item.orderdate | date:'dd-MM-yyyy HH:mm a'}}</td>
+								<!-- <td><label>
+										
+										<span>
+											{{item.address.street}}</span>
+										<span>,
+											{{item.address.ward}}</span>
+										<span>,{{item.address.district}}</span>
+										<span>,
+											{{item.address.city}}</span>
+
+									</label></td> -->
 								<td>{{formatPrice(calculateTotal(item))}}</td>
 								<td style="color: white; width: 300px;"
 									ng-class="{
@@ -66,7 +80,8 @@
 							        'bg-danger': item.statusOrder.statusorderid == 4
    									 }">{{item.statusOrder.name}}</td>
 								<td><a type="button" ng-click="edit(item)"
-									data-toggle="modal" data-target="#exampleModal"> <i class="bi bi-sticky"></i>
+									data-toggle="modal" data-target="#exampleModal"> <i
+										class="bi bi-sticky"></i>
 								</a> <!-- Modal -->
 									<div style="text-align: left;" class="modal fade"
 										id="exampleModal" tabindex="-1"
@@ -84,25 +99,43 @@
 												</div>
 												<div class="modal-body pb-5">
 													<div class="row">
-														<div class="col-sm-6">
+														<div class="col-sm-7">
 															<div class="form-group"
-																style="border: 1px solid #000;border-radius: 5px;height:130px">
-																<div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Địa chỉ người nhận</div>
-                                                                <div style="padding: 10px;">
-                                                                	 <label>- Địa chỉ : {{form.user.address}}</label><br/>  <labl>-
-																	Email người dùng : {{form.user.email}}</label> <br/> <label style="padding-top: 10px" >-
-																	Số điện thoại : {{form.user.phonenumber}}</label>
-                                                                </div>
+																style="border: 1px solid #000; border-radius: 5px; height: auto">
+																<div
+																	style="font-size: 20px; font-weight: bold; text-align: center; padding: 10px;">
+																	Địa chỉ người nhận</div>
+																<div style="padding: 10px;">
+																	<input type="hidden" th:value="{{form.address}}">
+																	<label>- Họ tên người nhận: <span>
+																			{{form.address.fullname}} </span></label> <label> - Địa chỉ:
+																		<span ng-if="form.address.street">
+																			{{form.address.street}}</span> <span
+																		ng-if="form.address.ward">,
+																			{{form.address.ward}}</span> <span
+																		ng-if="form.address.district">,{{form.address.district}}</span>
+																		<span ng-if="form.address.city">,
+																			{{form.address.city}}</span>
+
+																	</label><br /> <label> - Email người dùng:
+																		{{form.user.email}}</label> <br /> <label>- Số điện
+																		thoại: {{form.address.phonenumber}}</label>
+																</div>
 															</div>
-														</div>														
-														<div class="col-sm-6">
+														</div>
+														<div class="col-sm-5">
 															<div class="form-group"
-																style="border: 1px solid #000;border-radius: 5px;height:130px">
-																<div style="font-size: 20px; font-weight: bold;text-align: center;padding: 10px;">Hình thức thanh toán</div>
-                                                                <div style="padding: 10px;">
-                                                                	 <label>- Hình thức thanh toán : {{form.paymentmethod.methodname}}</label> <br> <label>-
-																	Trạng thái thanh toán : {{form.statusOrder.name}}</label>
-                                                                </div>
+																style="border: 1px solid #000; border-radius: 5px; height: 165px">
+
+																<div
+																	style="font-size: 20px; font-weight: bold; text-align: center; padding: 10px;">
+																	Hình thức thanh toán</div>
+																<br>
+																<div style="padding: 10px;">
+																	<label>- Hình thức thanh toán:
+																		{{form.paymentmethod.methodname}}</label> <br> <label>-
+																		Trạng thái thanh toán: {{form.statusOrder.name}}</label>
+																</div>
 															</div>
 														</div>
 
@@ -116,7 +149,7 @@
 																	<th scope="col">Tên sản phẩm</th>
 																	<th scope="col">Loại sản phẩm</th>
 																	<th scope="col">Số lượng (KG)</th>
-																	<th scope="col">Tạm tính</th>															
+																	<th scope="col">Tạm tính</th>
 																</tr>
 															</thead>
 															<tbody>
@@ -127,8 +160,8 @@
 																	<td>{{orderDetail.product.productname}}</td>
 																	<td>{{orderDetail.product.category.categoryname}}
 																	</td>
-																	<td>{{orderDetail.quantityordered}}</td>							
-																	<td>{{formatPrice(orderDetail.totalPrice)}}</td>												
+																	<td>{{orderDetail.quantityordered}}</td>
+																	<td>{{formatPrice(orderDetail.totalPrice)}}</td>
 																</tr>
 															</tbody>
 
@@ -136,22 +169,24 @@
 														<div class="modal-order text-right">
 															<hr>
 															<h4 style="padding-left: 100px" class="total fs-4">
-																Tổng cộng:
-																<strong>{{formatPrice(calculateTotal(form))}}</strong>
+																Tổng cộng: <strong>{{formatPrice(calculateTotal(form))}}</strong>
+															</h4>
+															<h4
+																ng:if="form.voucherorder != null && form.voucherorder.length > 0"
+																style="padding-left: 100px" class="total fs-4">
+																Giá khuyến mãi: <strong>{{formatPrice(calculateTotalVoucher(form))}}</strong>
 															</h4>
 															<hr>
 															<label style="font-size: 20px; color: black;">Cập
 																nhật trạng thái : </label> <select
 																class="form-select w-auto select"
 																ng-model="form.statusOrder.statusorderid"
-									
 																style="background-color: #f7f7f7; border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: auto; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
 																<option ng-repeat="c in cates"
-																	
 																	ng-value="c.statusorderid">{{c.name}}</option>
 															</select>
 															<div style="background-color: #007BFF; color: #fff;"
-																ng-click="update()" class="btn">Save</div>
+																ng-click="update()" class="btn">Thay đổi</div>
 														</div>
 													</div>
 												</div>
@@ -162,7 +197,7 @@
 							</tr>
 						</tbody>
 					</table>
-					
+
 				</div>
 			</div>
 		</div>

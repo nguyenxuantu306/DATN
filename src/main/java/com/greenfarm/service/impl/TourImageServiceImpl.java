@@ -1,22 +1,14 @@
 package com.greenfarm.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.greenfarm.dao.TourImageDAO;
 import com.greenfarm.entity.Tour;
 import com.greenfarm.entity.TourImage;
 import com.greenfarm.service.TourImageService;
-import com.greenfarm.service.TourService;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
-import jakarta.transaction.Transactional;
 
 @Service
 public class TourImageServiceImpl implements TourImageService {

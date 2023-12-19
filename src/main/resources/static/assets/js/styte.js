@@ -1,26 +1,42 @@
-// Hàm tạo mã HTML cho một sản phẩm
 function createProductHTML(product) {
-	var productHTML = `
-              <div 
-		class="col-lg-4 col-md-6 mb-4 text-center">
-		<div class="package-item bg-white mb-2">
-			<a href="/product/detail/${product.productid}"><img
-				style="height: 250px" class="img-fluid"
-				src="${product.image}" alt=""></a>
-			<div class="p-4">
-				<a 
-					class="h5 text-decoration-none" >${product.productname}</a>
-				<div class="border-top mt-4 pt-4">
-					<div class="text-center">				
-						<h5 class="m-0">${product.price} đ</h5>
+	// Kiểm tra số lượng sản phẩm
+	var outOfStockLabel = (product.quantityavailable <= 0) ? '<span style="position: absolute;font-size: 12px;top:0;right: 0;background-color: rgb(0, 0, 0);color: #ffffff;padding: 5px 10px;border: 1px solid #000;border-radius: 5px 0 0 5px; " class="out-of-stock-label">Hết hàng</span>' : '';
 
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-        `;
+	var productHTML = `
+        <div class="col-lg-4 col-md-6 mb-4 text-center">
+            <div class=" bg-white mb-2">
+                <a  href="/product/detail/${product.productid}" style="display: block; position: relative;">
+                    <img style="height: 250px; border: 2px solid #7AB730; border-radius: 5px;" class="img-fluid package-item" src="${product.image}" alt="">
+                    ${outOfStockLabel}
+                </a>
+                <div class="p-2">
+                    <a
+					style="font-size: 16px; color: #003C2D; text-decoration: none;"
+					onmouseover="this.style.color='#FFA500'"
+					onmouseout="this.style.color='#003C2D'"
+					th:utext="${product.productname}" class="h5 text-decoration-none"
+					href="/product/detail/${product.productid}">${product.productname}</a>
+                    <div class="mt-2 pt-2">
+                        <div class="text-center">                             
+                            <span
+							style="font-size: 20px; color: #003C2D; font-weight: bold;"
+							class="">${formatPrice(product.price)}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
 	return productHTML;
+}
+
+
+function formatPrice(price) {
+	// Thay đổi dấu chấm (.) thành dấu phẩy (,)
+	const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+	return formattedPrice.replace(/\./g, ',');
+
 }
 
 // Hàm hiển thị danh sách sản phẩm
@@ -97,7 +113,7 @@ function sortProductsByPrice(sortType) {
 }
 
 // Hàm xử lý sự kiện khi người dùng thay đổi giá trị radio
-function handlePriceRangeChange() {
+/*function handlePriceRangeChange() {
 	var priceRange = $('input[name="priceRange"]:checked').val();
 	$.ajax({
 		url: "/rest/products/filter-by-custom-price-range",
@@ -111,6 +127,8 @@ function handlePriceRangeChange() {
 		},
 	});
 }
+*/
+
 
 $(document).ready(function() {
 	// Gắn kết sự kiện khi người dùng nhập từ khóa
@@ -140,9 +158,12 @@ $(document).ready(function() {
 		sortProductsByPrice(sortType);
 	});
 
-	// Gắn kết sự kiện khi người dùng thay đổi giá trị radio
-	$('input[type="radio"]').change(handlePriceRangeChange);
+	/*// Gắn kết sự kiện khi người dùng thay đổi giá trị radio
+	$('input[type="radio"]').change(handlePriceRangeChange);*/
 });
+
+
+
 
 // rating và chức năng cơ bản tour
 $(document).ready(function() {
@@ -159,7 +180,7 @@ $(document).ready(function() {
 // Mini Cart
 
 // JavaScript to handle the mini cart toggle using jQuery
-$(document).ready(function() {
+/*$(document).ready(function() {
 	const cartToggle = $("#cart-toggle");
 	const miniCart = $("#mini-cart");
 
@@ -169,31 +190,48 @@ $(document).ready(function() {
 	cartToggle.click(function() {
 		miniCart.toggle();
 	});
-});
+});*/
 
 // AddToCart
 
 function addToCart(productId) {
-    var quantity = document.getElementById('quantityInput').value;
+	var quantity = document.getElementById('quantityInput').value;
+	var quantityavailable = parseFloat(document.getElementById('quantityavailable').innerText);
 
-    $.ajax({
-        type: "POST",
-        url: "/cart/add/" + productId,
-        data: {
-            productId: productId,
-            quantity: quantity  // Truyền số lượng vào data để gửi đến Controller
-        },
-        success: function(response) {
+	if (quantity > quantityavailable) {
+		Swal.fire({
+			icon: 'error',
+			title: 'Lỗi!',
+			text: 'Số lượng vượt quá số lượng có sẵn',
+		});
+		return; // Ngừng thực hiện hàm nếu số lượng không hợp lệ
+	} else if (isNaN(quantity) || parseFloat(quantity) < 0.5) {
+		Swal.fire({
+			icon: 'error',
+			title: 'Lỗi!',
+			text: 'Số lượng phải lớn hơn hoặc bằng 0.5Kg',
+		});
+		return; // Ngừng thực hiện hàm nếu số lượng không hợp lệ
+	}
+
+	$.ajax({
+		type: "POST",
+		url: "/cart/add/" + productId,
+		data: {
+			productId: productId,
+			quantity: quantity  // Truyền số lượng vào data để gửi đến Controller
+		},
+		success: function(response) {
 			Swal.fire({
 				icon: 'success',
 				title: 'Thành công!',
 				text: 'Thêm sản phẩm thành công!',
 			});
-        },
-        error: function(error) {
-            window.location.href = "http://localhost:8080/login";
-        },
-    });
+		},
+		error: function(error) {
+			window.location.href = "http://localhost:8080/login";
+		},
+	});
 }
 
 
@@ -265,6 +303,7 @@ function updateQuantity(productId, newQuantity) {
 
 // Lấy tất cả các trường số lượng
 var quantityInputs = document.querySelectorAll('.cart-quantity');
+var quantityavailable = document.getElementById('quantityavailable').innerText;
 
 // Lặp qua từng trường số lượng và thêm bộ lắng nghe sự kiện cho mỗi trường
 quantityInputs.forEach(function(quantityInput) {
@@ -272,9 +311,25 @@ quantityInputs.forEach(function(quantityInput) {
 		// Kiểm tra nếu phím Enter đã được nhấn (event.key === "Enter")
 		if (event.key === "Enter") {
 			var productId = quantityInput.getAttribute('data-productid');
-			var newQuantity = parseInt(quantityInput.value);
-			if (!isNaN(newQuantity) && newQuantity >= 1) {
-				updateQuantity(productId, newQuantity);
+			var newQuantity = parseFloat(quantityInput.value);
+			if (!isNaN(newQuantity) && newQuantity >= 0.5) {
+				if (newQuantity <= parseFloat(quantityavailable)) {
+					updateQuantity(productId, newQuantity);
+				} else {
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Số lượng vượt quá số lượng có sẵn: ' + quantityavailable + '(Kg)',
+					});
+					window.location.reload()
+				}
+			} else {
+				Swal.fire({
+					icon: 'error',
+					title: 'Lỗi!',
+					text: 'Số lượng phải lớn hơn hoặc bằng 0.5Kg',
+				});
+				window.location.reload()
 			}
 		}
 	});

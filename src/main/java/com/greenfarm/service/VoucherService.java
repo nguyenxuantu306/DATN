@@ -2,14 +2,15 @@ package com.greenfarm.service;
 
 import java.util.List;
 
-import com.greenfarm.entity.Product;
+import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Voucher;
+import com.greenfarm.entity.VoucherUser;
 
 public interface VoucherService {
 
 	List<Voucher> findAll();
 
-	Voucher findById(Integer voucherid);
+	Voucher findById(Integer voucherId);
 
 	Voucher create(Voucher voucher);
 
@@ -17,4 +18,12 @@ public interface VoucherService {
 
 	void delete(Integer voucherid);
 
+	List<Voucher> findByKeyword(String keyword);
+
+	Voucher findByVoucherid(long parseLong);
+
+	
+	List<Voucher> findAllDeletedVouchers();
+
+	void save(Voucher vourcher);
 }

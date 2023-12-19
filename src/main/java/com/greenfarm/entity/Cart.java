@@ -24,7 +24,7 @@ public class Cart implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer cartID;
 
-	private Integer quantity;
+	private Float quantity;
 
 	@ManyToOne
 	@JoinColumn(name = "Productid")

@@ -34,9 +34,13 @@
 			<div class="card">
 				<div class="social-graph-wrapper widget-linkedin">
 					<h4 class="text-white py-2 ">Người đăng ký & Tổng mua hàng</h4>
-					<span class="s-icon"><i class="fa fa-user"></i></span> <span
-						class="s-icon"><button type="button" class="btn btn-light"
-							data-toggle="modal" data-target="#exampleModal4">
+					<span class="s-icon"><button type="button"
+							class="btn btn-light" data-toggle="modal"
+							data-target="#exampleModal4">
+							<i class="fa fa-user"></i>
+						</button></span> <span class="s-icon"><button type="button"
+							class="btn btn-light" data-toggle="modal"
+							data-target="#exampleModal5">
 							<i class="fa fa-person"></i>
 						</button></span>
 				</div>
@@ -44,13 +48,13 @@
 					<div class="col-6 border-right">
 						<div class="pt-3 pb-3 pl-0 pr-0 text-center">
 							<h4 class="m-1">{{ numberOfRegistrations }}</h4>
-							<p class="m-0">Shop & Tour</p>
+							<p class="m-0">Shop</p>
 						</div>
 					</div>
 					<div class="col-6">
 						<div class="pt-3 pb-3 pl-0 pr-0 text-center">
 							<h4 class="m-1">{{ numberOfRegistrations }}</h4>
-							<p class="m-0">Shop & Tour</p>
+							<p class="m-0">Tour</p>
 						</div>
 					</div>
 				</div>
@@ -117,33 +121,190 @@
 		<div class="col-lg-12">
 			<div class="card">
 				<div class="card-body">
-					<div class="row py-3">
+					<div class="row">
 						<div class="col-md-6 input-group icons">
-							<h3 class="card">Thống kê doanh thu các năm</h3>
+							<h3 class="card">Thống kê doanh thu các tháng trong năm</h3>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-2">
-							<ul style="font-weight: bold;"
-								class="list-group list-group-flush text-center" id="listItems">
-								<li class="list-group-item"><i style="color: green;"
-									class="fas fa-calendar"></i> | <a href="#" data-year="2020">Năm:
-										2020</a></li>
-								<li class="list-group-item"><i style="color: green;"
-									class="fas fa-calendar"></i> | <a href="#" data-year="2021">Năm:
-										2021</a></li>
-								<li class="list-group-item"><i style="color: green;"
-									class="fas fa-calendar"></i> | <a href="#" data-year="2022">Năm:
-										2022</a></li>
-								<li class="list-group-item"><i style="color: green;"
-									class="fas fa-calendar"></i> | <a href="#" data-year="2023">Năm:
-										2023</a></li>
-								<!-- Thêm các năm khác nếu cần -->
+						<div class="col-lg-12">
+							<ul style="font-weight: bold; list-style: none; padding: 0;"
+								class="list-group list-group-flush" id="listItems">
+
+							</ul>
+
+						</div>
+
+
+
+						<div class="col-lg-6">
+							<div id="chart">
+								<canvas id="myChart1"></canvas>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div id="chart">
+								<canvas id="myChart2"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row ">
+						<div class="col-md-6 input-group icons">
+							<h3 class="card">Thống kê doanh thu các năm</h3>
+						</div>
+						<div class="col-md-6 text-right"></div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="w-100 mr-2">
+								<h5>Shop</h5>
+								<div class="progress" style="height: 6px">
+									<div class="progress-bar bg-danger" style="width: 100%"></div>
+								</div>
+							</div>
+							<ul ng-repeat="item in itemsThongKeDT"
+								class="list-group list-group-flush" id="listItems">
+								<li class="list-group-item text-center"><a href="#"> <span
+										style="font-weight: bold;"><i style="color: green;"
+											class="fas fa-calendar"></i> Năm: {{item.yearValue}} </span> <span
+										style="font-weight: bold; padding: 100px">{{item.sum |
+											currency:'₫':0}}</span>
+								</a></li>
 							</ul>
 						</div>
-						<div class="col-lg-10">
+						<div class="col-lg-6">
+							<div class="ml-2 w-100">
+								<h5>Tour</h5>
+								<div class="progress" style="height: 6px">
+									<div class="progress-bar bg-success" style="width: 100%"></div>
+								</div>
+							</div>
+							<ul ng-repeat="item in itemsThongKeDTTOUR"
+								class="list-group list-group-flush" id="listItems">
+								<li class="list-group-item text-center"><a href="#"> <span
+										style="font-weight: bold;"><i style="color: green;"
+											class="fas fa-calendar"></i> Năm: {{item.yearValue}} </span> <span
+										style="font-weight: bold; padding: 100px">{{item.sum |
+											currency:'₫':0}}</span>
+								</a></li>
+							</ul>
+						</div>
+						<div class="col-lg-6">
 							<div id="chart">
-								<canvas id="myChart"></canvas>
+								<canvas id="myChart3"></canvas>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div id="chart">
+								<canvas id="myChart4"></canvas>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row ">
+						<div class="col-md-6 text-center ">
+							<h3 class="card">Số lượng sản phẩm bán theo danh mục</h3>
+						</div>
+						<div class="col-md-6  text-center">
+							<h3 class="card">Thống kê số lượng vé đã đặt trong ngày</h3>
+						</div>
+					</div>
+					<div class="row">
+
+						<div class="col-lg-6">
+							<div id="chart">
+								<canvas id="myChart9"></canvas>
+							</div>
+							<div class="card-footer">
+								<label for="dateInput">Chọn ngày:</label> <input type="date"
+									id="dateInput" name="dateInput">
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div id="chart">
+								<canvas id="myChart12"></canvas>
+							</div>
+							<div class="card-footer">
+								<label for="dateInput1">Chọn ngày:</label> <input type="date"
+									id="dateInput1" name="dateInput1">
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row ">
+						<div class="col-md-6 text-center ">
+							<h3 class="card">Trạng thái đơn hàng</h3>
+						</div>
+						<div class="col-md-6  text-center">
+							<h3 class="card">Trạng thái đơn đặt vé</h3>
+						</div>
+					</div>
+					<div class="row">
+
+						<div class="col-lg-5">
+							<div id="chart">
+								<canvas id="myChart5"></canvas>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							<div id="chart">
+								<canvas id="myChart6"></canvas>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row ">
+						<div class="col-md-6 text-center ">
+							<h3 class="card">Top 10 sản phẩm bán chạy</h3>
+						</div>
+						<div class="col-md-6  text-center">
+							<h3 class="card">Top 10 sản phẩm dư nhiều</h3>
+						</div>
+					</div>
+					<div class="row">
+
+						<div class="col-lg-6">
+							<div id="chart">
+								<canvas id="myChart7"></canvas>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div id="chart">
+								<canvas id="myChart8"></canvas>
 							</div>
 						</div>
 					</div>
@@ -155,56 +316,32 @@
 		<div class="col-lg-12">
 			<div class="card">
 				<div class="card-body">
-					<div class="row py-3">
-						<div class="col-md-6 input-group icons">
-							<h3 class="card">Thống kê doanh thu của năm</h3>
+					<div class="row ">
+						<div class="col-md-6 text-center ">
+							<h3 class="card">Top 5 tour được đặt nhiều nhất</h3>
 						</div>
-						<div class="col-md-6 text-right"></div>
+						<div class="col-md-6  text-center">
+							<h3 class="card">Doanh thu cửa hàng 7 ngày trước</h3>
+						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-3">
-							<div class="w-100 mr-2">
-								<h5>Shop</h5>
-								<div class="progress" style="height: 6px">
-									<div class="progress-bar bg-danger" style="width: 40%"></div>
-								</div>
-							</div>
-							<ul ng-repeat="item in itemsThongKeDT"
-								class="list-group list-group-flush" id="listItems">
-								<li class="list-group-item text-center"><a href="#"> <span
-										style="font-weight: bold;"><i style="color: green;"
-											class="fas fa-calendar"></i> | Năm: {{item.yearValue}} </span> <span
-										style="font-weight: bold; padding: 20px">{{item.sum |
-											currency:'₫':0}}</span>
-								</a></li>
-							</ul>
-							<div class="ml-2 w-100">
-								<h5>Tour</h5>
-								<div class="progress" style="height: 6px">
-									<div class="progress-bar bg-success" style="width: 80%"></div>
-								</div>
-							</div>
-							<ul ng-repeat="item in itemsThongKeDTTOUR"
-								class="list-group list-group-flush" id="listItems">
-								<li class="list-group-item text-center"><a href="#"> <span
-										style="font-weight: bold;"><i style="color: green;"
-											class="fas fa-calendar"></i> | Năm: {{item.yearValue}} </span> <span
-										style="font-weight: bold; padding: 20px">{{item.sum |
-											currency:'₫':0}}</span>
-								</a></li>
-							</ul>
-						</div>
-						<div class="col-lg-9">
+
+						<div class="col-lg-6">
 							<div id="chart">
-								<canvas id="myChart2"></canvas>
+								<canvas id="myChart11"></canvas>
 							</div>
+						</div>
+						<div class="col-lg-6">
+							<div id="chart">
+								<canvas id="myChart10"></canvas>
+							</div>
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </div>
 
 <!-- Thống kê số lượng trạng thái của đơn hàng -->
@@ -323,49 +460,134 @@
 					aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<div style="color: black;" class="table-responsive">
-					<button style="text-align: center;" type="button" class="btn mb-1 btn-success">
+				<div style="color: black;" class="table-responsive ">
+					<button style="text-align: center;" type="button"
+						class="btn mb-1 btn-success">
 						Shop GreenFarm <span class="btn-icon-right"><i
 							class="fa fa-shopping-cart"></i></span>
 					</button>
-					<table class="table header-border table-hover verticle-middle">
+					<table class="table header-border table-hover verticle-middle ">
 						<thead>
 							<tr>
-								<th scope="col">STT</th>
-								<th scope="col">Email</th>
-								<th scope="col">Số điện thoại</th>
-								<th scope="col" style="text-align: center;">Tổng tiền đã mua hàng</th>
+								<th style="width:50px" scope="col">STT</th>
+								<th style="width:220px" scope="col">Email</th>
+								<th style="width:200px" scope="col">Số điện thoại</th>
+								<th style="width:200px">Tổng tiền đã
+									mua hàng</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="user in pager.itemsThongKetotaluser">
-								<th>{{$index + 1}}</th>
-								<td>{{user.group.email}}</td>
-								<td>{{user.group.phonenumber}}</td>
-								<td style="text-align: center;"><span class="label gradient-4 btn-rounded">
-										{{user.sum |number:0}} đ</span></td>
+							<!-- Dòng đầu tiên để hiển thị Top 1 -->
+							<tr ng-if="pager.itemsThongKetotaluser.length > 0"
+								class="gold-bg marquee-container">
+								<td colspan="4">
+									<div class="marquee-content" style="font-weight: bold;">
+										<i style="color: red;" class="fas fa-trophy gold-icon"></i>
+										Top 1: {{pager.itemsThongKetotaluser[0].group.email}} -
+										{{pager.itemsThongKetotaluser[0].sum | number:0}} đ <i
+											style="color: orange;" class="fas fa-trophy gold-icon"></i>
+										Top 2: {{pager.itemsThongKetotaluser[1].group.email}} -
+										{{pager.itemsThongKetotaluser[1].sum | number:0}} đ <i
+											style="color: yellow;" class="fas fa-trophy gold-icon"></i>
+										Top 3: {{pager.itemsThongKetotaluser[2].group.email}} -
+										{{pager.itemsThongKetotaluser[2].sum | number:0}} đ
+									</div>
+								</td>
+							</tr>
+
+
+							<!-- Các dòng còn lại sử dụng ng-repeat -->
+							<tr
+								ng-repeat="user in pager.itemsThongKetotaluser | orderBy:'-group.sum'">
+								<th style="width:50px">{{$index + 1}}</th>
+								<td style="width:220px">{{user.group.email}}</td>
+								<td style="width:200px">{{user.group.phonenumber}}</td>
+								<td style="width:200px"><span
+									class="label gradient-4 btn-rounded"> {{user.sum |
+										number:0}} đ</span></td>
 							</tr>
 						</tbody>
 					</table>
-					<button style="text-align: center;" type="button" class="btn mb-1 btn-success">
-						Tour GreenFarm <span class="btn-icon-right"><i class="fa fa-ship"></i></span>
+
+					<div class="panel-footer text-right">
+						<span class="col-md-6"
+							style="text-align: right; font-weight: bold; color: black; font-size: 15px">{{pager.page
+							+ 1}} / {{pager.count}} </span>
+						<button ng-click="pager.first()" class="btn btn-success">
+							<i class="fas fa-angle-double-left"></i>
+						</button>
+						<button ng-click="pager.prev()" class="btn btn-success">
+							<i class="fas fa-angle-left"></i>
+						</button>
+						<button ng-click="pager.next()" class="btn btn-success">
+							<i class="fas fa-angle-right"></i>
+						</button>
+						<button ng-click="pager.last()" class="btn btn-success">
+							<i class="fas fa-angle-double-right"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Thống kê tổng tiền người dùng đặt vé -->
+<div class="modal fade" id="exampleModal5" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl ">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title " id="exampleModalLabel">Thống kê tổng
+					tiền đặt vé của người dùng</h3>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div style="color: black;" class="table-responsive ">
+					<button style="text-align: center;" type="button"
+						class="btn mb-1 btn-success">
+						Tour GreenFarm <span class="btn-icon-right"><i
+							class="fa fa-ship"></i></span>
 					</button>
 					<table class="table header-border table-hover verticle-middle">
 						<thead>
 							<tr>
-								<th scope="col">STT</th>
-								<th scope="col">Email</th>
-								<th scope="col">Số điện thoại</th>
-								<th scope="col" style="text-align: center;">Tổng tiền đã đặt vé</th>
+								<th style="width:50px" scope="col">STT</th>
+								<th style="width:220px" scope="col">Email</th>
+								<th style="width:200px" scope="col">Số điện thoại</th>
+								<th style="width:200px" scope="col" >Tổng tiền đã
+									đặt vé</th>
 							</tr>
 						</thead>
 						<tbody>
+							<!-- Dòng đầu tiên để hiển thị Top 1 -->
+							<tr ng-if="pager.itemsThongKeBookingtotaluser.length > 0"
+								class="gold-bg marquee-container">
+								<td colspan="4">
+									<div class="marquee-content" style="font-weight: bold;">
+										<i style="color: red;" class="fas fa-trophy gold-icon"></i>
+										Top 1: {{pager.itemsThongKeBookingtotaluser[0].group.email}} -
+										{{pager.itemsThongKeBookingtotaluser[0].sum | number:0}} đ <i
+											style="color: orange;" class="fas fa-trophy gold-icon"></i>
+										Top 2: {{pager.itemsThongKeBookingtotaluser[1].group.email}} -
+										{{pager.itemsThongKeBookingtotaluser[1].sum | number:0}} đ
+										<i
+											style="color: blue;" class="fas fa-trophy gold-icon"></i>
+										Top 3: {{pager.itemsThongKeBookingtotaluser[2].group.email}} -
+										{{pager.itemsThongKeBookingtotaluser[2].sum | number:0}} đ
+									</div>
+
+								</td>
+							</tr>
 							<tr ng-repeat="tour in pager.itemsThongKeBookingtotaluser">
-								<th>{{$index + 1}}</th>
-								<td>{{tour.group.email}}</td>
-								<td>{{tour.group.phonenumber}}</td>
-								<td style="text-align: center;"><span class="label gradient-4 btn-rounded">
-										{{tour.sum |number:0}} đ</span></td>
+								<th style="width:50px">{{$index + 1}}</th>
+								<td style="width:220px">{{tour.group.email}}</td>
+								<td style="width:200px">{{tour.group.phonenumber}}</td>
+								<td style="width:200px"><span
+									class="label gradient-4 btn-rounded"> {{tour.sum
+										|number:0}} đ</span></td>
 							</tr>
 						</tbody>
 					</table>
@@ -391,4 +613,10 @@
 		</div>
 	</div>
 </div>
+<!--<script>
+  // Lấy ngày hiện tại
+  var today = new Date().toISOString().slice(0, 10);
 
+  // Đặt giá trị mặc định cho input là ngày hiện tại
+  document.getElementById('dateInput').value = today;
+</script>-->

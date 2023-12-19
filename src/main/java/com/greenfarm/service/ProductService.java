@@ -4,21 +4,24 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
 import com.greenfarm.entity.Category;
 import com.greenfarm.entity.Product;
 import com.greenfarm.entity.Report;
-import com.greenfarm.entity.ThongkeTK;
-import com.greenfarm.entity.Top10;
+import com.greenfarm.entity.ReportSP;
+import com.greenfarm.entity.User;
 
 public interface ProductService {
 
 	// Danh sách sản phẩm
 	List<Product> findAll();
+	
+	List<Product> findAllDeletedProducts();
+	
+	List<Product> findByKeyword(String keyword);
 
 	// Phân trang
-	Page<Product> findAll(Pageable pageable);
+	Page<Product> findAllByIsdeletedFalse(Pageable pageable);
 
 	// tìm sản phẩm theo id
 	Product findById(Integer productid);
@@ -48,7 +51,7 @@ public interface ProductService {
 	List<Product> findProductByProductPiceSort(Integer sortprice);
 
 	// Thống kê sản phẩm
-	List<Report> getTk_sp();
+	List<ReportSP> getTk_sp();
 
 	// Thống kê lại sp
 	List<Report> getTk_loai();
@@ -57,7 +60,7 @@ public interface ProductService {
 	List<Product> getReportSpTk();
 
 
-	List<Report> getReportspbanchay();
+	List<ReportSP> getReportspbanchay();
 	
 //	void purchaseProduct(Integer productId, Integer quantityBought);
 	
@@ -65,4 +68,7 @@ public interface ProductService {
 	
 	List<Product> getProductsByCategory(Category category);
 
+	void save(Product product);
+
+	
 }

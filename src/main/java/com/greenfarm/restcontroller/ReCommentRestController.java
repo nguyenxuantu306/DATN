@@ -7,12 +7,18 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.greenfarm.dto.CommentDTO;
 import com.greenfarm.dto.ReCommentDTO;
 import com.greenfarm.entity.Comment;
 import com.greenfarm.entity.ReComment;
@@ -41,7 +47,7 @@ public class ReCommentRestController {
 		
 	}
 	
-	@GetMapping("comment/{commentid}")
+	@GetMapping("/comment/{commentid}")
 	public ResponseEntity<List<ReCommentDTO>> getListrecommentbycomment(@PathVariable("commentid") Integer commentid){
 		
 		Comment comment = commentService.findById(commentid);
@@ -50,7 +56,73 @@ public class ReCommentRestController {
 		return new ResponseEntity<>(reCommentDTOs, HttpStatus.OK);
 		
 	}
+	
+	@GetMapping("{recommentid}")
+	public ResponseEntity<ReCommentDTO> getOne(@PathVariable("recommentid") Integer recommentid) {
+		
+		ReComment reComment = recommentService.findById(recommentid);
+		if (reComment == null) {
+			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy ReComment
+			return ResponseEntity.notFound().build();
+		}
+
+		// Sử dụng ModelMapper để ánh xạ từ ReComment sang ReReCommentDTO
+		ReCommentDTO ReCommentDTO = modelMapper.map(reComment, ReCommentDTO.class);
+
+		// Trả về ReCommentDTO bằng ResponseEntity với mã trạng thái 200 OK
+		return new ResponseEntity<>(ReCommentDTO, HttpStatus.OK);
+	}
+	
+	
+	@PostMapping()
+	public ResponseEntity<ReCommentDTO> create(@RequestBody ReComment recomment) {
+			ReComment createdReComment = recommentService.create(recomment);
+
+			// Sử dụng ModelMapper để ánh xạ từ Comment đã tạo thành ReCommentDTO
+			ReCommentDTO ReCommentDTO = modelMapper.map(createdReComment, ReCommentDTO.class);
+
+			// Trả về ReCommentDTO bằng ResponseEntity với mã trạng thái 201 Created
+			return new ResponseEntity<>(ReCommentDTO, HttpStatus.CREATED);				
+	}
+	////////////////////////////////////
+	
+	@PutMapping("{recommentid}")
+	public ResponseEntity<ReCommentDTO> update(@PathVariable("recommentid") Integer recommentid,
+			@RequestBody ReComment recomment) {
+		ReComment updatedrecomment = recommentService.update(recomment);
+
+		if (updatedrecomment == null) {
+			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy recomment để cập nhật
+			return ResponseEntity.notFound().build();
+		}
+
+		// Sử dụng ModelMapper để ánh xạ từ recomment đã cập nhật thành recommentDTO
+		ReCommentDTO recommentDTO = modelMapper.map(updatedrecomment, ReCommentDTO.class);
+
+		// Trả về recommentDTO bằng ResponseEntity với mã trạng thái 200 OK
+		return new ResponseEntity<>(recommentDTO, HttpStatus.OK);
+	}
+
+	@DeleteMapping("{recommentid}")
+	public ResponseEntity<Void> delete(@PathVariable("recommentid") Integer recommentid) {
+		ReComment existingrecomment = recommentService.findById(recommentid);
+
+		if (existingrecomment == null) {
+			// Trả về mã trạng thái 404 Not Found nếu không tìm thấy recomment để xóa
+			return ResponseEntity.notFound().build();
+		}
+
+		// Thực hiện xóa trong service
+		recommentService.deleteReCommentById(recommentid);
+
+		// Trả về mã trạng thái 204 No Content để chỉ ra thành công trong việc xóa
+		return ResponseEntity.noContent().build();
+	}
 }
+
+
+
+
 	//@GetMapping("/tour/{tourid}")
 ////public ResponseEntity<List<ReCommentDTO>>
 //getListcommentbytour(@PathVariable("tourid") Integer tourid){

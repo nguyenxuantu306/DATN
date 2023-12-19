@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Selection</title>
+</head>
+<body>
+    <h1>Camera Selection</h1>
+
+    <!-- Dropdown để chọn camera -->
+    <label for="cameraSelect">Select Camera:</label>
+    <select id="cameraSelect" onchange="selectCamera()">
+    </select>
+
+    <hr>
+
+    <!-- Hiển thị video từ camera được chọn -->
+    <video id="camera-view" width="640" height="480" autoplay></video>
+
+    <!-- Script JavaScript để xử lý chọn camera -->
+    <script>
+        // Lấy danh sách camera từ WebRTC API
+        navigator.mediaDevices.enumerateDevices()
+            .then(function(devices) {
+                const cameraSelect = document.getElementById('cameraSelect');
+
+                devices.forEach(function(device) {
+                    if (device.kind === 'videoinput') {
+                        const option = document.createElement('option');
+                        option.value = device.deviceId;
+                        option.text = device.label || 'Camera ' + (cameraSelect.length + 1);
+                        cameraSelect.add(option);
+                    }
+                });
+            })
+            .catch(function(error) {
+                console.error('Error enumerating devices:', error);
+            });
+
+        // Hàm được gọi khi chọn camera từ dropdown
+        function selectCamera() {
+            const selectedCameraId = document.getElementById('cameraSelect').value;
+
+            // Gọi lại getUserMedia với thiết bị được chọn
+            navigator.mediaDevices.getUserMedia({
+                video: { deviceId: selectedCameraId }
+            })
+            .then(function (stream) {
+                const videoElement = document.getElementById('camera-view');
+                videoElement.srcObject = stream;
+            })
+            .catch(function (error) {
+                console.error('Error accessing camera:', error);
+            });
+        }
+        
+        
+    </script>
+</body>
+</html>

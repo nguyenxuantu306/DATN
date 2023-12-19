@@ -8,7 +8,8 @@
 
 <body>
 	<div class="container">
-		<form action="/booking/create" method="post" th:object="${booking}">
+		<form id="bookingForm" action="/booking/create" method="post" th:action="@{/booking/create}"
+			th:object="${booking}">
 			<div class="row">
 				<div class="col-8" id="radius">
 					<div class="card mt-3" id="radius">
@@ -19,30 +20,35 @@
 							<input type="hidden" name="tourid" id="tourid" th:field="${booking.tour.tourid}"></input>
 
 							<div class="d-flex">
-								<p class="card-title mt-1" style="font-weight: bold;">Tour yêu cầu </p>
-								<p style="color: red;font-style: italic" class="mt-1 ml-1"> ( Đặt tour gia đình - cá
-									nhân - công ty - trường học )</p>
+								<p class="card-title mt-1" style="font-weight: bold;">Tour
+									yêu cầu</p>
+								<p style="color: red; font-style: italic" class="mt-1 ml-1">
+									( Đặt tour gia đình - cá nhân - công ty - trường học... )</p>
 							</div>
+							<div class="row">
+								<div class="col-12">
+									<input type="text" class="form-control" style="border-radius: 5px"
+										placeholder="Tour Tham Quan Vườn Rau" id="tourname" name="tourname"
+										th:field="${booking.tour.tourname}" aria-label="Username"
+										aria-describedby="basic-addon1" readonly>
+								</div>
 
-							<input type="text" class="form-control" style="border-radius: 5px"
-								placeholder="Tour Tham Quan Vườn Rau" id="tourname" name="tourname"
-								th:field="${booking.tour.tourname}" aria-label="Username"
-								aria-describedby="basic-addon1">
+							</div>
 							<br>
 							<div class="row">
 
 								<div class="col-6">
-									<label for="" style="font-weight: bold;">Khởi hành</label>
-									<input type="text" class="form-control" style="border-radius: 5px"
-										placeholder="Liên hệ" th:field="${booking.tour.departureday}"
-										aria-label="Username" aria-describedby="basic-addon1" disabled>
+									<label for="" style="font-weight: bold;">Khởi hành</label> <input type="text"
+										class="form-control" style="border-radius: 5px" placeholder="Liên hệ"
+										th:field="${booking.tour.departureday}" aria-label="Username"
+										aria-describedby="basic-addon1" readonly>
 								</div>
 								<!--  -->
 								<div class="col-6">
-									<label for="" style="font-weight: bold;">Phương tiện</label>
-									<input type="text" class="form-control" style="border-radius: 5px"
-										placeholder="Đến nơi sẽ đưa rước bằng xe tham quan" aria-label="Username"
-										aria-describedby="basic-addon1" disabled>
+									<label for="" style="font-weight: bold;">Phương tiện</label> <input type="text"
+										class="form-control" style="border-radius: 5px"
+										placeholder="Xe tham quan Tour tại GreenFarm" aria-label="Username"
+										aria-describedby="basic-addon1" readonly>
 								</div>
 							</div>
 						</div>
@@ -57,109 +63,144 @@
 							<b>CHI TIẾT TOUR</b>
 						</div>
 						<div class="card-body">
-
-							<h4 class="card-title mr-1">Mã booking </h4>
-							<p style="color: red;font-style: italic">(Quý khách vui lòng nhớ số booking để tiện cho các
-								giao dịch sau này)</p>
-
-
-							<h4 class="card-title">Tour yêu cầu </h4>
+							<h4 class="card-title">Tour yêu cầu</h4>
 							<div class="row">
-								<!--  -->
-								<div class="row">
 
-									<div class="col-6">
-										<label for="" style="font-weight: bold;">Vé người lớn : </label>
-										<input type="number" min="1" style="border-radius: 5px" class="form-control"
-											id="adultticketnumber" th:field="${booking.Adultticketnumber}"
-											aria-label="Username" aria-describedby="basic-addon1"
-											oninput="calculateTotal()">
-									</div>
-
-									<div class="col-6">
-										<label for="" style="font-weight: bold;">Vé trẻ em : </label>
-										<input type="number" min="0" style="border-radius: 5px" class="form-control"
-											id="childticketnumber" th:field="${booking.Childticketnumber}" value="0"
-											aria-label="Username" aria-describedby="basic-addon1"
-											oninput="calculateTotal()">
-									</div>
+								<div class="col-6">
+									<label class="mb-2" for="" style="font-weight: bold;">Vé
+										người lớn</label> <select class="custom-select custom-input custom-place mr-2"
+										id="adultticketnumber" name="adultticketnumber"
+										th:field="${booking.Adultticketnumber}" onchange="calculateTotal()" required="">
+										<option th:each="i : ${#numbers.sequence(1, 45)}" th:value="${i}"
+											th:text="${i}"></option>
+									</select>
 								</div>
 
-								<!--  -->
-								<div class="row">
 
-									<div class="col-6 mt-2">
-										<label for="" style="font-weight: bold;">Giá người lớn</label>
-										<input type="number" class="form-control" style="border-radius: 5px"
-											id="adultticketprice" th:value="${booking.tour.pricings.adultprice}"
-											aria-describedby="basic-addon1" disabled>
-									</div>
-
-									<div class="col-6 mt-2">
-										<label for="" style="font-weight: bold;">Giá trẻ em</label>
-										<input type="number" class="form-control" style="border-radius: 5px"
-											id="childticketprice" th:value="${booking.tour.pricings.childprice}"
-											aria-label="Username" aria-describedby="basic-addon1" disabled>
-									</div>
+								<div class="col-6">
+									<label class="mb-2" for="" style="font-weight: bold;">Vé
+										trẻ em</label> <select class="custom-select custom-input custom-place mr-2"
+										id="childticketnumber" name="childticketnumber"
+										th:field="${booking.Childticketnumber}" onchange="calculateTotal()" required="">
+										<option th:each="i : ${#numbers.sequence(0, 45)}" th:value="${i}"
+											th:text="${i}"></option>
+										<!-- Điều chỉnh dải số (0 đến 10) dựa trên nhu cầu của bạn -->
+									</select>
 								</div>
-								<!--  -->
-								<div class="row">
-									<!--  -->
-									<div class="col-6 mt-2">
-										<label for="" style="font-weight: bold;">Tổng tiền</label>
-										<input type="text" class="form-control" style="border-radius: 5px"
-											id="totalprice" th:field="${booking.Totalprice}" aria-label="Username"
-											aria-describedby="basic-addon1">
-									</div>
-								</div>
-
 
 							</div>
+
+							<!--  -->
+							<div class="row">
+
+								<div class="col-6 mt-2 ">
+									<label class="mb-2" for="" style="font-weight: bold;">Giá
+										người lớn</label>
+									<div class="input-group mb-3">
+										<input type="number" class="form-control"
+											style="border-radius: 5px; background-color: white;" id="adultticketprice"
+											th:value="${booking.tour.pricings.adultprice}"
+											aria-describedby="basic-addon1" readonly> <span class="input-group-text"
+											id="basic-addon2">VNĐ</span>
+									</div>
+								</div>
+
+								<div class="col-6 mt-2">
+									<label class="mb-2" for="" style="font-weight: bold;">Giá
+										trẻ em</label>
+									<div class="input-group mb-3">
+										<input type="number" class="form-control"
+											style="border-radius: 5px; background-color: white;" id="childticketprice"
+											th:value="${booking.tour.pricings.childprice}" aria-label="Username"
+											aria-describedby="basic-addon1" readonly><span class="input-group-text"
+											id="basic-addon2">VNĐ</span>
+									</div>
+								</div>
+							</div>
+							<!--  -->
+							<div class="row">
+								<!--  -->
+								<div class="col-6 mt-2">
+									<label class="mb-2" for="" style="font-weight: bold;">Tổng
+										tiền</label>
+									<div class="input-group mb-3">
+										<input type="text" class="form-control"
+											style="border-radius: 5px; background-color: white;" id="totalprice"
+											th:field="${booking.Totalprice}" aria-label="Username"
+											aria-describedby="basic-addon1" readonly><span class="input-group-text"
+											id="basic-addon2">VNĐ</span>
+									</div>
+
+								</div>
+								<div class="col-6 mt-2 ">
+									<label class="mb-2" for="" style="font-weight: bold;">Ngày
+										đặt tour</label>
+									<div class="input-group mb-3">
+										<div class="form-outline datepicker">
+											<select class="form-control"
+												style="border-radius: 5px; background-color: white;" readonly
+												name="tourdate" id="tourdate">
+
+												<!-- Thêm option mặc định -->
+												<option style="text-align: center;" value="" selected disabled>
+													Chọn ngày đi</option>
+
+												<!-- Sử dụng vòng lặp để tạo các option với thông tin số lượng chỗ -->
+												<option th:each="date: ${booking.tour.tourdate}"
+													th:unless="${date.tourdates.before(#dates.createNow())}"
+													th:value="${date.tourdates}"
+													th:attr="data-availableslots=${date.availableslots}"><span
+														th:text="${#dates.format(date.tourdates, 'dd-MM-yyyy')}"></span><span
+														class="separator">»»»</span> số lượng chỗ còn trống <span
+														id="availableslots" th:text="${date.availableslots}"></span>
+												</option>
+											</select>
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+
+
 						</div>
 					</div>
 				</div>
 				<!--  -->
-				<div class="col-4 mt-3" style="border: 1px solid;
-    border-radius: 10px;
-    background: #7AB730;
-    height: 390px;">
-					<h4 style="color: white;
-    text-align: center;
-
-    border-radius: 5px 5px 0px 0px;
-    padding: 6px;
-    margin-top: 7px;">Thông Tin Liên Lạc</h4>
+				<div class="col-4 mt-3"
+					style="border: 1px solid; border-radius: 10px; background: #7AB730; height: 300px;">
+					<h4
+						style="color: white; text-align: center; border-radius: 5px 5px 0px 0px; padding: 6px; margin-top: 7px;">
+						Thông
+						Tin Liên Lạc</h4>
 					<input type="hidden" th:field="${booking.user.userid}" />
 					<div class="input-group mb-3">
 
 
 						<input type="text" class="form-control" style="border-radius: 5px" placeholder="Họ tên*"
 							aria-label="Username" th:value="${booking.user.firstname +' ' + booking.user.lastname}"
-							aria-describedby="basic-addon1">
+							aria-describedby="basic-addon1" readonly>
 					</div>
 					<!--  -->
 					<div class="input-group mb-3">
 
 						<input type="text" class="form-control" style="border-radius: 5px" placeholder="Điện thoại*"
-							aria-label="Username" th:field="${booking.user.phonenumber}"
-							aria-describedby="basic-addon1">
+							aria-label="Username" th:field="${booking.user.phonenumber}" aria-describedby="basic-addon1"
+							readonly>
 
 					</div>
 					<!--  -->
 					<div class="input-group mb-3">
 
 						<input type="text" class="form-control" style="border-radius: 5px" placeholder="Email*"
-							aria-label="Username" th:field="${booking.user.email}" aria-describedby="basic-addon1">
+							aria-label="Username" th:field="${booking.user.email}" aria-describedby="basic-addon1"
+							readonly>
 
 					</div>
-					<!--  -->
-					<div class="input-group mb-3">
 
-						<input type="text" class="form-control" style="border-radius: 5px" placeholder="Địa chỉ"
-							aria-label="Username" th:field="${booking.user.address}" aria-describedby="basic-addon1">
-
-					</div>
-					<!--  -->
 					<div class="input-group mb-3">
 
 						<input type="hidden" class="form-control" style="border-radius: 5px" placeholder="Ghi chú"
@@ -167,10 +208,9 @@
 
 					</div>
 					<!--  -->
-					<button type="submit" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; border-radius: 5px;width: 267px;background: white;
-    color: #7AB730;">
-						ĐẶT TOUR
-					</button>
+					<button onclick="confirmBooking()" type="button" class="btn btn-primary text-center"
+						style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; border-radius: 999px; width: 350px; background: white; color: #7AB730;">
+						ĐẶT TOUR</button>
 
 				</div>
 
@@ -182,23 +222,104 @@
 		// Function to calculate total price
 		function calculateTotal() {
 			// Get the values of adult and child ticket numbers
-			var adultTickets = parseInt(document.getElementById('adultticketnumber').value) || 0;
-			var childTickets = parseInt(document.getElementById('childticketnumber').value) || 0;
+			var adultTickets = parseInt(document
+				.getElementById('adultticketnumber').value) || 0;
+			var childTickets = parseInt(document
+				.getElementById('childticketnumber').value) || 0;
 
+			// Ensure that there's at least 1 adult ticket and 0 child tickets
 			adultTickets = Math.max(adultTickets, 1);
 			childTickets = Math.max(childTickets, 0);
 
 			// Get the prices of adult and child tickets
-			var adultPrice = parseFloat(document.getElementById('adultticketprice').value) || 1;
-			var childPrice = parseFloat(document.getElementById('childticketprice').value) || 0;
+			var adultPrice = parseFloat(document
+				.getElementById('adultticketprice').value) || 1;
+			var childPrice = parseFloat(document
+				.getElementById('childticketprice').value) || 0;
 
 			// Calculate the total price
-			var totalPrice = (adultTickets * adultPrice) + (childTickets * childPrice);
+			var totalPrice = (adultTickets * adultPrice)
+				+ (childTickets * childPrice);
 
 			// Set the value of the total price input field
-			document.getElementById('totalprice').value = totalPrice.toFixed(2);
+			document.getElementById('totalprice').value = totalPrice.toFixed(3);
 		}
+
+		// Set default values when the page is loaded
+		document.addEventListener("DOMContentLoaded", function () {
+			document.getElementById('adultticketnumber').value = "1";
+			document.getElementById('childticketnumber').value = "0";
+			calculateTotal(); // Call the function to update the total with default values
+		});
 	</script>
+
+	<script>
+	function confirmBooking() {
+	    // Kiểm tra xem ngày đã được chọn hay chưa
+	    var selectedDate = document.getElementById('tourdate').value;
+
+	    if (!selectedDate) {
+	        // Nếu ngày chưa được chọn, hiển thị thông báo Swal.fire
+	        Swal.fire({
+	            icon: 'warning',
+	            title: 'Oops! Bạn quên chọn ngày',
+	            text: 'Để tiếp tục, hãy đảm bảo rằng bạn đã chọn một ngày trước khi đặt tour.'
+	        });
+	        return false; // Ngăn chặn gửi biểu mẫu
+	    }
+
+	 
+
+	    // Kiểm tra thêm số lượng chỗ còn trống
+	    var selectedAdultTickets = parseInt($('#adultticketnumber').val());
+	    var selectedChildTickets = parseInt($('#childticketnumber').val());
+	    var selectedOption = $('#tourdate option:selected');
+	    var availableSlots = parseInt(selectedOption.attr('data-availableslots'));
+
+	    if ((selectedAdultTickets + selectedChildTickets) > availableSlots) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: 'Số lượng vé vượt quá số chỗ còn trống!',
+	            text: 'Vui lòng chọn lại số lượng vé.',
+	        });
+	        return false; // Ngăn chặn gửi biểu mẫu
+	    }
+
+	    // Hàm xác nhận đặt tour
+	    Swal.fire({
+	        title: 'Xác nhận đặt tour?',
+	        text: 'Bạn có chắc muốn đặt tour không?',
+	        icon: 'question',
+	        showCancelButton: true,
+	        confirmButtonColor: '#3085d6',
+	        cancelButtonColor: '#d33',
+	        confirmButtonText: 'Đồng ý',
+	        cancelButtonText: 'Hủy bỏ'
+	    }).then((result) => {
+	        if (result.isConfirmed) {
+	            // Bạn chỉ cần submit form khi người dùng chọn "Đồng ý"
+	            document.getElementById("bookingForm").submit();
+	        }
+	    });
+	}
+
+	</script>
+
+	<!-- <script>
+	document.addEventListener('DOMContentLoaded', function () {
+	    // Format adult ticket price
+	    var adultPriceInput = document.getElementById('adultticketprice');
+	    var formattedAdultPrice = new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 0 }).format(parseFloat(adultPriceInput.value));
+	    adultPriceInput.value = formattedAdultPrice;
+
+	    // Format child ticket price
+	    var childPriceInput = document.getElementById('childticketprice');
+	    var formattedChildPrice = new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 0 }).format(parseFloat(childPriceInput.value));
+	    childPriceInput.value = formattedChildPrice;
+	});
+
+</script> -->
+
 </body>
 
 </html>
