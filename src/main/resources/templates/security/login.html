@@ -21,7 +21,7 @@
 							class="alert alert-danger"
 							role="alert"
 							th:if="${param.error}"
-							th:text="#{login.label.title}"
+							th:text="#{login.label.accountError}"
 					>
 						Tài khoản hoặc mật khẩu không đúng, vui lòng thử lại!
 					</div>
@@ -97,7 +97,7 @@
 						</p>
 
 						<div class="divider d-flex align-items-center my-4">
-							<p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+							<p class="text-center fw-bold mx-3 mb-0 text-muted" th:text="#{login.label.or}">HOẶC</p>
 						</div>
 						<div class="row">
 							<div class="col-md-6">

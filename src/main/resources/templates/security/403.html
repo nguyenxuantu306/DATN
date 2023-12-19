@@ -59,10 +59,10 @@ section {
                 <div class="col-md-9 col-lg-6 my-5">
                     <div class="text-center error-page">
                         <h1 class="mb-0 text-warning fs-1">403</h1>
-                        <h2 class="mb-4 text-dark">Xin lỗi, có gì đó không ổn!</h2>
-                        <p class="w-sm-80 mx-auto mb-4 text-dark">Xin lỗi, Bạn không thể truy cập vào trang web này</p>
+                        <h2 class="mb-4 text-dark" th:text="#{404.label.title}">Xin lỗi, có gì đó không ổn!</h2>
+                        <p class="w-sm-80 mx-auto mb-4 text-dark" th:text="#{404.label.content}">Xin lỗi, Bạn không thể truy cập vào trang web này</p>
                         <div>
-                            <a href="/admin" class="btn btn-info btn-lg me-sm-2 mb-2 mb-sm-0">Về trang chủ</a>
+                            <a href="/admin" class="btn btn-info btn-lg me-sm-2 mb-2 mb-sm-0" th:text="#{404.label.button}">Về trang chủ</a>
                         </div>
                     </div>
                 </div>
