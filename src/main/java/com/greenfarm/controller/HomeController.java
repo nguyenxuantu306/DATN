@@ -12,7 +12,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.greenfarm.dao.CartDAO;
 import com.greenfarm.entity.Cart;
@@ -23,6 +25,7 @@ import com.greenfarm.service.OrderDetailService;
 import com.greenfarm.service.TourService;
 
 @Controller
+@ControllerAdvice
 @RequestMapping("/")
 public class HomeController {
 	@Autowired
@@ -115,5 +118,16 @@ public class HomeController {
 		}
 		return total;
 	}
+	
+	@RequestMapping("/error/404")
+    public String handle404() {
+		return "security/404";
+		
+	}
+	
+	 @RequestMapping(value = "/*", method = RequestMethod.GET)
+	    public String notFound() {
+	    	return "redirect:/error/404";
+	    }
 
 }

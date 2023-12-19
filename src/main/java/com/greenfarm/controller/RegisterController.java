@@ -159,6 +159,23 @@ public class RegisterController {
 				user.setGender(null);
 				user.setCreateddate(new Date());
 				userservice.create(user);
+				try {
+					User user2 = userservice.findByEmail(user.getEmail());
+					Role role = roleService.findByid(2);
+					UserRole userRole = new UserRole();
+					userRole.setRole(role);
+					userRole.setUser(user2);
+					userroleService.create(userRole);
+					List<UserRole> list = new ArrayList<>();
+					list.add(userRole);
+					user2.setUserRole(list);
+					userservice.update(user2);
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println("leu leu");
+					e.printStackTrace();				}
+				// them role
+				
 				return REDIRECT_REGISTER_SUCCESS;
 			} catch (Exception e) {
 				e.printStackTrace();

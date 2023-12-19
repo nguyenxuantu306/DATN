@@ -20,10 +20,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 	UserService userService;
 	
 	 
-    public CustomOAuth2UserService() {
-        System.out.println("CustomOAuth2UserService bean is created.");
-    }
-	
+  
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 		OAuth2User user =  super.loadUser(userRequest);
