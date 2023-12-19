@@ -7,10 +7,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Map;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
@@ -220,10 +219,12 @@ public class ScanticketRestController {
 	   	   	BookingDTO bookingDTOs = modelMapper.map(booking, BookingDTO.class);
 	   	 return new ResponseEntity<>(bookingDTOs, HttpStatus.OK);
 				
-			} else if(booking.getStatusbooking().getStatusbookingid() == 2 || booking.getBookingdate() == LocalDateTime.now()) {
+			} else if(booking.getStatusbooking().getStatusbookingid() == 2 && booking.getTourDateBooking().getTourdate().getTourdates()  == new Date()) {
 				StatusBooking statusBooking = statusBookingService.findById(5);
 				booking.setStatusbooking(statusBooking);
-				booking.setUsedate(LocalDateTime.now());
+				//booking.setUsedate(LocalDateTime.now());
+				booking.setUsedate(ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")).toLocalDateTime());
+
 				Booking updatedBooking = bookingService.update(booking);
 				
 				BookingDTO bookingDTOs = modelMapper.map(booking, BookingDTO.class);

@@ -103,26 +103,26 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
 		const ketqua = items.statusbooking.statusbookingid;
 		switch (ketqua) {
 			case 1:
-				console.log("ko dung duoc");
-				$scope.ketquakiemtra = "Ve dang cho xac nhan, chua the su dung";
+
+				$scope.ketquakiemtra = "Vé đang chờ xác nhận, chưa thể sử dụng";
 				break;
 			case 2:
-				console.log("ok dung duoc");
-				$scope.ketquakiemtra = "Ve hop le co the su dung";
+
+				$scope.ketquakiemtra = "Vé hợp lệ có thể sử dụng";
 
 				break;
 			case 3:
 			case 4:
-				console.log("ko dung duoc");
-				$scope.ketquakiemtra = "Ve da bi huy";
+
+				$scope.ketquakiemtra = "Vé đã bị hủy";
 				break;
 			case 5:
-				console.log("ko dung duoc");
-				$scope.ketquakiemtra = "Ve da duoc su dung";
+
+				$scope.ketquakiemtra = "Vé đã được sử dụng";
 				break;
 			default:
-				console.log("ko dung duoc");
-				$scope.ketquakiemtra = "Trang thai ve khong hop le";
+
+				$scope.ketquakiemtra = "Trạng thái vé không hợp lệ";
 		}
 	};
 
@@ -146,7 +146,7 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
 	$scope.captureAndSend = function() {
 		$scope.reset();
 		if (!$scope.selectedCameraId) {
-			alert("Please select a camera.");
+			alert("Hãy chọn camera.");
 			return;
 		}
 
