@@ -112,7 +112,8 @@ public class Authconfig {
 		http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable());
 
 		http.authorizeRequests(authorize -> authorize
-				.requestMatchers("/profile", "/booking/*","/checkout", "/cart").authenticated()
+				.requestMatchers("/profile", "/cart").authenticated()
+				.requestMatchers("/booking/*","/checkout").hasRole("User")
 				.requestMatchers("/assetsAdmin/**", "/admin")
 				.hasRole("Administrator")
 				.requestMatchers("/assets/*").permitAll()
