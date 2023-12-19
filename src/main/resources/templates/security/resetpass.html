@@ -19,13 +19,13 @@
 						<h2 class="py-4" style="text-align: center;">Đặt lại mật khẩu</h2>
 
 						<form action="/resetpass" th:object="${data}" method="post" class="py-3">
-							
+
 							<div class="mb-4 form-floating">
 								<input name="newpass" type="password" th:field="*{newpass}" class="form-control"
 									id="newpass" placeholder="newpass" required>
 								<label for="newpass">Mật khẩu mới</label>
 							</div>
-							
+
 							<div class="mb-4 form-floating">
 								<input name="confirmpass" type="password" th:field="*{confirmpass}" class="form-control"
 									id="confirmpass" placeholder="confirmpass" required>
@@ -35,10 +35,10 @@
 						th:value="${param.token}">
 							<button style="font-size: 20px" type="submit"
 								class="form-control-submit-button">Đặt mặt khẩu mới</button>
-						
-						
+
+
 							<div class="register">
-							<p style="text-align: center;padding: 30px">Trở vế trang hồ sơ ? <a href="/profile" class="link-danger">hồ sơ cá nhân</a></p>
+							<p style="text-align: center;padding: 30px">Trở vế trang  <a href="/profile" class="link-danger">hồ sơ cá nhân</a> ?</p>
 							</div>
 						</form>
 					</div>

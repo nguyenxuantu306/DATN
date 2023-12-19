@@ -19,14 +19,13 @@
 									<i class="input-group-text fas fa-filter" style="padding: 10px"></i>
 								</div>
 								<select class="form-control " id="statusFilter" name="statusFilter">
-									<option value="" selected>Chọn trạng thái</option>
-									<option value="all">Tất cả</option>
-									<option value="Chờ xác nhận">Chờ xác nhận</option>
-									<option value="Đặt tour thành công">Đặt tour thành
-										công</option>
-									<option value="Vé đã được sử dụng">Vé đã được sử dụng</option>
-									<option value="Khách hàng cancel">Khách hàng cancel</option>
-									<option value="Tour bị hủy">Tour bị hủy</option>
+									<option value="" selected th:text="#{filter.label.selectStatus}">Chọn trạng thái</option>
+									<option value="all" th:text="#{filter.label.all}">Tất cả</option>
+									<option value="Chờ xác nhận" th:text="#{filter.label.wait}">Chờ xác nhận</option>
+									<option value="Đặt tour thành công" th:text="#{filter.label.tourSuccess}">Đặt vé thành công</option>
+									<option value="Vé đã được sử dụng" th:text="#{filter.label.usedTicket}">Vé đã được sử dụng</option>
+									<option value="Khách hàng cancel" th:text="#{filter.label.cancelledTiket}">Vé đã hủy</option>
+									<option value="Tour bị hủy" th:text="#{filter.label.tiketIsCancelled}">Vé bị hủy</option>
 
 								</select>
 							</div>
@@ -40,7 +39,7 @@
 								style="padding: 20px; width: auto; border-radius: 3px; background-color: #fff; font-size: 14px; flex-direction: column;">
 
 								<div class="card-header" style="background-color: #fff;">
-									<span class="fw-bold">Booking:</span> #[[${booking.Bookingid}]]
+									<span class="fw-bold" th:text="#{orderList.label.order}"></span> #[[${booking.Bookingid}]]
 									<span class="fw-bold" th:text="${booking.getBookingdateFormatted}"></span> <span
 										th:if="${booking.statusbooking.name} =='Tour bị hủy'"
 										class="float-end text-danger fw-bold"
@@ -57,42 +56,40 @@
 									</div>
 									<div class="col-md-8">
 										<div class="card-body">
-											<p th:text="'Tên tour: '+${booking.tour.tourname}"></p>
+											<span th:text="#{bookingList.label.tourName}"></span><p th:text="' '+${booking.tour.tourname}"></p>
 											<div class="">
-
+												<span th:text="#{bookingList.label.adultTiket}"></span>
 												<span
-													th:text="'Số vé người lớn: '+${booking.Adultticketnumber}+' x'+' '"></span>
+													th:text="' '+${booking.Adultticketnumber}+' x'+' '"></span>
 												<span
 													th:text="${#numbers.formatDecimal(booking.tour.pricings.adultprice, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
 											</div>
-
-
 											<div>
-
+												<span th:text="#{bookingList.label.childTiket}"></span>
 												<span
-													th:text="'Số vé trẻ em: '+${booking.Childticketnumber}+' x'+' '"></span>
+													th:text="' '+${booking.Childticketnumber}+' x'+' '"></span>
 												<span
 													th:text="${#numbers.formatDecimal(booking.tour.pricings.childprice, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
 											</div>
-											<div
-												th:text="'Phương thức thanh toán: '+${booking.paymentmethod.Methodname}">
+											<div>
+												<span th:text="#{bookingList.label.payment}"></span>
+												<span th:text="' '+${booking.paymentmethod.Methodname}"></span>
 											</div>
-
 										</div>
 									</div>
 									<div class="col-sm-2"></div>
 									<div class="">
 										<p class="float-end ">
-											<span class="text-end fw-bold">Tổng giá: </span> <span
+											<span class="text-end fw-bold" th:text="#{bookingList.label.total}">Tổng giá: </span> <span
 												class="text-danger me-4"
-												th:text="${#numbers.formatDecimal(booking.Totalprice, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+												th:text="' '+${#numbers.formatDecimal(booking.Totalprice, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
 										</p>
 									</div>
 									<div class="mt-3">
 										<span th:if="*{booking.statusbooking.name} == 'Chờ xác nhận'">
 											<button th:id="'cancelButton_' + ${booking.bookingid}"
-												class="cancel-button btn mt-3 text-danger float-end btn-white border border-danger ms-2">Hủy
-												tour</button>
+												class="cancel-button btn mt-3 text-danger float-end btn-white border border-danger ms-2" th:text="#{bookingList.label.cancel}">Hủy
+												vé</button>
 										</span>
 									</div>
 								</div>
@@ -131,11 +128,21 @@
 									style="border-radius: 4px">
 									<i class="bi bi-card-list"></i> <span th:text="#{profile.label.myOrder}"></span>
 								</button>
-							</a> <a class="mb-3" href="/booking/list">
+							</a> </a> <a class="mb-3" href="/booking/list">
 								<button type="button" class="list-group-item list-group-item-action active"
-									style="border-radius: 4px">
-									<i class="bi bi-card-list"></i> <span th:text="#{profile.label.myTicket}"></span>
+									style="border-radius: 4px;">
+									<i class="bi bi-card-list"></i> <span
+										th:text="#{profile.label.myTicket}"></span>
 								</button>
+							</a>
+							
+						<a href="/changepass">
+								<button type="button" class="list-group-item list-group-item-action "
+									style="border-radius: 4px;">
+									<i class="bi bi-card-list"></i> <span th:text="#{profile.label.changePass}"
+										></span>
+								</button>
+							</a>
 						</div>
 						<a class="btn border border-danger my-3 text-decoration-none text-center text-white fw-bold"
 							style="width: 100%; background-color: red;" href="/logoff"

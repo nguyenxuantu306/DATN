@@ -49,6 +49,7 @@
 					  th:data-address-street="${address.Street}"
 					  th:data-user-id="${address.user.userid}"
 					  th:data-address-all="${address.City + ', ' + address.District  + ', ' + address.Ward}"
+					  th:text="#{address.label.update}"
 			  >
                 Cập nhật
               </button>
@@ -69,6 +70,7 @@
 				class="bi bi-plus-circle border-0 text-danger"
 				data-bs-toggle="modal"
 				data-bs-target="#myModalCreate"
+				th:text="#{address.label.newAddress}"
 		>
 			Thêm mới địa chỉ
 		</button>
@@ -86,7 +88,7 @@
 			<div class="modal-content">
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Cập nhật địa chỉ</h4>
+					<h4 class="modal-title" th:text="#{address.label.updateAddress}">Cập nhật địa chỉ</h4>
 					<button
 							type="button"
 							class="btn-close"
@@ -99,7 +101,7 @@
 					<form action="/">
 						<div data-mdb-input-init class="form-outline d-flex">
 							<div class="d-inline-grid w-50">
-								<label class="form-check-label fw-bold">Họ tên: </label>
+								<label class="form-check-label" th:text="#{address.label.fullname}">Họ tên: </label>
 								<input
 										type="text"
 										id="fullname"
@@ -121,7 +123,7 @@
 								/>
 							</div>
 							<div class="d-inline-grid w-50">
-								<label>Số điện thoại</label>
+								<label th:text="#{address.label.phoneNumber}">Số điện thoại</label>
 								<input
 										type="text"
 										id="phonenumber"
@@ -152,7 +154,7 @@
 									required
 							>
 								<!-- Thêm thuộc tính required ở đây -->
-								<option value="" selected>Chọn tỉnh thành</option>
+								<option value="" selected th:text="#{address.label.province}">Chọn tỉnh thành</option>
 							</select>
 							<select
 									class="form-select form-select-sm form-control mr-3"
@@ -162,7 +164,7 @@
 									required
 							>
 								<!-- Thêm thuộc tính required ở đây -->
-								<option value="" selected>Chọn quận huyện</option>
+								<option value="" selected th:text="#{address.label.district}">Chọn quận huyện</option>
 							</select>
 							<select
 									class="form-select form-select-sm form-control"
@@ -172,11 +174,11 @@
 									required
 							>
 								<!-- Thêm thuộc tính required ở đây -->
-								<option value="" selected>Chọn phường xã</option>
+								<option value="" selected th:text="#{address.label.ward}">Chọn phường xã</option>
 							</select>
 						</div>
 						<div class="mt-3 w-100">
-							<label>Địa chỉ cụ thể: </label>
+							<label th:text="#{address.label.address}">Địa chỉ cụ thể: </label>
 							<input
 									type="text"
 									class="form-control"
@@ -191,13 +193,14 @@
 				<!-- Modal footer -->
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="updateAddress">
+					<button type="button" class="btn btn-primary" id="updateAddress" th:text="#{address.label.update}">
 						Cập nhật
 					</button>
 					<button
 							type="button"
 							class="btn btn-danger"
 							data-bs-dismiss="modal"
+							th:text="#{address.label.cancel}"
 					>
 						Đóng
 					</button>
@@ -218,7 +221,7 @@
 			<div class="modal-content">
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Thêm mới địa chỉ</h4>
+					<h4 class="modal-title" th:text="#{address.label.newAddress}">Thêm mới địa chỉ</h4>
 					<button
 							type="button"
 							class="btn-close"
@@ -230,11 +233,11 @@
 				<div class="modal-body">
 					<div data-mdb-input-init class="form-outline d-flex">
 						<div class="d-inline-grid w-50">
-							<label class="form-check-label fw-bold">Họ tên: </label>
+							<label class="form-check-label" th:text="#{address.label.fullname}">Họ tên: </label>
 							<input type="text" id="fullname_add" class="form-control" />
 						</div>
 						<div class="d-inline-grid w-50">
-							<label>Số điện thoại</label>
+							<label th:text="#{address.label.phoneNumber}">Số điện thoại</label>
 							<input
 									type="text"
 									id="phonenumber_add"
@@ -252,32 +255,32 @@
 								id="city_add"
 								aria-label=".form-select-sm"
 						>
-							<option value="" selected>Chọn tỉnh thành</option>
+							<option value="" selected th:text="#{address.label.province}">Chọn tỉnh thành</option>
 						</select>
 						<select
 								class="form-select form-select-sm form-control mr-3"
 								id="district_add"
 								aria-label=".form-select-sm"
 						>
-							<option value="" selected>Chọn quận huyện</option>
+							<option value="" selected th:text="#{address.label.district}">Chọn quận huyện</option>
 						</select>
 						<select
 								class="form-select form-select-sm form-control"
 								id="ward_add"
 								aria-label=".form-select-sm"
 						>
-							<option value="" selected>Chọn phường xã</option>
+							<option value="" selected th:text="#{address.label.ward}">Chọn phường xã</option>
 						</select>
 					</div>
 					<div class="mt-3 w-100">
-						<label>Địa chỉ cụ thể: </label>
+						<label th:text="#{address.label.address}">Địa chỉ cụ thể: </label>
 						<input type="text" class="form-control" id="street_add" />
 					</div>
 				</div>
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary" id="createAddress">
+					<button type="submit" class="btn btn-primary" id="createAddress" th:text="#{address.label.save}">
 						Lưu
 					</button>
 
@@ -285,6 +288,7 @@
 							type="button"
 							class="btn btn-danger"
 							data-bs-dismiss="modal"
+							th:text="#{address.label.cancel}"
 					>
 						Đóng
 					</button>

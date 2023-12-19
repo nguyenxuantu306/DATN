@@ -61,10 +61,6 @@
 									<div class="col-md-8 input-group">
 										<input type="text" class="form-control mr-3" placeholder="Tìm kiếm tên..."
 											name="search" id="searchInput" oninput="performSearch()">
-										<!-- <div class="input-group-append">
-											<button class="btn btn-primary" type="submit"
-												th:text="#{tour.label.search}">Tìm kiếm</button>
-										</div> -->
 									</div>
 									<div class="col-xs-24 col-sm-8 col-md-2">
 										<select id="departureday" name="departureday" class="form-control">
@@ -126,7 +122,7 @@
 														th:text="#{label.booking}">Đặt tour</a>
 												</button>
 												<button th:if="${hasEvent2}" class="btn btn-primary">
-													<a>Tour tạm đóng</a>
+													<a th:text="#{label.closeTour}">Tour tạm đóng</a>
 												</button>
 											</th:block>
 										</div>
