@@ -62,51 +62,77 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 		// Đặt giá trị mặc định cho expirationdate là thời gian hiện tại
 		item.expirationdate = new Date();
 
-		$http.post(`/rest/vouchers`, item).then(resp => {
-			resp.data.expirationdate = new Date(resp.data.expirationdate)
-			$scope.items.push(resp.data);
-			$scope.reset();
-			// Sử dụng SweetAlert2 cho thông báo thành công
+		// Kiểm tra trùng lặp mã giảm giá
+		var isDuplicate = $scope.items.some(function(existingItem) {
+			return existingItem.code === item.code;
+		});
+
+		if (isDuplicate) {
+			// Sử dụng SweetAlert2 cho thông báo lỗi
 			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Thêm mã giảm giá thành công!',
+				icon: 'warning',
+				title: 'Lỗi!',
+				text: 'Mã giảm giá đã tồn tại. Vui lòng chọn mã khác.',
 			});
-			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-			$scope.frmvalidate.$setPristine();
-			$scope.frmvalidate.$setUntouched();
-			$scope.frmvalidate.$submitted = false;
-		}).catch(error => {
+		} else {
+			$http.post(`/rest/vouchers`, item).then(resp => {
+				resp.data.expirationdate = new Date(resp.data.expirationdate)
+				$scope.items.push(resp.data);
+				$scope.reset();
+				// Sử dụng SweetAlert2 cho thông báo thành công
+				Swal.fire({
+					icon: 'success',
+					title: 'Thành công!',
+					text: 'Thêm mã giảm giá thành công!',
+				});
+				$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+				$scope.frmvalidate.$setPristine();
+				$scope.frmvalidate.$setUntouched();
+				$scope.frmvalidate.$submitted = false;
+			}).catch(error => {
+				// Sử dụng SweetAlert2 cho thông báo lỗi
+				Swal.fire({
+					icon: 'error',
+					title: 'Lỗi!',
+					text: 'Lỗi thêm mã giảm giá sản phẩm',
+				});
+				console.log("Error", error);
+			});
+		}
+	}
+
+	// Cập nhật voucher
+	$scope.update = function() {
+		var item = angular.copy($scope.form);
+
+		// Kiểm tra trùng lặp mã giảm giá
+		var isDuplicate = $scope.items.some(function(existingItem) {
+			return existingItem.code === item.code && existingItem.voucherid !== item.voucherid;
+		});
+
+		if (isDuplicate) {
 			// Sử dụng SweetAlert2 cho thông báo lỗi
 			Swal.fire({
 				icon: 'error',
 				title: 'Lỗi!',
-				text: 'Lỗi thêm mã giảm giá sản phẩm',
+				text: 'Mã giảm giá đã tồn tại. Vui lòng chọn mã khác.',
 			});
-			console.log("Error", error);
-		});
-	}
-
-
-	// cập voucher
-	$scope.update = function() {
-		var item = angular.copy($scope.form);
-		$http.put(`/rest/vouchers/${item.voucherid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.voucherid == item.voucherid);
-			$scope.items[index] = item;
-			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Cập nhật mã thành công!',
-			});
-			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-			$scope.frmvalidateupdate.$setPristine();
-			$scope.frmvalidateupdate.$setUntouched();
-			$scope.frmvalidateupdate.$submitted = false;
-			$scope.edit(item);
-		})
-			.catch(error => {
+		} else {
+			$http.put(`/rest/vouchers/${item.voucherid}`, item).then(resp => {
+				var index = $scope.items.findIndex(p => p.voucherid == item.voucherid);
+				$scope.items[index] = item;
+				// Sử dụng SweetAlert2 cho thông báo thành công
+				Swal.fire({
+					icon: 'success',
+					title: 'Thành công!',
+					text: 'Cập nhật mã thành công!',
+				});
+				$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+				$scope.frmvalidateupdate.$setPristine();
+				$scope.frmvalidateupdate.$setUntouched();
+				$scope.frmvalidateupdate.$submitted = false;
+				$scope.edit(item);
+			}).catch(error => {
 				// Sử dụng SweetAlert2 cho thông báo lỗi
 				Swal.fire({
 					icon: 'error',
@@ -115,7 +141,9 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 				});
 				console.log("Error", error);
 			});
-	}
+		}
+	};
+
 
 	$scope.delete = function(item) {
 		// Hiển thị cửa sổ xác nhận trước khi xóa
@@ -367,8 +395,8 @@ app.controller("vouchers-ctrl", function($scope, $http, $window) {
 		var apiUrl = '/rest/vouchers/user/searchkeywordvoucheruser';
 
 		// Kiểm tra xem có từ khóa tìm kiếm không
-		if ($scope.searchText) {
-			apiUrl += '?keyword=' + $scope.searchText;
+		if ($scope.searchText1) {
+			apiUrl += '?keyword=' + $scope.searchText1;
 		}
 
 		$http.get(apiUrl)

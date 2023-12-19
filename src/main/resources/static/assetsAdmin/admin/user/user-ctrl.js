@@ -116,72 +116,108 @@ app.controller("user-ctrl", function($scope, $http) {
 		$scope.frmvalidate.$submitted = false;
 	}
 
-	// Thêm mới
+
+	// Tạo user
 	$scope.create = function() {
-    var item = angular.copy($scope.form);
-    
-    // Đặt giá trị mặc định cho createddate là thời gian hiện tại
-    item.createddate = new Date();
-    
-    $http.post(`/rest/users/admin`, item).then(resp => {
-        resp.data.createddate = new Date(resp.data.createddate);
-        resp.data.birthday = new Date(resp.data.birthday);
-        $scope.items.push(resp.data);
-        $scope.reset();
-        // Sử dụng SweetAlert2 cho thông báo thành công
-        Swal.fire({
-            icon: 'success',
-            title: 'Thành công!',
-            text: 'Thêm tài khoản thành công!',
-        });
-        $scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-        $scope.frmvalidate.$setPristine();
-        $scope.frmvalidate.$setUntouched();
-        $scope.frmvalidate.$submitted = false;
-
-    }).catch(error => {
-        // Sử dụng SweetAlert2 cho thông báo lỗi
-        Swal.fire({
-            icon: 'error',
-            title: 'Lỗi!',
-            text: 'Lỗi thêm mới tài khoản',
-        });
-        console.log("Error", error);
-    });
-}
-
-
-
-	// cập nhật user
-	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		console.log(item)
-		$http.put(`/rest/users/${item.userid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.userid == item.userid);
-			$scope.items[index] = item;
-			
-			// Sử dụng SweetAlert2 cho thông báo thành công
+
+		// Đặt giá trị mặc định cho createddate là thời gian hiện tại
+		item.createddate = new Date();
+
+		// Kiểm tra trùng lặp email hoặc số điện thoại
+		var isDuplicate = $scope.items.some(function(existingItem) {
+			return existingItem.email === item.email || existingItem.phonenumber === item.phonenumber;
+		});
+
+		if (isDuplicate) {
+			// Thông báo lỗi nếu trùng lặp
 			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Cập nhật thành công!',
+				icon: 'warning',
+				title: 'Lỗi!',
+				text: 'Email hoặc số điện thoại đã tồn tại. Vui lòng chọn thông tin khác.',
 			});
-			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-			$scope.frmvalidateupdate.$setPristine();
-			$scope.frmvalidateupdate.$setUntouched();
-			$scope.frmvalidateupdate.$submitted = false;
-			$scope.edit(item);
-		})
-			.catch(error => {
-				// Sử dụng SweetAlert2 cho thông báo lỗi
+			return; // Không thêm mới tài khoản nếu trùng lặp
+		} else {
+			// Nếu không trùng lặp, thực hiện thêm mới
+			$http.post(`/rest/users/admin`, item).then(resp => {
+				resp.data.createddate = new Date(resp.data.createddate);
+				resp.data.birthday = new Date(resp.data.birthday);
+				$scope.items.push(resp.data);
+				$scope.reset();
+				// Thông báo thành công
+				Swal.fire({
+					icon: 'success',
+					title: 'Thành công!',
+					text: 'Thêm tài khoản thành công!',
+				}).then((result) => {
+					// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+					if (result.isConfirmed) {
+						// Nếu đã bấm, thực hiện reload trang
+						location.reload();
+					}
+				});
+				$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+				$scope.frmvalidate.$setPristine();
+				$scope.frmvalidate.$setUntouched();
+				$scope.frmvalidate.$submitted = false;
+			}).catch(error => {
+				// Thông báo lỗi khi có lỗi từ server
 				Swal.fire({
 					icon: 'error',
 					title: 'Lỗi!',
-					text: 'Lỗi Cập nhật',
+					text: 'Lỗi thêm mới tài khoản',
 				});
 				console.log("Error", error);
 			});
+		}
 	}
+
+	// Cập nhật User
+	$scope.update = function() {
+		var item = angular.copy($scope.form);
+
+		// Kiểm tra trùng lặp email hoặc số điện thoại
+		var isDuplicate = $scope.items.some(function(existingItem) {
+			return (existingItem.email === item.email || existingItem.phonenumber === item.phonenumber) && existingItem.userid !== item.userid;
+		});
+
+		if (isDuplicate) {
+			// Sử dụng SweetAlert2 cho thông báo lỗi
+			Swal.fire({
+				icon: 'error',
+				title: 'Lỗi!',
+				text: 'Email hoặc số điện thoại đã tồn tại. Vui lòng chọn thông tin khác.',
+			});
+		} else {
+			// Nếu không trùng lặp, thực hiện cập nhật
+			$http.put(`/rest/users/${item.userid}`, item).then(resp => {
+				var index = $scope.items.findIndex(p => p.userid == item.userid);
+				$scope.items[index] = item;
+
+				// Sử dụng SweetAlert2 cho thông báo thành công
+				Swal.fire({
+					icon: 'success',
+					title: 'Thành công!',
+					text: 'Cập nhật thành công!',
+				});
+				$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+				$scope.frmvalidateupdate.$setPristine();
+				$scope.frmvalidateupdate.$setUntouched();
+				$scope.frmvalidateupdate.$submitted = false;
+				$scope.edit(item);
+			})
+				.catch(error => {
+					// Sử dụng SweetAlert2 cho thông báo lỗi
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi cập nhật',
+					});
+					console.log("Error", error);
+				});
+		}
+	}
+
 
 
 
@@ -279,58 +315,58 @@ app.controller("user-ctrl", function($scope, $http) {
 
 
 	$scope.pager = {
-    page: 0,
-    size: 10,
-    get items() {
-        var start = this.page * this.size;
-        return $scope.items ? $scope.items.slice(start, start + this.size) : [];
-    },
-    get count() {
-        return Math.ceil(1.0 * ($scope.items ? $scope.items.length : 0) / this.size);
-    },
-    first() {
-        this.page = 0;
-    },
-    prev() {
-        this.page--;
-        if (this.page < 0) {
-            this.last();
-        }
-    },
-    next() {
-        this.page++;
-        if (this.page >= this.count) {
-            this.first();
-        }
-    },
-    last() {
-        this.page = this.count - 1;
-    }
-};
-
-	
-	
-	$scope.loadData = function () {
-    var apiUrl = '/rest/users/searchkeyworduser';
-
-    // Kiểm tra xem có từ khóa tìm kiếm không
-    if ($scope.searchText) {
-        apiUrl += '?keyword=' + $scope.searchText;
-    }
-
-    $http.get(apiUrl)
-        .then(function (response) {
-            // Cập nhật dữ liệu trong scope
-            $scope.items = response.data; // Cập nhật items để phản ánh dữ liệu mới
-            $scope.pager.page = 0; // Đặt lại trang về 0 khi có dữ liệu mới
-        })
-        .catch(function (error) {
-            console.error('Lỗi khi tải dữ liệu:', error);
-        });
-};
+		page: 0,
+		size: 10,
+		get items() {
+			var start = this.page * this.size;
+			return $scope.items ? $scope.items.slice(start, start + this.size) : [];
+		},
+		get count() {
+			return Math.ceil(1.0 * ($scope.items ? $scope.items.length : 0) / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+	};
 
 
-   
+
+	$scope.loadData = function() {
+		var apiUrl = '/rest/users/searchkeyworduser';
+
+		// Kiểm tra xem có từ khóa tìm kiếm không
+		if ($scope.searchText) {
+			apiUrl += '?keyword=' + $scope.searchText;
+		}
+
+		$http.get(apiUrl)
+			.then(function(response) {
+				// Cập nhật dữ liệu trong scope
+				$scope.items = response.data; // Cập nhật items để phản ánh dữ liệu mới
+				$scope.pager.page = 0; // Đặt lại trang về 0 khi có dữ liệu mới
+			})
+			.catch(function(error) {
+				console.error('Lỗi khi tải dữ liệu:', error);
+			});
+	};
+
+
+
 
 
 	// Trong AngularJS controller hoặc service

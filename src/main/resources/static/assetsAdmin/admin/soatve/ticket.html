@@ -20,19 +20,23 @@
 							</button>
 							<hr>
 
-							<div class="bg-success" style="max-width: 640; max-height: 480">
-								<video id="camera-view" style="max-width: 100%" autoplay></video>
-
+							<div
+								style="max-width: 640px; max-height: 480px; position: relative; background-image: url('https://media.istockphoto.com/id/928427244/vi/vec-to/%C4%91i%E1%BB%87n-tho%E1%BA%A1i-th%C3%B4ng-minh-trong-tay-ng%C6%B0%E1%BB%9Di-%C4%91%C3%A0n-%C3%B4ng-qu%C3%A9t-m%C3%A3-qr-%E1%BB%A9ng-d%E1%BB%A5ng-qu%C3%A9t-m%C3%A3-v%E1%BA%A1ch-tr%C3%AAn-m%C3%A0n-h%C3%ACnh.jpg?s=170667a&w=0&k=20&c=MJUaQHJopiUk4TY--P6vr_4HkfKVzCONeWYziZSIQCU='); background-size: 50%; background-position: center; background-repeat: no-repeat;">
+								<video id="camera-view" style="max-width: 100%; z-index: 2;"
+									autoplay></video>
 							</div>
+
+
 						</div>
 
 						<div class="col-6 bg-success">
 							<div>
 								<h2>Các tour diễn ra trong ngày</h2>
 								<div class="table-responsive">
+									
 									<table
 										class="table table-striped table-bordered zero-configuration">
-										<thead>
+										<thead ng-if="tourlist.length > 0" >
 											<tr>
 												<th>STT</th>
 												<th>Tên Tour</th>
@@ -67,7 +71,14 @@
 											</tr>
 										</tbody>
 									</table>
-
+									<div ng-if="tourlist.length === 0" style="text-align: center;">
+										<img style="width: 300px; padding: 15px;"
+										src="/assets/images/logo.png" alt="">
+										<h4 class="mt-4">
+											<i class="fa fa-thumbs-down text-danger"></i> Hiện tại chưa có tour nào trong ngày hôm nay !
+										</h4>
+										
+									</div>
 								</div>
 							</div>
 
