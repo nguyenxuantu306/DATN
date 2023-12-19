@@ -196,9 +196,16 @@ $(document).ready(function() {
 
 function addToCart(productId) {
 	var quantity = document.getElementById('quantityInput').value;
+	var quantityavailable = parseFloat(document.getElementById('quantityavailable').innerText);
 
-	// Kiểm tra nếu quantity không phải là số hoặc nhỏ hơn 0.5
-	if (isNaN(quantity) || parseFloat(quantity) < 0.5) {
+	if (quantity > quantityavailable) {
+		Swal.fire({
+			icon: 'error',
+			title: 'Lỗi!',
+			text: 'Số lượng vượt quá số lượng có sẵn',
+		});
+		return; // Ngừng thực hiện hàm nếu số lượng không hợp lệ
+	} else if (isNaN(quantity) || parseFloat(quantity) < 0.5) {
 		Swal.fire({
 			icon: 'error',
 			title: 'Lỗi!',
@@ -296,6 +303,7 @@ function updateQuantity(productId, newQuantity) {
 
 // Lấy tất cả các trường số lượng
 var quantityInputs = document.querySelectorAll('.cart-quantity');
+var quantityavailable = document.getElementById('quantityavailable').innerText;
 
 // Lặp qua từng trường số lượng và thêm bộ lắng nghe sự kiện cho mỗi trường
 quantityInputs.forEach(function(quantityInput) {
@@ -303,15 +311,25 @@ quantityInputs.forEach(function(quantityInput) {
 		// Kiểm tra nếu phím Enter đã được nhấn (event.key === "Enter")
 		if (event.key === "Enter") {
 			var productId = quantityInput.getAttribute('data-productid');
-			var newQuantity = parseInt(quantityInput.value);
+			var newQuantity = parseFloat(quantityInput.value);
 			if (!isNaN(newQuantity) && newQuantity >= 0.5) {
-				updateQuantity(productId, newQuantity);
+				if (newQuantity <= parseFloat(quantityavailable)) {
+					updateQuantity(productId, newQuantity);
+				} else {
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Số lượng vượt quá số lượng có sẵn: ' + quantityavailable + '(Kg)',
+					});
+					window.location.reload()
+				}
 			} else {
 				Swal.fire({
 					icon: 'error',
 					title: 'Lỗi!',
 					text: 'Số lượng phải lớn hơn hoặc bằng 0.5Kg',
 				});
+				window.location.reload()
 			}
 		}
 	});

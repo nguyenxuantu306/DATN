@@ -106,60 +106,90 @@ app.controller("product-ctrl", function($scope, $http) {
 		};
 	}
 
-	// Thêm sản phẩm mới
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		$http.post(`/rest/products`, item).then(resp => {
-			resp.data.publication_date = new Date(resp.data.publication_date)
-			$scope.items.push(resp.data);
-			$scope.reset();
-			// Sử dụng SweetAlert2 cho thông báo thành công
+
+		// Kiểm tra trùng lặp tên sản phẩm
+		var isDuplicate = $scope.items.some(function(existingItem) {
+			return existingItem.productname === item.productname;
+		});
+
+		if (isDuplicate) {
+			// Sử dụng SweetAlert2 cho thông báo lỗi
 			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Thêm sản phẩm thành công!',
-			}).then((result) => {
-				// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
-				if (result.isConfirmed) {
-					// Nếu đã bấm, thực hiện reload trang
-					location.reload();
-				}
+				icon: 'warning',
+				title: 'Lỗi!',
+				text: 'Tên sản phẩm đã tồn tại. Vui lòng chọn tên khác.',
 			});
-			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-			$scope.frmvalidate.$setPristine();
-			$scope.frmvalidate.$setUntouched();
-			$scope.frmvalidate.$submitted = false;
-		}).catch(error => {
+		} else {
+			// Nếu không trùng, tiến hành thêm sản phẩm
+			$http.post(`/rest/products`, item).then(resp => {
+				resp.data.publication_date = new Date(resp.data.publication_date)
+				$scope.items.push(resp.data);
+				$scope.reset();
+				// Sử dụng SweetAlert2 cho thông báo thành công
+				Swal.fire({
+					icon: 'success',
+					title: 'Thành công!',
+					text: 'Thêm sản phẩm thành công!',
+				}).then((result) => {
+					// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+					if (result.isConfirmed) {
+						// Nếu đã bấm, thực hiện reload trang
+						location.reload();
+					}
+				});
+				$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+				$scope.frmvalidate.$setPristine();
+				$scope.frmvalidate.$setUntouched();
+				$scope.frmvalidate.$submitted = false;
+			}).catch(error => {
+				// Sử dụng SweetAlert2 cho thông báo lỗi
+				Swal.fire({
+					icon: 'warning',
+					title: 'Lỗi!',
+					text: 'Lỗi thêm sản phẩm',
+				});
+				console.log("Error", error);
+			});
+		}
+	}
+
+
+
+
+	$scope.update = function() {
+		var item = angular.copy($scope.form);
+
+		// Kiểm tra trùng lặp tên sản phẩm
+		var isDuplicate = $scope.items.some(function(existingItem) {
+			return existingItem.productname === item.productname && existingItem.productid !== item.productid;
+		});
+
+		if (isDuplicate) {
 			// Sử dụng SweetAlert2 cho thông báo lỗi
 			Swal.fire({
 				icon: 'error',
 				title: 'Lỗi!',
-				text: 'Lỗi thêm sản phẩm',
+				text: 'Tên sản phẩm đã tồn tại. Vui lòng chọn tên khác.',
 			});
-			console.log("Error", error);
-		});
-	}
-
-
-	// Cập nhật sản phẩm
-	$scope.update = function() {
-		var item = angular.copy($scope.form);
-		$http.put(`/rest/products/${item.productid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.productid == item.productid);
-			$scope.items[index] = item;
-			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Cập nhật sản phẩm thành công!',
-			});
-			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-			$scope.frmvalidateupdate.$setPristine();
-			$scope.frmvalidateupdate.$setUntouched();
-			$scope.frmvalidateupdate.$submitted = false;
-			$scope.edit(item);
-		})
-			.catch(error => {
+		} else {
+			// Nếu không trùng, tiến hành cập nhật sản phẩm
+			$http.put(`/rest/products/${item.productid}`, item).then(resp => {
+				var index = $scope.items.findIndex(p => p.productid == item.productid);
+				$scope.items[index] = item;
+				// Sử dụng SweetAlert2 cho thông báo thành công
+				Swal.fire({
+					icon: 'success',
+					title: 'Thành công!',
+					text: 'Cập nhật sản phẩm thành công!',
+				});
+				$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+				$scope.frmvalidateupdate.$setPristine();
+				$scope.frmvalidateupdate.$setUntouched();
+				$scope.frmvalidateupdate.$submitted = false;
+				$scope.edit(item);
+			}).catch(error => {
 				// Sử dụng SweetAlert2 cho thông báo lỗi
 				Swal.fire({
 					icon: 'error',
@@ -168,7 +198,10 @@ app.controller("product-ctrl", function($scope, $http) {
 				});
 				console.log("Error", error);
 			});
+		}
 	}
+
+
 
 
 	$scope.restore = function(productid) {

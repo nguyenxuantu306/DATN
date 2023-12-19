@@ -116,7 +116,7 @@
                         <div class="card">
                             <div class="card-body"> <span class="card-title">Địa chỉ nhận hàng.</span> <span th:each="address : ${user.address}">
 									<div th:if="${address.active}"
-										th:text="${address.street + ', ' + address.district + ', ' + address.city}">
+                                         th:text="${address.street + ', ' + address.ward + ', ' + address.district + ', ' + address.city}">
 									</div>
 
 								</span>
