@@ -1,6 +1,7 @@
 
 package com.greenfarm.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,12 +39,17 @@ import com.greenfarm.dto.Provider;
 import com.greenfarm.dto.RegisterDTO;
 import com.greenfarm.dto.RegisteroauthDTO;
 import com.greenfarm.dto.UserDTO;
+import com.greenfarm.entity.PaymentMethod;
 import com.greenfarm.entity.Role;
 import com.greenfarm.entity.User;
 import com.greenfarm.entity.UserRole;
+import com.greenfarm.entity.Voucher;
+import com.greenfarm.entity.VoucherUser;
 import com.greenfarm.exception.InvalidTokenException;
 import com.greenfarm.exception.UserAlreadyExistException;
 import com.greenfarm.service.UserService;
+import com.greenfarm.service.VoucherService;
+import com.greenfarm.service.VoucherUserService;
 import com.greenfarm.service.RoleService;
 import com.greenfarm.service.UserRoleService;
 import com.mysql.cj.util.StringUtils;
@@ -61,6 +67,13 @@ public class RegisterController {
 	private static final String REDIRECT_REGISTER_ERROR_EMAIL = "redirect:/register?errorEmail";
 	private static final String REDIRECT_REGISTER_ERROR_PHONE_NUMBER = "redirect:/register?errorPhoneNumber";
 
+	
+	@Autowired
+	VoucherUserService voucherUserService;
+	
+	@Autowired
+	VoucherService voucherService;
+	
 	@Autowired
 	com.greenfarm.service.UserService userservice;
 
@@ -159,6 +172,32 @@ public class RegisterController {
 				user.setGender(null);
 				user.setCreateddate(new Date());
 				userservice.create(user);
+				try {
+					User user2 = userservice.findByEmail(user.getEmail());
+					Role role = roleService.findByid(2);
+					UserRole userRole = new UserRole();
+					userRole.setRole(role);
+					userRole.setUser(user2);
+					userroleService.create(userRole);
+					List<UserRole> list = new ArrayList<>();
+					list.add(userRole);
+					user2.setUserRole(list);
+					
+					Voucher voucher = new Voucher();
+					voucher.setVoucherid(1);
+					VoucherUser voucherUser = new VoucherUser();
+					voucherUser.setExpirationdate(LocalDateTime.now());
+					voucherUser.setUser(user2);
+					voucherUser.setVoucher(voucher);
+					voucherUserService.create(voucherUser);
+					
+					userservice.update(user2);
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println("leu leu");
+					e.printStackTrace();				}
+				// them role
+				
 				return REDIRECT_REGISTER_SUCCESS;
 			} catch (Exception e) {
 				e.printStackTrace();

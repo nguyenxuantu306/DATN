@@ -94,7 +94,7 @@
 									id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
 							</div>
 							<input type="search" class="form-control" id="search"
-								ng-model="searchText" ng-change="loadData1()"
+								ng-model="searchText1" ng-change="loadData1()"
 								placeholder="Nhập từ khóa">
 						</div>
 						<div class="col-md-6 text-right">
@@ -191,7 +191,7 @@
 										<label>Mã giảm giá:</label> <input name="discount"
 											style="height: 55px" type="number" ng-model="form.discount"
 											class="form-control input-default" placeholder="VD : 0.1"
-											required /> <label
+											required  readonly="readonly"/> <label
 											ng-show="frmvalidateupdate.$submitted && frmvalidateupdate.discount.$error.required"
 											style="color: red;">Vui lòng nhập mã giảm giá !</label>
 									</div>

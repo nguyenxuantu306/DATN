@@ -60,11 +60,11 @@
 								style="color: #999; text-decoration: line-through"></span>-->
 							<span th:text="*{#numbers.formatDecimal(price,0,'COMMA',0,'POINT')} + ' ₫ '"></span>
 						</h2>
-						<strong>Mô tả : </strong>
-						<p th:text="*{description}" class="product-description mb-3"></p>
-						<strong>Số lượng : </strong> <span id="quantityavailable" th:text="*{quantityavailable}"
+						<strong th:text="#{shopDetail.label.describe}">Mô tả : </strong>
+						<p th:text="' '+*{description}" class="product-description mb-3"></p>
+						<strong th:text="#{shopDetail.label.quantity}">Số lượng : </strong> <span id="quantityavailable" th:text="' '+*{quantityavailable}"
 							class="product-description mb-3"></span> kilogam có sẵn <br>
-						<strong>Đơn vị: </strong> Kilogam
+						<strong th:text="#{shopDetail.label.unit}">Đơn vị: </strong> Kilogam
 						<div class="cart-button mt-4 mb-4 d-flex">
 							<div class="d-flex">
 								<button style="border: 1px solid rgba(0, 0, 0, .09); width: 32px"
@@ -83,7 +83,7 @@
 							<button th:if="${item.quantityavailable <= 0}"
 								style="background-color: #7AB730; color: white; text-decoration: none; cursor: not-allowed;"
 								class="add-to-cart-button">
-								<i class="fas fa-exclamation-circle"></i> Sản phẩm đã hết hàng
+								<i class="fas fa-exclamation-circle"></i> <span th:text="#{shopDetail.label.outOfStock}"></span>
 							</button>
 
 						</div>
@@ -118,9 +118,6 @@
 								onmouseover="this.style.color='#FFA500'" onmouseout="this.style.color='#003C2D'"
 								th:href="@{|/product/detail/${p.productid}|}" th:text="${p.productname}"></a>
 							<div class="mt-2 pt-2">
-								<!-- <b
-									th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"></b> -->
-
 								<div class="text-center">
 									<span style="font-size: 20px; color: #003C2D; font-weight: bold;"
 										th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' ₫ '"
@@ -142,40 +139,30 @@
 					<div class="row justify-content-left d-flex">
 
 						<div class="col-md-6">
-							<h1 class="pt-5">Tỷ lệ đánh giá</h1>
+							<h1 class="pt-5" th:text="#{shopDetail.label.ratingRate}">Tỷ lệ đánh giá</h1>
 							<div class="rating-bar0 justify-content-center">
 								<table class="text-left mx-auto" th:each="starCount : ${ratingCountMap}">
 									<tr>
 										<td class="rating-label"><i class="fas fa-star text-warning"> <span
 													style="color: black;" th:text="${starCount.start}"></span>
 											</i></td>
-
 										<td class="rating-bar">
-
-
 											<div class="progress">
 												<div class="progress-bar" role="progressbar" aria-label="Basic example"
 													th:style="'width: ' + ${starCount.startcount * 100 / totalReviewCount} + '%; background-color: orange;'"
 													aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 											</div>
-
-
 										</td>
-										<td class="text-right" th:text="${starCount.startcount} + ' Đánh giá'"><span
-												th:text="${starCount.startcount}"></span> <span>Đánh
-												giá</span></td>
+										<td class="text-right"><span
+												th:text="${starCount.startcount}"></span> <span th:text="#{shopDetail.label.reviews}">Đánh giá</span></td>
 									</tr>
 								</table>
-
-
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="card">
 								<div class="modal-header ">
-									<h1 class="fs-3 text-center" id="" th:text="#{shopDetail.label.thanhks}">GreenFarm
-										xin được
-										cám ơn quý khách!</h1>
+									<h1 class="fs-3 text-center" id="" th:text="#{shopDetail.label.thanhks}">GreenFarm xin được cám ơn quý khách!</h1>
 								</div>
 								<div class="card-body">
 									<form th:action="@{'/product/detail/' + ${productid}}" th:object="${reviewinsert}"
@@ -193,7 +180,7 @@
 
 										<div class="form-outline">
 											<textarea th:field="*{content}" class="form-control" id="textAreaExample"
-												rows="4" placeholder="Mời bạn đánh giá về sản phẩm..."></textarea>
+												rows="4" placeholder="..."></textarea>
 										</div>
 
 										<div class="d-flex justify-content-between mt-3">

@@ -1,70 +1,104 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
->
-  <head>
-    <meta charset="UTF-8" />
-    <title>GreenFarm</title>
-  </head>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8" />
+<title>GreenFarm</title>
+</head>
 
-  <body>
-    <div th:fragment="footer" class="footer_area">
-        <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
-            <div class="row pt-5">
-                <div class="col-lg-3 col-md-6 mb-5">
-                    <a href="" class="navbar-brand">
-                        <img src="/assets/images/logo.png" style="width: 200px">
-                    </a>
-                    <p>Sức khỏe là thứ tốt nhất có sức khỏe có thành công</p>
-                    <h6 class="text-white texxt-uppercase mt-4 mb-3" style="letter-spacing: 5px;" th:text="#{footer.label.followsUs}">Follow Us</h6>
-                    <!-- <div class="d-flex justify-content-start">
+<body>
+	<div th:fragment="footer" class="footer_area">
+		<div
+			class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5"
+			style="margin-top: 90px;">
+			<div class="row pt-5">
+				<div class="col-lg-3 col-md-6 mb-5">
+					<a href="" class="navbar-brand"> <img
+						src="/assets/images/logo.png" style="width: 200px">
+					</a>
+					<p>Sức khỏe là thứ tốt nhất có sức khỏe có thành công</p>
+					<h6 class="text-white texxt-uppercase mt-4 mb-3"
+						style="letter-spacing: 5px;" th:text="#{footer.label.followsUs}">Follow
+						Us</h6>
+					<!-- <div class="d-flex justify-content-start">
                         <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
                         <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
                         <a class="btn btn-outline-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
                     </div> -->
-                </div>
-                <div class="col-lg-3 col-md-6 mb-5">
-                    <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;" th:text="#{footer.label.introduce}">Giới thiệu</h5>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-white-50 mb-2" href="#" th:text="#{footer.label.aboutUs}">Về chúng tôi<i></i></a>
-                        <a class="text-white-50 mb-2" href="#" th:text="#{footer.label.paymentGuide}">Hướng dẫn thanh toán</a>
-                        <a class="text-white-50 mb-2" href="#" th:text="#{footer.label.instructTour}">Hướng dẫn đặt tour</a>
-                        <a class="text-white-50 mb-2" href="#" th:text="#{footer.label.priceList}">Bảng giá</a>
-                        <a class="text-white-50 mb-2" href="#" th:text="#{footer.label.promotional}">Tour khuyến mãi</a>
-    
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-5">
-                    <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;" th:text="#{footer.label.menu}">Liên kết</h5>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-white-50 mb-2" href="/product/shop" th:text="#{footer.label.shop}">Shop</a>
-                        <a class="text-white-50 mb-2" href="/tour" th:text="#{footer.label.tour}">Tour</a>
-                        <a class="text-white-50 mb-2" href="/about" th:text="#{footer.label.about}">About</a>
-                        <a class="text-white-50 mb-2" href="/login" th:text="#{footer.label.login}">Login</a>
-                        <a class="text-white-50 mb-2" href="/register" th:text="#{footer.label.register}">Register</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-5">
-                    <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;" th:text="#{footer.label.contactInfo}">Thông tin liên hệ</h5>
-                    <p><i class="fa fa-map-marker-alt mr-2"></i>Hồ Chí Minh, Việt Nam</p>
-                    <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
-                    <p><i class="fa fa-envelope mr-2"></i>greenfarmo@gmail.com</p>
-                    <h6 class="text-white text-uppercase mt-4 mb-3" style="letter-spacing: 5px;" th:text="#{footer.label.newsletter}">Newsletter</h6>
-                    <div class="w-100">
-                        <div class="input-group">
-                            <input type="text" class="form-control border-light" style="padding: 25px;" placeholder="Email">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary px-3" th:text="#{footer.label.subscribe}">Sign Up</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5" style="border-color: rgba(256, 256, 256, .1) !important;">
-        </div>
-    </div>
-  </body>
+				</div>
+				<div class="col-lg-3 col-md-6 mb-5">
+					<h5 class="text-white text-uppercase mb-4"
+						style="letter-spacing: 5px;" th:text="#{footer.label.introduce}">Giới
+						thiệu</h5>
+					<div class="d-flex flex-column justify-content-start">
+						<a class="text-white-50 mb-2" href="#"
+							th:text="#{footer.label.aboutUs}">Về chúng tôi<i></i></a> <a
+							class="text-white-50 mb-2" href="#"
+							th:text="#{footer.label.paymentGuide}">Hướng dẫn thanh toán</a> <a
+							class="text-white-50 mb-2" href="#"
+							th:text="#{footer.label.instructTour}">Hướng dẫn đặt tour</a> <a
+							class="text-white-50 mb-2" href="#"
+							th:text="#{footer.label.priceList}">Bảng giá</a> <a
+							class="text-white-50 mb-2" href="#"
+							th:text="#{footer.label.promotional}">Tour khuyến mãi</a>
+
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 mb-5">
+					<h5 class="text-white text-uppercase mb-4"
+						style="letter-spacing: 5px;">THÔNG TIN CHUYỂN KHOẢN</h5>
+					<div class="cot1_ft">
+						<div>
+							<p
+								style="color: white-space; font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+								<span style="font-family: gothamnarrowbook;">1. Chủ tài
+									khoản:&nbsp;<span style="font-family: gothamnarrowmedium;">Công
+										ty Du Lịch GreenFarm</span>&nbsp;|&nbsp;STK:&nbsp;<span
+									style="font-family: gothamnarrowmedium;">0331 000 445
+										709</span>&nbsp;| Ngân hàng Ngoại Thương ( Vietcombank) - GREEN FARM
+									– Nông trại du lịchThôn Sông Xoài 1, Láng Lớn, Châu Đức, Bà Rịa
+									Vũng Tàu
+								</span>
+							</p>
+
+							<p style="text-align: justify;">&nbsp;</p>
+
+
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 mb-5">
+					<h5 class="text-white text-uppercase mb-4"
+						style="letter-spacing: 5px;" th:text="#{footer.label.contactInfo}">Thông
+						tin liên hệ</h5>
+					<p>
+						<i class="fa fa-map-marker-alt mr-2"></i>Hồ Chí Minh, Việt Nam
+					</p>
+					<p>
+						<i class="fa fa-phone-alt mr-2"></i>+012 345 67890
+					</p>
+					<p>
+						<i class="fa fa-envelope mr-2"></i>greenfarm@gmail.com
+					</p>
+					<h6 class="text-white text-uppercase mt-4 mb-3"
+						style="letter-spacing: 5px;" th:text="#{footer.label.newsletter}">Newsletter</h6>
+					<div class="w-100">
+						<div class="input-group">
+							<input type="text" class="form-control border-light"
+								style="padding: 25px;" placeholder="Email">
+							<div class="input-group-append">
+								<button class="btn btn-primary px-3"
+									th:text="#{footer.label.subscribe}">Sign Up</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div
+			class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5"
+			style="border-color: rgba(256, 256, 256, .1) !important;"></div>
+	</div>
+</body>
 </html>

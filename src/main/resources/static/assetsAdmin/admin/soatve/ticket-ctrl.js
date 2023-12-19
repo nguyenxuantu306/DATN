@@ -26,8 +26,9 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
 
 		$scope.reset = function() {
 			$scope.error = ['err'];
+			$scope.ketquaquet = "";
 			$scope.form = {
-				
+
 			};
 		}
 
@@ -103,26 +104,40 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
 		const ketqua = items.statusbooking.statusbookingid;
 		switch (ketqua) {
 			case 1:
-				console.log("ko dung duoc");
-				$scope.ketquakiemtra = "Ve dang cho xac nhan, chua the su dung";
+
+				$scope.ketquakiemtra = "Vé đang chờ xác nhận, chưa thể sử dụng";
 				break;
 			case 2:
-				console.log("ok dung duoc");
-				$scope.ketquakiemtra = "Ve hop le co the su dung";
+
+				$scope.ketquakiemtra = "Vé hợp lệ có thể sử dụng";
 
 				break;
 			case 3:
 			case 4:
-				console.log("ko dung duoc");
-				$scope.ketquakiemtra = "Ve da bi huy";
+
+				$scope.ketquakiemtra = "Vé đã bị hủy";
 				break;
 			case 5:
-				console.log("ko dung duoc");
-				$scope.ketquakiemtra = "Ve da duoc su dung";
+
+				$scope.ketquakiemtra = "Vé đã được sử dụng";
+				// Kiểm tra xem tourDate có phải là ngày hôm nay không
+				var today = new Date();
+				var tourDate = new Date(items.tourDateBooking.tourdate.tourdates);
+
+				if (
+					tourDate.getDate() === today.getDate() &&
+					tourDate.getMonth() === today.getMonth() &&
+					tourDate.getFullYear() === today.getFullYear()
+				) {
+					// Đây là ngày hôm nay
+					console.log("TourDate là ngày hôm nay.");
+				} else {
+					console.log("TourDate không phải là ngày hôm nay.");
+				}
 				break;
 			default:
-				console.log("ko dung duoc");
-				$scope.ketquakiemtra = "Trang thai ve khong hop le";
+
+				$scope.ketquakiemtra = "Trạng thái vé không hợp lệ";
 		}
 	};
 
@@ -146,7 +161,7 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
 	$scope.captureAndSend = function() {
 		$scope.reset();
 		if (!$scope.selectedCameraId) {
-			alert("Please select a camera.");
+			alert("Hãy chọn camera.");
 			return;
 		}
 
@@ -162,16 +177,15 @@ app.controller("ticket-ctrl", function($scope, $http, $window) {
 		console.log("day la du lieu gui di" + imageData);
 		$http.post('/checktikcet', { imageData: imageData })
 			.then(resp => {
-				console.log("cmthành công ");
 				console.log(resp.data);
-				console.log("cmthành công ");
 				$scope.items.push(resp.data);
-				
+
 				$scope.kiemtrave(resp.data);
+				$scope.ketquaquet = "Quét thành công";
 
 			}).catch(error => {
 				// Sử dụng SweetAlert2 cho thông báo lỗi
-
+					$scope.ketquaquet = "Quét  thất bại hãy quét lại";
 				console.log("cmt lỗi ");
 				console.error("Error", error);
 				console.log("Error", error);

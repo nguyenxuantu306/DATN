@@ -7,18 +7,12 @@
     <title>Checkout</title>
 </head>
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Checkout</title>
-</head>
-
 <body class="bg-light">
     <div class="container">
         <div class="row py-5">
             <div class="col-md-4 order-md-2 mb-4">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Giỏ hàng của bạn</span>
+                    <span class="text-muted" th:text="#{checkout.label.yourCart}">Giỏ hàng của bạn</span>
                 </h4>
                 <form th:method="post" th:action="@{/checkout/payment}" th:object="${orderDetail}">
                     <ul class="list-group">
@@ -33,16 +27,15 @@
                                 </li>
                             </div>
                         </div>
-                        <li class="list-group-item d-flex justify-content-between"><span>Tổng
+                        <li class="list-group-item d-flex justify-content-between"><span th:text="#{checkout.label.total}">Tổng
 								cộng</span> <strong id="totalPrice"> <span
 									style="font-size: smaller; opacity: 0.7;"></span> <span
 									th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
-
 							</strong></li>
-                        <li class="list-group-item d-flex justify-content-between"><span>Khuyến
+                        <li class="list-group-item d-flex justify-content-between"><span th:text="#{checkout.label.promoCode}">Khuyến
 								mãi</span> <strong id="totalPriceValue"></strong></li>
                         <li class="list-group-item d-flex justify-content-between">
-                            Gía sau khi áp dụng :
+                            <div th:text="#{checkout.label.pricePro}">Giá sau khi áp dụng :</div>
                             <div id="discountedPriceDisplay"></div>
                         </li>
                     </ul>
@@ -50,7 +43,7 @@
 
                 <div>
 
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" th:text="#{checkout.label.yourCart}">
 						Chọn hoặc nhập mã voucher</button>
 
 
@@ -58,13 +51,11 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Chọn GreenFram Voucher</h1>
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="#{checkout.label.voucher}">Chọn GreenFram Voucher</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body ">
-                                    <div class="cupon_area">
-                                        <a>Mã Voucher</a> <input type="text" placeholder="Enter coupon code"> <a class="tp_btn" href="#">Apply Coupon</a>
-                                    </div>
+
                                     <div class="p-3">
                                         <div th:each="voucher : ${vouchers}" style="background-color: azure;" class="mb-2">
                                             <img style="width: 60px;" src="https://toppng.com/uploads/preview/voucher-icon-kostenloser-icon-voucher-11553428421ncp0vltb6w.png" />
@@ -79,8 +70,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelVoucherSelection()">HỦY</button>
-                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="applyVoucher()">OK</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelVoucherSelection()" th:text="#{checkout.label.cancel}">HỦY</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="applyVoucher()" th:text="#{checkout.label.ok}">OK</button>
                                 </div>
                             </div>
                         </div>
@@ -90,37 +81,37 @@
             </div>
 
             <div class="col-md-8 order-md-1">
-                <h4 class="mb-3">Địa chỉ thanh toán</h4>
+                <h4 class="mb-3" th:text="#{checkout.label.billAddress}">Địa chỉ thanh toán</h4>
                 <form id="myForm" class="needs-validation" novalidate th:object="${Order}" th:method="post" th:action="@{/checkout/payment}">
                     <div class="mb-3">
                         <label for="email">Email <!-- <span class="text-muted">(Optional)</span> --></label>
                         <input type="email" class="form-control" id="email" th:placeholder="${user.email}" readonly="readonly" />
-                        <div class="invalid-feedback">Please enter a valid email address for shipping updates.</div>
+                        <div class="invalid-feedback" th:text="#{checkout.label.notificationAddress}">Vui lòng nhập địa chỉ email hợp lệ để cập nhật thông tin vận chuyển.</div>
                     </div>
                     <div class="mb-3">
                         <div th:each="address : ${user.address}" th:if="${address.active}" class="mt-2">
                             <div class="row">
                                 <input type="hidden" th:name="addressId" th:value="${address.AddressID}" />
                                 <div class="col">
-                                    <label class="form-label" th:if="${address.active}">Họ
+                                    <label class="form-label" th:if="${address.active}" th:text="#{checkout.label.fullname}">Họ
 										và tên:</label> <input type="text" readonly th:if="${address.active}" class="form-control" th:value="${address.fullname}" />
                                 </div>
 
                                 <div class="col">
-                                    <label class="form-label" th:if="${address.active}">Số
+                                    <label class="form-label" th:if="${address.active}" th:text="#{checkout.label.phoneNumber}">Số
 										điện thoại:</label> <input type="text" readonly th:if="${address.active}" th:value="${address.phonenumber}" class="form-control" />
                                 </div>
                             </div>
                             <hr th:if="${address.active}" />
                         </div>
                         <div class="card">
-                            <div class="card-body"> <span class="card-title">Địa chỉ nhận hàng.</span> <span th:each="address : ${user.address}">
+                            <div class="card-body"> <span class="card-title" th:text="#{checkout.label.billAddress}">Địa chỉ nhận hàng.</span> <span th:each="address : ${user.address}">
 									<div th:if="${address.active}"
                                          th:text="${address.street + ', ' + address.ward + ', ' + address.district + ', ' + address.city}">
 									</div>
 
 								</span>
-                                <a href="/address" class="btn btn-success float-end">Thay đổi</a>
+                                <a href="/address" class="btn btn-success float-end" th:text="#{checkout.label.change}">Thay đổi</a>
                             </div>
                         </div>
 
@@ -128,10 +119,10 @@
                     </div>
 
                     <input type="hidden" id="hiddenTotalPrice" name="hiddenTotalPrice" th:value="${totalPrice}" th:data-original-price="${totalPrice}">
-                    <h4 class="mb-3">Payment</h4>
+                    <h4 class="mb-3" th:text="#{checkout.label.payment}">Payment</h4>
                     <div class="d-block my-3">
                         <div class="custom-control custom-radio">
-                            <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required onclick="showButton('debit')" checked value="1" /> <label class="custom-control-label" for="debit">COD</label>
+                            <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required onclick="showButton('debit')" checked value="1" /> <label class="custom-control-label" for="debit" th:text="#{checkout.label.cod}">COD</label>
                         </div>
                         <div class="custom-control custom-radio">
                             <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required onclick="showButton('paypal')" value="2" /> <label class="custom-control-label" for="paypal">PayPal</label>
@@ -144,22 +135,18 @@
                     <input type="hidden" name="voucherid" id="voucherid" th:value="0">
 
                     <div id="paypal-button" style="display: none;">
-                        <button onclick="changeFormActionPaypal()" class="btn btn-primary btn-lg btn-block" type="submit">
+                        <button onclick="changeFormActionPaypal()" class="btn btn-primary btn-lg btn-block" type="submit" th:text="#{checkout.label.order}">
 							PLACE ORDER</button>
                     </div>
                     <div id="vnpay-button" style="display: none;">
-                        <button onclick="changeFormAction()" class="btn btn-primary btn-lg btn-block" type="submit">
+                        <button onclick="changeFormAction()" class="btn btn-primary btn-lg btn-block" type="submit" th:text="#{checkout.label.order}">
 							PLACE ORDER</button>
                     </div>
                     <div id="checkout-button">
                         <!-- Đặt nội dung nút "Continue to checkout" ở đây -->
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit" th:text="#{checkout.label.order}">
 							PLACE ORDER</button>
-
                     </div>
-
-
-
                 </form>
             </div>
         </div>

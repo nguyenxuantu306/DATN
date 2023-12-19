@@ -39,9 +39,9 @@
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb" style="background-color: white;">
 					<li style="color: #0055AA;" class="breadcrumb-item"><a
-						href="#">Trang chủ</a></li>
+						href="/" th:text="#{detailTour.label.breadcrumbHome}">Trang chủ</a></li>
 					<li style="color: #0055AA;" class="breadcrumb-item"><a
-						href="#">Tour</a></li>
+						href="/tour" th:text="#{detailTour.label.breadcrumbTour}">Tour</a></li>
 					<li th:text="*{Tourname}" class="breadcrumb-item active"
 						aria-current="page"></li>
 				</ol>
@@ -49,8 +49,8 @@
 			<div class="text-left mb-3">
 				<h3 th:text="*{Tourname}" class="text-primary text-uppercase"></h3>
 				<h5>
-					Giá tour gốc/khách: <span
-						th:text="*{#numbers.formatDecimal(pricings.Adultprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}"
+					<span th:text="#{detailTour.label.cost}">Giá vé gốc/khách: </span><span
+						th:text="' '+*{#numbers.formatDecimal(pricings.Adultprice, 0, 'COMMA', 0, 'POINT') + ' ₫ '}"
 						style="color: #fb752e"></span>
 
 				</h5>
@@ -61,11 +61,11 @@
 					<div th:unless="${hasEvent2}"
 						style="display: flex; justify-content: space-between; align-items: center;">
 						<a th:href="@{|/booking/${tourid}|}"
-							class="btn btn-lg btn-primary p-2">Đặt ngay</a>
+							class="btn btn-lg btn-primary p-2" th:text="#{label.booking}">Đặt ngay</a>
 					</div>
 					<div th:if="${hasEvent2}"
 						style="display: flex; justify-content: space-between; align-items: center;">
-						<a class="btn btn-lg btn-primary p-2">Tour tạm đóng</a>
+						<a class="btn btn-lg btn-primary p-2" th:text="#{label.closeTour}">Tạm đóng</a>
 					</div>
 				</th:block>
 			</div>
@@ -76,44 +76,44 @@
 					<li class="nav-item" role="presentation">
 						<button class="nav-link active" id="pills-tour-tab"
 							data-bs-toggle="pill" data-bs-target="#pills-tour" type="button"
-							role="tab" aria-controls="pills-tour" aria-selected="true">
+							role="tab" aria-controls="pills-tour" aria-selected="true" th:text="#{detailTour.label.tourInformation}">
 							Chương trình tour</button>
 					</li>
 					<li class="nav-item" role="presentation">
 						<button class="nav-link" id="pills-profile-tab"
 							data-bs-toggle="pill" data-bs-target="#pills-profile"
 							type="button" role="tab" aria-controls="pills-profile"
-							aria-selected="false">Bảng giá</button>
+							aria-selected="false" th:text="#{detailTour.label.priceList}">Bảng giá</button>
 					</li>
 					<li class="nav-item" role="presentation">
 						<button class="nav-link" id="pills-infomation-tab"
 							data-bs-toggle="pill" data-bs-target="#pills-infomation"
 							type="button" role="tab" aria-controls="pills-infomation"
-							aria-selected="false">Thông tin tour</button>
+							aria-selected="false" th:text="#{detailTour.label.general}">Thông tin tour</button>
 					</li>
 					<li class="nav-item" role="presentation">
 						<button class="nav-link" id="pills-overview-tab"
 							data-bs-toggle="pill" data-bs-target="#pills-overview"
 							type="button" role="tab" aria-controls="pills-overview"
-							aria-selected="false">Tổng quan tour</button>
+							aria-selected="false" th:text="#{detailTour.label.overview}">Tổng quan tour</button>
 					</li>
 					<li class="nav-item" role="presentation">
 						<button class="nav-link" id="pills-condition-tab"
 							data-bs-toggle="pill" data-bs-target="#pills-condition"
 							type="button" role="tab" aria-controls="pills-condition"
-							aria-selected="false">Điều kiện tour</button>
+							aria-selected="false" th:text="#{detailTour.label.tourConditions}">Điều kiện tour</button>
 					</li>
 					<li class="nav-item" role="presentation">
 						<button class="nav-link" id="pills-image-tab"
 							data-bs-toggle="pill" data-bs-target="#pills-image" type="button"
-							role="tab" aria-controls="pills-image" aria-selected="false">
+							role="tab" aria-controls="pills-image" aria-selected="false" th:text="#{detailTour.label.tourImage}">
 							Hình ảnh tour</button>
 					</li>
 				</ul>
 				<div class="tab-content" id="pills-tabContent">
 					<div class="tab-pane fade show active" id="pills-tour"
 						role="tabpanel" aria-labelledby="pills-tour-tab" tabindex="0">
-						<h3>CHƯƠNG TRÌNH TOUR</h3>
+						<h3 th:text="#{detailTour.label.tourInformation}">CHƯƠNG TRÌNH TOUR</h3>
 						<div class="row">
 							<div class="col-lg-6 col-md-12 mb-4">
 								<img class="img-fluid" th:src="@{|*{image}|}" alt=""
@@ -145,7 +145,7 @@
 					</div>
 					<div class="tab-pane fade" id="pills-profile" role="tabpanel"
 						aria-labelledby="pills-profile-tab" tabindex="0">
-						<h3>BẢNG GIÁ</h3>
+						<h3 th:text="#{detailTour.label.priceList}">BẢNG GIÁ</h3>
 						<div>
 
 							<th:block
@@ -154,9 +154,9 @@
 									<thead>
 										<tr>
 											<th scope="col">STT</th>
-											<th scope="col">Giá người lớn</th>
-											<th scope="col">Giá trẻ em</th>
-											<th scope="col">Hành động</th>
+											<th scope="col" th:text="#{detailTour.label.adultPrice}">Giá người lớn</th>
+											<th scope="col" th:text="#{detailTour.label.childPrice}">Giá trẻ em</th>
+											<th scope="col" th:text="#{label.action}">Hành động</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -171,9 +171,9 @@
 											<!-- <td style="padding-top: 20px" th:text="*{Availableslots}"></td> -->
 											<td th:unless="${hasEvent1}"><a
 												th:href="@{|/booking/${tourid}|}"
-												class="btn btn-md btn-primary p-2">Đặt ngay</a></td>
+												class="btn btn-md btn-primary p-2" th:text="#{label.booking}">Đặt ngay</a></td>
 											<td th:if="${hasEvent1}">
-												<button class="btn btn-md btn-primary p-2" disabled>Hết
+												<button class="btn btn-md btn-primary p-2" disabled th:text="#{detailTour.label.allSite}">Hết
 													chổ</button>
 											</td>
 										</tr>
@@ -181,7 +181,7 @@
 								</table>
 							</th:block>
 						</div>
-						<h3 class="mt-2">NGÀY GIỜ ĐẶT TOUR</h3>
+						<h3 class="mt-2" th:text="#{detailTour.label.bookingDateTime}">NGÀY GIỜ ĐẶT VÉ</h3>
 						<!-- Store the condition result in a variable -->
 						<th:block
 							th:with="hasEvents=${#lists.isEmpty(item.tourdate.?[tourdates.after(#dates.createNow())])}">
@@ -191,8 +191,8 @@
 									<thead>
 										<tr>
 											<th scope="col">STT</th>
-											<th scope="col">Ngày đặt chỗ</th>
-											<th scope="col">Chỗ còn trống</th>
+											<th scope="col" th:text="#{detailTour.label.bookingDate}">Ngày đặt chỗ</th>
+											<th scope="col" th:text="#{detailTour.label.blank}">Chỗ còn trống</th>
 
 										</tr>
 									</thead>
@@ -215,12 +215,12 @@
 							<div th:if="${hasEvents}" class="text-center">
 								<img class="" style="width: 108x; height: 98px;" alt=""
 									src="https://www.bonakdaraesthetics.com/connect/blog/2016-12-14-winter-vip-event/img/feature.jpg">
-								<p class="text-center fw-bold fs-4">Hiện tại không có sự
+								<p class="text-center fw-bold fs-4" th:text="#{detailTour.label.closeTour}">Hiện tại không có sự
 									kiện này!</p>
 								<button type="button"
 									style="background-color: #7AB730; border-radius: 3px; width: 200px"
 									class="btn btn-success">
-									<a href="/tour">ĐẶT TOUR NGAY</a>
+									<a href="/tour" th:text="#{label.booking}">ĐẶT NGAY</a>
 								</button>
 							</div>
 						</th:block>
@@ -228,12 +228,12 @@
 					</div>
 					<div class="tab-pane fade" id="pills-infomation" role="tabpanel"
 						aria-labelledby="pills-infomation-tab" tabindex="0">
-						<h3>THÔNG TIN TOUR</h3>
+						<h3 th:text="#{detailTour.label.general}">THÔNG TIN</h3>
 						<div class="d-flex flex-center flex-between mt-5"
 							style="justify-content: space-between">
 							<div>
-								<i class="fa fa-calendar-check-o" aria-hidden="true"></i> Xe
-								tham quan GreenFarm
+								<i class="fa fa-calendar-check-o" aria-hidden="true"></i><span th:text="#{detailTour.label.vehicle}">Xe
+								tham quan GreenFarm</span>
 							</div>
 							<div>
 								<i class="fa fa-bullhorn" aria-hidden="true"></i> <span
@@ -248,7 +248,7 @@
 					</div>
 					<div class="tab-pane fade" id="pills-overview" role="tabpanel"
 						aria-labelledby="pills-overview-tab" tabindex="0">
-						<h3>TỔNG QUAN TOUR</h3>
+						<h3 th:text="#{detailTour.label.overview}">TỔNG QUAN</h3>
 						<h3 th:text="*{tourOverview.Title}" class="m-auto text-center"
 							style="width: 50%"></h3>
 						<p th:text="*{tourOverview.Content}" class="m-auto text-center"
@@ -256,13 +256,13 @@
 					</div>
 					<div class="tab-pane fade" id="pills-condition" role="tabpanel"
 						aria-labelledby="pills-condition-tab" tabindex="0">
-						<h3>ĐIỀU KIỆN TOUR</h3>
+						<h3 th:text="#{detailTour.label.tourConditions}">ĐIỀU KIỆN TOUR</h3>
 
 						<p th:text="*{tourCondition.Conditions}"></p>
 					</div>
 					<div class="tab-pane fade" id="pills-image" role="tabpanel"
 						aria-labelledby="pills-image-tab" tabindex="0">
-						<h3>HÌNH ẢNH TOUR</h3>
+						<h3 th:text="#{detailTour.label.tourImage}">HÌNH ẢNH TOUR</h3>
 						<div class="row">
 							<div class="col-md-4" th:each="image : ${item.tourImage}">
 								<img style="height: 400px" th:src="${image.Imageurl}"
@@ -286,7 +286,7 @@
 
 			<div class="py-3">
 				<div class="">
-					<h1 class="">DANH SÁCH CÁC BÌNH LUẬN</h1>
+					<h1 class="" th:text="#{detailTour.label.commentList}">DANH SÁCH CÁC BÌNH LUẬN</h1>
 				</div>
 			</div>
 
@@ -320,7 +320,7 @@
 									<button class="btn btn-secondary dropdown-toggle" type="button"
 										id="dropdownMenuButton1" data-bs-toggle="dropdown"
 										aria-expanded="false">
-										<i class="far fa-comment-dots me-2"></i> ReComment
+										<i class="far fa-comment-dots me-2"></i> <span th:text="#{detailTour.label.recomment}">Trả lời</span>
 									</button>
 
 
@@ -344,40 +344,32 @@
 											<div class="float-end mt-2 pt-1">
 												<button type="button" class="btn btn-primary btn-sm"
 													ng-disabled="!form.recommenttext || form.recommenttext.trim() === ''"
-													ng-click="createrecomment(p)">Post recomment</button>
+													ng-click="createrecomment(p)" th:text="#{detailTour.label.comment}">Post recomment</button>
 												<button type="button" class="btn btn-primary btn-sm"
 													ng-click="updaterecm(recm)"
-													ng-disabled="!form.recommenttext || form.recommenttext.trim() === ''">Update
+													ng-disabled="!form.recommenttext || form.recommenttext.trim() === ''" th:text="#{detailTour.label.updateComment}">Update
 													recomment</button>
 												<button type="button" class="btn btn-outline-primary btn-sm"
-													ng-click="resetrecm()">Cancel</button>
+													ng-click="resetrecm()" th:text="#{detailTour.label.cancel}">Cancel</button>
 											</div>
 										</div>
 									</div>
-
-
 								</div>
-
-
 								<div class="list-inline" ng-if="isUserLoggedIn(p.user.email)">
 									<a href="#!"
 										class="d-inline-flex align-items-center  me-3  list-inline-item">
 										<i class="far fa-comment-dots me-2"></i>
-										<p class="mb-0" ng-click="delete(p)">Xóa</p>
+										<p class="mb-0" ng-click="delete(p)" th:text="#{detailTour.label.cancel}">Xóa</p>
 									</a> <a href="#!"
 										class="d-inline-flex align-items-center  me-3 list-inline-item">
 										<i class="far fa-comment-dots me-2"></i>
-										<p class="mb-0" ng-click="edit(p)">Sửa</p>
+										<p class="mb-0" ng-click="edit(p)" th:text="#{detailTour.label.cancel}">Sửa</p>
 									</a>
-
-
 								</div>
 							</div>
-
 						</div>
 						<!-- //recomment -->
 						<div class="row" ng-repeat="recm in p.recomment">
-
 							<div class="col-2 "></div>
 							<div class="col-10   my-2">
 								<div class="d-flex justify-content-between mb-2">
@@ -393,25 +385,21 @@
 								<div class="d-flex flex-row align-items-center"
 									th:if="${#authorization.expression('isAuthenticated()')}"
 									ng-model="p.user.email">
-
 									<div class="list-inline"
 										ng-if="isUserLoggedIn(recm.user.email)">
 										<a href="#!"
 											class="d-inline-flex align-items-center  me-3  list-inline-item">
 											<i class="far fa-comment-dots me-2"></i>
-											<p class="mb-0" ng-click="deleterecm(recm)">Xóa</p>
+											<p class="mb-0" ng-click="deleterecm(recm)" th:text="#{detailTour.label.delete}">Xóa</p>
 										</a> <a href="#!"
 											class="d-inline-flex align-items-center  me-3 list-inline-item">
 											<i class="far fa-comment-dots me-2"></i>
-											<p class="mb-0" ng-click="editrecm(recm)">Sửa</p>
+											<p class="mb-0" ng-click="editrecm(recm)" th:text="#{detailTour.label.update}">Sửa</p>
 										</a>
-
 									</div>
 								</div>
 							</div>
-
 						</div>
-
 					</div>
 				</div>
 				<div class="panel-footer text-center">
@@ -434,34 +422,28 @@
 						style="background-color: #7AB730">
 						<i class="fas fa-angle-double-right"></i>
 					</button>
-
 				</div>
-
 				<!-- viet coment -->
 				<div th:if="${#authorization.expression('isAuthenticated()')}"
 					class="card-footer py-3 border-0"
 					style="background-color: #f8f9fa;">
 					<div class="d-flex flex-start w-100">
-
 						<img class="rounded-circle shadow-1-strong me-3"
 							src="{{users.image}}" alt="avatar" width="40" height="40" />
-
 						<div class="form-outline w-100">
 							<textarea class="form-control" id="textAreaExample" rows="4"
 								ng-model="form.commenttext" placeholder="Comment"
 								style="background: #fff;"></textarea>
-
 						</div>
 					</div>
 					<div class="float-end mt-2 pt-1">
 						<button type="button" class="btn btn-primary btn-sm"
 							ng-disabled="!form.commenttext || form.commenttext.trim() === ''"
-							ng-click="update()">Post comment</button>
+							ng-click="update()" th:text="#{detailTour.label.comment}">Post comment</button>
 						<button type="button" class="btn btn-outline-primary btn-sm"
-							ng-click="reset()">Cancel</button>
+							ng-click="reset()" th:text="#{detailTour.label.cancel}">Cancel</button>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>

@@ -30,7 +30,7 @@ app.controller("tour-ctrl", function($scope, $http) {
 		$http.get("/rest/tours/deleted").then(resp => {
 			$scope.deletedItems = resp.data;
 		});
-		
+
 		// Load các tour
 		$http.get("/rest/tours").then(resp => {
 			$scope.cates = resp.data;
@@ -109,123 +109,156 @@ app.controller("tour-ctrl", function($scope, $http) {
 	// Thêm tour mới
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		$http.post(`/rest/tours`, item).then(resp => {
-			resp.data.startdate = new Date(resp.data.startdate);
-			resp.data.enddate = new Date(resp.data.enddate);
-			$scope.items.push(resp.data);
-			$scope.reset();
-			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Thêm tour thành công!',
-			});
-			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-			$scope.frmvalidateadd.$setPristine();
-			$scope.frmvalidateadd.$setUntouched();
-			$scope.frmvalidateadd.$submitted = false;
-		}).catch(error => {
+
+		// Kiểm tra trùng lặp tên tour
+		var isDuplicate = $scope.items.some(function(existingItem) {
+			return existingItem.tourname === item.tourname;
+		});
+
+		if (isDuplicate) {
 			// Sử dụng SweetAlert2 cho thông báo lỗi
 			Swal.fire({
-				icon: 'error',
+				icon: 'warning',
 				title: 'Lỗi!',
-				text: 'Lỗi thêm mới tour!',
+				text: 'Tên tour đã tồn tại. Vui lòng chọn tên khác.',
 			});
-			console.log("Error", error);
-		});
-	};
-
-
-
-	// Cập nhật tour
-	$scope.update = function() {
-		var item = angular.copy($scope.form);
-		if (item.tourid != null) {
-			if (item.tourImage) {
-				item.tourImage.forEach(imageurl => {
-					delete imageurl.tourid;
-				});
-			}
-			$http.put(`/rest/tours/${item.tourid}`, item).then(resp => {
-				var index = $scope.items.findIndex(p => p.tourid == item.tourid);
-				$scope.items[index] = item;
+		} else {
+			$http.post(`/rest/tours`, item).then(resp => {
+				resp.data.startdate = new Date(resp.data.startdate);
+				resp.data.enddate = new Date(resp.data.enddate);
+				$scope.items.push(resp.data);
 				$scope.reset();
 				// Sử dụng SweetAlert2 cho thông báo thành công
 				Swal.fire({
 					icon: 'success',
 					title: 'Thành công!',
-					text: 'Cập nhật tour thành công!',
+					text: 'Thêm tour thành công!',
+				}).then((result) => {
+					if (result.isConfirmed) {
+						// Nếu đã bấm, thực hiện reload trang
+						location.reload();
+					}
 				});
 				$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-				$scope.frmvalidateupdate.$setPristine();
-				$scope.frmvalidateupdate.$setUntouched();
-				$scope.frmvalidateupdate.$submitted = false;
-				$scope.edit(item)
-
+				$scope.frmvalidateadd.$setPristine();
+				$scope.frmvalidateadd.$setUntouched();
+				$scope.frmvalidateadd.$submitted = false;
 			}).catch(error => {
 				// Sử dụng SweetAlert2 cho thông báo lỗi
 				Swal.fire({
 					icon: 'error',
 					title: 'Lỗi!',
-					text: 'Lỗi cập nhật tour!',
+					text: 'Lỗi thêm mới tour!',
 				});
 				console.log("Error", error);
 			});
-		} else {
-			alert("Tour id không tồn tại");
 		}
-	}
+	};
+
+	// Cập nhật tour
+	$scope.update = function() {
+		var item = angular.copy($scope.form);
+
+		// Kiểm tra trùng lặp tên tour
+		var isDuplicate = $scope.items.some(function(existingItem) {
+			return existingItem.tourname === item.tourname && existingItem.tourid !== item.tourid;
+		});
+
+		if (isDuplicate) {
+			// Sử dụng SweetAlert2 cho thông báo lỗi
+			Swal.fire({
+				icon: 'error',
+				title: 'Lỗi!',
+				text: 'Tên tour đã tồn tại. Vui lòng chọn tên khác.',
+			});
+		} else {
+			if (item.tourid != null) {
+				if (item.tourImage) {
+					item.tourImage.forEach(imageurl => {
+						delete imageurl.tourid;
+					});
+				}
+				$http.put(`/rest/tours/${item.tourid}`, item).then(resp => {
+					var index = $scope.items.findIndex(p => p.tourid == item.tourid);
+					$scope.items[index] = item;
+					$scope.reset();
+					// Sử dụng SweetAlert2 cho thông báo thành công
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công!',
+						text: 'Cập nhật tour thành công!',
+					});
+					$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+					$scope.frmvalidateupdate.$setPristine();
+					$scope.frmvalidateupdate.$setUntouched();
+					$scope.frmvalidateupdate.$submitted = false;
+					$scope.edit(item);
+				}).catch(error => {
+					// Sử dụng SweetAlert2 cho thông báo lỗi
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi cập nhật tour!',
+					});
+					console.log("Error", error);
+				});
+			} else {
+				alert("Tour id không tồn tại");
+			}
+		}
+	};
+
 
 	$scope.restore = function(tourid) {
-    // Hiển thị cửa sổ xác nhận trước khi khôi phục
-    Swal.fire({
-        title: 'Xác nhận khôi phục',
-        text: 'Bạn có chắc chắn muốn khôi phục địa điểm này?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Đồng ý',
-        cancelButtonText: 'Hủy bỏ'
-    }).then((result) => {
-        // Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
-        if (result.isConfirmed) {
-            // Nếu đã bấm "Đồng ý", thực hiện khôi phục
-            try {
-                axios.put(`/rest/tours/${tourid}/restore`)
-                    .then(response => {
-                        // Xử lý phản hồi thành công
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Thành công!',
-                            text: 'Khôi phục địa điểm thành công!',
-                        }).then((result) => {
-                            // Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
-                            if (result.isConfirmed) {
-                                // Nếu đã bấm, thực hiện reload trang
-                                location.reload();
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        // Xử lý lỗi
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Lỗi!',
-                            text: 'Lỗi khôi phục địa điểm!',
-                        });
-                        console.log("Error", error);
-                    });
-            } catch (error) {
-                // Xử lý lỗi ngoại lệ
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi!',
-                    text: 'Lỗi khôi phục địa điểm',
-                });
-                console.log("Exception", error);
-            }
-        }
-    });
-};
+		// Hiển thị cửa sổ xác nhận trước khi khôi phục
+		Swal.fire({
+			title: 'Xác nhận khôi phục',
+			text: 'Bạn có chắc chắn muốn khôi phục địa điểm này?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Đồng ý',
+			cancelButtonText: 'Hủy bỏ'
+		}).then((result) => {
+			// Kiểm tra xem người dùng đã bấm nút "Đồng ý" hay không
+			if (result.isConfirmed) {
+				// Nếu đã bấm "Đồng ý", thực hiện khôi phục
+				try {
+					axios.put(`/rest/tours/${tourid}/restore`)
+						.then(response => {
+							// Xử lý phản hồi thành công
+							Swal.fire({
+								icon: 'success',
+								title: 'Thành công!',
+								text: 'Khôi phục địa điểm thành công!',
+							}).then((result) => {
+								// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+								if (result.isConfirmed) {
+									// Nếu đã bấm, thực hiện reload trang
+									location.reload();
+								}
+							});
+						})
+						.catch(error => {
+							// Xử lý lỗi
+							Swal.fire({
+								icon: 'error',
+								title: 'Lỗi!',
+								text: 'Lỗi khôi phục địa điểm!',
+							});
+							console.log("Error", error);
+						});
+				} catch (error) {
+					// Xử lý lỗi ngoại lệ
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi khôi phục địa điểm',
+					});
+					console.log("Exception", error);
+				}
+			}
+		});
+	};
 
 
 	$scope.delete = function(item) {

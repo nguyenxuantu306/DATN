@@ -22,12 +22,12 @@
 								</div>
 								<select class="form-control" id="statusFilter"
 									name="statusFilter" >
-									<option value="1">Chọn trạng thái</option>
-									<option value="all">Tất cả</option>
-									<option value="Chờ xác nhận">Chờ xác nhận</option>
-									<option value="Đang giao">Đang giao</option>
-									<option value="Giao hàng thành công">Giao hàng thành công</option>
-									<option value="Đã hủy">Đã hủy</option>
+									<option value="1" th:text="#{filter.label.selectStatus}">Chọn trạng thái</option>
+									<option value="all" th:text="#{filter.label.all}">Tất cả</option>
+									<option value="Chờ xác nhận" th:text="#{filter.label.wait}">Chờ xác nhận</option>
+									<option value="Đang giao" th:text="#{filter.label.deliver}">Đang giao</option>
+									<option value="Giao hàng thành công" th:text="#{filter.label.deliverSuccess}">Giao hàng thành công</option>
+									<option value="Đã hủy" th:text="#{filter.label.cancelOrder}">Đã hủy</option>
 									<!-- Các tùy chọn khác -->
 								</select>
 							</div>
@@ -41,10 +41,12 @@
 								<div class="card-header" style="background-color: #fff">
 									<span class="fw-bold" th:text="#{orderList.label.order}">Đơn
 										hàng:</span> #[[${order.orderid}]] <span class="fw-bold"
-										th:text="${order.getOrderDateFormatted()}"></span> <span
+										th:text="${order.getOrderDateFormatted()}"></span> 
+										<span
 										th:if="${order.statusOrder.name} =='Đã hủy'"
 										class="float-end text-danger fw-bold"
-										th:text="${order.statusOrder.name}"></span> <span
+										th:text="${order.statusOrder.name}"></span> 
+										<span
 										th:if="${order.statusOrder.name} !='Đã hủy'"
 										class="float-end text-success fw-bold"
 										th:text="${order.statusOrder.name}"></span>
@@ -71,10 +73,10 @@
 										<div class="card-body">
 											<span> <span
 												th:text="${orderDetail.product.productname}"></span><br />
-												<span
-												th:text="'Số lượng: '+${orderDetail.quantityordered}+'kg'"></span><br />
-												Giá: <span
-												th:text="${#numbers.formatDecimal(orderDetail.product.price, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
+												<span th:text="#{orderList.label.quantity}">Số lượng: </span><span
+												th:text="' '+${orderDetail.quantityordered}+'kg'"></span><br />
+												<span th:text="#{orderList.label.price}">Giá: </span><span
+												th:text="' '+${#numbers.formatDecimal(orderDetail.product.price, 0, 'COMMA', 0, 'POINT')}+'đ'"></span>
 											</span>
 										</div>
 									</div>
@@ -94,7 +96,7 @@
 								<div>
 									<div class="mr-2">
 										<div class="float-end text-danger">
-											Tổng giá: <span class="orderTotal"></span>
+											<span th:text="#{orderList.label.total}">Tổng giá: </span><span class="orderTotal"></span>
 										</div>
 									</div>
 									<br />
@@ -125,9 +127,8 @@
 									src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/orderlist/5fafbb923393b712b96488590b8f781f.png">
 								<p
 									class="card-title text-center fw-bold text-uppercase text-muted"
-									style="margin-top: 50px;">RẤT TIẾC BẠN CHƯA CÓ ĐƠN HÀNG NÀO
+									style="margin-top: 50px;" th:text="#{orderList.label.total}">RẤT TIẾC BẠN CHƯA CÓ ĐƠN HÀNG NÀO
 									TẠI GREENFARM</p>
-
 							</div>
 						</div>
 					</div>
@@ -150,12 +151,19 @@
 									<i class="bi bi-card-list"></i> <span
 										th:text="#{profile.label.myOrder}"></span>
 								</button>
-							</a> <a href="/booking/list">
-								<button type="button"
-									class="list-group-item list-group-item-action"
-									style="border-radius: 4px">
+							</a> </a> <a class="mb-3" href="/booking/list">
+								<button type="button" class="list-group-item list-group-item-action"
+									style="border-radius: 4px;">
 									<i class="bi bi-card-list"></i> <span
 										th:text="#{profile.label.myTicket}"></span>
+								</button>
+							</a>
+							
+						<a href="/changepass">
+								<button type="button" class="list-group-item list-group-item-action "
+									style="border-radius: 4px;">
+									<i class="bi bi-card-list"></i> <span th:text="#{profile.label.changePass}"
+										></span>
 								</button>
 							</a>
 						</div>

@@ -24,9 +24,8 @@
 													<div class="mx-auto" style="width: 140px">
 														<div class="d-flex justify-content-center align-items-center rounded"
 															style="height: 140px; background-color: rgb(233, 236, 239);">
-
 															<img id="previewImage" style="max-height: 140px; max-width: 140px"
-																 alt="image" th:src="@{|${user.image}|}"/>
+																alt="image" th:src="@{|${user.image}|}"/>
 														</div>
 													</div>
 												</div>
@@ -35,7 +34,7 @@
 													<div class="text-center text-sm-left mb-2 mb-sm-0">
 														<h4 class="pt-sm-2 pb-1 mb-0 text-nowrap"
 															th:text="${user.firstname + ' ' + user.lastname}">
-															Full Name</h4>
+															</h4>
 														<div class="mt-2">
 															<label for="fileInput" class="btn btn-primary"> <i
 																	class="fa fa-fw fa-camera"></i> <span
@@ -48,8 +47,7 @@
 													</div>
 													<div class="text-center text-sm-right">
 														<div class="text-muted">
-															<!-- <small th:text="${user.firstname + ' ' + user.lastname}"></small> -->
-															<small th:text="'join at '+${user.createddate}">
+															<small th:text="${user.createddate}">
 															</small>
 														</div>
 													</div>
@@ -62,7 +60,7 @@
 															<div class="row">
 																<div class="col">
 																	<div class="form-group">
-																		<label>First Name</label> <input
+																		<label th:text="#{profile.label.firstName}">First Name</label> <input
 																			class="form-control"
 																			th:field="${user.firstname}" type="text"
 																			name="name" th:value="${user.firstname}"
@@ -72,7 +70,7 @@
 																</div>
 																<div class="col">
 																	<div class="form-group">
-																		<label>Last Name</label> <input
+																		<label th:text="#{profile.label.lastName}">Last Name</label> <input
 																			class="form-control" type="text"
 																			th:placeholder="${user.lastname}"
 																			th:value="${user.lastname}"
@@ -83,7 +81,7 @@
 															<div class="row">
 																<div class="col">
 																	<div class="form-group">
-																		<label>Birthday</label> <input
+																		<label th:text="#{profile.label.birthday}">Birthday</label> <input
 																			class="form-control" type="date"
 																			name="birthday"
 																			th:field="${user.birthday}" />
@@ -92,7 +90,7 @@
 																</div>
 																<div class="col">
 																	<div class="form-group">
-																		<label>Phone Number</label> <input
+																		<label th:text="#{profile.label.phoneNumber}">Phone Number</label> <input
 																			class="form-control" type="number"
 																			th:value="${user.phonenumber}"
 																			th:field="${user.phonenumber}"
@@ -114,14 +112,15 @@
 															<div class="row">
 																<div class="col mb-3">
 																	<div class="form-group">
-																		<label>Gender</label>
+																		<label th:text="#{profile.label.gender}">Gender</label>
 																		<div class="form-check">
 																			<input class="form-check-input"
 																				th:field="${user.gender}" value="1"
 																				type="radio" name="flexRadioDefault"
 																				checked /> <label
 																				class="form-check-label"
-																				for="flexRadioDefault1">
+																				for="flexRadioDefault1"
+																				th:text="#{profile.label.genderMale}">
 																				Male </label>
 																		</div>
 																		<div class="form-check">
@@ -129,7 +128,8 @@
 																				th:field="${user.gender}" value="0"
 																				checked /> <label
 																				class="form-check-label"
-																				for="flexRadioDefault2">
+																				for="flexRadioDefault2"
+																				th:text="#{profile.label.genderFemale}">
 																				Female </label>
 																		</div>
 																	</div>
@@ -140,7 +140,7 @@
 
 													<div class="row">
 														<div class="col d-flex justify-content-end">
-															<button class="btn btn-primary" type="submit">
+															<button class="btn btn-primary" type="submit" th:text="#{profile.label.submit}">
 																Save Changes</button>
 														</div>
 													</div>
@@ -173,19 +173,19 @@
 								<i class="bi bi-card-list"></i> <span
 									th:text="#{profile.label.myOrder}"></span>
 							</button>
-						</a> <a href="/booking/list">
+						</a> <a class="mb-3" href="/booking/list">
 							<button type="button" class="list-group-item list-group-item-action "
 								style="border-radius: 4px;">
 								<i class="bi bi-card-list"></i> <span
 									th:text="#{profile.label.myTicket}"></span>
 							</button>
 						</a>
-						<br>
+						
 					<a href="/changepass">
 							<button type="button" class="list-group-item list-group-item-action "
 								style="border-radius: 4px;">
-								<i class="bi bi-card-list"></i> <span
-									>Đổi mật khẩu</span>
+								<i class="bi bi-card-list"></i> <span th:text="#{profile.label.changePass}"
+									></span>
 							</button>
 						</a>
 					</div>

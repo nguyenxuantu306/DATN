@@ -41,6 +41,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.google.api.client.util.Value;
@@ -112,7 +113,8 @@ public class Authconfig {
 		http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable());
 
 		http.authorizeRequests(authorize -> authorize
-				.requestMatchers("/profile", "/booking/*","/checkout", "/cart").authenticated()
+				.requestMatchers("/profile", "/cart").authenticated()
+				.requestMatchers("/booking/*","/checkout").not().hasRole("Administrator")
 				.requestMatchers("/assetsAdmin/**", "/admin")
 				.hasRole("Administrator")
 				.requestMatchers("/assets/*").permitAll()
@@ -122,12 +124,13 @@ public class Authconfig {
 		http.formLogin(form -> form.loginPage("/login")
 				.successHandler(authSucessHandler)
 								.failureHandler(customFailHandle)
-				
+								
+
 		/* .loginProcessingUrl("/") */
 
 		)
-		
-		
+		.exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+		.and()
 		.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logoff")).permitAll())
 		.oauth2Login(oauth2Login ->
         oauth2Login
@@ -156,7 +159,10 @@ public class Authconfig {
 	    return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository);
 	}
 
-	
+	@Bean
+	public AccessDeniedHandler accessDeniedHandler() {
+	    return new CustomAccessDeniedHandler();
+	}
 	
 	
 }

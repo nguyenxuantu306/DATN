@@ -44,75 +44,112 @@ app.controller("tourdate-ctrl", function($scope, $http) {
 	}
 
 
-	// Thêm sử kiện mới
+	// Thêm sự kiện mới
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		$http.post(`/rest/tourdates`, item).then(resp => {
-			resp.data.tourdates = new Date(resp.data.tourdates)
-			$scope.items.push(resp.data);
-			$scope.reset();
-			// Sử dụng SweetAlert2 cho thông báo thành công
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Tổ chức ngày tham quan thành công!',
-			}).then((result) => {
-				// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
-				if (result.isConfirmed) {
-					// Nếu đã bấm, thực hiện reload trang
-					location.reload();
-				}
-			});
-			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-			$scope.frmvalidate.$setPristine();
-			$scope.frmvalidate.$setUntouched();
-			$scope.frmvalidate.$submitted = false;
-		}).catch(error => {
-			// Sử dụng SweetAlert2 cho thông báo lỗi
-			Swal.fire({
-				icon: 'error',
-				title: 'Lỗi!',
-				text: 'Lỗi Tổ chức ngày tham quan',
-			});
-			console.log("Error", error);
+
+		// Chuyển đổi ngày thành đối tượng Date
+		item.tourdates = new Date(item.tourdates);
+
+		// Kiểm tra xem ngày tham quan đã tồn tại trong danh sách hay chưa
+		var isDuplicate = $scope.items.some(function(existingItem) {
+			return new Date(existingItem.tourdates).toDateString() === item.tourdates.toDateString();
 		});
-	}
 
-
-	// cập loại nhật sản phẩm
-	$scope.update = function() {
-		var item = angular.copy($scope.form);
-		$http.put(`/rest/tourdates/${item.tourdateid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.tourdateid == item.tourdateid);
-			$scope.items[index] = item;
-			// Sử dụng SweetAlert2 cho thông báo thành công
+		if (isDuplicate) {
+			// Ngày tham quan đã tồn tại, hiển thị thông báo lỗi
 			Swal.fire({
-				icon: 'success',
-				title: 'Thành công!',
-				text: 'Cập nhật ngày tổ chức thành công!',
-			}).then((result) => {
-				// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
-				if (result.isConfirmed) {
-					// Nếu đã bấm, thực hiện reload trang
-					location.reload();
-				}
+				icon: 'warning',
+				title: 'Lỗi!',
+				text: 'Ngày tham quan đã tồn tại.',
 			});
-			$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
-			$scope.frmvalidateupdate.$setPristine();
-			$scope.frmvalidateupdate.$setUntouched();
-			$scope.frmvalidateupdate.$submitted = false;
-			$scope.edit(item);
-		})
-			.catch(error => {
+		} else {
+			$http.post(`/rest/tourdates`, item).then(resp => {
+				resp.data.tourdates = new Date(resp.data.tourdates);
+				$scope.items.push(resp.data);
+				$scope.reset();
+				// Sử dụng SweetAlert2 cho thông báo thành công
+				Swal.fire({
+					icon: 'success',
+					title: 'Thành công!',
+					text: 'Tổ chức ngày tham quan thành công!',
+				}).then((result) => {
+					// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+					if (result.isConfirmed) {
+						// Nếu đã bấm, thực hiện reload trang
+						location.reload();
+					}
+				});
+				$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+				$scope.frmvalidate.$setPristine();
+				$scope.frmvalidate.$setUntouched();
+				$scope.frmvalidate.$submitted = false;
+			}).catch(error => {
 				// Sử dụng SweetAlert2 cho thông báo lỗi
 				Swal.fire({
 					icon: 'error',
 					title: 'Lỗi!',
-					text: 'Lỗi Cập nhật ngày tổ chức',
+					text: 'Lỗi Tổ chức ngày tham quan',
 				});
 				console.log("Error", error);
 			});
+		}
 	}
+
+	// Cập nhật sự kiện
+	$scope.update = function() {
+		var item = angular.copy($scope.form);
+
+		// Chuyển đổi ngày thành đối tượng Date
+		item.tourdates = new Date(item.tourdates);
+
+		// Kiểm tra xem ngày tham quan đã tồn tại trong danh sách (trừ sự kiện đang cập nhật) hay chưa
+		var isDuplicate = $scope.items.some(function(existingItem) {
+			return existingItem.tourdateid !== item.tourdateid &&
+				new Date(existingItem.tourdates).toDateString() === item.tourdates.toDateString();
+		});
+
+		if (isDuplicate) {
+			// Ngày tham quan đã tồn tại, hiển thị thông báo lỗi
+			Swal.fire({
+				icon: 'warning',
+				title: 'Lỗi!',
+				text: 'Ngày tham quan đã tồn tại.',
+			});
+		} else {
+			$http.put(`/rest/tourdates/${item.tourdateid}`, item).then(resp => {
+				var index = $scope.items.findIndex(p => p.tourdateid == item.tourdateid);
+				$scope.items[index] = item;
+				// Sử dụng SweetAlert2 cho thông báo thành công
+				Swal.fire({
+					icon: 'success',
+					title: 'Thành công!',
+					text: 'Cập nhật ngày tổ chức thành công!',
+				}).then((result) => {
+					// Kiểm tra xem người dùng đã bấm nút "OK" hay chưa
+					if (result.isConfirmed) {
+						// Nếu đã bấm, thực hiện reload trang
+						location.reload();
+					}
+				});
+				$scope.form = {}; // Hoặc thực hiện các bước cần thiết để reset form
+				$scope.frmvalidateupdate.$setPristine();
+				$scope.frmvalidateupdate.$setUntouched();
+				$scope.frmvalidateupdate.$submitted = false;
+				$scope.edit(item);
+			})
+				.catch(error => {
+					// Sử dụng SweetAlert2 cho thông báo lỗi
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi!',
+						text: 'Lỗi Cập nhật ngày tổ chức',
+					});
+					console.log("Error", error);
+				});
+		}
+	}
+
 
 
 	$scope.delete = function(item) {
@@ -184,33 +221,33 @@ app.controller("tourdate-ctrl", function($scope, $http) {
 	};
 
 	$scope.loadData = function() {
-    var apiUrl = '/rest/tourdates/filtertourdate';
+		var apiUrl = '/rest/tourdates/filtertourdate';
 
-    // Lấy giá trị ngày từ input
-    var selectedDate = $scope.selectedDate;
+		// Lấy giá trị ngày từ input
+		var selectedDate = $scope.selectedDate;
 
-    // Kiểm tra xem có ngày được chọn không
-    if (selectedDate) {
-        // Format ngày thành chuỗi YYYY-MM-DD để truyền vào URL với múi giờ Việt Nam
-        var formattedDate = moment(selectedDate).format('YYYY-MM-DD');
+		// Kiểm tra xem có ngày được chọn không
+		if (selectedDate) {
+			// Format ngày thành chuỗi YYYY-MM-DD để truyền vào URL với múi giờ Việt Nam
+			var formattedDate = moment(selectedDate).format('YYYY-MM-DD');
 
-        // Thêm thông tin ngày vào URL
-        apiUrl += ($scope.searchText ? '&' : '?') + 'date=' + formattedDate;
-    } else {
-        // Nếu không có ngày được chọn, loại bỏ thông tin ngày từ URL
-        apiUrl = apiUrl.replace(/&?date=[^&]*/, '');
-    }
+			// Thêm thông tin ngày vào URL
+			apiUrl += ($scope.searchText ? '&' : '?') + 'date=' + formattedDate;
+		} else {
+			// Nếu không có ngày được chọn, loại bỏ thông tin ngày từ URL
+			apiUrl = apiUrl.replace(/&?date=[^&]*/, '');
+		}
 
-    $http.get(apiUrl)
-        .then(function(response) {
-            // Cập nhật dữ liệu trong scope
-            $scope.items = response.data; // Cập nhật items để phản ánh dữ liệu mới
-            $scope.pager.page = 0; // Đặt lại trang về 0 khi có dữ liệu mới
-        })
-        .catch(function(error) {
-            console.error('Lỗi khi tải dữ liệu:', error);
-        });
-};
+		$http.get(apiUrl)
+			.then(function(response) {
+				// Cập nhật dữ liệu trong scope
+				$scope.items = response.data; // Cập nhật items để phản ánh dữ liệu mới
+				$scope.pager.page = 0; // Đặt lại trang về 0 khi có dữ liệu mới
+			})
+			.catch(function(error) {
+				console.error('Lỗi khi tải dữ liệu:', error);
+			});
+	};
 
 
 
