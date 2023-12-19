@@ -22,13 +22,13 @@
 							
 							<div class="mb-4 form-floating">
 								<input name="newpass" type="password" th:field="*{newpass}" class="form-control"
-									id="newpass" placeholder="newpass" required>
+									id="newpass" placeholder="newpass" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,16}$">
 								<label for="newpass">Mật khẩu mới</label>
 							</div>
 							
 							<div class="mb-4 form-floating">
 								<input name="confirmpass" type="password" th:field="*{confirmpass}" class="form-control"
-									id="confirmpass" placeholder="confirmpass" required>
+									id="confirmpass" placeholder="confirmpass" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,16}$">
 								<label for="confirmpass">Xác nhận mật khẩu </label>
 							</div>
 							<input type="hidden" for="token" name="token" th:field="*{token}"
